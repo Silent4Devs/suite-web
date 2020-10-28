@@ -46,4 +46,21 @@ class ChangePasswordController extends Controller
 
         return redirect()->route('login')->with('message', __('global.delete_account_success'));
     }
+
+    public function toggleTwoFactor(Request $request)
+    {
+        $user = auth()->user();
+
+        if ($user->two_factor) {
+            $message = __('global.two_factor.disabled');
+        } else {
+            $message = __('global.two_factor.enabled');
+        }
+
+        $user->two_factor = !$user->two_factor;
+
+        $user->save();
+
+        return redirect()->route('profile.password.edit')->with('message', $message);
+    }
 }
