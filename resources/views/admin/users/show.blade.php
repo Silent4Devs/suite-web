@@ -49,6 +49,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.user.fields.two_factor') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $user->two_factor ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.user.fields.approved') }}
                         </th>
                         <td>
