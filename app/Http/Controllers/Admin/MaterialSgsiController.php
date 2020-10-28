@@ -1,0 +1,171 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Requests\MassDestroyMaterialSgsiRequest;
+use App\Http\Requests\StoreMaterialSgsiRequest;
+use App\Http\Requests\UpdateMaterialSgsiRequest;
+use App\Models\Area;
+use App\Models\MaterialSgsi;
+use App\Models\Team;
+use Gate;
+use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
+
+class MaterialSgsiController extends Controller
+{
+    use MediaUploadingTrait;
+
+    public function index(Request $request)
+    {
+        abort_if(Gate::denies('material_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->ajax()) {
+            $query = MaterialSgsi::with(['arearesponsable', 'team'])->select(sprintf('%s.*', (new MaterialSgsi)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = 'material_sgsi_show';
+                $editGate      = 'material_sgsi_edit';
+                $deleteGate    = 'material_sgsi_delete';
+                $crudRoutePart = 'material-sgsis';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : "";
+            });
+            $table->editColumn('objetivo', function ($row) {
+                return $row->objetivo ? $row->objetivo : "";
+            });
+            $table->editColumn('personalobjetivo', function ($row) {
+                return $row->personalobjetivo ? MaterialSgsi::PERSONALOBJETIVO_SELECT[$row->personalobjetivo] : '';
+            });
+            $table->addColumn('arearesponsable_area', function ($row) {
+                return $row->arearesponsable ? $row->arearesponsable->area : '';
+            });
+
+            $table->editColumn('tipoimparticion', function ($row) {
+                return $row->tipoimparticion ? MaterialSgsi::TIPOIMPARTICION_SELECT[$row->tipoimparticion] : '';
+            });
+
+            $table->editColumn('archivo', function ($row) {
+                return $row->archivo ? '<a href="' . $row->archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'arearesponsable', 'archivo']);
+
+            return $table->make(true);
+        }
+
+        $areas = Area::get();
+        $teams = Team::get();
+
+        return view('admin.materialSgsis.index', compact('areas', 'teams'));
+    }
+
+    public function create()
+    {
+        abort_if(Gate::denies('material_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.materialSgsis.create', compact('arearesponsables'));
+    }
+
+    public function store(StoreMaterialSgsiRequest $request)
+    {
+        $materialSgsi = MaterialSgsi::create($request->all());
+
+        if ($request->input('archivo', false)) {
+            $materialSgsi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $materialSgsi->id]);
+        }
+
+        return redirect()->route('admin.material-sgsis.index');
+    }
+
+    public function edit(MaterialSgsi $materialSgsi)
+    {
+        abort_if(Gate::denies('material_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $materialSgsi->load('arearesponsable', 'team');
+
+        return view('admin.materialSgsis.edit', compact('arearesponsables', 'materialSgsi'));
+    }
+
+    public function update(UpdateMaterialSgsiRequest $request, MaterialSgsi $materialSgsi)
+    {
+        $materialSgsi->update($request->all());
+
+        if ($request->input('archivo', false)) {
+            if (!$materialSgsi->archivo || $request->input('archivo') !== $materialSgsi->archivo->file_name) {
+                if ($materialSgsi->archivo) {
+                    $materialSgsi->archivo->delete();
+                }
+
+                $materialSgsi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+            }
+        } elseif ($materialSgsi->archivo) {
+            $materialSgsi->archivo->delete();
+        }
+
+        return redirect()->route('admin.material-sgsis.index');
+    }
+
+    public function show(MaterialSgsi $materialSgsi)
+    {
+        abort_if(Gate::denies('material_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $materialSgsi->load('arearesponsable', 'team');
+
+        return view('admin.materialSgsis.show', compact('materialSgsi'));
+    }
+
+    public function destroy(MaterialSgsi $materialSgsi)
+    {
+        abort_if(Gate::denies('material_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $materialSgsi->delete();
+
+        return back();
+    }
+
+    public function massDestroy(MassDestroyMaterialSgsiRequest $request)
+    {
+        MaterialSgsi::whereIn('id', request('ids'))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('material_sgsi_create') && Gate::denies('material_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new MaterialSgsi();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+}
