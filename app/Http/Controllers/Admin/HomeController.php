@@ -41,7 +41,7 @@ class HomeController
 
         $settings3 = [
             'chart_title'        => 'Progreso General del Plan',
-            'chart_type'         => 'line',
+            'chart_type'         => 'pie',
             'report_type'        => 'group_by_relationship',
             'model'              => 'App\Models\PlanBaseActividade',
             'group_by_field'     => 'estado',
