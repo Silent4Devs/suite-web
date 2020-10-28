@@ -89,6 +89,25 @@
             </div>
         </div>
     </div>
+    @if(Route::has('profile.password.toggleTwoFactor'))
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    {{ trans('global.two_factor.title') }}
+                </div>
 
+                <div class="card-body">
+                    <form method="POST" action="{{ route("profile.password.toggleTwoFactor") }}">
+                        @csrf
+                        <div class="form-group">
+                            <button class="btn btn-danger" type="submit">
+                                {{ auth()->user()->two_factor ? trans('global.two_factor.disable') : trans('global.two_factor.enable') }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
 @endsection

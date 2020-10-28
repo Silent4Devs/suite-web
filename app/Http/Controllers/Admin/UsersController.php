@@ -55,6 +55,9 @@ class UsersController extends Controller
                 return $row->email ? $row->email : "";
             });
 
+            $table->editColumn('two_factor', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->two_factor ? 'checked' : null) . '>';
+            });
             $table->editColumn('approved', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->approved ? 'checked' : null) . '>';
             });
@@ -82,7 +85,7 @@ class UsersController extends Controller
                 return $row->puesto ? $row->puesto->puesto : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'approved', 'verified', 'roles', 'organizacion', 'area', 'puesto']);
+            $table->rawColumns(['actions', 'placeholder', 'two_factor', 'approved', 'verified', 'roles', 'organizacion', 'area', 'puesto']);
 
             return $table->make(true);
         }
