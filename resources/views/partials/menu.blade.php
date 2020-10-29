@@ -11,7 +11,7 @@
 
     <ul class="c-sidebar-nav">
        
-      
+    <li class="c-sidebar-nav-title">Menu</li>
         @can('organizacion_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.organizacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizacions") || request()->is("admin/organizacions/*") ? "active" : "" }}">
@@ -74,6 +74,14 @@
                 </ul>
             </li>
         @endcan
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route("admin.systemCalendar") }}" class="c-sidebar-nav-link {{ request()->is("admin/system-calendar") || request()->is("admin/system-calendar/*") ? "active" : "" }}">
+                <i class="c-sidebar-nav-icon fa-fw fas fa-calendar">
+
+                </i>
+                {{ trans('global.systemCalendar') }}
+            </a>
+        </li>
         @can('glosario_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.glosarios.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/glosarios") || request()->is("admin/glosarios/*") ? "active" : "" }}">
@@ -84,6 +92,7 @@
                 </a>
             </li>
         @endcan
+        <li class="c-sidebar-nav-title">Normas</li>
         @can('isoveinticieteuno_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -574,6 +583,7 @@
                 </ul>
             </li>
         @endcan
+        <li class="c-sidebar-nav-title">Administración</li>
         @can('user_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -788,14 +798,7 @@
                 </ul>
             </li>
         @endcan
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route("admin.systemCalendar") }}" class="c-sidebar-nav-link {{ request()->is("admin/system-calendar") || request()->is("admin/system-calendar/*") ? "active" : "" }}">
-                <i class="c-sidebar-nav-icon fa-fw fas fa-calendar">
-
-                </i>
-                {{ trans('global.systemCalendar') }}
-            </a>
-        </li>
+        
         @if(\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') && \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
             <li class="c-sidebar-nav-item">
                 <a class="{{ request()->is("admin/team-members") || request()->is("admin/team-members/*") ? "active" : "" }} c-sidebar-nav-link" href="{{ route("admin.team-members.index") }}">
