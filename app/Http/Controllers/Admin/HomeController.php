@@ -17,7 +17,7 @@ class HomeController
             'aggregate_function' => 'count',
             'filter_field'       => 'created_at',
             'filter_period'      => 'year',
-            'column_class'       => 'col-md-6',
+            'column_class'       => 'col-md-3',
             'entries_number'     => '5',
             'relationship_name'  => 'colaborador',
         ];
@@ -41,7 +41,7 @@ class HomeController
 
         $settings3 = [
             'chart_title'        => 'Progreso General del Plan',
-            'chart_type'         => 'pie',
+            'chart_type'         => 'line',
             'report_type'        => 'group_by_relationship',
             'model'              => 'App\Models\PlanBaseActividade',
             'group_by_field'     => 'estado',

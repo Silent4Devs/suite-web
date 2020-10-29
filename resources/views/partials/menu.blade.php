@@ -1,25 +1,17 @@
-<div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show">
+<div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light">
 
-    <div class="c-sidebar-brand d-md-down-none">
-        <a class="c-sidebar-brand-full h4" href="#">
-            {{ trans('panel.site_title') }}
-        </a>
+<div class="c-sidebar-brand d-md-down-none bg-transparent">
+    
+    <div class="text-center">
+            <a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}"
+                                                     style="width: 40%;"></a>
+        </div>
+  
     </div>
 
     <ul class="c-sidebar-nav">
-        <li>
-            <select class="searchable-field form-control">
-
-            </select>
-        </li>
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route("admin.home") }}" class="c-sidebar-nav-link">
-                <i class="c-sidebar-nav-icon fas fa-fw fa-tachometer-alt">
-
-                </i>
-                {{ trans('global.dashboard') }}
-            </a>
-        </li>
+       
+      
         @can('organizacion_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.organizacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizacions") || request()->is("admin/organizacions/*") ? "active" : "" }}">
@@ -32,7 +24,7 @@
         @endcan
         @can('dashboard_access')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.dashboards.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/dashboards") || request()->is("admin/dashboards/*") ? "active" : "" }}">
+                <a href="{{ route("admin.home") }}" class="c-sidebar-nav-link {{ request()->is("admin/dashboards") || request()->is("admin/dashboards/*") ? "active" : "" }}">
                     <i class="fa-fw far fa-chart-bar c-sidebar-nav-icon">
 
                     </i>
