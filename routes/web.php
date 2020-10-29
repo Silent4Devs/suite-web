@@ -1,6 +1,8 @@
 <?php
 
-Route::view('/', 'welcome');
+//Route::view('/', 'welcome');
+Route::get('/', 'Auth\LoginController@showLoginForm');
+
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
