@@ -22,22 +22,30 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/Silent4Business-Logo-Color.png') }}">
     @yield('styles')
 </head>
 
 <body class="c-app">
     @include('partials.menu')
     <div class="c-wrapper">
-        <header class="c-header c-header-fixed px-3">
+        <header class="c-header c-header-fixed px-3"  style="background: linear-gradient(60deg, rgb(35,57,91) 40%, rgb(62,142,207) 70%, rgb(13,164,160) 100%) !important;">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
-            <a class="c-header-brand d-lg-none" href="#">{{ trans('panel.site_title') }}</a>
-
+          
             <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
-                <i class="fas fa-fw fa-bars"></i>
+                <i class="fas fa-fw fa-bars" style="color:white"></i>
             </button>
+
+
+            <form class="form-inline">
+            
+            <select class="form-control mr-sm-2 searchable-field ">
+
+                  </select>
+             </form>
 
             <ul class="c-header-nav ml-auto">
                 @if(count(config('panel.available_languages', [])) > 1)
@@ -118,6 +126,8 @@
                 {{ csrf_field() }}
             </form>
         </div>
+        <! -- incluir de footer --> 
+        @include('partials.footer')
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
