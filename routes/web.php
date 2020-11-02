@@ -560,3 +560,5 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
         Route::get('two-factor/resend', 'TwoFactorController@resend')->name('twoFactor.resend');
     }
 });
+
+Route::view('sitemap', 'admin.sitemap.index');
