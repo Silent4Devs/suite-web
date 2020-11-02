@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card"> 
+<div class="card">
     <div class="card-header">
         {{ trans('cruds.implementacion.title') }}
     </div>
@@ -39,7 +39,7 @@
                     <div class="tab-pane fade show active" id="home-just" role="tabpanel"
                          aria-labelledby="home-tab-just">
                         <!-- Introduccion>-->
-               
+
                     <!-- Introduccion -->
                     </div>
                     <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">

@@ -1,16 +1,16 @@
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light">
 
 <div class="c-sidebar-brand d-md-down-none bg-transparent">
-    
+
     <div class="text-center">
             <a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}"
                                                      style="width: 40%;"></a>
         </div>
-  
+
     </div>
 
     <ul class="c-sidebar-nav">
-       
+
     <li class="c-sidebar-nav-title">Menu</li>
         @can('organizacion_access')
             <li class="c-sidebar-nav-item">
@@ -798,7 +798,7 @@
                 </ul>
             </li>
         @endcan
-        
+
         @if(\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') && \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
             <li class="c-sidebar-nav-item">
                 <a class="{{ request()->is("admin/team-members") || request()->is("admin/team-members/*") ? "active" : "" }} c-sidebar-nav-link" href="{{ route("admin.team-members.index") }}">
@@ -819,6 +819,14 @@
                 </li>
             @endcan
         @endif
+        <li class="c-sidebar-nav-item">
+            <a href="{{ url('sitemap') }}" class="c-sidebar-nav-link">
+                <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt">
+
+                </i>
+                TEST
+            </a>
+        </li>
         <li class="c-sidebar-nav-item">
             <a href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt">

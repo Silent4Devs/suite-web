@@ -34,14 +34,14 @@
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
-          
+
             <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
                 <i class="fas fa-fw fa-bars" style="color:white"></i>
             </button>
 
 
             <form class="form-inline">
-            
+
             <select class="form-control mr-sm-2 searchable-field ">
 
                   </select>
@@ -126,7 +126,7 @@
                 {{ csrf_field() }}
             </form>
         </div>
-        <! -- incluir de footer --> 
+        <! -- incluir de footer -->
         @include('partials.footer')
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
