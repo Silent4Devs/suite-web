@@ -11,18 +11,19 @@
         "php": "^7.3",
         "bugsnag/bugsnag-laravel": "^2.20",
         "doctrine/dbal": "^2.10",
+        "emotality/tawk-laravel": "^1.1",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/dusk": "^6.6",
         "laravel/framework": "^8.0",
+        "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
-        "yajra/laravel-datatables-oracle": "^9.11",
         "laraveldaily/laravel-charts": "^0.1.24",
+        "nuovo/spreadsheet-reader": "^0.5.11",
         "spatie/laravel-medialibrary": "^8.7",
-        "laravel/passport": "^10.0",
-        "nuovo/spreadsheet-reader": "^0.5.11"
+        "yajra/laravel-datatables-oracle": "^9.11"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
