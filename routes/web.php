@@ -1,6 +1,8 @@
 <?php
 
-Route::view('/', 'welcome');
+//Route::view('/', 'welcome');
+Route::get('/', 'Auth\LoginController@showLoginForm');
+
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
@@ -558,3 +560,5 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
         Route::get('two-factor/resend', 'TwoFactorController@resend')->name('twoFactor.resend');
     }
 });
+
+Route::view('sitemap', 'admin.sitemap.index');

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "872a421a40fc16fc04fd71923f17db50",
+    "content-hash": "da92a0c7beea3b345d67d1fd448a24a5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1024,6 +1024,61 @@
                 "validator"
             ],
             "time": "2020-09-26T15:48:38+00:00"
+        },
+        {
+            "name": "emotality/tawk-laravel",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emotality/tawk-laravel.git",
+                "reference": "69224b05989b16e2838a3e76d5018c1420eaae83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emotality/tawk-laravel/zipball/69224b05989b16e2838a3e76d5018c1420eaae83",
+                "reference": "69224b05989b16e2838a3e76d5018c1420eaae83",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Emotality\\TawkTo\\TawkToServiceProvider"
+                    ],
+                    "aliases": {
+                        "TawkTo": "Emotality\\TawkTo\\TawkTo"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Emotality\\TawkTo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-Pierre Fourie",
+                    "email": "jp@emotality.com",
+                    "homepage": "https://emotality.com"
+                }
+            ],
+            "description": "A tawk.to chat widget for Laravel.",
+            "keywords": [
+                "chat",
+                "laravel",
+                "tawk",
+                "tawk.to",
+                "tawkto",
+                "widget"
+            ],
+            "time": "2020-10-19T03:16:51+00:00"
         },
         {
             "name": "fideloper/proxy",
