@@ -50,7 +50,7 @@ class GlobalSearchController extends Controller
         $searchableData = [];
 
         foreach ($this->models as $model => $translation) {
-            $modelClass = 'App\Models\' . $model;
+            $modelClass = 'App\Models\\' . $model;
             $query = $modelClass::query();
 
             $fields = $modelClass::$searchable;
