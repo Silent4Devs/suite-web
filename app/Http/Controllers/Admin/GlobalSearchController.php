@@ -35,7 +35,7 @@ class GlobalSearchController extends Controller
         'Dmaic'                   => 'cruds.dmaic.title',
         'PlanMejora'              => 'cruds.planMejora.title',
         'IncidentesDeSeguridad'   => 'cruds.incidentesDeSeguridad.title',
-        'Archivo'                 => 'cruds.archivo.title',
+     
     ];
 
     public function search(Request $request)
@@ -85,4 +85,4 @@ class GlobalSearchController extends Controller
 }
 
 }
-}
+
