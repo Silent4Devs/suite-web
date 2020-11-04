@@ -105,7 +105,7 @@
                 <ul class="c-header-nav ml-auto">
 
                     <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="c-avatar"><img class="c-avatar-img" src="{{asset('img/avatars/defaultt.jpg')}}" alt="user@email.com"></div>
+                            <div class="c-avatar"><img class="c-avatar-img" src="{{asset('img/avatars/user-iconn.png')}}" alt="user@email.com" style="height: 80%"></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right pt-0 hide">
 
@@ -122,9 +122,8 @@
             @endcan
         @endif
                             <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
-                                <svg class="c-icon mfe-2">
-                                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
-                                </svg> Bloquear</a>
+                            <i class="fas fa-fw fa-lock c-sidebar-nav-icon">
+                        </i> Bloquear</a>
                             <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                             <i class="fas fa-fw fa-sign-out-alt c-sidebar-nav-icon">
                         </i> Cerrar sesión</a>
