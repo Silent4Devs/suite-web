@@ -157,7 +157,7 @@
                     @can('liderazgo_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-gavel c-sidebar-nav-icon" style="text-indent: 10px">
+                                <i class="fa-fw fas fa-gavel c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.liderazgo.title') }}
@@ -219,7 +219,7 @@
                     @can('planificacion_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-tasks c-sidebar-nav-icon" style="text-indent: 10px">
+                                <i class="fa-fw fas fa-tasks c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.planificacion.title') }}
@@ -251,7 +251,7 @@
                     @can('soporte_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-headset c-sidebar-nav-icon" style="text-indent: 10px">
+                                <i class="fa-fw fas fa-headset c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.soporte.title') }}
@@ -353,7 +353,7 @@
                     @can('operacion_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon" style="text-indent: 10px">
+                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.operacion.title') }}
@@ -395,7 +395,7 @@
                     @can('evaluacion_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-file-signature c-sidebar-nav-icon" style="text-indent: 10px">
+                                <i class="fa-fw fas fa-file-signature c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.evaluacion.title') }}
@@ -477,7 +477,7 @@
                     @can('mejora_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-infinity c-sidebar-nav-icon" style="text-indent: 10px">
+                                <i class="fa-fw fas fa-infinity c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.mejora.title') }}
