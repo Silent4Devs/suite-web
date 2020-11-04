@@ -54,7 +54,7 @@
                     @can('carpetum_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.carpeta.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/carpeta") || request()->is("admin/carpeta/*") ? "active" : "" }}">
-                                <i class="fa-fw far fa-folder-open c-sidebar-nav-icon">
+                                <i class="fa-fw far fa-folder-open c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.carpetum.title') }}
@@ -64,7 +64,7 @@
                     @can('archivo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.archivos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/archivos") || request()->is("admin/archivos/*") ? "active" : "" }}">
-                                <i class="fa-fw far fa-file-archive c-sidebar-nav-icon">
+                                <i class="fa-fw far fa-file-archive c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.archivo.title') }}
@@ -103,9 +103,9 @@
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('contexto_access')
-                        <li class="c-sidebar-nav-dropdown">
+                        <li class="c-sidebar-nav-dropdown" >
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-archive c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-archive c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.contexto.title') }}
@@ -114,7 +114,7 @@
                                 @can('entendimiento_organizacion_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.entendimiento-organizacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/entendimiento-organizacions") || request()->is("admin/entendimiento-organizacions/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-sitemap c-sidebar-nav-icon">
+                                            <i class="" >
 
                                             </i>
                                             {{ trans('cruds.entendimientoOrganizacion.title') }}
@@ -124,7 +124,7 @@
                                 @can('partes_interesada_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.partes-interesadas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/partes-interesadas") || request()->is("admin/partes-interesadas/*") ? "active" : "" }}">
-                                            <i class="fa-fw far fa-handshake c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.partesInteresada.title') }}
@@ -134,7 +134,7 @@
                                 @can('matriz_requisito_legale_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.matriz-requisito-legales.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/matriz-requisito-legales") || request()->is("admin/matriz-requisito-legales/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-balance-scale c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.matrizRequisitoLegale.title') }}
@@ -144,7 +144,7 @@
                                 @can('alcance_sgsi_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.alcance-sgsis.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/alcance-sgsis") || request()->is("admin/alcance-sgsis/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-pen-alt c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.alcanceSgsi.title') }}
@@ -157,7 +157,7 @@
                     @can('liderazgo_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-gavel c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-gavel c-sidebar-nav-icon" style="text-indent: 10px">
 
                                 </i>
                                 {{ trans('cruds.liderazgo.title') }}
@@ -166,7 +166,7 @@
                                 @can('comiteseguridad_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.comiteseguridads.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/comiteseguridads") || request()->is("admin/comiteseguridads/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-user-secret c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.comiteseguridad.title') }}
@@ -176,7 +176,7 @@
                                 @can('minutasaltadireccion_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.minutasaltadireccions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/minutasaltadireccions") || request()->is("admin/minutasaltadireccions/*") ? "active" : "" }}">
-                                            <i class="fa-fw far fa-calendar-minus c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.minutasaltadireccion.title') }}
@@ -186,7 +186,7 @@
                                 @can('evidencias_sgsi_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.evidencias-sgsis.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/evidencias-sgsis") || request()->is("admin/evidencias-sgsis/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-calendar-alt c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.evidenciasSgsi.title') }}
@@ -196,7 +196,7 @@
                                 @can('politica_sgsi_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.politica-sgsis.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/politica-sgsis") || request()->is("admin/politica-sgsis/*") ? "active" : "" }}">
-                                            <i class="fa-fw far fa-edit c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.politicaSgsi.title') }}
@@ -206,7 +206,7 @@
                                 @can('roles_responsabilidade_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.roles-responsabilidades.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/roles-responsabilidades") || request()->is("admin/roles-responsabilidades/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-users c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.rolesResponsabilidade.title') }}
@@ -219,7 +219,7 @@
                     @can('planificacion_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-tasks c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-tasks c-sidebar-nav-icon" style="text-indent: 10px">
 
                                 </i>
                                 {{ trans('cruds.planificacion.title') }}
@@ -228,7 +228,7 @@
                                 @can('riesgosoportunidade_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.riesgosoportunidades.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/riesgosoportunidades") || request()->is("admin/riesgosoportunidades/*") ? "active" : "" }}">
-                                            <i class="fa-fw far fa-eye c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.riesgosoportunidade.title') }}
@@ -238,7 +238,7 @@
                                 @can('objetivosseguridad_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.objetivosseguridads.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/objetivosseguridads") || request()->is("admin/objetivosseguridads/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-lock c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.objetivosseguridad.title') }}
@@ -251,7 +251,7 @@
                     @can('soporte_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-headset c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-headset c-sidebar-nav-icon" style="text-indent: 10px">
 
                                 </i>
                                 {{ trans('cruds.soporte.title') }}
@@ -260,7 +260,7 @@
                                 @can('recurso_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.recursos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/recursos") || request()->is("admin/recursos/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-certificate c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.recurso.title') }}
@@ -270,7 +270,7 @@
                                 @can('competencium_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.competencia.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/competencia") || request()->is("admin/competencia/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-award c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.competencium.title') }}
@@ -280,7 +280,7 @@
                                 @can('concientizacion_sgi_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.concientizacion-sgis.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/concientizacion-sgis") || request()->is("admin/concientizacion-sgis/*") ? "active" : "" }}">
-                                            <i class="fa-fw far fa-user c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.concientizacionSgi.title') }}
@@ -290,7 +290,7 @@
                                 @can('material_sgsi_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.material-sgsis.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/material-sgsis") || request()->is("admin/material-sgsis/*") ? "active" : "" }}">
-                                            <i class="fa-fw far fa-file-pdf c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.materialSgsi.title') }}
@@ -300,7 +300,7 @@
                                 @can('material_iso_veinticiente_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.material-iso-veinticientes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/material-iso-veinticientes") || request()->is("admin/material-iso-veinticientes/*") ? "active" : "" }}">
-                                            <i class="fa-fw far fa-file-pdf c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.materialIsoVeinticiente.title') }}
@@ -310,7 +310,7 @@
                                 @can('comunicacion_sgi_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.comunicacion-sgis.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/comunicacion-sgis") || request()->is("admin/comunicacion-sgis/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-language c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.comunicacionSgi.title') }}
@@ -320,7 +320,7 @@
                                 @can('politica_del_sgsi_soporte_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.politica-del-sgsi-soportes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/politica-del-sgsi-soportes") || request()->is("admin/politica-del-sgsi-soportes/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-ruble-sign c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.politicaDelSgsiSoporte.title') }}
@@ -330,7 +330,7 @@
                                 @can('control_acceso_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.control-accesos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/control-accesos") || request()->is("admin/control-accesos/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-universal-access c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.controlAcceso.title') }}
@@ -340,7 +340,7 @@
                                 @can('informacion_documetada_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.informacion-documetadas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/informacion-documetadas") || request()->is("admin/informacion-documetadas/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-info c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.informacionDocumetada.title') }}
@@ -353,7 +353,7 @@
                     @can('operacion_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon" style="text-indent: 10px">
 
                                 </i>
                                 {{ trans('cruds.operacion.title') }}
@@ -362,7 +362,7 @@
                                 @can('planificacion_control_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.planificacion-controls.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/planificacion-controls") || request()->is("admin/planificacion-controls/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-braille c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.planificacionControl.title') }}
@@ -372,7 +372,7 @@
                                 @can('activo_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.activos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/activos") || request()->is("admin/activos/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-user-lock c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.activo.title') }}
@@ -382,7 +382,7 @@
                                 @can('tratamiento_riesgo_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.tratamiento-riesgos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/tratamiento-riesgos") || request()->is("admin/tratamiento-riesgos/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-exclamation-triangle c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.tratamientoRiesgo.title') }}
@@ -395,7 +395,7 @@
                     @can('evaluacion_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-file-signature c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-file-signature c-sidebar-nav-icon" style="text-indent: 10px">
 
                                 </i>
                                 {{ trans('cruds.evaluacion.title') }}
@@ -404,7 +404,7 @@
                                 @can('indicadores_sgsi_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.indicadores-sgsis.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/indicadores-sgsis") || request()->is("admin/indicadores-sgsis/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-chart-pie c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.indicadoresSgsi.title') }}
@@ -414,7 +414,7 @@
                                 @can('incidentes_de_seguridad_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.incidentes-de-seguridads.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/incidentes-de-seguridads") || request()->is("admin/incidentes-de-seguridads/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-exclamation-triangle c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.incidentesDeSeguridad.title') }}
@@ -424,7 +424,7 @@
                                 @can('indicadorincidentessi_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.indicadorincidentessis.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/indicadorincidentessis") || request()->is("admin/indicadorincidentessis/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-chart-line c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.indicadorincidentessi.title') }}
@@ -434,7 +434,7 @@
                                 @can('auditoria_anual_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.auditoria-anuals.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/auditoria-anuals") || request()->is("admin/auditoria-anuals/*") ? "active" : "" }}">
-                                            <i class="fa-fw fab fa-buysellads c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.auditoriaAnual.title') }}
@@ -444,7 +444,7 @@
                                 @can('plan_auditorium_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.plan-auditoria.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/plan-auditoria") || request()->is("admin/plan-auditoria/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-tasks c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.planAuditorium.title') }}
@@ -454,7 +454,7 @@
                                 @can('auditoria_interna_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.auditoria-internas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/auditoria-internas") || request()->is("admin/auditoria-internas/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-eye c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.auditoriaInterna.title') }}
@@ -464,7 +464,7 @@
                                 @can('revision_direccion_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.revision-direccions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/revision-direccions") || request()->is("admin/revision-direccions/*") ? "active" : "" }}">
-                                            <i class="fa-fw fab fa-rev c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.revisionDireccion.title') }}
@@ -477,7 +477,7 @@
                     @can('mejora_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-infinity c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-infinity c-sidebar-nav-icon" style="text-indent: 10px">
 
                                 </i>
                                 {{ trans('cruds.mejora.title') }}
@@ -486,7 +486,7 @@
                                 @can('accion_correctiva_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.accion-correctivas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/accion-correctivas") || request()->is("admin/accion-correctivas/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-check-double c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.accionCorrectiva.title') }}
@@ -496,7 +496,7 @@
                                 @can('planaccion_correctiva_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.planaccion-correctivas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/planaccion-correctivas") || request()->is("admin/planaccion-correctivas/*") ? "active" : "" }}">
-                                            <i class="fa-fw far fa-calendar-check c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.planaccionCorrectiva.title') }}
@@ -506,7 +506,7 @@
                                 @can('registromejora_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.registromejoras.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/registromejoras") || request()->is("admin/registromejoras/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.registromejora.title') }}
@@ -516,7 +516,7 @@
                                 @can('dmaic_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.dmaics.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/dmaics") || request()->is("admin/dmaics/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-medal c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.dmaic.title') }}
@@ -526,7 +526,7 @@
                                 @can('plan_mejora_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.plan-mejoras.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/plan-mejoras") || request()->is("admin/plan-mejoras/*") ? "active" : "" }}">
-                                            <i class="fa-fw fas fa-clipboard-list c-sidebar-nav-icon">
+                                            <i class="">
 
                                             </i>
                                             {{ trans('cruds.planMejora.title') }}
@@ -596,7 +596,7 @@
                     @can('permission_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.permissions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/permissions") || request()->is("admin/permissions/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-unlock-alt c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-unlock-alt c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.permission.title') }}
@@ -606,7 +606,7 @@
                     @can('role_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.roles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/roles") || request()->is("admin/roles/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.role.title') }}
@@ -616,7 +616,7 @@
                     @can('user_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.users.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/users") || request()->is("admin/users/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-user c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-user c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.user.title') }}
@@ -626,7 +626,7 @@
                     @can('controle_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.controles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/controles") || request()->is("admin/controles/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-screwdriver c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-screwdriver c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.controle.title') }}
@@ -636,7 +636,7 @@
                     @can('audit_log_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.audit-logs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/audit-logs") || request()->is("admin/audit-logs/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-file-alt c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-file-alt c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.auditLog.title') }}
@@ -646,7 +646,7 @@
                     @can('area_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.areas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
-                                <i class="fa-fw far fa-building c-sidebar-nav-icon">
+                                <i class="fa-fw far fa-building c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.area.title') }}
@@ -656,7 +656,7 @@
                     @can('organizacione_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.organizaciones.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizaciones") || request()->is("admin/organizaciones/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-university c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-university c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.organizacione.title') }}
@@ -666,7 +666,7 @@
                     @can('tipoactivo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.tipoactivos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/tipoactivos") || request()->is("admin/tipoactivos/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-laptop c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-laptop c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.tipoactivo.title') }}
@@ -676,7 +676,7 @@
                     @can('puesto_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.puestos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/puestos") || request()->is("admin/puestos/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-user-md c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-user-md c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.puesto.title') }}
@@ -686,7 +686,7 @@
                     @can('user_alert_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.user-alerts.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-bell c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-bell c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.userAlert.title') }}
@@ -696,7 +696,7 @@
                     @can('sede_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.sedes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sedes") || request()->is("admin/sedes/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-building c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-building c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.sede.title') }}
@@ -706,7 +706,7 @@
                     @can('enlaces_ejecutar_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.enlaces-ejecutars.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/enlaces-ejecutars") || request()->is("admin/enlaces-ejecutars/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.enlacesEjecutar.title') }}
@@ -716,7 +716,7 @@
                     @can('team_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.teams.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/teams") || request()->is("admin/teams/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-users c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-users c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.team.title') }}
@@ -726,7 +726,7 @@
                     @can('estado_incidente_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.estado-incidentes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/estado-incidentes") || request()->is("admin/estado-incidentes/*") ? "active" : "" }}">
-                                <i class="fa-fw fab fa-stripe-s c-sidebar-nav-icon">
+                                <i class="fa-fw fab fa-stripe-s c-sidebar-nav-icon" style="text-indent: 30px"> 
 
                                 </i>
                                 {{ trans('cruds.estadoIncidente.title') }}
@@ -736,7 +736,7 @@
                     @can('estatus_plan_trabajo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.estatus-plan-trabajos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/estatus-plan-trabajos") || request()->is("admin/estatus-plan-trabajos/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.estatusPlanTrabajo.title') }}
@@ -746,7 +746,7 @@
                     @can('estado_documento_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.estado-documentos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/estado-documentos") || request()->is("admin/estado-documentos/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.estadoDocumento.title') }}
@@ -778,7 +778,7 @@
                     @can('faq_category_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.faq-categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/faq-categories") || request()->is("admin/faq-categories/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.faqCategory.title') }}
@@ -788,7 +788,7 @@
                     @can('faq_question_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.faq-questions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/faq-questions") || request()->is("admin/faq-questions/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-question c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-question c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.faqQuestion.title') }}
@@ -808,33 +808,16 @@
                 </a>
             </li>
         @endif
-        @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-            @can('profile_password_edit')
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}" href="{{ route('profile.password.edit') }}">
-                        <i class="fa-fw fas fa-key c-sidebar-nav-icon">
-                        </i>
-                        {{ trans('global.change_password') }}
-                    </a>
-                </li>
-            @endcan
-        @endif
+   
         <li class="c-sidebar-nav-item">
             <a href="{{ url('sitemap') }}" class="c-sidebar-nav-link">
-                <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt">
+                <i class="c-sidebar-nav-icon fas fa-fw fa-sitemap">
 
                 </i>
-                TEST
+                Mapa de sitio
             </a>
         </li>
-        <li class="c-sidebar-nav-item">
-            <a href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt">
-
-                </i>
-                {{ trans('global.logout') }}
-            </a>
-        </li>
+ 
     </ul>
 
 </div>
