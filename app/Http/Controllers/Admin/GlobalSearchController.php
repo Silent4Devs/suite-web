@@ -35,7 +35,6 @@ class GlobalSearchController extends Controller
         'Dmaic'                   => 'cruds.dmaic.title',
         'PlanMejora'              => 'cruds.planMejora.title',
         'IncidentesDeSeguridad'   => 'cruds.incidentesDeSeguridad.title',
-        'Archivo'                 => 'cruds.archivo.title',
     ];
 
     public function search(Request $request)
@@ -50,7 +49,7 @@ class GlobalSearchController extends Controller
         $searchableData = [];
 
         foreach ($this->models as $model => $translation) {
-            $modelClass = 'App\Models\' . $model;
+            $modelClass = 'App\Models\\' . $model;
             $query = $modelClass::query();
 
             $fields = $modelClass::$searchable;
@@ -84,5 +83,4 @@ class GlobalSearchController extends Controller
 
 }
 
-}
 }
