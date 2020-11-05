@@ -64,7 +64,7 @@
                 <ul class="c-header-nav ml-auto">
                     <li class="c-header-nav-item dropdown notifications-menu">
                         <a href="#" class="c-header-nav-link" data-toggle="dropdown">
-                            <i class="far fa-bell"></i>
+                            <i class="far fa-bell" style='font-size:28px'></i>
                             @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
                                 @if($alertsCount > 0)
                                     <span class="badge badge-warning navbar-badge">
@@ -92,9 +92,9 @@
                     </li>
                 </ul>
                 <ul class="c-header-nav ml-auto">
-                    <li class="c-header-nav-item px-3 c-d-legacy-none">
+                    <li class="c-header-nav-item px-2 c-d-legacy-none">
                         <button class="c-class-toggler c-header-nav-btn" type="button" id="header-tooltip" data-target="body" data-class="c-dark-theme" data-toggle="c-tooltip" data-placement="bottom" title="Alternar modo claro / oscuro">
-                        <i class="fa-fw fas fa-moon c-sidebar-nav-icon">
+                        <i class="fa-fw far fa-moon" style='font-size:25px'>
                         </i>
                         
                         </button>
@@ -105,7 +105,7 @@
                 <ul class="c-header-nav ml-auto">
 
                     <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="c-avatar"><img class="c-avatar-img" src="{{asset('img/avatars/user-iconn.png')}}" alt="user@email.com" style="height: 80%"></div>
+                            <div class="c-avatar"><img class="c-avatar-img" src="{{asset('img/avatars/usuario.png')}}" alt="user@email.com" ></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right pt-0 hide">
 
