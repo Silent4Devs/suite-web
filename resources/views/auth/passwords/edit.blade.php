@@ -48,7 +48,7 @@
                 <form method="POST" action="{{ route("profile.password.update") }}">
                     @csrf
                     <div class="form-group">
-                        <label class="required" for="title">New {{ trans('cruds.user.fields.password') }}</label>
+                        <label class="required" for="title">Nueva {{ trans('cruds.user.fields.password') }}</label>
                         <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password" required>
                         @if($errors->has('password'))
                             <div class="invalid-feedback">
@@ -57,7 +57,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label class="required" for="title">Repeat New {{ trans('cruds.user.fields.password') }}</label>
+                        <label class="required" for="title">Confirmar nueva {{ trans('cruds.user.fields.password') }}</label>
                         <input class="form-control" type="password" name="password_confirmation" id="password_confirmation" required>
                     </div>
                     <div class="form-group">
