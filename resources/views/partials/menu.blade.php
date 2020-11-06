@@ -43,14 +43,14 @@
             </li>
         @endcan
         @can('documentacion_access')
-            <li class="c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw far fa-file-alt c-sidebar-nav-icon">
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.carpeta.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/carpeta") || request()->is("admin/carpeta/*") ? "active" : "" }}">
+                    <i class="fa-fw far fa-window-restore c-sidebar-nav-icon">
 
                     </i>
-                    {{ trans('cruds.documentacion.title') }}
+                    {{ trans('cruds.carpetum.title') }}
                 </a>
-                <ul class="c-sidebar-nav-dropdown-items">
+                <!--<ul class="c-sidebar-nav-dropdown-items">
                     @can('carpetum_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.carpeta.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/carpeta") || request()->is("admin/carpeta/*") ? "active" : "" }}">
@@ -71,7 +71,7 @@
                             </a>
                         </li>
                     @endcan
-                </ul>
+                </ul>-->
             </li>
         @endcan
         <li class="c-sidebar-nav-item">
@@ -726,7 +726,7 @@
                     @can('estado_incidente_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.estado-incidentes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/estado-incidentes") || request()->is("admin/estado-incidentes/*") ? "active" : "" }}">
-                                <i class="fa-fw fab fa-stripe-s c-sidebar-nav-icon" style="text-indent: 30px"> 
+                                <i class="fa-fw fab fa-stripe-s c-sidebar-nav-icon" style="text-indent: 30px">
 
                                 </i>
                                 {{ trans('cruds.estadoIncidente.title') }}
@@ -808,7 +808,7 @@
                 </a>
             </li>
         @endif
-   
+
         <li class="c-sidebar-nav-item">
             <a href="{{ url('sitemap') }}" class="c-sidebar-nav-link">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-sitemap">
@@ -817,7 +817,7 @@
                 Mapa de sitio
             </a>
         </li>
- 
+
     </ul>
 
 </div>
