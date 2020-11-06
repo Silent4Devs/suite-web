@@ -34,14 +34,14 @@
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
-
+          
             <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
                 <i class="fas fa-fw fa-bars" style="color:white"></i>
             </button>
 
 
             <form class="form-inline">
-
+            
             <select class="form-control mr-sm-2 searchable-field ">
 
                   </select>
@@ -64,7 +64,7 @@
                 <ul class="c-header-nav ml-auto">
                     <li class="c-header-nav-item dropdown notifications-menu">
                         <a href="#" class="c-header-nav-link" data-toggle="dropdown">
-                            <i class="far fa-bell" style='font-size:28px'></i>
+                            <i class="far fa-bell"></i>
                             @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
                                 @if($alertsCount > 0)
                                     <span class="badge badge-warning navbar-badge">
@@ -91,46 +91,7 @@
                         </div>
                     </li>
                 </ul>
-                <ul class="c-header-nav ml-auto">
-                    <li class="c-header-nav-item px-2 c-d-legacy-none">
-                        <button class="c-class-toggler c-header-nav-btn" type="button" id="header-tooltip" data-target="body" data-class="c-dark-theme" data-toggle="c-tooltip" data-placement="bottom" title="Alternar modo claro / oscuro">
-                        <i class="fa-fw far fa-moon" style='font-size:25px'>
-                        </i>
-                        
-                        </button>
-                    </li>
-                </ul>
 
-
-                <ul class="c-header-nav ml-auto">
-
-                    <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="c-avatar"><img class="c-avatar-img" src="{{asset('img/avatars/usuario.png')}}" alt="user@email.com" ></div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right pt-0 hide">
-
-                            <div class="dropdown-header bg-light py-2"><strong>Ajustes</strong></div>
-                            @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-            @can('profile_password_edit')
-               
-                    <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}" href="{{ route('profile.password.edit') }}">
-                        <i class="fa-fw fas fa-user c-sidebar-nav-icon">
-                        </i>
-                        Perfil
-                    </a>
- 
-            @endcan
-        @endif
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
-                            <i class="fas fa-fw fa-lock c-sidebar-nav-icon">
-                        </i> Bloquear</a>
-                            <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                            <i class="fas fa-fw fa-sign-out-alt c-sidebar-nav-icon">
-                        </i> Cerrar sesión</a>
-                        </div>
-                    </li>
-                   
-                </ul>
             </ul>
         </header>
 
@@ -165,25 +126,18 @@
                 {{ csrf_field() }}
             </form>
         </div>
-        <! -- incluir de footer -->
+        <! -- incluir de footer --> 
         @include('partials.footer')
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"></script>
     <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    <script src="//cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
-    <script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+ 
+   
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
+   
     <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
