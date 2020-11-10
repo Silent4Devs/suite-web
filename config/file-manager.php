@@ -31,14 +31,15 @@ return [
      * List of disk names that you want to use
      * (from config/filesystems)
      */
-    'diskList' => ['public'],
+    //'diskList' => ['public'],
+    'diskList'  => ['img', 'public'],
 
     /**
      * Default disk for left manager
      *
      * null - auto select the first disk in the disk list
      */
-    'leftDisk' => null,
+    'leftDisk' => 'public',
 
     /**
      * Default disk for right manager
