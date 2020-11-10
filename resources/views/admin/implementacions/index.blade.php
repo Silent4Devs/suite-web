@@ -69,7 +69,7 @@
                             them, vinyl
                             craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
                     </div>
-                    <div class="tab-pane fade" id="just" role="tabpanel" aria-labelledby="contact-tab-just">
+                    <div class="tab-pane fade" id="just" role="tabpanel" aria-labelledby="contact-tab-just" style="display: flex; justify-content: center; align-items: center;">
                         @include('admin.implementacions.consultoria')
                     </div>
 
