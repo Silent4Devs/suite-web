@@ -78,4 +78,6 @@
         </div>
     </div>
 </div>
+{{ TawkTo::widgetCode() }}
+
 @endsection
