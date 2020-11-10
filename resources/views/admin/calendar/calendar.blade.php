@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-<h3 class="page-title">{{ trans('global.systemCalendar') }}</h3>
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.systemCalendar') }}
-    </div>
+
+<div class="card" style="margin-top:50px;">
+  <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+      <h3 class="mb-2  text-center text-white"><strong>Calendario</strong></h3>
+  </div>
 
     <div class="card-body">
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
