@@ -1,21 +1,26 @@
 @extends('layouts.admin')
 @section('content')
 @can('organizacion_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.organizacions.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.organizacion.title_singular') }}
-            </a>
-        </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.organizacion.title_singular') }} {{ trans('global.list') }}
-    </div>
+
+
+    <div class="card mt-5">
+      <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+          <h3 class="mb-2  text-center text-white"><strong>Mi Organización</strong></h3>
+      </div>
+
+
+      <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+          <div class="col-lg-12">
+              <a class="btn btn-success" href="{{ route('admin.organizacions.create') }}">
+                  {{ trans('global.add') }} {{ trans('cruds.organizacion.title_singular') }}
+              </a>
+          </div>
+      </div>
+  @endcan
+
 
     <div class="card-body">
-        <table class=" table table table-responsive-sm table-sm  ajaxTable datatable datatable-Organizacion">
+        <table class=" table table table-responsive-sm table-sm table-bordered ajaxTable datatable datatable-Organizacion">
             <thead>
                 <tr>
                     <th width="10">
@@ -104,6 +109,7 @@
                 </tr>
             </thead>
         </table>
+      
     </div>
 </div>
 
