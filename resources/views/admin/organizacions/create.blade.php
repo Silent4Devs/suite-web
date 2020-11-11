@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.organizacion.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
+        <h3 class="mb-1  text-center text-white">{{ trans('global.create') }} {{ trans('cruds.organizacion.title_singular') }}</h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.organizacions.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.organizacions.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label class="required" for="empresa">{{ trans('cruds.organizacion.fields.empresa') }}</label>
                 <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}" required>
                 @if($errors->has('empresa'))
@@ -19,9 +19,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label class="required" for="direccion">{{ trans('cruds.organizacion.fields.direccion') }}</label>
-                <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" name="direccion" id="direccion" required>{{ old('direccion') }}</textarea>
+                <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" name="direccion" id="direccion" required style="min-height: 0px; max-height: 200px; height: 35px;">{{ old('direccion') }}</textarea>
                 @if($errors->has('direccion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('direccion') }}
@@ -29,7 +29,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label for="telefono">{{ trans('cruds.organizacion.fields.telefono') }}</label>
                 <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number" name="telefono" id="telefono" value="{{ old('telefono', '') }}" step="1">
                 @if($errors->has('telefono'))
@@ -39,7 +39,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.telefono_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label for="correo">{{ trans('cruds.organizacion.fields.correo') }}</label>
                 <input class="form-control {{ $errors->has('correo') ? 'is-invalid' : '' }}" type="email" name="correo" id="correo" value="{{ old('correo') }}">
                 @if($errors->has('correo'))
@@ -49,7 +49,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.correo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label for="pagina_web">{{ trans('cruds.organizacion.fields.pagina_web') }}</label>
                 <input class="form-control {{ $errors->has('pagina_web') ? 'is-invalid' : '' }}" type="text" name="pagina_web" id="pagina_web" value="{{ old('pagina_web', '') }}">
                 @if($errors->has('pagina_web'))
@@ -59,7 +59,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label for="giro">{{ trans('cruds.organizacion.fields.giro') }}</label>
                 <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text" name="giro" id="giro" value="{{ old('giro', '') }}">
                 @if($errors->has('giro'))
@@ -69,7 +69,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.giro_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-12">
                 <label for="servicios">{{ trans('cruds.organizacion.fields.servicios') }}</label>
                 <input class="form-control {{ $errors->has('servicios') ? 'is-invalid' : '' }}" type="text" name="servicios" id="servicios" value="{{ old('servicios', '') }}">
                 @if($errors->has('servicios'))
@@ -79,7 +79,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.servicios_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label for="mision">{{ trans('cruds.organizacion.fields.mision') }}</label>
                 <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision" id="mision">{{ old('mision') }}</textarea>
                 @if($errors->has('mision'))
@@ -89,7 +89,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.mision_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label for="vision">{{ trans('cruds.organizacion.fields.vision') }}</label>
                 <textarea class="form-control {{ $errors->has('vision') ? 'is-invalid' : '' }}" name="vision" id="vision">{{ old('vision') }}</textarea>
                 @if($errors->has('vision'))
@@ -99,7 +99,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.vision_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label for="valores">{{ trans('cruds.organizacion.fields.valores') }}</label>
                 <textarea class="form-control {{ $errors->has('valores') ? 'is-invalid' : '' }}" name="valores" id="valores">{{ old('valores') }}</textarea>
                 @if($errors->has('valores'))
@@ -109,7 +109,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label for="logotipo">{{ trans('cruds.organizacion.fields.logotipo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('logotipo') ? 'is-invalid' : '' }}" id="logotipo-dropzone">
                 </div>
@@ -120,7 +120,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-12">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
