@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
+        "alexusmai/laravel-file-manager": "^2.5",
         "bugsnag/bugsnag-laravel": "^2.20",
         "doctrine/dbal": "^2.10",
         "emotality/tawk-laravel": "^1.1",
