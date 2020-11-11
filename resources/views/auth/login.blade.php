@@ -1,12 +1,18 @@
 @extends('layouts.app')
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card mx-4">
-            <div class="card-body p-4">
-                <h1>{{ trans('panel.site_title') }}</h1>
 
-                <p class="text-muted">{{ trans('global.login') }}</p>
+<div class="row" style="height: 100%; width: 100%; position: absolute; top: 0; background-color: #fff;">
+    <div class="col-md-8 d-flex align-items-center justify-content-center" style="background-image: url(img/auth-bg2.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <div style="">
+            <span class="db"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 350px;" alt="logo"/></span><br><br>
+            <h3 class="font-light m-t-30">Bienvenido al <span style="font-weight: bold;"> Sistema de Gestión Normativa </span><br><br><font style="font-weight: bolder; font-size: 35pt;">TABANTAJ</font>
+            </h3>
+        </div>
+    </div>
+    <div class="col-md-4"  style="background-color: #fff; box-shadow: 0px 0px 11px -3px #888">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="my-5" style="text-align: right;">{{ trans('global.login') }}</h1>
 
                 @if(session('message'))
                     <div class="alert alert-info" role="alert">
@@ -57,18 +63,18 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-primary px-4">
+                        <div class="col-12 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary mb-4" style="width: 90%;">
                                 {{ trans('global.login') }}
                             </button>
                         </div>
                         <div class="col-6 text-right">
                             @if(Route::has('password.request'))
-                                <a class="btn btn-link px-0" href="{{ route('password.request') }}">
+                                <a class="btn btn-link px-0" href="{{ route('password.request') }}" style="float: left;">
                                     {{ trans('global.forgot_password') }}
                                 </a><br>
                             @endif
-                            <a class="btn btn-link px-0" href="{{ route('register') }}">
+                            <a class="btn btn-link px-0" href="{{ route('register') }}" style="float: left;">
                                 {{ trans('global.register') }}
                             </a>
                         </div>
