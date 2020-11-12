@@ -562,3 +562,8 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 
 Route::view('sitemap', 'admin.sitemap.index');
+
+Route::view('admin/gantt', 'admin.gantt.index');
+
+
+URL::forceScheme('https');
