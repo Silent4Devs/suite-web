@@ -45,10 +45,10 @@
         @can('documentacion_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.carpeta.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/carpeta") || request()->is("admin/carpeta/*") ? "active" : "" }}">
-                    <i class="fa-fw far fa-window-restore c-sidebar-nav-icon">
+                    <i class="fa-fw far fa-folder-open c-sidebar-nav-icon">
 
                     </i>
-                    {{ trans('cruds.carpetum.title') }}
+                   Documentos
                 </a>
                 <!--<ul class="c-sidebar-nav-dropdown-items">
                     @can('carpetum_access')

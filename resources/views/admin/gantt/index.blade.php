@@ -3,10 +3,11 @@
 <script src="https://github.highcharts.com/gantt/highcharts-gantt.src.js"></script>
 <script src="https://github.highcharts.com/gantt/modules/draggable-points.js"></script>
 <script src="https://github.highcharts.com/gantt/modules/exporting.js"></script>
+
 <style type="text/css">
-#container, #buttonGroup {
-    max-width: 1100px;
-    min-width: 250px;
+#containergantt, #buttonGroup {
+    max-width: 900px;
+    min-width: 50px;
     margin: 1em auto;
 }
 
@@ -78,7 +79,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
-            <div id="container"></div>
+            <div id="containergantt"></div>
     <div id="buttonGroup" class="button-row">
         <button id="btnShowDialog">
             <i class="fa fa-plus"></i>
@@ -191,7 +192,7 @@ function updateRemoveButtonStatus() {
 
 
 
-Highcharts.ganttChart('container', {
+Highcharts.ganttChart('containergantt', {
  chart: {
         spacingLeft: 1
     },
