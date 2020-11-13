@@ -1,15 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.competencium.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
+         <h3 class="mb-1  text-center text-white">
+        {{ trans('global.create') }} {{ trans('cruds.competencium.title_singular') }} </h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.competencia.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.competencia.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label class="required" for="nombrecolaborador_id">{{ trans('cruds.competencium.fields.nombrecolaborador') }}</label>
                 <select class="form-control select2 {{ $errors->has('nombrecolaborador') ? 'is-invalid' : '' }}" name="nombrecolaborador_id" id="nombrecolaborador_id" required>
                     @foreach($nombrecolaboradors as $id => $nombrecolaborador)
@@ -23,7 +24,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.competencium.fields.nombrecolaborador_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="perfilpuesto">{{ trans('cruds.competencium.fields.perfilpuesto') }}</label>
                 <input class="form-control {{ $errors->has('perfilpuesto') ? 'is-invalid' : '' }}" type="text" name="perfilpuesto" id="perfilpuesto" value="{{ old('perfilpuesto', '') }}">
                 @if($errors->has('perfilpuesto'))
@@ -33,7 +34,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.competencium.fields.perfilpuesto_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="certificados">{{ trans('cruds.competencium.fields.certificados') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('certificados') ? 'is-invalid' : '' }}" id="certificados-dropzone">
                 </div>
@@ -44,7 +45,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.competencium.fields.certificados_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
