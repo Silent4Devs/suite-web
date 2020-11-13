@@ -1,15 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.riesgosoportunidade.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
+         <h3 class="mb-1  text-center text-white">
+        {{ trans('global.create') }} {{ trans('cruds.riesgosoportunidade.title_singular') }} </h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.riesgosoportunidades.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.riesgosoportunidades.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="control_id">{{ trans('cruds.riesgosoportunidade.fields.control') }}</label>
                 <select class="form-control select2 {{ $errors->has('control') ? 'is-invalid' : '' }}" name="control_id" id="control_id">
                     @foreach($controls as $id => $control)
@@ -23,7 +24,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.riesgosoportunidade.fields.control_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>{{ trans('cruds.riesgosoportunidade.fields.aplicaorganizacion') }}</label>
                 <select class="form-control {{ $errors->has('aplicaorganizacion') ? 'is-invalid' : '' }}" name="aplicaorganizacion" id="aplicaorganizacion">
                     <option value disabled {{ old('aplicaorganizacion', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -38,7 +39,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.riesgosoportunidade.fields.aplicaorganizacion_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="justificacion">{{ trans('cruds.riesgosoportunidade.fields.justificacion') }}</label>
                 <textarea class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}" name="justificacion" id="justificacion">{{ old('justificacion') }}</textarea>
                 @if($errors->has('justificacion'))
@@ -48,7 +49,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.riesgosoportunidade.fields.justificacion_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

@@ -1,15 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.minutasaltadireccion.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
+         <h3 class="mb-1  text-center text-white">
+        {{ trans('global.create') }} {{ trans('cruds.minutasaltadireccion.title_singular') }} </h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.minutasaltadireccions.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.minutasaltadireccions.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="objetivoreunion">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}</label>
                 <textarea class="form-control {{ $errors->has('objetivoreunion') ? 'is-invalid' : '' }}" name="objetivoreunion" id="objetivoreunion">{{ old('objetivoreunion') }}</textarea>
                 @if($errors->has('objetivoreunion'))
@@ -19,7 +20,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="responsablereunion_id">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion') }}</label>
                 <select class="form-control select2 {{ $errors->has('responsablereunion') ? 'is-invalid' : '' }}" name="responsablereunion_id" id="responsablereunion_id">
                     @foreach($responsablereunions as $id => $responsablereunion)
@@ -33,7 +34,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="arearesponsable">{{ trans('cruds.minutasaltadireccion.fields.arearesponsable') }}</label>
                 <input class="form-control {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" type="text" name="arearesponsable" id="arearesponsable" value="{{ old('arearesponsable', '') }}">
                 @if($errors->has('arearesponsable'))
@@ -43,7 +44,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.arearesponsable_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
                 <label for="fechareunion">{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}</label>
                 <input class="form-control date {{ $errors->has('fechareunion') ? 'is-invalid' : '' }}" type="text" name="fechareunion" id="fechareunion" value="{{ old('fechareunion') }}">
                 @if($errors->has('fechareunion'))
@@ -53,7 +54,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-9">
                 <label for="archivo">{{ trans('cruds.minutasaltadireccion.fields.archivo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
                 </div>
@@ -64,7 +65,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.archivo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

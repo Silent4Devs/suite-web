@@ -1,15 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.informacionDocumetada.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
+         <h3 class="mb-1  text-center text-white">
+        {{ trans('global.create') }} {{ trans('cruds.informacionDocumetada.title_singular') }} </h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.informacion-documetadas.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.informacion-documetadas.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label class="required" for="titulodocumento">{{ trans('cruds.informacionDocumetada.fields.titulodocumento') }}</label>
                 <input class="form-control {{ $errors->has('titulodocumento') ? 'is-invalid' : '' }}" type="text" name="titulodocumento" id="titulodocumento" value="{{ old('titulodocumento', '') }}" required>
                 @if($errors->has('titulodocumento'))
@@ -19,7 +20,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.informacionDocumetada.fields.titulodocumento_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group  col-md-6">
                 <label>{{ trans('cruds.informacionDocumetada.fields.tipodocumento') }}</label>
                 <select class="form-control {{ $errors->has('tipodocumento') ? 'is-invalid' : '' }}" name="tipodocumento" id="tipodocumento">
                     <option value disabled {{ old('tipodocumento', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -34,7 +35,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.informacionDocumetada.fields.tipodocumento_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="identificador">{{ trans('cruds.informacionDocumetada.fields.identificador') }}</label>
                 <input class="form-control {{ $errors->has('identificador') ? 'is-invalid' : '' }}" type="text" name="identificador" id="identificador" value="{{ old('identificador', '') }}">
                 @if($errors->has('identificador'))
@@ -44,7 +45,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.informacionDocumetada.fields.identificador_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="version">{{ trans('cruds.informacionDocumetada.fields.version') }}</label>
                 <input class="form-control {{ $errors->has('version') ? 'is-invalid' : '' }}" type="number" name="version" id="version" value="{{ old('version', '') }}" step="0.01" min="1" max="99">
                 @if($errors->has('version'))
@@ -54,7 +55,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.informacionDocumetada.fields.version_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="politicas">{{ trans('cruds.informacionDocumetada.fields.politicas') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -72,7 +73,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.informacionDocumetada.fields.politicas_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="contenido">{{ trans('cruds.informacionDocumetada.fields.contenido') }}</label>
                 <textarea class="form-control {{ $errors->has('contenido') ? 'is-invalid' : '' }}" name="contenido" id="contenido">{{ old('contenido') }}</textarea>
                 @if($errors->has('contenido'))
@@ -82,7 +83,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.informacionDocumetada.fields.contenido_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label for="elaboro_id">{{ trans('cruds.informacionDocumetada.fields.elaboro') }}</label>
                 <select class="form-control select2 {{ $errors->has('elaboro') ? 'is-invalid' : '' }}" name="elaboro_id" id="elaboro_id">
                     @foreach($elaboros as $id => $elaboro)
@@ -96,7 +97,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.informacionDocumetada.fields.elaboro_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group  col-md-4">
                 <label for="reviso_id">{{ trans('cruds.informacionDocumetada.fields.reviso') }}</label>
                 <select class="form-control select2 {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="reviso_id" id="reviso_id">
                     @foreach($revisos as $id => $reviso)
@@ -110,7 +111,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.informacionDocumetada.fields.reviso_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label for="aprobacion_id">{{ trans('cruds.informacionDocumetada.fields.aprobacion') }}</label>
                 <select class="form-control select2 {{ $errors->has('aprobacion') ? 'is-invalid' : '' }}" name="aprobacion_id" id="aprobacion_id">
                     @foreach($aprobacions as $id => $aprobacion)
@@ -124,7 +125,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.informacionDocumetada.fields.aprobacion_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="logotipo">{{ trans('cruds.informacionDocumetada.fields.logotipo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('logotipo') ? 'is-invalid' : '' }}" id="logotipo-dropzone">
                 </div>
@@ -135,7 +136,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.informacionDocumetada.fields.logotipo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
