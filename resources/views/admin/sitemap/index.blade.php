@@ -68,19 +68,18 @@
                             <div class="card-body card-body-cascade">
 
                                 <ul class="divided-list list-unstyled text-center">
-                                    <li><a href="" target="_blank"> Mi organización</a></li>
-                                    <li><a href="" target="_blank">Dashboard</a></li>
-                                    <li><a href="" target="_blank"> Implementación</a>
-                                    <div class="contenido_modificado" style="margin-right:20px;margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Introducción</a></div>
-                                    <div class="contenido_modificado" style="margin-left:55px;margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Guía de Implementación</a></div>
-                                    <div class="contenido_modificado" style="margin-left:33px;margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Plan de Trabajo Base</a></div>
-                                    <div class="contenido_modificado" style="margin-left:27px;margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Consultoría en línea</a></div>
+                                    <li><a href="{{ route("admin.organizacions.index") }}" > Mi organización</a></li>
+                                    <li><a href="{{ route("admin.home") }}">Dashboard</a></li>
+                                    <li><a href="{{ route("admin.implementacions.index") }}"> Implementación</a>
+                                    <div class="contenido_modificado" style="margin-right:20px;margin-top:10px; font-size:11pt;"><a><p class="text-primary"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Introducción</a></p></div>
+                                    <div class="contenido_modificado" style="margin-left:55px;margin-top:10px; font-size:11pt;"><a><p class="text-primary"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Guía de Implementación</a></p></div>
+                                    <div class="contenido_modificado" style="margin-left:33px;margin-top:10px; font-size:11pt;"><a><p class="text-primary"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Plan de Trabajo Base</a></p></div>
+                                    <div class="contenido_modificado" style="margin-left:27px;margin-top:10px; font-size:11pt;"><a><p class="text-primary"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Consultoría en línea</a></p></div>
                                     </li>
-                                    <li><a href="" target="_blank"> Documentación</a>
-                                    <div class="contenido_modificado" style="margin-right:40px;margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Carpetas</a></div>
-                                    <div class="contenido_modificado" style="margin-right:40px;margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Archivos</a></div>
+                                    <li><a href="{{ route("admin.carpeta.index") }}"> Carpetas</a>
                                     </li>
-                                    <li><a href="" target="_blank"> Glosario</a></li>
+                                    <li><a href="{{ route("admin.systemCalendar") }}" > Calendario</a></li>
+                                    <li><a href="{{ route("admin.glosarios.index") }}" > Glosario</a></li>
                                 </ul>
 
                             </div>
@@ -123,7 +122,7 @@
 
                                         <!--Card image-->
                                         <div class="col-md-11 col-sm-9 py-2 card card-body bg-info align-self-center " style="margin-top:-25px;">
-                                            <h4 class="mb-2  text-center text-white"><i class="fas fa-archive"></i> Contexto</h4 >
+                                            <h4 class="mb-2 text-center text-white"><i class="fas fa-archive"></i> Contexto</h4 >
                                         </div>
                                         <!--/Card image-->
 
@@ -131,13 +130,11 @@
                                         <div class="card-body card-body-cascade">
 
                                             <ul class="divided-list list-unstyled text-center">
-                                                <li><a href="" target="_blank">Entendimiento de la Organización</a></li>
-                                                <li><a href="" target="_blank">Expectativas</a><br>
-                                                <div class="contenido_modificado" style="margin-left:40px;margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Partes interesadas</a></div>
-                                                <div class="contenido_modificado" style="margin-left:44px;margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Matriz de requisitos Legales</a></div>
-                                                </li>
-                                                <li><a href="" target="_blank">Determinación de Alcance </a></li>
-                                                <li><a href="" target="_blank">SGSI</a></li>
+                                                <li><a href="{{ route("admin.entendimiento-organizacions.index") }}" >Entendimiento de la Organización</a></li>
+                                                <li><a href="{{ route("admin.partes-interesadas.index") }}" > Partes interesadas</a></li>
+                                                <li><a href="{{ route("admin.matriz-requisito-legales.index") }}" >Matriz de requisitos Legales</a></li>
+                                                <li><a href="{{ route("admin.alcance-sgsis.index") }}" >Determinación de Alcance </a></li>
+
 
                                             </ul>
 
@@ -169,10 +166,11 @@
                                         <div class="card-body card-body-cascade">
 
                                             <ul class="divided-list list-unstyled text-center">
-                                                <li><a href="" target="_blank">Liderazgo y Compromiso</a></li>
-                                                <li><a href="" target="_blank">Politica</a></li>
-                                                <li><a href="" target="_blank">Roles y Responsabilidades</a></li>
-
+                                                <li><a href="{{ route("admin.comiteseguridads.index") }}">Conformación del Comité de Seguridad</a></li>
+                                                <li><a href="{{ route("admin.minutasaltadireccions.index") }}">Minutas de Sesiones con Alta Direccion</a></li>
+                                                <li><a href="{{ route("admin.evidencias-sgsis.index") }}" >Evidencias de Asignación de Recursos al SGSI</a></li>
+                                                <li><a href="{{ route("admin.politica-sgsis.index") }}" >Política SGSI</a></li>
+                                                <li><a href="{{ route("admin.roles-responsabilidades.index") }}">Roles y Responsabilidades</a></li>
                                             </ul>
 
                                         </div>
@@ -204,8 +202,8 @@
                                         <div class="card-body card-body-cascade">
 
                                             <ul class="divided-list list-unstyled text-center">
-                                                <li><a href="" target="_blank">Riesgos y Oportunidades</a></li>
-                                                <li><a href="" target="_blank">Objetivos de Seguridad</a></li>
+                                                <li><a href="{{ route("admin.riesgosoportunidades.index") }}">Riesgos y Oportunidades</a></li>
+                                                <li><a href="{{ route("admin.objetivosseguridads.index") }}">Objetivos de Seguridad</a></li>
 
                                             </ul>
 
@@ -238,15 +236,15 @@
                                         <div class="card-body card-body-cascade">
 
                                             <ul class="divided-list list-unstyled text-center">
-                                                <li><a href="" target="_blank">Recursos</a></li>
-                                                <li><a href="" target="_blank">Competencias</a></li>
-                                                <li><a href="" target="_blank">Concientización</a>
-                                                    <div class="contenido_modificado" style="margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Concientización SGSI</a></div>
-                                                    <div class="contenido_modificado" style="margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Material Introducción SGSI</a></div>
-                                                    <div class="contenido_modificado" style="margin-left:14px; margin-top:10px; font-size:11pt;"><a href="" target="_blank"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Material ISO 27001:2013</a></div>
-                                                </li>
-                                                <li><a href="" target="_blank">Comunicación</a></li>
-                                                <li><a href="" target="_blank">Información Documentada</a></li>
+                                                <li><a href="{{ route("admin.recursos.index") }}">Recursos</a></li>
+                                                <li><a href="{{ route("admin.competencia.index") }}">Competencias</a></li>
+                                                <li><a href="{{ route("admin.concientizacion-sgis.index") }}">Concientización SGSI</a></li>
+                                                <li><a href="{{ route("admin.material-sgsis.index") }}"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Material SGSI</a></li>
+                                                <li><a href="{{ route("admin.material-iso-veinticientes.index") }}" ><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Material ISO 27001:2013</a></li>
+                                                <li><a href="{{ route("admin.comunicacion-sgis.index") }}">Comunicación SGSI</a></li>
+                                                <li><a href="{{ route("admin.politica-del-sgsi-soportes.index") }}">Política de SGSI</a></li>
+                                                <li><a href="{{ route("admin.control-accesos.index") }}">Control de Accesos</a></li>
+                                                <li><a href="{{ route("admin.informacion-documetadas.index") }}">Información Documentada</a></li>
 
                                             </ul>
 
@@ -270,7 +268,7 @@
                             <div class="row mt-5">
 
                                 <!--Grid column-->
-                              <div class="col-lg-3 col-md-6">
+                              <div class="col-lg-4 col-md-6">
 
                                     <!--Card-->
                                     <div class="card card-cascade narrower">
@@ -286,9 +284,9 @@
                                         <div class="card-body card-body-cascade">
 
                                             <ul class="divided-list list-unstyled text-center">
-                                                <li><a href="" target="_blank">Planificación y Control</a></li>
-                                                <li><a href="" target="_blank">Apreciación de Riesgos</a></li>
-                                                <li><a href="" target="_blank">Tratamiento de los riesgos</a></li>
+                                                <li><a  href="{{ route("admin.planificacion-controls.index") }}">Planificación y Control</a></li>
+                                                <li><a href="{{ route("admin.activos.index") }}">Apreciación de Riesgos</a></li>
+                                                <li><a href="{{ route("admin.tratamiento-riesgos.index") }}">Tratamiento de los riesgos</a></li>
 
 
                                             </ul>
@@ -303,7 +301,7 @@
                                 <!--Grid column-->
 
 
-                                <div class="col-lg-3 col-md-6">
+                                <div class="col-lg-4 col-md-6">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
@@ -319,11 +317,13 @@
                                           <div class="card-body card-body-cascade">
 
                                               <ul class="divided-list list-unstyled text-center">
-                                                  <li><a href="" target="_blank">Monitoreo de Análisis</a></li>
-                                                  <li><a href="" target="_blank">Auditoria Interna </a></li>
-                                                  <li><a href="" target="_blank">Revisión por Dirección</a></li>
-
-
+                                                  <li><a href="{{ route("admin.indicadores-sgsis.index") }}">Indicadores SGSI</a></li>
+                                                  <li><a href="{{ route("admin.incidentes-de-seguridads.index") }}">Incidentes de Seguridad </a></li>
+                                                  <li><a href="{{ route("admin.indicadorincidentessis.index") }}">Indicador Incidentes</a></li>
+                                                  <li><a href="{{ route("admin.auditoria-anuals.index") }}">Programa Anual de Auditoria</a></li>
+                                                  <li><a href="{{ route("admin.plan-auditoria.index") }}">Plan de Auditoria</a></li>
+                                                  <li><a href="{{ route("admin.auditoria-internas.index") }}">Auditoria Interna</a></li>
+                                                  <li><a href="{{ route("admin.revision-direccions.index") }}">Revisión por dirección </a></li>
                                               </ul>
 
                                           </div>
@@ -339,7 +339,7 @@
 
 
 
-                                  <div class="col-lg-3 col-md-6">
+                                  <div class="col-lg-4 col-md-6">
 
                                         <!--Card-->
                                         <div class="card card-cascade narrower">
@@ -355,11 +355,11 @@
                                             <div class="card-body card-body-cascade">
 
                                                 <ul class="divided-list list-unstyled text-center">
-                                                    <li><a href="" target="_blank">Acciones Correctivas </a></li>
-                                                    <li><a href="" target="_blank">Acciones de Mejora</a></li>
-
-
-
+                                                    <li><a href="{{ route("admin.accion-correctivas.index") }}">Acción Correctiva </a></li>
+                                                    <li><a href="{{ route("admin.planaccion-correctivas.index") }}" >Plan Acción</a></li>
+                                                    <li><a href="{{ route("admin.registromejoras.index") }}" >Registro Mejora</a></li>
+                                                    <li><a href="{{ route("admin.dmaics.index") }}">DMAIC</a></li>
+                                                    <li><a href="{{ route("admin.plan-mejoras.index") }}">Plan Implementación</a></li>
                                                 </ul>
 
                                             </div>
@@ -373,38 +373,6 @@
 
 
 
-
-                                    <div class="col-lg-3 col-md-6">
-
-                                          <!--Card-->
-                                          <div class="card card-cascade narrower">
-
-                                              <!--Card image-->
-
-                                              <div class="col-md-11 col-sm-9 py-2 card card-body bg-info align-self-center " style="margin-top:-25px;">
-                                                  <h4 class="mb-2  text-center text-white"><i class="fas fa-calendar"></i> Planeación de Actividades</h4>
-                                              </div>
-
-                                              <!--/Card image-->
-
-                                              <!--Card content-->
-                                              <div class="card-body card-body-cascade">
-
-                                                  <ul class="divided-list list-unstyled text-center">
-                                                      <li><a href="" target="_blank">Actividades</a></li>
-
-
-
-                                                  </ul>
-
-                                              </div>
-                                              <!--/.Card content-->
-
-                                          </div>
-                                          <!--/.Card-->
-
-                                      </div>
-                                      <!--Grid column-->
 
 
                             </div>
@@ -433,6 +401,39 @@
 
 
 
+                                <!--Grid row-->
+                                <div class="row mb-5 mt-5">
+
+                                    <!--Grid column-->
+                                    <div class="col-lg-12 col-md-6" >
+
+                                        <!--Card-->
+                                        <div class="card card-cascade narrower">
+
+                                            <!--Card image-->
+                                            <div class="col-md-11 col-sm-9 py-2 card card-body bg-info align-self-center " style="margin-top:-25px;">
+                                                <h4 class="mb-2 text-center text-white"><i class="fas fa-archive"></i> ISO 22301</h4 >
+                                            </div>
+                                            <!--/Card image-->
+
+                                            <!--Card content-->
+                                            <div class="card-body card-body-cascade">
+
+                                                <ul class="divided-list list-unstyled text-center">
+                                                    <li><a href="{{ route("admin.adquirirveintidostrecientosunos.index") }}">Adquirir Módulo</a></li>
+
+                                                </ul>
+
+                                            </div>
+                                            <!--/.Card content-->
+
+                                        </div>
+                                        <!--/.Card-->
+
+                                    </div>
+
+                                </div>
+
                              <section id="">
 
 
@@ -441,6 +442,38 @@
 
 
 
+                                       <!--Grid row-->
+                                       <div class="row mb-5 mt-5">
+
+                                           <!--Grid column-->
+                                           <div class="col-lg-12 col-md-6" >
+
+                                               <!--Card-->
+                                               <div class="card card-cascade narrower">
+
+                                                   <!--Card image-->
+                                                   <div class="col-md-11 col-sm-9 py-2 card card-body bg-info align-self-center " style="margin-top:-25px;">
+                                                       <h4 class="mb-2 text-center text-white"><i class="fas fa-archive"></i> ISO 31000</h4 >
+                                                   </div>
+                                                   <!--/Card image-->
+
+                                                   <!--Card content-->
+                                                   <div class="card-body card-body-cascade">
+
+                                                       <ul class="divided-list list-unstyled text-center">
+                                                           <li><a href="{{ route("admin.adquirirtreintaunmils.index") }}" >Adquirir Módulo</a></li>
+
+                                                       </ul>
+
+                                                   </div>
+                                                   <!--/.Card content-->
+
+                                               </div>
+                                               <!--/.Card-->
+
+                                           </div>
+
+                                       </div>
 
                              <!--Section: -->
                              <section id="">
@@ -452,7 +485,7 @@
 
 
                                      <!--Grid row-->
-                                     <div class="row mt-5">
+                                     <div class="row mt-5 ">
 
                                          <!--Grid column-->
                                        <div class="col-lg-3 col-md-6">
@@ -471,22 +504,22 @@
                                                  <div class="card-body card-body-cascade">
 
                                                      <ul class="divided-list list-unstyled text-center">
-                                                         <li><a href="" target="_blank">Permisos</a></li>
-                                                         <li><a href="" target="_blank">Roles</a></li>
-                                                         <li><a href="" target="_blank">Usuarios</a></li>
-                                                         <li><a href="" target="_blank">Controles</a></li>
-                                                         <li><a href="" target="_blank">Audit Logs</a></li>
-                                                         <li><a href="" target="_blank">Áreas</a></li>
-                                                         <li><a href="" target="_blank">Organización</a></li>
-                                                         <li><a href="" target="_blank">Tipos de Activos</a></li>
-                                                         <li><a href="" target="_blank">Puestos</a></li>
-                                                         <li><a href="" target="_blank">User Alerts</a></li>
-                                                         <li><a href="" target="_blank">Sedes</a></li>
-                                                         <li><a href="" target="_blank">Enlaces Ejecutar</a></li>
-                                                         <li><a href="" target="_blank">Teams</a></li>
-                                                         <li><a href="" target="_blank">Estado Incidentes</a></li>
-                                                         <li><a href="" target="_blank">Estatus Plan de Trabajo</a></li>
-                                                         <li><a href="" target="_blank">Estado Documentos</a></li>
+                                                         <li><a href="{{ route("admin.permissions.index") }}">Permisos</a></li>
+                                                         <li><a href="{{ route("admin.roles.index") }}">Roles</a></li>
+                                                         <li><a href="{{ route("admin.users.index") }}">Usuarios</a></li>
+                                                         <li><a href="{{ route("admin.controles.index") }}">Controles</a></li>
+                                                         <li><a href="{{ route("admin.audit-logs.index") }}">Audit Logs</a></li>
+                                                         <li><a href="{{ route("admin.areas.index") }}">Áreas</a></li>
+                                                         <li><a href="{{ route("admin.organizaciones.index") }}">Organización</a></li>
+                                                         <li><a href="{{ route("admin.tipoactivos.index") }}">Tipos de Activos</a></li>
+                                                         <li><a href="{{ route("admin.puestos.index") }}">Puestos</a></li>
+                                                         <li><a href="{{ route("admin.user-alerts.index") }}">User Alerts</a></li>
+                                                         <li><a href="{{ route("admin.sedes.index") }}">Sedes</a></li>
+                                                         <li><a href="{{ route("admin.enlaces-ejecutars.index") }}">Enlaces Ejecutar</a></li>
+                                                         <li><a href="{{ route("admin.teams.index") }}">Teams</a></li>
+                                                         <li><a href="{{ route("admin.estado-incidentes.index") }}">Estado Incidentes</a></li>
+                                                         <li><a href="{{ route("admin.estatus-plan-trabajos.index") }}">Estatus Plan de Trabajo</a></li>
+                                                         <li><a href="{{ route("admin.estado-documentos.index") }}">Estado Documentos</a></li>
                                                      </ul>
 
                                                  </div>
@@ -514,7 +547,7 @@
                                                    <div class="card-body card-body-cascade">
 
                                                        <ul class="divided-list list-unstyled text-center">
-                                                           <li><a href="" target="_blank">Plan de Trabajo Base</a></li>
+                                                           <li><a href="{{ route("admin.plan-base-actividades.index") }}">Plan de Trabajo Base</a></li>
 
 
 
@@ -551,7 +584,7 @@
                                                      <div class="card-body card-body-cascade">
 
                                                          <ul class="divided-list list-unstyled text-center">
-                                                             <li><a href="" target="_blank">Preguntas Frecuentes</a></li>
+                                                             <li><a href="{{ route("admin.faq-questions.index") }}" >Preguntas Frecuentes</a></li>
 
 
                                                          </ul>
@@ -568,52 +601,11 @@
 
 
 
-                                             <div class="col-lg-3 col-md-6">
-
-                                                   <!--Card-->
-                                                   <div class="card card-cascade narrower">
-
-                                                       <!--Card image-->
-
-                                                       <div class="col-md-11 col-sm-9 py-2 card card-body bg-info align-self-center " style="margin-top:-25px;">
-                                                           <h4 class="mb-2  text-center text-white"><i class="fas fa-key"></i> Cambiar Contraseña</h4>
-                                                       </div>
-
-                                                       <!--/Card image-->
-
-                                                       <!--Card content-->
-                                                       <div class="card-body card-body-cascade">
-
-                                                           <ul class="divided-list list-unstyled text-center">
-                                                               <li><a href="" target="_blank">Cambiar Contraseña</a></li>
 
 
-
-                                                           </ul>
-
-                                                       </div>
-                                                       <!--/.Card content-->
-
-                                                   </div>
-                                                   <!--/.Card-->
-
-                                               </div>
-                                               <!--Grid column-->
-
-
-                                     </div>
-                                     <!--Grid row-->
-
-
-
-
-
-
-                                     <!--Grid row-->
-                                     <div class="row mb-5 mt-5">
 
                                          <!--Grid column-->
-                                         <div class="col-lg-6 col-md-6" >
+                                         <div class="col-lg-3 col-md-6" >
 
                                              <!--Card-->
                                              <div class="card card-cascade narrower">
@@ -628,7 +620,7 @@
                                                  <div class="card-body card-body-cascade">
 
                                                      <ul class="divided-list list-unstyled text-center">
-                                                         <li><a href="" target="_blank">Site Map</a></li>
+                                                         <li><a href="{{ url('sitemap') }}">Site Map</a></li>
 
 
                                                      </ul>
@@ -647,34 +639,6 @@
 
 
 
-                                         <!--Grid column-->
-                                         <div class="col-lg-6 col-md-6">
-
-                                             <!--Card-->
-                                             <div class="card card-cascade narrower">
-
-                                                 <!--Card image-->
-
-                                                 <div class="col-md-11 col-sm-9 py-2 card card-body bg-info align-self-center " style="margin-top:-25px;">
-                                                     <h4 class="mb-2  text-center text-white"><i class="fas fa-arrow-right"></i> Salir</h4>
-                                                 </div>
-                                                 <!--/Card image-->
-
-                                                 <!--Card content-->
-                                                 <div class="card-body card-body-cascade">
-
-                                                     <ul class="divided-list list-unstyled text-center">
-                                                         <li><a href="" target="_blank">Salir</a></li>
-                                                     </ul>
-
-                                                 </div>
-                                                 <!--/.Card content-->
-
-                                             </div>
-                                             <!--/.Card-->
-
-                                         </div>
-                                         <!--Grid column-->
 
                                      </div>
                                      <!--Grid row-->
