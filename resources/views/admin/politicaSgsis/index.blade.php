@@ -1,7 +1,14 @@
 @extends('layouts.admin')
 @section('content')
 @can('politica_sgsi_create')
-    <div style="margin-bottom: 10px;" class="row">
+
+<div class="card mt-5">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+        <h3 class="mb-2  text-center text-white"><strong>Política SGSI</strong></h3>
+    </div>
+
+
+    <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.politica-sgsis.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.politicaSgsi.title_singular') }}
@@ -9,10 +16,7 @@
         </div>
     </div>
 @endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.politicaSgsi.title_singular') }} {{ trans('global.list') }}
-    </div>
+
 
     <div class="card-body">
         <div class="table-responsive">

@@ -4,6 +4,7 @@
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.dashboard.title') }}
+
     </div>
 
     <div class="card-body">

@@ -1,25 +1,25 @@
-<h3 class="text-center indigo-text" class="mb-0">Guía de Implementación</h3>
+
 
 <div class="row">
 
-    <div class="col-6">
+    <div class="col-lg-5 col-md-6 col-sm-12 ">
 
         <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:50px;">
-            <li class="list-group-item"><h2 class="text-primary">Planificación</h2></li>
+            <li class="list-group-item"><h2 class="text-prim" style="margin-left:12px;">Planificación</h2></li>
 
 
             <li class="list-group-item nav-item">
                 <a class="nav-link" id="informacion-tab-dos" data-toggle="tab" href="#informacion-dos" role="tab"
                    aria-controls="informacion-dos"
                    aria-selected="false">Guía
-                    de Implementación</a>
+                    de Implementación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);" ></i></p></a>
             </li>
 
             <li class="list-group-item nav-item">
                 <a class="nav-link" id="informacion-tab-tres" data-toggle="tab" href="#informacion-tres" role="tab"
                    aria-controls="informacion-tres"
                    aria-selected="false">Guía
-                    de Implementación</a>
+                    de Implementación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
             </li>
 
 
@@ -27,8 +27,8 @@
 
     </div>
 
-    <div class="col-6">
-        <div class="tab-content" id="myTabContentJust">
+    <div class="col-lg-7 col-md-6 col-sm-12">
+        <div class="tab-content" id="myTabContentJust" style="margin-top:50px; margin">
 
 
             <div class="tab-pane fade" id="informacion-dos" role="tabpanel" aria-labelledby="informacion-tab-dos">
