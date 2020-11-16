@@ -28,7 +28,11 @@
         border-bottom: 1px solid #eee;
         font-size: 1rem;
     }
+
+
 </style>
+
+
 
 
 
@@ -49,37 +53,35 @@
 
                 <div class="row">
 
+
+                  <div class=" col-md-11 col-sm-10  py-2 card card-body bg-info align-self-center " style=" margin-left:40px;  z-index:20;">
+                      <h4 class="mb-2  text-center text-white"><i class="fas fa-home"></i> Menú</h4 >
+                  </div>
+
+
                     <!--Grid column-->
-                    <div class="col-lg-12 col-md-6">
+                    <div class="col-lg-6 col-md-6" style="margin-top:-80px;">
 
                         <!--Card-->
                         <div class="card card-cascade narrower mt-5">
 
-                            <!--Card image-->
 
 
-                            <div class="col-md-11 col-sm-9 py-2 card card-body bg-info align-self-center " style="margin-top:-30px; ">
-                                <h4 class="mb-2  text-center text-white"><i class="fas fa-home"></i> Menu</h4 >
-                            </div>
 
-                            <!--/Card image-->
-
-                            <!--Card content-->
-                            <div class="card-body card-body-cascade">
 
                                 <ul class="divided-list list-unstyled text-center">
-                                    <li><a href="{{ route("admin.organizacions.index") }}" > Mi organización</a></li>
-                                    <li><a href="{{ route("admin.home") }}">Dashboard</a></li>
+                                    <li><a href="{{ route("admin.organizacions.index") }}" > Mi organización</a>
+                                    </li>
+                                    <li><a href="{{ route("admin.home") }}">Dashboard</a>
+                                    </li>
+
                                     <li><a href="{{ route("admin.implementacions.index") }}"> Implementación</a>
                                     <div class="contenido_modificado" style="margin-right:20px;margin-top:10px; font-size:11pt;"><a><p class="text-primary"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Introducción</a></p></div>
                                     <div class="contenido_modificado" style="margin-left:55px;margin-top:10px; font-size:11pt;"><a><p class="text-primary"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Guía de Implementación</a></p></div>
                                     <div class="contenido_modificado" style="margin-left:33px;margin-top:10px; font-size:11pt;"><a><p class="text-primary"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Plan de Trabajo Base</a></p></div>
                                     <div class="contenido_modificado" style="margin-left:27px;margin-top:10px; font-size:11pt;"><a><p class="text-primary"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Consultoría en línea</a></p></div>
-                                    </li>
-                                    <li><a href="{{ route("admin.carpeta.index") }}"> Carpetas</a>
-                                    </li>
-                                    <li><a href="{{ route("admin.systemCalendar") }}" > Calendario</a></li>
-                                    <li><a href="{{ route("admin.glosarios.index") }}" > Glosario</a></li>
+                                  </li>
+
                                 </ul>
 
                             </div>
@@ -88,12 +90,36 @@
                         </div>
                         <!--/.Card-->
 
-                    </div>
-                    <!--Grid column-->
 
 
 
-                    <hr class="my-5">
+
+
+                        <!--Grid column-->
+                        <div class="col-lg-6 col-md-6"style="margin-top:-80px;">
+
+                            <!--Card-->
+                            <div class="card card-cascade narrower mt-5">
+
+                                <!--Card image-->
+
+
+
+
+                                <ul class="divided-list list-unstyled text-center">
+                                    <li><a href="{{ route("admin.carpeta.index") }}"> Documentos</a>
+                                    </li>
+                                    <li><a href="{{ route("admin.systemCalendar") }}">Calendario</a>
+                                    </li>
+                                    <li><a href="{{ route("admin.glosarios.index") }}">Glosario</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                          </div>
+
+                      </div>
+                      <!--Grid column-->
 
 
 
@@ -239,8 +265,8 @@
                                                 <li><a href="{{ route("admin.recursos.index") }}">Recursos</a></li>
                                                 <li><a href="{{ route("admin.competencia.index") }}">Competencias</a></li>
                                                 <li><a href="{{ route("admin.concientizacion-sgis.index") }}">Concientización SGSI</a></li>
-                                                <li><a href="{{ route("admin.material-sgsis.index") }}"><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Material SGSI</a></li>
-                                                <li><a href="{{ route("admin.material-iso-veinticientes.index") }}" ><i class="fas fa-circle" style="-webkit-transform:scale(.6);"></i> Material ISO 27001:2013</a></li>
+                                                <li><a href="{{ route("admin.material-sgsis.index") }}">Material SGSI</a></li>
+                                                <li><a href="{{ route("admin.material-iso-veinticientes.index") }}" > Material ISO 27001:2013</a></li>
                                                 <li><a href="{{ route("admin.comunicacion-sgis.index") }}">Comunicación SGSI</a></li>
                                                 <li><a href="{{ route("admin.politica-del-sgsi-soportes.index") }}">Política de SGSI</a></li>
                                                 <li><a href="{{ route("admin.control-accesos.index") }}">Control de Accesos</a></li>
@@ -397,7 +423,7 @@
 
 
                                 <!--Title-->
-                                <h4 class="text-info"><strong><i class="fas fa-globe text-info" style="margin-top:70px;margin-left:20px;"></i> ISO 22301</strong></h4>
+                                <h4 class="text-info"><strong><i class="fas fa-globe text-info" style="margin-top:30px;margin-left:20px;"></i> ISO 22301</strong></h4>
 
 
 
@@ -438,7 +464,7 @@
 
 
                                   <!--Title-->
-                                 <h4 class="text-info"><strong><i class="fas fa-globe text-info" style="margin-top:70px;margin-left:20px;"></i> ISO 31000</strong></h4>
+                                 <h4 class="text-info"><strong><i class="fas fa-globe text-info" style="margin-left:20px;"></i> ISO 31000</strong></h4>
 
 
 
