@@ -76,9 +76,10 @@
                             @endif
                             <a class="btn btn-link px-0" href="{{ route('register') }}" style="float: left;">
                                 {{ trans('global.register') }}
-                            </a>
-                             <a class="btn btn-link px-0" href="{{ route('register') }}" style="float: left;">
-                                {{ trans('global.register') }}
+                            </a> 
+                            <p>&nbsp;</p>
+                             <a class="btn btn-link px-0" style="float: left;" href="https://silent4business.com/aviso-de-privacidad/" target="_blank">
+                                Aviso de privacidad 
                             </a>
                         </div>
                     </div>
