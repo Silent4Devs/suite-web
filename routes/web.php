@@ -566,4 +566,4 @@ Route::view('sitemap', 'admin.sitemap.index');
 Route::view('admin/gantt', 'admin.gantt.index');
 
 
-URL::forceScheme('https');
+//URL::forceScheme('https');
