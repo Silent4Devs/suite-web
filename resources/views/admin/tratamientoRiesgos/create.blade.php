@@ -1,15 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.tratamientoRiesgo.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
+         <h3 class="mb-1  text-center text-white">
+        {{ trans('global.create') }} {{ trans('cruds.tratamientoRiesgo.title_singular') }}</h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.tratamiento-riesgos.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.tratamiento-riesgos.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="nivelriesgo">{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgo') }}</label>
                 <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}" type="text" name="nivelriesgo" id="nivelriesgo" value="{{ old('nivelriesgo', '') }}">
                 @if($errors->has('nivelriesgo'))
@@ -19,7 +20,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="control_id">{{ trans('cruds.tratamientoRiesgo.fields.control') }}</label>
                 <select class="form-control select2 {{ $errors->has('control') ? 'is-invalid' : '' }}" name="control_id" id="control_id">
                     @foreach($controls as $id => $control)
@@ -33,7 +34,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.control_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="acciones">{{ trans('cruds.tratamientoRiesgo.fields.acciones') }}</label>
                 <textarea class="form-control {{ $errors->has('acciones') ? 'is-invalid' : '' }}" name="acciones" id="acciones">{{ old('acciones') }}</textarea>
                 @if($errors->has('acciones'))
@@ -43,7 +44,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.acciones_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="responsable_id">{{ trans('cruds.tratamientoRiesgo.fields.responsable') }}</label>
                 <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}" name="responsable_id" id="responsable_id">
                     @foreach($responsables as $id => $responsable)
@@ -57,7 +58,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.responsable_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="fechacompromiso">{{ trans('cruds.tratamientoRiesgo.fields.fechacompromiso') }}</label>
                 <input class="form-control date {{ $errors->has('fechacompromiso') ? 'is-invalid' : '' }}" type="text" name="fechacompromiso" id="fechacompromiso" value="{{ old('fechacompromiso') }}">
                 @if($errors->has('fechacompromiso'))
@@ -67,7 +68,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.fechacompromiso_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>{{ trans('cruds.tratamientoRiesgo.fields.prioridad') }}</label>
                 <select class="form-control {{ $errors->has('prioridad') ? 'is-invalid' : '' }}" name="prioridad" id="prioridad">
                     <option value disabled {{ old('prioridad', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -82,7 +83,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.prioridad_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="estatus">{{ trans('cruds.tratamientoRiesgo.fields.estatus') }}</label>
                 <input class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" type="text" name="estatus" id="estatus" value="{{ old('estatus', '') }}">
                 @if($errors->has('estatus'))
@@ -92,7 +93,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.estatus_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="probabilidad">{{ trans('cruds.tratamientoRiesgo.fields.probabilidad') }}</label>
                 <input class="form-control {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}" type="text" name="probabilidad" id="probabilidad" value="{{ old('probabilidad', '') }}">
                 @if($errors->has('probabilidad'))
@@ -102,7 +103,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.probabilidad_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="impacto">{{ trans('cruds.tratamientoRiesgo.fields.impacto') }}</label>
                 <input class="form-control {{ $errors->has('impacto') ? 'is-invalid' : '' }}" type="text" name="impacto" id="impacto" value="{{ old('impacto', '') }}">
                 @if($errors->has('impacto'))
@@ -112,7 +113,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.impacto_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="nivelriesgoresidual">{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgoresidual') }}</label>
                 <input class="form-control {{ $errors->has('nivelriesgoresidual') ? 'is-invalid' : '' }}" type="text" name="nivelriesgoresidual" id="nivelriesgoresidual" value="{{ old('nivelriesgoresidual', '') }}">
                 @if($errors->has('nivelriesgoresidual'))
@@ -122,7 +123,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgoresidual_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

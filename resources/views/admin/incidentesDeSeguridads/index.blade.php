@@ -1,17 +1,20 @@
 @extends('layouts.admin')
 @section('content')
 @can('incidentes_de_seguridad_create')
-    <div style="margin-bottom: 10px;" class="row">
+    
+@endcan
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
+         <h3 class="mb-1  text-center text-white">
+        {{ trans('cruds.incidentesDeSeguridad.title_singular') }} {{ trans('global.list') }}
+    </div>
+
+    <div style="margin-bottom: 10px;" class="row ml-4">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.incidentes-de-seguridads.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.incidentesDeSeguridad.title_singular') }}
             </a>
         </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.incidentesDeSeguridad.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">

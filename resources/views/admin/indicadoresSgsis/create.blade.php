@@ -1,15 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.indicadoresSgsi.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
+         <h3 class="mb-1  text-center text-white">
+        {{ trans('global.create') }} {{ trans('cruds.indicadoresSgsi.title_singular') }}</h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.indicadores-sgsis.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.indicadores-sgsis.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label class="required" for="control">{{ trans('cruds.indicadoresSgsi.fields.control') }}</label>
                 <input class="form-control {{ $errors->has('control') ? 'is-invalid' : '' }}" type="text" name="control" id="control" value="{{ old('control', '') }}" required>
                 @if($errors->has('control'))
@@ -19,7 +20,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.control_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="titulo">{{ trans('cruds.indicadoresSgsi.fields.titulo') }}</label>
                 <input class="form-control {{ $errors->has('titulo') ? 'is-invalid' : '' }}" type="text" name="titulo" id="titulo" value="{{ old('titulo', '') }}">
                 @if($errors->has('titulo'))
@@ -29,7 +30,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.titulo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="responsable_id">{{ trans('cruds.indicadoresSgsi.fields.responsable') }}</label>
                 <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}" name="responsable_id" id="responsable_id">
                     @foreach($responsables as $id => $responsable)
@@ -43,7 +44,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.responsable_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="formula">{{ trans('cruds.indicadoresSgsi.fields.formula') }}</label>
                 <textarea class="form-control {{ $errors->has('formula') ? 'is-invalid' : '' }}" name="formula" id="formula">{{ old('formula') }}</textarea>
                 @if($errors->has('formula'))
@@ -53,7 +54,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.formula_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>{{ trans('cruds.indicadoresSgsi.fields.frecuencia') }}</label>
                 <select class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}" name="frecuencia" id="frecuencia">
                     <option value disabled {{ old('frecuencia', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -68,7 +69,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.frecuencia_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>{{ trans('cruds.indicadoresSgsi.fields.unidadmedida') }}</label>
                 <select class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" name="unidadmedida" id="unidadmedida">
                     <option value disabled {{ old('unidadmedida', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -83,7 +84,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.unidadmedida_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="meta">{{ trans('cruds.indicadoresSgsi.fields.meta') }}</label>
                 <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" type="text" name="meta" id="meta" value="{{ old('meta', '') }}">
                 @if($errors->has('meta'))
@@ -93,7 +94,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.meta_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>{{ trans('cruds.indicadoresSgsi.fields.semaforo') }}</label>
                 <select class="form-control {{ $errors->has('semaforo') ? 'is-invalid' : '' }}" name="semaforo" id="semaforo">
                     <option value disabled {{ old('semaforo', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -108,7 +109,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.semaforo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="enero">{{ trans('cruds.indicadoresSgsi.fields.enero') }}</label>
                 <input class="form-control {{ $errors->has('enero') ? 'is-invalid' : '' }}" type="number" name="enero" id="enero" value="{{ old('enero', '') }}" step="0.01" max="100">
                 @if($errors->has('enero'))
@@ -118,7 +119,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.enero_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="febrero">{{ trans('cruds.indicadoresSgsi.fields.febrero') }}</label>
                 <input class="form-control {{ $errors->has('febrero') ? 'is-invalid' : '' }}" type="number" name="febrero" id="febrero" value="{{ old('febrero', '') }}" step="0.01" max="100">
                 @if($errors->has('febrero'))
@@ -128,7 +129,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.febrero_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="marzo">{{ trans('cruds.indicadoresSgsi.fields.marzo') }}</label>
                 <input class="form-control {{ $errors->has('marzo') ? 'is-invalid' : '' }}" type="number" name="marzo" id="marzo" value="{{ old('marzo', '') }}" step="0.01" max="100">
                 @if($errors->has('marzo'))
@@ -138,7 +139,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.marzo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="abril">{{ trans('cruds.indicadoresSgsi.fields.abril') }}</label>
                 <input class="form-control {{ $errors->has('abril') ? 'is-invalid' : '' }}" type="number" name="abril" id="abril" value="{{ old('abril', '') }}" step="0.01" max="100">
                 @if($errors->has('abril'))
@@ -148,7 +149,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.abril_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="mayo">{{ trans('cruds.indicadoresSgsi.fields.mayo') }}</label>
                 <input class="form-control {{ $errors->has('mayo') ? 'is-invalid' : '' }}" type="number" name="mayo" id="mayo" value="{{ old('mayo', '') }}" step="0.01" max="100">
                 @if($errors->has('mayo'))
@@ -158,7 +159,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.mayo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="junio">{{ trans('cruds.indicadoresSgsi.fields.junio') }}</label>
                 <input class="form-control {{ $errors->has('junio') ? 'is-invalid' : '' }}" type="number" name="junio" id="junio" value="{{ old('junio', '') }}" step="0.01" max="100">
                 @if($errors->has('junio'))
@@ -168,7 +169,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.junio_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="julio">{{ trans('cruds.indicadoresSgsi.fields.julio') }}</label>
                 <input class="form-control {{ $errors->has('julio') ? 'is-invalid' : '' }}" type="number" name="julio" id="julio" value="{{ old('julio', '') }}" step="0.01" max="100">
                 @if($errors->has('julio'))
@@ -178,7 +179,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.julio_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="agosto">{{ trans('cruds.indicadoresSgsi.fields.agosto') }}</label>
                 <input class="form-control {{ $errors->has('agosto') ? 'is-invalid' : '' }}" type="number" name="agosto" id="agosto" value="{{ old('agosto', '') }}" step="0.01" max="100">
                 @if($errors->has('agosto'))
@@ -188,7 +189,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.agosto_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="septiembre">{{ trans('cruds.indicadoresSgsi.fields.septiembre') }}</label>
                 <input class="form-control {{ $errors->has('septiembre') ? 'is-invalid' : '' }}" type="number" name="septiembre" id="septiembre" value="{{ old('septiembre', '') }}" step="0.01" max="100">
                 @if($errors->has('septiembre'))
@@ -198,7 +199,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.septiembre_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="octubre">{{ trans('cruds.indicadoresSgsi.fields.octubre') }}</label>
                 <input class="form-control {{ $errors->has('octubre') ? 'is-invalid' : '' }}" type="number" name="octubre" id="octubre" value="{{ old('octubre', '') }}" step="0.01" max="100">
                 @if($errors->has('octubre'))
@@ -208,7 +209,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.octubre_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="noviembre">{{ trans('cruds.indicadoresSgsi.fields.noviembre') }}</label>
                 <input class="form-control {{ $errors->has('noviembre') ? 'is-invalid' : '' }}" type="number" name="noviembre" id="noviembre" value="{{ old('noviembre', '') }}" step="0.01" max="100">
                 @if($errors->has('noviembre'))
@@ -218,7 +219,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.noviembre_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="diciembre">{{ trans('cruds.indicadoresSgsi.fields.diciembre') }}</label>
                 <input class="form-control {{ $errors->has('diciembre') ? 'is-invalid' : '' }}" type="number" name="diciembre" id="diciembre" value="{{ old('diciembre', '') }}" step="0.01" max="100">
                 @if($errors->has('diciembre'))
@@ -228,7 +229,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.diciembre_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="anio">{{ trans('cruds.indicadoresSgsi.fields.anio') }}</label>
                 <input class="form-control {{ $errors->has('anio') ? 'is-invalid' : '' }}" type="text" name="anio" id="anio" value="{{ old('anio', '') }}">
                 @if($errors->has('anio'))
@@ -238,7 +239,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.anio_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

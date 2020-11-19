@@ -1,17 +1,20 @@
 @extends('layouts.admin')
 @section('content')
 @can('indicadores_sgsi_create')
-    <div style="margin-bottom: 10px;" class="row">
+    
+@endcan
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
+         <h3 class="mb-1  text-center text-white"><strong>
+        {{ trans('cruds.indicadoresSgsi.title_singular') }} {{ trans('global.list') }}</strong></h3>
+    </div>
+
+    <div style="margin-bottom: 10px;" class="row ml-4">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.indicadores-sgsis.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.indicadoresSgsi.title_singular') }}
             </a>
         </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.indicadoresSgsi.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">

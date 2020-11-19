@@ -1,15 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.planAuditorium.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
+         <h3 class="mb-1  text-center text-white">
+        {{ trans('global.create') }} {{ trans('cruds.planAuditorium.title_singular') }} </h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.plan-auditoria.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.plan-auditoria.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="fecha_id">{{ trans('cruds.planAuditorium.fields.fecha') }}</label>
                 <select class="form-control select2 {{ $errors->has('fecha') ? 'is-invalid' : '' }}" name="fecha_id" id="fecha_id">
                     @foreach($fechas as $id => $fecha)
@@ -23,7 +24,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.fecha_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="objetivo">{{ trans('cruds.planAuditorium.fields.objetivo') }}</label>
                 <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo" id="objetivo">{{ old('objetivo') }}</textarea>
                 @if($errors->has('objetivo'))
@@ -33,7 +34,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.objetivo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="alcance">{{ trans('cruds.planAuditorium.fields.alcance') }}</label>
                 <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}" name="alcance" id="alcance">{{ old('alcance') }}</textarea>
                 @if($errors->has('alcance'))
@@ -43,7 +44,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.alcance_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="criterios">{{ trans('cruds.planAuditorium.fields.criterios') }}</label>
                 <textarea class="form-control {{ $errors->has('criterios') ? 'is-invalid' : '' }}" name="criterios" id="criterios">{{ old('criterios') }}</textarea>
                 @if($errors->has('criterios'))
@@ -53,7 +54,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.criterios_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="documentoauditar">{{ trans('cruds.planAuditorium.fields.documentoauditar') }}</label>
                 <textarea class="form-control {{ $errors->has('documentoauditar') ? 'is-invalid' : '' }}" name="documentoauditar" id="documentoauditar">{{ old('documentoauditar') }}</textarea>
                 @if($errors->has('documentoauditar'))
@@ -63,7 +64,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.documentoauditar_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="equipoauditor">{{ trans('cruds.planAuditorium.fields.equipoauditor') }}</label>
                 <input class="form-control {{ $errors->has('equipoauditor') ? 'is-invalid' : '' }}" type="text" name="equipoauditor" id="equipoauditor" value="{{ old('equipoauditor', '') }}">
                 @if($errors->has('equipoauditor'))
@@ -73,7 +74,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.equipoauditor_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="auditados">{{ trans('cruds.planAuditorium.fields.auditados') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -91,7 +92,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.auditados_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label for="descripcion">{{ trans('cruds.planAuditorium.fields.descripcion') }}</label>
                 <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
                 @if($errors->has('descripcion'))
@@ -101,7 +102,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.descripcion_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
