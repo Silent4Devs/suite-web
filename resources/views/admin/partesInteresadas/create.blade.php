@@ -9,6 +9,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.partes-interesadas.store") }}" enctype="multipart/form-data" class="row">
             @csrf
+            {{ Form::hidden('pdf-value', 'PartesInt')}}
             <div class="form-group col-md-6">
                 <label class="required" for="parteinteresada">{{ trans('cruds.partesInteresada.fields.parteinteresada') }}</label>
                 <input class="form-control {{ $errors->has('parteinteresada') ? 'is-invalid' : '' }}" type="text" name="parteinteresada" id="parteinteresada" value="{{ old('parteinteresada', '') }}" required>

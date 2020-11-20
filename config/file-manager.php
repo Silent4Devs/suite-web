@@ -32,14 +32,14 @@ return [
      * (from config/filesystems)
      */
     //'diskList' => ['public'],
-    'diskList'  => ['img', 'public'],
+    'diskList'  => ['Documentacion'],
 
     /**
      * Default disk for left manager
      *
      * null - auto select the first disk in the disk list
      */
-    'leftDisk' => 'public',
+    'leftDisk' => null,
 
     /**
      * Default disk for right manager
@@ -68,7 +68,7 @@ return [
      * set null, 0 - if you don't need cache (default)
      * if you want use cache - set the number of minutes for which the value should be cached
      */
-    'cache' => null,
+    'cache' => 60,
 
     /**
      * File manager modules configuration
@@ -96,7 +96,7 @@ return [
     /**
      * Show / Hide system files and folders
      */
-    'hiddenFiles' => true,
+    'hiddenFiles' => false,
 
     /***************************************************************************
      * Middleware
@@ -111,7 +111,7 @@ return [
      *
      * default - false(OFF)
      */
-    'acl' => false,
+    'acl' => true,
 
     /**
      * Hide files and folders from file-manager if user doesn't have access
@@ -134,7 +134,7 @@ return [
      *
      * null or value in minutes
      */
-    'aclRulesCache' => null,
+    'aclRulesCache' => 60,
 
     //********* Default configuration for DefaultConfigRepository END **********
 
@@ -158,8 +158,10 @@ return [
      * access: 0 - deny, 1 - read, 2 - read/write
      */
     'aclRules' => [
+        // null - for not authenticated users
         null => [
             //['disk' => 'public', 'path' => '/', 'access' => 2],
+            ['disk' => 'Documentacion', 'path' => '/*.gitignore', 'access' => 0],
         ],
         1 => [
             //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],
