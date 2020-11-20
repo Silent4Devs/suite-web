@@ -7,7 +7,7 @@
 		body{
 			margin: 0;
 
-			background-image: url(img/errors/fondo.png);
+			background-image: url({{ asset('img/errors/fondo.png') }});
 			background-repeat: no-repeat;
 			background-position: center;
 			background-size: cover;
@@ -44,7 +44,7 @@
 			width: 200px;
 			height: 250px;
 
-			background-image: url(img/errors/credencial.png);
+			background-image: url({{ asset('img/errors/credencial.png') }});
 			background-repeat: no-repeat;
 			background-size: contain;
 			background-position: center;
@@ -134,7 +134,7 @@
 				@yield('message')
 			</div>
 			<div class="caja">
-				<a href="{{ app('router')->has('home') ? route('home') : url('/') }}">
+				<a href="{{ app('router')->has('home') ? route('home') : url('/admin') }}">
 					<div class="boton">Ok</div>
 				</a>
 			</div>
