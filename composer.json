@@ -19,6 +19,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/dusk": "^6.6",
         "laravel/framework": "^8.0",
+        "laracasts/flash": "^3.0",
         "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",

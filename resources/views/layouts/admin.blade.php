@@ -215,6 +215,9 @@
 <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script>
+    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+</script>
+<script>
     $(function () {
         let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
         let csvButtonTrans = '{{ trans('global.datatables.csv') }}'
