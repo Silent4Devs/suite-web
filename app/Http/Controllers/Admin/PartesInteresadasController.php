@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPartesInteresadaRequest;
 use App\Http\Requests\StorePartesInteresadaRequest;
@@ -27,9 +28,9 @@ class PartesInteresadasController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'partes_interesada_show';
-                $editGate      = 'partes_interesada_edit';
-                $deleteGate    = 'partes_interesada_delete';
+                $viewGate = 'partes_interesada_show';
+                $editGate = 'partes_interesada_edit';
+                $deleteGate = 'partes_interesada_delete';
                 $crudRoutePart = 'partes-interesadas';
 
                 return view('partials.datatablesActions', compact(
@@ -74,8 +75,12 @@ class PartesInteresadasController extends Controller
     public function store(StorePartesInteresadaRequest $request)
     {
         $partesInteresada = PartesInteresada::create($request->all());
-
+        //dd($request['pdf-value'], $request->all());
+        $generar = new GeneratePdf();
+        //$generar->Generate($request['pdf-value'], $request);
+        $generar->Generate($request['pdf-value']);
         return redirect()->route('admin.partes-interesadas.index');
+
     }
 
     public function edit(PartesInteresada $partesInteresada)

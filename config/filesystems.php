@@ -48,6 +48,21 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'Documentacion' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'private',
+
+        ],
+
+        'Iso27001' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/Normas/ISO27001'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'private',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
