@@ -3,7 +3,6 @@
 /public/storage
 /storage/framework
 /vendor
-/public/data
 .idea
 .env
 .env.backup
