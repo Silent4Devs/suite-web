@@ -36,7 +36,8 @@
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white text-center">
+                    <div class="card-header bg-primary text-white" align="justify">
+
                         Clausula
                     </div>
 
@@ -47,16 +48,17 @@
                     </li>
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-tres" data-toggle="tab" href="#informacion-tres" role="tab" aria-controls="informacion-tres" aria-selected="false">Contexto interno<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-tres" data-toggle="tab" href="#informacion-tres" role="tab" aria-controls="informacion-tres" aria-selected="false">4.1 Entendimiento de<br> la Organización<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                    </li>
+                    
+                    <li class="list-group-item nav-item">
+                        <a class="nav-link" id="informacion-tab-cinco" data-toggle="tab" href="#informacion-cinco" role="tab" aria-controls="informacion-cinco" aria-selected="false">4.2 Partes Interesadas<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-cuatro" data-toggle="tab" href="#informacion-cuatro" role="tab" aria-controls="informacion-cuatro" aria-selected="false">Contexto externo<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-seis" data-toggle="tab" href="#informacion-seis" role="tab" aria-controls="informacion-seis" aria-selected="false">4.3 Alcance del Sistema <br>de Gestión <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-cinco" data-toggle="tab" href="#informacion-cinco" role="tab" aria-controls="informacion-cinco" aria-selected="false">Partes interesadas<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
-                    </li>
-                    <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-seis" data-toggle="tab" href="#informacion-seis" role="tab" aria-controls="informacion-seis" aria-selected="false">Alcance del sistema de gestión <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-sgsi" data-toggle="tab" href="#informacion-sgsi" role="tab" aria-controls="informacion-sgsi" aria-selected="false">4.4 Sistema de Gestión <br>de Seguridad de la Información<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
                 </ul>
 
@@ -70,7 +72,8 @@
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white text-center">
+                            <div class="card-header bg-primary text-white" align="justify">
+
                                 El objetivo del SGSI es proteger los activos de información de la empresa para que pueda lograr los objetivos.
                             </div>
 
@@ -92,10 +95,12 @@
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-tres" role="tabpanel" aria-labelledby="informacion-tab-tres">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Los siguientes son ejemplos de áreas que se pueden considerar al evaluar problemas internos que pueden afectar en los riesgos del SGSI:
+                            <div class="card-header bg-primary text-white" align="justify">
+
+                               La organizacion debe determinar las cuestiones externas e internas que son pertinentes para su propósito y que afectan a su capacidad para lograr los resultados previstos de su sistema de gestión de seguridad de la información.
                             </div>
                             <div class="card-body ">
+                                <p align="justify">Los siguientes son ejemplos de áreas que se pueden considerar al evaluar problemas internos que pueden afectar en los riesgos del SGSI:</p>
                                 <p align="justify">• Nivel de Madurez</p>
                                 <p align="justify">• Cultura organizativa</p>
                                 <p align="justify">• Gestión</p>
@@ -115,7 +120,8 @@
                     <!--informacion-tres-->
                     <div class=" tab-pane fade" id="informacion-cuatro" role="tabpanel" aria-labelledby="informacion-tab-cuatro">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
+                            <div class="card-header bg-primary text-white" align="justify">
+
                                 Los siguientes son ejemplos de áreas que se pueden considerar al evaluar problemas externos que pueden afectar en los riesgos del SGSI:
                             </div>
                             <div class="card-body ">
@@ -132,8 +138,13 @@
                     </div>
                     <div class=" tab-pane fade" id="informacion-cinco" role="tabpanel" aria-labelledby="informacion-tab-cinco">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Partes interesadas:
+                            <div class="card-header bg-primary text-white" align="justify">
+
+                               
+                                La organización debe determinar: <br>a) Las partes interesadas que son pertinentes al Sistema de Gestión de Seguridad de la Información.<br>
+                                b) Los requisitos de estas partes interesadas pertinentes a seguridad de la información.
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">Una parte interesada es cualquier persona que pueda ser o se considere afectada por acciones u omisiones de la organización. A lo largo de todo el análisis de los problemas internos y externos, las partes interesadas permanecerán claras. Pueden incluir accionistas, propietarios, reguladores, clientes, empleados y competidores, y pueden extenderse al público y al medio ambiente, según la naturaleza del negocio. No es necesario que intente comprender o satisfacer todos los caprichos, pero determinarán qué necesidades y expectativas están relacionadas con el SGSI.</p>
@@ -149,8 +160,44 @@
                     <!--informacion-cinco-->
                     <div class=" tab-pane fade" id="informacion-seis" role="tabpanel" aria-labelledby="informacion-tab-cinco">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Alcance del sistema de gestión:
+                            <div class="card-header bg-primary text-white" align="justify">
+
+                                La empresa debe determinar los límites y la aplicabilidad del Sistema de Gestión de la Seguridad de la Información para establecer su alcance:
+
+                                Cuando se determina este alcance, la empresa debe considerar:
+
+                                a) Las cuestiones externas e internas referenciadas al numeral 4.1
+                                b) Los requisitos referidos en el numeral 4.2
+                                c) Las interfaces y dependencias entre las actividades realizadas por la empresa y la que realizan otras empresas
+
+                                El alcance debe estar disponible como información documentada.
+                            </div>
+                            <div class="card-body ">
+                                <p align="justify">• Para cumplir con esta norma, documentará el alcance del SGSI. El alcance generalmente describe:</p>
+                                <p align="justify">• Incluir (o no incluir) la restricción de uno o más sitios físicos;</p>
+                                <p align="justify">• Incluir (o excluir) restricciones de red físicas y lógicas;</p>
+                                <p align="justify">• Incluir (o excluir) el grupo de empleados internos y externos;</p>
+                                <p align="justify">• Incluir (o excluir) procesos, actividades o servicios internos y externos; y La interfaz crítica que está dentro de los límites del alcance.</p>
+
+                            </div>
+                            <div class="col-lg-9 col-md-6 col-sm-12" style="margin-left:75%">
+                                <a href="{{ route("admin.alcance-sgsis.index") }}" class="btn btn-info" role="button">Ejecutar</a>
+                            </div>
+                            <br>
+                        </div>
+                        <!--card-->
+                    </div>
+                    <!--informacion-seis-->
+
+                    <!--informacion-tan-sgsi-->
+                    <div class=" tab-pane fade" id="informacion-sgsi" role="tabpanel" aria-labelledby="informacion-sgsi">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white" align="justify">
+
+                               
+                               La empresa debe establecer, implantar, mantener y mejorar continuamente un Sistema de Gestión de Seguridad de la Información, según a los requisitos de la norma ISO 27001 2013.
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">• Para cumplir con esta norma, documentará el alcance del SGSI. El alcance generalmente describe:</p>
@@ -182,25 +229,24 @@
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white text-center">
+                    <div class="card-header bg-primary text-white" align="justify">
+
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-liderazgo" data-toggle="tab" href="#informacion-liderazgo" role="tab" aria-controls="informacion-liderazgo" aria-selected="false">Liderazgo
+                        <a class="nav-link" id="informacion-tab-liderazgo" data-toggle="tab" href="#informacion-liderazgo" role="tab" aria-controls="informacion-liderazgo" aria-selected="false">5.1 Liderazgo y Compromiso
                             <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-politicaseg" data-toggle="tab" href="#informacion-politicaseg" role="tab" aria-controls="informacion-politicaseg" aria-selected="false">Política de seguridad<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-politicaseg" data-toggle="tab" href="#informacion-politicaseg" role="tab" aria-controls="informacion-politicaseg" aria-selected="false">5.2 Política de Seguridad<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-rolesresp" data-toggle="tab" href="#informacion-rolesresp" role="tab" aria-controls="informacion-rolesresp" aria-selected="false">Roles y responsabilidades<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-rolesresp" data-toggle="tab" href="#informacion-rolesresp" role="tab" aria-controls="informacion-rolesresp" aria-selected="false">5.3 Roles y Responsabilidades<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
-                    <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-evidenciarlid" data-toggle="tab" href="#informacion-evidenciarlid" role="tab" aria-controls="informacion-evidenciarlid" aria-selected="false">Evidenciar el liderazgo<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
-                    </li>
+                   
                 </ul>
 
             </div>
@@ -213,8 +259,18 @@
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white text-center">
-                                Liderazgo
+                            <div class="card-header bg-primary text-white" align="justify">
+
+                                La alta dirección debe demostrar liderazgo y compromiso con respecto al Sistema de Gestión de Seguridad de la Información:
+
+<br>a) Asegurando que se establezcan la política de la seguridad de la información y los objetivos de la seguridad de la información, y que estos sean compatibles con la dirección estratégica de la empresa
+<br>b) Asegurando la integración de los requisitos del Sistema de Gestión de Seguridad de la Información en los procesos de la empresa
+<br>c) Asegura que los recursos necesarios para el Sistema de Gestión de Seguridad de la Información se encuentren disponibles
+<br>d) Combinar la importancia de una gestión de la seguridad de la información eficaz y de la conformidad con los requisitos del Sistema de Gestión de Seguridad de la Información
+<br>e) Se debe asegurar de que el Sistema de Gestión de la Seguridad de la Información logre los resultados previstos
+<br>f) Dirigiendo y apoyando a las personas, para contribuir a la eficiencia del Sistema de Gestión de Seguridad de la Información
+<br>g) Promover la mejora continua
+<br>h) Apoyar otros roles pertinentes de la dirección, es necesario demostrar el liderazgo aplicado a sus áreas de responsabilidad
                             </div>
 
 
@@ -235,8 +291,18 @@
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-politicaseg" role="tabpanel" aria-labelledby="informacion-tab-politicaseg">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Política de seguridad:
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La alta dirección debe establecer una política de la seguridad de la información que:a) Sea adecuada al propósito de la organización
+<br>b) Incluya objetivos de seguridad de la información o proporcione el marco de referencia para el establecimiento de los objetivos de la seguridad de la información
+<br>c) Incluye el compromiso de cumplir con los requisitos aplicables que se relacionan con la seguridad de la información
+<br>d) Incluya el compromiso de mejora continua del Sistema de Gestión de Seguridad de la Información
+La política de seguridad de la información debe:
+<br>a) Estar disponible como información documentada
+<br>b) Comunicarse dentro de la empresa
+<br>c) Estar disponible para las partes interesada
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">Una responsabilidad importante de un líder es establecer y documentar una política de seguridad de la información consistente con los principales objetivos de la organización. Incluirá metas o un marco para establecerlas. Para demostrar que cumple con los requisitos del entorno de la organización y las partes interesadas clave, se recomienda que consulte o incluya un resumen de los principales problemas y requisitos que se gestionarán al igual que incluirán un compromiso para:</p>
@@ -250,8 +316,13 @@
                     <!--informacion-tres-->
                     <div class=" tab-pane fade" id="informacion-rolesresp" role="tabpanel" aria-labelledby="informacion-tab-rolesresp">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Roles y responsabilidades
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La alta dirección debe asegurarse de que las responsabilidades y autoridades para los roles pertinentes a la seguridad de la información sean asignados y comunicados.La alta dirección debe asignar la responsabilidad y autoridad para:
+<br>a) Asegurarse de que el Sistema de Gestión de Seguridad de la Información sea conforme a los requisitos de la norma ISO 27001
+<br>b) Informar a la alta dirección sobre el desempeño del Sistema de Gestión de Seguridad de la Información
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">Para que las actividades de seguridad de la información formen parte de las actividades diarias de una organización, las responsabilidades estarán claramente definidas y comunicadas. Aunque no existe un requisito en el estándar para el nombramiento de un representante de seguridad de la información, para algunas organizaciones, puede ser útil designar a una persona para que lidere un equipo de seguridad de la información responsable de coordinar la capacitación, el control y el control. Informar el desempeño del SGSI a la gerencia. Esta persona puede ser la responsable de la protección de datos o los servicios de TI. Sin embargo, para funcionar con eficacia, idealmente sería parte de la gerencia con conocimientos de gestión de seguridad de la información.</p>
@@ -259,22 +330,7 @@
                         </div>
                         <!--card-->
                     </div>
-                    <div class=" tab-pane fade" id="informacion-evidenciarlid" role="tabpanel" aria-labelledby="informacion-tab-evidenciarlid">
-                        <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Evidenciar el liderazgo
-                            </div>
-                            <div class="card-body ">
-                                <p align="justify">Los gerentes serán aquellos que marquen la dirección estratégica y aprueben la asignación de recursos organizacionales dentro del SGSI. Dependiendo de la estructura de la organización, estas pueden ser o no el equipo directivo. Normalmente, los auditores evaluarán las habilidades de liderazgo entrevistando a uno o más miembros de la gerencia y evaluando el nivel de participación en: </p>
-                                <p align="justify">• Evaluación de riesgos y oportunidades;</p>
-                                <p align="justify">• Desarrollar y comunicar políticas;</p>
-                                <p align="justify">• Establecimiento y comunicación de metas;</p>
-                                <p align="justify">• Revisar y comunicar el rendimiento del sistema;</p>
-                                <p align="justify">• Asignar los recursos y responsabilidades adecuados.</p>
-                            </div>
-                        </div>
-                        <!--card-->
-                    </div>
+                    
                     <!--informacion-cinco-->
 
 
@@ -292,22 +348,21 @@
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white text-center">
+                    <div class="card-header bg-primary text-white" align="justify">
+
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-evaluacionriesg" data-toggle="tab" href="#informacion-evaluacionriesg" role="tab" aria-controls="informacion-evaluacionriesg" aria-selected="false">Evaluación de riesgos
+                        <a class="nav-link" id="informacion-tab-evaluacionriesg" data-toggle="tab" href="#informacion-evaluacionriesg" role="tab" aria-controls="informacion-evaluacionriesg" aria-selected="false">6.1 Riesgos y Oportunidades
                             <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-tratamientoriesg" data-toggle="tab" href="#informacion-tratamientoriesg" role="tab" aria-controls="informacion-tratamientoriesg" aria-selected="false">Tratamiento de riesgos<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-tratamientoriesg" data-toggle="tab" href="#informacion-tratamientoriesg" role="tab" aria-controls="informacion-tratamientoriesg" aria-selected="false">6.2 Objetivos de Seguridad<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
-                    <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-objetivosseg" data-toggle="tab" href="#informacion-objetivosseg" role="tab" aria-controls="informacion-objetivosseg" aria-selected="false">Objetivos de seguridad de la información y planificación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
-                    </li>
+                   
 
                 </ul>
 
@@ -321,8 +376,13 @@
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white text-center">
-                                Evaluación de riesgos
+                            <div class="card-header bg-primary text-white" align="justify">
+
+6.1.1 GeneralidadesAl planificar el sistema de Gestión de Seguridad de la Información, la empresa debe considerar las cuestiones referidas en el numeral 4.1 y los requisitos a que se hace referencia en el numeral 4.2 y determinar los riesgos y oportunidades que es necesario tratar.
+<br>6.1.2 Valoración de riesgos de la seguridad de la informaciónLa empresa debe definir y aplicar un proceso de valoración de riesgos de la seguridad de la información.
+<br>6.1.3 Tratamiento de riesgos de la seguridad de la informaciónLa empresa debe definir y aplicar un proceso de tratamiento de riesgos de la seguridad de la información.La empresa debe conservar información documentada sobre el proceso de tratamiento de riesgos de la seguridad de la información.
+
+
                             </div>
 
 
@@ -341,8 +401,21 @@
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-tratamientoriesg" role="tabpanel" aria-labelledby="informacion-tab-tratamientoriesg">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Tratamiento de riesgos
+                            <div class="card-header bg-primary text-white" align="justify">
+
+                          
+La empresa debe establecer los objetivos de seguridad de la información en las funciones y niveles pertinentes.Los objetivos de seguridad de la información:
+<br>a) Ser coherentes con la política de seguridad de la información
+<br>b) Ser medibles
+<br>c) Tener en cuenta los requisitos de la seguridad de la información aplicada y los resultados de la valoración y el tratamiento de los riesgos
+<br>d) Ser comunicados
+<br>e) Ser actualizados según sea necesarioLa empresa debe conservar información documentada sobre los objetivos de la seguridad de la información. Cuando se hace la planificación para conseguir los objetivos de seguridad de la información, la empresa debe determinar:a) Lo que se va a hacer
+<br>b) Los recursos que se requieren
+<br>c) Quién será la persona responsable
+<br>d) Cuando se finalizará
+<br>e) Como se realizará la evaluación de resultados
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">Para cada riesgo identificado en la evaluación de riesgos, aplicará criterios para determinar si:</p>
@@ -362,31 +435,7 @@
                         <!--card-->
                     </div>
                     <!--informacion-tres-->
-                    <div class=" tab-pane fade" id="informacion-objetivosseg" role="tabpanel" aria-labelledby="informacion-tab-objetivosseg">
-                        <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Objetivos de seguridad de la información y planificación
-                            </div>
-                            <div class="card-body ">
-                                <p align="justify">En los niveles relevantes, se necesitará tener objetivos documentados y relacionados con la seguridad de la información. Estos pueden estar en un nivel superior y aplicarse en toda la organización o solo a nivel departamental.
-                                    Cada objetivo establecido será:
-                                </p>
-                                <p align="justify">• Medible.</p>
-                                <p align="justify">• Alineado a la política del SGSI.</p>
-                                <p align="justify">• Considerado en los requisitos a nivel de seguridad de la información.</p>
-                                <p align="justify">• Considerado en los resultados de la evaluación de riesgos y de las actividades del tratamiento de riesgos.</p>
-                                <p align="justify">Los objetivos más importantes para la seguridad de la información incluyen:</p>
-                                <p align="justify">• No exceder la frecuencia definida para ciertos tipos de incidentes de seguridad de la información.</p>
-                                <p align="justify">• Logre un cumplimiento cuantificable con el control de seguridad de la información.</p>
-                                <p align="justify">• Proporcionar disponibilidad definida en los servicios de información.</p>
-                                <p align="justify">• No exceder el número de errores de datos medibles.</p>
-                                <p align="justify">• Mejorar los recursos disponibles mediante selección, capacitación o adquisición.</p>
-                                <p align="justify">• Implementar nuevas medidas de control.</p>
-                                <p align="justify">• Cumplimiento las normas relativas a la seguridad de la información.</p>
-                            </div>
-                        </div>
-                        <!--card-->
-                    </div>
+                    
 
                     <!--informacion-cinco-->
 
@@ -404,27 +453,28 @@
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white text-center">
+                    <div class="card-header bg-primary text-white" align="justify">
+
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-clausoporte" data-toggle="tab" href="#informacion-clausoporte" role="tab" aria-controls="informacion-clausoporte" aria-selected="false">Soporte
+                        <a class="nav-link" id="informacion-tab-clausoporte" data-toggle="tab" href="#informacion-clausoporte" role="tab" aria-controls="informacion-clausoporte" aria-selected="false">7.1 Recursos
                             <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-competencia" data-toggle="tab" href="#informacion-competencia" role="tab" aria-controls="informacion-competencia" aria-selected="false">Competencia<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-competencia" data-toggle="tab" href="#informacion-competencia" role="tab" aria-controls="informacion-competencia" aria-selected="false">7.2 Competencia<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-concientizacion" data-toggle="tab" href="#informacion-concientizacion" role="tab" aria-controls="informacion-concientizacion" aria-selected="false">Concienciación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-concientizacion" data-toggle="tab" href="#informacion-concientizacion" role="tab" aria-controls="informacion-concientizacion" aria-selected="false">7.3 Concienciación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-comunicacionsiet" data-toggle="tab" href="#informacion-comunicacionsiet" role="tab" aria-controls="informacion-comunicacionsiet" aria-selected="false">Comunicación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-comunicacionsiet" data-toggle="tab" href="#informacion-comunicacionsiet" role="tab" aria-controls="informacion-comunicacionsiet" aria-selected="false">7.4 Comunicación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-informaciondoc" data-toggle="tab" href="#informacion-informaciondoc" role="tab" aria-controls="informacion-informaciondoc" aria-selected="false">Información documentada<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-informaciondoc" data-toggle="tab" href="#informacion-informaciondoc" role="tab" aria-controls="informacion-informaciondoc" aria-selected="false">7.5 Información documentada<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
 
                 </ul>
@@ -439,8 +489,11 @@
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white text-center">
-                                Soporte
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La organización debe determinar y proporcionar los recursos necesarios para el establecimiento, implementación, mantenimiento y mejora continua del Sistema de Gestión de Seguridad de la Información.
+
+
                             </div>
 
 
@@ -456,8 +509,15 @@
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-competencia" role="tabpanel" aria-labelledby="informacion-tab-competencia">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Competencia
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La organización debe:
+<br>a) Determinar la competencia necesaria de las personas que realizan, bajo su control, un trabajo que afecta su desempeño de la seguridad de la información
+<br>b) Asegurarse de que dichas personas sean competentes, basándose en la educación, formación o experiencia adecuadas
+<br>c) Cuando se aplicable, tomar acciones para adquirir la competencia necesaria y evaluar la eficacia de las acciones
+<br>d) Conservar la información documentada apropiada, como evidencia de la competencia
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">La implementación de medidas efectivas de control de seguridad de la información depende del conocimiento y las habilidades en las siguientes áreas: Los empleados, proveedores y contratistas. Para garantizar una base suficiente de conocimientos y habilidades, deben:</p>
@@ -474,8 +534,14 @@
                     <!--informacion-tres-->
                     <div class=" tab-pane fade" id="informacion-concientizacion" role="tabpanel" aria-labelledby="informacion-tab-concientizacion">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Concienciación
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La persona que realizan el trabajo bajo el control de la empresa deben tomar conciencia de:
+<br>a) La política de seguridad de la información
+<br>b) Su contribución a la eficacia del Sistema de Gestión de Seguridad de la Información incluyendo los beneficios de una mejora del desempeño de la seguridad de la información
+<br>c) Las implicaciones dela no conformidad con los requisitos del Sistema de Gestión de Seguridad de la Información
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">Además de garantizar las capacidades del personal clave en términos de seguridad de la información, los empleados, proveedores y contratistas también comprenderán los elementos del SGSI. Esto es esencial para establecer una cultura de apoyo dentro de la organización. Todos los empleados, proveedores y contratistas considerarán lo siguiente:</p>
@@ -490,8 +556,16 @@
                     <!--informacion-cuatro-->
                     <div class=" tab-pane fade" id="informacion-comunicacionsiet" role="tabpanel" aria-labelledby="informacion-tab-comunicacionsiet">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Comunicación
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La organización debe determinar las necesidades de las comunicaciones internas y externas pertinentes al Sistema de Gestión de Seguridad de la Información, que incluyan:
+<br>a) El contenido de la comunicación
+<br>b) Cuando comunicar
+<br>c) A quien comunicar
+<br>d) Quien debe comunicar
+<br>e) Los procesos para llevar a cabo la comunicación
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">Para que los procesos del SGSI se ejecuten de forma eficaz, se asegurará de haber planificado y gestionado cuidadosamente las actividades de comunicación. La norma los especifica de manera concisa al exigirle que determine lo siguiente:</p>
@@ -507,8 +581,26 @@
                     <!--informacion-cinco-->
                     <div class=" tab-pane fade" id="informacion-informaciondoc" role="tabpanel" aria-labelledby="informacion-tab-informaciondoc">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Información documentada
+                            <div class="card-header bg-primary text-white" align="justify">
+
+7.5.1 GeneralidadesEl Sistema de Gestión de Seguridad de la Información de la empresa debe incluir:
+<br>a) La información documentada requerida por la norma ISO 27001
+<br>b) La información documentada que la empresa debe determinar cómo necesaria para la eficacia del Sistema de Gestión de Seguridad de la Información
+<br>7.5.2 Creación y actualizaciónCuando se crea y actualiza información documentada, la empresa debe asegurarse de que lo siguiente sea apropiado:
+<br>a) Identificar y describir
+<br>b) Formato y medio s de soporte
+c) Revisión y aprobación con respecto a la identidad y adecuación
+<br>7.5.3 Control de la información documentadaLa información documentada requerida por el Sistema de Gestión de Seguridad de la Información y por la norma ISO 27001 se debe controlar para asegurarse que:
+<br>a) Debe estar disponible y adecuada para su uso, donde y cuando se necesite
+<br>b) Tiene que estar protegida de forma adecuada
+<br>Para el control de la información documentada, la organización debe tratar las siguientes actividades según se aplique:
+<br>a) Distribución, acceso, recuperación y uso
+<br>b) Almacenamiento y preservación
+<br>c) Control de cambios
+<br>d) Retención y disposición
+<br>La información documentada de origen externo, que la empresa ha determinado que es necesario para la planificación y la operación del Sistema de Gestión de Seguridad de la Información, se debe identificar y controlar.
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">Para ser útil, la información documentada para implementar y mantener SGSI debe:</p>
@@ -542,21 +634,22 @@
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white text-center">
+                    <div class="card-header bg-primary text-white" align="justify">
+
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-clausoperacion" data-toggle="tab" href="#informacion-clausoperacion" role="tab" aria-controls="informacion-clausoperacion" aria-selected="false">Operación
+                        <a class="nav-link" id="informacion-tab-clausoperacion" data-toggle="tab" href="#informacion-clausoperacion" role="tab" aria-controls="informacion-clausoperacion" aria-selected="false">8.1 Operación
                             <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-evaluacionriesgo" data-toggle="tab" href="#informacion-evaluacionriesgo" role="tab" aria-controls="informacion-evaluacionriesgo" aria-selected="false">Evaluación de riesgos de la <br>seguridad de la información<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-evaluacionriesgo" data-toggle="tab" href="#informacion-evaluacionriesgo" role="tab" aria-controls="informacion-evaluacionriesgo" aria-selected="false">8.2 Evaluación de riesgos de la <br>seguridad de la información<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-tratamientriesg" data-toggle="tab" href="#informacion-tratamientriesg" role="tab" aria-controls="informacion-tratamientriesg" aria-selected="false">Tratamiento de riesgos de <br>seguridad de la información<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-tratamientriesg" data-toggle="tab" href="#informacion-tratamientriesg" role="tab" aria-controls="informacion-tratamientriesg" aria-selected="false">8.3 Tratamiento de riesgos de <br>seguridad de la información<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
 
                 </ul>
@@ -571,8 +664,14 @@
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white text-center">
-                                Operación
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La organización debe planificar, implantar y controlar los procesos necesarios para cumplir con todos los requisitos de seguridad de la información y para implantar todas las acciones determinadas en el numeral 6.1. La empresa también debe implementar planes para conseguir los objetivos del Sistema de Gestión de Seguridad de la Información.
+<br>La empresa debe mantener información documentada en la medida necesaria para tener la confianza en que los procesos se han llevado a cabo según lo planificado.
+<br>La empresa debe controlar los cambios planificados y revisar todas las consecuencias de los cambio son previstos, tomando acciones para mitigar todos los efectos adversos, cuando sea necesario.
+<br>La empresa se debe asegurar de que todos los procesos contratados externamente se encuentren controlados.
+
+
                             </div>
 
 
@@ -588,8 +687,12 @@
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-evaluacionriesgo" role="tabpanel" aria-labelledby="informacion-tab-evaluacionriesgo">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Evaluación de riesgos de la seguridad de la información
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La empresa debe llevar a cabo valoraciones de riesgos de la seguridad de la información a intervalos planificados o cuando se propagan u ocurran cambios significativos, teniendo en cuenta los criterios establecidos.
+<br>La empresa debe conservar información documentada de los resultados de las valoraciones de riesgos en cuanto a la seguridad de la información.
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">Los métodos de evaluación de riesgos referenciados en la cláusula 6 se aplicarán a todos los procesos, activos, información y actividades en el alcance del SGSI.
@@ -607,8 +710,11 @@
                     <!--informacion-tres-->
                     <div class=" tab-pane fade" id="informacion-tratamientriesg" role="tabpanel" aria-labelledby="informacion-tab-tratamientriesg">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Tratamiento de riesgos de seguridad de la información
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La organización debe implantar el plan de tratamiento de riesgo de la seguridad de la información.
+<br>La organización debe conservar información documentada de los resultados del tratamiento de riesgos de la seguridad de la información.
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">El plan de tratamiento de riesgos que desarrolle no solo puede ser una declaración de intenciones, sino que se implementará. Cuando se requieren cambios para tener en cuenta nueva información sobre riesgos y cambios en los criterios de evaluación de riesgos, el plan se actualizará y volverse a autorizar.</p>
@@ -633,24 +739,22 @@
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white text-center">
+                    <div class="card-header bg-primary text-white" align="justify">
+
                         Clausula
                     </div>
 
 
-                    <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-clausevalu" data-toggle="tab" href="#informacion-clausevalu" role="tab" aria-controls="informacion-clausevalu" aria-selected="false">Evaluación del desempeño
-                            <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
-                    </li>
+                    
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-segnaeva" data-toggle="tab" href="#informacion-segnaeva" role="tab" aria-controls="informacion-segnaeva" aria-selected="false">Seguimiento, medición, análisis y evaluación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-segnaeva" data-toggle="tab" href="#informacion-segnaeva" role="tab" aria-controls="informacion-segnaeva" aria-selected="false">9.1 Seguimiento, medición, <br> análisis y evaluación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-auditint" data-toggle="tab" href="#informacion-auditint" role="tab" aria-controls="informacion-auditint" aria-selected="false">Auditorías internas<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-auditint" data-toggle="tab" href="#informacion-auditint" role="tab" aria-controls="informacion-auditint" aria-selected="false">9.2 Auditorías internas<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-revisdir" data-toggle="tab" href="#informacion-revisdir" role="tab" aria-controls="informacion-revisdir" aria-selected="false">Revisión por la dirección<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-revisdir" data-toggle="tab" href="#informacion-revisdir" role="tab" aria-controls="informacion-revisdir" aria-selected="false">9.3 Revisión por la dirección<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
 
 
@@ -662,30 +766,21 @@
                 <div class="tab-content" id="myTabContentJust" style="margin-top:15px;">
 
 
-                    <div class="tab-pane fade" id="informacion-clausevalu" role="tabpanel" aria-labelledby="informacion-tab-clausevalu">
-
-                        <div class="card">
-
-                            <div class="card-header bg-primary text-white text-center">
-                                Evaluación del desempeño
-                            </div>
-
-
-                            <div class="card-body ">
-                                <p align="justify">Hay 3 maneras de evaluar el rendimiento del SGSI:</p>
-                                <p align="justify">• Seguimiento de la efectividad de los controles de SGSI.</p>
-                                <p align="justify">• Auditorías internas.</p>
-                                <p align="justify">• En la revisión por la dirección.</p>
-                            </div>
-
-                        </div>
-                        <!--card-->
-                    </div>
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-segnaeva" role="tabpanel" aria-labelledby="informacion-tab-segnaeva">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Seguimiento, medición, análisis y evaluación
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La empresa debe evaluar el desempeño de la seriedad de la información y la eficacia del Sistema de Gestión de Seguridad de la Información.
+<br>La empresa debe determinar:
+<br>a) A qué es necesario hacer seguimiento y qué es necesario medir, incluido los procesos y controles de la seguridad de la información
+<br>b) Los métodos de seguimiento, medición, análisis y evaluación, según sea aplicable, para asegurar resultados válidos
+<br>c) Cuándo se debe lleva a cabo el seguimiento y la medición
+<br>d) Quién debe llevar a cabo el seguimiento y la medición
+<br>e) Cuándo se deben analizar y evaluar todos los resultados del seguimiento y la medición
+<br>f) Quien debe analizar y evaluar todos los resultados.La empresa debe conservar información documentada apropiada como evidencia de los resultados del monitoreo y la medición
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">La organización decidirá que controlar para asegurarse de que el proceso del SGSI y los controles de seguridad de la información funcionen como se espera. No es práctico controlarlo todo el tiempo. Si intenta hacerlo, la cantidad de datos puede ser tan grande que en realidad será imposible utilizarlos de manera eficaz. Entonces, de hecho, tomarán una decisión informada sobre qué monitorear.</p>
@@ -697,8 +792,19 @@
                     <!--informacion-tres-->
                     <div class=" tab-pane fade" id="informacion-auditint" role="tabpanel" aria-labelledby="informacion-tab-auditint">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Auditorías internas
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La empresa debe llevar a cabo las auditorías internas a intervalos planificados, para proporcionar información sobre el Sistema de Gestión de Seguridad de la Información:
+<br>a) Está conforme con los requisitos de la empresa para su sistema de gestión y los requisitos de la norma ISO 27001
+<br>b) Está implementado y mantenido de forma eficaz
+<br>La organización debe:
+<br>a) Planificar, establecer, implantar y mantener uno o varios programas de auditoría que incluyan la frecuencia, los métodos, las responsabilidades, los requisitos de planificación y la elaboración de informes. Los programas de auditoría deben tener en cuenta la importancia de los procesos involucrados y los resultados de las auditorías
+<br>b) Para cada auditoría, definir los criterios y el alcance de ésta
+<br>c) Seleccionar a los auditores y llevar a cabo auditorías para asegurarse la objetividad y la imparcialidad del proceso de auditoría
+<br>d) Asegurase de que los resultados de las auditorías se informan a la dirección pertinente
+<br>e) Conservar información documentada como evidencia de la implantación del programa de auditoría y de los resultados de ésta
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">El objetivo de las auditorías internas es evaluar las deficiencias en los procesos del SGSI e identificar oportunidades de mejora. También proporcionan una verificación de la realidad para la gerencia sobre el rendimiento del SGSI. Las auditorías internas pueden ayudarlo a evitar situaciones inesperadas en las auditorías externas.</p>
@@ -713,8 +819,20 @@
                     <!--informacion-cuatro-->
                     <div class=" tab-pane fade" id="informacion-revisdir" role="tabpanel" aria-labelledby="informacion-tab-revisdir">
                         <div class="card">
-                            <div class="card-header bg-primary text-white text-center">
-                                Revisión por la dirección
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La alta dirección debe revisar el Sistema de Gestión de Seguridad de la Información de la organización a intervalos planificados, para asegurarse de que su conveniencia, adecuación y eficacia son continuas.
+<br>La revisión por la dirección debe incluir consideraciones sobre:
+<br>a) El estado de las acciones con relación a las revisiones previas por la dirección
+<br>b) Los cambios en las cuestiones externas e internas que sean pertinentes al Sistema de Gestión de Seguridad de la Información
+<br>c) Retroalimentación sobre el desempeño de la seguridad de la información
+<br>d) Retroalimentación de las partes interesadas
+<br>e) Resultados de la valoración de riesgos y estado del plan de tratamiento de riesgos
+<br>f) Las oportunidades de mejora continua
+<br>Los elementos de salida de la revisión por la dirección deben incluir las decisiones relacionadas con las oportunidades de mejora continua y cualquier necesidad de cambio dentro del Sistema de Gestión de Seguridad de la Información.
+<br>La organización debe conservar información documentada como evidencia de los resultados de las revisiones por la dirección.
+
+
                             </div>
                             <div class="card-body ">
                                 <p align="justify">La revisión por la dirección es un elemento indispensable del SGSI.
@@ -742,13 +860,18 @@
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white text-center">
+                    <div class="card-header bg-primary text-white" align="justify">
+
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-nocoformidad" data-toggle="tab" href="#informacion-nocoformidad" role="tab" aria-controls="informacion-nocoformidad" aria-selected="false">No conformidad y <br> acción correctiva
+                        <a class="nav-link" id="informacion-tab-nocoformidad" data-toggle="tab" href="#informacion-nocoformidad" role="tab" aria-controls="informacion-nocoformidad" aria-selected="false">10.1 No Conformidades y <br> Acciónes Correctivas
+                            <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                    </li>
+                    <li class="list-group-item nav-item">
+                        <a class="nav-link" id="informacion-tab-mcontinua" data-toggle="tab" href="#informacion-mcontinua" role="tab" aria-controls="informacion-mcontinua" aria-selected="false">10.2 Mejora Continua
                             <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
                     </li>
 
@@ -766,8 +889,18 @@
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white text-center">
-                                No conformidad y acción correctiva
+                            <div class="card-header bg-primary text-white" align="justify">
+
+Cuando ocurra una no conformidad, la empresa debe:a) Reaccionar ante la no conformidad y según sea aplicable<br>
+b) Evaluar la necesidad de acciones para eliminar las causa de la no conformidad, con el fin de que no vuelva a ocurrir ni ocurra en otra parte.
+<br>c) Implantar cualquier acción necesaria
+<br>d) Revisar la eficacia de las acciones correctivas tomadas
+<br>e) Hacer cambios en el Sistema de Gestión de Seguridad de la Información
+La organización debe conservar la información documentada adecuada, como evidencia de:
+<br>a) La naturaleza de las no conformidades y cualquier acción posterior tomada
+<br>b) Los resultados de cualquier acción correctiva
+
+
                             </div>
 
 
@@ -784,6 +917,33 @@
                         </div>
                         <!--card-->
                     </div>
+
+                     <div class="tab-pane fade" id="informacion-tab-mcontinua" role="tabpanel" aria-labelledby="informacion-mcontinua">
+
+                        <div class="card">
+
+                            <div class="card-header bg-primary text-white" align="justify">
+
+La empresa debe mejorar continuamente la conveniencia, adecuación y Sistema de Gestión de Seguridad de la Información.
+
+
+                            </div>
+
+
+                            <div class="card-body ">
+                                <p align="justify">Se pueden lograr mejoras al conocer los incidentes de seguridad, los problemas encontrados durante las auditorías, los problemas de rendimiento, las quejas de las partes interesadas y los conocimientos generados durante las revisiones por la dirección.</p>
+                                <p align="justify">Para cada oportunidad identificada, se mantendrán registros de:</p>
+                                <p align="justify">• Que pasó.</p>
+                                <p align="justify">• Si el evento tiene consecuencias adversas, qué medidas se tomarán para controlarlo y mitigarlo.</p>
+                                <p align="justify">• La causa raíz del incidente (si se determina).</p>
+                                <p align="justify">• Medidas tomadas para eliminar la causa raíz (si es necesario).</p>
+                                <p align="justify">• Evaluación de la eficacia de las medidas adoptadas.</p>
+                            </div>
+
+                        </div>
+                        <!--card-->
+                    </div>
+
 
 
 
