@@ -27,6 +27,14 @@
     <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
+
+    <style type="text/css">
+        .iconos-crear{
+            font-size: 15pt;
+            color: #9FA2A5;
+            margin-right: 10px; 
+        }
+    </style>
     @yield('styles')
 </head>
 
