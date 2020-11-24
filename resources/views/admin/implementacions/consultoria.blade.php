@@ -64,6 +64,72 @@
 	.correo{
 		margin-left: 40px;
 	}
+	.btn_consultores{
+		width: 140px;
+		height: 37px;
+		border: 1px solid #fff;
+		position: absolute;
+		bottom: 15px;
+		left: 15px;
+		color: #fff;
+		font-size: 12pt;
+		border-radius: 8px;
+		box-shadow: 0px 0px 5px -1px;
+		cursor: pointer;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.btn_consultores:hover{
+		transform: scale(1.08);
+	}
+	.tabla_consultores{
+		width: 100%;
+		display: none;
+	}
+	table{
+		width: 650px;
+		margin: auto;
+		color: #fff;
+	}
+	table thead tr{
+		background-color: #008398;
+		transform: scale(1.01);
+		box-shadow: 0px 3px 5px -3px #000;
+	}
+	table th{
+		border-bottom: 1px;
+		padding: 10px;
+		text-align: center;
+	}
+	table td{
+		padding: 10px;
+	}
+	table tbody tr{
+		border-bottom: 1px solid rgba(255,255,255,0.3);
+		background-color: rgba(0,0,0,0.4);
+	}
+	table tbody tr:hover{
+		transform: scale(1.01);
+
+		background-color: rgba(0,0,0,0.5);
+	}
+	.btn_cerrar{
+		display: none;
+		width: 50px;
+		height: 50px;
+		right: 30px;		
+		position: absolute;
+	}
+	.icono_cerrar{
+		font-size: 50px;
+		cursor: pointer;
+	}
+
+
+
+
 
 
 	@media(max-width: 796px){
@@ -83,15 +149,91 @@
 </style>
 
 <div class="contacto">
-	<p class="tiulo">¿CÓMO PODEMOS APOYARTE? &nbsp;&nbsp; <font>CONTÁCTANOS</font></p>
 
-	<p class="info">
-		Si quieres asesoría por parte de nuestros expertos contáctanos a través de nuestros siguientes medios.
-	</p>
+	<div class="btn_cerrar"><i class="far fa-times-circle icono_cerrar"></i></div>
 
-	<div class="caja_btn">
-		<div class="boton cel"><a href="tel:525525115770"><img src="../img/implementacion/btn_cel.png"></a></div>
-		<div class="boton whats"><a href="https://wa.me/525525115770" target="_blank"><img src="../img/implementacion/btn_whats.png"></a></div>
-		<div class="boton correo"><a href="mailto:tabantaj@silent4business.com"><img src="../img/implementacion/btn_correo.png"></a></div>
+	<div class="btn_consultores">Consultores</div>
+
+	<div class="genreal">
+		<p class="tiulo">¿CÓMO PODEMOS APOYARTE? &nbsp;&nbsp; <font>CONTÁCTANOS</font></p>
+
+		<p class="info">
+			Si quieres asesoría por parte de nuestros expertos contáctanos a través de nuestros siguientes medios.
+		</p>
+
+		<div class="caja_btn">
+			<div class="boton cel"><a href="tel:525525115770"><img src="../img/implementacion/btn_cel.png"></a></div>
+			<div class="boton whats"><a href="https://wa.me/525525115770" target="_blank"><img src="../img/implementacion/btn_whats.png"></a></div>
+			<div class="boton correo"><a href="mailto:tabantaj@silent4business.com"><img src="../img/implementacion/btn_correo.png"></a></div>
+		</div>
 	</div>
+
+	<div class="tabla_consultores">
+		<table>
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Puesto</th>
+					<th>Teléfono</th>
+					<th>Correo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Enrique Cáliz</td>
+					<td>Consultor Estratégico Jr.</td>
+					<td>5578232000 Ext. 146</td>
+					<td>enrique.caliz@silent4business.com</td>
+				</tr>
+				<tr>
+					<td>Erika Rosales</td>
+					<td>Especialista de Consultoría Estratégica</td>
+					<td>5578232000 Ext. 146</td>
+					<td>erika.rosales@silent4business.com</td>
+				</tr>
+				<tr>
+					<td>Jazmín Cardoso Piña</td>
+					<td>Consultor Estratégico Sr.</td>
+					<td>5578232000 Ext. 146</td>
+					<td>jazmin.cardoso@silent4business.com</td>
+				</tr>
+				<tr>
+					<td>Alejandro Said Pacheco Salas</td>
+					<td>Consultor Estratégico Jr.</td>
+					<td>5578232000 Ext. 146</td>
+					<td>alejandro.pacheco@silent4business.com</td>
+				</tr>
+				<tr>
+					<td>Yediael Ceja</td>
+					<td>Consultor Estratégico Jr.</td>
+					<td>5578232000 Ext. 146</td>
+					<td>yediael.ceja@silent4business.com</td>
+				</tr>
+				<tr style="border: none;">
+					<td>Marco Luna Robles</td>
+					<td>Líder de Consultoría Estratégica</td>
+					<td>5578232000 Ext. 158</td>
+					<td>marco.luna@silent4business.com</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script type="text/javascript">
+	$(".btn_consultores").click(function(){
+		$(".genreal").fadeOut(180);
+		$(".tabla_consultores").delay(180).fadeIn(180);
+		$(".btn_consultores").fadeOut(180);
+		$(".btn_cerrar").delay(180).fadeIn(180);
+	});
+	$(".btn_cerrar").click(function(){
+		$(".genreal").delay(180).fadeIn(180);
+		$(".tabla_consultores").fadeOut(180);
+		$(".btn_consultores").delay(180).fadeIn(180);
+		$(".btn_cerrar").fadeOut(180);
+	});
+</script>
