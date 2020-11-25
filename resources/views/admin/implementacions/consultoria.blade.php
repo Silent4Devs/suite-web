@@ -83,6 +83,7 @@
 	}
 	.btn_consultores:hover{
 		transform: scale(1.08);
+		transition: 0.1s;
 	}
 	.tabla_consultores{
 		width: 100%;
@@ -109,9 +110,10 @@
 	table tbody tr{
 		border-bottom: 1px solid rgba(255,255,255,0.3);
 		background-color: rgba(0,0,0,0.4);
+		transition: 0.1s;
 	}
 	table tbody tr:hover{
-		transform: scale(1.01);
+		transform: scale(1.015);
 
 		background-color: rgba(0,0,0,0.5);
 	}

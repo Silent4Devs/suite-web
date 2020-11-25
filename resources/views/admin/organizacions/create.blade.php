@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card card-body  align-self-center" style="margin-top: -40px; background-color: #0CA193;">
+    <div class="col-md-10 col-sm-9 py-3 card card-body verde_silent align-self-center" style="margin-top: -40px;">
         <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Mi organización </h3>
     </div>
 
