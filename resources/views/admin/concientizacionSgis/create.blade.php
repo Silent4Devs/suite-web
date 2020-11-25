@@ -2,16 +2,15 @@
 @section('content')
 
 <div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
-         <h3 class="mb-1  text-center text-white">
-        {{ trans('global.create') }} {{ trans('cruds.concientizacionSgi.title_singular') }} </h3>
+    <div class="col-md-10 col-sm-9 py-3 card card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Concientización SGI  </h3>
     </div>
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.concientizacion-sgis.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-12">
-                <label class="required" for="objetivocomunicado">{{ trans('cruds.concientizacionSgi.fields.objetivocomunicado') }}</label>
+                <label class="required" for="objetivocomunicado"><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.objetivocomunicado') }}</label>
                 <input class="form-control {{ $errors->has('objetivocomunicado') ? 'is-invalid' : '' }}" type="text" name="objetivocomunicado" id="objetivocomunicado" value="{{ old('objetivocomunicado', '') }}" required>
                 @if($errors->has('objetivocomunicado'))
                     <div class="invalid-feedback">
@@ -21,7 +20,7 @@
                 <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.objetivocomunicado_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label>{{ trans('cruds.concientizacionSgi.fields.personalobjetivo') }}</label>
+                <label><i class="fas fa-user iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.personalobjetivo') }}</label>
                 <select class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}" name="personalobjetivo" id="personalobjetivo">
                     <option value disabled {{ old('personalobjetivo', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\ConcientizacionSgi::PERSONALOBJETIVO_SELECT as $key => $label)
@@ -36,7 +35,7 @@
                 <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.personalobjetivo_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label for="arearesponsable_id">{{ trans('cruds.concientizacionSgi.fields.arearesponsable') }}</label>
+                <label for="arearesponsable_id"><i class="fas fa-chart-area iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.arearesponsable') }}</label>
                 <select class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" name="arearesponsable_id" id="arearesponsable_id">
                     @foreach($arearesponsables as $id => $arearesponsable)
                         <option value="{{ $id }}" {{ old('arearesponsable_id') == $id ? 'selected' : '' }}>{{ $arearesponsable }}</option>
@@ -50,7 +49,7 @@
                 <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.arearesponsable_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label>{{ trans('cruds.concientizacionSgi.fields.medio_envio') }}</label>
+                <label><i class="fas fa-pager iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.medio_envio') }}</label>
                 <select class="form-control {{ $errors->has('medio_envio') ? 'is-invalid' : '' }}" name="medio_envio" id="medio_envio">
                     <option value disabled {{ old('medio_envio', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\ConcientizacionSgi::MEDIO_ENVIO_SELECT as $key => $label)
@@ -65,7 +64,7 @@
                 <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.medio_envio_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label for="fecha_publicacion">{{ trans('cruds.concientizacionSgi.fields.fecha_publicacion') }}</label>
+                <label for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.fecha_publicacion') }}</label>
                 <input class="form-control date {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}" type="text" name="fecha_publicacion" id="fecha_publicacion" value="{{ old('fecha_publicacion') }}">
                 @if($errors->has('fecha_publicacion'))
                     <div class="invalid-feedback">
@@ -75,7 +74,7 @@
                 <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.fecha_publicacion_helper') }}</span>
             </div>
             <div class="form-group col-12">
-                <label for="archivo">{{ trans('cruds.concientizacionSgi.fields.archivo') }}</label>
+                <label for="archivo"><i class="far fa-file iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.archivo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
                 </div>
                 @if($errors->has('archivo'))
@@ -85,7 +84,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.archivo_helper') }}</span>
             </div>
-            <div class="form-group col-12">
+            <div class="form-group col-12 text-right">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

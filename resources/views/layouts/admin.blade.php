@@ -38,6 +38,9 @@
             color: #9FA2A5;
             margin-right: 10px; 
         }
+        .verde_silent{
+            background-color: #0CA193;
+        }
     </style>
     @yield('styles')
 </head>
