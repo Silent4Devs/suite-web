@@ -1,23 +1,37 @@
 <div class="card" style="margin-top:-30px;">
 <div style="margin-top: 15px; margin-left: 15px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-secondary" href="#">
+<a class="btn" style="background-color:#048c74;color:white;" href="admin/gantt'); }}">
                 Cronograma
             </a>
         </div>
+        
+</div>
+@can('plan_base_actividade_create')
+    <div style="margin-top:-30px; margin-right: 10px;" class="row text-right">
+        <div class="col-lg-12">
+            <a  href="{{ route('admin.plan-base-actividades.create') }}">
+               
+                <i class="fas fa-plus-circle fa-3x" style="color:#048c74"></i>
+            </a>
+        </div>
     </div>
+@endcan
     
+<div class="card">
+ 
+
     <div class="card-body">
-        <table class=" table  table-striped table-hover ajaxTable datatable datatable-PlanBaseActividade" style="width:100%">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PlanBaseActividade">
             <thead>
-                <tr>
-                    <th width="10">
+                <tr style="background-color:white">
+                    <th width="10" >
 
                     </th>
                     <th>
                         {{ trans('cruds.planBaseActividade.fields.id') }}
                     </th>
-                    <th style="width:100%">
+                    <th>
                         {{ trans('cruds.planBaseActividade.fields.actividad') }}
                     </th>
                     <th>
@@ -54,20 +68,63 @@
                         &nbsp;
                     </th>
                 </tr>
-                
+                <tr style="background-color:white">
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                        
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                           
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                          
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                           
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                    
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
             </thead>
         </table>
     </div>
 </div>
-@can('plan_base_actividade_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.plan-base-actividades.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.planBaseActividade.title_singular') }}
-            </a>
-        </div>
-    </div>
-@endcan
+
 
 @section('scripts')
 @parent
@@ -107,7 +164,7 @@
     retrieve: true,
     aaSorting: [],
     ajax: "{{ route('admin.plan-base-actividades.index') }}",
-    columns: [ 
+    columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'actividad', name: 'actividad' },
@@ -124,7 +181,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'asc' ]],
+    order: [[ 1, 'desc' ]],
     pageLength: 50,
   };
   let table = $('.datatable-PlanBaseActividade').DataTable(dtOverrideGlobals);
