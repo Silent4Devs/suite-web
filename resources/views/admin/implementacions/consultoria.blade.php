@@ -90,7 +90,7 @@
 		display: none;
 	}
 	table{
-		width: 650px;
+		width: 670px;
 		margin: auto;
 		color: #fff;
 	}
@@ -166,7 +166,7 @@
 		<div class="caja_btn">
 			<div class="boton cel"><a href="tel:525525115770"><img src="../img/implementacion/btn_cel.png"></a></div>
 			<div class="boton whats"><a href="https://wa.me/525525115770" target="_blank"><img src="../img/implementacion/btn_whats.png"></a></div>
-			<div class="boton correo"><a href="mailto:tabantaj@silent4business.com"><img src="../img/implementacion/btn_correo.png"></a></div>
+			<div class="boton correo"><a href="mailto:contacto@silent4business.com"><img src="../img/implementacion/btn_correo.png"></a></div>
 		</div>
 	</div>
 

@@ -157,7 +157,7 @@
                     @can('liderazgo_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-gavel c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-gavel c-sidebar-nav-icon" style="text-indent: 30px; margin-right: 10px;">
 
                                 </i>
                                 {{ trans('cruds.liderazgo.title') }}

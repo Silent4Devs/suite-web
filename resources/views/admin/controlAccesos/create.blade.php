@@ -2,16 +2,15 @@
 @section('content')
 
 <div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center" style="margin-top: -40px">
-         <h3 class="mb-1  text-center text-white">
-        {{ trans('global.create') }} {{ trans('cruds.controlAcceso.title_singular') }} </h3>
+    <div class="col-md-10 col-sm-9 py-3 card card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Control de Acceso </h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.control-accesos.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.control-accesos.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group">
-                <label for="descripcion">{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
+            <div class="form-group col-12">
+                <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
                 <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
                 @if($errors->has('descripcion'))
                     <div class="invalid-feedback">
@@ -20,8 +19,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.controlAcceso.fields.descripcion_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="archivo">{{ trans('cruds.controlAcceso.fields.archivo') }}</label>
+            <div class="form-group col-12">
+                <label for="archivo"><i class="far fa-file iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.archivo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
                 </div>
                 @if($errors->has('archivo'))
@@ -31,7 +30,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.controlAcceso.fields.archivo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 text-right">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
