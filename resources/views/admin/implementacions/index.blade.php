@@ -25,8 +25,8 @@
                             de Implementación</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#contact-just" role="tab"
-                           aria-controls="contact-just"
+                        <a class="nav-link" id="plan-tab-just" data-toggle="tab" href="#plan-just" role="tab"
+                           aria-controls="plan-just"
                            aria-selected="false">Plan
                             de Trabajo Base</a>
                     </li>
@@ -59,8 +59,8 @@
 
 
 
-                    <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
-                  @include('admin.implementacions.plantrabajo')
+                    <div class="tab-pane fade" id="plan-just" role="tabpanel" aria-labelledby="plan-tab-just">
+                        @include('admin.implementacions.plantrabajo')
                   
                   
                     </div>

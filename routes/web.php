@@ -292,6 +292,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('user-alerts/read', 'UserAlertsController@read');
     Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
     Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
+
+// Matriz Riesgos
+Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
+Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+
+Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
+Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
+Route::get('user-alerts/read', 'UserAlertsController@read');
+Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
+Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
 // Change password
@@ -564,6 +575,6 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 Route::view('sitemap', 'admin.sitemap.index');
 
 Route::view('admin/gantt', 'admin.gantt.index');
-
+Route::view('analisis-brechas', 'admin.analisisbrechas.index');
 
 //URL::forceScheme('https');
