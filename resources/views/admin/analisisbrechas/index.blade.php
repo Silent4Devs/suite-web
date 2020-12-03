@@ -4,7 +4,6 @@
     <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
         <h3 class="mb-2  text-center text-white"><strong>ANÁLISIS DE BRECHAS ISO 27001</strong></h3>
     </div>
-
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
@@ -25,35 +24,22 @@
                         <a class="nav-link" id="dash-tab-just" data-toggle="tab" href="#dash-just" role="tab" aria-controls="dash-just" aria-selected="false">DASHBOARD</a>
                     </li>
                 </ul>
-
                 <div class="tab-content card pt-5" id="myTabContentJust">
                     <div class="tab-pane fade show active" id="intr-just" role="tabpanel" aria-labelledby="intr-tab-just">
-                        <!-- Introduccion>-->
                         @include('admin.analisisbrechas.introduccion')
-                        <!-- Introduccion -->
                     </div>
-
-
-
                     <div class="tab-pane fade" id="gap1-just" role="tabpanel" aria-labelledby="gap1-tab-just">
-                        <!--Guia de introducción-->
-
-
+                        @include('admin.analisisbrechas.gapuno')
                     </div>
-
-
-
                     <div class="tab-pane fade" id="gap2-just" role="tabpanel" aria-labelledby="gap2-tab-just">
-
-
+                        @include('admin.analisisbrechas.gapdos')
                     </div>
                     <div class="tab-pane fade" id="gap3-just" role="tabpanel" aria-labelledby="gap3-tab-just" style="display: flex; justify-content: center; align-items: center;">
-
+                        @include('admin.analisisbrechas.gaptres')
                     </div>
-                    <div class="tab-pane fade" id="dash-just" role="tabpanel" aria-labelledby="dash-tab-just" style="display: flex; justify-content: center; align-items: center;">
-
+                    <div class="tab-pane fade" id="dash-just" role="tabpanel" aria-labelledby="dash-tab-just">
+                        @include('admin.analisisbrechas.dashboardab')
                     </div>
-
                 </div>
             </div>
         </div>
