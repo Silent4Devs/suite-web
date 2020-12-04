@@ -82,6 +82,28 @@
                 </ul>-->
             </li>
         @endcan
+        @can('analisis_riesgo_access')
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/matriz-riesgos*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fas fa-virus-slash iconos-crear c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.analisisRiesgo.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('matriz_riesgo_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.matriz-riesgos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/matriz-riesgos") || request()->is("admin/matriz-riesgos/*") ? "c-active" : "" }}">
+                                <i class="fas fa-virus-slash iconos-crear c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.matrizRiesgo.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
         <li class="c-sidebar-nav-item">
             <a href="{{ route("admin.systemCalendar") }}" class="c-sidebar-nav-link {{ request()->is("admin/system-calendar") || request()->is("admin/system-calendar/*") ? "active" : "" }}">
                 <i class="c-sidebar-nav-icon fa-fw fas fa-calendar">
