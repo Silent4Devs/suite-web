@@ -23,25 +23,7 @@ class CreateGapLogroDosTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('gap_logro_uno', function (Blueprint $table) {
-            $table->id();
-            $table->string('entregable');
-            $table->string('valoracion');
-            $table->longText('evidencia');
-            $table->integer('recomendacion');
-            $table->longText('evidencia');
-            $table->timestamps();
-        });
-
-        Schema::create('gap_logro_tres', function (Blueprint $table) {
-            $table->id();
-            $table->string('pregunta');
-            $table->string('valoracion');
-            $table->longText('evidencia');
-            $table->integer('recomendacion');
-            $table->boolean()->nullable();
-            $table->timestamps();
-        });
+    
     }
 
     /**
@@ -51,8 +33,6 @@ class CreateGapLogroDosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gap_logro_uno');
         Schema::dropIfExists('gap_logro_dos');
-        Schema::dropIfExists('gap_logro_tres');
     }
 }
