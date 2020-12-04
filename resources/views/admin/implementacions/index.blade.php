@@ -25,8 +25,8 @@
                             de Implementación</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#contact-just" role="tab"
-                           aria-controls="contact-just"
+                        <a class="nav-link" id="plan-tab-just" data-toggle="tab" href="#plan-just" role="tab"
+                           aria-controls="plan-just"
                            aria-selected="false">Plan
                             de Trabajo Base</a>
                     </li>
@@ -59,18 +59,10 @@
 
 
 
-                    <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
-                        <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic
-                            lomo retro
-                            fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft
-                            beer, iphone
-                            skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
-                            Leggings
-                            gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles
-                            pitchfork
-                            biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of
-                            them, vinyl
-                            craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
+                    <div class="tab-pane fade" id="plan-just" role="tabpanel" aria-labelledby="plan-tab-just">
+                        @include('admin.implementacions.plantrabajo')
+                  
+                  
                     </div>
                     <div class="tab-pane fade" id="just" role="tabpanel" aria-labelledby="contact-tab-just" style="display: flex; justify-content: center; align-items: center;">
                         @include('admin.implementacions.consultoria')

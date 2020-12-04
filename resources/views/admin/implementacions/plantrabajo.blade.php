@@ -1,24 +1,31 @@
-@extends('layouts.admin')
-@section('content')
-@can('plan_base_actividade_create')
-    <div style="margin-bottom: 10px;" class="row">
+<div class="card" style="margin-top:-30px;">
+<div style="margin-top: 15px; margin-left: 15px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.plan-base-actividades.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.planBaseActividade.title_singular') }}
+<a class="btn" style="background-color:#048c74;color:white;" href="admin/gantt'); }}">
+                Cronograma
+            </a>
+        </div>
+        
+</div>
+@can('plan_base_actividade_create')
+    <div style="margin-top:-30px; margin-right: 10px;" class="row text-right">
+        <div class="col-lg-12">
+            <a  href="{{ route('admin.plan-base-actividades.create') }}">
+               
+                <i class="fas fa-plus-circle fa-3x" style="color:#048c74"></i>
             </a>
         </div>
     </div>
 @endcan
+    
 <div class="card">
-    <div class="card-header">
-        {{ trans('cruds.planBaseActividade.title_singular') }} {{ trans('global.list') }}
-    </div>
+ 
 
     <div class="card-body">
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PlanBaseActividade">
             <thead>
-                <tr>
-                    <th width="10">
+                <tr style="background-color:white">
+                    <th width="10" >
 
                     </th>
                     <th>
@@ -61,7 +68,7 @@
                         &nbsp;
                     </th>
                 </tr>
-                <tr>
+                <tr style="background-color:white">
                     <td>
                     </td>
                     <td>
@@ -73,17 +80,13 @@
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($plan_base_actividades as $key => $item)
-                                <option value="{{ $item->actividad }}">{{ $item->actividad }}</option>
-                            @endforeach
+                        
                         </select>
                     </td>
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($enlaces_ejecutars as $key => $item)
-                                <option value="{{ $item->ejecutar }}">{{ $item->ejecutar }}</option>
-                            @endforeach
+                           
                         </select>
                     </td>
                     <td>
@@ -91,25 +94,19 @@
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($estatus_plan_trabajos as $key => $item)
-                                <option value="{{ $item->estado }}">{{ $item->estado }}</option>
-                            @endforeach
+                          
                         </select>
                     </td>
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
+                           
                         </select>
                     </td>
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
+                    
                         </select>
                     </td>
                     <td>
@@ -128,9 +125,7 @@
     </div>
 </div>
 
-
-
-@endsection
+</div>
 @section('scripts')
 @parent
 <script>

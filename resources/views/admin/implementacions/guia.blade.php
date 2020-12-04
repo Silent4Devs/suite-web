@@ -8,25 +8,25 @@
 </style>
 <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:-30px;">
     <li class="nav-item" role="presentation">
-        <a style="font-size: 11px;" class="nav-link active" id="contexto-tab" data-toggle="tab" href="#contexto" role="tab" aria-controls="contexto" aria-selected="true">4. CONTEXTO DE LA ORGANIZACIÓN</a>
+        <a style="font-size: 11px;" class="nav-link active" id="contexto-tab" data-toggle="tab" href="#contexto" role="tab" aria-controls="contexto" aria-selected="true"><span style="color:#3c3c44;">4. CONTEXTO DE LA ORGANIZACIÓN</span></a>
     </li>
     <li class="nav-item" role="presentation">
-        <a style="font-size: 11px;" class="nav-link" id="liderazgo-tab" data-toggle="tab" href="#liderazgo" role="tab" aria-controls="liderazgo" aria-selected="false">5. LIDERAZGO</a>
+        <a style="font-size: 11px;" class="nav-link" id="liderazgo-tab" data-toggle="tab" href="#liderazgo" role="tab" aria-controls="liderazgo" aria-selected="false"><span style="color:#3c3c44;">5. LIDERAZGO</span></a>
     </li>
     <li class="nav-item" role="presentation">
-        <a style="font-size: 11px;" class="nav-link" id="planificacion-tab" data-toggle="tab" href="#planificacion" role="tab" aria-controls="planificacion" aria-selected="false">6. PLANIFICACIÓN</a>
+        <a style="font-size: 11px;" class="nav-link" id="planificacion-tab" data-toggle="tab" href="#planificacion" role="tab" aria-controls="planificacion" aria-selected="false"><span style="color:#3c3c44;">6. PLANIFICACIÓN</span></a>
     </li>
     <li class="nav-item" role="presentation">
-        <a style="font-size: 11px;" class="nav-link" id="soporte-tab" data-toggle="tab" href="#soporte" role="tab" aria-controls="soporte" aria-selected="false">7. SOPORTE</a>
+        <a style="font-size: 11px;" class="nav-link" id="soporte-tab" data-toggle="tab" href="#soporte" role="tab" aria-controls="soporte" aria-selected="false"><span style="color:#3c3c44;">7. SOPORTE</span></a>
     </li>
     <li class="nav-item" role="presentation">
-        <a style="font-size: 11px;" class="nav-link" id="operacion-tab" data-toggle="tab" href="#operacion" role="tab" aria-controls="operacion" aria-selected="false">8. OPERACIÓN</a>
+        <a style="font-size: 11px;" class="nav-link" id="operacion-tab" data-toggle="tab" href="#operacion" role="tab" aria-controls="operacion" aria-selected="false"><span style="color:#3c3c44;">8. OPERACIÓN</span></a>
     </li>
     <li class="nav-item" role="presentation">
-        <a style="font-size: 11px;" class="nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">9. EVALUACIÓN DEL DESEMPEÑO</a>
+        <a style="font-size: 11px;" class="nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false"><span style="color:#3c3c44;">9. EVALUACIÓN DEL DESEMPEÑO</span></a>
     </li>
     <li class="nav-item" role="presentation">
-        <a style="font-size: 11px;" class="nav-link" id="mejora-tab" data-toggle="tab" href="#mejora" role="tab" aria-controls="mejora" aria-selected="false">10. MEJORA</a>
+        <a style="font-size: 11px;" class="nav-link" id="mejora-tab" data-toggle="tab" href="#mejora" role="tab" aria-controls="mejora" aria-selected="false"><span style="color:#3c3c44;">10. MEJORA</span></a>
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
@@ -36,29 +36,29 @@
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white" align="justify">
+                    <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-dos" data-toggle="tab" href="#informacion-dos" role="tab" aria-controls="informacion-dos" aria-selected="false">Objetivo del SGSI
-                            <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-dos" data-toggle="tab" href="#informacion-dos" role="tab" aria-controls="informacion-dos" aria-selected="false"><span style="color:#3c3c44;">Objetivo del SGSI
+                            </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-tres" data-toggle="tab" href="#informacion-tres" role="tab" aria-controls="informacion-tres" aria-selected="false">4.1 Entendimiento de<br> la Organización<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-tres" data-toggle="tab" href="#informacion-tres" role="tab" aria-controls="informacion-tres" aria-selected="false"><span style="color:#3c3c44;">4.1 Entendimiento de<br> la Organización</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-cinco" data-toggle="tab" href="#informacion-cinco" role="tab" aria-controls="informacion-cinco" aria-selected="false">4.2 Partes Interesadas<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-cinco" data-toggle="tab" href="#informacion-cinco" role="tab" aria-controls="informacion-cinco" aria-selected="false"><span style="color:#3c3c44;">4.2 Partes Interesadas</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-seis" data-toggle="tab" href="#informacion-seis" role="tab" aria-controls="informacion-seis" aria-selected="false">4.3 Alcance del Sistema <br>de Gestión <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-seis" data-toggle="tab" href="#informacion-seis" role="tab" aria-controls="informacion-seis" aria-selected="false"><span style="color:#3c3c44;">4.3 Alcance del Sistema <br>de Gestión </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-sgsi" data-toggle="tab" href="#informacion-sgsi" role="tab" aria-controls="informacion-sgsi" aria-selected="false">4.4 Sistema de Gestión <br>de Seguridad de la Información<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-sgsi" data-toggle="tab" href="#informacion-sgsi" role="tab" aria-controls="informacion-sgsi" aria-selected="false"><span style="color:#3c3c44;">4.4 Sistema de Gestión <br>de Seguridad de la Información</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                 </ul>
 
@@ -71,8 +71,11 @@
                     <div class="tab-pane fade" id="informacion-dos" role="tabpanel" aria-labelledby="informacion-tab-dos">
 
                         <div class="card">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
-                            <div class="card-header bg-primary text-white" align="justify">
+Objetivo del SGSI.
+</div>
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
                                 El objetivo del SGSI es proteger los activos de información de la empresa para que pueda lograr los objetivos.
                             </div>
@@ -95,9 +98,14 @@
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-tres" role="tabpanel" aria-labelledby="informacion-tab-tres">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
-                               La organizacion debe determinar las cuestiones externas e internas que son pertinentes para su propósito y que afectan a su capacidad para lograr los resultados previstos de su sistema de gestión de seguridad de la información.
+                        4.1 Entendimiento de la Organización
+</div>
+                        
+<div class="card card-body text-black  bg-light mb-3" align="justify">
+
+ La organizacion debe determinar las cuestiones externas e internas que son pertinentes para su propósito y que afectan a su capacidad para lograr los resultados previstos de su sistema de gestión de seguridad de la información.
                             </div>
                             <div class="card-body ">
                                 <p align="justify">Los siguientes son ejemplos de áreas que se pueden considerar al evaluar problemas internos que pueden afectar en los riesgos del SGSI:</p>
@@ -118,27 +126,15 @@
                         <!--card-->
                     </div>
                     <!--informacion-tres-->
-                    <div class=" tab-pane fade" id="informacion-cuatro" role="tabpanel" aria-labelledby="informacion-tab-cuatro">
-                        <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
-
-                                Los siguientes son ejemplos de áreas que se pueden considerar al evaluar problemas externos que pueden afectar en los riesgos del SGSI:
-                            </div>
-                            <div class="card-body ">
-                                <p align="justify">• Competencia</p>
-                                <p align="justify">• Dueño</p>
-                                <p align="justify">• Organismos reguladores</p>
-                                <p align="justify">• Económico/político</p>
-                                <p align="justify">• Consideraciones ambientales</p>
-                                <p align="justify">• Frecuencia de ataques a la información</p>
-                                <p align="justify">• Accionistas</p>
-                            </div>
-                        </div>
-                        <!--card-->
-                    </div>
+                   
                     <div class=" tab-pane fade" id="informacion-cinco" role="tabpanel" aria-labelledby="informacion-tab-cinco">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+4.2 Partes Interesadas
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
                                
                                 La organización debe determinar: <br>a) Las partes interesadas que son pertinentes al Sistema de Gestión de Seguridad de la Información.<br>
@@ -160,7 +156,12 @@
                     <!--informacion-cinco-->
                     <div class=" tab-pane fade" id="informacion-seis" role="tabpanel" aria-labelledby="informacion-tab-cinco">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+4.3 Alcance del Sistema de Gestión
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
                                 La empresa debe determinar los límites y la aplicabilidad del Sistema de Gestión de la Seguridad de la Información para establecer su alcance:
 
@@ -192,7 +193,12 @@
                     <!--informacion-tan-sgsi-->
                     <div class=" tab-pane fade" id="informacion-sgsi" role="tabpanel" aria-labelledby="informacion-sgsi">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+                        4.4 Sistema de Gestión de Seguridad de la Información
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
                                
                                La empresa debe establecer, implantar, mantener y mejorar continuamente un Sistema de Gestión de Seguridad de la Información, según a los requisitos de la norma ISO 27001 2013.
@@ -229,22 +235,22 @@
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white" align="justify">
+                    <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-liderazgo" data-toggle="tab" href="#informacion-liderazgo" role="tab" aria-controls="informacion-liderazgo" aria-selected="false">5.1 Liderazgo y Compromiso
-                            <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-liderazgo" data-toggle="tab" href="#informacion-liderazgo" role="tab" aria-controls="informacion-liderazgo" aria-selected="false"><span style="color:#3c3c44;">5.1 Liderazgo y Compromiso
+                            </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-politicaseg" data-toggle="tab" href="#informacion-politicaseg" role="tab" aria-controls="informacion-politicaseg" aria-selected="false">5.2 Política de Seguridad<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-politicaseg" data-toggle="tab" href="#informacion-politicaseg" role="tab" aria-controls="informacion-politicaseg" aria-selected="false"><span style="color:#3c3c44;">5.2 Política de Seguridad</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-rolesresp" data-toggle="tab" href="#informacion-rolesresp" role="tab" aria-controls="informacion-rolesresp" aria-selected="false">5.3 Roles y Responsabilidades<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-rolesresp" data-toggle="tab" href="#informacion-rolesresp" role="tab" aria-controls="informacion-rolesresp" aria-selected="false"><span style="color:#3c3c44;">5.3 Roles y Responsabilidades</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                    
                 </ul>
@@ -259,7 +265,12 @@
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+5.1 Liderazgo y Compromiso
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
                                 La alta dirección debe demostrar liderazgo y compromiso con respecto al Sistema de Gestión de Seguridad de la Información:
 
@@ -291,7 +302,12 @@
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-politicaseg" role="tabpanel" aria-labelledby="informacion-tab-politicaseg">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+5.2 Política de Seguridad
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La alta dirección debe establecer una política de la seguridad de la información que:a) Sea adecuada al propósito de la organización
 <br>b) Incluya objetivos de seguridad de la información o proporcione el marco de referencia para el establecimiento de los objetivos de la seguridad de la información
@@ -316,7 +332,12 @@ La política de seguridad de la información debe:
                     <!--informacion-tres-->
                     <div class=" tab-pane fade" id="informacion-rolesresp" role="tabpanel" aria-labelledby="informacion-tab-rolesresp">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+5.3 Roles y Responsabilidades
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La alta dirección debe asegurarse de que las responsabilidades y autoridades para los roles pertinentes a la seguridad de la información sean asignados y comunicados.La alta dirección debe asignar la responsabilidad y autoridad para:
 <br>a) Asegurarse de que el Sistema de Gestión de Seguridad de la Información sea conforme a los requisitos de la norma ISO 27001
@@ -348,19 +369,19 @@ La alta dirección debe asegurarse de que las responsabilidades y autoridades pa
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white" align="justify">
+                    <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-evaluacionriesg" data-toggle="tab" href="#informacion-evaluacionriesg" role="tab" aria-controls="informacion-evaluacionriesg" aria-selected="false">6.1 Riesgos y Oportunidades
-                            <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-evaluacionriesg" data-toggle="tab" href="#informacion-evaluacionriesg" role="tab" aria-controls="informacion-evaluacionriesg" aria-selected="false"><span style="color:#3c3c44;">6.1 Riesgos y Oportunidades
+                            </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-tratamientoriesg" data-toggle="tab" href="#informacion-tratamientoriesg" role="tab" aria-controls="informacion-tratamientoriesg" aria-selected="false">6.2 Objetivos de Seguridad<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-tratamientoriesg" data-toggle="tab" href="#informacion-tratamientoriesg" role="tab" aria-controls="informacion-tratamientoriesg" aria-selected="false"><span style="color:#3c3c44;">6.2 Objetivos de Seguridad</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                    
 
@@ -376,7 +397,12 @@ La alta dirección debe asegurarse de que las responsabilidades y autoridades pa
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+6.1 Riesgos y Oportunidades
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 6.1.1 GeneralidadesAl planificar el sistema de Gestión de Seguridad de la Información, la empresa debe considerar las cuestiones referidas en el numeral 4.1 y los requisitos a que se hace referencia en el numeral 4.2 y determinar los riesgos y oportunidades que es necesario tratar.
 <br>6.1.2 Valoración de riesgos de la seguridad de la informaciónLa empresa debe definir y aplicar un proceso de valoración de riesgos de la seguridad de la información.
@@ -401,7 +427,12 @@ La alta dirección debe asegurarse de que las responsabilidades y autoridades pa
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-tratamientoriesg" role="tabpanel" aria-labelledby="informacion-tab-tratamientoriesg">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+6.2 Objetivos de Seguridad
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
                           
 La empresa debe establecer los objetivos de seguridad de la información en las funciones y niveles pertinentes.Los objetivos de seguridad de la información:
@@ -453,28 +484,28 @@ La empresa debe establecer los objetivos de seguridad de la información en las 
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white" align="justify">
+                    <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-clausoporte" data-toggle="tab" href="#informacion-clausoporte" role="tab" aria-controls="informacion-clausoporte" aria-selected="false">7.1 Recursos
-                            <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-clausoporte" data-toggle="tab" href="#informacion-clausoporte" role="tab" aria-controls="informacion-clausoporte" aria-selected="false"><span style="color:#3c3c44;">7.1 Recursos
+                            </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-competencia" data-toggle="tab" href="#informacion-competencia" role="tab" aria-controls="informacion-competencia" aria-selected="false">7.2 Competencia<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-competencia" data-toggle="tab" href="#informacion-competencia" role="tab" aria-controls="informacion-competencia" aria-selected="false"><span style="color:#3c3c44;">7.2 Competencia</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-concientizacion" data-toggle="tab" href="#informacion-concientizacion" role="tab" aria-controls="informacion-concientizacion" aria-selected="false">7.3 Concienciación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-concientizacion" data-toggle="tab" href="#informacion-concientizacion" role="tab" aria-controls="informacion-concientizacion" aria-selected="false"><span style="color:#3c3c44;">7.3 Concienciación</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-comunicacionsiet" data-toggle="tab" href="#informacion-comunicacionsiet" role="tab" aria-controls="informacion-comunicacionsiet" aria-selected="false">7.4 Comunicación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-comunicacionsiet" data-toggle="tab" href="#informacion-comunicacionsiet" role="tab" aria-controls="informacion-comunicacionsiet" aria-selected="false"><span style="color:#3c3c44;">7.4 Comunicación</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-informaciondoc" data-toggle="tab" href="#informacion-informaciondoc" role="tab" aria-controls="informacion-informaciondoc" aria-selected="false">7.5 Información documentada<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-informaciondoc" data-toggle="tab" href="#informacion-informaciondoc" role="tab" aria-controls="informacion-informaciondoc" aria-selected="false"><span style="color:#3c3c44;">7.5 Información documentada</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
                 </ul>
@@ -489,7 +520,12 @@ La empresa debe establecer los objetivos de seguridad de la información en las 
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+7.1 Recursos
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La organización debe determinar y proporcionar los recursos necesarios para el establecimiento, implementación, mantenimiento y mejora continua del Sistema de Gestión de Seguridad de la Información.
 
@@ -509,7 +545,12 @@ La organización debe determinar y proporcionar los recursos necesarios para el 
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-competencia" role="tabpanel" aria-labelledby="informacion-tab-competencia">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+7.2 Competencia
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La organización debe:
 <br>a) Determinar la competencia necesaria de las personas que realizan, bajo su control, un trabajo que afecta su desempeño de la seguridad de la información
@@ -534,7 +575,12 @@ La organización debe:
                     <!--informacion-tres-->
                     <div class=" tab-pane fade" id="informacion-concientizacion" role="tabpanel" aria-labelledby="informacion-tab-concientizacion">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+7.3 Concienciación
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La persona que realizan el trabajo bajo el control de la empresa deben tomar conciencia de:
 <br>a) La política de seguridad de la información
@@ -556,7 +602,12 @@ La persona que realizan el trabajo bajo el control de la empresa deben tomar con
                     <!--informacion-cuatro-->
                     <div class=" tab-pane fade" id="informacion-comunicacionsiet" role="tabpanel" aria-labelledby="informacion-tab-comunicacionsiet">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+7.4 Comunicación
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La organización debe determinar las necesidades de las comunicaciones internas y externas pertinentes al Sistema de Gestión de Seguridad de la Información, que incluyan:
 <br>a) El contenido de la comunicación
@@ -581,9 +632,14 @@ La organización debe determinar las necesidades de las comunicaciones internas 
                     <!--informacion-cinco-->
                     <div class=" tab-pane fade" id="informacion-informaciondoc" role="tabpanel" aria-labelledby="informacion-tab-informaciondoc">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
-7.5.1 GeneralidadesEl Sistema de Gestión de Seguridad de la Información de la empresa debe incluir:
+7.5 Información documentada
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
+
+7.5.1 Generalidades El Sistema de Gestión de Seguridad de la Información de la empresa debe incluir:
 <br>a) La información documentada requerida por la norma ISO 27001
 <br>b) La información documentada que la empresa debe determinar cómo necesaria para la eficacia del Sistema de Gestión de Seguridad de la Información
 <br>7.5.2 Creación y actualizaciónCuando se crea y actualiza información documentada, la empresa debe asegurarse de que lo siguiente sea apropiado:
@@ -634,22 +690,22 @@ c) Revisión y aprobación con respecto a la identidad y adecuación
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white" align="justify">
+                    <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-clausoperacion" data-toggle="tab" href="#informacion-clausoperacion" role="tab" aria-controls="informacion-clausoperacion" aria-selected="false">8.1 Operación
-                            <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-clausoperacion" data-toggle="tab" href="#informacion-clausoperacion" role="tab" aria-controls="informacion-clausoperacion" aria-selected="false"><span style="color:#3c3c44;">8.1 Operación
+                            </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-evaluacionriesgo" data-toggle="tab" href="#informacion-evaluacionriesgo" role="tab" aria-controls="informacion-evaluacionriesgo" aria-selected="false">8.2 Evaluación de riesgos de la <br>seguridad de la información<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-evaluacionriesgo" data-toggle="tab" href="#informacion-evaluacionriesgo" role="tab" aria-controls="informacion-evaluacionriesgo" aria-selected="false"><span style="color:#3c3c44;">8.2 Evaluación de riesgos de la <br>seguridad de la información</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-tratamientriesg" data-toggle="tab" href="#informacion-tratamientriesg" role="tab" aria-controls="informacion-tratamientriesg" aria-selected="false">8.3 Tratamiento de riesgos de <br>seguridad de la información<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-tratamientriesg" data-toggle="tab" href="#informacion-tratamientriesg" role="tab" aria-controls="informacion-tratamientriesg" aria-selected="false"><span style="color:#3c3c44;">8.3 Tratamiento de riesgos de <br>seguridad de la información</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
                 </ul>
@@ -664,7 +720,12 @@ c) Revisión y aprobación con respecto a la identidad y adecuación
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+8.1 Operación
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La organización debe planificar, implantar y controlar los procesos necesarios para cumplir con todos los requisitos de seguridad de la información y para implantar todas las acciones determinadas en el numeral 6.1. La empresa también debe implementar planes para conseguir los objetivos del Sistema de Gestión de Seguridad de la Información.
 <br>La empresa debe mantener información documentada en la medida necesaria para tener la confianza en que los procesos se han llevado a cabo según lo planificado.
@@ -687,7 +748,12 @@ La organización debe planificar, implantar y controlar los procesos necesarios 
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-evaluacionriesgo" role="tabpanel" aria-labelledby="informacion-tab-evaluacionriesgo">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+8.2 Evaluación de riesgos de la Seguridad de la información
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La empresa debe llevar a cabo valoraciones de riesgos de la seguridad de la información a intervalos planificados o cuando se propagan u ocurran cambios significativos, teniendo en cuenta los criterios establecidos.
 <br>La empresa debe conservar información documentada de los resultados de las valoraciones de riesgos en cuanto a la seguridad de la información.
@@ -710,7 +776,12 @@ La empresa debe llevar a cabo valoraciones de riesgos de la seguridad de la info
                     <!--informacion-tres-->
                     <div class=" tab-pane fade" id="informacion-tratamientriesg" role="tabpanel" aria-labelledby="informacion-tab-tratamientriesg">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+8.3 Tratamiento de riesgos de seguridad de la información
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La organización debe implantar el plan de tratamiento de riesgo de la seguridad de la información.
 <br>La organización debe conservar información documentada de los resultados del tratamiento de riesgos de la seguridad de la información.
@@ -739,7 +810,7 @@ La organización debe implantar el plan de tratamiento de riesgo de la seguridad
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white" align="justify">
+                    <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
                         Clausula
                     </div>
@@ -748,13 +819,13 @@ La organización debe implantar el plan de tratamiento de riesgo de la seguridad
                     
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-segnaeva" data-toggle="tab" href="#informacion-segnaeva" role="tab" aria-controls="informacion-segnaeva" aria-selected="false">9.1 Seguimiento, medición, <br> análisis y evaluación<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link  text-black" id="informacion-tab-segnaeva" data-toggle="tab" href="#informacion-segnaeva" role="tab" aria-controls="informacion-segnaeva" aria-selected="false"><span style="color:#3c3c44;"><span style="color:#3c3c44;">9.1 Seguimiento, medición, <br> análisis y evaluación</span></span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-auditint" data-toggle="tab" href="#informacion-auditint" role="tab" aria-controls="informacion-auditint" aria-selected="false">9.2 Auditorías internas<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-auditint" data-toggle="tab" href="#informacion-auditint" role="tab" aria-controls="informacion-auditint" aria-selected="false"><span style="color:#3c3c44;"><span style="color:#3c3c44;">9.2 Auditorías internas</span></span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-revisdir" data-toggle="tab" href="#informacion-revisdir" role="tab" aria-controls="informacion-revisdir" aria-selected="false">9.3 Revisión por la dirección<i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-revisdir" data-toggle="tab" href="#informacion-revisdir" role="tab" aria-controls="informacion-revisdir" aria-selected="false"><span style="color:#3c3c44;"><span style="color:#3c3c44;">9.3 Revisión por la dirección</span></span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
 
@@ -769,7 +840,12 @@ La organización debe implantar el plan de tratamiento de riesgo de la seguridad
                     <!--informacion dos-->
                     <div class=" tab-pane fade" id="informacion-segnaeva" role="tabpanel" aria-labelledby="informacion-tab-segnaeva">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+9.1 Seguimiento, medición, análisis y evaluación
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La empresa debe evaluar el desempeño de la seriedad de la información y la eficacia del Sistema de Gestión de Seguridad de la Información.
 <br>La empresa debe determinar:
@@ -792,7 +868,13 @@ La empresa debe evaluar el desempeño de la seriedad de la información y la efi
                     <!--informacion-tres-->
                     <div class=" tab-pane fade" id="informacion-auditint" role="tabpanel" aria-labelledby="informacion-tab-auditint">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+9.2 Auditorías internas
+</div>
+
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La empresa debe llevar a cabo las auditorías internas a intervalos planificados, para proporcionar información sobre el Sistema de Gestión de Seguridad de la Información:
 <br>a) Está conforme con los requisitos de la empresa para su sistema de gestión y los requisitos de la norma ISO 27001
@@ -819,7 +901,12 @@ La empresa debe llevar a cabo las auditorías internas a intervalos planificados
                     <!--informacion-cuatro-->
                     <div class=" tab-pane fade" id="informacion-revisdir" role="tabpanel" aria-labelledby="informacion-tab-revisdir">
                         <div class="card">
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+9.3 Revisión por la dirección
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La alta dirección debe revisar el Sistema de Gestión de Seguridad de la Información de la organización a intervalos planificados, para asegurarse de que su conveniencia, adecuación y eficacia son continuas.
 <br>La revisión por la dirección debe incluir consideraciones sobre:
@@ -860,19 +947,19 @@ La alta dirección debe revisar el Sistema de Gestión de Seguridad de la Inform
             <div class="col-lg-4 col-md-6 col-sm-12 ">
 
                 <ul class="list-group nav" class="nav" id="myTabJust" style="margin-top:15px;">
-                    <div class="card-header bg-primary text-white" align="justify">
+                    <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
                         Clausula
                     </div>
 
 
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-nocoformidad" data-toggle="tab" href="#informacion-nocoformidad" role="tab" aria-controls="informacion-nocoformidad" aria-selected="false">10.1 No Conformidades y <br> Acciónes Correctivas
-                            <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-nocoformidad" data-toggle="tab" href="#informacion-nocoformidad" role="tab" aria-controls="informacion-nocoformidad" aria-selected="false"><span style="color:#3c3c44;">10.1 No Conformidades y <br> Acciónes Correctivas
+                            </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                     <li class="list-group-item nav-item">
-                        <a class="nav-link" id="informacion-tab-mcontinua" data-toggle="tab" href="#informacion-mcontinua" role="tab" aria-controls="informacion-mcontinua" aria-selected="false">10.2 Mejora Continua
-                            <i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3);"></i></a>
+                        <a class="nav-link" id="informacion-tab-mcontinua" data-toggle="tab" href="#informacion-mcontinua" role="tab" aria-controls="informacion-mcontinua" aria-selected="false"><span style="color:#3c3c44;">10.2 Mejora Continua
+                            </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
 
@@ -889,7 +976,12 @@ La alta dirección debe revisar el Sistema de Gestión de Seguridad de la Inform
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+10.1 No conformidades y acciónes correctivas
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 Cuando ocurra una no conformidad, la empresa debe:a) Reaccionar ante la no conformidad y según sea aplicable<br>
 b) Evaluar la necesidad de acciones para eliminar las causa de la no conformidad, con el fin de que no vuelva a ocurrir ni ocurra en otra parte.
@@ -918,11 +1010,16 @@ La organización debe conservar la información documentada adecuada, como evide
                         <!--card-->
                     </div>
 
-                     <div class="tab-pane fade" id="informacion-tab-mcontinua" role="tabpanel" aria-labelledby="informacion-mcontinua">
+                     <div class="tab-pane fade" id="informacion-mcontinua" role="tabpanel" aria-labelledby="informacion-tab-mcontinua">
 
                         <div class="card">
 
-                            <div class="card-header bg-primary text-white" align="justify">
+                        <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
+
+10.2 Mejora continua
+</div>
+
+<div class="card card-body text-black  bg-light mb-3" align="justify">
 
 La empresa debe mejorar continuamente la conveniencia, adecuación y Sistema de Gestión de Seguridad de la Información.
 
