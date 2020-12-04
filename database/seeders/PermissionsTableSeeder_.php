@@ -1176,30 +1176,6 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 292,
-                'title' => 'analisis_riesgo_access',
-            ],
-            [
-                'id'    => 293,
-                'title' => 'matriz_riesgo_create',
-            ],
-            [
-                'id'    => 294,
-                'title' => 'matriz_riesgo_edit',
-            ],
-            [
-                'id'    => 295,
-                'title' => 'matriz_riesgo_show',
-            ],
-            [
-                'id'    => 296,
-                'title' => 'matriz_riesgo_delete',
-            ],
-            [
-                'id'    => 297,
-                'title' => 'matriz_riesgo_access',
-            ],
-            [
-                'id'    => 298,
                 'title' => 'profile_password_edit',
             ],
         ];
