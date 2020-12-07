@@ -17,40 +17,40 @@
               </div>
 
               <!-- Card -->
-              <div class="card" style="margin-left:10px; margin-right:10px;">
+              <div class="card" style= "border:none; margin-left:10px; margin-right:10px;">
                   <!-- Card content -->
                   <div class="card-body">
                       <!-- Text -->
                       <p class="card-text" align="justify">Definicion del Marco de Seguridad y Privacidad de la Organización. Tiene un peso del 30% del total del componente: 10% - Diagnostico de Seguridad y Privacidad , 20% - Proposito de Seguridad y Privacidad de la Informacion.
                       </p>
                       <p>
-                       <strong>INSTRUCCIONES:</strong> Por favor, conteste el siguiente cuestionario de acuerdo con los siguientes parámetros:                      
+                       <strong>INSTRUCCIONES:</strong> Por favor, conteste el siguiente cuestionario de acuerdo con los siguientes parámetros:
                       </p>
 
                       <table cellspacing="0" cellpadding="15px" style="margin-top: 50px; margin-bottom: 25px;">
                         <tr>
                             <td class="bg-success">
-                                Cumple satisfactoriamente 
+                                Cumple satisfactoriamente
                             </td>
                             <td>
-                              Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.             
+                              Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.
                             </td>
                         </tr>
                         <tr>
                             <td class="bg-warning">
                                 "Cumple
-                                parcialmente" 
+                                parcialmente"
                             </td>
                             <td>
-                                Lo que la norma requiere  (ISO27001 versión 2013)  se está haciendo de manera parcial, se está haciendo diferente, no está documentado, se definió y aprobó pero no se gestiona             
+                                Lo que la norma requiere  (ISO27001 versión 2013)  se está haciendo de manera parcial, se está haciendo diferente, no está documentado, se definió y aprobó pero no se gestiona
                             </td>
                         </tr>
                          <tr>
                             <td class="bg-danger">
-                                No cumple 
+                                No cumple
                             </td>
                             <td>
-                                No existe y/o no se está haciendo.              
+                                No existe y/o no se está haciendo.
                             </td>
                         </tr>
                       </table>
@@ -81,7 +81,7 @@
                             <td>Cumple satisfactoriamente</td>
                             <td>Describir la evidencia que soporta el cumplimiento del requisito. Indicar sitio fisico, o sistema donde se pueda verificar el mismo.  </td>
                             <td>
-                              Pautas que se deben llevar a cabo para dar cumplimiento al requisito. 
+                              Pautas que se deben llevar a cabo para dar cumplimiento al requisito.
                             </td>
                         </tr>
                       </table>

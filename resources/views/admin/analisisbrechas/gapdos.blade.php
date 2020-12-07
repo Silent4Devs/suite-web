@@ -7,7 +7,7 @@
 
 
               <!-- Card -->
-              <div class="card" style="margin-left:10px; margin-right:10px;">
+              <div class="card" style=" border:none; margin-left:10px; margin-right:10px;">
                   <!-- Card content -->
                   <div class="card-body">
                       <!-- Text -->
@@ -15,30 +15,27 @@
                       </p>
                       <p> <strong>INSTRUCCIONES:</strong> Por favor, conteste el siguiente cuestionario de acuerdo con los siguientes parámetros:</p>
 
-                  </div>
 
-              </div>
-              <!-- Card -->
 
               <table
-                  class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PartesInteresada">
+                  class=" table table-bordered table-striped table-hover ajaxTable datatable">
                   <thead>
 
                   <tr>
-                      <th style="background-color: #321fdb;" class="text-white text-center" >Cumple satisfactoriamente</th>
-                      <th>Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.
+                      <th class="text-white text-center bg-info">Cumple satisfactoriamente</th>
+                      <th class="font-weight-normal">Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.
                   </th>
                   <tr>
-                      <th style="background-color: #321fdb;" class="text-white text-center" >Cumple parcialmente</th>
-                      <th>Lo que la norma requiere  (ISO27001 versión 2013)  se está haciendo de manera parcial, se está haciendo diferente, no está documentado, se definió y aprobó pero no se gestiona.
+                      <th class="text-white text-center bg-warning" >Cumple parcialmente</th>
+                      <th class="font-weight-normal">Lo que la norma requiere  (ISO27001 versión 2013)  se está haciendo de manera parcial, se está haciendo diferente, no está documentado, se definió y aprobó pero no se gestiona.
                   </th>
                   <tr>
-                      <th style="background-color: #321fdb;" class="text-white text-center" >No cumple</th>
-                      <th>Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.
+                      <th class="text-white text-center bg-danger"><p style="margin-top:-12px;">No cumple</p></th>
+                      <th class="font-weight-normal">Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.
                   </th>
                   <tr>
-                      <th style="background-color: #321fdb;" class="text-white text-center" >No aplica</th>
-                      <th>El control no es aplicable para la entidad. En el campo evidencia por favor indicar la justificación respectiva de su no aplicabilidad.
+                      <th style="background-color: #ced2d8;  margin-top:-20px;" class="text-center" style="color: #000;"><p  style="margin-top:-20px;"> No aplica </p></th>
+                      <th class="font-weight-normal">El control no es aplicable para la entidad. En el campo evidencia por favor indicar la justificación respectiva de su no aplicabilidad.
                   </th>
                   </tr>
                   </thead>
@@ -47,7 +44,7 @@
 
 
               <table
-                  class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PartesInteresada" style="margin-top:15px;">
+                  class=" table table-bordered table-striped table-hover ajaxTable datatable" style="margin-top:50px;">
                   <thead>
 
                   <tr>
@@ -63,10 +60,10 @@
 
 
               <table
-                  class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PartesInteresada"style="margin-top:-15px;"  >
+                  class=" table table-bordered table-striped table-hover ajaxTable datatable"style="margin-top:-17px;"  >
                   <thead>
 
-                  <tr style="background-color: #321fdb;" class="text-white text-center">
+                  <tr style="color: #000;"  class=" text-center bg-light">
                       <th>Control</th>
                       <th>Valoración</th>
                       <th >Evidencia de cumplimiento</th>
@@ -79,30 +76,15 @@
 
 
               <table
-                  class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PartesInteresada" style="margin-top:-20px;">
+                  class=" table table-bordered table-striped table-hover ajaxTable datatable " style="margin-top:-18px;">
                   <thead>
 
                   <tr>
-                      <th style="background-color: #321fdb;" class="text-white text-center" >A5</th>
-                      <th>Políticas de la Seguridad de la Información</th></th>
+                      <th style="background-color: #888"  class="text-white text-center">A5</th>
+                      <th style="background-color: #888" class="text-white">Políticas de la Seguridad de la Información</th></th>
                   <tr>
-                      <th style="background-color: #321fdb;" class="text-white text-center" >A5.1</th>
-                      <th>Orientación de la dirección para la gestión de la seguridad de la información</th>
-
-
-                  </tr>
-
-                  </thead>
-
-              </table>
-
-
-              <table
-                  class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PartesInteresada" style="margin-top:-20px;">
-                  <thead>
-
-                  <tr>
-                      <th style="background-color: #321fdb;" class="text-white text-center" >OBJETIVO: Brindar orientación y soporte, por parte de la dirección, para la seguridad de la información de acuerdo con los requisitos del negocio y con las leyes y reglamentos pertinentes</th>
+                      <th style="background-color: #888" class="text-white text-center" >A5.1</th>
+                      <th style="background-color: #888" class="text-white">Orientación de la dirección para la gestión de la seguridad de la información</th>
 
 
                   </tr>
@@ -113,38 +95,50 @@
 
 
 
+                <table
+                    class=" table table-bordered table-striped table-hover ajaxTable datatable" style="margin-top:-20px;">
+                    <thead>
 
-              <table
-                  class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PartesInteresada" style="margin-top:-15px;">
-                  <thead>
+                    <tr>
+                        <th style="background-color:#888;" class="text-white" ><p class="font-weight-normal"><strong>OBJETIVO:</strong> Brindar orientación y soporte, por parte de la dirección, para la seguridad de la información de acuerdo con los requisitos del negocio y con las leyes y reglamentos pertinentes</p></th>
+
+
+                    </tr>
+
+                    </thead>
+
+                </table>
+
+              <table cellspacing="0"  cellpadding="15px" style="margin-top:-17px;">
 
                   <tr>
 
-                      <th>A5.1.1</th>
-                      <th>Políticas para la seguridad de la información</th>
-                      <th>Se debe definir un conjunto de políticas para la seguridad de la información, aprobada por la dirección, publicada y comunicada a los empleados y a las partes externas pertinentes.</th>
-                      <th>Cumple parcialmente</th>
-                      <th>Describir la evidencia que soporta el cumplimiento del requisito. Indicar sitio fisico, o sistema donde se pueda verificar el mismo. </th>
-                      <th>Pautas que se deben llevar a cabo para dar cumplimiento al requisito.</th>
-
-
+                    <th class="font-weight-normal">A5.1.1</th>
+                    <th class="font-weight-normal">Políticas para la seguridad de la información</th>
+                    <th class="font-weight-normal">Se debe definir un conjunto de políticas para la seguridad de la información, aprobada por la dirección, publicada y comunicada a los empleados y a las partes externas pertinentes.</th>
+                    <th class="font-weight-normal">Cumple parcialmente</th>
+                    <th class="font-weight-normal">Describir la evidencia que soporta el cumplimiento del requisito. Indicar sitio fisico, o sistema donde se pueda verificar el mismo. </th>
+                    <th class="font-weight-normal">Pautas que se deben llevar a cabo para dar cumplimiento al requisito.</th>
                   </tr>
 
                   <tr>
+                  <th  class="font-weight-normal" style="margin-top:-20px;">A5.1.2</th>
+                  <th class="font-weight-normal">Revisión de las políticas para la seguridad de la información.</th>
+                  <th class="font-weight-normal">Las políticas para la seguridad de la información se deben revisar a intervalos planificados o si ocurren cambios  significativos, para asegurar su conveniencia, adecuación y eficacia continua.</th>
+                  <th class="font-weight-normal">Cumple parcialmente</th>
+                  <th class="font-weight-normal">Describir la evidencia que soporta el cumplimiento del requisito. Indicar sitio fisico, o sistema donde se pueda verificar el mismo.  </th>
+                  <th class="font-weight-normal">Pautas que se deben llevar a cabo para dar cumplimiento al requisito.</th>
 
-                      <th>A5.1.1</th>
-                      <th>Políticas para la seguridad de la información</th>
-                      <th>Se debe definir un conjunto de políticas para la seguridad de la información, aprobada por la dirección, publicada y comunicada a los empleados y a las partes externas pertinentes.</th>
-                      <th>Cumple parcialmente</th>
-                      <th>Describir la evidencia que soporta el cumplimiento del requisito. Indicar sitio fisico, o sistema donde se pueda verificar el mismo. </th>
-                      <th>Pautas que se deben llevar a cabo para dar cumplimiento al requisito.</th>
-
-
-                  </tr>
-
-                  </thead>
+                </tr>
 
               </table>
-          </div>
 
-      </div>
+
+            </div>
+              <!-- Card body -->
+        </div>
+        <!-- Card -->
+
+    </div>
+
+</div>
