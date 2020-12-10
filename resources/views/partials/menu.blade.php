@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
+
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light">
 
 <div class="c-sidebar-brand d-md-down-none bg-transparent">
@@ -8,6 +10,13 @@
         </div>
 
     </div>
+
+     <style type="text/css">
+        .c-dark-theme{
+            background-color: #000;
+            color: #fff;
+        }
+    </style>
 
     <ul class="c-sidebar-nav">
 
@@ -852,3 +861,5 @@
     </ul>
 
 </div>
+
+<script type="text/javascript" src="{{ asset('js/dark_mode.js') }}"></script>

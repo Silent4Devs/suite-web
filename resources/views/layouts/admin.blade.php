@@ -32,7 +32,7 @@
     <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
     <style type="text/css">
         .iconos-crear{
             font-size: 15pt;
@@ -46,7 +46,7 @@
     @yield('styles')
 </head>
 
-<body class="c-app">
+<body class="">
 @include('partials.menu')
 <div class="c-wrapper">
     <header class="c-header c-header-fixed px-3"
@@ -229,6 +229,7 @@
 <script>
     $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 </script>
+<script type="text/javascript" src="{{ asset('js/dark_mode.js') }}"></script>
 <script>
     $(function () {
         let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
