@@ -293,19 +293,29 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
     Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
 
-// Matriz Riesgos
-Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
-Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+     // Matriz Riesgos
+     Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
+     Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+     // Gap Unos
+     Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
+     Route::resource('gap-unos', 'GapUnoController');
+ 
+     // Gap Dos
+     Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
+     Route::resource('gap-dos', 'GapDosController');
+ 
+     // Gap Tres
+     Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
+     Route::resource('gap-tres', 'GapTresController');
 
-Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
-Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
-Route::get('user-alerts/read', 'UserAlertsController@read');
-Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
-Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
-
+    Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
+    Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
+    Route::get('user-alerts/read', 'UserAlertsController@read');
+    Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
+    Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
-// Change password
+    // Change password
     if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
         Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
         Route::post('password', 'ChangePasswordController@update')->name('password.update');
@@ -333,11 +343,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
     Route::resource('organizacions', 'OrganizacionController');
 
-    // Dashboards
-    Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-    // Implementacions
-    Route::resource('implementacions', 'ImplementacionController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Glosarios
     Route::delete('glosarios/destroy', 'GlosarioController@massDestroy')->name('glosarios.massDestroy');
@@ -351,9 +356,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
 
-    // Entendimiento Organizacions
-    Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
+ 
     // Partes Interesadas
     Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
     Route::resource('partes-interesadas', 'PartesInteresadasController');
@@ -401,14 +404,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     // Competencia
     Route::delete('competencia/destroy', 'CompetenciasController@massDestroy')->name('competencia.massDestroy');
     Route::resource('competencia', 'CompetenciasController');
-
-    // Adquirirveintidostrecientosunos
-    Route::resource('adquirirveintidostrecientosunos', 'AdquirirveintidostrecientosunoController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-    // Adquirirtreintaunmils
-    Route::resource('adquirirtreintaunmils', 'AdquirirtreintaunmilController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-    // Concientizacion Sgis
+  // Concientizacion Sgis
     Route::delete('concientizacion-sgis/destroy', 'ConcientizacionSgiController@massDestroy')->name('concientizacion-sgis.massDestroy');
     Route::resource('concientizacion-sgis', 'ConcientizacionSgiController');
 
@@ -553,10 +549,20 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::delete('faq-categories/destroy', 'FaqCategoryController@massDestroy')->name('faq-categories.massDestroy');
     Route::resource('faq-categories', 'FaqCategoryController');
 
- // Matriz Riesgos
- Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
- Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+    // Matriz Riesgos
+    Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
+    Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+    // Gap Unos
+    Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
+    Route::resource('gap-unos', 'GapUnoController');
 
+    // Gap Dos
+    Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
+    Route::resource('gap-dos', 'GapDosController');
+
+    // Gap Tres
+    Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
+    Route::resource('gap-tres', 'GapTresController');
 
     // Faq Questions
     Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
@@ -569,7 +575,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('profile/toggle-two-factor', 'ProfileController@toggleTwoFactor')->name('profile.toggle-two-factor');
 });
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
-// Two Factor Authentication
+    // Two Factor Authentication
     if (file_exists(app_path('Http/Controllers/Auth/TwoFactorController.php'))) {
         Route::get('two-factor', 'TwoFactorController@show')->name('twoFactor.show');
         Route::post('two-factor', 'TwoFactorController@check')->name('twoFactor.check');

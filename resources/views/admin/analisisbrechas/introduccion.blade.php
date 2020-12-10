@@ -27,7 +27,7 @@
 
 
 
-              <img class="card-img-top" src="../img/seguridad.jpg" alt="Card image">
+              <img class="card-img-top" src="../public/img/gap_Ana.jpg" alt="Card image">
 
               <!-- Card image -->
 

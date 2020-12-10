@@ -92,9 +92,9 @@
             </li>
         @endcan
         @can('analisis_riesgo_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/matriz-riesgos*") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/matriz-riesgos*") ? "c-show" : "" }} {{ request()->is("admin/gap-unos*") ? "c-show" : "" }} {{ request()->is("admin/gap-dos*") ? "c-show" : "" }} {{ request()->is("admin/gap-tres*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fas fa-virus-slash iconos-crear c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
                     </i>
                     {{ trans('cruds.analisisRiesgo.title') }}
@@ -103,13 +103,14 @@
                     @can('matriz_riesgo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.matriz-riesgos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/matriz-riesgos") || request()->is("admin/matriz-riesgos/*") ? "c-active" : "" }}">
-                                <i class="fas fa-virus-slash iconos-crear c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
                                 </i>
                                 {{ trans('cruds.matrizRiesgo.title') }}
                             </a>
                         </li>
                     @endcan
+                   
                 </ul>
             </li>
         @endcan
