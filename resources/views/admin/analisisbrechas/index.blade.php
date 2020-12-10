@@ -34,7 +34,7 @@
                     <div class="tab-pane fade" id="gap2-just" role="tabpanel" aria-labelledby="gap2-tab-just">
                         @include('admin.analisisbrechas.gapdos')
                     </div>
-                    <div class="tab-pane fade" id="gap3-just" role="tabpanel" aria-labelledby="gap3-tab-just" style="display: flex; justify-content: center; align-items: center;">
+                    <div class="tab-pane fade" id="gap3-just" role="tabpanel" aria-labelledby="gap3-tab-just">
                         @include('admin.analisisbrechas.gaptres')
                     </div>
                     <div class="tab-pane fade" id="dash-just" role="tabpanel" aria-labelledby="dash-tab-just">
