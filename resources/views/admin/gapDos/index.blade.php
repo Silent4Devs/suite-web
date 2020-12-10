@@ -1,49 +1,21 @@
-      <div class="row">
-          <div class="col-12 col-md-12 col-sm-12">
-              <div class="card-header font-weight-bold  text-white" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
-              GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN (40%)
-              </div>
+@extends('layouts.admin')
+@section('content')
+@can('gap_do_create')
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ route('admin.gap-dos.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.gapDo.title_singular') }}
+            </a>
+        </div>
+    </div>
+@endcan
+<div class="card">
+    <div class="card-header">
+        {{ trans('cruds.gapDo.title_singular') }} {{ trans('global.list') }}
+    </div>
 
-
-
-              <!-- Card -->
-              <div class="card" style=" border:none; margin-left:10px; margin-right:10px;">
-                  <!-- Card content -->
-                  <div class="card-body">
-                      <!-- Text -->
-                      <p class="card-text" align="justify">Implementacion del Plan de Seguridad y Privacidad. Tiene un peso del 40% del total del componente: 20% - Identificacion y analisis de riesgos, 20% - Plan de tratamiento de riesgos, clasificacion y gestion de controles.
-                      </p>
-                      <p> <strong>INSTRUCCIONES:</strong> Por favor, conteste el siguiente cuestionario de acuerdo con los siguientes parámetros:</p>
-
-
-
-              <table
-                  class=" table table-bordered table-striped table-hover ajaxTable datatable">
-                  <thead>
-
-                  <tr>
-                      <th class="text-white text-center bg-info">Cumple satisfactoriamente</th>
-                      <th class="font-weight-normal">Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.
-                  </th>
-                  <tr>
-                      <th class="text-white text-center bg-warning" >Cumple parcialmente</th>
-                      <th class="font-weight-normal">Lo que la norma requiere  (ISO27001 versión 2013)  se está haciendo de manera parcial, se está haciendo diferente, no está documentado, se definió y aprobó pero no se gestiona.
-                  </th>
-                  <tr>
-                      <th class="text-white text-center bg-danger"><p style="margin-top:-12px;">No cumple</p></th>
-                      <th class="font-weight-normal">Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.
-                  </th>
-                  <tr>
-                      <th style="background-color: #ced2d8;  margin-top:-20px;" class="text-center" style="color: #000;"><p  style="margin-top:-20px;"> No aplica </p></th>
-                      <th class="font-weight-normal">El control no es aplicable para la entidad. En el campo evidencia por favor indicar la justificación respectiva de su no aplicabilidad.
-                  </th>
-                  </tr>
-                  </thead>
-
-              </table>
-
-
-              <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-GapDo">
+    <div class="card-body">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-GapDo">
             <thead>
                 <tr>
                     <th width="10">
@@ -108,16 +80,12 @@
                 </tr>
             </thead>
         </table>
-
-
-            </div>
-              <!-- Card body -->
-        </div>
-        <!-- Card -->
-
     </div>
-
 </div>
+
+
+
+@endsection
 @section('scripts')
 @parent
 <script>
