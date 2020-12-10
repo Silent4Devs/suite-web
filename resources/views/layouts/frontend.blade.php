@@ -29,6 +29,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/Silent4Business-Logo-Color.png') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
    
     @yield('styles')
 </head>
@@ -521,6 +522,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/dark_mode.js') }}"></script>
 @yield('scripts')
 
 </html>

@@ -1,10 +1,13 @@
 <style>
-.botoneje {
-  float: right;
-}
-
-}
-
+    .botoneje {
+      float: right;
+    }
+    h6{
+        font-weight: bold;
+    }
+    .subtitulo{
+        color: #777;
+    }
 </style>
 <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:-30px;">
     <li class="nav-item" role="presentation">
@@ -82,13 +85,43 @@ Objetivo del SGSI.
 
 
                             <div class="card-body">
-                                <p align="justify">La forma y el área de prioridad dependerán del entorno en el que opera la organización. Incluyendo los siguientes niveles:</p>
+                                <p align="justify">Antes de iniciar con la implementación de la norma ISO 27001 es necesario definir su alcance de aplicación.</p>
 
-                                <p align="justify">• Interno: Aspectos que la organización puede controlar.</p>
+                                <p align="justify">
+                                    <h6>ALCANCE DEL SGSI</h6>
+                                    Para definir el alcance del Sistema de Gestión de Seguridad de la Información debemos identificar qué información vamos a proteger, considerando la responsabilidad de su protección sin importar dónde, cómo y quién acceda a esta información.
+                                </p>
 
-                                <p align="justify">• Externo: Aspecto que la organización no puede controlar directamente.</p>
+                                <p align="justify">Cuando nos ponemos a analizar la información sobre la que tenemos la responsabilidad de proteger, deberemos pensar en que no importa si esta información se almacena en las oficinas de su empresa o en algún lugar de la nube; no importa si se accede a esta información desde su red local o mediante acceso remoto.</p>
+
+                                <p align="justify">
+                                    <h6>ALCANCE DEL SGSI EN LA CERTIFICACIÓN</h6>
+                                    En el caso de que hayamos elegido certificar nuestro sistema SGSI, el auditor en la etapa de certificación verificará si todos los elementos del SGSI cumplen sus requisitos y están correctamente implementados, pero solo dentro de su alcance; no comprobará los departamentos o sistemas que no están incluidos en el alcance definido para el SGSI.</p>
+
+                                <p align="justify">En este capítulo la norma nos da unas indicaciones de la aplicabilidad de la norma ISO 27001 y de cómo usarla. </p>
+
+                                <p align="justify">
+                                    <h6>ANÁLISIS DE BRECHAS ISO 27001 (GAP ANALYSIS) </h6>
+                                    Antes de iniciar con la implementación del Sistema de Gestión de Seguridad de la Información (SGSI) en la Organizacion, es necesario realizar un diagnóstico inicial para determinar el grado de cumplimiento tanto de los requisitos de la norma ISO 27001 como de sus controles. Para lograr este objetivo emplearemos el Análisis de Brechas (Gap Analysis). 
+                                </p>
+                                <p align="justify">
+                                    Un análisis de brechas GAP es un método para evaluar las diferencias de rendimiento entre los sistemas de información de una empresa o las aplicaciones de software para determinar si se cumplen los requisitos del negocio y, de no ser así, qué pasos se deben tomar para garantizar que se cumplan con éxito. Gap se refiere al espacio entre "donde estamos" (el presente) y "donde queremos estar" (el objetivo a alcanzar). Un análisis de deficiencias también puede denominarse análisis de necesidades, permitiéndonos determinar lo que nos falta y los recursos necesarios para alcanzar los objetivos.
+                                </p>
+                                <p align="justify">
+                                    Por lo tanto, este análisis nos permitirá determinar el nivel de madurez que presenta la Organización respecto a los temas relacionados con Seguridad de la Información y establecer el punto de partida para implementar la norma y evaluar el esfuerzo necesario, así como tener una herramienta fiable para elaborar un plan de implementación de ISO 27001.
+                                </p>
+                                <p align="justify">
+                                    Así mismo, podrá utilizar esta herramienta después de la ejecución del plan de implementación para evaluar el grado de avance del proyecto.
+                                </p>
+                                <p align="justify">
+                                    <h6>CONTEXTO DE LA ORGANIZACIÓN </h6>
+                                    Esta fase del proyecto consiste en establecer el contexto del SGSI en cumplimiento de los requisitos de la norma ISO 27001 recogidos en la cláusula 4 de la Norma. 
+                                </p>
+                                <p align="justify">
+                                    El contexto organizacional consiste en considerar las expectativas y necesidades de todas las partes interesadas, así como en determinar o identificar los “problemas” internos y externos a los que se enfrenta la organización.
+                                </p>
                             </div>
-                            <div class="col-lg-9 col-md-6 col-sm-12" style="margin-left:75%">
+                            <div class="col-lg-9 col-md-6 col-sm-12" style="margin-left:75%; margin-bottom: 30px;">
                                 <a href="{{ route("admin.entendimiento-organizacions.index") }}" class="btn btn-info" role="button">Ejecutar</a>
                             </div>
                             <br>
@@ -108,18 +141,42 @@ Objetivo del SGSI.
  La organizacion debe determinar las cuestiones externas e internas que son pertinentes para su propósito y que afectan a su capacidad para lograr los resultados previstos de su sistema de gestión de seguridad de la información.
                             </div>
                             <div class="card-body ">
-                                <p align="justify">Los siguientes son ejemplos de áreas que se pueden considerar al evaluar problemas internos que pueden afectar en los riesgos del SGSI:</p>
-                                <p align="justify">• Nivel de Madurez</p>
-                                <p align="justify">• Cultura organizativa</p>
-                                <p align="justify">• Gestión</p>
-                                <p align="justify">• Recursos</p>
-                                <p align="justify">• Madurez de los recursos</p>
-                                <p align="justify">• Formato de los activos de información:</p>
-                                <p align="justify">• Sensibilidad/valor de los activos de información</p>
-                                <p align="justify">• Consistencia</p>
-                                <p align="justify">• Sistemas</p>
-                                <p align="justify">• Complejidad del sistema</p>
-                                <p align="justify">• Espacio físico</p>
+                                <p align="justify">
+                                    La norma ISO 27001 alineándose con los estándares ISO 31000 sobre Gestión del Riesgo, nos propone ayudarnos con los requisitos del capítulo 5.3 de esta norma para la determinación de estas cuestiones. 
+                                </p>
+                                <p align="justify">
+                                    El contexto organizacional consiste en considerar las expectativas y necesidades de todas las partes interesadas, así como en determinar o identificar los “problemas” internos y externos a los que se enfrenta la organización y que afectan su capacidad para lograr los resultados previstos de su Sistema de Gestión de Seguridad de la Información (SGSI). Para realizar este análisis se empleará la metodología FODA para entender el contexto de la organización en las dos perspectivas mencionadas.
+                                </p>
+                                <p align="justify">
+                                    El análisis FODA es una metodología donde conformaras un cuadro de la situación actual de la organización permitiendo de esta manera obtener un diagnóstico preciso para tomar decisiones (estrategias) que favorezcan el posicionamiento de este. El análisis FODA está compuesto por una evaluación de las competencias internas como fortalezas (F), debilidades (D), y las competencias externas como las oportunidades (O) y amenazas (A), dónde nos proporciona un esquema para la toma de decisiones estratégicas.  
+                                </p>
+                                <p align="justify">
+                                    <h6>El contexto externo</h6>
+                                    El contexto externo puede incluir:
+                                    <ul>
+                                        <li>El entorno social y cultural, político, legal, regulatorio, financiero, tecnológico, económico, ambiental</li>
+                                        <li>El entorno competitivo, ya sea internacional, nacional, regional o local;</li>
+                                        <li>Los factores clave del negocio y las tendencias que tienen impacto en los objetivos de la organización;</li>
+                                        <li>Las percepciones y los valores de las partes interesadas externas (contratistas, clientes, administraciones públicas etc.).</li>
+                                    </ul>
+                                </p>
+                                <p align="justify">
+                                    <h6>El contexto interno</h6>
+                                    El contexto interno incluye cualquier cosa dentro de la organización que pueda influir en la forma en que una organización administrará su riesgo de seguridad de la información.
+                                </p>
+                                <p align="justify">
+                                    El contexto interno puede incluir:
+                                    <ul>
+                                        <li> El gobierno y administración, la estructura organizacional, los roles y responsabilidades;</li>
+                                        <li>Las políticas, los objetivos y las estrategias que existen para alcanzarlos;</li>
+                                        <li>Capacidades, entendidas en términos de recursos y conocimiento (por ejemplo, capital, tiempo, personas, procesos, sistemas y tecnologías);</li>
+                                        <li>Las relaciones con las percepciones y valores de las partes interesadas internas;</li>
+                                        <li>La cultura de la organización;</li>
+                                        <li>Los sistemas de información, flujos de información y procesos de toma de decisiones (tanto formales como informales)</li>
+                                        <li>Normas, directrices y modelos adoptados por la organización y la forma y el alcance de las relaciones contractuales</li>
+                                    </ul>
+                                </p>
+                                
                             </div>
 
                         </div>
@@ -143,11 +200,51 @@ Objetivo del SGSI.
 
                             </div>
                             <div class="card-body ">
-                                <p align="justify">Una parte interesada es cualquier persona que pueda ser o se considere afectada por acciones u omisiones de la organización. A lo largo de todo el análisis de los problemas internos y externos, las partes interesadas permanecerán claras. Pueden incluir accionistas, propietarios, reguladores, clientes, empleados y competidores, y pueden extenderse al público y al medio ambiente, según la naturaleza del negocio. No es necesario que intente comprender o satisfacer todos los caprichos, pero determinarán qué necesidades y expectativas están relacionadas con el SGSI.</p>
+                                <p align="justify">
+                                    <h6>¿Qué son las partes interesadas en el contexto del SGSI?</h6>
+
+                                    Se trata de personas u organizaciones que pueden influir en la seguridad de la información o en la continuidad del negocio. Por otro lado, puede tratarse de personas o entidades que pueden verse afectadas por la seguridad de la información o las actividades de continuidad del negocio.
+                                </p>
+                                <p align="justify">
+                                    <h6>Típicamente, las partes interesadas podrían incluir:</h6>
+                                    <ul>
+                                        <li>Empleados</li>
+                                        <li>Accionistas o propietarios del negocio</li>
+                                        <li>Agencias gubernamentales y entidades reguladoras</li>
+                                        <li>Servicios de emergencia (por ejemplo, bomberos, policía, ambulancia, etc.</li>
+                                        <li>Clientes</li>
+                                        <li>Medios de comunicación </li>
+                                        <li>Proveedores y socios </li>
+                                        <li>Cualquier otra persona que considere importante para su negocio</li>
+                                        <li>Habiendo identificado a sus partes interesadas, ahora hay demandas para que una organización considere sus necesidades y expectativas</li>
+                                    </ul>
+                                </p>
+                                <p align="justify">
+                                    <h6>NOTAS:</h6>
+                                    <ul>
+                                        <li>Las necesidades y expectativas son solo aquellas relevantes para la seguridad de la información. </li>
+                                        <li>Los requisitos legales y reglamentarios, así como las obligaciones contractuales pueden incluirse en los requisitos de las partes interesadas.</li>
+                                        <li>Algo que parece evidente, pero que conviene resaltar es que necesita averiguar lo que las partes interesadas quieren de usted, y necesita averiguar cómo satisfacer todos estos requisitos en su SGSI</li>
+                                    </ul>
+                                </p>
+                                <p align="justify">
+                                    <h6>Requisitos legales, reglamentarios y de otros tipos aplicables </h6>
+                                    Como siguiente paso debe especificar exactamente qué leyes y reglamentos, así como cláusulas de seguridad o continuidad existen en los contratos al igual que en los demás requisitos de partes interesadas
+                                </p>
+                                <p align="justify">
+                                    Los requisitos legales, reglamentarios y de otros tipos aplicables son tomados en cuenta al establecer, implantar y mantener el SGSI.
+                                </p>
+                                <p align="justify">
+                                    La tarea de identificar los requisitos hay que realizarla antes de comenzar a desarrollar su SGSI.
+                                </p>
+                                <p align="justify">
+                                    La organización debe documentar, publicar y actualizar una Lista de requisitos legales y regulatorios para la consulta de las partes interesadas que se vean afectados. 
+                                </p>
 
                             </div>
-                            <div class="col-lg-9 col-md-6 col-sm-12" style="margin-left:75%">
-                                <a href="{{ route("admin.partes-interesadas.index") }}" class="btn btn-info" role="button">Ejecutar</a>
+                            <div class="col-12 text-center" style=" margin-bottom: 30px;">
+                                <a href="{{ route("admin.partes-interesadas.index") }}" class="btn btn-info" role="button">PARTES INTERESADAS </a>
+                                <a href="{{ route("admin.partes-interesadas.index") }}" class="btn btn-info" role="button">LISTA DE REQUISITOS  </a>
                             </div>
                             <br>
                         </div>
@@ -174,15 +271,108 @@ Objetivo del SGSI.
                                 El alcance debe estar disponible como información documentada.
                             </div>
                             <div class="card-body ">
-                                <p align="justify">• Para cumplir con esta norma, documentará el alcance del SGSI. El alcance generalmente describe:</p>
-                                <p align="justify">• Incluir (o no incluir) la restricción de uno o más sitios físicos;</p>
-                                <p align="justify">• Incluir (o excluir) restricciones de red físicas y lógicas;</p>
-                                <p align="justify">• Incluir (o excluir) el grupo de empleados internos y externos;</p>
-                                <p align="justify">• Incluir (o excluir) procesos, actividades o servicios internos y externos; y La interfaz crítica que está dentro de los límites del alcance.</p>
+                                <p align="justify">
+                                    En este punto se deben definir los límites en la aplicación del sistema de gestión de la seguridad de la información. 
+                                </p>
+                                <p align="justify">
+                                    Los elementos que debemos tener en cuenta para la definición del alcance son:
+                                    <ul>
+                                        <li>El contexto de la organización: Las cuestiones Internas y Externas</li>
+                                        <li>Los requisitos y expectativas de las partes interesadas</li>
+                                    </ul>
+                                    Identificar el alcance correcto del SGSI es crucial porque ayudará a las organizaciones a cumplir sus requisitos de seguridad y planificar la implementación del SGSI
+                                </p>
+                                <p align="justify">
+                                    Una correcta definición del alcance permitirá:
+                                    <ul>
+                                        <li>Determinar los recursos necesarios evitando el uso innecesario de recursos (en términos de tiempo, costo y esfuerzo</li>
+                                        <li> Planificar la implementación del SGSI determinando el calendario y el presupuesto necesario.</li>
+                                        <li>Alinear los requisitos de seguridad de la organización con los ejercicios de análisis y evaluación de riesgos.</li>
+                                    </ul>
+                                </p>
+                                <p align="justify">
+                                    Ejemplos de preguntas que pueden guiar a las organizaciones a la hora de definir el alcance y los límites del SGSI:
+                                    <ul>
+                                        <li> ¿Qué productos y servicios en su organización estarán cubiertos por el SGSI? </li>
+                                        <li> ¿Cómo y por qué el producto o servicio seleccionado es crítico para su organización?</li>
+                                        <li>¿Cuáles son las características del servicio seleccionado?; es decir, el negocio, la organización, sus ubicaciones, activos y tecnologías para ser incluidos en el SGSI </li>
+                                        <li>¿Va a requerir que las partes externas, proveedores cumplan con su SGSI?</li>
+                                        <li> ¿Si las actividades realizadas por la organización requieren de interfaces o dependencias externas o de actividades realizados por terceros? ¿Deberían ser considerados dentro del alcance del SGSI? </li>
+                                    </ul>
+                                </p>
+                                <p align="justify">
+                                    Consideraciones antes de definir el Alcance del SGSI
+                                    <ol>
+                                        <li> Considere los requisitos de seguridad de la información que se han identificado en la Cláusula 4.1 – Definir los requisitos de seguridad de la información; 2. Considerar los servicios críticos que pueden causar un gran impacto en la organización o en sus clientes y partes interesadas como resultado de pérdidas de confidencialidad, integridad o disponibilidad;</li>
+                                        <li>Definir el alcance y los límites de la organización;</li>
+                                        <li>Definir el alcance y los límites de la Tecnología de Comunicación de Información (TIC)</li>
+                                        <li>Definir el alcance físico y los límites</li>
+                                        <li>Integre alcance y límites elementales para obtener el alcance y los límites del SGSI.</li>
+                                        <li>Considere las actividades externalizadas, así como las interfaces y dependencias requeridas.</li>
+                                    </ol>
+                                </p>
+                                <p align="justify">
+                                    <h6>Cómo definir el alcance de un SGSI</h6>
+                                  <h6 class="subtitulo">1. Identificar lo que necesita ser protegido.</h6>
+                                </p>
+                                <p align="justify">
+                                    Una de las primeras preguntas que debemos hacer es "¿Qué necesita protección?
+                                </p>
+                                <p align="justify">
+                                    Para establecer que los activos realmente valen la pena proteger, la organización debe justificar por qué cada activo requiere protección mediante un inventario de activos. El análisis y evaluación del riesgo de cada activo determinaran su inclusión en el alcance del SGSI
+                                </p>
+                                <p align="justify">
+                                    De cualquier manera, el alcance debe definir claramente lo que se está incluyendo, en función de los objetivos comerciales y los activos de información que se protegerán, y debe quedar claro que todo lo demás está fuera del alcance
+                                </p>
+                                <p align="justify">
+                                    Recomendación: Una vez definidos los procesos y las actividades incluidas en el alcance y para que el alcance sea completamente claro, especialmente para terceros, resulta útil identificar lo que no está en el alcance (por ejemplo, las actividades del departamento de recursos humanos). 
+                                </p>
+                                <p align="justify">
+                                    <h6 class="subtitulo">2. Comprenda la organización</h6>
+                                    Cuando el alcance de un SGSI se define por la necesidad de proteger un activo en particular es importante entender primero los componentes del sistema y la estructura involucrada en la entrega de los servicios relevantes.
+                                </p>
+                                <p align="justify">
+                                    Esto puede incluir, por ejemplo, obtener diagramas de sistema que muestren los almacenamientos y flujos de datos y los sistemas de TI relevantes. El personal involucrado en la administración y entrega de todos los componentes del sistema probablemente será considerado "dentro del alcance". 
+                                </p>
+                                <p align="justify">
+                                    <h6 class="subtitulo">3. Asegurar el apoyo al alcance del SGSI</h6>
+                                    El alcance de un SGSI, política, proyecto o auditoría, etc. debe ser respaldado y acordado formalmente por las principales partes interesadas relevantes
+                                </p>
+                                <p align="justify">
+                                    Si no se identifica correctamente y se acepta formalmente el alcance seguramente tendremos dificultades para realizar el plan de implantación del SGSI
+                                </p>
+                                <p align="justify">
+                                    Para quienes manejan la seguridad de la información, es importante considerar los límites del control y la autoridad.
+                                </p>
+                                <p align="justify">
+                                    <strong>Recomendación:</strong> Si se da el caso de que la seguridad de los servicios o sistemas en un departamento particular está fuera del control o la autoridad de los propietarios del SGSI, no deberían incluirse en el alcance. En el contexto de una auditoría, se hace imprescindible acordar qué sistemas están en el alcance ya que hay que garantizar a qué sistemas el auditor está autorizado a acceder y en qué circunstancias. En caso contrario podemos tener problemas incluso legales.
+                                </p>
+                                <p align="justify">
+                                    <h6 class="subtitulo">4. Monitorear y revisar</h6>
+                                    El alcance de un SGSI, política, auditoría o proyecto no es estático y puede evolucionar con el tiempo a medida que se desarrollan las circunstancias, las amenazas, las tecnologías y los requisitos. Por lo tanto, el alcance no es algo que deba hacerse una vez al comienzo de un proyecto y luego se lo olvide. 
+                                </p>
+                                <p align="justify">
+                                    El alcance del SGSI debe ser revisado a intervalos regulares o cuando haya cambios significativos estableciendo para ello dependencias de tiempo en el proyecto de seguridad que debería ser aplicable para un período de tiempo particular.
+                                </p>
+                                <p align="justify">
+                                    Motivos para revisar el alcance del SGSI
+                                    <ul>
+                                        <li> Cambios en el entorno regulatorio </li>
+                                        <li> Actualizaciones a estándares o en requisitos de terceros</li>
+                                        <li> Cambio en la organización (por ejemplo, cambios en la estructura de la organización) </li>
+                                        <li> No conformidades o incidentes que indiquen alcance incorrecto</li>
+                                        <li> Madurez general del SGSI (el alcance puede aumentar con el tiempo) </li>
+                                        <li> Cambio en los procesos y las prácticas (por ejemplo, el cese de ciertas actividades) </li>
+                                        <li> Cambios en la externalización de servicios</li>
+                                    </ul>
+                                </p>
+                                <p align="justify">
+                                    
+                                </p>
 
                             </div>
-                            <div class="col-lg-9 col-md-6 col-sm-12" style="margin-left:75%">
-                                <a href="{{ route("admin.alcance-sgsis.index") }}" class="btn btn-info" role="button">Ejecutar</a>
+                            <div class="col-lg-9 col-md-6 col-sm-12" style="margin-left:75%; margin-bottom: 30px;">
+                                <a href="{{ route("admin.alcance-sgsis.index") }}" class="btn btn-info" role="button">ALCANCE DEL SGSI </a>
                             </div>
                             <br>
                         </div>
@@ -213,7 +403,7 @@ Objetivo del SGSI.
                                 <p align="justify">• Incluir (o excluir) procesos, actividades o servicios internos y externos; y La interfaz crítica que está dentro de los límites del alcance.</p>
 
                             </div>
-                            <div class="col-lg-9 col-md-6 col-sm-12" style="margin-left:75%">
+                            <div class="col-lg-9 col-md-6 col-sm-12" style="margin-left:75%; margin-bottom: 30px;">
                                 <a href="{{ route("admin.alcance-sgsis.index") }}" class="btn btn-info" role="button">Ejecutar</a>
                             </div>
                             <br>
