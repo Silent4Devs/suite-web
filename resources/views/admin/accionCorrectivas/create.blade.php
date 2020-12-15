@@ -9,6 +9,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.accion-correctivas.store") }}" enctype="multipart/form-data">
             @csrf
+            {{ Form::hidden('pdf-value', 'accioncorrectiva')}}
             <div class="form-group">
                 <label for="fecharegistro">{{ trans('cruds.accionCorrectiva.fields.fecharegistro') }}</label>
                 <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="text" name="fecharegistro" id="fecharegistro" value="{{ old('fecharegistro') }}">
