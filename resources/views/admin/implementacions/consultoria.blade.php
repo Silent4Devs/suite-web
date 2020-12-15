@@ -34,6 +34,7 @@
 		float: right;
 		margin-right: 10%;
 		text-align: center;
+		color: #05192c;
 	}
 	.caja_btn{
 		width: 400px;
@@ -87,6 +88,7 @@
 	}
 	.tabla_consultores{
 		width: 100%;
+		margin-top: 30px;
 		display: none;
 	}
 	table{
@@ -127,17 +129,36 @@
 	.icono_cerrar{
 		font-size: 50px;
 		cursor: pointer;
+		color: #ccc;
+		margin-top: -25px;
 	}
 
 
 
 
 
-
+	@media(max-width: 1100px){
+		table{
+			width: 100%;
+		}
+	}
 	@media(max-width: 796px){
 		.info{
 			width: 90%;
 			margin-right: 5%;
+		}
+		table{
+			width: 100%;
+		}
+		table tr{
+			display: flex;
+			flex-direction: column;
+		}
+		.tabla_consultores{
+			width: 100%;
+			height: 450px;
+			overflow-y: scroll;
+			overflow-x: hidden;
 		}
 	}
 	@media(max-width: 600px){

@@ -9,19 +9,19 @@
             <div class="col-md-12">
                 <ul class="nav nav-pills nav-fill" id="myTabJust" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="intr-tab-just" data-toggle="tab" href="#intr-just" role="tab" aria-controls="intr-just" aria-selected="true">INTRODUCCIÓN</a>
+                        <a class="nav-link active" id="intr-tab-just" data-toggle="tab" href="#intr-just" role="tab" aria-controls="intr-just" aria-selected="true"><font class="letra_blanca">INTRODUCCIÓN</font></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="gap1-tab-just" data-toggle="tab" href="#gap1-just" role="tab" aria-controls="gap1-just" aria-selected="false">GAP 01</a>
+                        <a class="nav-link" id="gap1-tab-just" data-toggle="tab" href="#gap1-just" role="tab" aria-controls="gap1-just" aria-selected="false"><font class="letra_blanca">GAP 01</font></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="gap2-tab-just" data-toggle="tab" href="#gap2-just" role="tab" aria-controls="gap2-just" aria-selected="false">GAP 02</a>
+                        <a class="nav-link" id="gap2-tab-just" data-toggle="tab" href="#gap2-just" role="tab" aria-controls="gap2-just" aria-selected="false"><font class="letra_blanca">GAP 02</font></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="gap3-tab-just" data-toggle="tab" href="#gap3-just" role="tab" aria-controls="gap3-just" aria-selected="false">GAP 03</a>
+                        <a class="nav-link" id="gap3-tab-just" data-toggle="tab" href="#gap3-just" role="tab" aria-controls="gap3-just" aria-selected="false"><font class="letra_blanca">GAP 03</font></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="dash-tab-just" data-toggle="tab" href="#dash-just" role="tab" aria-controls="dash-just" aria-selected="false">DASHBOARD</a>
+                        <a class="nav-link" id="dash-tab-just" data-toggle="tab" href="#dash-just" role="tab" aria-controls="dash-just" aria-selected="false"><font class="letra_blanca">DASHBOARD</font></a>
                     </li>
                 </ul>
                 <div class="tab-content card pt-5" id="myTabContentJust">
