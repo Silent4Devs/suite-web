@@ -24,12 +24,17 @@
         color: #ccc;
         border: none;
     }
-    body.c-dark-theme span{
+    body.c-dark-theme .form-group span{
         background-color: #000;
         color: #ccc;
         border: none;
     }
     body.c-dark-theme select{
+        background-color: #000;
+        color: #ccc;
+        border: none;
+    }
+    body.c-dark-theme .needsclick{
         background-color: #000;
         color: #ccc;
         border: none;
