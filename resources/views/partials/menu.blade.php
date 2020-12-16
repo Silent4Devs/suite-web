@@ -1,90 +1,126 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
+<style type="text/css">
+    body.c-dark-theme .letra_blanca{
+        color: #fff;
+    }
+    body.c-dark-theme .img_logo{
+        filter: grayscale(100%) invert(0.5) brightness(200%);
+    }
+    .iconos_menu{
+        font-size: 14pt;
+        margin-right: 15px;
+        margin-left: 2px;
+    }
+    .dark_mode1, .img_logo{
+        transition: 0.3s;
+    }
+    body.c-dark-theme input{
+        background-color: #000;
+        color: #ccc;
+        border: none;
+    }
+    body.c-dark-theme textarea{
+        background-color: #000;
+        color: #ccc;
+        border: none;
+    }
+    body.c-dark-theme .form-group span{
+        background-color: #000;
+        color: #ccc;
+        border: none;
+    }
+    body.c-dark-theme select{
+        background-color: #000;
+        color: #ccc;
+        border: none;
+    }
+    body.c-dark-theme .needsclick{
+        background-color: #000;
+        color: #ccc;
+        border: none;
+    }
+</style>
 
-<div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light">
+
+<div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style="border: none;">
 
 <div class="c-sidebar-brand d-md-down-none bg-transparent">
 
-    <div class="text-center">
-            <a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}"
-                                                     style="width: 40%;"></a>
+    <div class="text-center dark_mode1" style="padding-top: 20px;">
+            <a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 40%;" class="img_logo"></a>
         </div>
 
     </div>
 
-     <style type="text/css">
-        .c-dark-theme{
-            background-color: #000;
-            color: #fff;
-        }
-    </style>
+     
 
-    <ul class="c-sidebar-nav">
+    <ul class="c-sidebar-nav dark_mode1">
 
-    <li class="c-sidebar-nav-title">Menu</li>
+    <li class="c-sidebar-nav-title"><font class="letra_blanca">Menu</font></li>
         @can('organizacion_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.organizacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizacions") || request()->is("admin/organizacions/*") ? "active" : "" }}">
-                    <i class="fa-fw fas fa-home c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-home iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.organizacion.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.organizacion.title') }} </font>
                 </a>
             </li>
         @endcan
         @can('dashboard_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.home") }}" class="c-sidebar-nav-link {{ request()->is("admin/dashboards") || request()->is("admin/dashboards/*") ? "active" : "" }}">
-                    <i class="fa-fw far fa-chart-bar c-sidebar-nav-icon">
+                    <i class="fa-fw far fa-chart-bar iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.dashboard.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.dashboard.title') }} </font>
                 </a>
             </li>
         @endcan
         <li class="c-sidebar-nav-item">
             <a href="{{ url('analisis-brechas') }}" class="c-sidebar-nav-link">
-                <i class="c-sidebar-nav-icon fas fa-fw fa-file-signature">
+                <i class="iconos_menu letra_blanca fas fa-fw fa-file-signature">
 
                 </i>
-               Análisis de brechas
+              <font class="letra_blanca"> Análisis de brechas</font>
             </a>
         </li>
         @can('implementacion_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.implementacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/implementacions") || request()->is("admin/implementacions/*") ? "active" : "" }}">
-                    <i class="fa-fw far fa-window-restore c-sidebar-nav-icon">
+                    <i class="fa-fw far fa-window-restore iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.implementacion.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.implementacion.title') }} </font>
                 </a>
             </li>
         @endcan
         @can('documentacion_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.carpeta.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/carpeta") || request()->is("admin/carpeta/*") ? "active" : "" }}">
-                    <i class="fa-fw far fa-folder-open c-sidebar-nav-icon">
+                    <i class="fa-fw far fa-folder-open iconos_menu letra_blanca">
 
                     </i>
-                   Documentos
+                   <font class="letra_blanca"> Documentos </font>
                 </a>
                 <!--<ul class="c-sidebar-nav-dropdown-items">
                     @can('carpetum_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.carpeta.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/carpeta") || request()->is("admin/carpeta/*") ? "active" : "" }}">
-                                <i class="fa-fw far fa-folder-open c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw far fa-folder-open iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.carpetum.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.carpetum.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('archivo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.archivos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/archivos") || request()->is("admin/archivos/*") ? "active" : "" }}">
-                                <i class="fa-fw far fa-file-archive c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw far fa-file-archive iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.archivo.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.archivo.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -94,19 +130,19 @@
         @can('analisis_riesgo_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/matriz-riesgos*") ? "c-show" : "" }} {{ request()->is("admin/gap-unos*") ? "c-show" : "" }} {{ request()->is("admin/gap-dos*") ? "c-show" : "" }} {{ request()->is("admin/gap-tres*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.analisisRiesgo.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.analisisRiesgo.title') }} </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('matriz_riesgo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.matriz-riesgos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/matriz-riesgos") || request()->is("admin/matriz-riesgos/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
 
                                 </i>
-                                {{ trans('cruds.matrizRiesgo.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.matrizRiesgo.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -116,39 +152,39 @@
         @endcan
         <li class="c-sidebar-nav-item">
             <a href="{{ route("admin.systemCalendar") }}" class="c-sidebar-nav-link {{ request()->is("admin/system-calendar") || request()->is("admin/system-calendar/*") ? "active" : "" }}">
-                <i class="c-sidebar-nav-icon fa-fw fas fa-calendar">
+                <i class="iconos_menu letra_blanca fa-fw fas fa-calendar">
 
                 </i>
-                {{ trans('global.systemCalendar') }}
+                <font class="letra_blanca"> {{ trans('global.systemCalendar') }} </font>
             </a>
         </li>
         @can('glosario_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.glosarios.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/glosarios") || request()->is("admin/glosarios/*") ? "active" : "" }}">
-                    <i class="fa-fw fas fa-book c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-book iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.glosario.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.glosario.title') }} </font>
                 </a>
             </li>
         @endcan
-        <li class="c-sidebar-nav-title">Normas</li>
+        <li class="c-sidebar-nav-title"><font class="letra_blanca">Normas</font></li>
         @can('isoveinticieteuno_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-globe-americas c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.isoveinticieteuno.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.isoveinticieteuno.title') }} </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('contexto_access')
                         <li class="c-sidebar-nav-dropdown" >
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-archive c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-archive iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.contexto.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.contexto.title') }} </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('entendimiento_organizacion_access')
@@ -157,7 +193,7 @@
                                             <i class="" >
 
                                             </i>
-                                            {{ trans('cruds.entendimientoOrganizacion.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.entendimientoOrganizacion.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -167,7 +203,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.partesInteresada.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.partesInteresada.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -177,7 +213,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.matrizRequisitoLegale.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.matrizRequisitoLegale.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -187,7 +223,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.alcanceSgsi.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.alcanceSgsi.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -197,10 +233,10 @@
                     @can('liderazgo_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-gavel c-sidebar-nav-icon" style="text-indent: 30px; margin-right: 10px;">
+                                <i class="fa-fw fas fa-gavel iconos_menu letra_blanca">
 
                                 </i>
-                                {{ trans('cruds.liderazgo.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.liderazgo.title') }} </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('comiteseguridad_access')
@@ -209,7 +245,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.comiteseguridad.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.comiteseguridad.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -219,7 +255,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.minutasaltadireccion.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.minutasaltadireccion.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -229,7 +265,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.evidenciasSgsi.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.evidenciasSgsi.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -239,7 +275,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.politicaSgsi.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.politicaSgsi.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -249,7 +285,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.rolesResponsabilidade.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.rolesResponsabilidade.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -259,10 +295,10 @@
                     @can('planificacion_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-tasks c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-tasks iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.planificacion.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.planificacion.title') }} </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('riesgosoportunidade_access')
@@ -271,7 +307,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.riesgosoportunidade.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.riesgosoportunidade.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -281,7 +317,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.objetivosseguridad.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.objetivosseguridad.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -291,10 +327,10 @@
                     @can('soporte_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-headset c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-headset iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.soporte.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.soporte.title') }} </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('recurso_access')
@@ -303,7 +339,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.recurso.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.recurso.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -313,7 +349,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.competencium.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.competencium.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -323,7 +359,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.concientizacionSgi.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.concientizacionSgi.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -333,7 +369,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.materialSgsi.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.materialSgsi.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -343,7 +379,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.materialIsoVeinticiente.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.materialIsoVeinticiente.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -353,7 +389,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.comunicacionSgi.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.comunicacionSgi.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -363,7 +399,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.politicaDelSgsiSoporte.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.politicaDelSgsiSoporte.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -373,7 +409,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.controlAcceso.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.controlAcceso.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -383,7 +419,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.informacionDocumetada.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.informacionDocumetada.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -393,10 +429,10 @@
                     @can('operacion_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-briefcase iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.operacion.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.operacion.title') }} </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('planificacion_control_access')
@@ -405,7 +441,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.planificacionControl.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.planificacionControl.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -415,7 +451,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.activo.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.activo.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -425,7 +461,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.tratamientoRiesgo.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.tratamientoRiesgo.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -435,10 +471,10 @@
                     @can('evaluacion_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-file-signature c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-file-signature iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.evaluacion.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.evaluacion.title') }} </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('indicadores_sgsi_access')
@@ -447,7 +483,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.indicadoresSgsi.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.indicadoresSgsi.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -457,7 +493,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.incidentesDeSeguridad.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.incidentesDeSeguridad.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -467,7 +503,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.indicadorincidentessi.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.indicadorincidentessi.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -477,7 +513,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.auditoriaAnual.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.auditoriaAnual.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -487,7 +523,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.planAuditorium.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.planAuditorium.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -497,7 +533,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.auditoriaInterna.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.auditoriaInterna.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -507,7 +543,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.revisionDireccion.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.revisionDireccion.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -517,10 +553,10 @@
                     @can('mejora_access')
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fa-fw fas fa-infinity c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-infinity iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.mejora.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.mejora.title') }} </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('accion_correctiva_access')
@@ -529,7 +565,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.accionCorrectiva.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.accionCorrectiva.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -539,7 +575,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.planaccionCorrectiva.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.planaccionCorrectiva.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -549,7 +585,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.registromejora.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.registromejora.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -559,7 +595,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.dmaic.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.dmaic.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -569,7 +605,7 @@
                                             <i class="">
 
                                             </i>
-                                            {{ trans('cruds.planMejora.title') }}
+                                            <font class="letra_blanca"> {{ trans('cruds.planMejora.title') }} </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -582,19 +618,19 @@
         @can('isoveintidostresuno_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-globe-africa c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-globe-africa iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.isoveintidostresuno.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.isoveintidostresuno.title') }} </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('adquirirveintidostrecientosuno_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.adquirirveintidostrecientosunos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/adquirirveintidostrecientosunos") || request()->is("admin/adquirirveintidostrecientosunos/*") ? "active" : "" }}">
-                                <i class="fa-fw fab fa-amazon-pay c-sidebar-nav-icon">
+                                <i class="fa-fw fab fa-amazon-pay iconos_menu letra_blanca">
 
                                 </i>
-                                {{ trans('cruds.adquirirveintidostrecientosuno.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.adquirirveintidostrecientosuno.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -604,192 +640,192 @@
         @can('isotreintaunmil_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-globe-americas c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.isotreintaunmil.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.isotreintaunmil.title') }} </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('adquirirtreintaunmil_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.adquirirtreintaunmils.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/adquirirtreintaunmils") || request()->is("admin/adquirirtreintaunmils/*") ? "active" : "" }}">
-                                <i class="fa-fw fab fa-amazon-pay c-sidebar-nav-icon">
+                                <i class="fa-fw fab fa-amazon-pay iconos_menu letra_blanca">
 
                                 </i>
-                                {{ trans('cruds.adquirirtreintaunmil.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.adquirirtreintaunmil.title') }} </font>
                             </a>
                         </li>
                     @endcan
                 </ul>
             </li>
         @endcan
-        <li class="c-sidebar-nav-title">Administración</li>
+        <li class="c-sidebar-nav-title"><font class="letra_blanca">Administración</font></li>
         @can('user_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-users c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-users iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.userManagement.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.userManagement.title') }} </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('permission_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.permissions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/permissions") || request()->is("admin/permissions/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-unlock-alt c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-unlock-alt iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.permission.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.permission.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('role_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.roles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/roles") || request()->is("admin/roles/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-briefcase iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.role.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.role.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('user_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.users.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/users") || request()->is("admin/users/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-user c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-user iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.user.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.user.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('controle_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.controles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/controles") || request()->is("admin/controles/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-screwdriver c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-screwdriver iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.controle.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.controle.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('audit_log_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.audit-logs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/audit-logs") || request()->is("admin/audit-logs/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-file-alt c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-file-alt iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.auditLog.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.auditLog.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('area_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.areas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
-                                <i class="fa-fw far fa-building c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw far fa-building iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.area.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.area.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('organizacione_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.organizaciones.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizaciones") || request()->is("admin/organizaciones/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-university c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-university iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.organizacione.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.organizacione.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('tipoactivo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.tipoactivos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/tipoactivos") || request()->is("admin/tipoactivos/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-laptop c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-laptop iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.tipoactivo.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.tipoactivo.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('puesto_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.puestos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/puestos") || request()->is("admin/puestos/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-user-md c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-user-md iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.puesto.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.puesto.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('user_alert_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.user-alerts.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-bell c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-bell iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.userAlert.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.userAlert.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('sede_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.sedes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sedes") || request()->is("admin/sedes/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-building c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-building iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.sede.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.sede.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('enlaces_ejecutar_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.enlaces-ejecutars.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/enlaces-ejecutars") || request()->is("admin/enlaces-ejecutars/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-cogs iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.enlacesEjecutar.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.enlacesEjecutar.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('team_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.teams.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/teams") || request()->is("admin/teams/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-users c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-users iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.team.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.team.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('estado_incidente_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.estado-incidentes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/estado-incidentes") || request()->is("admin/estado-incidentes/*") ? "active" : "" }}">
-                                <i class="fa-fw fab fa-stripe-s c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fab fa-stripe-s iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.estadoIncidente.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.estadoIncidente.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('estatus_plan_trabajo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.estatus-plan-trabajos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/estatus-plan-trabajos") || request()->is("admin/estatus-plan-trabajos/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-cogs iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.estatusPlanTrabajo.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.estatusPlanTrabajo.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('estado_documento_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.estado-documentos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/estado-documentos") || request()->is("admin/estado-documentos/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-cogs iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.estadoDocumento.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.estadoDocumento.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -799,39 +835,39 @@
         @can('plan_base_actividade_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.plan-base-actividades.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/plan-base-actividades") || request()->is("admin/plan-base-actividades/*") ? "active" : "" }}">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.planBaseActividade.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.planBaseActividade.title') }} </font>
                 </a>
             </li>
         @endcan
         @can('faq_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-question c-sidebar-nav-icon">
+                    <i class="fa-fw fas fa-question iconos_menu letra_blanca">
 
                     </i>
-                    {{ trans('cruds.faqManagement.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.faqManagement.title') }} </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('faq_category_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.faq-categories.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/faq-categories") || request()->is("admin/faq-categories/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-briefcase c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-briefcase iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.faqCategory.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.faqCategory.title') }} </font>
                             </a>
                         </li>
                     @endcan
                     @can('faq_question_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.faq-questions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/faq-questions") || request()->is("admin/faq-questions/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-question c-sidebar-nav-icon" style="text-indent: 30px">
+                                <i class="fa-fw fas fa-question iconos_menu letra_blanca" >
 
                                 </i>
-                                {{ trans('cruds.faqQuestion.title') }}
+                                <font class="letra_blanca"> {{ trans('cruds.faqQuestion.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -842,7 +878,7 @@
         @if(\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') && \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
             <li class="c-sidebar-nav-item">
                 <a class="{{ request()->is("admin/team-members") || request()->is("admin/team-members/*") ? "active" : "" }} c-sidebar-nav-link" href="{{ route("admin.team-members.index") }}">
-                    <i class="c-sidebar-nav-icon fa-fw fa fa-users">
+                    <i class="iconos_menu letra_blanca fa-fw fa fa-users">
                     </i>
                     <span>{{ trans("global.team-members") }}</span>
                 </a>
@@ -851,10 +887,10 @@
 
         <li class="c-sidebar-nav-item">
             <a href="{{ url('sitemap') }}" class="c-sidebar-nav-link">
-                <i class="c-sidebar-nav-icon fas fa-fw fa-sitemap">
+                <i class="iconos_menu letra_blanca fas fa-fw fa-sitemap">
 
                 </i>
-                Mapa de sitio
+                <font class="letra_blanca">Mapa de sitio</font>
             </a>
         </li>
 

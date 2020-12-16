@@ -28,7 +28,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
         rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+    
     <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
@@ -50,7 +50,7 @@
 @include('partials.menu')
 <div class="c-wrapper">
     <header class="c-header c-header-fixed px-3"
-            style="background: linear-gradient(60deg, rgb(35,57,91) 40%, rgb(62,142,207) 70%, rgb(13,164,160) 100%) !important;">
+            style="background: linear-gradient(60deg, rgb(35,57,91) 40%, rgb(62,142,207) 70%, rgb(13,164,160) 100%) !important; border: none;">
         <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
             <i class="fas fa-fw fa-bars"></i>

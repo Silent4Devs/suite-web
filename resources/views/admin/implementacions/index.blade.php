@@ -16,25 +16,25 @@
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab"
                            aria-controls="home-just"
-                           aria-selected="true">Introducción</a>
+                           aria-selected="true"><font class="letra_blanca">Introducción</font></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab"
                            aria-controls="profile-just"
-                           aria-selected="false">Guía
-                            de Implementación</a>
+                           aria-selected="false"><font class="letra_blanca">Guía
+                            de Implementación</font></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="plan-tab-just" data-toggle="tab" href="#plan-just" role="tab"
                            aria-controls="plan-just"
-                           aria-selected="false">Plan
-                            de Trabajo Base</a>
+                           aria-selected="false"><font class="letra_blanca">Plan
+                            de Trabajo Base</font></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#just" role="tab"
                            aria-controls="contact-just"
-                           aria-selected="false">Consultoría
-                            en línea</a>
+                           aria-selected="false"><font class="letra_blanca">Consultoría
+                            en línea</font></a>
                     </li>
                 </ul>
 

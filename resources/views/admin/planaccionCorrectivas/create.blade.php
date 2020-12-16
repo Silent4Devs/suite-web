@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.planaccionCorrectiva.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Plan de Acción  </h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.planaccion-correctivas.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.planaccion-correctivas.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group">
-                <label for="accioncorrectiva_id">{{ trans('cruds.planaccionCorrectiva.fields.accioncorrectiva') }}</label>
+            <div class="form-group col-md-6">
+                <label for="accioncorrectiva_id"><i class="fas fa-exclamation-triangle iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.accioncorrectiva') }}</label>
                 <select class="form-control select2 {{ $errors->has('accioncorrectiva') ? 'is-invalid' : '' }}" name="accioncorrectiva_id" id="accioncorrectiva_id">
                     @foreach($accioncorrectivas as $id => $accioncorrectiva)
                         <option value="{{ $id }}" {{ old('accioncorrectiva_id') == $id ? 'selected' : '' }}>{{ $accioncorrectiva }}</option>
@@ -23,8 +23,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planaccionCorrectiva.fields.accioncorrectiva_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="actividad">{{ trans('cruds.planaccionCorrectiva.fields.actividad') }}</label>
+            <div class="form-group col-md-6">
+                <label class="required" for="actividad"><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.actividad') }}</label>
                 <input class="form-control {{ $errors->has('actividad') ? 'is-invalid' : '' }}" type="text" name="actividad" id="actividad" value="{{ old('actividad', '') }}" required>
                 @if($errors->has('actividad'))
                     <div class="invalid-feedback">
@@ -33,8 +33,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planaccionCorrectiva.fields.actividad_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="responsable_id">{{ trans('cruds.planaccionCorrectiva.fields.responsable') }}</label>
+            <div class="form-group col-md-6">
+                <label for="responsable_id"><i class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.responsable') }}</label>
                 <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}" name="responsable_id" id="responsable_id">
                     @foreach($responsables as $id => $responsable)
                         <option value="{{ $id }}" {{ old('responsable_id') == $id ? 'selected' : '' }}>{{ $responsable }}</option>
@@ -47,8 +47,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planaccionCorrectiva.fields.responsable_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="fechacompromiso">{{ trans('cruds.planaccionCorrectiva.fields.fechacompromiso') }}</label>
+            <div class="form-group col-md-6">
+                <label for="fechacompromiso"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.fechacompromiso') }}</label>
                 <input class="form-control date {{ $errors->has('fechacompromiso') ? 'is-invalid' : '' }}" type="text" name="fechacompromiso" id="fechacompromiso" value="{{ old('fechacompromiso') }}">
                 @if($errors->has('fechacompromiso'))
                     <div class="invalid-feedback">
@@ -57,8 +57,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planaccionCorrectiva.fields.fechacompromiso_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label>{{ trans('cruds.planaccionCorrectiva.fields.estatus') }}</label>
+            <div class="form-group col-12">
+                <label><i class="fas fa-signal iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.estatus') }}</label>
                 <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus" id="estatus">
                     <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\PlanaccionCorrectiva::ESTATUS_SELECT as $key => $label)
@@ -72,7 +72,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planaccionCorrectiva.fields.estatus_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 text-right">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
