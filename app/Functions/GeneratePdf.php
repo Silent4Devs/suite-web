@@ -28,7 +28,8 @@ class GeneratePdf
             case 'accioncorrectiva':
                 //dd("Entra a accioncorrectiva", $datavalues);
                 $file = 'AccionCorrectiva-'.$datavalues->id.'-'.$datavalues->created_at.'.pdf';
-                $pdf = PDF::loadView('PDF.accion_correctiva.F_SGI_016_accion_correctiva_v1', compact('pdfvalue', 'datavalues'))->save("data/".$file);
+                //$pdf = PDF::loadView('PDF.accion_correctiva.F_SGI_016_accion_correctiva_v1', compact('pdfvalue', 'datavalues'))->save("data/".$file);
+                $pdf = PDF::loadView('PDF.lista_verificacion.lista_verificacion', compact('pdfvalue', 'datavalues'))->save("data/".$file);
                 Storage::disk('Iso27001')->put('Mejora continua/Acciones Correctivas/'.$file, $pdf->output());
                 unlink("data/".$file);
                 //dd("Termina");
