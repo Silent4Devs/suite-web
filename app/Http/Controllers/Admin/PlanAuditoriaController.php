@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPlanAuditoriumRequest;
 use App\Http\Requests\StorePlanAuditoriumRequest;
@@ -110,6 +111,8 @@ class PlanAuditoriaController extends Controller
     public function store(StorePlanAuditoriumRequest $request)
     {
         $planAuditorium = PlanAuditorium::create($request->all());
+        $generar = new GeneratePdf();
+        $generar->Generate($request['pdf-value'], $planAuditorium);
         $planAuditorium->auditados()->sync($request->input('auditados', []));
 
         return redirect()->route('admin.plan-auditoria.index');

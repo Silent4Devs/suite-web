@@ -50,7 +50,8 @@
 				<td width="30%"><img src="i"></td>
 				<td>Lista de Verificación</td>
 				<td width="30%">F-SGI-023 V1 <br>
-				19 febrero 2019</td>
+                    {{date('j F Y')}}
+                </td>
 			</tr>
 		</table>
 	</div>
@@ -58,7 +59,9 @@
 		<table>
 			<tr>
 				<td class="td_primera">Fecha</td>
-				<td></td>
+				<td>
+                    {{$datavalues->fecha_id}}
+                </td>
 			</tr>
 		</table>
 	</div>
@@ -66,7 +69,7 @@
 		<table>
 			<tr>
 				<td class="td_primera">NOMBRE DEL AUDITOR</td>
-				<td></td>
+				<td>{{$datavalues->equipoauditor}}</td>
 			</tr>
 		</table>
 	</div>
