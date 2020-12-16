@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
@@ -139,6 +140,7 @@ class AccionCorrectivaController extends Controller
     public function store(StoreAccionCorrectivaRequest $request)
     {
         $accionCorrectiva = AccionCorrectiva::create($request->all());
+        //dd($request['pdf-value']);
 
         if ($request->input('documentometodo', false)) {
             $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');
@@ -147,7 +149,9 @@ class AccionCorrectivaController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $accionCorrectiva->id]);
         }
-
+        $generar = new GeneratePdf();
+        //$generar->Generate($request['pdf-value'], $request);
+        $generar->Generate($request['pdf-value'], $accionCorrectiva);
         return redirect()->route('admin.accion-correctivas.index');
     }
 

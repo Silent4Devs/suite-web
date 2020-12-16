@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="pdf-template/style.css" media="all"/>
+    <title>Partes interesadas</title>
 </head>
 <body>
 <header class="clearfix">
@@ -22,13 +23,11 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($datas as $data)
                 <tr>
-                    <td>{{$data['parteinteresada']}}</td>
-                    <td>{{$data['requisitos']}}</td>
-                    <td>{{$data['clausala']}}</td>
+                    <td>{{$datavalues->parteinteresada}}</td>
+                    <td>{{$datavalues->requisitos}}</td>
+                    <td>{{$datavalues->clausula}}</td>
                 </tr>
-            @endforeach
             </tbody>
             @break
             @default
