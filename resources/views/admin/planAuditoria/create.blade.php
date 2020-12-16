@@ -9,6 +9,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.plan-auditoria.store") }}" enctype="multipart/form-data" class="row">
             @csrf
+            {{ Form::hidden('pdf-value', 'planAuditoria')}}
             <div class="form-group col-12">
                 <label for="fecha_id"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.planAuditorium.fields.fecha') }}</label>
                 <select class="form-control select2 {{ $errors->has('fecha') ? 'is-invalid' : '' }}" name="fecha_id" id="fecha_id">
