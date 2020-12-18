@@ -1,0 +1,481 @@
+<style>
+    .letras-dashboard {
+        font-size: 12px;
+    }
+
+    .letras-dashboard2 {
+        font-size: 10px;
+    }
+
+    .fondo-azul {
+        background-color: deepskyblue;
+        color: black;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <!--<div class="col">-->
+        <div class="card">
+            <div class="card-body">
+                <h6 align="center">PORCENTAJE DE IMPLEMENTACIÓN GENERAL ISO 27001 (74.7%)
+                </h6>
+                <div class="progress">
+                    <div
+                        class="progress-bar progress-bar-striped progress-bar-animated"
+                        role="progressbar" aria-valuenow="40"
+                        aria-valuemin="0" aria-valuemax="100"
+                        style="width: 74.7%">74.7%
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm">
+                        <table class="table table-responsive-sm letras-dashboard">
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Fase</th>
+                                <th scope="col">Meta</th>
+                                <th scope="col">Alcanzado</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">GAP01</th>
+                                <td>Planear</td>
+                                <td>30%</td>
+                                <td>26.2%</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">GAP02</th>
+                                <td>Hacer</td>
+                                <td>40%</td>
+                                <td>34.8%</td>
+                            </tr>
+                            <tr>
+                                <th rowspan="2">
+                                    GAP03
+                                </th>
+                                <td>Verificar</td>
+                                <td>15%</td>
+                                <td>7.5%</td>
+                            </tr>
+                            <tr>
+                                <td>Actuar</td>
+                                <td>15%</td>
+                                <td>6.3%</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>Total</td>
+                                <td>100%</td>
+                                <td class="fondo-azul">74.7%</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm">
+                        <canvas id="popChart" width="800" height="650"></canvas>
+                    </div>
+                    <div class="col-sm">
+                        <div id="gaugeArea" width="800" height="650"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--segunda tabla-->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="fondo-azul text-white" align="center">
+                    POR DOMINIO DE CONTROL</h6>
+                <table class="table table-responsive" style="margin-top: 0px;">
+                    <thead class="thead-dark letras-dashboard2 align-middle">
+                    <tr>
+                        <th scope="col">NOMBRE DOMINIOS DE CONTROL</th>
+                        <th scope="col">CONTROLES QUE APLICAN</th>
+                        <th scope="col">PESO CONTROLES IMPLEMENTADOS Y PARCIALMENTE IMPLEMENTADOS</th>
+                        <th scope="col">IMPLEMENTADOS</th>
+                        <th scope="col">PARCIALMENTE</th>
+                        <th scope="col">NO CUMPLE</th>
+                        <th scope="col">NO APLICA</th>
+                    </tr>
+                    </thead>
+                    <tbody class="letras-dashboard" align="center">
+                    <tr>
+                        <td>DOMINIO 5 - POLÍTICAS DE SEGURIDAD DE LA INFORMACIÓN</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 6 - ORGANIZACIÓN DE LA SEGURIDAD DE LA INFORMACIÓN</td>
+                        <td>7</td>
+                        <td>5.5</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 7 - SEGURIDAD DE LOS RECURSOS HUMANOS</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 8 - GESTIÓN DE ACTIVOS</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 9 - CONTROL DE ACCESO</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 10 - CRIPTOGRAFÍA</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 11 - SEGURIDAD FÍSICA Y DEL ENTORNO</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 12 - SEGURIDAD DE LAS OPERACIONES</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 13 - SEGURIDAD DE LAS COMUNICACIONES</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 14 - ADQUISICIÓN, DESARROLLO Y MANTENIMIENTO DE SISTEMAS</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 15 - RELACIÓN CON LOS PROVEEDORES</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 16 - GESTIÓN DE INCIDENTES DE SEGURIDAD DE LA INFORMACIÓN</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 17 - ASPECTOS DE SEGURIDAD DE LA INFORMACIÓN DE LA GESTION DE CONTINUIDAD DE
+                            NEGOCIO
+                        </td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>DOMINIO 18 - SEGURIDAD DE LAS COMUNICACIONES</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--segunda tabla-->
+<!--tercera tabla-->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 align="center">AVANCES POR DOMINIO DE CONTROL</h6>
+                <canvas id="myChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<!--tercera tabla-->
+<!--cuarta tabla-->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE SEGURIDAD Y PRIVACIDAD DE LA ORGANIZACIÓN (30%)
+                </h6>
+                <div class="progress">
+                    <div
+                        class="progress-bar progress-bar-striped progress-bar-animated"
+                        role="progressbar" aria-valuenow="30"
+                        aria-valuemin="0" aria-valuemax="100"
+                        style="width: 30%">30%
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm" align="center">
+                        <span>PLANEAR</span>
+                        <table class="table table-responsive-sm letras-dashboard">
+                            <thead>
+                            <tr>
+                                <th scope="col">ESTATUS</th>
+                                <th scope="col">REQUISITOS</th>
+                                <th scope="col">PESO</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Cumple satisfactoriamente</td>
+                                <td class="bg-success text-white">10</td>
+                                <td>26.2%</td>
+                            </tr>
+                            <tr>
+                                <td>Cumple parcialmente</td>
+                                <td class="bg-warning text-white">1</td>
+                                <td>0.8%</td>
+                            </tr>
+                            <tr>
+                                <td>No cumple</td>
+                                <td class="bg-danger text-black">2</td>
+                                <td>7.5%</td>
+                            </tr>
+                            <tr>
+                                <td>Autodiagnóstico</td>
+                                <td class="bg-dark text-white">1</td>
+                                <td>5%</td>
+                            </tr>
+                            <tr>
+                                <td>Plan de trabajo</td>
+                                <td class="bg-info text-white">1</td>
+                                <td>5%</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Total</td>
+                                <td>15</td>
+                                <td>25%</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm">
+                        <canvas id="doughnut-chart" width="800" height="450"></canvas>
+                    </div>
+                    <div class="col-sm">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--cuarta tabla-->
+
+<script>
+    //Grafica de barras
+    var popCanvas = document.getElementById("popChart");
+    var barChart = new Chart(popCanvas, {
+        type: 'bar',
+        data: {
+            labels: ["Planear", "Hacer", "Verificar", "Actuar"],
+            datasets: [{
+                label: '% Implementación por fase',
+                data: [30, 40, 15, 15],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                ]
+            }]
+        }
+    });
+
+    //doughtnut1
+    /*var popCanvas1 = document.getElementById("popChart1");
+    var barChart1 = new Chart(popCanvas1, {
+        type: 'doughnut',
+        data: {
+            labels: ["Planear", "Hacer", "Verificar", "Actuar"],
+            datasets: [{
+                label: '% Implementación por fase',
+                data: [26.2, 34.8, 7.5, 6.3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                ]
+            }]
+        }
+    });*/
+
+    //speedometer
+    // Element inside which you want to see the chart
+    let element = document.querySelector('#gaugeArea')
+
+    // Properties of the gauge
+    let gaugeOptions = {
+        hasNeedle: true,
+        needleColor: 'gray',
+        needleUpdateSpeed: 1000,
+        arcColors: ['rgb(44, 151, 222)', 'lightgray'],
+        arcDelimiters: [74.7],
+        rangeLabel: ['0', '100'],
+        centralLabel: '74.7%',
+    }
+
+    // Drawing and updating the chart
+    GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(74.7)
+
+    //radarchart
+    //Empieza radar chart
+    var data = {
+        labels: [
+            "Dominio 5",
+            "Dominio 6",
+            "Dominio 7",
+            "Dominio 8",
+            "Dominio 9",
+            "Dominio 10",
+            "Dominio 11",
+            "Dominio 12",
+            "Dominio 13",
+            "Dominio 14",
+            "Dominio 15",
+            "Dominio 16",
+            "Dominio 17",
+            "Dominio 18",
+        ],
+        datasets: [
+            {
+                label: "Meta",
+                backgroundColor: "rgba(179,181,198,0.2)",
+                borderColor: "rgba(179,181,198,1)",
+                pointBackgroundColor: "rgba(179,181,198,1)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(179,181,198,1)",
+                data: [65, 59, 90, 81, 56, 55, 40, 20, 10, 50, 80, 56, 48, 74]
+            },
+            {
+                label: "Alcanzado",
+                backgroundColor: "rgba(255,99,132,0.2)",
+                borderColor: "rgba(255,99,132,1)",
+                pointBackgroundColor: "rgba(255,99,132,1)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(255,99,132,1)",
+                data: [28, 48, 40, 79, 96, 27, 100, 54, 24, 90, 83, 23, 64, 32]
+            }
+        ]
+    };
+
+    var ctx = document.getElementById("myChart");
+    var options = {
+        tooltips: {
+            mode: 'label'
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    };
+    var myRadarChart = new Chart(ctx, {
+        type: 'radar',
+        data: data,
+        options: options
+    });
+    Chart.helpers.bindEvents(myRadarChart, ['mousedown'], function (evt) {
+        var lastMousePosition = [evt.x, evt.y];
+        //console.log('mousedown');
+        var lastActive = myRadarChart.lastActive;
+        if (Array.isArray(lastActive) && lastActive.length) {
+            lastActive = lastActive[0];
+            //console.log(lastActive);
+            var moveHandler = function (evt) {
+                var index = lastActive._index;
+                var dataset = lastActive._datasetIndex;
+                //console.log('mouse move');
+                if (evt.y < lastMousePosition[1]) {
+                    myRadarChart.data.datasets[dataset].data[index] = myRadarChart.data.datasets[dataset].data[index] + 1;
+                    myRadarChart.update(1, false);
+                } else if (evt.y > lastMousePosition[1]) {
+                    myRadarChart.data.datasets[dataset].data[index] = myRadarChart.data.datasets[dataset].data[index] - 1;
+                    myRadarChart.update(1, false);
+                }
+                lastMousePosition = [evt.x, evt.y];
+            };
+            var outHandler = function () {
+                //console.log('unbinding');
+                Chart.helpers.unbindEvents(myRadarChart, {'mousemove': moveHandler});
+                Chart.helpers.unbindEvents(myRadarChart, {'mouseup': outHandler});
+                Chart.helpers.unbindEvents(myRadarChart, {'mouseout': outHandler});
+            }
+            Chart.helpers.bindEvents(myRadarChart, ['mousemove'], moveHandler);
+            Chart.helpers.bindEvents(myRadarChart, ['mouseup'], outHandler);
+            Chart.helpers.bindEvents(myRadarChart, ['mouseout'], outHandler);
+        }
+    });
+
+</script>

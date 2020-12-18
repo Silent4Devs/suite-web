@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Emotality\TawkTo\TawkToServiceProvider::class,
         Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
-
+        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class
 
     ],
 
