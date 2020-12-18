@@ -314,19 +314,215 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-sm">
-                        <canvas id="doughnut-chart" width="800" height="450"></canvas>
+                    <div class="col-sm" align="center">
+                        <h6>Requisitos GAP 01 - Planear</h6>
+                        <canvas id="popChart1" width="800" height="800"></canvas>
+                        <p>15 requisitos</p>
                     </div>
-                    <div class="col-sm">
-
+                    <div class="col-sm" align="center">
+                        <h6>Cumplimiento GAP 01 - Planear</h6>
+                        <canvas id="popChart2" width="800" height="800"></canvas>
+                        <h6>26.2% Cumplimiento</h6>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <!--cuarta tabla-->
+<!--quinta tabla-->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 align="center">GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN (40%)
+                </h6>
+                <div class="progress">
+                    <div
+                        class="progress-bar progress-bar-striped progress-bar-animated"
+                        role="progressbar" aria-valuenow="40"
+                        aria-valuemin="0" aria-valuemax="100"
+                        style="width: 40%">40%
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm" align="center">
+                        <span>HACER</span>
+                        <table class="table table-responsive-sm letras-dashboard">
+                            <thead>
+                            <tr>
+                                <th scope="col">ESTATUS</th>
+                                <th scope="col">REQUISITOS</th>
+                                <th scope="col">PESO</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Cumple satisfactoriamente</td>
+                                <td class="bg-success text-white">10</td>
+                                <td>26.2%</td>
+                            </tr>
+                            <tr>
+                                <td>Cumple parcialmente</td>
+                                <td class="bg-warning text-white">1</td>
+                                <td>0.8%</td>
+                            </tr>
+                            <tr>
+                                <td>No cumple</td>
+                                <td class="bg-danger text-black">2</td>
+                                <td>7.5%</td>
+                            </tr>
+                            <tr>
+                                <td>No aplica</td>
+                                <td class="bg-dark text-white">1</td>
+                                <td>5%</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Total</td>
+                                <td>15</td>
+                                <td>25%</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm" align="center">
+                        <h6>Controles GAP 02 - Hacer</h6>
+                        <canvas id="popChart3" width="800" height="750"></canvas>
+                        <p>114 controles</p>
+                    </div>
+                    <div class="col-sm" align="center">
+                        <h6>Cumplimiento GAP 02 - Hacer</h6>
+                        <canvas id="popChart4" width="800" height="750"></canvas>
+                        <h6>34.8% Cumplimiento</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--quinta tabla-->
+<!--sexta tabla-->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 align="center">GAP 03:  MONITOREO Y MEJORA CONTINUA (30%)
+                </h6>
+                <div class="progress">
+                    <div
+                        class="progress-bar progress-bar-striped progress-bar-animated"
+                        role="progressbar" aria-valuenow="30"
+                        aria-valuemin="0" aria-valuemax="100"
+                        style="width: 30%">30%
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm" align="center">
+                        <span>VERIFICAR</span>
+                        <table class="table table-responsive-sm letras-dashboard">
+                            <thead>
+                            <tr>
+                                <th scope="col">ESTATUS</th>
+                                <th scope="col">REQUISITOS</th>
+                                <th scope="col">PESO</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Cumple satisfactoriamente</td>
+                                <td class="bg-success text-white">10</td>
+                                <td>26.2%</td>
+                            </tr>
+                            <tr>
+                                <td>Cumple parcialmente</td>
+                                <td class="bg-warning text-white">1</td>
+                                <td>0.8%</td>
+                            </tr>
+                            <tr>
+                                <td>No cumple</td>
+                                <td class="bg-danger text-black">2</td>
+                                <td>7.5%</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Total</td>
+                                <td>15</td>
+                                <td>25%</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm" align="center">
+                        <h6>Requisitos GAP 03 - Verificar</h6>
+                        <canvas id="popChart5" width="800" height="750"></canvas>
+                        <p>06 requisitos</p>
+                    </div>
+                    <div class="col-sm" align="center">
+                        <h6>Cumplimiento GAP 03 - Verificar</h6>
+                        <canvas id="popChart6" width="800" height="750"></canvas>
+                        <h6>7.5% Cumplimiento</h6>
+                    </div>
+                </div>
+                <hr>
+                <!--segunda-->
+                <div class="row">
+                    <div class="col-sm" align="center">
+                        <span>ACTUAR</span>
+                        <table class="table table-responsive-sm letras-dashboard">
+                            <thead>
+                            <tr>
+                                <th scope="col">ESTATUS</th>
+                                <th scope="col">REQUISITOS</th>
+                                <th scope="col">PESO</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Cumple satisfactoriamente</td>
+                                <td class="bg-success text-white">10</td>
+                                <td>26.2%</td>
+                            </tr>
+                            <tr>
+                                <td>Cumple parcialmente</td>
+                                <td class="bg-warning text-white">1</td>
+                                <td>0.8%</td>
+                            </tr>
+                            <tr>
+                                <td>No cumple</td>
+                                <td class="bg-danger text-black">2</td>
+                                <td>7.5%</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Total</td>
+                                <td>15</td>
+                                <td>25%</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="background-color: black; color: white;">TOTAL GAP 03</span>
+                            </div>
+                            <input type="text" value="13.8%" class="form-control" disabled style="color: black;">
+                        </div>
+                    </div>
+                    <div class="col-sm" align="center">
+                        <h6>Requisitos GAP 03 - Actuar</h6>
+                        <canvas id="popChart7" width="800" height="750"></canvas>
+                        <p>06 requisitos</p>
+                    </div>
+                    <div class="col-sm" align="center">
+                        <h6>Cumplimiento GAP 03 - Actuar</h6>
+                        <canvas id="popChart8" width="800" height="750"></canvas>
+                        <h6>7.5% Cumplimiento</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--sexta tabla-->
 
 <script>
     //Grafica de barras
@@ -348,24 +544,191 @@
         }
     });
 
-    //doughtnut1
-    /*var popCanvas1 = document.getElementById("popChart1");
+    //doughtnuts
+    var popCanvas1 = document.getElementById("popChart1");
     var barChart1 = new Chart(popCanvas1, {
         type: 'doughnut',
+        labels: {
+            render: 'value'
+        },
         data: {
-            labels: ["Planear", "Hacer", "Verificar", "Actuar"],
+            labels: [
+                "Cumple satistactoriamente",
+                "Cumple parcialmente",
+                "No cumple",
+                "Autodiagnóstico",
+                "Plan de trabajo"
+            ],
             datasets: [{
                 label: '% Implementación por fase',
-                data: [26.2, 34.8, 7.5, 6.3],
+                data: [10, 1, 2, 1, 1],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)',
-                    'rgba(255, 206, 86, 0.6)',
-                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(244, 208, 63, 0.6)',
+                    'rgba(231, 76, 60, 0.6)',
+                    'rgba(133, 193, 233 , 0.6)',
                 ]
             }]
         }
-    });*/
+    });
+
+    var popCanvas2 = document.getElementById("popChart2");
+    var barChart2 = new Chart(popCanvas2, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                "Cumple satistactoriamente",
+                "Cumple parcialmente",
+                "No cumple",
+                "Autodiagnóstico",
+                "Plan de trabajo"
+            ],
+            datasets: [{
+                label: '% Implementación por fase',
+                data: [15.4, 0.8, 3.8, 5],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(244, 208, 63, 0.6)',
+                    'rgba(231, 76, 60, 0.6)',
+                    'rgba(133, 193, 233 , 0.6)',
+                ]
+            }]
+        }
+    });
+
+    var popCanvas3 = document.getElementById("popChart3");
+    var barChart3 = new Chart(popCanvas3, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                "Cumple satistactoriamente",
+                "Cumple parcialmente",
+                "No cumple",
+                "No aplica"
+            ],
+            datasets: [{
+                label: '% Implementación por fase',
+                data: [15.4, 0.8, 3.8, 5],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(244, 208, 63, 0.6)',
+                    'rgba(231, 76, 60, 0.6)',
+                    'rgba(133, 193, 233 , 0.6)',
+                ]
+            }]
+        }
+    });
+
+    var popCanvas4 = document.getElementById("popChart4");
+    var barChart4 = new Chart(popCanvas4, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                "Cumple satistactoriamente",
+                "Cumple parcialmente",
+                "No cumple",
+                "No aplica"
+            ],
+            datasets: [{
+                label: '% Implementación por fase',
+                data: [15.4, 0.8, 3.8, 5],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(244, 208, 63, 0.6)',
+                    'rgba(231, 76, 60, 0.6)',
+                    'rgba(133, 193, 233 , 0.6)',
+                ]
+            }]
+        }
+    });
+
+    var popCanvas5 = document.getElementById("popChart5");
+    var barChart5 = new Chart(popCanvas5, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                "Cumple satistactoriamente",
+                "Cumple parcialmente",
+                "No cumple",
+                "No aplica"
+            ],
+            datasets: [{
+                label: '% Implementación por fase',
+                data: [15.4, 0.8, 3.8, 5],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(244, 208, 63, 0.6)',
+                    'rgba(231, 76, 60, 0.6)',
+                    'rgba(133, 193, 233 , 0.6)',
+                ]
+            }]
+        }
+    });
+
+    var popCanvas6 = document.getElementById("popChart6");
+    var barChart6 = new Chart(popCanvas6, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                "Cumple satistactoriamente",
+                "Cumple parcialmente",
+                "No cumple",
+                "No aplica"
+            ],
+            datasets: [{
+                label: '% Implementación por fase',
+                data: [15.4, 0.8, 3.8, 5],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(244, 208, 63, 0.6)',
+                    'rgba(231, 76, 60, 0.6)',
+                    'rgba(133, 193, 233 , 0.6)',
+                ]
+            }]
+        }
+    });
+
+    var popCanvas7 = document.getElementById("popChart7");
+    var barChart7 = new Chart(popCanvas7, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                "Cumple satistactoriamente",
+                "Cumple parcialmente",
+                "No cumple",
+            ],
+            datasets: [{
+                label: '% Implementación por fase',
+                data: [2, 2, 2],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(244, 208, 63, 0.6)',
+                    'rgba(231, 76, 60, 0.6)',
+                ]
+            }]
+        }
+    });
+
+    var popCanvas8 = document.getElementById("popChart8");
+    var barChart8 = new Chart(popCanvas8, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                "Cumple satistactoriamente",
+                "Cumple parcialmente",
+                "No cumple",
+            ],
+            datasets: [{
+                label: '% Implementación por fase',
+                data: [15.4, 0.8, 3.8],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(244, 208, 63, 0.6)',
+                    'rgba(231, 76, 60, 0.6)',
+                ]
+            }]
+        }
+    });
 
     //speedometer
     // Element inside which you want to see the chart
