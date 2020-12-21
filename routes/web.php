@@ -296,14 +296,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
      // Matriz Riesgos
      Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
      Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+
      // Gap Unos
      Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
      Route::resource('gap-unos', 'GapUnoController');
- 
+
      // Gap Dos
      Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
      Route::resource('gap-dos', 'GapDosController');
- 
+
      // Gap Tres
      Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
      Route::resource('gap-tres', 'GapTresController');
@@ -356,7 +357,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
 
- 
+
     // Partes Interesadas
     Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
     Route::resource('partes-interesadas', 'PartesInteresadasController');
