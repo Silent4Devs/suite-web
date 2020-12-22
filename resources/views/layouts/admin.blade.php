@@ -28,7 +28,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
         rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>
-    
+
     <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
@@ -37,7 +37,7 @@
         .iconos-crear{
             font-size: 15pt;
             color: #9FA2A5;
-            margin-right: 10px; 
+            margin-right: 10px;
         }
         .verde_silent{
             background-color: #0CA193;
@@ -90,7 +90,7 @@
             <ul class="c-header-nav ml-auto">
                 <li class="c-header-nav-item dropdown notifications-menu">
                     <a href="#" class="c-header-nav-link" data-toggle="dropdown">
-                        <i class="far fa-bell" style='font-size:28px'></i>
+                        <i class="fas fa-bell" style="font-size:28px; color:#F0F1F0;" ></i>
                         @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
                         @if($alertsCount > 0)
                             <span class="badge badge-warning navbar-badge">
@@ -123,7 +123,7 @@
                     <button class="c-class-toggler c-header-nav-btn" type="button" id="header-tooltip"
                             data-target="body" data-class="c-dark-theme" data-toggle="c-tooltip" data-placement="bottom"
                             title="Alternar modo claro / oscuro">
-                        <i class="fa-fw far fa-moon" style='font-size:25px'>
+                        <i class="fas fa-moon"style="font-size:28px; color:#F0F1F0;"></i>
                         </i>
 
                     </button>
