@@ -142,7 +142,7 @@ class AccionCorrectivaController extends Controller
         $accionCorrectiva = AccionCorrectiva::create($request->all());
         //dd($request['pdf-value']);
 
-        if ($request->input('documentometodo', false)) {
+   /*     if ($request->input('documentometodo', false)) {
             $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');
         }
 
@@ -151,7 +151,7 @@ class AccionCorrectivaController extends Controller
         }
         $generar = new GeneratePdf();
         //$generar->Generate($request['pdf-value'], $request);
-        $generar->Generate($request['pdf-value'], $accionCorrectiva);
+        $generar->Generate($request['pdf-value'], $accionCorrectiva);      */
         return redirect()->route('admin.accion-correctivas.index');
     }
 
