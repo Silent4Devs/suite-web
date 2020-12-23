@@ -15,8 +15,8 @@
             </li>
             <li class="nav-item border">
                 <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#just" role="tab"
-                aria-controls="contact-just"
-                aria-selected="false"><font class="letra_blanca">Plan de Accion</font></a>
+                           aria-controls="contact-just"
+                           aria-selected="false"><font class="letra_blanca">Plan de Accion</font></a>
             </li>
         </ul>
 
@@ -241,12 +241,9 @@
                         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.documentometodo_helper') }}</span>
                     </div>
                     <div class="form-group col-12 text-right">
-
                         <button class="btn btn-danger" type="submit">
                             {{ trans('global.save') }}
                         </button>
-
-                         <a id="profile-tab-classic" data-toggle="tab" href="#just" role="tab" aria-controls="contact-just" aria-selected="false" class="btn btn-primary">Siguiente</a>
                     </div>
                 </form>
             </div>
