@@ -52,7 +52,7 @@
 
     </div>
 
-     
+
 
     <ul class="c-sidebar-nav dark_mode1">
 
@@ -78,7 +78,7 @@
             </li>
         @endcan
         <li class="c-sidebar-nav-item">
-            <a href="{{ url('analisis-brechas') }}" class="c-sidebar-nav-link">
+            <a href="{{ url('/admin') }}" class="c-sidebar-nav-link">
                 <i class="iconos_menu letra_blanca fas fa-fw fa-file-signature">
 
                 </i>
@@ -146,7 +146,6 @@
                             </a>
                         </li>
                     @endcan
-                   
                 </ul>
             </li>
         @endcan
@@ -874,7 +873,7 @@
                 </ul>
             </li>
         @endcan
-        
+
         @if(\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') && \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
             <li class="c-sidebar-nav-item">
                 <a class="{{ request()->is("admin/team-members") || request()->is("admin/team-members/*") ? "active" : "" }} c-sidebar-nav-link" href="{{ route("admin.team-members.index") }}">
