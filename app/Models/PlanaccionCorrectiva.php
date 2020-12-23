@@ -33,7 +33,7 @@ class PlanaccionCorrectiva extends Model
     ];
 
     protected $fillable = [
-        'accioncorrectiva_id',
+        //'accioncorrectiva_id',
         'actividad',
         'responsable_id',
         'fechacompromiso',
@@ -48,12 +48,12 @@ class PlanaccionCorrectiva extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-
+/*
     public function accioncorrectiva()
     {
         return $this->belongsTo(AccionCorrectiva::class, 'accioncorrectiva_id');
     }
-
+*/
     public function responsable()
     {
         return $this->belongsTo(User::class, 'responsable_id');

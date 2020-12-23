@@ -25,22 +25,19 @@
             <div style="margin-bottom: 10px; margin-left:12px;" class="row">
                 <div class="col-lg-12">
                     <a class="btn btn-success" href="{{ route('admin.accion-correctivas.create') }}">
-                        {{ trans('global.add') }}
+                        Agregar Acción Correctiva
                     </a>
                 </div>
             </div>
         @endcan
         <div class="card">
-            <div class="card-header">
-                {{ trans('cruds.accionCorrectiva.title_singular') }} {{ trans('global.list') }}
-            </div>
 
             <div class="card-body">
                 <table
                     class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-AccionCorrectiva">
                     <thead>
                     <tr>
-                        <th width="10">
+                        <th width="2">
 
                         </th>
                         <th>
