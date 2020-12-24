@@ -13,9 +13,6 @@
     </div>
 @endcan
 <div class="card" style="border: none;">
-    <div class="card-header">
-        {{ trans('cruds.planaccionCorrectiva.title_singular') }} {{ trans('global.list') }}
-    </div>
 
     <div class="card-body" style="border: none;">
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PlanaccionCorrectiva">
@@ -116,7 +113,7 @@
         left: 0;
         right: 0;
         margin: auto;
-        background-color: #fff;
+        background-color: rgba(255,255,255,0);
         overflow-y: scroll;
         padding: 25px;
         padding-top: 60px;
@@ -287,7 +284,7 @@
 </script>
 
 
-<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
 <script type="text/javascript">
     $(".boton_verde").click(function(){
         $(".fondo_negro").fadeIn(100);
