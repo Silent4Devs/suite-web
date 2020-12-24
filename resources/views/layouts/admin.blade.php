@@ -42,6 +42,13 @@
         .verde_silent{
             background-color: #0CA193;
         }
+        .iconos_cabecera{
+            color: #fff;
+            font-size:28px;
+        }
+        body.c-dark-theme .iconos_cabecera{
+            color: #000;
+        }
     </style>
     @yield('styles')
 </head>
@@ -90,7 +97,7 @@
             <ul class="c-header-nav ml-auto">
                 <li class="c-header-nav-item dropdown notifications-menu">
                     <a href="#" class="c-header-nav-link" data-toggle="dropdown">
-                        <i class="fas fa-bell" style="font-size:28px; color:#F0F1F0;" ></i>
+                        <i class="fas fa-bell iconos_cabecera"></i>
                         @php($alertsCount = \Auth::user()->userUserAlerts()->where('read', false)->count())
                         @if($alertsCount > 0)
                             <span class="badge badge-warning navbar-badge">
@@ -123,7 +130,7 @@
                     <button class="c-class-toggler c-header-nav-btn" type="button" id="header-tooltip"
                             data-target="body" data-class="c-dark-theme" data-toggle="c-tooltip" data-placement="bottom"
                             title="Alternar modo claro / oscuro">
-                        <i class="fas fa-moon"style="font-size:28px; color:#F0F1F0;"></i>
+                        <i class="fas fa-moon iconos_cabecera"></i>
                         </i>
 
                     </button>
@@ -135,8 +142,7 @@
 
                 <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown" href="#"
                                                                role="button" aria-haspopup="true" aria-expanded="false">
-                        <div class="c-avatar"><img class="c-avatar-img" src="{{asset('img/avatars/usuario.png')}}"
-                                                   alt="user@email.com"></div>
+                        <div class="c-avatar"><i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i></div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right pt-0 hide">
 
@@ -146,7 +152,7 @@
 
                                 <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
                                    href="{{ route('profile.password.edit') }}">
-                                    <i class="fa-fw fas fa-user c-sidebar-nav-icon">
+                                    <i class="fas fa-user-circle c-sidebar-nav-icon">
                                     </i>
                                     Perfil
                                 </a>
@@ -202,6 +208,7 @@
     <! -- incluir de footer -->
     @include('partials.footer')
 </div>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
