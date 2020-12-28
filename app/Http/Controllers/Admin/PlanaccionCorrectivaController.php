@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Flash;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPlanaccionCorrectivaRequest;
 use App\Http\Requests\StorePlanaccionCorrectivaRequest;
@@ -90,8 +91,8 @@ class PlanaccionCorrectivaController extends Controller
     public function store(StorePlanaccionCorrectivaRequest $request)
     {
         $planaccionCorrectiva = PlanaccionCorrectiva::create($request->all());
-
-        return redirect()->route('admin.planaccion-correctivas.index');
+        Flash::success("Se ha registrado correctamente la actividad del plan de acción");
+        Route::URL('accion-correctivas/plan_accion');
     }
 
     public function edit(PlanaccionCorrectiva $planaccionCorrectiva)
@@ -137,5 +138,12 @@ class PlanaccionCorrectivaController extends Controller
         PlanaccionCorrectiva::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function planformulario(PlanaccionCorrectiva $planaccionCorrectiva)
+    {
+        dd("Pase");
+        return view('admin.accion-correctiva.plan_accion');
+        
     }
 }

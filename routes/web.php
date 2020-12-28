@@ -228,6 +228,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('accion-correctivas/media', 'AccionCorrectivaController@storeMedia')->name('accion-correctivas.storeMedia');
     Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
     Route::resource('accion-correctivas', 'AccionCorrectivaController');
+    Route::get('accion-correctivas/actplana', 'PlanaccionCorrectivaController@planformulario')->name('actplana');
+    Route::get('plan-test', 'AccionCorrectivaController@test')->name('plantest');
+    
     // Ajax
     //Route::post('AjaxAccionCorrectivaCrear', 'AccionCorrectiva@store');
 
