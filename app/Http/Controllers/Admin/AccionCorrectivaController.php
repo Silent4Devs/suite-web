@@ -139,6 +139,19 @@ class AccionCorrectivaController extends Controller
 
     public function store(StoreAccionCorrectivaRequest $request)
     {
+        // se agrega el ajax
+        if ($request->ajax()) {
+            $test = new Test;
+            $headers = [
+              'Access-Control-Allow-Origin' => '*',
+              'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE, OPTIONS',
+            ];
+            header('content-type: application/json; charset=utf-8');
+            return response()->json(
+                $test->titulo = 'test paso',
+                $headers,
+            );
+        }
         $accionCorrectiva = AccionCorrectiva::create($request->all());
         //dd($request['pdf-value']);
 

@@ -41,7 +41,7 @@
 
 
                                     <form method="POST" action="{{ route("admin.accion-correctivas.store") }}"
-                                          enctype="multipart/form-data" class="row">
+                                          enctype="multipart/form-data" class="row" id="formulario">
                                         @csrf
 
                                         {{ Form::hidden('pdf-value', 'accioncorrectiva')}}
@@ -53,7 +53,7 @@
                                             <input
                                                 class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}"
                                                 type="text" name="fecharegistro" id="fecharegistro"
-                                                value="{{ old('fecharegistro') }}">
+                                                value="{{ old('fecharegistro') }}" required>
                                             @if($errors->has('fecharegistro'))
                                                 <div class="invalid-feedback">
                                                     {{ $errors->first('fecharegistro') }}
@@ -68,7 +68,8 @@
                                             </label>
                                             <select
                                                 class="form-control select2 {{ $errors->has('nombrereporta') ? 'is-invalid' : '' }}"
-                                                name="nombrereporta_id" id="nombrereporta_id">
+                                                name="nombrereporta_id" id="nombrereporta_id" required>
+                                                <option></option>
                                                 @foreach($nombrereportas as $id => $nombrereporta)
                                                     <option
                                                         value="{{ $id }}" {{ old('nombrereporta_id') == $id ? 'selected' : '' }}>{{ $nombrereporta }}</option>
@@ -88,7 +89,8 @@
                                             </label>
                                             <select
                                                 class="form-control select2 {{ $errors->has('puestoreporta') ? 'is-invalid' : '' }}"
-                                                name="puestoreporta_id" id="puestoreporta_id">
+                                                name="puestoreporta_id" id="puestoreporta_id" required>
+                                                <option></option>
                                                 @foreach($puestoreportas as $id => $puestoreporta)
                                                     <option
                                                         value="{{ $id }}" {{ old('puestoreporta_id') == $id ? 'selected' : '' }}>{{ $puestoreporta }}</option>
@@ -108,7 +110,8 @@
                                             </label>
                                             <select
                                                 class="form-control select2 {{ $errors->has('nombreregistra') ? 'is-invalid' : '' }}"
-                                                name="nombreregistra_id" id="nombreregistra_id">
+                                                name="nombreregistra_id" id="nombreregistra_id" required>
+                                                <option></option>
                                                 @foreach($nombreregistras as $id => $nombreregistra)
                                                     <option
                                                         value="{{ $id }}" {{ old('nombreregistra_id') == $id ? 'selected' : '' }}>{{ $nombreregistra }}</option>
@@ -128,7 +131,8 @@
                                             </label>
                                             <select
                                                 class="form-control select2 {{ $errors->has('puestoregistra') ? 'is-invalid' : '' }}"
-                                                name="puestoregistra_id" id="puestoregistra_id">
+                                                name="puestoregistra_id" id="puestoregistra_id" required>
+                                                <option></option>
                                                 @foreach($puestoregistras as $id => $puestoregistra)
                                                     <option
                                                         value="{{ $id }}" {{ old('puestoregistra_id') == $id ? 'selected' : '' }}>{{ $puestoregistra }}</option>
@@ -148,7 +152,7 @@
                                             </label>
                                             <textarea
                                                 class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}"
-                                                name="tema" id="tema">{{ old('tema') }}</textarea>
+                                                name="tema" id="tema" required>{{ old('tema') }}</textarea>
                                             @if($errors->has('tema'))
                                                 <div class="invalid-feedback">
                                                     {{ $errors->first('tema') }}
@@ -163,7 +167,8 @@
                                             </label>
                                             <select
                                                 class="form-control {{ $errors->has('causaorigen') ? 'is-invalid' : '' }}"
-                                                name="causaorigen" id="causaorigen">
+                                                name="causaorigen" id="causaorigen" required>
+                                                <option></option>
                                                 <option value
                                                         disabled {{ old('causaorigen', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                                 @foreach(App\Models\AccionCorrectiva::CAUSAORIGEN_SELECT as $key => $label)
@@ -185,7 +190,7 @@
                                             </label>
                                             <textarea
                                                 class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                                name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+                                                name="descripcion" id="descripcion" required>{{ old('descripcion') }}</textarea>
                                             @if($errors->has('descripcion'))
                                                 <div class="invalid-feedback">
                                                     {{ $errors->first('descripcion') }}
@@ -200,7 +205,8 @@
                                             </label>
                                             <select
                                                 class="form-control {{ $errors->has('metodo_causa') ? 'is-invalid' : '' }}"
-                                                name="metodo_causa" id="metodo_causa">
+                                                name="metodo_causa" id="metodo_causa" required>
+                                                <option></option>
                                                 <option value
                                                         disabled {{ old('metodo_causa', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                                 @foreach(App\Models\AccionCorrectiva::METODO_CAUSA_SELECT as $key => $label)
@@ -222,7 +228,7 @@
                                             </label>
                                             <textarea
                                                 class="form-control {{ $errors->has('solucion') ? 'is-invalid' : '' }}"
-                                                name="solucion" id="solucion">{{ old('solucion') }}</textarea>
+                                                name="solucion" id="solucion" required>{{ old('solucion') }}</textarea>
                                             @if($errors->has('solucion'))
                                                 <div class="invalid-feedback">
                                                     {{ $errors->first('solucion') }}
@@ -238,7 +244,7 @@
                                             <textarea
                                                 class="form-control {{ $errors->has('cierre_accion') ? 'is-invalid' : '' }}"
                                                 name="cierre_accion"
-                                                id="cierre_accion">{{ old('cierre_accion') }}</textarea>
+                                                id="cierre_accion" required>{{ old('cierre_accion') }}</textarea>
                                             @if($errors->has('cierre_accion'))
                                                 <div class="invalid-feedback">
                                                     {{ $errors->first('cierre_accion') }}
@@ -253,7 +259,8 @@
                                             </label>
                                             <select
                                                 class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}"
-                                                name="estatus" id="estatus">
+                                                name="estatus" id="estatus" required>
+                                                <option></option>
                                                 <option value
                                                         disabled {{ old('estatus', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                                 @foreach(App\Models\AccionCorrectiva::ESTATUS_SELECT as $key => $label)
@@ -276,7 +283,7 @@
                                             <input
                                                 class="form-control date {{ $errors->has('fecha_compromiso') ? 'is-invalid' : '' }}"
                                                 type="text" name="fecha_compromiso" id="fecha_compromiso"
-                                                value="{{ old('fecha_compromiso') }}">
+                                                value="{{ old('fecha_compromiso') }}" required>
                                             @if($errors->has('fecha_compromiso'))
                                                 <div class="invalid-feedback">
                                                     {{ $errors->first('fecha_compromiso') }}
@@ -292,7 +299,7 @@
                                             <input
                                                 class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}"
                                                 type="text" name="fecha_verificacion" id="fecha_verificacion"
-                                                value="{{ old('fecha_verificacion') }}">
+                                                value="{{ old('fecha_verificacion') }}" required>
                                             @if($errors->has('fecha_verificacion'))
                                                 <div class="invalid-feedback">
                                                     {{ $errors->first('fecha_verificacion') }}
@@ -307,7 +314,8 @@
                                             </label>
                                             <select
                                                 class="form-control select2 {{ $errors->has('responsable_accion') ? 'is-invalid' : '' }}"
-                                                name="responsable_accion_id" id="responsable_accion_id">
+                                                name="responsable_accion_id" id="responsable_accion_id" required>
+                                                <option></option>
                                                 @foreach($responsable_accions as $id => $responsable_accion)
                                                     <option
                                                         value="{{ $id }}" {{ old('responsable_accion_id') == $id ? 'selected' : '' }}>{{ $responsable_accion }}</option>
@@ -327,7 +335,8 @@
                                             </label>
                                             <select
                                                 class="form-control select2 {{ $errors->has('nombre_autoriza') ? 'is-invalid' : '' }}"
-                                                name="nombre_autoriza_id" id="nombre_autoriza_id">
+                                                name="nombre_autoriza_id" id="nombre_autoriza_id" required>
+                                                <option></option>
                                                 @foreach($nombre_autorizas as $id => $nombre_autoriza)
                                                     <option
                                                         value="{{ $id }}" {{ old('nombre_autoriza_id') == $id ? 'selected' : '' }}>{{ $nombre_autoriza }}</option>
@@ -365,7 +374,8 @@
                                     </form>
 
 
-                                    <button id="botonNext" class="btn btn-primary" onclick="stepper2.next()">Next</button>
+                                    <button id="botonNext" class="btn btn-primary" onclick="stepper2.next()">Next
+                                    </button>
                                 </div>
                                 <div id="test-nl-2" class="content">
 
@@ -373,7 +383,8 @@
                                     @include('admin.accionCorrectivas.plan_accion_crear')
 
 
-                                    <button id="botonNext" class="btn btn-primary" onclick="stepper2.next()">Next</button>
+                                    <button id="botonNext" class="btn btn-primary" onclick="stepper2.next()">Next
+                                    </button>
                                 </div>
 
                             </div>
@@ -405,17 +416,87 @@
             animation: true
         })
 
-        $(document).ready(function() {
+        $(document).ready(
+            function () {
+                $("#botonNext").hide();
+
+                $('#test-nl-1').change(
+                    function () {
+
+                        var fecharegistro = $( "#fecharegistro" ).val().trim();
+                        /*var selectnombrerep = $('#nombrereporta_id').val();
+                        var puestoreporta = $('#puestoreporta_id').val();
+                        var nombreregistra = $('#nombreregistra_id').val();
+                        var puestoregistra = $('#puestoregistra_id').val();*/
+                        var tema = $('#tema').val().trim();
+                        //var causaorigen = $('#causaorigen').val();
+                        var descripcion = $('#descripcion').val().trim();
+                        //var metodocausa = $('#metodo_causa').val().trim();
+                        var solucion = $('#solucion').val().trim();
+                        var cierreaccion = $('#cierre_accion').val().trim();
+                        //var estatus = $('#estatus').val().trim();
+                        /*var fechacompromiso = $('#fecha_compromiso').val().trim();
+                        var fechaverificacion = $('#fecha_verificacion').val().trim();
+                        var responsableatencion = $('#responsable_accion_id').val();
+                        var nombreautoriza = $('#nombre_autoriza_id').val();*/
+
+                        // Revisa cada elemento
+                        if ( fecharegistro != "" && tema != "" && descripcion != "" && solucion != "" && cierreaccion != "") {
+                            var isBtn = true;
+                            console.log(fecharegistro, tema, descripcion, solucion, cierreaccion);
+
+                            $("#botonNext").toggle(isBtn);
+                        } else {
+                            console.log("le falta");
+                        }
+
+                    }
+                );
+
+
+                $("#botonNext").click(
+                    function ()
+                    {
+                        console.log("click next");
+                        event.preventDefault();
+                        var dataString = $('#formulario').serialize(); // carga todos los campos para enviarlos
+                        // AJAX
+
+                        $.ajax({
+                            dataType: 'json',
+                            type: "POST",
+                            url: "http://127.0.0.1/admin/accion-correctivas/store",
+                            cache: false,
+                            crossDomain: false,
+                            data: dataString,
+                            success: function(data) {
+                                console.log("paso");
+                                // leer el JSON de retono
+                                $(data).each(function(key,value) {
+                                    $("ul").append(value.titulo);
+                                })
+
+                            }
+                        });
+                        /*var efnPost = $.post( URL, {NAMEDATA:DATA, ...} );
+                        efnPost.done(
+                            function()
+                            {
+                                stepper2.next();
+                            }
+                        );*/
+                    }
+                );
+            }
+        );
+
+        /*$(document).ready(function() {
             $("#botonNext").hide();
 
-            /*$("#fecharegistro").datepicker({
+            $("#fecharegistro").datepicker({
                 onSelect: function(dateText) {
                     console.log("Selected date: " + dateText + "; input's current value: " + this.value);
                 }
-            });*/
-
-            $('#fecharegistro').on("keyup change", function () {
-               alert("date");
             });
 
             $('#tema').on('keyup', function () {
@@ -427,7 +508,7 @@
                 // Hide or show the button according to the boolean value
                 $("#botonNext").toggle(showBtn);
             });
-        });
+        });*/
 
     </script>
 
