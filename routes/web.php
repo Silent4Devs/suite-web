@@ -592,7 +592,6 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 });
 
 
-
 });*/
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
