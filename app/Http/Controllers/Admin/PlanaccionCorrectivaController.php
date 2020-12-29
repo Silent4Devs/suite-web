@@ -113,7 +113,10 @@ class PlanaccionCorrectivaController extends Controller
     {
         $planaccionCorrectiva->update($request->all());
 
-        return redirect()->route('admin.planaccion-correctivas.index');
+        //return redirect()->route('admin.planaccion-correctivas.index');
+        if ($request->ajax()) {​​​​​
+            return response()->json(['success' => true]);
+        }​​​​​
     }
 
     public function show(PlanaccionCorrectiva $planaccionCorrectiva)
@@ -155,4 +158,20 @@ class PlanaccionCorrectivaController extends Controller
         return view('admin.accionCorrectivas.plan_accion')->with('ids', $id);
        
     }
+
+    public function changeplanact(Request $request){
+        try {
+            $id = $request->input('id');
+            $actividad = $request->actividad;
+            $fechacompromiso = $request->fechacompromi;
+            $estatus = $request->estado;
+            $planaccion = AccionCorrectiva::findOrFail($id);
+            $planaccion->save();
+        } catch (Exception $e) {
+            return response($e->getMessage(), 400);
+  }
+  
+    }
+
+
 }
