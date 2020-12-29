@@ -1,3 +1,4 @@
+
 <?php
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
@@ -12,7 +13,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Incidentes De Seguridads
     Route::apiResource('incidentes-de-seguridads', 'IncidentesDeSeguridadApiController');
-	
+
 	  // Gap Unos
     Route::apiResource('gap-unos', 'GapUnoApiController');
 
