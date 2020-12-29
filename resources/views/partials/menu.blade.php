@@ -12,7 +12,7 @@
         margin-left: 2px;
     }
     .dark_mode1, .img_logo{
-        transition: 0.3s;
+        transition: 0s;
     }
     body.c-dark-theme input{
         background-color: #000;
