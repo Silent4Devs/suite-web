@@ -242,6 +242,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('planaccion-correctivas/destroy', 'PlanaccionCorrectivaController@massDestroy')->name('planaccion-correctivas.massDestroy');
     Route::resource('planaccion-correctivas', 'PlanaccionCorrectivaController');
 
+    Route::get('planaccion-correctivas','PlanaccionCorrectivaController@index');
+    Route::post('planaccion-correctivas/update','PlanaccionCorrectivaController@update');
+
     // Registromejoras
     Route::delete('registromejoras/destroy', 'RegistromejoraController@massDestroy')->name('registromejoras.massDestroy');
     Route::resource('registromejoras', 'RegistromejoraController');
@@ -588,7 +591,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
 });
 
-*/
+
 
 });*/
 
