@@ -39,9 +39,9 @@
                     </div>
                     <div class="collapse" id="collapseactividad">
                         <div class="card card-body">
-                            @include('admin.accionCorrectivas.edit_planaccion')
+                            
 
-
+<!--@include('admin.accionCorrectivas.edit_planaccion')-->
                         
                         </div>
                     </div>

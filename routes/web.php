@@ -234,6 +234,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
     Route::resource('accion-correctivas', 'AccionCorrectivaController');
     Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
+    
+    Route::post('accion-correctivas/editarplan','PlanaccionCorrectivaController@update');
 
     // Ajax
     //Route::post('AjaxAccionCorrectivaCrear', 'AccionCorrectiva@store');
@@ -242,8 +244,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('planaccion-correctivas/destroy', 'PlanaccionCorrectivaController@massDestroy')->name('planaccion-correctivas.massDestroy');
     Route::resource('planaccion-correctivas', 'PlanaccionCorrectivaController');
 
-    Route::get('planaccion-correctivas','PlanaccionCorrectivaController@index');
-    Route::post('planaccion-correctivas/update','PlanaccionCorrectivaController@update');
+   
 
     // Registromejoras
     Route::delete('registromejoras/destroy', 'RegistromejoraController@massDestroy')->name('registromejoras.massDestroy');
@@ -590,6 +591,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
     Route::post('profile/toggle-two-factor', 'ProfileController@toggleTwoFactor')->name('profile.toggle-two-factor');
 
 });
+
 
 
 });*/

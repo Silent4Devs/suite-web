@@ -121,5 +121,5 @@
 
 
     <div class="form-group col-12 text-right">
-        <button id="form-siguienteaccion" data-toggle="collapse" onclick="closetabcollap2()" data-target="#collapseplan" class="btn btn-primary">Siguiente</button>
+        <button id="form-siguienteaccion" data-toggle="collapse" onclick="closetabcollanext2()" data-target="#collapseplan" class="btn btn-primary">Siguiente</button>
     </div>
