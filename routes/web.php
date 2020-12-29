@@ -11,6 +11,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
 
+    //analisis brechas
+    //Route::resource('analisis-brechas', 'AnalisisBController');
+    Route::get('analisis-brechas','AnalisisBController@index');
+    Route::post('analisis-brechas/update','AnalisisBController@update');
+
     // Roles
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
@@ -228,10 +233,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('accion-correctivas/media', 'AccionCorrectivaController@storeMedia')->name('accion-correctivas.storeMedia');
     Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
     Route::resource('accion-correctivas', 'AccionCorrectivaController');
+    Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
+
+    // Ajax
+    //Route::post('AjaxAccionCorrectivaCrear', 'AccionCorrectiva@store');
 
     // Planaccion Correctivas
     Route::delete('planaccion-correctivas/destroy', 'PlanaccionCorrectivaController@massDestroy')->name('planaccion-correctivas.massDestroy');
     Route::resource('planaccion-correctivas', 'PlanaccionCorrectivaController');
+
+    Route::get('planaccion-correctivas','PlanaccionCorrectivaController@index');
+    Route::post('planaccion-correctivas/update','PlanaccionCorrectivaController@update');
 
     // Registromejoras
     Route::delete('registromejoras/destroy', 'RegistromejoraController@massDestroy')->name('registromejoras.massDestroy');
@@ -325,7 +337,9 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
         Route::post('profile/two-factor', 'ChangePasswordController@toggleTwoFactor')->name('password.toggleTwoFactor');
     }
 });
-Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
+
+/*Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
+
     Route::get('/home', 'HomeController@index')->name('home');
 
     // Permissions
@@ -574,7 +588,12 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('frontend/profile/destroy', 'ProfileController@destroy')->name('profile.destroy');
     Route::post('frontend/profile/password', 'ProfileController@password')->name('profile.password');
     Route::post('profile/toggle-two-factor', 'ProfileController@toggleTwoFactor')->name('profile.toggle-two-factor');
+
 });
+
+
+});*/
+
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
     // Two Factor Authentication
     if (file_exists(app_path('Http/Controllers/Auth/TwoFactorController.php'))) {
@@ -585,8 +604,6 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 
 Route::view('sitemap', 'admin.sitemap.index');
-
+Route::view('stepper', 'stepper');
 Route::view('admin/gantt', 'admin.gantt.index');
-Route::view('analisis-brechas', 'admin.analisisbrechas.index');
-
 //URL::forceScheme('https');

@@ -33,7 +33,7 @@ class PlanaccionCorrectiva extends Model
     ];
 
     protected $fillable = [
-        //'accioncorrectiva_id',
+        'accioncorrectiva_id',
         'actividad',
         'responsable_id',
         'fechacompromiso',

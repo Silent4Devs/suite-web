@@ -10,14 +10,13 @@ use \DateTimeInterface;
 
 class GapUno extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use MultiTenantModelTrait, HasFactory;
 
-    public $table = 'gap_unos';
+    public $table = 'gap_logro_uno';
 
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     protected $fillable = [
@@ -27,8 +26,14 @@ class GapUno extends Model
         'recomendacion',
         'created_at',
         'updated_at',
-        'deleted_at',
-        'team_id',
+    ];
+
+    protected $casts = [
+        'id' => 'integer',
+        'pregunta' => 'string',
+        'valoracion' => 'string',
+        'evidencia' => 'string',
+        'recomendacion' => 'string',
     ];
 
     const VALORACION_SELECT = [
@@ -58,8 +63,4 @@ class GapUno extends Model
         $this->save();
     }
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
 }

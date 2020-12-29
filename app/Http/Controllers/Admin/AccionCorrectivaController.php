@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Flash;
 use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -139,7 +140,8 @@ class AccionCorrectivaController extends Controller
 
     public function store(StoreAccionCorrectivaRequest $request)
     {
-        $accionCorrectiva = AccionCorrectiva::create($request->all());
+
+        $accionCorrectiva = AccionCorrectiva::create($request->all());;
         //dd($request['pdf-value']);
 
    /*     if ($request->input('documentometodo', false)) {
@@ -152,7 +154,12 @@ class AccionCorrectivaController extends Controller
         $generar = new GeneratePdf();
         //$generar->Generate($request['pdf-value'], $request);
         $generar->Generate($request['pdf-value'], $accionCorrectiva);      */
-        return redirect()->route('admin.accion-correctivas.index');
+        //return redirect()->route('admin.accion-correctivas.plan_accion')->with('accioncorrectivas', $accionCorrectiva);
+
+            Flash::success("Registro guardado exitosamente");
+            return redirect('admin/plan-correctiva?param='.$accionCorrectiva->id);
+
+
     }
 
     public function edit(AccionCorrectiva $accionCorrectiva)
@@ -230,5 +237,9 @@ class AccionCorrectivaController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function test(){
+        dd("Test");
     }
 }
