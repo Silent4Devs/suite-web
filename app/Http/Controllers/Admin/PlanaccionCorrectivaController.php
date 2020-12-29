@@ -91,8 +91,9 @@ class PlanaccionCorrectivaController extends Controller
     public function store(StorePlanaccionCorrectivaRequest $request)
     {
         $planaccionCorrectiva = PlanaccionCorrectiva::create($request->all());
+       // dd(request()->all());
         Flash::success("Se ha registrado correctamente la actividad del plan de acción");
-        Route::URL('accion-correctivas/plan_accion');
+        return redirect()->route('admin.accion-correctivas.index');
     }
 
     public function edit(PlanaccionCorrectiva $planaccionCorrectiva)
@@ -142,9 +143,16 @@ class PlanaccionCorrectivaController extends Controller
 
     public function planformulario(Request $request)
     {
-        //dd($request->request);
+        
         $id = request()->param;
         return view('admin.accionCorrectivas.plan_accion')->with('ids', $id);
 
+    }
+    public function planeditformulario(Request $request)
+    {
+        
+        $id = request()->param;
+        return view('admin.accionCorrectivas.plan_accion')->with('ids', $id);
+       
     }
 }

@@ -12,15 +12,10 @@
             <div class="row">
 
                 <div class="col-md-12 mt-5">
-                    <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap1()" id="acollapseExample" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                        Acción Correctiva
-                    </a>
-                    <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap2()" id="acollapseplan" href="#collapseplan" role="button" aria-expanded="false" aria-controls="collapseplan">
-                        Análisis de causa raíz
-                    </a>
-                    <a class="btn btn-primary" data-toggle="collapse"  id="acollapseactividad"  role="button" aria-expanded="false" aria-controls="collapseactividad">
-                        Plan de acción
-                    </a>
+                <button id="acollapseExample" data-toggle="collapse" onclick="closetabcollap1()" data-target="#collapseExample" class="btn btn-danger">Acción Correctiva</button>
+                <button id="acollapseplan" data-toggle="collapse" onclick="closetabcollap2()" data-target="#collapseplan" class="btn btn-primary">Análisis de causa raíz</button>
+                <button id="acollapseactividad" data-toggle="collapse" onclick="" data-target="#" class="btn btn-primary">Plan de acción</button>
+           
                     </p>
                     <div class="collapse show" id="collapseExample">
                         <div class="card card-body">
@@ -59,6 +54,27 @@
 
 @section('scripts')
 <script>
+
+
+
+$("#acollapseExample").click(function(){
+  
+  $("#acollapseExample").removeClass('btn btn-primary').addClass("btn btn-danger");
+  $("#acollapseplan").removeClass('btn btn-danger').addClass("btn btn-primary");
+});
+
+$("#acollapseplan").click(function(){
+    $("#acollapseExample").removeClass('btn btn-danger').addClass("btn btn-primary");
+  $(this).toggleClass("btn btn-danger");
+  $("#acollapseplan").removeClass('btn btn-primary').addClass("btn btn-danger");
+});
+$("#form-siguienteaccion").click(function(){
+    $("#acollapseExample").removeClass('btn btn-danger').addClass("btn btn-primary");
+  $("#acollapseplan").removeClass('btn btn-primary').addClass("btn btn-danger");
+});
+
+
+
     function closetabcollap1() {
         $('#collapseExample').collapse('show');
         $('#collapseplan').collapse('hide');

@@ -121,7 +121,7 @@
                                 <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.documentometodo_helper') }}</span>
                             </div>
                             <div class="form-group col-12 text-right">
-                                <button class="btn btn-danger" type="submit">
+                                <button class="btn btn-primary" type="submit">
                                     {{ trans('global.save') }}
                                 </button>
                             </div>

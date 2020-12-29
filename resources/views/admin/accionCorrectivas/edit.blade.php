@@ -39,11 +39,10 @@
                     </div>
                     <div class="collapse" id="collapseactividad">
                         <div class="card card-body">
-                            @include('admin.accionCorrectivas.plan_accion_crear')
+                            @include('admin.accionCorrectivas.edit_planaccion')
 
 
-                            <button id="botonNext" class="btn btn-primary" onclick="stepper2.next()">Next
-                            </button>
+                        
                         </div>
                     </div>
                 </div>

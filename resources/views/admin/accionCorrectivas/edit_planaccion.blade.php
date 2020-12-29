@@ -1,37 +1,4 @@
-@extends('layouts.admin')
-@section('content')
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Acción Correctiva </h3>
-    </div>
 
-    <div class="card-body">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-12 mt-5">
-                    <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap1()" id="acollapseExample" href="" role="button" aria-expanded="false" aria-controls="collapseExample">
-                        Acción Correctiva
-                    </a>
-                    <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap2()" id="acollapseplan" href="" role="button" aria-expanded="false" aria-controls="collapseplan">
-                        Análisis de causa raíz
-                    </a>
-                    <a class="btn btn-danger" data-toggle="collapse" onclick="closetabcollap3()" id="acollapseactividad" href="#collapseactividad" role="button" aria-expanded="false" aria-controls="collapseactividad">
-                        Plan de acción
-                    </a>
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body">
-                            <div id="test-nl-1" class="content">
-
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="collapse" id="collapseplan">
-                        <div class="card card-body">
-
-                        </div>
-                    </div>
                     <div class="collapse show" id="collapseactividad">
                         <div class="card card-body">
 
@@ -51,11 +18,7 @@
                                 <span class="help-block">{{ trans('cruds.planaccionCorrectiva.fields.accioncorrectiva_helper') }}</span>
                 </div>
             -->
-                                <div class="form-group col-12">
-                                    {!! Html::decode(Form::label('id', '<i class="fas fa-file iconos-crear"></i>No. Acción Correctiva:', ['class' => 'required'])) !!}
-                                    {!! Html::decode(Form::text('accioncorrectivaid', $ids, ['id' => 'accioncorrectivaid', 'disabled'], ['class' => 'form-control mx-auto'])) !!}
-                                    {{ Form::hidden('accioncorrectiva_id', $ids, ['id' => 'accioncorrectiva_id']) }}
-                                </div>
+                           
                                 <div class="form-group col-12">
                                     <label class="required" for="actividad"><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.actividad') }}
                                     </label>
@@ -119,17 +82,4 @@
 
 
                         </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="test-nl-1" class="content">
-                @include('admin.accionCorrectivas.tabla_planaccion')
-
-            </div>
-        </div>
-    </div>
-</div>
-
-@endsection
+                    
