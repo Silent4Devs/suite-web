@@ -12,32 +12,44 @@
         margin-left: 2px;
     }
     .dark_mode1, .img_logo{
-        transition: 0.3s;
+        transition: 0s;
     }
     body.c-dark-theme input{
         background-color: #000;
         color: #ccc;
-        border: rgba(0,0,0,0);
+        border-color: rgba(0,0,0,0);
+    }
+    body.c-dark-theme input:focus{
+        background-color: #000;
     }
     body.c-dark-theme textarea{
         background-color: #000;
         color: #ccc;
-        border: rgba(0,0,0,0);
+        border-color: rgba(0,0,0,0);
+    }
+    body.c-dark-theme textarea:focus{
+        background-color: #000;
     }
     body.c-dark-theme .form-group span{
         background-color: #000;
         color: #ccc;
-        border: rgba(0,0,0,0);
+        border-color: rgba(0,0,0,0);
+    }
+     body.c-dark-theme .form-group span:focus{
+        background-color: #000;
     }
     body.c-dark-theme select{
         background-color: #000;
         color: #ccc;
-        border: rgba(0,0,0,0);
+        border-color: rgba(0,0,0,0);
+    }
+     body.c-dark-theme select:focus{
+        background-color: #000;
     }
     body.c-dark-theme .needsclick{
         background-color: #000;
         color: #ccc;
-        border: rgba(0,0,0,0);
+        border-color: rgba(0,0,0,0);
     }
 </style>
 
@@ -897,4 +909,3 @@
 
 </div>
 
-<script type="text/javascript" src="{{ asset('js/dark_mode.js') }}"></script>

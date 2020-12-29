@@ -1,10 +1,10 @@
 .c-dark-theme{
     background-color: #181924;
     color: #888;
-    border: 1px solid rgba(0,0,0,0);
+    border-color: rgba(0,0,0,0);
 }
 ul, div img, .card{
-	transition: 0.3s;
+	transition: 0s;
 }
 
 body.c-dark-theme .dark_mode1{
@@ -14,7 +14,7 @@ body.c-dark-theme .dark_mode1{
 body.c-dark-theme .card{
     background-color: #2a2b36;
     color: #fff;
-    border: 1px solid rgba(0,0,0,0);
+    border-color: rgba(0,0,0,0);
 }
 body.c-dark-theme .card-header{
     background-color: #2a2b36;

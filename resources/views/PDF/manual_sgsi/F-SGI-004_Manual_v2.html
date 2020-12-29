@@ -10,6 +10,7 @@
 		}
 		table{
 			border-collapse: collapse;
+			border: none;
 		}
 		header{
 			width: 100%;
@@ -40,8 +41,11 @@
 			width: 100%;
 			height: 100%;
 		}
+		.tabla2 td{
+			border: none;
+		}
 		.tabla3{
-			width: 50%;
+			width: 100%;
 		}
 		.tabla4{
 			width: 70%;
@@ -85,7 +89,18 @@
 			font-size: 14pt;
 			margin-top: 60px;
 		}
-
+		.tabla7{
+			margin-top: 30px;
+			width: 100%;
+		}
+		.tabla7 th{
+			background-color: #eee;
+			border: 1px solid #ccc;
+		}
+		.bgcolor{
+			background-color: #eee;
+			color: #000;
+		}
 
 	</style>
 </head>
@@ -98,32 +113,32 @@
 		<h1 class="titulo">Titulo</h1>
 		<table class="tabla1" cellspacing="0" cellpadding="0">
 			<tr>
-				<td>Elaboró:</td>
+				<td class="bgcolor">Elaboró:</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Revisó:</td>
+				<td class="bgcolor">Revisó:</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Aprobó:</td>
+				<td class="bgcolor">Aprobó:</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Responsable del documento:</td>
+				<td class="bgcolor">Responsable del documento:</td>
 				<td style="padding: 0;">
 					<table class="tabla2" cellpadding="0" cellspacing="0">
 						<tr>
-							<td width="50%"></td>
+							<td width="50%" style="border-right: 1px solid #ccc;"></td>
 							<td style="padding: 0;">
 								<table class="tabla3" cellpadding="0" cellspacing="0">
 									<tr>
-										<td>Tiempo de retención:</td>
+										<td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc;" class="bgcolor">Tiempo de retención:</td>
 										<td>1 año posterior a su vigencia</td>
 									</tr>
 									<tr>
-										<td>Disposición final:</td>
-										<td>Eliminación de repositorio documental</td>
+										<td  class="bgcolor">Disposición final:</td>
+										<td style="border-left: 1px solid #ccc; border-top: 1px solid #ccc;">Eliminación de repositorio documental</td>
 									</tr>
 								</table>
 							</td>
@@ -136,15 +151,15 @@
 		<table class="tabla4" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
-					<th>Versión</th>
-					<th>Fecha</th>
-					<th>Descripción del cambio</th>
+					<th class="bgcolor">Versión</th>
+					<th class="bgcolor">Fecha</th>
+					<th class="bgcolor">Descripción del cambio</th>
 				</tr>
 				<tbody>
 					<tr>
 						<td>X</td>
 						<td>DD/MM/AA</td>
-						<td>Emicion inicial</td>
+						<td>Emisión inicial</td>
 					</tr>
 					<tr>
 						<td></td>
