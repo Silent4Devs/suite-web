@@ -140,10 +140,11 @@ class PlanaccionCorrectivaController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function planformulario(PlanaccionCorrectiva $planaccionCorrectiva)
+    public function planformulario(Request $request)
     {
-        dd("Pase");
-        return view('admin.accion-correctiva.plan_accion');
-        
+        //dd($request->request);
+        $id = request()->param;
+        return view('admin.accionCorrectivas.plan_accion')->with('ids', $id);
+
     }
 }

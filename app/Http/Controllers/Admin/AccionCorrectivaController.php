@@ -140,9 +140,8 @@ class AccionCorrectivaController extends Controller
 
     public function store(StoreAccionCorrectivaRequest $request)
     {
-   
-        $accionCorrectiva = AccionCorrectiva::create($request->all());
-        
+
+        $accionCorrectiva = AccionCorrectiva::create($request->all());;
         //dd($request['pdf-value']);
 
    /*     if ($request->input('documentometodo', false)) {
@@ -158,9 +157,9 @@ class AccionCorrectivaController extends Controller
         //return redirect()->route('admin.accion-correctivas.plan_accion')->with('accioncorrectivas', $accionCorrectiva);
 
             Flash::success("Registro guardado exitosamente");
-            return redirect("accion-correctivas/actplana");
-                   
-     
+            return redirect('admin/plan-correctiva?param='.$accionCorrectiva->id);
+
+
     }
 
     public function edit(AccionCorrectiva $accionCorrectiva)
@@ -240,7 +239,7 @@ class AccionCorrectivaController extends Controller
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 
-    public function test(){​​​​​
+    public function test(){
         dd("Test");
     }
 }
