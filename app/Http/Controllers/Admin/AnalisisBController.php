@@ -16,7 +16,7 @@ class AnalisisBController extends Controller
     public function index()
     {
         $gapuno = GapUno::all();
-        return view('home')->with('gapunos', $gapuno);
+        return view('dashboard.index')->with('gapunos', $gapuno);
     }
 
     /**

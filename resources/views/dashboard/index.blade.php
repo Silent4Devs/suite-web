@@ -53,31 +53,36 @@
                                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                                              aria-labelledby="home-tab">
                                             <!--introduccion-->
-                                            <!--introduccion-->
+                                        @include('dashboard.introduccion')
+                                        <!--introduccion-->
                                         </div>
                                         <div class="tab-pane fade" id="gapuno" role="tabpanel"
                                              aria-labelledby="profile-tab">
                                             <div class="container">
                                                 <!--gap uno-->
-                                                <!--gap uno-->
+                                            @include('dashboard.gapuno')
+                                            <!--gap uno-->
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="gapdos" role="tabpanel"
                                              aria-labelledby="contact-tab">
                                             <div class="container">
                                                 <!--gap dos -->
-                                                <!--gap dos -->
+                                            @include('dashboard.gapdos')
+                                            <!--gap dos -->
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="gaptres" role="tabpanel"
                                              aria-labelledby="contact-tab">
                                             <div class="container">
                                                 <!--gap tres-->
-                                                <!--gap tres -->
+                                            @include('dashboard.gaptres')
+                                            <!--gap tres -->
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="dashboard" role="tabpanel"
                                              aria-labelledby="contact-tab">
+                                            @include('dashboard.tablero')
                                         </div>
                                     </div>
                                 </div>
