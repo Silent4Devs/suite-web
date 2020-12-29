@@ -78,7 +78,7 @@
             </li>
         @endcan
         <li class="c-sidebar-nav-item">
-            <a href="{{ url('/admin') }}" class="c-sidebar-nav-link">
+            <a href="{{ url('/admin/analisis-brechas') }}" class="c-sidebar-nav-link">
                 <i class="iconos_menu letra_blanca fas fa-fw fa-file-signature">
 
                 </i>

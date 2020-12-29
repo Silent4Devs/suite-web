@@ -15,10 +15,10 @@ class CreateGapLogroUnoTable extends Migration
     {
         Schema::create('gap_logro_uno', function (Blueprint $table) {
             $table->id();
-            $table->string('entregable');
-            $table->string('valoracion');
-            $table->longText('evidencia');
-            $table->integer('recomendacion');
+            $table->string('pregunta')->nullable();
+            $table->string('valoracion')->nullable();
+            $table->longText('evidencia')->nullable();
+            $table->integer('recomendacion')->nullable();
             $table->timestamps();
         });
     }

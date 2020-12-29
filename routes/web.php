@@ -11,6 +11,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
 
+    //analisis brechas
+    //Route::resource('analisis-brechas', 'AnalisisBController');
+    Route::get('analisis-brechas','AnalisisBController@index');
+    Route::post('analisis-brechas/update','AnalisisBController@update');
+
     // Roles
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
@@ -330,8 +335,8 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
     }
 });
 
-/*
-Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
+/*Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
+
     Route::get('/home', 'HomeController@index')->name('home');
 
     // Permissions
@@ -580,9 +585,12 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('frontend/profile/destroy', 'ProfileController@destroy')->name('profile.destroy');
     Route::post('frontend/profile/password', 'ProfileController@password')->name('profile.password');
     Route::post('profile/toggle-two-factor', 'ProfileController@toggleTwoFactor')->name('profile.toggle-two-factor');
+
 });
 
 */
+
+});*/
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
     // Two Factor Authentication
@@ -594,8 +602,6 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 
 Route::view('sitemap', 'admin.sitemap.index');
-
+Route::view('stepper', 'stepper');
 Route::view('admin/gantt', 'admin.gantt.index');
-Route::view('analisis-brechas', 'admin.analisisbrechas.index');
-
 //URL::forceScheme('https');
