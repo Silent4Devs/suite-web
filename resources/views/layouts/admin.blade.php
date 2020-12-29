@@ -117,9 +117,7 @@
             </ul>
             <ul class="c-header-nav ml-auto">
                 <li class="c-header-nav-item px-2 c-d-legacy-none">
-                    <button class="c-class-toggler c-header-nav-btn" type="button" id="header-tooltip"
-                            data-target="body" data-class="c-dark-theme" data-toggle="c-tooltip" data-placement="bottom"
-                            title="Alternar modo claro / oscuro">
+                    <button id="btnDark" style="background: rgba(0,0,0,0); border: none;">
                         <i class="fas fa-moon iconos_cabecera"></i>
                         </i>
 
@@ -225,7 +223,29 @@
 <script>
     $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 </script>
-<script type="text/javascript" src="{{ asset('js/dark_mode.js') }}"></script>
+<script>
+    
+        const btnDark = document.querySelector('#btnDark');
+
+        btnDark.addEventListener('click', () => {
+            document.body.classList.toggle('c-dark-theme');
+
+            if (document.body.classList.contains('c-dark-theme')) {
+                localStorage.setItem('dark-mode', 'true');
+            }
+            else{
+                localStorage.setItem('dark-mode', 'false');
+            }
+        });
+
+        if (localStorage.getItem('dark-mode') === 'true') {
+            document.body.classList.add('c-dark-theme');
+        }
+        else{
+            document.body.classList.remove('c-dark-theme');
+        }
+
+</script>
 <script>
     $(function () {
         let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
