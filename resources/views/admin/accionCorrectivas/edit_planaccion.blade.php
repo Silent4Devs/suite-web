@@ -1,3 +1,5 @@
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
                     <div class="collapse show" id="collapseactividad">
                         <div class="card card-body">
@@ -19,7 +21,13 @@
                 </div>
             -->
                            
+                                
                                 <div class="form-group col-12">
+                                    {!! Html::decode(Form::text('accioncorrectivaid', $ids, ['id' => 'accioncorrectivaid', 'disabled'], ['class' => 'form-control mx-auto'])) !!}
+                                    {{ Form::hidden('accioncorrectiva_id', $ids, ['id' => 'accioncorrectiva_id']) }}
+                                </div>
+            
+                                    <div class="form-group col-12">
                                     <label class="required" for="actividad"><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.actividad') }}
                                     </label>
                                     <input class="form-control {{ $errors->has('actividad') ? 'is-invalid' : '' }}" type="text" name="actividad" id="actividad" value="{{ old('actividad', '') }}" required>
@@ -82,4 +90,63 @@
 
 
                         </div>
+
+
+                        <table class="table" style="font-size: 12px;">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">NO</th>
+                                <th scope="col">Actividad</th>
+                                <th scope="col">Fecha compromiso</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Responsable</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($planaccion as $planac)
+                                <tr>
+                                    <th scope="row">
+                                        {{$gapuno->id}}
+                                    </th>
+                                    <td>
+                                        {{$gapuno->actitividad}}
+                                    </td>
+                                    <td>
+                                      
+                                    </td>
+                                    <td>
+                                        <a href="" class="update" data-pk="{{ $gapuno->id }}" data-type="text" data-name="evidencia" data-title="Actualizar evidencia">{{ $gapuno->evidencia }}</a>
+                                    </td>
+                                    <td>
+                                    <input name="recomendacion" id="recomendacion{{ $gapuno->id }}" value="{{ $gapuno->recomendacion }}">
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     
+
+</div>
+
+
+<script>
+    $(document).ready(function() {
+
+        $.fn.editable.defaults.mode = 'popup';
+        $.fn.editable.defaults.send = "always";
+
+        $.fn.editable.defaults.params = function (params)
+        {
+            params._token = $("#_token").data("token");
+            return params;
+        };
+
+        $('#investmentName').editable({
+
+            type: 'text',
+            url: '/',
+            send: 'always'
+
+        });
+    });
+</script>
