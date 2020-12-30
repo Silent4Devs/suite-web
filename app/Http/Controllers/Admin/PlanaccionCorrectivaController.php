@@ -137,6 +137,12 @@ class PlanaccionCorrectivaController extends Controller
                     $palanaccion->save();
                     return response()->json(['success' => true]);
                     break;
+                case 'responsable':
+                    $palanaccion = PlanaccionCorrectiva::findOrFail($id);
+                    $palanaccion->responsable_id = $request->value;
+                    $palanaccion->save();
+                    return response()->json(['success' => true]);
+                    break;
             }
         }
 

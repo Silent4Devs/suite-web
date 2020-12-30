@@ -256,47 +256,7 @@
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.ajaxOptions = {type: 'PUT'};
 
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        });
-
-        //categories table
-        $(".actividad").editable({
-            dataType: 'json',
-            success: function (response, newValue) {
-                console.log('Actualizado, response')
-            }
-        });
-
-        $(".estatus").editable({
-            dataType: 'json',
-            source: [
-                {value: 'por_iniciar', text: 'Por iniciar'},
-                {value: 'en_proceso', text: 'En proceso'},
-                {value: 'terminado', text: 'Terminado'}
-            ],
-            success: function (response, newValue) {
-                console.log('Actualizado, response')
-            }
-        });
-
-        $(".fechacompromiso").editable({
-            dataType: 'json',
-            format: 'YYYY-MM-DD',
-            viewformat: 'YYYY.MM.DD',
-            template: 'D / MM / YYYY',
-            combodate: {
-                minYear: 2019,
-                maxYear: 2100,
-                minuteStep: 1
-            },
-            success: function (response, newValue) {
-                console.log('Actualizado, response')
-            }
-        });
-
-    });
+    @yield('x-editable')
 
 </script>
 <!-- x-editable -->

@@ -123,8 +123,81 @@
                    data-name="estatus">
                 </a>
             </td>
-            <td>{{$item->responsable_id}}</td>
+            <td>
+                <a href="#"
+                   data-type="select"
+                   data-pk="{{$item->id}}"
+                   data-url="{{route("admin.planaccion-correctivas.update", $item->id)}}"
+                   data-title="Seleccionar responsable"
+                   data-value="{{$item->responsable_id}}"
+                   class="responsable"
+                   data-name="responsable">
+                </a>
+            </td>
         </tr>
     @endforeach
     </tbody>
 </table>
+
+<script>
+    @section('x-editable')
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+
+        //categories table
+        $(".actividad").editable({
+            dataType: 'json',
+            success: function (response, newValue) {
+                console.log('Actualizado, response')
+            }
+        });
+
+        $(".estatus").editable({
+            dataType: 'json',
+            source: [
+                {value: 'por_iniciar', text: 'Por iniciar'},
+                {value: 'en_proceso', text: 'En proceso'},
+                {value: 'terminado', text: 'Terminado'}
+            ],
+            success: function (response, newValue) {
+                console.log('Actualizado, response')
+            }
+        });
+
+        $(".fechacompromiso").editable({
+            dataType: 'json',
+            format: 'YYYY-MM-DD',
+            viewformat: 'YYYY.MM.DD',
+            template: 'D / MM / YYYY',
+            combodate: {
+                minYear: 2019,
+                maxYear: 2100,
+                minuteStep: 1
+            },
+            success: function (response, newValue) {
+                console.log('Actualizado, response')
+            }
+        });
+
+    });
+
+    $(".responsable").editable({
+        dataType: 'json',
+        source: [
+                @foreach($users as $user)
+                    { value: '{{ $user->id }}', text: '{{ $user->name }}' }
+                    @unless ($loop->last)
+                    ,
+                    @endunless
+                @endforeach
+        ],
+        success: function (response, newValue) {
+            console.log('Actualizado, response')
+        }
+    });
+    @endsection
+</script>
+<!-- x-editable -->
+
