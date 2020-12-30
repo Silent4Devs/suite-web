@@ -234,7 +234,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
     Route::resource('accion-correctivas', 'AccionCorrectivaController');
     Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
-    
     Route::post('accion-correctivas/editarplan','PlanaccionCorrectivaController@update');
 
     // Ajax
@@ -244,7 +243,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('planaccion-correctivas/destroy', 'PlanaccionCorrectivaController@massDestroy')->name('planaccion-correctivas.massDestroy');
     Route::resource('planaccion-correctivas', 'PlanaccionCorrectivaController');
 
-   
+
 
     // Registromejoras
     Route::delete('registromejoras/destroy', 'RegistromejoraController@massDestroy')->name('registromejoras.massDestroy');

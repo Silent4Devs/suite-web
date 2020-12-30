@@ -18,7 +18,6 @@
                     <button id="acollapseplan" data-toggle="collapse" onclick="closetabcollap2()" data-target="#collapseplan" class="btn btn-primary">Análisis de causa raíz</button>
                     <button id="acollapseactividad" data-toggle="collapse" onclick="" data-target="#" class="btn btn-primary">Plan de acción</button>
 
-                    </p>
                     <div class="collapse show" id="collapseExample">
                         <div class="card card-body">
                             <div id="test-nl-1" class="content">
@@ -53,7 +52,7 @@
         @section('scripts')
 
         <script>
-          
+
                     $("#acollapseExample").click(function() {
 
                         $("#acollapseExample").removeClass('btn btn-primary').addClass("btn btn-danger");

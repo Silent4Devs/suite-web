@@ -28,6 +28,9 @@
     <!--<link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet"/>-->
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
+    <!-- x-editable -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
+          rel="stylesheet"/>
     <style type="text/css">
         .iconos-crear{
             font-size: 15pt;
@@ -44,6 +47,7 @@
         body.c-dark-theme .iconos_cabecera{
             color: #000;
         }
+
         body, .iconos_cabecera{
             transition: 0.2s;
         }
@@ -56,6 +60,21 @@
             opacity: 0.7;
         }
         
+
+        .glyphicon-ok::before {
+            content: "\f00c";
+        }
+
+        .glyphicon-remove::before {
+            content: "\f00d";
+        }
+
+        .glyphicon {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            font-style: normal;
+        }
+
     </style>
     @yield('styles')
 </head>
@@ -240,11 +259,25 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+<!-- x editable -->
+<script
+    src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
 <script>
     $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 </script>
+<!-- x-editable -->
 <script>
-    
+    $.fn.editable.defaults.mode = 'inline';
+    $.fn.editable.defaults.ajaxOptions = {type: 'PUT'};
+
+    @yield('x-editable')
+
+</script>
+<!-- x-editable -->
+
+<script>
+
         const btnDark = document.querySelector('#btnDark');
 
         btnDark.addEventListener('click', () => {

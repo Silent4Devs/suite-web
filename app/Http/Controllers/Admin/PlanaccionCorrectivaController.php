@@ -15,6 +15,9 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
+use DateTime;
+
 
 class PlanaccionCorrectivaController extends Controller
 {
@@ -30,9 +33,9 @@ class PlanaccionCorrectivaController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'planaccion_correctiva_show';
-                $editGate      = 'planaccion_correctiva_edit';
-                $deleteGate    = 'planaccion_correctiva_delete';
+                $viewGate = 'planaccion_correctiva_show';
+                $editGate = 'planaccion_correctiva_edit';
+                $deleteGate = 'planaccion_correctiva_delete';
                 $crudRoutePart = 'planaccion-correctivas';
 
                 return view('partials.datatablesActions', compact(
@@ -71,8 +74,8 @@ class PlanaccionCorrectivaController extends Controller
         }
 
         $accion_correctivas = AccionCorrectiva::get();
-        $users              = User::get();
-        $teams              = Team::get();
+        $users = User::get();
+        $teams = Team::get();
 
         return view('admin.planaccionCorrectivas.index', compact('accion_correctivas', 'users', 'teams'));
     }
@@ -90,10 +93,25 @@ class PlanaccionCorrectivaController extends Controller
 
     public function store(StorePlanaccionCorrectivaRequest $request)
     {
+        //dd(request()->all());
         $planaccionCorrectiva = PlanaccionCorrectiva::create($request->all());
-       // dd(request()->all());
+        // 
+        //dd($planaccionCorrectiva);
+        $id = $request->get('accioncorrectiva_id');
+        $accionid = AccionCorrectiva::find($id);
+        $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name')
+            ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
+            ->join('users', 'planaccion_correctivas.responsable_id', '=', 'users.id')
+            ->where('planaccion_correctivas.accioncorrectiva_id', '=', $id)
+            ->get();
+        $Count = $PlanAccion->count();
+        $users = User::all("id", "name");
+        //dd($accionid);
+        //dd($id);
         Flash::success("Se ha registrado correctamente la actividad del plan de acción");
-        return redirect()->route('admin.accion-correctivas.index');
+        //return redirect()->route('admin.accion-correctivas.edit');
+        //return view('admin.accionCorrectivas.edit')->with("accioncorrectiva_id",$id);
+        return view('admin.accionCorrectivas.edit', compact('accionid', 'users','id'));
     }
 
     public function edit(PlanaccionCorrectiva $planaccionCorrectiva)
@@ -105,21 +123,51 @@ class PlanaccionCorrectivaController extends Controller
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $planaccionCorrectiva->load('accioncorrectiva', 'responsable', 'team');
+        //dd($planaccionCorrectiva);
+
 
         return view('admin.planaccionCorrectivas.edit', compact('accioncorrectivas', 'responsables', 'planaccionCorrectiva'));
     }
 
-    public function update(UpdatePlanaccionCorrectivaRequest $request, PlanaccionCorrectiva $planaccionCorrectiva)
+    public function update(Request $request, $id)
     {
-        $planaccionCorrectiva->update($request->all());
+        if ($request->ajax()) {
+            switch ($request->name) {
+                case 'actividad':
+                    $palanaccion = PlanaccionCorrectiva::findOrFail($id);
+                    $palanaccion->actividad = $request->value;
+                    $palanaccion->save();
+                    return response()->json(['success' => true]);
+                    break;
+                case 'estatus':
+                    $palanaccion = PlanaccionCorrectiva::findOrFail($id);
+                    $palanaccion->estatus = $request->value;
+                    $palanaccion->save();
+                    return response()->json(['success' => true]);
+                    break;
+                case 'fechacompromiso':
+                    $fecha = str_replace(' ', '', trim($request->value));
+                    $data = Carbon::parse($fecha)->format('d-m-Y');
+                    $palanaccion = PlanaccionCorrectiva::findOrFail($id);
+                    $palanaccion->fechacompromiso = $data;
+                    $palanaccion->save();
+                    return response()->json(['success' => true]);
+                    break;
+                case 'responsable':
+                    $palanaccion = PlanaccionCorrectiva::findOrFail($id);
+                    $palanaccion->responsable_id = $request->value;
+                    $palanaccion->save();
+                    return response()->json(['success' => true]);
+                    break;
+            }
+        }
 
-        //return redirect()->route('admin.planaccion-correctivas.index');
-        if ($request->ajax()) {​​​​​
-            return response()->json(['success' => true]);
-        }​​​​​
+        /*$planaccionCorrectiva->update($request->all());
+        return redirect()->route('admin.planaccion-correctivas.index');*/
     }
 
-    public function show(PlanaccionCorrectiva $planaccionCorrectiva)
+    public
+    function show(PlanaccionCorrectiva $planaccionCorrectiva)
     {
         abort_if(Gate::denies('planaccion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -128,7 +176,8 @@ class PlanaccionCorrectivaController extends Controller
         return view('admin.planaccionCorrectivas.show', compact('planaccionCorrectiva'));
     }
 
-    public function destroy(PlanaccionCorrectiva $planaccionCorrectiva)
+    public
+    function destroy(PlanaccionCorrectiva $planaccionCorrectiva)
     {
         abort_if(Gate::denies('planaccion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -137,7 +186,8 @@ class PlanaccionCorrectivaController extends Controller
         return back();
     }
 
-    public function massDestroy(MassDestroyPlanaccionCorrectivaRequest $request)
+    public
+    function massDestroy(MassDestroyPlanaccionCorrectivaRequest $request)
     {
         PlanaccionCorrectiva::whereIn('id', request('ids'))->delete();
 
@@ -146,20 +196,23 @@ class PlanaccionCorrectivaController extends Controller
 
     public function planformulario(Request $request)
     {
-        
-        $id = request()->param;
-        return view('admin.accionCorrectivas.plan_accion')->with('ids', $id);
 
+        $users = User::all("id", "name");
+        $id = request()->param;
+        return view('admin.accionCorrectivas.plan_accion')->with('ids', $id)->with('users', $users);
     }
-    public function planeditformulario(Request $request)
+
+    public
+    function planeditformulario(Request $request)
     {
-        
+
         $id = request()->param;
         return view('admin.accionCorrectivas.plan_accion')->with('ids', $id);
-       
     }
 
-    public function changeplanact(Request $request){
+    public
+    function changeplanact(Request $request)
+    {
         try {
             $id = $request->input('id');
             $actividad = $request->actividad;
@@ -169,9 +222,6 @@ class PlanaccionCorrectivaController extends Controller
             $planaccion->save();
         } catch (Exception $e) {
             return response($e->getMessage(), 400);
-  }
-  
+        }
     }
-
-
 }
