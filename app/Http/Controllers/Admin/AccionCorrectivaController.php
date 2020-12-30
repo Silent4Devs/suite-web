@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\PlanaccionCorrectiva;
 use Flash;
 use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
@@ -180,7 +181,17 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->load('nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team');
 
-        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva'));
+        $id = $accionCorrectiva->id;
+
+        $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name')
+            ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
+            ->join('users', 'planaccion_correctivas.responsable_id', '=', 'users.id')
+            ->where('planaccion_correctivas.accioncorrectiva_id', '=', $id)
+            ->get();
+        $Count = $PlanAccion->count();
+        $users = User::all("id", "name");
+
+        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'PlanAccion', 'id', 'Count', 'users')   );
     }
 
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
