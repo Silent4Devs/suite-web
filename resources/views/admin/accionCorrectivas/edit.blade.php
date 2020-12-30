@@ -30,10 +30,12 @@
                                 <div id="test-nl-1" class="content">
                                     @include('admin.accionCorrectivas.editform1')
 
-                                    <a class="btn btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
-                                       role="button">
-                                        Siguiente
-                                    </a>
+                                    <div class="col-12 text-right">
+                                        <a class="btn btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
+                                           role="button">
+                                            Siguiente
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
