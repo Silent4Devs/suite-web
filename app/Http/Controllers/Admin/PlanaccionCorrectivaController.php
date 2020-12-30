@@ -93,10 +93,25 @@ class PlanaccionCorrectivaController extends Controller
 
     public function store(StorePlanaccionCorrectivaRequest $request)
     {
+        //dd(request()->all());
         $planaccionCorrectiva = PlanaccionCorrectiva::create($request->all());
-        // dd(request()->all());
+        // 
+        //dd($planaccionCorrectiva);
+        $id = $request->get('accioncorrectiva_id');
+        $accionid = AccionCorrectiva::find($id);
+        $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name')
+            ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
+            ->join('users', 'planaccion_correctivas.responsable_id', '=', 'users.id')
+            ->where('planaccion_correctivas.accioncorrectiva_id', '=', $id)
+            ->get();
+        $Count = $PlanAccion->count();
+        $users = User::all("id", "name");
+        //dd($accionid);
+        //dd($id);
         Flash::success("Se ha registrado correctamente la actividad del plan de acción");
-        return redirect()->route('admin.accion-correctivas.index');
+        //return redirect()->route('admin.accion-correctivas.edit');
+        //return view('admin.accionCorrectivas.edit')->with("accioncorrectiva_id",$id);
+        return view('admin.accionCorrectivas.edit', compact('accionid', 'users','id'));
     }
 
     public function edit(PlanaccionCorrectiva $planaccionCorrectiva)
@@ -109,6 +124,7 @@ class PlanaccionCorrectivaController extends Controller
 
         $planaccionCorrectiva->load('accioncorrectiva', 'responsable', 'team');
         //dd($planaccionCorrectiva);
+
 
         return view('admin.planaccionCorrectivas.edit', compact('accioncorrectivas', 'responsables', 'planaccionCorrectiva'));
     }
@@ -131,7 +147,7 @@ class PlanaccionCorrectivaController extends Controller
                     break;
                 case 'fechacompromiso':
                     $fecha = str_replace(' ', '', trim($request->value));
-                    $data =Carbon::parse($fecha)->format('d-m-Y');
+                    $data = Carbon::parse($fecha)->format('d-m-Y');
                     $palanaccion = PlanaccionCorrectiva::findOrFail($id);
                     $palanaccion->fechacompromiso = $data;
                     $palanaccion->save();
@@ -178,14 +194,12 @@ class PlanaccionCorrectivaController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public
-    function planformulario(Request $request)
+    public function planformulario(Request $request)
     {
 
         $users = User::all("id", "name");
         $id = request()->param;
         return view('admin.accionCorrectivas.plan_accion')->with('ids', $id)->with('users', $users);
-
     }
 
     public
@@ -194,7 +208,6 @@ class PlanaccionCorrectivaController extends Controller
 
         $id = request()->param;
         return view('admin.accionCorrectivas.plan_accion')->with('ids', $id);
-
     }
 
     public
@@ -210,8 +223,5 @@ class PlanaccionCorrectivaController extends Controller
         } catch (Exception $e) {
             return response($e->getMessage(), 400);
         }
-
     }
-
-
 }

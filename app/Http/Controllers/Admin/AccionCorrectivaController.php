@@ -197,7 +197,7 @@ class AccionCorrectivaController extends Controller
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
     {
         $accionCorrectiva->update($request->all());
-
+        //dd($accionCorrectiva);
         if ($request->input('documentometodo', false)) {
             if (!$accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
                 if ($accionCorrectiva->documentometodo) {
