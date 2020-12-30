@@ -1,5 +1,10 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
 <style type="text/css">
+    li:active{
+        transform: scale(0.96);
+        transition: 0.06s;
+        opacity: 0.8;
+    }
     body.c-dark-theme .letra_blanca{
         color: #fff;
     }
@@ -12,7 +17,13 @@
         margin-left: 2px;
     }
     .dark_mode1, .img_logo{
-        transition: 0s;
+        transition: 0.2s;
+    }
+    ul, div img, .card{
+        transition: 0.2s;
+    }
+    input{
+        transition: 0.2s;
     }
     body.c-dark-theme input{
         background-color: #000;
@@ -22,6 +33,9 @@
     body.c-dark-theme input:focus{
         background-color: #000;
     }
+    textarea{
+        transition: 0.2s;
+    }
     body.c-dark-theme textarea{
         background-color: #000;
         color: #ccc;
@@ -29,6 +43,9 @@
     }
     body.c-dark-theme textarea:focus{
         background-color: #000;
+    }
+    span{
+        transition: 0.2s;
     }
     body.c-dark-theme .form-group span{
         background-color: #000;

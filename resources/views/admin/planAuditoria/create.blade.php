@@ -64,7 +64,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.documentoauditar_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-12">
                 <label for="equipoauditor"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.planAuditorium.fields.equipoauditor') }}</label>
                 <input class="form-control {{ $errors->has('equipoauditor') ? 'is-invalid' : '' }}" type="text" name="equipoauditor" id="equipoauditor" value="{{ old('equipoauditor', '') }}">
                 @if($errors->has('equipoauditor'))
@@ -74,7 +74,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.equipoauditor_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-12">
                 <label for="auditados"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.planAuditorium.fields.auditados') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>

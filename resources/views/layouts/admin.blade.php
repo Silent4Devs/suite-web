@@ -47,6 +47,20 @@
         body.c-dark-theme .iconos_cabecera{
             color: #000;
         }
+
+        body, .iconos_cabecera{
+            transition: 0.2s;
+        }
+        #btnDark{
+            cursor: pointer;
+        }
+        .iconos_cabecera:active{
+            transform: scale(0.8);
+            transition: 0.06s;
+            opacity: 0.7;
+        }
+        
+
         .glyphicon-ok::before {
             content: "\f00c";
         }
@@ -60,6 +74,7 @@
             font-weight: 900;
             font-style: normal;
         }
+
     </style>
     @yield('styles')
 </head>
@@ -138,11 +153,11 @@
             </ul>
             <ul class="c-header-nav ml-auto">
                 <li class="c-header-nav-item px-2 c-d-legacy-none">
-                    <button id="btnDark" style="background: rgba(0,0,0,0); border: none;">
+                    <div id="btnDark">
                         <i class="fas fa-moon iconos_cabecera"></i>
                         </i>
 
-                    </button>
+                    </div>
                 </li>
             </ul>
 
