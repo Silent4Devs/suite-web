@@ -284,7 +284,7 @@
         $(".fechacompromiso").editable({
             dataType: 'json',
             format: 'YYYY-MM-DD',
-            viewformat: 'DD.MM.YYYY',
+            viewformat: 'YYYY.MM.DD',
             template: 'D / MM / YYYY',
             combodate: {
                 minYear: 2019,
