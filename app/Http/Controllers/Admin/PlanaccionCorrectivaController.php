@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
+use DateTime;
+
 
 class PlanaccionCorrectivaController extends Controller
 {
@@ -129,7 +131,7 @@ class PlanaccionCorrectivaController extends Controller
                     break;
                 case 'fechacompromiso':
                     $fecha = str_replace(' ', '', trim($request->value));
-                    $data = Carbon::parse($fecha)->toDateTimeString();
+                    $data =Carbon::parse($fecha)->format('d-m-Y');
                     $palanaccion = PlanaccionCorrectiva::findOrFail($id);
                     $palanaccion->fechacompromiso = $data;
                     $palanaccion->save();
