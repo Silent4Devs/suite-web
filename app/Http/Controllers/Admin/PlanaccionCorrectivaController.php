@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Puesto;
 use Flash;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPlanaccionCorrectivaRequest;
@@ -91,11 +92,40 @@ class PlanaccionCorrectivaController extends Controller
         return view('admin.planaccionCorrectivas.create', compact('accioncorrectivas', 'responsables'));
     }
 
+    public function storeEdit(Request $request){
+        //dd(request()->all());
+        $planaccionCorrectiva = PlanaccionCorrectiva::create($request->all());
+        $accionCorrectiva = AccionCorrectiva::find($planaccionCorrectiva->accioncorrectiva_id);
+        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombrereportas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoreportas = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $nombreregistras = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $puestoregistras = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $responsable_accions = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $nombre_autorizas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $id = $accionCorrectiva->id;
+        $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name')
+            ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
+            ->join('users', 'planaccion_correctivas.responsable_id', '=', 'users.id')
+            ->where('planaccion_correctivas.accioncorrectiva_id', '=', $id)
+            ->get();
+        $Count = $PlanAccion->count();
+        $users = User::all("id", "name");
+
+        Flash::success("Se ha registrado correctamente actividad del plan de acción");
+        return view('admin.accionCorrectivas.edit', compact('accionCorrectiva', 'responsables', 'planaccionCorrectiva','nombrereportas','puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas','PlanAccion', 'id', 'Count', 'users'));
+
+    }
+
     public function store(StorePlanaccionCorrectivaRequest $request)
     {
         //dd(request()->all());
         $planaccionCorrectiva = PlanaccionCorrectiva::create($request->all());
-        // 
+        //
         //dd($planaccionCorrectiva);
         $id = $request->get('accioncorrectiva_id');
         $accionid = AccionCorrectiva::find($id);
@@ -111,7 +141,7 @@ class PlanaccionCorrectivaController extends Controller
         Flash::success("Se ha registrado correctamente la actividad del plan de acción");
         //return redirect()->route('admin.accion-correctivas.edit');
         //return view('admin.accionCorrectivas.edit')->with("accioncorrectiva_id",$id);
-        return view('admin.accionCorrectivas.edit', compact('accionid', 'users','id'));
+        return redirect('admin.accionCorrectivas.index', compact('accionid', 'users','id'));
     }
 
     public function edit(PlanaccionCorrectiva $planaccionCorrectiva)
@@ -176,8 +206,7 @@ class PlanaccionCorrectivaController extends Controller
         return view('admin.planaccionCorrectivas.show', compact('planaccionCorrectiva'));
     }
 
-    public
-    function destroy(PlanaccionCorrectiva $planaccionCorrectiva)
+    public function destroy(PlanaccionCorrectiva $planaccionCorrectiva)
     {
         abort_if(Gate::denies('planaccion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -202,16 +231,14 @@ class PlanaccionCorrectivaController extends Controller
         return view('admin.accionCorrectivas.plan_accion')->with('ids', $id)->with('users', $users);
     }
 
-    public
-    function planeditformulario(Request $request)
+    public function planeditformulario(Request $request)
     {
 
         $id = request()->param;
         return view('admin.accionCorrectivas.plan_accion')->with('ids', $id);
     }
 
-    public
-    function changeplanact(Request $request)
+    public function changeplanact(Request $request)
     {
         try {
             $id = $request->input('id');

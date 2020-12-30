@@ -191,7 +191,7 @@ class AccionCorrectivaController extends Controller
         $Count = $PlanAccion->count();
         $users = User::all("id", "name");
 
-        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'PlanAccion', 'id', 'Count', 'users')   );
+        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'PlanAccion', 'id', 'Count', 'users'));
     }
 
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
