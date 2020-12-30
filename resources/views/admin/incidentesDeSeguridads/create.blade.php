@@ -54,7 +54,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.incidentesDeSeguridad.fields.fechaocurrencia_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-12">
                 <label for="activos"><i class="fas fa-chart-line iconos-crear"></i>{{ trans('cruds.incidentesDeSeguridad.fields.activo') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -82,7 +82,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.incidentesDeSeguridad.fields.clasificacion_helper') }}</span>
             </div>
-            <div class="form-group col-12">
+            <div class="form-group col-md-6">
                 <label for="estado_id"><i class="fas fa-signal iconos-crear"></i>{{ trans('cruds.incidentesDeSeguridad.fields.estado') }}</label>
                 <select class="form-control select2 {{ $errors->has('estado') ? 'is-invalid' : '' }}" name="estado_id" id="estado_id">
                     @foreach($estados as $id => $estado)

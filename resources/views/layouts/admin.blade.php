@@ -47,6 +47,20 @@
         body.c-dark-theme .iconos_cabecera{
             color: #000;
         }
+
+        body, .iconos_cabecera{
+            transition: 0s;
+        }
+        #btnDark{
+            cursor: pointer;
+        }
+        .iconos_cabecera:active{
+            transform: scale(0.8);
+            transition: 0.06s;
+            opacity: 0.7;
+        }
+        
+
         .glyphicon-ok::before {
             content: "\f00c";
         }
@@ -60,6 +74,7 @@
             font-weight: 900;
             font-style: normal;
         }
+
     </style>
     @yield('styles')
 </head>
@@ -138,13 +153,36 @@
             </ul>
             <ul class="c-header-nav ml-auto">
                 <li class="c-header-nav-item px-2 c-d-legacy-none">
-                    <button id="btnDark" style="background: rgba(0,0,0,0); border: none;">
+                    <div id="btnDark">
                         <i class="fas fa-moon iconos_cabecera"></i>
                         </i>
 
-                    </button>
+                    </div>
                 </li>
             </ul>
+            <script>
+
+                const btnDark = document.querySelector('#btnDark');
+
+                btnDark.addEventListener('click', () => {
+                    document.body.classList.toggle('c-dark-theme');
+
+                    if (document.body.classList.contains('c-dark-theme')) {
+                        localStorage.setItem('dark-mode', 'true');
+                    }
+                    else{
+                        localStorage.setItem('dark-mode', 'false');
+                    }
+                });
+
+                if (localStorage.getItem('dark-mode') === 'true') {
+                    document.body.classList.add('c-dark-theme');
+                }
+                else{
+                    document.body.classList.remove('c-dark-theme');
+                }
+
+            </script>
 
 
             <ul class="c-header-nav ml-auto">
@@ -217,6 +255,7 @@
     <!-- incluir de footer -->
     @include('partials.footer')
 </div>
+
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -261,29 +300,7 @@
 </script>
 <!-- x-editable -->
 
-<script>
 
-        const btnDark = document.querySelector('#btnDark');
-
-        btnDark.addEventListener('click', () => {
-            document.body.classList.toggle('c-dark-theme');
-
-            if (document.body.classList.contains('c-dark-theme')) {
-                localStorage.setItem('dark-mode', 'true');
-            }
-            else{
-                localStorage.setItem('dark-mode', 'false');
-            }
-        });
-
-        if (localStorage.getItem('dark-mode') === 'true') {
-            document.body.classList.add('c-dark-theme');
-        }
-        else{
-            document.body.classList.remove('c-dark-theme');
-        }
-
-</script>
 <script>
     $(function () {
         let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
