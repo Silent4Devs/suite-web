@@ -1,9 +1,9 @@
-<form method="POST" action="{{ route("admin.planaccion-correctivas.store") }}" enctype="multipart/form-data"
+<form method="POST" action="{{url('admin/plan-correctivas-storeedit')}}" enctype="multipart/form-data"
       class="row">
     @csrf
 
+    <div class="form-group col-12">
 
-    <div class="form-group col-md-4">
         {!! Html::decode(Form::label('id', '<i class="fas fa-file iconos-crear"></i>No. Acción Correctiva:')) !!}
         {!! Html::decode(Form::text('accioncorrectiva_id', $id, ['id' => 'accioncorrectivaid', 'disabled'], ['class' => 'form-control mx-auto'])) !!}
         {{ Form::hidden('accioncorrectiva_id', $id, ['id' => 'accioncorrectiva_id']) }}
@@ -13,7 +13,7 @@
                 class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.actividad') }}
         </label>
         <input class="form-control {{ $errors->has('actividad') ? 'is-invalid' : '' }}" type="text" name="actividad"
-               id="actividad" value="{{ old('actividad', '') }}">
+               id="actividad" value="{{ old('actividad', '') }}" required>
         @if($errors->has('actividad'))
             <div class="invalid-feedback">
                 {{ $errors->first('actividad') }}
@@ -26,7 +26,7 @@
                 class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.responsable') }}
         </label>
         <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}" name="responsable_id"
-                id="responsable_id">
+                id="responsable_id" required>
             @foreach($users as $user)
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
             @endforeach
@@ -43,7 +43,7 @@
                 class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.fechacompromiso') }}
         </label>
         <input class="form-control date {{ $errors->has('fechacompromiso') ? 'is-invalid' : '' }}" type="text"
-               name="fechacompromiso" id="fechacompromiso" value="{{ old('fechacompromiso') }}">
+               name="fechacompromiso" id="fechacompromiso" value="{{ old('fechacompromiso') }}" required>
         @if($errors->has('fechacompromiso'))
             <div class="invalid-feedback">
                 {{ $errors->first('fechacompromiso') }}
@@ -54,7 +54,7 @@
     <div class="form-group col-12">
         <label><i class="fas fa-signal iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.estatus') }}
         </label>
-        <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus" id="estatus">
+        <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus" id="estatus" required>
             <option value
                     disabled {{ old('estatus', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
             @foreach(App\Models\PlanaccionCorrectiva::ESTATUS_SELECT as $key => $label)

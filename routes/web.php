@@ -235,6 +235,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('accion-correctivas', 'AccionCorrectivaController');
     Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
     Route::post('accion-correctivas/editarplan','PlanaccionCorrectivaController@update');
+    Route::post('plan-correctivas-storeedit', 'PlanaccionCorrectivaController@storeEdit');
+    Route::post('planaccion-storered', 'PlanaccionCorrectivaController@storeRedirect')->name('storered');
+
 
     // Ajax
     //Route::post('AjaxAccionCorrectivaCrear', 'AccionCorrectiva@store');
@@ -242,8 +245,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Planaccion Correctivas
     Route::delete('planaccion-correctivas/destroy', 'PlanaccionCorrectivaController@massDestroy')->name('planaccion-correctivas.massDestroy');
     Route::resource('planaccion-correctivas', 'PlanaccionCorrectivaController');
-
-
 
     // Registromejoras
     Route::delete('registromejoras/destroy', 'RegistromejoraController@massDestroy')->name('registromejoras.massDestroy');
@@ -327,6 +328,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
     Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
 });
+
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
     // Change password
     if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
