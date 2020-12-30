@@ -3,12 +3,12 @@
     @csrf
 
 
-    <div class="form-group col-12">
+    <div class="form-group col-md-4">
         {!! Html::decode(Form::label('id', '<i class="fas fa-file iconos-crear"></i>No. Acción Correctiva:')) !!}
         {!! Html::decode(Form::text('accioncorrectiva_id', $id, ['id' => 'accioncorrectivaid', 'disabled'], ['class' => 'form-control mx-auto'])) !!}
         {{ Form::hidden('accioncorrectiva_id', $id, ['id' => 'accioncorrectiva_id']) }}
     </div>
-    <div class="form-group col-12">
+    <div class="form-group col-md-8">
         <label for="actividad"><i
                 class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.planaccionCorrectiva.fields.actividad') }}
         </label>
