@@ -84,7 +84,9 @@
                                         <select
                                             class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
                                             name="responsable_id" id="responsable_id">
-                                            <option></option>
+                                            @foreach($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
                                         </select>
                                         @if($errors->has('responsable'))
                                             <div class="invalid-feedback">

@@ -182,8 +182,9 @@ class PlanaccionCorrectivaController extends Controller
     function planformulario(Request $request)
     {
 
+        $users = User::all("id", "name");
         $id = request()->param;
-        return view('admin.accionCorrectivas.plan_accion')->with('ids', $id);
+        return view('admin.accionCorrectivas.plan_accion')->with('ids', $id)->with('users', $users);
 
     }
 
