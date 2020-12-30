@@ -12,6 +12,7 @@
         text-align: justify;
         padding: 10px;
         border-bottom: 1px solid #ccc;
+        vertical-align: top;
     }
     div.alphabet {
         position: relative;

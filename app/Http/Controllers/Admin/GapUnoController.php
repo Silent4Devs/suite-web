@@ -90,12 +90,37 @@ class GapUnoController extends Controller
         return view('admin.gapUnos.edit', compact('gapUno'));
     }
 
-    public function update(UpdateGapUnoRequest $request, GapUno $gapUno)
-    {
-        $gapUno->update($request->all());
 
-        return redirect()->route('admin.gap-unos.index');
+
+    public function update(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            switch ($request->name) {
+                case 'evidencia':
+                    $gapun = GapUno::findOrFail($id);
+                    $gapun->evidencia = $request->value;
+                    $gapun->save();
+                    return response()->json(['success' => true]);
+                    break;
+                case 'recomendacion':
+                    $gapun = GapUno::findOrFail($id);
+                    $gapun->recomendacion = $request->value;
+                    $gapun->save();
+                    return response()->json(['success' => true]);
+                    break;
+                    case 'valoracion':
+                        $gapun = GapUno::findOrFail($id);
+                        $gapun->valoracion = $request->value;
+                        $gapun->save();
+                        return response()->json(['success' => true]);
+                        break;
+            }
+        }
+
+        /*$planaccionCorrectiva->update($request->all());
+        return redirect()->route('admin.planaccion-correctivas.index');*/
     }
+
 
     public function show(GapUno $gapUno)
     {

@@ -14,7 +14,7 @@
                 <div class="row">
 
                     <div class="col-md-12 mt-5">
-                        <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap1()"
+                        <a class="btn btn-danger" data-toggle="collapse" onclick="closetabcollap1()"
                            id="acollapseExample" href="#collapseExample" role="button" aria-expanded="false"
                            aria-controls="collapseExample">
                             Acción Correctiva
@@ -86,13 +86,43 @@
 
         @endsection
 
-        @section('scripts')
-            <script>
-                function closetabcollap1() {
-                    $('#collapseExample').collapse('show');
-                    $('#collapseplan').collapse('hide');
-                    $('#collapseactividad').collapse('hide');
-                }
+
+@section('scripts')
+    <script>
+
+                    $("#acollapseExample").click(function() {
+
+                        $("#acollapseExample").removeClass('btn btn-primary').addClass("btn btn-danger");
+                        $("#acollapseplan").removeClass('btn btn-danger').addClass("btn btn-primary");
+                        $("#acollapseactividad").removeClass('btn-danger').addClass("btn-primary");
+                    });
+
+                    $("#acollapseplan").click(function() {
+                        $("#acollapseExample").removeClass('btn btn-danger').addClass("btn btn-primary");
+                        $(this).toggleClass("btn btn-danger");
+                        $("#acollapseplan").removeClass('btn btn-primary').addClass("btn btn-danger");
+                        $("#acollapseactividad").removeClass('btn-danger').addClass("btn-primary");
+                    });
+                    $("#nextcollapseForm1").click(function() {
+                        $("#acollapseExample").removeClass('btn btn-danger').addClass("btn btn-primary");
+                        $("#acollapseplan").removeClass('btn btn-primary').addClass("btn btn-danger");
+                        $("#acollapseactividad").removeClass('btn-danger').addClass("btn-primary");
+
+                    });
+
+                    $("#acollapseactividad").click(function(){
+                        $("#acollapseExample").removeClass('btn-danger').addClass("btn-primary");
+                        $("#acollapseplan").removeClass('btn-danger').addClass("btn-primary");
+                        $("#acollapseactividad").removeClass('btn-primary').addClass("btn-danger");
+                    });
+
+
+
+        function closetabcollap1() {
+            $('#collapseExample').collapse('show');
+            $('#collapseplan').collapse('hide');
+            $('#collapseactividad').collapse('hide');
+        }
 
                 function closetabcollap1next() {
                     $('#collapseExample').collapse('hide');
