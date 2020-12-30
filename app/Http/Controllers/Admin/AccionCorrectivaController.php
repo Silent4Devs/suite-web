@@ -36,9 +36,9 @@ class AccionCorrectivaController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'accion_correctiva_show';
-                $editGate      = 'accion_correctiva_edit';
-                $deleteGate    = 'accion_correctiva_delete';
+                $viewGate = 'accion_correctiva_show';
+                $editGate = 'accion_correctiva_edit';
+                $deleteGate = 'accion_correctiva_delete';
                 $crudRoutePart = 'accion-correctivas';
 
                 return view('partials.datatablesActions', compact(
@@ -109,13 +109,13 @@ class AccionCorrectivaController extends Controller
             return $table->make(true);
         }
 
-        $users   = User::get();
+        $users = User::get();
         $puestos = Puesto::get();
-        $users   = User::get();
+        $users = User::get();
         $puestos = Puesto::get();
-        $users   = User::get();
-        $users   = User::get();
-        $teams   = Team::get();
+        $users = User::get();
+        $users = User::get();
+        $teams = Team::get();
 
         return view('admin.accionCorrectivas.index', compact('users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
     }
@@ -145,20 +145,20 @@ class AccionCorrectivaController extends Controller
         $accionCorrectiva = AccionCorrectiva::create($request->all());;
         //dd($request['pdf-value']);
 
-   /*     if ($request->input('documentometodo', false)) {
-            $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');
-        }
+        /*     if ($request->input('documentometodo', false)) {
+                 $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');
+             }
 
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $accionCorrectiva->id]);
-        }
-        $generar = new GeneratePdf();
-        //$generar->Generate($request['pdf-value'], $request);
-        $generar->Generate($request['pdf-value'], $accionCorrectiva);      */
+             if ($media = $request->input('ck-media', false)) {
+                 Media::whereIn('id', $media)->update(['model_id' => $accionCorrectiva->id]);
+             }
+             $generar = new GeneratePdf();
+             //$generar->Generate($request['pdf-value'], $request);
+             $generar->Generate($request['pdf-value'], $accionCorrectiva);      */
         //return redirect()->route('admin.accion-correctivas.plan_accion')->with('accioncorrectivas', $accionCorrectiva);
 
-            Flash::success("Registro guardado exitosamente");
-            return redirect('admin/plan-correctiva?param='.$accionCorrectiva->id);
+        Flash::success("Registro guardado exitosamente");
+        return redirect('admin/plan-correctiva?param=' . $accionCorrectiva->id);
 
 
     }
@@ -228,6 +228,8 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->delete();
 
+
+        Flash::success("Registro guardado exitosamente");
         return back();
     }
 
@@ -242,15 +244,16 @@ class AccionCorrectivaController extends Controller
     {
         abort_if(Gate::denies('accion_correctiva_create') && Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new AccionCorrectiva();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new AccionCorrectiva();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 
-    public function test(){
+    public function test()
+    {
         dd("Test");
     }
 }

@@ -236,6 +236,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
     Route::post('accion-correctivas/editarplan','PlanaccionCorrectivaController@update');
     Route::post('plan-correctivas-storeedit', 'PlanaccionCorrectivaController@storeEdit');
+    Route::post('planaccion-storered', 'PlanaccionCorrectivaController@storeRedirect')->name('storered');
 
 
     // Ajax
