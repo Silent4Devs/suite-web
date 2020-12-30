@@ -4,7 +4,7 @@
     border-color: rgba(0,0,0,0);
 }
 ul, div img, .card{
-	transition: 0.2s;
+	transition: 0s;
 }
 
 body.c-dark-theme .dark_mode1{

@@ -17,13 +17,13 @@
         margin-left: 2px;
     }
     .dark_mode1, .img_logo{
-        transition: 0.2s;
+        transition: 0s;
     }
     ul, div img, .card{
-        transition: 0.2s;
+        transition: 0s;
     }
     input{
-        transition: 0.2s;
+        transition: 0s;
     }
     body.c-dark-theme input{
         background-color: #000;
@@ -34,7 +34,7 @@
         background-color: #000;
     }
     textarea{
-        transition: 0.2s;
+        transition: 0s;
     }
     body.c-dark-theme textarea{
         background-color: #000;
@@ -45,7 +45,7 @@
         background-color: #000;
     }
     span{
-        transition: 0.2s;
+        transition: 0s;
     }
     body.c-dark-theme .form-group span{
         background-color: #000;
