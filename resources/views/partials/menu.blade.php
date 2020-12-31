@@ -912,7 +912,28 @@
                 </a>
             </li>
         @endif
+        @can('lista_de_verificacion_access')
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/control-documentos*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
+                    </i>
+                    {{ trans('cruds.listaDeVerificacion.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('control_documento_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.control-documentos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/control-documentos") || request()->is("admin/control-documentos/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.controlDocumento.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
         <li class="c-sidebar-nav-item">
             <a href="{{ url('sitemap') }}" class="c-sidebar-nav-link">
                 <i class="iconos_menu letra_blanca fas fa-fw fa-sitemap">
