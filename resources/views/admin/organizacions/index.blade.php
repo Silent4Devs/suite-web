@@ -159,7 +159,7 @@
                     <label for="logotipo"> <i
                             class="fas fa-image iconos-crear"></i> {{ trans('cruds.organizacion.fields.logotipo') }}
                     </label>
-                    <img src="{{ url('storage/images/'.$logotipo->logotipo) }}" alt="" style="width: 480px; height: 150px;">
+                    <img src="{{ url('images/'.$logotipo->logotipo) }}" alt="" style="width: 480px; height: 150px;">
                 @if($errors->has('logotipo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('logotipo') }}

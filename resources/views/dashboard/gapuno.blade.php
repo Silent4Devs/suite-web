@@ -1,6 +1,3 @@
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-
 <div class="row">
     <div class="col">
         <div class="card">
@@ -88,9 +85,9 @@
                                     <!--   <td>
                                         @if($gapuno->valoracion == 1)
                                         <div class="p-2 mb-2 bg-success text-white">
-                                       
+
                                         </div>
-                                        
+
                                         @elseif($gapuno->valoracion == 2)
                                         <div class="p-2 mb-2 bg-warning text-white">
                                             Cumple parcialmente
@@ -103,15 +100,18 @@
                                         Sin información cargada
                                         @endif
                                     </td>-->
-                                    <td><a href="#" data-type="select" data-pk="{{$gapuno->id}}" data-url="{{route("admin.gap-unos.update",  $gapuno->id)}}" data-title="Seleccionar valoracion" data-value="{{$gapuno->valoracion}}" class="valoracion" data-name="valoracion">
+                                    <td>
+                                        <a href="#" data-type="select" data-pk="{{$gapuno->id}}" data-url="{{route("admin.gap-unos.update",  $gapuno->id)}}" data-title="Seleccionar valoracion" data-value="{{$gapuno->valoracion}}" class="valoracion" data-name="valoracion">
                                         </a>
                                     </td>
-                                    <td><a href="#" data-type="text" data-pk="{{$gapuno->id}}" data-url="{{route("admin.gap-unos.update", $gapuno->id)}}" data-title="Evidencia" data-value="{{$gapuno->evidencia}}" class="evidencia" data-name="evidencia">
-                                        </a></td>
-
-                                    <td><a href="#" data-type="text" data-pk="{{$gapuno->id}}" data-url="{{route("admin.gap-unos.update", $gapuno->id)}}" data-title="Recomendacion" data-value="{{$gapuno->recomendacion}}" class="recomendacion" data-name="recomendacion">
-                                        </a></td>
-
+                                    <td>
+                                        <a href="#" data-type="text" data-pk="{{$gapuno->id}}" data-url="{{route("admin.gap-unos.update", $gapuno->id)}}" data-title="Evidencia" data-value="{{$gapuno->evidencia}}" class="evidencia" data-name="evidencia">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#" data-type="text" data-pk="{{$gapuno->id}}" data-url="{{route("admin.gap-unos.update", $gapuno->id)}}" data-title="Recomendacion" data-value="{{$gapuno->recomendacion}}" class="recomendacion" data-name="recomendacion">
+                                        </a>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

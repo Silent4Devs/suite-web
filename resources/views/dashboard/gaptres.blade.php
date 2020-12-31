@@ -57,7 +57,7 @@
                     <h5 class="p-3 mb-2 bg-white text-dark mx-auto">
                         VERIFICAR</h5>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" style="font-size: 12px;">
                             <thead class="thead-dark">
                             <tr>
                                 <th scope="col">NO</th>
@@ -70,85 +70,110 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($gaptresVerif as $verificar)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>¿La entidad cuenta con un
-                                    autodiagnóstico realizado para medir
-                                    el avance en el establecimiento,
-                                    implementación, mantenimiento y
-                                    mejora continua de su SGSI (Sistema
-                                    de Gestión de Seguridad de la
-                                    información)?
+                                <th scope="row">
+                                    {{$verificar->id}}
+                                </th>
+                                <td>
+                                    {{$verificar->pregunta}}
                                 </td>
                                 <td>
-                                    <div
-                                        class="p-2 mb-2 bg-success text-white">
-                                        Cumple satisfactoriamente
-                                    </div>
+                                    <a href="#"
+                                       data-type="select"
+                                       data-pk="{{$verificar->id}}"
+                                       data-url="{{route("admin.gap-tres.update",  $verificar->id)}}"
+                                       data-title="Seleccionar valoracion"
+                                       data-value="{{$verificar->valoracion}}"
+                                       class="valoracion" data-name="valoracion">
+                                    </a>
                                 </td>
                                 <td>
-                                    Describir la evidencia que soporta
-                                    el cumplimiento del requisito.
-                                    Indicar sitio fisico, o sistema
-                                    donde se pueda verificar el mismo.
+                                    <a href="#"
+                                       data-type="text"
+                                       data-pk="{{$verificar->id}}"
+                                       data-url="{{route("admin.gap-tres.update", $verificar->id)}}"
+                                       data-title="Evidencia"
+                                       data-value="{{$verificar->evidencia}}"
+                                       class="evidencia"
+                                       data-name="evidencia">
+                                    </a>
                                 </td>
                                 <td>
-                                    Pautas que se deben llevar a cabo
-                                    para dar cumplimiento al requisito.
+                                    <a href="#"
+                                       data-type="text"
+                                       data-pk="{{$verificar->id}}"
+                                       data-url="{{route("admin.gap-tres.update", $verificar->id)}}"
+                                       data-title="Recomendacion"
+                                       data-value="{{$verificar->recomendacion}}"
+                                       class="recomendacion"
+                                       data-name="recomendacion">
+                                    </a>
                                 </td>
                             </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                    <h5 class="p-3 mb-2 bg-white text-dark mx-auto">
+                        ACTUAR</h5>
+                    <div class="table-responsive">
+                        <table class="table" style="font-size: 12px;">
+                            <thead class="thead-dark">
                             <tr>
-                                <th scope="row">2</th>
-                                <td>
-                                    ¿La entidad creó un caso de estudio
-                                    o plan inicial del proyecto, donde
-                                    se incluyen las prioridades y
-                                    objetivos para la implementación del
-                                    SGSI?
-                                </td>
-                                <td>
-                                    <div
-                                        class="p-2 mb-2 bg-danger text-white">
-                                        No cumple
-                                    </div>
-                                </td>
-                                <td>
-                                    Describir la evidencia que soporta
-                                    el cumplimiento del requisito.
-                                    Indicar sitio fisico, o sistema
-                                    donde se pueda verificar el mismo.
-                                </td>
-                                <td>
-                                    Pautas que se deben llevar a cabo
-                                    para dar cumplimiento al requisito.
-                                </td>
+                                <th scope="col">NO</th>
+                                <th scope="col">PREGUNTA</th>
+                                <th scope="col">VALORACIÓN</th>
+                                <th scope="col">EVIDENCIA DE
+                                    CUMPLIMIENTO
+                                </th>
+                                <th scope="col">RECOMENDACIÓN</th>
                             </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>
-                                    ¿La entidad creó un caso de estudio
-                                    o plan inicial del proyecto, donde
-                                    se incluyen las prioridades y
-                                    objetivos para la implementación del
-                                    SGSI?
-                                </td>
-                                <td>
-                                    <div
-                                        class="p-2 mb-2 bg-warning text-white">
-                                        Cumple parcialmente
-                                    </div>
-                                </td>
-                                <td>
-                                    Describir la evidencia que soporta
-                                    el cumplimiento del requisito.
-                                    Indicar sitio fisico, o sistema
-                                    donde se pueda verificar el mismo.
-                                </td>
-                                <td>
-                                    Pautas que se deben llevar a cabo
-                                    para dar cumplimiento al requisito.
-                                </td>
-                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($gaptresAct as $actuar)
+                                <tr>
+                                    <th scope="row">
+                                        {{$actuar->id}}
+                                    </th>
+                                    <td>
+                                        {{$actuar->pregunta}}
+                                    </td>
+                                    <td>
+                                        <a href="#"
+                                           data-type="select"
+                                           data-pk="{{$actuar->id}}"
+                                           data-url="{{route("admin.gap-tres.update",  $actuar->id)}}"
+                                           data-title="Seleccionar valoracion"
+                                           data-value="{{$actuar->valoracion}}"
+                                           class="valoracion" data-name="valoracion">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#"
+                                           data-type="text"
+                                           data-pk="{{$actuar->id}}"
+                                           data-url="{{route("admin.gap-tres.update", $actuar->id)}}"
+                                           data-title="Evidencia"
+                                           data-value="{{$actuar->evidencia}}"
+                                           class="evidencia"
+                                           data-name="evidencia">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#"
+                                           data-type="text"
+                                           data-pk="{{$actuar->id}}"
+                                           data-url="{{route("admin.gap-tres.update", $actuar->id)}}"
+                                           data-title="Recomendacion"
+                                           data-value="{{$actuar->recomendacion}}"
+                                           class="recomendacion"
+                                           data-name="recomendacion">
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -157,3 +182,51 @@
         </div>
     </div>
 </div>
+
+<script>
+    @section('x-editable')
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        //categories table
+        $(".evidencia").editable({
+            dataType: 'json',
+            success: function(response, newValue) {
+                console.log('Actualizado, response')
+            }
+        });
+        $(".valoracion").editable({
+            dataType: 'json',
+            source: [{
+                value: '1',
+                text: 'Cumple satisfactoriamente'
+            },
+                {
+                    value: '2',
+                    text: 'Cumple parcialmente'
+                },
+                {
+                    value: '3',
+                    text: 'No cumple'
+                }
+            ],
+            success: function(response, newValue) {
+                console.log('Actualizado, response')
+            }
+        });
+        $(".recomendacion").editable({
+            dataType: 'json',
+            success: function(response, newValue) {
+                console.log('Actualizado, response')
+            }
+        });
+
+    });
+
+
+    @endsection
+</script>

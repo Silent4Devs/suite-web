@@ -130,9 +130,6 @@
                             <input type="file" class="custom-file-input" name="logotipo" id="logotipo" accept="image/*">
                             <label class="custom-file-label" for="inputGroupFile02">Escoger imagen</label>
                         </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="logotipo">Subir</span>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group">
