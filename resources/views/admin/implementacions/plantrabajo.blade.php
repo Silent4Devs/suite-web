@@ -1,5 +1,6 @@
-<div class="card" style="margin-top:-30px;">
-<div style="margin-top: 15px; margin-left: 15px;" class="row">
+
+
+<div class="row">
         <div class="col-lg-12">
 <a class="btn" style="background-color:#048c74;color:white;" href="admin/gantt'); }}">
                 Cronograma
@@ -22,9 +23,9 @@
  
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PlanBaseActividade">
+        <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-PlanBaseActividade">
             <thead>
-                <tr style="background-color:white">
+                <tr>
                     <th width="10" >
 
                     </th>
@@ -68,7 +69,7 @@
                         &nbsp;
                     </th>
                 </tr>
-                <tr style="background-color:white">
+                <tr>
                     <td>
                     </td>
                     <td>
@@ -122,7 +123,7 @@
                 </tr>
             </thead>
         </table>
-    </div>
+
 </div>
 
 </div>

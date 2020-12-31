@@ -38,33 +38,23 @@
                     </li>
                 </ul>
 
-                <div class="tab-content card pt-5" id="myTabContentJust">
-                    <div class="tab-pane fade show active" id="home-just" role="tabpanel"
-                         aria-labelledby="home-tab-just">
-                        <!-- Introduccion>-->
+                <div class="tab-content card" id="myTabContentJust">
+
+                    <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just" style="margin-top: 30px; padding: 0 30px;">
                         @include('admin.implementacions.introduccion')
-                    <!-- Introduccion -->
                     </div>
 
 
 
-                    <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-                      <!--Guia de introducción-->
-
-
-                        @include('admin.implementacions.guia')
-
-
+                    <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just" style="margin-top: 30px;">
+                       @include('admin.implementacions.guia')
                     </div>
-
-
-
+                    
                     <div class="tab-pane fade" id="plan-just" role="tabpanel" aria-labelledby="plan-tab-just">
                         @include('admin.implementacions.plantrabajo')
-                  
-                  
                     </div>
-                    <div class="tab-pane fade" id="just" role="tabpanel" aria-labelledby="contact-tab-just" style="display: flex; justify-content: center; align-items: center;">
+
+                    <div class="tab-pane fade" id="just" role="tabpanel" aria-labelledby="contact-tab-just" style="margin-top: 30px;">
                         @include('admin.implementacions.consultoria')
                     </div>
 

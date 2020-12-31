@@ -120,7 +120,12 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
             </div>
-            <div class="form-group col-sm-12 text-right">
+            <div class="form-group col-12">
+                <i class="far fa-file-alt iconos-crear"></i>
+                <label>Antecedentes</label>
+                <textarea class="form-control"></textarea>
+            </div>
+            <div class="form-group col-12 text-right">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

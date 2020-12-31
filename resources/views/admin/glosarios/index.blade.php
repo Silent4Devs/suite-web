@@ -53,6 +53,17 @@
         text-align: center;
         z-index: 1;
     }
+    .paginate_button{
+        margin: 5px;
+        padding: 5px 10px;
+        background: #a3d6ed;
+        cursor: pointer;
+        border-radius: 4px;
+        color: #fff;
+    }
+    body.c-dark-theme .paginate_button{
+        background: #4488a7;
+    }
 
 
     @media(max-width: 1050px){
@@ -649,7 +660,7 @@
 @section('scripts')
 @parent
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
     <!--Abecedario-->
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>

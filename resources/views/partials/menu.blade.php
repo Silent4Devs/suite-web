@@ -1,9 +1,9 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
 <style type="text/css">
     li:active{
-        transform: scale(0.96);
-        transition: 0.06s;
-        opacity: 0.8;
+        transform: scale(0.98);
+        transition: 0.03s;
+        opacity: 0.97;
     }
     body.c-dark-theme .letra_blanca{
         color: #fff;
@@ -215,7 +215,7 @@
                                 <font class="letra_blanca"> {{ trans('cruds.contexto.title') }} </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
-                                @can('entendimiento_organizacion_access')
+                            <!--@can('entendimiento_organizacion_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.entendimiento-organizacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/entendimiento-organizacions") || request()->is("admin/entendimiento-organizacions/*") ? "active" : "" }}">
                                             <i class="" >
@@ -223,7 +223,7 @@
                                             </i>
                                             <font class="letra_blanca"> {{ trans('cruds.entendimientoOrganizacion.title') }} </font>
                                         </a>
-                                    </li>
+                                    </li>-->
                                 @endcan
                                 @can('partes_interesada_access')
                                     <li class="c-sidebar-nav-item">
@@ -597,7 +597,7 @@
                                         </a>
                                     </li>
                                 @endcan
-                                @can('planaccion_correctiva_access')
+                              <!--  @can('planaccion_correctiva_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.planaccion-correctivas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/planaccion-correctivas") || request()->is("admin/planaccion-correctivas/*") ? "active" : "" }}">
                                             <i class="">
@@ -605,7 +605,7 @@
                                             </i>
                                             <font class="letra_blanca"> {{ trans('cruds.planaccionCorrectiva.title') }} </font>
                                         </a>
-                                    </li>
+                                    </li> -->
                                 @endcan
                                 @can('registromejora_access')
                                     <li class="c-sidebar-nav-item">
@@ -617,7 +617,7 @@
                                         </a>
                                     </li>
                                 @endcan
-                                @can('dmaic_access')
+                              <!--  @can('dmaic_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.dmaics.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/dmaics") || request()->is("admin/dmaics/*") ? "active" : "" }}">
                                             <i class="">
@@ -625,9 +625,9 @@
                                             </i>
                                             <font class="letra_blanca"> {{ trans('cruds.dmaic.title') }} </font>
                                         </a>
-                                    </li>
+                                    </li>-->
                                 @endcan
-                                @can('plan_mejora_access')
+                              <!--  @can('plan_mejora_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.plan-mejoras.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/plan-mejoras") || request()->is("admin/plan-mejoras/*") ? "active" : "" }}">
                                             <i class="">
@@ -635,7 +635,7 @@
                                             </i>
                                             <font class="letra_blanca"> {{ trans('cruds.planMejora.title') }} </font>
                                         </a>
-                                    </li>
+                                    </li>-->
                                 @endcan
                             </ul>
                         </li>
