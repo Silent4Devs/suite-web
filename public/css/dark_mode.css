@@ -25,11 +25,15 @@ body.c-dark-theme .table{
     background-color: #2a2b36;
     color: #fff;
 }
+body.c-dark-theme .table tr:nth-child(odd){
+    background-color: #556377;
+}
 body.c-dark-theme .table tr:nth-child(even){
 	background-color: #4b5265;
 }
+
 body.c-dark-theme .table tr:hover{
-	background-color: rgba(255,255,255,0.5);
+	background-color: rgba(255,255,255,0.4);
 	color: #fff;
 }
 
