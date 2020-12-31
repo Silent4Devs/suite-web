@@ -15,7 +15,7 @@ class AddAntecedentesToOrganizacions extends Migration
     {
         Schema::table('organizacions', function (Blueprint $table) {
             //
-            $table->string('antecedentes')->nullable();
+            $table->longText('antecedentes')->nullable();
         });
     }
 

@@ -18,12 +18,12 @@ class CreateGapLogroDosTable extends Migration
             $table->string('anexo_indice');
             $table->string('anexo_politica');
             $table->longText('anexo_descripcion');
-            $table->integer('estado');
+            $table->string('estado');
             $table->longText('evidencia');
             $table->timestamps();
         });
 
-    
+
     }
 
     /**

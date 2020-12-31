@@ -12,7 +12,7 @@ class GapDo extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
 
-    public $table = 'gap_dos';
+    public $table = 'gap_logro_dos';
 
     protected $dates = [
         'created_at',
