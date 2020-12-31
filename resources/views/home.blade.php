@@ -52,11 +52,58 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12" style="margin-top:20px; ">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="{{ $chart4->options['column_class'] }}">
+                                <div class="col-md-12 col-sm-6 py-1 card card-body bg-info align-self-center " style="margin-top:-40px; ">
+                                    <h3 class="mb-2  text-center text-white"><strong>Check</strong></h3>
+                                </div>
+                                <h3>{!! $chart4->options['chart_title'] !!}</h3>
+                                {!! $chart4->renderHtml() !!}
+                            </div>
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="{{ $settings5['column_class'] }}">
+                            <div class="card text-white bg-primary">
+                                <div class="card-body pb-0">
+                                    <div class="text-value">{{ number_format($settings5['total_number']) }}</div>
+                                    <div>{{ $settings5['chart_title'] }}</div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="{{ $settings6['column_class'] }}">
+                            <div class="card text-white bg-primary">
+                                <div class="card-body pb-0">
+                                    <div class="text-value">{{ number_format($settings6['total_number']) }}</div>
+                                    <div>{{ $settings6['chart_title'] }}</div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="{{ $chart7->options['column_class'] }}">
+                            <h3>{!! $chart7->options['chart_title'] !!}</h3>
+                            {!! $chart7->renderHtml() !!}
+                        </div>
+                        <div class="{{ $chart8->options['column_class'] }}">
+                            <h3>{!! $chart8->options['chart_title'] !!}</h3>
+                            {!! $chart8->renderHtml() !!}
+                        </div>
+                        <div class="{{ $chart9->options['column_class'] }}">
+                            <h3>{!! $chart9->options['chart_title'] !!}</h3>
+                            {!! $chart9->renderHtml() !!}
+                        </div>
+                        <div class="{{ $chart10->options['column_class'] }}">
+                            <h3>{!! $chart10->options['chart_title'] !!}</h3>
+                            {!! $chart10->renderHtml() !!}
+                        </div>
             </div>
         </div>
     </div>
 </div>
-
 @endsection
 @section('scripts')
 @parent
