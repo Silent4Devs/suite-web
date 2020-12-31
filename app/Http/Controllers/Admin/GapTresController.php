@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyGapTreRequest;
 use App\Http\Requests\StoreGapTreRequest;
 use App\Http\Requests\UpdateGapTreRequest;
 use App\Models\GapTre;
-use App\Models\Team; 
+use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,11 +90,32 @@ class GapTresController extends Controller
         return view('admin.gapTres.edit', compact('gapTre'));
     }
 
-    public function update(UpdateGapTreRequest $request, GapTre $gapTre)
+    public function update(Request $request, $id)
     {
-        $gapTre->update($request->all());
-
-        return redirect()->route('admin.gap-tres.index');
+        if ($request->ajax()) {
+            switch ($request->name) {
+                case 'evidencia':
+                    $gapun = GapTre::findOrFail($id);
+                    $gapun->evidencia = $request->value;
+                    $gapun->save();
+                    return response()->json(['success' => true]);
+                    break;
+                case 'recomendacion':
+                    $gapun = GapTre::findOrFail($id);
+                    $gapun->recomendacion = $request->value;
+                    $gapun->save();
+                    return response()->json(['success' => true]);
+                    break;
+                case 'valoracion':
+                    $gapun = GapTre::findOrFail($id);
+                    $gapun->valoracion = $request->value;
+                    $gapun->save();
+                    return response()->json(['success' => true]);
+                    break;
+            }
+        }
+        //$gapTre->update($request->all());
+        //return redirect()->route('admin.gap-tres.index');
     }
 
     public function show(GapTre $gapTre)

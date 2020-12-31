@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\GapTre;
 use Illuminate\Http\Request;
 use App\Models\GapUno;
 
@@ -16,7 +17,10 @@ class AnalisisBController extends Controller
     public function index()
     {
         $gapuno = GapUno::all();
-        return view('dashboard.index')->with('gapunos', $gapuno);
+        $gaptresVerif = GapTre::get()->where('estado', '=', 'verificar');
+        $gaptresAct = GapTre::get()->where('estado', '=', 'actuar');
+        //dd($gaptresAct);
+        return view('dashboard.index', compact('gaptresVerif', 'gaptresAct'))->with('gapunos', $gapuno);
     }
 
     /**
