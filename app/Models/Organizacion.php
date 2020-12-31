@@ -17,10 +17,6 @@ class Organizacion extends Model implements HasMedia
 
     public $table = 'organizacions';
 
-    protected $appends = [
-        'logotipo',
-    ];
-
     public static $searchable = [
         'mision',
         'vision',
@@ -48,6 +44,8 @@ class Organizacion extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'antecedentes',
+        'logotipo',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
