@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use LaravelDaily\LaravelCharts\Classes\LaravelChart;
-
+use App\Services\LaravelChart;
 class HomeController
 {
     public function index()
     {
         $settings1 = [
             'chart_title'        => 'Actividades por colaborador',
-            'chart_type'         => 'pie',
+            'chart_type'         => 'bar',
             'report_type'        => 'group_by_relationship',
             'model'              => 'App\Models\PlanBaseActividade',
             'group_by_field'     => 'name',
             'aggregate_function' => 'count',
             'filter_field'       => 'created_at',
             'filter_period'      => 'year',
-            'column_class'       => 'col-md-3',
+            'column_class'       => 'col-md-6',
             'entries_number'     => '5',
             'relationship_name'  => 'colaborador',
         ];
@@ -26,13 +25,13 @@ class HomeController
 
         $settings2 = [
             'chart_title'        => 'Incidentes de seguridad',
-            'chart_type'         => 'pie',
+            'chart_type'         => 'doughnut',
             'report_type'        => 'group_by_relationship',
             'model'              => 'App\Models\IncidentesDeSeguridad',
             'group_by_field'     => 'estado',
             'aggregate_function' => 'count',
             'filter_field'       => 'created_at',
-            'column_class'       => 'col-md-3',
+            'column_class'       => 'col-md-6',
             'entries_number'     => '5',
             'relationship_name'  => 'estado',
         ];
@@ -40,8 +39,8 @@ class HomeController
         $chart2 = new LaravelChart($settings2);
 
         $settings3 = [
-            'chart_title'        => 'Progreso General del Plan',
-            'chart_type'         => 'line',
+            'chart_title'        => 'Documentos',
+            'chart_type'         => 'pie',
             'report_type'        => 'group_by_relationship',
             'model'              => 'App\Models\PlanBaseActividade',
             'group_by_field'     => 'estado',
