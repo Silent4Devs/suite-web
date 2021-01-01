@@ -101,7 +101,14 @@
                                         @endif
                                     </td>-->
                                     <td>
-                                        <a href="#" data-type="select" data-pk="{{$gapuno->id}}" data-url="{{route("admin.gap-unos.update",  $gapuno->id)}}" data-title="Seleccionar valoracion" data-value="{{$gapuno->valoracion}}" class="valoracion" data-name="valoracion">
+                                        <a href="#"
+                                           data-type="select"
+                                           data-pk="{{$gapuno->id}}"
+                                           data-url="{{route("admin.gap-unos.update",  $gapuno->id)}}"
+                                           data-title="Seleccionar valoracion"
+                                           data-value="{{$gapuno->valoracion}}"
+                                           class="valoracion"
+                                           data-name="valoracion">
                                         </a>
                                     </td>
                                     <td>
