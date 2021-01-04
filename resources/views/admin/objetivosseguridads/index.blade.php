@@ -10,7 +10,7 @@
     <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.objetivosseguridads.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.objetivosseguridad.title_singular') }}
+                  Agregar <strong>+<strong>
             </a>
         </div>
     </div>
