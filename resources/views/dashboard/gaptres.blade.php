@@ -2,14 +2,14 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h6 align="center">GAP 03:  MONITOREO Y MEJORA CONTINUA (30%)
+                <h6 align="center">GAP 03:  MONITOREO Y MEJORA CONTINUA ({{number_format($porcentajeGap3, 2, '.', '')}}%)
                 </h6>
                 <div class="progress">
                     <div
                         class="progress-bar progress-bar-striped progress-bar-animated"
-                        role="progressbar" aria-valuenow="30"
+                        role="progressbar" aria-valuenow="{{(number_format($porcentajeGap3, 2, '.', '') * 100) / 30}}"
                         aria-valuemin="0" aria-valuemax="100"
-                        style="width: 30%">30%</div>
+                        style="width: {{(number_format($porcentajeGap3, 2, '.', '') * 100) / 30}}%">{{(number_format($porcentajeGap3, 2, '.', '') * 100) / 30}}%</div>
                 </div>
                 <div class="card">
                     <div class="card-body">

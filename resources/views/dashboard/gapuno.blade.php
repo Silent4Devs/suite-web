@@ -4,9 +4,10 @@
             <div class="card-body">
                 <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE
                     SEGURIDAD
-                    Y PRIVACIDAD DE LA ORGANIZACIÓN (75%)</h6>
+                    Y PRIVACIDAD DE LA ORGANIZACIÓN ({{number_format($porcentajeGap1, 2, '.', '')}}%)</h6>
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">75%
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                         aria-valuenow="{{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}" aria-valuemin="0" aria-valuemax="100" style="width: {{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}%">{{number_format($porcentajeGap1, 2, '.', '')}}%
                     </div>
                 </div>
                 <div class="card">
@@ -63,18 +64,18 @@
                     <div class="table-responsive">
                         <table class="table" style="font-size: 12px;">
                             <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">NO</th>
-                                    <th scope="col">PREGUNTA</th>
-                                    <th scope="col">VALORACIÓN</th>
-                                    <th scope="col">EVIDENCIA DE
-                                        CUMPLIMIENTO
-                                    </th>
-                                    <th scope="col">RECOMENDACIÓN</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">NO</th>
+                                <th scope="col">PREGUNTA</th>
+                                <th scope="col">VALORACIÓN</th>
+                                <th scope="col">EVIDENCIA DE
+                                    CUMPLIMIENTO
+                                </th>
+                                <th scope="col">RECOMENDACIÓN</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach($gapunos as $gapuno)
+                            @foreach($gapunos as $gapuno)
                                 <tr>
                                     <th scope="row">
                                         {{$gapuno->id}}
@@ -82,24 +83,6 @@
                                     <td>
                                         {{$gapuno->pregunta}}
                                     </td>
-                                    <!--   <td>
-                                        @if($gapuno->valoracion == 1)
-                                        <div class="p-2 mb-2 bg-success text-white">
-
-                                        </div>
-
-                                        @elseif($gapuno->valoracion == 2)
-                                        <div class="p-2 mb-2 bg-warning text-white">
-                                            Cumple parcialmente
-                                        </div>
-                                        @elseif($gapuno->valoracion == 3)
-                                        <div class="p-2 mb-2 bg-danger text-white">
-                                            No cumple
-                                        </div>
-                                        @else
-                                        Sin información cargada
-                                        @endif
-                                    </td>-->
                                     <td>
                                         <a href="#"
                                            data-type="select"
@@ -112,15 +95,21 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="#" data-type="text" data-pk="{{$gapuno->id}}" data-url="{{route("admin.gap-unos.update", $gapuno->id)}}" data-title="Evidencia" data-value="{{$gapuno->evidencia}}" class="evidencia" data-name="evidencia">
+                                        <a href="#" data-type="text" data-pk="{{$gapuno->id}}"
+                                           data-url="{{route("admin.gap-unos.update", $gapuno->id)}}"
+                                           data-title="Evidencia" data-value="{{$gapuno->evidencia}}" class="evidencia"
+                                           data-name="evidencia">
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="#" data-type="text" data-pk="{{$gapuno->id}}" data-url="{{route("admin.gap-unos.update", $gapuno->id)}}" data-title="Recomendacion" data-value="{{$gapuno->recomendacion}}" class="recomendacion" data-name="recomendacion">
+                                        <a href="#" data-type="text" data-pk="{{$gapuno->id}}"
+                                           data-url="{{route("admin.gap-unos.update", $gapuno->id)}}"
+                                           data-title="Recomendacion" data-value="{{$gapuno->recomendacion}}"
+                                           class="recomendacion" data-name="recomendacion">
                                         </a>
                                     </td>
                                 </tr>
-                                @endforeach
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -132,28 +121,12 @@
 
 
 <script>
-    /*$(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': '{{csrf_token()}}'
-            }
-        });
-
-        $('.xedit').editable({
-           url: '{{url('analisis-brechas/update')}}',
-            title: 'GapUno Update',
-            success: function (response, newValue) {
-               console.log('Actualizado', response)
-        }
-        });
-    })*/
-
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         $.fn.editable.defaults.mode = 'popup';
         $.fn.editable.defaults.send = "always";
 
-        $.fn.editable.defaults.params = function(params) {
+        $.fn.editable.defaults.params = function (params) {
             params._token = $("#_token").data("token");
             return params;
         };
@@ -170,7 +143,7 @@
 
 <script>
     @section('x-editable')
-    $(document).ready(function() {
+    $(document).ready(function () {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -180,16 +153,16 @@
         //categories table
         $(".evidencia").editable({
             dataType: 'json',
-            success: function(response, newValue) {
+            success: function (response, newValue) {
                 console.log('Actualizado, response')
             }
         });
         $(".valoracion").editable({
             dataType: 'json',
             source: [{
-                    value: '1',
-                    text: 'Cumple satisfactoriamente'
-                },
+                value: '1',
+                text: 'Cumple satisfactoriamente'
+            },
                 {
                     value: '2',
                     text: 'Cumple parcialmente'
@@ -199,19 +172,41 @@
                     text: 'No cumple'
                 }
             ],
-            success: function(response, newValue) {
+            success: function (response, newValue) {
+                console.log('Actualizado, response')
+            }
+        });
+        $(".valoracionGap2").editable({
+            dataType: 'json',
+            source: [{
+                value: '1',
+                text: 'Cumple satisfactoriamente'
+            },
+                {
+                    value: '2',
+                    text: 'Cumple parcialmente'
+                },
+                {
+                    value: '3',
+                    text: 'No cumple'
+                },
+                {
+                    value: '4',
+                    text: 'No aplica'
+                }
+            ],
+            success: function (response, newValue) {
                 console.log('Actualizado, response')
             }
         });
         $(".recomendacion").editable({
             dataType: 'json',
-            success: function(response, newValue) {
+            success: function (response, newValue) {
                 console.log('Actualizado, response')
             }
         });
 
     });
-
 
     @endsection
 </script>

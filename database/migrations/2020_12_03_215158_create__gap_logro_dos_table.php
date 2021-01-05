@@ -18,10 +18,11 @@ class CreateGapLogroDosTable extends Migration
             $table->string('control-uno')->nullable();
             $table->string('control-dos')->nullable();
             $table->string('anexo_indice')->nullable();
-            $table->string('anexo_politica')->nullable();
+            $table->longText('anexo_politica')->nullable();
             $table->longText('anexo_descripcion')->nullable();
-            $table->string('estado')->nullable();
+            $table->string('valoracion')->nullable();
             $table->longText('evidencia')->nullable();
+            $table->longText('recomendacion')->nullable();
             $table->timestamps();
         });
 
