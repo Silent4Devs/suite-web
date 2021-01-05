@@ -49,6 +49,7 @@
     </div>
 </div>
 
+<script src="{{ asset('js/dark_mode.js') }}"></script>
 
 
 @endsection
