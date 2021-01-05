@@ -12,12 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
-use Laravel\Passport\HasApiTokens;
 use \DateTimeInterface;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Notifiable, HasApiTokens, HasFactory;
+    use SoftDeletes, Notifiable, HasFactory;
 
     public $table = 'users';
 
@@ -83,7 +82,7 @@ class User extends Authenticatable
     {
         $this->timestamps            = false;
         $this->two_factor_code       = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15);
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
         $this->save();
     }
 

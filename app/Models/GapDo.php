@@ -10,14 +10,13 @@ use \DateTimeInterface;
 
 class GapDo extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use MultiTenantModelTrait, HasFactory;
 
-    public $table = 'gap_dos';
+    public $table = 'gap_logro_dos';
 
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     const VALORACION_SELECT = [
@@ -28,6 +27,8 @@ class GapDo extends Model
     ];
 
     protected $fillable = [
+        'control-uno',
+        'control-dos',
         'anexo_indice',
         'control',
         'descripcion_control',
@@ -36,7 +37,6 @@ class GapDo extends Model
         'recomendacion',
         'created_at',
         'updated_at',
-        'deleted_at',
         'team_id',
     ];
 

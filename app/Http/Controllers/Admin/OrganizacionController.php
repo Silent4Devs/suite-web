@@ -10,10 +10,12 @@ use App\Http\Requests\UpdateOrganizacionRequest;
 use App\Models\Organizacion;
 use App\Models\Team;
 use Gate;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Flash;
 
 class OrganizacionController extends Controller
 {
@@ -21,7 +23,7 @@ class OrganizacionController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        /*abort_if(Gate::denies('organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Organizacion::with(['team'])->select(sprintf('%s.*', (new Organizacion)->table));
@@ -95,16 +97,33 @@ class OrganizacionController extends Controller
             return $table->make(true);
         }
 
-        $teams = Team::get();
+        $teams = Team::get();*/
 
-        return view('admin.organizacions.index', compact('teams'));
+        $organizacions = Organizacion::first();
+        $logotipo = DB::table('organizacions')->get('logotipo');
+
+        if (empty($organizacions)){
+            $count = Organizacion::get()->count();
+            $empty = FALSE;
+            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty);
+        }else{
+            $empty = TRUE;
+            $count = Organizacion::get()->count();
+            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo[0]);
+        }
+
     }
 
     public function create()
     {
-        abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return view('admin.organizacions.create');
+        $count = Organizacion::get()->count();
+        if ($count == 0) {
+            abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            return view('admin.organizacions.create');
+        } else {
+            Flash::warning("<h5 align='center'>Ya existe un registro en la base de datos</h5>");
+            return redirect()->route('admin.organizacions.index');
+        }
     }
 
     public function store(StoreOrganizacionRequest $request)
@@ -135,7 +154,19 @@ class OrganizacionController extends Controller
     {
         $organizacion->update($request->all());
 
-        if ($request->input('logotipo', false)) {
+        $file = $request->file('logotipo');
+        if ($file != null) {
+            //$dataImg = $file->get();
+            $nombre = $file->getClientOriginalName();
+            //\Storage::disk('local')->put($nombre,  \File::get($file));
+            $file->move(base_path('public/images'), $file->getClientOriginalName());
+            $organizacions = Organizacion::find(request()->org_id);
+            //\Storage::delete($organizacions->logotipo);
+            $organizacions->logotipo = $nombre;
+            $organizacions->save();
+            }
+
+        /*if ($request->input('logotipo', false)) {
             if (!$organizacion->logotipo || $request->input('logotipo') !== $organizacion->logotipo->file_name) {
                 if ($organizacion->logotipo) {
                     $organizacion->logotipo->delete();
@@ -145,8 +176,9 @@ class OrganizacionController extends Controller
             }
         } elseif ($organizacion->logotipo) {
             $organizacion->logotipo->delete();
-        }
+        }*/
 
+        Flash::success("<h5 align='center'>Editado con éxito</h5>");
         return redirect()->route('admin.organizacions.index');
     }
 
@@ -179,10 +211,10 @@ class OrganizacionController extends Controller
     {
         abort_if(Gate::denies('organizacion_create') && Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Organizacion();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Organizacion();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

@@ -15,15 +15,18 @@ class CreateGapLogroDosTable extends Migration
     {
         Schema::create('gap_logro_dos', function (Blueprint $table) {
             $table->id();
-            $table->string('anexo_indice');
-            $table->string('anexo_politica');
-            $table->longText('anexo_descripcion');
-            $table->integer('estado');
-            $table->longText('evidencia');
+            $table->string('control-uno')->nullable();
+            $table->string('control-dos')->nullable();
+            $table->string('anexo_indice')->nullable();
+            $table->longText('anexo_politica')->nullable();
+            $table->longText('anexo_descripcion')->nullable();
+            $table->string('valoracion')->nullable();
+            $table->longText('evidencia')->nullable();
+            $table->longText('recomendacion')->nullable();
             $table->timestamps();
         });
 
-    
+
     }
 
     /**
