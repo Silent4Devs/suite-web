@@ -2,9 +2,8 @@
 @section('content')
 
 <div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body bg-primary align-self-center" style="margin-top: -40px">
-         <h3 class="mb-1  text-center text-white">
-        {{ trans('global.create') }} {{ trans('cruds.materialSgsi.title_singular') }} </h3>
+    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Material SGSI</h3>
     </div>
 
     <div class="card-body">
