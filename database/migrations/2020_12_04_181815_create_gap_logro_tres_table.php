@@ -18,7 +18,7 @@ class CreateGapLogroTresTable extends Migration
             $table->string('pregunta');
             $table->string('valoracion')->nullable();
             $table->longText('evidencia')->nullable();
-            $table->string('recomendacion')->nullable();
+            $table->longText('recomendacion')->nullable();
             $table->string('estado')->nullable();
             $table->timestamps();
         });
