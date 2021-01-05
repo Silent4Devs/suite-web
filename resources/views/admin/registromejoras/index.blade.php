@@ -3,20 +3,17 @@
 @can('registromejora_create')
 <div class="card mt-5">
     <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-        <h3 class="mb-2  text-center text-white"><strong>Registro de mejoras</strong></h3>
+        <h3 class="mb-2  text-center text-white"><strong>Registro de Mejoras</strong></h3>
     </div>
     <div style="margin-bottom: 10px; margin-left:12px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.registromejoras.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.registromejora.title_singular') }}
+                  Agregar <strong>+<strong>
             </a>
         </div>
     </div>
 @endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.registromejora.title_singular') }} {{ trans('global.list') }}
-    </div>
+
 
     <div class="card-body">
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Registromejora">
