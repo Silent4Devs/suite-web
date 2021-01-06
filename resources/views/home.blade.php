@@ -89,16 +89,27 @@
                         <div class="col-md-12 col-sm-6 py-1 card card-body bg-info align-self-center">
                             <h3 class="mb-2  text-center text-white"><strong>Act</strong></h3>
                         </div>
-                        <div class="col-4">
-                            <div class="text-value">{{ number_format($settings5['total_number']) }}</div>
-                            <div>{{ $settings5['chart_title'] }}</div>
+                        <div class="col-4 text-left row">
+                            <div class="text-value col-12 mb-4">{{ number_format($settings5['total_number']) }}
+                            {{ $settings5['chart_title'] }}</div>
                             <br />
-                            <div class="text-value">{{ number_format($settings6['total_number']) }}</div>
-                            <div>{{ $settings6['chart_title'] }}</div>
+                            <div class="text-value col-12 mb-4">{{ number_format($settings6['total_number']) }}
+                            {{ $settings6['chart_title'] }}</div>
                             <br />
+                            <div class="col-12 text-left mb-4">
+                                 <a class="btn" style="background-color:#048c74;color:white;" href="admin/accion-correctivas">
+                              VER ACCION CORRECTIVA &nbsp;>>
+                                </a>
+                         </div>
+                         <div class="col-12 text-left mb-4">
+                        <a class="btn" style="background-color:#048c74;color:white;" href="admin/registromejoras">
+                              VER REGISTRO DE MEJORA >>
+                        </a>
+                         </div>
                         </div>
+          
                         <div class="col-8">
-                            <canvas id="myChart" width="350" height="350"></canvas>
+                            <canvas id="myChart" width="0" height="300px"></canvas>
                         </div>
                     </div>
                 </div>
@@ -153,32 +164,32 @@
                 ]
             },
             options: {
-                legend: {
-                    display: true
-                },
-                scales: {
-                    yAxes: [{
-                        gridLines: {
-                            display: true,
-                            drawBorder: false,
-                            color: '#f2f2f2',
-                        },
-                        ticks: {
-                            beginAtZero: true,
-                            stepSize: 1,
-                            callback: function(value, index, values) {
-                                return value;
-                            }
-                        }
-                    }],
-                    xAxes: [{
-                        gridLines: {
-                            display: false,
-                            tickMarkLength: 15,
-                        }
-                    }]
-                },
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'left',
+                labels: {
+                    fontColor: "black",
+                    boxWidth: 20,
+                    padding: 20
+                }
+            },
+            tooltips: {
+            mode: 'label'
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+            xAxes: [{
+            gridLines: {
+                offsetGridLines: true
             }
+        }]
+        }
+        }
         });
 
         var ctx2 = document.getElementById("incidentechart").getContext('2d');
