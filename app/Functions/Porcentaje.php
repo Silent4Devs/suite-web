@@ -44,13 +44,15 @@ class Porcentaje
         $valor = 40 / $total;
         $satisfactoriamente = $gap2satisfactorio * $valor;
         $parcialmenteValor = $gap2parcialmente * ($valor / 2);
-        $porcentaje = ($satisfactoriamente + $parcialmenteValor) / 40;
+        $porcentaje = ($satisfactoriamente + $parcialmenteValor) * (100) / 40;
+        $avance = $satisfactoriamente + $parcialmenteValor;
 
 
         return array(
             'Gap2Satis' => $satisfactoriamente,
             'Gap2Parcial' => $parcialmenteValor,
-            'Porcentaje' => $porcentaje
+            'Porcentaje' => $porcentaje,
+            'Avance' => $avance
         );
     }//termina func
 
@@ -80,6 +82,10 @@ class Porcentaje
 
         $resultado = $gap1cont + $gap12cont;
         //$porc2 = (round($gap12cont) * 20) / 100;
-        return $resultado;
+        return array(
+            'porcentaje' => $resultado,
+            'verificar' => $gap1cont,
+            'actuar' => $gap12cont,
+        );
     }//termina func
 }
