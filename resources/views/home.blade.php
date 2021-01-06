@@ -76,8 +76,13 @@
                                 <div class="col-md-12 col-sm-6 py-1 card card-body bg-info align-self-center " style="margin-top:-40px; ">
                                     <h3 class="mb-2  text-center text-white"><strong>Check</strong></h3>
                                 </div>
-                                <div class="col-12 align-self-center">
-                            <canvas id="chartAuditoria" width="350" height="100"></canvas>
+                                <div class="col-12  mb-4">
+                            <canvas id="chartAuditoria" ></canvas>
+                            <div class="col-12 text-right mb-4">
+                                 <a class="btn" style="background-color:#048c74;color:white;" href="admin/auditoria-anuals">
+                              VER DETALLE &nbsp;>>
+                                </a>
+                         </div>
                         </div>
                           
 
