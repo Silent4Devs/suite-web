@@ -344,6 +344,8 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
     }
 });
 
+
+
 /*Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
@@ -614,3 +616,8 @@ Route::view('sitemap', 'admin.sitemap.index');
 Route::view('stepper', 'stepper');
 Route::view('admin/gantt', 'admin.gantt.index');
 //URL::forceScheme('https');
+
+
+Route::view('post_register', 'auth.post_register');
+
+Route::view('test', 'auth.test');
