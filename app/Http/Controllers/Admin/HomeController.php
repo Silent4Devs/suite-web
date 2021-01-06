@@ -6,6 +6,13 @@ use App\Services\LaravelChart;
 use App\Models\User;
 use DB;
 use Carbon\Carbon;
+use App\Models\AccionCorrectiva;
+use App\Models\Registromejora;
+use App\Models\IncidentesDeSeguridad;
+use App\Models\ControlDocumento;
+use App\Models\PlanBaseActividade;
+use App\Models\AuditoriaAnual;
+
 class HomeController
 {
     public function index()
@@ -49,7 +56,7 @@ class HomeController
             'group_by_field'     => 'estado',
             'aggregate_function' => 'count',
             'filter_field'       => 'created_at',
-            'column_class'       => 'col-md-6',
+            'column_class'       => 'col-md-12',
             'entries_number'     => '5',
             'relationship_name'  => 'estatus',
         ];
@@ -229,6 +236,62 @@ class HomeController
 
         $chart10 = new LaravelChart($settings10);
 
-        return view('home', compact('chart1', 'chart2', 'chart3', 'chart4', 'settings5', 'settings6', 'chart7', 'chart8', 'chart9', 'chart10'));
+
+
+        $registro = Registromejora::select('id')->count('id');
+        $accionc = AccionCorrectiva::select('id')->count('id');
+
+        $incidentesasignado = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '4')->count('id');
+        $incidentescerrado = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '1')->count('id');
+        $incidentespendiente = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '3')->count('id');
+        $incidentescancelado = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '5')->count('id');
+        $incidentescurso = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '2')->count('id');
+
+
+        $documentoPubli = ControlDocumento::select('id')->where('estado_id', '=', '1')->count('id');
+        $documentoAprob =  ControlDocumento::select('id')->where('estado_id', '=', '2')->count('id');
+        $documentorev = ControlDocumento::select('id')->where('estado_id', '=', '3')->count('id');
+        $documentoElab = ControlDocumento::select('id')->where('estado_id', '=', '4')->count('id');
+        $docunoelab =  ControlDocumento::select('id')->where('estado_id', '=', '5')->count('id');
+
+        $actividadsininici = PlanBaseActividade::select('id')->where('estatus_id', '=', '1')->count('id');
+        $actividadenproc =  PlanBaseActividade::select('id')->where('estatus_id', '=', '2')->count('id');
+        $actividadcompl = PlanBaseActividade::select('id')->where('estatus_id', '=', '3')->count('id');
+        $actividadretr = PlanBaseActividade::select('id')->where('estatus_id', '=', '4')->count('id');
+      
+        $auditexterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Interna')->count('id');
+        $auditinterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Externa')->count('id');
+      
+
+        return view('home', compact(
+            'auditexterna',
+            'auditinterna',
+            'actividadsininici',
+            'actividadenproc',
+            'actividadcompl',
+            'actividadretr',
+            'chart1',
+            'chart2',
+            'chart3',
+            'chart4',
+            'settings5',
+            'settings6',
+            'chart7',
+            'chart8',
+            'chart9',
+            'chart10',
+            'accionc',
+            'registro',
+            'incidentesasignado',
+            'incidentescerrado',
+            'incidentespendiente',
+            'incidentescancelado',
+            'incidentescurso',
+            'documentoPubli',
+            'documentoAprob',
+            'documentorev',
+            'documentoElab',
+            'docunoelab'
+        ));
     }
 }
