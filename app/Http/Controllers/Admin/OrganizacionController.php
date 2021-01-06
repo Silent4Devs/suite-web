@@ -152,20 +152,21 @@ class OrganizacionController extends Controller
 
     public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
     {
-        $file = $request->file('logotipo');
-        if ($file != null) {
-            $dataImg = $file->get();
-            $nombre = $file->getClientOriginalName();
-            \Storage::disk('local')->put($nombre,  \File::get($file));
-            $organizacions = Organizacion::find(request()->org_id);
-            \Storage::delete($organizacions->logotipo);
-            $organizacions->logotipo = $nombre;
-            $organizacions->save();
-        }
-
         $organizacion->update($request->all());
 
-        if ($request->input('logotipo', false)) {
+        $file = $request->file('logotipo');
+        if ($file != null) {
+            //$dataImg = $file->get();
+            $nombre = $file->getClientOriginalName();
+            //\Storage::disk('local')->put($nombre,  \File::get($file));
+            $file->move(base_path('public/images'), $file->getClientOriginalName());
+            $organizacions = Organizacion::find(request()->org_id);
+            //\Storage::delete($organizacions->logotipo);
+            $organizacions->logotipo = $nombre;
+            $organizacions->save();
+            }
+
+        /*if ($request->input('logotipo', false)) {
             if (!$organizacion->logotipo || $request->input('logotipo') !== $organizacion->logotipo->file_name) {
                 if ($organizacion->logotipo) {
                     $organizacion->logotipo->delete();
@@ -175,7 +176,7 @@ class OrganizacionController extends Controller
             }
         } elseif ($organizacion->logotipo) {
             $organizacion->logotipo->delete();
-        }
+        }*/
 
         Flash::success("<h5 align='center'>Editado con éxito</h5>");
         return redirect()->route('admin.organizacions.index');

@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\GapDo;
+use App\Models\GapTre;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +17,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
             GapunoTableSeeder::class,
+            GaptresTableSeeder::class,
+            GapdosTableSeeder::class,
         ]);
     }
 }

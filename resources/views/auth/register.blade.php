@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="row justify-content-center">
+<div class="row justify-content-center" style="background-image: url(img/auth-bg2.jpg); background-size: cover; background-position: center; background-repeat: no-repeat; position: absolute; top: 0;
+left: 0; width: 100%; height: 100%; display: flex;
+align-items: center; justify-content: center;">
     <div class="col-md-6">
 
         <div class="card mx-4">
@@ -13,7 +15,7 @@
                         <input type="hidden" name="team" id="team" value="{{ request()->query('team') }}">
                     @endif
                     <h1>{{ trans('panel.site_title') }}</h1>
-                    <p class="text-muted">{{ trans('global.register') }}</p>
+                    <p class="text-muted">Por favor llene el siguiente formulario para registrarse en el sistema de gestión normativa TABANTAJ</p>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -63,12 +65,14 @@
                                 <i class="fa fa-lock fa-fw"></i>
                             </span>
                         </div>
-                        <input type="password" name="password_confirmation" class="form-control" required placeholder="{{ trans('global.login_password_confirmation') }}">
+                        <input type="password" name="password_confirmation" class="form-control" required placeholder="Confirmar contraseña">
                     </div>
 
                     <button class="btn btn-block btn-primary">
                         {{ trans('global.register') }}
                     </button>
+
+                    <p class="mt-4" style="color: #888;"> Una vez registrado debera esperar la aprobacion del administrador del sistema </p>
                 </form>
 
             </div>

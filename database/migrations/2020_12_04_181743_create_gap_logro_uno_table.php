@@ -18,7 +18,7 @@ class CreateGapLogroUnoTable extends Migration
             $table->string('pregunta')->nullable();
             $table->string('valoracion')->nullable();
             $table->longText('evidencia')->nullable();
-            $table->string('recomendacion')->nullable();
+            $table->longText('recomendacion')->nullable();
             $table->timestamps();
         });
     }

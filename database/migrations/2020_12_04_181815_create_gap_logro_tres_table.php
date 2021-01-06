@@ -16,9 +16,9 @@ class CreateGapLogroTresTable extends Migration
         Schema::create('gap_logro_tres', function (Blueprint $table) {
             $table->id();
             $table->string('pregunta');
-            $table->string('valoracion');
-            $table->longText('evidencia');
-            $table->string('recomendacion');
+            $table->string('valoracion')->nullable();
+            $table->longText('evidencia')->nullable();
+            $table->longText('recomendacion')->nullable();
             $table->string('estado')->nullable();
             $table->timestamps();
         });

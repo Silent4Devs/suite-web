@@ -53,18 +53,10 @@
                         @endif
                     </div>
 
-                    <div class="input-group mb-4">
-                        <div class="form-check checkbox">
-                            <input class="form-check-input" name="remember" type="checkbox" id="remember" style="vertical-align: middle;" />
-                            <label class="form-check-label" for="remember" style="vertical-align: middle;">
-                                {{ trans('global.remember_me') }}
-                            </label>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-12 d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary mb-4" style="width: 90%;">
+                    <div class="row text-right" whidth="100%">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary mb-4">
                                 {{ trans('global.login') }}
                             </button>
                         </div>

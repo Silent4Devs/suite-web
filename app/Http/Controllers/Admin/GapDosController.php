@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroyGapDoRequest;
 use App\Http\Requests\StoreGapDoRequest;
 use App\Http\Requests\UpdateGapDoRequest;
 use App\Models\GapDo;
-use App\Models\Team; 
+use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -96,11 +96,32 @@ class GapDosController extends Controller
         return view('admin.gapDos.edit', compact('gapDo'));
     }
 
-    public function update(UpdateGapDoRequest $request, GapDo $gapDo)
+    public function update(Request $request, $id)
     {
-        $gapDo->update($request->all());
-
-        return redirect()->route('admin.gap-dos.index');
+        if ($request->ajax()) {
+            switch ($request->name) {
+                case 'evidencia':
+                    $gapun = GapDo::findOrFail($id);
+                    $gapun->evidencia = $request->value;
+                    $gapun->save();
+                    return response()->json(['success' => true]);
+                    break;
+                case 'recomendacion':
+                    $gapun = GapDo::findOrFail($id);
+                    $gapun->recomendacion = $request->value;
+                    $gapun->save();
+                    return response()->json(['success' => true]);
+                    break;
+                case 'valoracion':
+                    $gapun = GapDo::findOrFail($id);
+                    $gapun->valoracion = $request->value;
+                    $gapun->save();
+                    return response()->json(['success' => true]);
+                    break;
+            }
+        }
+        //$gapTre->update($request->all());
+        //return redirect()->route('admin.gap-tres.index');
     }
 
     public function show(GapDo $gapDo)

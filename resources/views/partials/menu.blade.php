@@ -1,10 +1,5 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
 <style type="text/css">
-    li:active{
-        transform: scale(0.98);
-        transition: 0.03s;
-        opacity: 0.97;
-    }
     body.c-dark-theme .letra_blanca{
         color: #fff;
     }
@@ -68,6 +63,33 @@
         color: #ccc;
         border-color: rgba(0,0,0,0);
     }
+
+    .active, .c-active{
+            position: relative;
+            color: #fff;
+    }
+    .active:before, .c-active:before{
+        content: "";
+        background: #380caf;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+    }
+    a.active font, a.c-active font, a.c-active .letra_blanca{
+        color: #fff;
+    }
+
+    li a:hover font{
+        color: #fff;
+    }
+    li a:hover .letra_blanca{
+        color: #fff;
+    }
+
+
 </style>
 
 
@@ -946,4 +968,77 @@
     </ul>
 
 </div>
+
+<script>
+
+
+
+    var a = document.getElementsByClassName("active");
+    for(var i = 0; i < a.length; i++)
+        a[i].className += " c-active";
+
+
+    var ida = document.getElementsByClassName("c-active");
+    for(var i = 0; i < ida.length; i++)
+        ida[i].id += "seleccionado";
+
+
+
+    document.getElementById('seleccionado').parentNode.classList.add('c-show');
+
+    document.getElementById('seleccionado').parentNode.parentNode.classList.add('c-show');
+
+    document.getElementById('seleccionado').parentNode.parentNode.parentNode.classList.add('c-show');
+
+    document.getElementById('seleccionado').parentNode.parentNode.parentNode.parentNode.classList.add('c-show');
+
+    document.getElementById('seleccionado').parentNode.parentNode.parentNode.parentNode.parentNode.classList.add('c-show');
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    document.getElementById('seleccionado').parentNode.classList.add('select_li');
+    var idli = document.getElementsByClassName("select_li");
+    for(var i = 0; i < idli.length; i++)
+        idli[i].id += "seleccionadoli";
+
+    document.getElementById('seleccionadoli').parentNode.classList.add('c-show');
+    var idul = document.getElementsByClassName("c-show");
+    for(var i = 0; i < idul.length; i++)
+        idul[i].id += "seleccionadoul";
+
+    document.getElementById('seleccionadoul').parentNode.classList.add('c-show');
+    var idull = document.getElementsByClassName("c-show");
+    for(var i = 0; i < idull.length; i++)
+        idull[i].id += "seleccionadoull";
+
+    document.getElementById('seleccionadoull').parentNode.classList.add('c-show');
+    var idulll = document.getElementsByClassName("c-show");
+    for(var i = 0; i < idulll.length; i++)
+        idulll[i].id += "seleccionadoulll";
+
+    document.getElementById('seleccionadoulll').parentNode.classList.add('c-show');
+*/
+    
+    
+
+    
+
+</script>
+
+
 

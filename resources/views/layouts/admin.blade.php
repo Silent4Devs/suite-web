@@ -47,6 +47,13 @@
         body.c-dark-theme .iconos_cabecera{
             color: #000;
         }
+        body.c-dark-theme .c-show, .select_li{
+            background: rgba(255,255,255,0.1);
+        }
+        body.c-dark-theme .c-active, .active{
+            background: rgba(255,255,255,0.1);
+        }
+        
 
         body, .iconos_cabecera{
             transition: 0s;
@@ -59,6 +66,7 @@
             transition: 0.06s;
             opacity: 0.7;
         }
+        
         
 
         .glyphicon-ok::before {
@@ -84,7 +92,7 @@
 <div class="c-wrapper">
     <header class="c-header c-header-fixed px-3"
             style="background: linear-gradient(60deg, rgb(35,57,91) 40%, rgb(62,142,207) 70%, rgb(13,164,160) 100%) !important; border: none;">
-        <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
+        <button  class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
             <i class="fas fa-fw fa-bars"></i>
         </button>
@@ -92,7 +100,7 @@
 
         <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar"
                 data-class="c-sidebar-lg-show" responsive="true">
-            <i class="fas fa-fw fa-bars" style="color:white"></i>
+            <i id="btnMenu" class="fas fa-fw fa-bars" style="color:white"></i>
         </button>
 
 
@@ -283,6 +291,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+
 <!-- x editable -->
 <script
     src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
@@ -500,6 +509,8 @@
     });
 
 </script>
+
+
 @yield('scripts')
 </body>
 
