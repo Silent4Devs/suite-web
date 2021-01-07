@@ -29,7 +29,16 @@
                                         {{ trans('cruds.recurso.fields.cursoscapacitaciones') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.recurso.fields.fecha_curso') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.recurso.fields.participantes') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.recurso.fields.instructor') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.recurso.fields.certificado') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -45,12 +54,19 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                    </td>
+                                    <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
                                             @foreach($users as $key => $item)
                                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                     </td>
@@ -66,8 +82,21 @@
                                             {{ $recurso->cursoscapacitaciones ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $recurso->fecha_curso ?? '' }}
+                                        </td>
+                                        <td>
                                             @foreach($recurso->participantes as $key => $item)
                                                 <span>{{ $item->name }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $recurso->instructor ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($recurso->certificado as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
                                             @endforeach
                                         </td>
                                         <td>
@@ -150,14 +179,28 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  $('.datatable thead').on('input', '.search', function () {
+  
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
       let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
       table
-        .column($(this).parent().index())
+        .column(index)
         .search(value, strict)
         .draw()
   });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 })
 
 </script>

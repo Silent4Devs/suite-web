@@ -99,6 +99,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Recursos
     Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
+    Route::post('recursos/media', 'RecursosController@storeMedia')->name('recursos.storeMedia');
+    Route::post('recursos/ckmedia', 'RecursosController@storeCKEditorImages')->name('recursos.storeCKEditorImages');
     Route::resource('recursos', 'RecursosController');
 
     // Competencia

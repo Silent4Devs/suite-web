@@ -1,0 +1,8 @@
+Steps to apply the license:
+
+1. Login to Remedy Smart Reporting using “siadmin” account into the “Default” organization through the application direct URL:
+•	Bundled Tomcat: http(s)://SmartReporting_host:<port>
+•	External Tomcat: http(s)://SmartReporting_host:<port>/SmartReporting
+2. Navigate to Administration > Admin Console and click on “Licence Management”
+3. Click on “Upload Licence” to expand the options and click on “Browse” button to select the license included on this file
+4. Click on “Preview” button to verify the new license information and click on “Submit” button
