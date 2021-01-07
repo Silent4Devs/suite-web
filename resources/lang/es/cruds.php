@@ -487,7 +487,7 @@ return [
         'fields'         => [
             'id'                          => 'ID',
             'id_helper'                   => ' ',
-            'cursoscapacitaciones'        => 'Consolidación de cursos y capacitaciones por personal',
+            'cursoscapacitaciones'        => 'Nombre del curso',
             'cursoscapacitaciones_helper' => ' ',
             'created_at'                  => 'Created at',
             'created_at_helper'           => ' ',
@@ -499,6 +499,12 @@ return [
             'participantes_helper'        => ' ',
             'team'                        => 'Team',
             'team_helper'                 => ' ',
+            'fecha_curso'                 => 'Fecha del curso',
+            'fecha_curso_helper'          => ' ',
+            'instructor'                  => 'Instructor',
+            'instructor_helper'           => ' ',
+            'certificado'                 => 'Certificado (Archivo PDF o JPG)',
+            'certificado_helper'          => ' ',
         ],
     ],
     'competencium'                   => [
