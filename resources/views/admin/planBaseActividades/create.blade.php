@@ -103,6 +103,9 @@
             <div class="form-group">
                 <label for="fecha_inicio">{{ trans('cruds.planBaseActividade.fields.fecha_inicio') }}</label>
                 <input class="form-control date {{ $errors->has('fecha_inicio') ? 'is-invalid' : '' }}" type="text" name="fecha_inicio" id="fecha_inicio" value="{{ old('fecha_inicio') }}">
+                <div class="input-group-addon">
+        <span class="glyphicon glyphicon-th"></span>
+    </div>
                 @if($errors->has('fecha_inicio'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecha_inicio') }}
@@ -202,6 +205,101 @@
 
          return _results
      }
-}
+};
+</script>
+<script>
+
+$('#fecha_fin').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: true,
+    language: "es",
+    orientation: "bottom right",
+    autoclose: true,
+    autoHide: true,
+    beforeShowDay: function(date){
+          if (date.getMonth() == (new Date()).getMonth())
+            switch (date.getDate()){
+              case 4:
+                return {
+                  tooltip: 'Example tooltip',
+                  classes: 'active'
+                };
+              case 8:
+                return false;
+              case 12:
+                return "blue";
+          }
+        }
+});
+
+$('#fecha_inicio').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: true,
+    orientation: "bottom right",
+    autoclose: true,
+    autoHide: true,
+    beforeShowDay: function(date){
+          if (date.getMonth() == (new Date()).getMonth())
+            switch (date.getDate()){
+              case 4:
+                return {
+                  tooltip: 'Example tooltip',
+                  classes: 'active'
+                };
+              case 8:
+                return false;
+              case 12:
+                return "blue";
+          }
+        }
+});
+$('#compromiso').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: true,
+    language: "es",
+    orientation: "bottom right",
+    autoclose: true,
+    autoHide: true,
+    beforeShowDay: function(date){
+          if (date.getMonth() == (new Date()).getMonth())
+            switch (date.getDate()){
+              case 4:
+                return {
+                  tooltip: 'Example tooltip',
+                  classes: 'active'
+                };
+              case 8:
+                return false;
+              case 12:
+                return "blue";
+          }
+        }
+});
+
+$('#real').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: true,
+    language: "es",
+    orientation: "bottom right",
+    autoclose: true,
+    autoHide: true,
+    beforeShowDay: function(date){
+          if (date.getMonth() == (new Date()).getMonth())
+            switch (date.getDate()){
+              case 4:
+                return {
+                  tooltip: 'Seleccionar fecha',
+                  classes: 'active'
+                };
+              case 8:
+                return false;
+              case 12:
+                return "blue";
+          }
+        }
+});
+
+
+
 </script>
 @endsection

@@ -156,6 +156,102 @@
 
 @section('scripts')
 <script>
+
+$('#fecha_fin').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: true,
+    language: "es",
+    orientation: "bottom right",
+    autoclose: true,
+    autoHide: true,
+    beforeShowDay: function(date){
+          if (date.getMonth() == (new Date()).getMonth())
+            switch (date.getDate()){
+              case 4:
+                return {
+                  tooltip: 'Example tooltip',
+                  classes: 'active'
+                };
+              case 8:
+                return false;
+              case 12:
+                return "blue";
+          }
+        }
+});
+
+
+$('#fecha_inicio').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: true,
+    orientation: "bottom right",
+    autoclose: true,
+    autoHide: true,
+    beforeShowDay: function(date){
+          if (date.getMonth() == (new Date()).getMonth())
+            switch (date.getDate()){
+              case 4:
+                return {
+                  tooltip: 'Example tooltip',
+                  classes: 'active'
+                };
+              case 8:
+                return false;
+              case 12:
+                return "blue";
+          }
+        }
+});
+$('#compromiso').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: true,
+    language: "es",
+    orientation: "bottom right",
+    autoclose: true,
+    autoHide: true,
+    beforeShowDay: function(date){
+          if (date.getMonth() == (new Date()).getMonth())
+            switch (date.getDate()){
+              case 4:
+                return {
+                  tooltip: 'Example tooltip',
+                  classes: 'active'
+                };
+              case 8:
+                return false;
+              case 12:
+                return "blue";
+          }
+        }
+});
+
+$('#real').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: true,
+    language: "es",
+    orientation: "bottom right",
+    autoclose: true,
+    autoHide: true,
+    beforeShowDay: function(date){
+          if (date.getMonth() == (new Date()).getMonth())
+            switch (date.getDate()){
+              case 4:
+                return {
+                  tooltip: 'Seleccionar fecha',
+                  classes: 'active'
+                };
+              case 8:
+                return false;
+              case 12:
+                return "blue";
+          }
+        }
+});
+
+
+
+</script>
+<script>
     Dropzone.options.guiaDropzone = {
     url: '{{ route('admin.plan-base-actividades.storeMedia') }}',
     maxFilesize: 2, // MB

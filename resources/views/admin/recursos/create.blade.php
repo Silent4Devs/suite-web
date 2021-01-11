@@ -21,7 +21,7 @@
             </div>
             <div class="form-group col-12">
                 <label for="fecha_curso"><i class="fas fa-calendar iconos-crear"></i>{{ trans('cruds.recurso.fields.fecha_curso') }}</label>
-                <input class="form-control date {{ $errors->has('fecha_curso') ? 'is-invalid' : '' }}" type="text" name="fecha_curso" id="fecha_curso" value="{{ old('fecha_curso') }}">
+                <input class="form-control  {{ $errors->has('fecha_curso') ? 'is-invalid' : '' }}" type="text" name="fecha_curso" id="fecha_curso" value="{{ old('fecha_curso') }}">
                 @if($errors->has('fecha_curso'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecha_curso') }}
@@ -29,6 +29,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.recurso.fields.fecha_curso_helper') }}</span>
             </div>
+         
             <div class="form-group col-12">
                 <label for="participantes"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.recurso.fields.participantes') }}</label>
                 <div style="padding-bottom: 4px">
@@ -137,5 +138,28 @@ Dropzone.options.certificadoDropzone = {
          return _results
      }
 }
+
+
+$('#fecha_curso').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: true,
+    language: "es",
+    orientation: "bottom right",
+    autoclose: true,
+    beforeShowDay: function(date){
+          if (date.getMonth() == (new Date()).getMonth())
+            switch (date.getDate()){
+              case 4:
+                return {
+                  tooltip: 'Example tooltip',
+                  classes: 'active'
+                };
+              case 8:
+                return false;
+              case 12:
+                return "blue";
+          }
+        }
+});
 </script>
 @endsection

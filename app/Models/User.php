@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\MyResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use \DateTimeInterface;
@@ -116,10 +117,14 @@ class User extends Authenticatable
         }
     }
 
-    public function sendPasswordResetNotification($token)
+    /*public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
-    }
+    }*/
+    public function sendPasswordResetNotification($token)
+{
+    $this->notify(new MyResetPassword($token));
+}
 
     public function getVerifiedAtAttribute($value)
     {
