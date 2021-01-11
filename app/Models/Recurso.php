@@ -56,12 +56,15 @@ class Recurso extends Model implements HasMedia
 
     public function getFechaCursoAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        //return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return Carbon::parse($value)->format('d/m/Y');
     }
 
     public function setFechaCursoAttribute($value)
     {
         $this->attributes['fecha_curso'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        //$this->attributes['fecha_curso'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+        //$this->attributes['fecha_curso'] =  Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
     }
 
     public function participantes()
