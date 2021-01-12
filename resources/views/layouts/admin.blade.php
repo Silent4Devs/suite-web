@@ -40,18 +40,18 @@
         .verde_silent{
             background-color: #0CA193;
         }
+        .azul_silent{
+            background-color: #2589AA;
+        }
         .iconos_cabecera{
             color: #fff;
             font-size:28px;
         }
+        body.c-dark-theme #sidebar{
+            background-color: #2a2b36;
+        }
         body.c-dark-theme .iconos_cabecera{
             color: #000;
-        }
-        body.c-dark-theme .c-show, .select_li{
-            background: rgba(255,255,255,0.1);
-        }
-        body.c-dark-theme .c-active, .active{
-            background: rgba(255,255,255,0.1);
         }
         
 
@@ -65,6 +65,10 @@
             transform: scale(0.8);
             transition: 0.06s;
             opacity: 0.7;
+        }
+
+        .flex-column{
+            background: rgba(0,0,0,0);
         }
         
         

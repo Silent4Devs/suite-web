@@ -4,7 +4,7 @@ return [
     'actions'                              => 'Acciones',
     'add'                                  => 'Agregar',
     'allRightsReserved'                    => 'Todos los derechos reservados.',
-    'areYouSure'                           => 'Estás seguro?',
+    'areYouSure'                           => '¿Esta seguro que desea eliminar este registro?',
     'clickHereToVerify'                    => 'Haga click para verificar',
     'create'                               => 'Crear',
     'dashboard'                            => 'Panel de Control',
