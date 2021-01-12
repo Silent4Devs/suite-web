@@ -1,18 +1,21 @@
 @extends('layouts.admin')
 @section('content')
 @can('plan_base_actividade_create')
-    <div style="margin-bottom: 10px;" class="row">
+
+<div class="card mt-5">
+  <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+      <h3 class="mb-2  text-center text-white"><strong>Plan de Trabajo Base </strong></h3>
+  </div>
+
+    <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.plan-base-actividades.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.planBaseActividade.title_singular') }}
+                    Agregar <strong>+</strong>
             </a>
         </div>
     </div>
 @endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.planBaseActividade.title_singular') }} {{ trans('global.list') }}
-    </div>
+
 
     <div class="card-body">
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PlanBaseActividade">

@@ -1,10 +1,70 @@
 @extends('layouts.admin')
 @section('content')
 
-    <div class="card mt-4">
-        <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1  text-center text-white">Mi organización </h3>
-        </div>
+<style>
+
+.tarjeta{
+
+margin-left:50px;
+margin-top:20px;
+border-radius: 3px;
+border:solid;
+border-color: #ccc;
+width: 430px;
+border-width: 1px;
+padding-left: 5px;
+padding-bottom: 20px;
+padding-right: 5px;
+padding-top: 5px;
+}
+.imagen_organizacion{
+border-radius: 3px;
+border:solid;
+border-color: #ccc;
+margin-left:500px;
+margin-top:-110px;
+border-width: 1px;
+width: 500px;
+
+
+}
+
+.boton_organizacion{
+margin-left:310px;
+
+}
+
+	@media(max-width: 796px){
+
+.tarjeta{
+
+  margin-left:15px;
+  margin-top:20px;
+  border:none;
+
+}
+
+.imagen_organizacion{
+
+margin-left:335px;
+margin-top:-110px;
+width: 340px;
+
+}
+
+.boton_organizacion{
+
+margin-left:100px;
+
+}
+
+ }
+</style>
+
+        <div class="card mt-5">
+            <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+                <h3 class="mb-2  text-center text-white"><strong>Mi Organización</strong></h3>
+            </div>
 
         <br>
         @include('layouts.errors')
@@ -157,7 +217,7 @@
                 </div>
                 <div class="form-group col-sm-6">
                     <label for="logotipo"> <i
-                            class="fas fa-image iconos-crear"></i> {{ trans('cruds.organizacion.fields.logotipo') }}
+                            class="fas fa-image iconos-crear" ></i> {{ trans('cruds.organizacion.fields.logotipo') }}
                     </label>
                     <img src="{{ url('images/'.$logotipo->logotipo) }}" alt="" style="width: 480px; height: 150px;">
                 @if($errors->has('logotipo'))
@@ -178,15 +238,31 @@
             </div>
         </div>
         @else
-            <div class="col-lg-12">
-                @if(!empty($count == 1))
-                @else
-                    <span>Por favor, agregue su organización pulsando el boton: </span>
-                    <a class="btn btn-success" href="{{ route('admin.organizacions.create') }}">
-                        Agregar organización
-                    </a>
-                @endif
-            </div>
+
+
+    <div class="row">
+
+              <div class=" tarjeta">
+                  @if(!empty($count == 1))
+                  @else
+                      <span>Agregue los datos generales de su organización</span>
+                      <br>
+                      <br>
+                      <a class="btn btn-success boton_organizacion"  href="{{ route('admin.organizacions.create') }}">
+                          Agregar <strong>+</strong>
+                      </a>
+                  @endif
+              </div>
+
+              <div class=" imagen_organizacion">
+                  <img src="../img/organizacion.jpeg" width="100%">
+              </div>
+
+      </div><!--row-->
+
+
+
+
 
             <div class="card-body">
                 <div class="row">

@@ -11,7 +11,7 @@
     <div style="margin-bottom: 10px; margin-left:10px;" class="row ml-4">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.auditoria-anuals.create') }}">
-                    Agregar <strong>+<strong>
+                    Agregar <strong>+</strong>
             </a>
         </div>
     </div>

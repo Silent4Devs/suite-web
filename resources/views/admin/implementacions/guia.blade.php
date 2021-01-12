@@ -28,11 +28,11 @@
         background-color: #07404e;
     }
     body.c-dark-theme .text_grande{
-        background-color: rgba(255,255,255,0.06); 
+        background-color: rgba(255,255,255,0.06);
         margin-bottom: 17px;
     }
     body.c-dark-theme .color_dark{
-        background-color: rgba(255,255,255,0.06); 
+        background-color: rgba(255,255,255,0.06);
     }
     body.c-dark-theme a.invert.active{
         color: #fff;
@@ -91,7 +91,7 @@
                     <li class="list-group-item nav-item color_dark">
                         <a class="nav-link" id="informacion-tab-tres" data-toggle="tab" href="#informacion-tres" role="tab" aria-controls="informacion-tres" aria-selected="false"><span class="color_letra";">4.1 Entendimiento de<br> la Organización</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    
+
                     <li class="list-group-item nav-item color_dark">
                         <a class="nav-link" id="informacion-tab-cinco" data-toggle="tab" href="#informacion-cinco" role="tab" aria-controls="informacion-cinco" aria-selected="false"><span class="color_letra";">4.2 Partes Interesadas</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
@@ -140,7 +140,7 @@ Objetivo del SGSI.
 
                                 <p>
                                     <h6>ANÁLISIS DE BRECHAS ISO 27001 (GAP ANALYSIS) </h6>
-                                    Antes de iniciar con la implementación del Sistema de Gestión de Seguridad de la Información (SGSI) en la Organizacion, es necesario realizar un diagnóstico inicial para determinar el grado de cumplimiento tanto de los requisitos de la norma ISO 27001 como de sus controles. Para lograr este objetivo emplearemos el Análisis de Brechas (Gap Analysis). 
+                                    Antes de iniciar con la implementación del Sistema de Gestión de Seguridad de la Información (SGSI) en la Organizacion, es necesario realizar un diagnóstico inicial para determinar el grado de cumplimiento tanto de los requisitos de la norma ISO 27001 como de sus controles. Para lograr este objetivo emplearemos el Análisis de Brechas (Gap Analysis).
                                 </p>
                                 <p>
                                     Un análisis de brechas GAP es un método para evaluar las diferencias de rendimiento entre los sistemas de información de una empresa o las aplicaciones de software para determinar si se cumplen los requisitos del negocio y, de no ser así, qué pasos se deben tomar para garantizar que se cumplan con éxito. Gap se refiere al espacio entre "donde estamos" (el presente) y "donde queremos estar" (el objetivo a alcanzar). Un análisis de deficiencias también puede denominarse análisis de necesidades, permitiéndonos determinar lo que nos falta y los recursos necesarios para alcanzar los objetivos.
@@ -153,7 +153,7 @@ Objetivo del SGSI.
                                 </p>
                                 <p>
                                     <h6>CONTEXTO DE LA ORGANIZACIÓN </h6>
-                                    Esta fase del proyecto consiste en establecer el contexto del SGSI en cumplimiento de los requisitos de la norma ISO 27001 recogidos en la cláusula 4 de la Norma. 
+                                    Esta fase del proyecto consiste en establecer el contexto del SGSI en cumplimiento de los requisitos de la norma ISO 27001 recogidos en la cláusula 4 de la Norma.
                                 </p>
                                 <p>
                                     El contexto organizacional consiste en considerar las expectativas y necesidades de todas las partes interesadas, así como en determinar o identificar los “problemas” internos y externos a los que se enfrenta la organización.
@@ -173,20 +173,20 @@ Objetivo del SGSI.
 
                         4.1 Entendimiento de la Organización
 </div>
-                        
+
 <div class="card card-body text-black  fondo_secundario mb-3" align="justify">
 
  La organizacion debe determinar las cuestiones externas e internas que son pertinentes para su propósito y que afectan a su capacidad para lograr los resultados previstos de su sistema de gestión de seguridad de la información.
                             </div>
                             <div class="card-body text_grande">
                                 <p>
-                                    La norma ISO 27001 alineándose con los estándares ISO 31000 sobre Gestión del Riesgo, nos propone ayudarnos con los requisitos del capítulo 5.3 de esta norma para la determinación de estas cuestiones. 
+                                    La norma ISO 27001 alineándose con los estándares ISO 31000 sobre Gestión del Riesgo, nos propone ayudarnos con los requisitos del capítulo 5.3 de esta norma para la determinación de estas cuestiones.
                                 </p>
                                 <p>
                                     El contexto organizacional consiste en considerar las expectativas y necesidades de todas las partes interesadas, así como en determinar o identificar los “problemas” internos y externos a los que se enfrenta la organización y que afectan su capacidad para lograr los resultados previstos de su Sistema de Gestión de Seguridad de la Información (SGSI). Para realizar este análisis se empleará la metodología FODA para entender el contexto de la organización en las dos perspectivas mencionadas.
                                 </p>
                                 <p>
-                                    El análisis FODA es una metodología donde conformaras un cuadro de la situación actual de la organización permitiendo de esta manera obtener un diagnóstico preciso para tomar decisiones (estrategias) que favorezcan el posicionamiento de este. El análisis FODA está compuesto por una evaluación de las competencias internas como fortalezas (F), debilidades (D), y las competencias externas como las oportunidades (O) y amenazas (A), dónde nos proporciona un esquema para la toma de decisiones estratégicas.  
+                                    El análisis FODA es una metodología donde conformaras un cuadro de la situación actual de la organización permitiendo de esta manera obtener un diagnóstico preciso para tomar decisiones (estrategias) que favorezcan el posicionamiento de este. El análisis FODA está compuesto por una evaluación de las competencias internas como fortalezas (F), debilidades (D), y las competencias externas como las oportunidades (O) y amenazas (A), dónde nos proporciona un esquema para la toma de decisiones estratégicas.
                                 </p>
                                 <p>
                                     <h6>El contexto externo</h6>
@@ -214,14 +214,14 @@ Objetivo del SGSI.
                                         <li>Normas, directrices y modelos adoptados por la organización y la forma y el alcance de las relaciones contractuales</li>
                                     </ul>
                                 </p>
-                                
+
                             </div>
 
                         </div>
                         <!--card-->
                     </div>
                     <!--informacion-tres-->
-                   
+
                     <div class=" tab-pane fade" id="informacion-cinco" role="tabpanel" aria-labelledby="informacion-tab-cinco">
                         <div class="card">
                         <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
@@ -231,7 +231,7 @@ Objetivo del SGSI.
 
 <div class="card card-body text-black  fondo_secundario mb-3" align="justify">
 
-                               
+
                                 La organización debe determinar: <br>a) Las partes interesadas que son pertinentes al Sistema de Gestión de Seguridad de la Información.<br>
                                 b) Los requisitos de estas partes interesadas pertinentes a seguridad de la información.
 
@@ -276,7 +276,7 @@ Objetivo del SGSI.
                                     La tarea de identificar los requisitos hay que realizarla antes de comenzar a desarrollar su SGSI.
                                 </p>
                                 <p>
-                                    La organización debe documentar, publicar y actualizar una Lista de requisitos legales y regulatorios para la consulta de las partes interesadas que se vean afectados. 
+                                    La organización debe documentar, publicar y actualizar una Lista de requisitos legales y regulatorios para la consulta de las partes interesadas que se vean afectados.
                                 </p>
 
                             </div>
@@ -310,7 +310,7 @@ Objetivo del SGSI.
                             </div>
                             <div class="card-body text_grande">
                                 <p>
-                                    En este punto se deben definir los límites en la aplicación del sistema de gestión de la seguridad de la información. 
+                                    En este punto se deben definir los límites en la aplicación del sistema de gestión de la seguridad de la información.
                                 </p>
                                 <p>
                                     Los elementos que debemos tener en cuenta para la definición del alcance son:
@@ -363,14 +363,14 @@ Objetivo del SGSI.
                                     De cualquier manera, el alcance debe definir claramente lo que se está incluyendo, en función de los objetivos comerciales y los activos de información que se protegerán, y debe quedar claro que todo lo demás está fuera del alcance
                                 </p>
                                 <p>
-                                    Recomendación: Una vez definidos los procesos y las actividades incluidas en el alcance y para que el alcance sea completamente claro, especialmente para terceros, resulta útil identificar lo que no está en el alcance (por ejemplo, las actividades del departamento de recursos humanos). 
+                                    Recomendación: Una vez definidos los procesos y las actividades incluidas en el alcance y para que el alcance sea completamente claro, especialmente para terceros, resulta útil identificar lo que no está en el alcance (por ejemplo, las actividades del departamento de recursos humanos).
                                 </p>
                                 <p>
                                     <h6 class="subtitulo">2. Comprenda la organización</h6>
                                     Cuando el alcance de un SGSI se define por la necesidad de proteger un activo en particular es importante entender primero los componentes del sistema y la estructura involucrada en la entrega de los servicios relevantes.
                                 </p>
                                 <p>
-                                    Esto puede incluir, por ejemplo, obtener diagramas de sistema que muestren los almacenamientos y flujos de datos y los sistemas de TI relevantes. El personal involucrado en la administración y entrega de todos los componentes del sistema probablemente será considerado "dentro del alcance". 
+                                    Esto puede incluir, por ejemplo, obtener diagramas de sistema que muestren los almacenamientos y flujos de datos y los sistemas de TI relevantes. El personal involucrado en la administración y entrega de todos los componentes del sistema probablemente será considerado "dentro del alcance".
                                 </p>
                                 <p>
                                     <h6 class="subtitulo">3. Asegurar el apoyo al alcance del SGSI</h6>
@@ -387,7 +387,7 @@ Objetivo del SGSI.
                                 </p>
                                 <p>
                                     <h6 class="subtitulo">4. Monitorear y revisar</h6>
-                                    El alcance de un SGSI, política, auditoría o proyecto no es estático y puede evolucionar con el tiempo a medida que se desarrollan las circunstancias, las amenazas, las tecnologías y los requisitos. Por lo tanto, el alcance no es algo que deba hacerse una vez al comienzo de un proyecto y luego se lo olvide. 
+                                    El alcance de un SGSI, política, auditoría o proyecto no es estático y puede evolucionar con el tiempo a medida que se desarrollan las circunstancias, las amenazas, las tecnologías y los requisitos. Por lo tanto, el alcance no es algo que deba hacerse una vez al comienzo de un proyecto y luego se lo olvide.
                                 </p>
                                 <p>
                                     El alcance del SGSI debe ser revisado a intervalos regulares o cuando haya cambios significativos estableciendo para ello dependencias de tiempo en el proyecto de seguridad que debería ser aplicable para un período de tiempo particular.
@@ -405,7 +405,7 @@ Objetivo del SGSI.
                                     </ul>
                                 </p>
                                 <p>
-                                    
+
                                 </p>
 
                             </div>
@@ -428,7 +428,7 @@ Objetivo del SGSI.
 
 <div class="card card-body text-black  fondo_secundario mb-3" align="justify">
 
-                               
+
                                La empresa debe establecer, implantar, mantener y mejorar continuamente un Sistema de Gestión de Seguridad de la Información, según a los requisitos de la norma ISO 27001 2013.
 
 
@@ -475,7 +475,7 @@ Objetivo del SGSI.
                                     Los controles para la seguridad de la información que se establezcan mediante la implantación de un sistema de gestión SGSI vendrán determinados por un análisis científico que permita evaluar cómo afectan a las necesidades de cada empresa las amenazas y riesgos de la seguridad de la información. Cada actividad y entorno en el que se desarrolla una actividad, así como el tamaño y dimensión de cada organización determinara los controles adecuados para cada organización.
                                 </p>
                                 <p>
-                                    Un sistema de Gestión SGSI basado en ISO 27001 también nos permitirá beneficiarnos de la adopción de las mejores prácticas del mercado y de la industria en todo el mundo para la seguridad de la información. 
+                                    Un sistema de Gestión SGSI basado en ISO 27001 también nos permitirá beneficiarnos de la adopción de las mejores prácticas del mercado y de la industria en todo el mundo para la seguridad de la información.
                                 </p>
                                 <p>
                                     <h6>4. Integración de sistemas de gestión</h6>
@@ -506,13 +506,11 @@ Objetivo del SGSI.
                                 </p>
                                 <p>
                                     <h6 class="subtitulo">2. ISO 27002 Guía de buenas prácticas para la implantación de un SGSI</h6>
-                                    ISO 27002 se trata más bien de una guía que nos proporciona los posibles controles o instrumentos de control previamente pensados y diseñados específicamente para abordar los problemas o peligros para la seguridad de la información. Los peligros para la seguridad de la información han de ser identificados durante un proceso de evaluación de riesgos formal, previsto en los requisitos de la norma ISO 27001.  
+                                    ISO 27002 se trata más bien de una guía que nos proporciona los posibles controles o instrumentos de control previamente pensados y diseñados específicamente para abordar los problemas o peligros para la seguridad de la información. Los peligros para la seguridad de la información han de ser identificados durante un proceso de evaluación de riesgos formal, previsto en los requisitos de la norma ISO 27001.
                                 </p>
 
                             </div>
-                            <div class="col-12 text-center fondo_secundario caja_botones">
-                                <a href="{{ route("admin.alcance-sgsis.index") }}" class="btn btn-info" role="button">Ejecutar</a>
-                            </div>
+      
                             <br>
                         </div>
                         <!--card-->
@@ -549,7 +547,7 @@ Objetivo del SGSI.
                     <li class="list-group-item nav-item color_dark">
                         <a class="nav-link" id="informacion-tab-rolesresp" data-toggle="tab" href="#informacion-rolesresp" role="tab" aria-controls="informacion-rolesresp" aria-selected="false"><span class="color_letra";">5.3 Roles y Responsabilidades</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                   
+
                 </ul>
 
             </div>
@@ -648,7 +646,7 @@ La alta dirección debe asegurarse de que las responsabilidades y autoridades pa
                         </div>
                         <!--card-->
                     </div>
-                    
+
                     <!--informacion-cinco-->
 
 
@@ -680,7 +678,7 @@ La alta dirección debe asegurarse de que las responsabilidades y autoridades pa
                     <li class="list-group-item nav-item color_dark">
                         <a class="nav-link" id="informacion-tab-tratamientoriesg" data-toggle="tab" href="#informacion-tratamientoriesg" role="tab" aria-controls="informacion-tratamientoriesg" aria-selected="false"><span class="color_letra";">6.2 Objetivos de Seguridad</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                   
+
 
                 </ul>
 
@@ -731,7 +729,7 @@ La alta dirección debe asegurarse de que las responsabilidades y autoridades pa
 
 <div class="card card-body text-black  fondo_secundario mb-3" align="justify">
 
-                          
+
 La empresa debe establecer los objetivos de seguridad de la información en las funciones y niveles pertinentes.Los objetivos de seguridad de la información:
 <br>a) Ser coherentes con la política de seguridad de la información
 <br>b) Ser medibles
@@ -763,7 +761,7 @@ La empresa debe establecer los objetivos de seguridad de la información en las 
                         <!--card-->
                     </div>
                     <!--informacion-tres-->
-                    
+
 
                     <!--informacion-cinco-->
 
@@ -1113,7 +1111,7 @@ La organización debe implantar el plan de tratamiento de riesgo de la seguridad
                     </div>
 
 
-                    
+
 
                     <li class="list-group-item nav-item color_dark">
                         <a class="nav-link  text-black" id="informacion-tab-segnaeva" data-toggle="tab" href="#informacion-segnaeva" role="tab" aria-controls="informacion-segnaeva" aria-selected="false"><span class="color_letra";"><span class="color_letra";">9.1 Seguimiento, medición, <br> análisis y evaluación</span></span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
