@@ -27,8 +27,20 @@
             events={!! json_encode($events) !!};
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
+                locale: 'es',
+                monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+                monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+                dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+                dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
                 events: events,
-
+                buttonText: {
+                next: '>',
+                nextYear: '>>',
+                prev: '<',
+                prevYear: '<<',
+                today:    'Hoy',
+                //today: moment().locale('es', {months : "Ene_Feb_Mar_Abr_May_Jun_Jul_Ago_Sep_Oct_Nov_Dic".split("_")}).format("MMMM YYYY"),
+                },
 
             })
         });
