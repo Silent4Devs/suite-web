@@ -47,17 +47,17 @@ class MyResetPassword extends Notification
     {
         
             return (new MailMessage)
-        ->subject('Restablecimiento de contraseña, TABANTAJ.')
+        ->subject('TABANTAJ: Restablecimiento de contraseña.')
         ->line([
             'Recibimos una solicitud de restablecimiento de contraseña para su cuenta.',
             ])
         ->line([
-            'Este enlace de restablecimiento de contraseña caducará en 60 minutos.',
+            'Este enlace caducará en 60 minutos.',
                     ])
         ->line([
             'En caso de cualquier duda, favor de contactar al equipo de soporte',
             'contacto@silent4business.com',
-            'Haga clic en el botón de abajo para restablecer su contraseña:',
+    
         ])
         ->line([
             
