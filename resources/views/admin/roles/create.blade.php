@@ -1,16 +1,17 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.role.title_singular') }}
-    </div>
+
+    <div class="card mt-4">
+        <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Rol </h3>
+        </div>
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.roles.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label class="required" for="title">{{ trans('cruds.role.fields.title') }}</label>
+                <label class="required" for="title"><i class="fas fa-briefcase iconos-crear"></i>{{ trans('cruds.role.fields.title') }}</label>
                 <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
                 @if($errors->has('title'))
                     <div class="invalid-feedback">
@@ -20,7 +21,7 @@
                 <span class="help-block">{{ trans('cruds.role.fields.title_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
+                <label class="required" for="permissions"><i class="fab fa-creative-commons-share iconos-crear"></i>{{ trans('cruds.role.fields.permissions') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>

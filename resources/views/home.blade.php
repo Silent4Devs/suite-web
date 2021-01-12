@@ -1,127 +1,230 @@
 @extends('layouts.admin')
 @section('content')
+
+<style>
+
+.tablac-titulos{
+
+ margin-top:-40px;
+ height:45px;
+ margin-left:250px;
+
+}
+
+.titulo_capacitacion{
+
+background-color:#0B0C0B;
+height:20px;
+ width:300px;
+
+}
+
+.titulo_incidente{
+  background-color:#0B0C0B;
+  height:20px;
+   width:300px;
+
+}
+
+	@media(max-width: 796px){
+    .tablac-titulos{
+
+      margin-left:150px;
+
+    }
+
+    .titulo_capacitacion{
+
+
+     width:150px;
+
+    }
+
+    .titulo_incidente{
+
+     width:160px;
+     height: 30px;
+     font-size:12px;
+    }
+
+
+  }
+</style>
 <div class="content">
     <div class="row">
         <div class="col-lg-12">
-            <div class="card mt-5">
-                <div class="col-md-12 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                    <h3 class="mb-2  text-center text-white"><strong>Tablero de Control</strong></h3>
+
+        <div class="card mt-5">
+            <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center "
+                 style="margin-top:-40px; ">
+                <h3 class="mb-2  text-center text-white"><strong>Tablero de Control</strong></h3>
+            </div>
+
+          <div class="row">
+              <div class="col-12">
+                  <div class="card diseño-caja" style="margin-left:30px;margin-right:30px; margin-top:80px;">
+                    <div class="card-body">
+
+                        <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos">
+                            <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Plan</strong></h4>
+                        </div>
+                        <div class="col-12 align-self-center" style="background-color:#0B0C0B;height:20px;">
+                        <h6 class="text-white text-center">PROGRESO GENERAL DEL PLAN</h6>
+                        </div>
+
+                        <div class="container">
+                            <div class="row align-items-start">
+
+                              <div class="col-lg-2 col-md-2 col-sm-2" style="margin-top:20px; " >
+                              <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/implementacions#plan-just">
+                                    Ver Plan >>
+                              </a>
+                              </div>
+
+                              <div class="col-lg-9 col-md-9 col-sm-9"  style="margin-top:20px; ">
+                                <canvas id="chartActividades"></canvas>
+                              </div>
+
+                          </div>
+                        </div>
+
+
+                  </div>
                 </div>
-              
-                <div class="container">
-                    <div class="row align-items-start">
-                        <div class="col-md-12 col-sm-6 py-1 card card-body bg-info align-self-center">
-                            <h3 class="mb-2  text-center text-white"><strong>Plan</strong></h3>
-                        </div>
-                        <div class="col-12 align-self-center">
-                        <h3>Progreso general del plan</h3>
-                        <canvas id="chartActividades"></canvas>
-                        <div class="col-lg-12">
-                        <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/implementacions#plan-just">
-                              VER PLAN >>
-            </a>
-           
-        </div>
-                        </div>
-                        <div class="row">
-                        </div>
-                    </div>
-                </div>
+              </div>
+            </div>
+
                 <div class="row nogap">
-       <div class="text-center col-md-6"><p>&nbsp;</p></div>
-       
-</div>
-                <div class="container ">
-                    <div class="row align-items-start">
-                        <div class="col-md-12 col-sm-6 py-1 card card-body bg-info align-self-center">
-                            <h3 class="mb-2  text-center text-white"><strong>Do</strong></h3>
-                        </div>
-                        <div class="col-4">
-                        <h3>Documentación</h3>
+                     <div class="text-center col-md-6"><p>&nbsp;</p></div>
+
+                </div>
+
+      <div class="row">
+          <div class="col-12">
+              <div class="card diseño-caja" style="margin-left:30px;margin-right:30px;">
+                <div class="card-body">
+
+                  <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos ">
+                      <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Do</strong></h4>
+                  </div>
+                      <div class="row">
+                        <div class="col-4" style="background-color:#0B0C0B;height:20px;">
+                          <h6 class="text-white text-center">DOCUMENTACIÓN</h6>
                         <canvas id="chartDocu" width="350" height="450"></canvas>
                         <div class="col-lg-12">
                         <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/carpeta">
-                              VER DETALLE >>
+                              Ver Detalle >>
                         </a>
                          </div>
                         </div>
-                        <div class="col-4">
-                        <h3>Capacitación</h3>
+                        <div class="col-4" >
+                            <h6  class="text-white text-center titulo_capacitacion">CAPACITACION</h6>
+
                         <canvas id="chartCapaci" width="350" height="450"></canvas>
-                        <div class="col-lg-12">
+                        <div class="col-lg-8">
                         <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/recursos">
-                              VER DETALLE >>
+                              Ver Detalle >>
                         </a>
                          </div>
                         </div>
-                        <div class="col-4">
-                        <h3>Incidentes de seguridad</h3>
+                        <div class="col-4" >
+                        <h6  class="text-white text-center titulo_incidente">INCIDENTES DE SEGURIDAD</h6>
                         <canvas id="incidentechart" width="350" height="450"></canvas>
                         <div class="col-lg-12">
                         <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/incidentes-de-seguridads">
-                              VER DETALLE >>
+                              Ver Detalle >>
                         </a>
                          </div>
                         </div>
                     </div>
                 </div>
+              </div>
+          </div>
+        </div>
+
                 <div class="row nogap">
        <div class="text-center col-md-6"><p>&nbsp;</p></div>
-       
+
 </div>
-                <div class="col-12" style="margin-top:20px; ">
-                    <div class="card-body">
-                        <div class="row">
-                          
-                                <div class="col-md-12 col-sm-6 py-1 card card-body bg-info align-self-center " style="margin-top:-40px; ">
-                                    <h3 class="mb-2  text-center text-white"><strong>Check</strong></h3>
-                                </div>
-                                <div class="col-12  mb-4">
-                            <canvas id="chartAuditoria" ></canvas>
-                            <div class="col-12 text-right mb-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card diseño-caja" style="margin-left:30px;margin-right:30px;">
+                  <div class="card-body">
+
+                      <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos">
+                          <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Check</strong></h4>
+                      </div>
+                      <div class="container">
+                          <div class="row align-items-start">
+
+                            <div class="col-4  mb-4">
                                  <a class="btn" style="background-color:#048c74;color:white;" href="admin/auditoria-anuals">
-                              VER DETALLE &nbsp;>>
+                              Ver Detalle &nbsp;>>
                                 </a>
-                         </div>
-                        </div>
-                          
+                            </div>
+
+                          <div class="col-7  mb-4">
+                              <canvas id="chartAuditoria" ></canvas>
+                          </div>
 
                         </div>
+                      </div>
+
                     </div>
+                  </div>
                 </div>
-                <div class="container">
-                    <div class="row align-items-start">
-                        <div class="col-md-12 col-sm-6 py-1 card card-body bg-info align-self-center">
-                            <h3 class="mb-2  text-center text-white"><strong>Act</strong></h3>
-                        </div>
-                        <div class="col-4 text-left row">
-                            <div class="text-value col-12 mb-4">{{ number_format($settings5['total_number']) }}
-                            {{ $settings5['chart_title'] }}</div>
-                            <br />
-                            <div class="text-value col-12 mb-4">{{ number_format($settings6['total_number']) }}
-                            {{ $settings6['chart_title'] }}</div>
-                            <br />
-                            <div class="col-12 text-left mb-4">
-                                 <a class="btn" style="background-color:#048c74;color:white;" href="admin/accion-correctivas">
-                              VER ACCION CORRECTIVA &nbsp;>>
-                                </a>
-                         </div>
-                         <div class="col-12 text-left mb-4">
-                        <a class="btn" style="background-color:#048c74;color:white;" href="admin/registromejoras">
-                              VER REGISTRO DE MEJORA >>
-                        </a>
-                         </div>
-                        </div>
-          
-                        <div class="col-8">
-                            <canvas id="myChart" width="0" height="300px"></canvas>
-                        </div>
+              </div>
+
+
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card diseño-caja" style="margin-left:30px;margin-right:30px;margin-top:50px;">
+                  <div class="card-body">
+
+                    <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos">
+                        <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Act</strong></h4>
                     </div>
-                </div>
-            </div>
+
+                    <div class="container">
+                        <div class="row align-items-start">
+
+                            <div class="col-4 text-left row">
+                                <div class="text-value col-12 mb-4">{{ number_format($settings5['total_number']) }}
+                                {{ $settings5['chart_title'] }}</div>
+                                <br />
+                                <div class="text-value col-12 mb-4">{{ number_format($settings6['total_number']) }}
+                                {{ $settings6['chart_title'] }}</div>
+                                <br />
+                                <div class="col-12 text-left mb-4">
+                                     <a class="btn" style="background-color:#048c74;color:white;" href="admin/accion-correctivas">
+                                  Ver Acción Correctiva &nbsp;>>
+                                    </a>
+                             </div>
+                             <div class="col-12 text-left mb-4">
+                            <a class="btn" style="background-color:#048c74;color:white;" href="admin/registromejoras">
+                                  Ver Registro de Mejora >>
+                            </a>
+                             </div>
+                            </div>
+
+
+
+                            <div class="col-8">
+                                <canvas id="myChart" width="0" height="300px"></canvas>
+                            </div>
+                      </div>
+                    </div>
+                 </div>
+              </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div><!--content-->
+    </div><!--row-->
+ </div><!--col-->
+
+
 @endsection
 @section('scripts')
 @parent
@@ -130,7 +233,7 @@
 <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js">
 </script>{!! $chart1->renderJs() !!}{!! $chart2->renderJs() !!}{!! $chart3->renderJs() !!}{!! $chart4->renderJs() !!}
 <script>
-  
+
 
         var ctx = document.getElementById("myChart").getContext('2d');
         var barChart2 = new Chart(ctx, {
@@ -246,7 +349,7 @@
                         borderWidth: 0,
                         borderColor: 'transparent',
                         pointBorderWidth: 0,
-                        
+
                         pointBackgroundColor: 'transparent',
                         pointHoverBackgroundColor: 'rgba(63,82,227,.8)',
                     },
@@ -287,8 +390,8 @@
 					        });
 					      }
 					    },
-    
-    } 
+
+    }
         });
 
     var canvasccap = document.getElementById("chartCapaci");
@@ -308,7 +411,7 @@
                 backgroundColor: [
                     'rgba(22, 160, 133, 0.6)',
                     'rgba(244, 208, 63, 0.6)',
-                    
+
                 ]
             }]
         }
@@ -336,12 +439,12 @@
                     'rgba(231, 76, 60, 0.6)',
                     'rgba(133, 193, 233 , 0.6)',
                     'rgba(43, 65, 233 , 0.6)',
-                    
+
                 ]
             }]
         }
     });
-	
+
 	var popCanvas1 = document.getElementById("chartActividades");
     var barChart1 = new Chart(popCanvas1, {
         type: 'doughnut',
@@ -381,11 +484,11 @@
                     'rgba(54, 162, 235, 0.6)',
                 ]
             }]
-            
+
         },
-  
-        
+
+
     });
-	
+
 </script>
 @endsection

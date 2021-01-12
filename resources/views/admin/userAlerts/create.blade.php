@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.userAlert.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Alerta de Usuario </h3>
     </div>
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.user-alerts.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label class="required" for="alert_text">{{ trans('cruds.userAlert.fields.alert_text') }}</label>
+                <label class="required" for="alert_text"><i class="fas fa-user-clock iconos-crear"></i>{{ trans('cruds.userAlert.fields.alert_text') }}</label>
                 <input class="form-control {{ $errors->has('alert_text') ? 'is-invalid' : '' }}" type="text" name="alert_text" id="alert_text" value="{{ old('alert_text', '') }}" required>
                 @if($errors->has('alert_text'))
                     <div class="invalid-feedback">
@@ -20,7 +20,7 @@
                 <span class="help-block">{{ trans('cruds.userAlert.fields.alert_text_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="alert_link">{{ trans('cruds.userAlert.fields.alert_link') }}</label>
+                <label for="alert_link"><i class="fas fa-user-clock iconos-crear"></i>{{ trans('cruds.userAlert.fields.alert_link') }}</label>
                 <input class="form-control {{ $errors->has('alert_link') ? 'is-invalid' : '' }}" type="text" name="alert_link" id="alert_link" value="{{ old('alert_link', '') }}">
                 @if($errors->has('alert_link'))
                     <div class="invalid-feedback">
@@ -30,7 +30,7 @@
                 <span class="help-block">{{ trans('cruds.userAlert.fields.alert_link_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="users">{{ trans('cruds.userAlert.fields.user') }}</label>
+                <label for="users"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.userAlert.fields.user') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>

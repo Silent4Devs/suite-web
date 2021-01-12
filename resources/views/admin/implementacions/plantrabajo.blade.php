@@ -1,26 +1,35 @@
 
 
-<div class="row">
+<div  style="margin-bottom: 10px; margin-left:10px; margin-top:20px; "class="row">
         <div class="col-lg-12">
-<a class="btn" style="background-color:#048c74;color:white;" href="admin/gantt'); }}">
+
+            <a class="btn" style="background-color:#048c74;color:white;" href="admin/gantt'); }}">
                 Cronograma
             </a>
         </div>
-        
+
 </div>
 @can('plan_base_actividade_create')
     <div style="margin-top:-30px; margin-right: 10px;" class="row text-right">
         <div class="col-lg-12">
-            <a  href="{{ route('admin.plan-base-actividades.create') }}">
-               
-                <i class="fas fa-plus-circle fa-3x" style="color:#048c74"></i>
+            <a  class="btn btn-success" href="{{ route('admin.plan-base-actividades.create') }}">
+
+                Agregar<strong>+</strong>
+            </a>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ route('admin.faq-questions.create') }}">
+                Agregar <strong>+</strong>
             </a>
         </div>
     </div>
 @endcan
-    
+
 <div class="card">
- 
+
 
     <div class="card-body">
         <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-PlanBaseActividade">
@@ -81,13 +90,13 @@
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                        
+
                         </select>
                     </td>
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                           
+
                         </select>
                     </td>
                     <td>
@@ -95,19 +104,19 @@
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                          
+
                         </select>
                     </td>
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                           
+
                         </select>
                     </td>
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                    
+
                         </select>
                     </td>
                     <td>

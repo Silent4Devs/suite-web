@@ -123,7 +123,7 @@
 		display: none;
 		width: 50px;
 		height: 50px;
-		right: 30px;		
+		right: 30px;
 		position: absolute;
 	}
 	.icono_cerrar{
@@ -214,12 +214,7 @@
 					<td>5578232000 Ext. 146</td>
 					<td>erika.rosales@silent4business.com</td>
 				</tr>
-				<tr>
-					<td>Jazmín Cardoso Piña</td>
-					<td>Consultor Estratégico Sr.</td>
-					<td>5578232000 Ext. 146</td>
-					<td>jazmin.cardoso@silent4business.com</td>
-				</tr>
+
 				<tr>
 					<td>Alejandro Said Pacheco Salas</td>
 					<td>Consultor Estratégico Jr.</td>

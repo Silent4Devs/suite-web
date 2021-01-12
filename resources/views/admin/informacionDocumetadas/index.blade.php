@@ -10,7 +10,7 @@
     <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.informacion-documetadas.create') }}">
-                  Agregar <strong>+<strong>
+                  Agregar <strong>+</strong>
             </a>
         </div>
     </div>
