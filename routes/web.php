@@ -99,6 +99,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Recursos
     Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
+    Route::post('recursos/media', 'RecursosController@storeMedia')->name('recursos.storeMedia');
+    Route::post('recursos/ckmedia', 'RecursosController@storeCKEditorImages')->name('recursos.storeCKEditorImages');
     Route::resource('recursos', 'RecursosController');
 
     // Competencia
@@ -346,7 +348,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
 
 
-/*Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
+Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
@@ -601,7 +603,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
 
 
-});*/
+
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
     // Two Factor Authentication
@@ -614,7 +616,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 
 Route::view('sitemap', 'admin.sitemap.index');
 Route::view('stepper', 'stepper');
-Route::view('admin/gantt', 'admin.gantt.index');
+Route::view('admin/gantt', 'admin.gantt.grap');
 //URL::forceScheme('https');
 
 

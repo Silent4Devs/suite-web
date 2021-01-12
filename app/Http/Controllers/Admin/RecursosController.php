@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRecursoRequest;
 use App\Http\Requests\StoreRecursoRequest;
 use App\Http\Requests\UpdateRecursoRequest;
@@ -11,11 +12,14 @@ use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class RecursosController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('recurso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -48,6 +52,7 @@ class RecursosController extends Controller
             $table->editColumn('cursoscapacitaciones', function ($row) {
                 return $row->cursoscapacitaciones ? $row->cursoscapacitaciones : "";
             });
+
             $table->editColumn('participantes', function ($row) {
                 $labels = [];
 
@@ -57,8 +62,24 @@ class RecursosController extends Controller
 
                 return implode(' ', $labels);
             });
+            $table->editColumn('instructor', function ($row) {
+                return $row->instructor ? $row->instructor : "";
+            });
+            $table->editColumn('certificado', function ($row) {
+                if (!$row->certificado) {
+                    return '';
+                }
 
-            $table->rawColumns(['actions', 'placeholder', 'participantes']);
+                $links = [];
+
+                foreach ($row->certificado as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'participantes', 'certificado']);
 
             return $table->make(true);
         }
@@ -83,6 +104,14 @@ class RecursosController extends Controller
         $recurso = Recurso::create($request->all());
         $recurso->participantes()->sync($request->input('participantes', []));
 
+        foreach ($request->input('certificado', []) as $file) {
+            $recurso->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificado');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $recurso->id]);
+        }
+
         return redirect()->route('admin.recursos.index');
     }
 
@@ -101,6 +130,22 @@ class RecursosController extends Controller
     {
         $recurso->update($request->all());
         $recurso->participantes()->sync($request->input('participantes', []));
+
+        if (count($recurso->certificado) > 0) {
+            foreach ($recurso->certificado as $media) {
+                if (!in_array($media->file_name, $request->input('certificado', []))) {
+                    $media->delete();
+                }
+            }
+        }
+
+        $media = $recurso->certificado->pluck('file_name')->toArray();
+
+        foreach ($request->input('certificado', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $recurso->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificado');
+            }
+        }
 
         return redirect()->route('admin.recursos.index');
     }
@@ -128,5 +173,17 @@ class RecursosController extends Controller
         Recurso::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('recurso_create') && Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new Recurso();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

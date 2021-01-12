@@ -1,0 +1,53 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\EstadoDocumento;
+
+
+class EstadodocumentosTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        //
+        $estadodoc = [
+            [
+                'id'                 => 1,
+                'estado'               => 'Publicados',
+                'descripcion'              => 'Publicados',
+           
+            ],
+            [
+                'id'                 => 2,
+                'estado'               => 'Aprobados',
+                'descripcion'              => 'Aprobados',
+           
+            ],
+            [
+                'id'                 => 3,
+                'estado'               => 'En revision',
+                'descripcion'              => 'En revisión',
+           
+            ],
+            [
+                'id'                 => 4,
+                'estado'               => 'Elaborado',
+                'descripcion'              => 'Elaborado',
+           
+            ],
+            [
+                'id'                 => 5,
+                'estado'               => 'No elaborado',
+                'descripcion'              => 'No elaborado',
+           
+            ],
+        ];
+        EstadoDocumento::insert($estadodoc);
+    }
+}

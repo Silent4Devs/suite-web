@@ -17,11 +17,19 @@ class StoreRecursoRequest extends FormRequest
     public function rules()
     {
         return [
+            'fecha_curso'     => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
             'participantes.*' => [
                 'integer',
             ],
             'participantes'   => [
                 'array',
+            ],
+            'instructor'      => [
+                'string',
+                'nullable',
             ],
         ];
     }

@@ -11,6 +11,8 @@ class CreateRecursosTable extends Migration
         Schema::create('recursos', function (Blueprint $table) {
             $table->increments('id');
             $table->longText('cursoscapacitaciones')->nullable();
+            $table->date('fecha_curso')->nullable();
+            $table->string('instructor')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

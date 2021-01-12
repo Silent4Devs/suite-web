@@ -109,7 +109,7 @@ return [
     'assigned_user'                        => 'Asignado(Usuario)',
     'attachment'                           => 'Archivo adjunto',
     'axis'                                 => 'Eje',
-    'back_to_list'                         => 'Cancelar',
+    'back_to_list'                         => 'Regresar',
     'basic_crm'                            => 'CRM básico',
     'budget'                               => 'Presupuesto',
     'calendar_sources'                     => 'Fuentes de calendario',

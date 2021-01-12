@@ -7,7 +7,7 @@
     table{
         width: 100%;
     }
-    
+
     table td{
         text-align: justify;
         padding: 10px;
@@ -75,7 +75,7 @@
 </style>
 
 
-<!--  
+<!--
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.glosarios.create') }}">
@@ -96,26 +96,30 @@
         <table id="dom" class="responsive-table" width="100%">
             <thead>
             <tr>
+                <th>No</th>
                 <th>Concepto</th>
                 <th>Definición</th>
                 <th>Explicación</th>
-                
+
             </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>3.1 Control de Acceso</td>
+                    <td>3.1 </td>
+                    <td>Control de Acceso</td>
                     <td>“medios para garantizar que el acceso a los activos esté autorizado y restringido según los requisitos comerciales y de seguridad”</td>
                     <td>El control de acceso es una forma de limitar el acceso a un sistema o a recursos físicos o virtuales. En sistemas de la información, el control de acceso es un proceso mediante el cual los usuarios obtienen acceso y ciertos privilegios a los sistemas, recursos o información.
                     En los sistemas de control de acceso, los usuarios deben presentar las credenciales antes de que se les pueda otorgar el acceso. En los sistemas físicos, estas credenciales pueden tener muchas formas, pero las credenciales que no se pueden transferir brindan la mayor seguridad.</td>
                 </tr>
                 <tr>
-                    <td>3.2 Ataque</td>
+                    <td>3.2</td>
+                    <td>Ataque</td>
                     <td>"Intentar destruir, exponer, alterar, deshabilitar, robar u obtener acceso no autorizado o hacer un uso no autorizado de un activo"</td>
                     <td>Los ataques cibernéticos son los mas comunes hoy en día. Un ciber ataque es un ataque contra un sistema informático, una red o una aplicación o dispositivo habilitado para Internet. Los piratas informáticos utilizan una variedad de herramientas para lanzar ataques, incluidos malware, ransomware , kits de explotación y otros métodos.</td>
                 </tr>
                 <tr>
-                    <td>3.3. Auditoría</td>
+                    <td>3.3.</td>
+                    <td>Auditoría</td>
                     <td>Proceso sistemático, independiente y documentado para obtener evidencia de auditoría y evaluarla objetivamente para determinar hasta qué punto se cumplen los criterios de auditoría.
 
                     Las auditorias pueden ser internas o externas
@@ -134,13 +138,15 @@
 
                 </tr>
                 <tr>
-                    <td>3.4 Alcance de Auditoría</td>
+                    <td>3.4 </td>
+                    <td>Alcance de Auditoría</td>
                     <td>Alcance y límites de una auditoría</td>
                     <td>El alcance de una auditoria generalmente incluye una descripción de las áreas físicas, unidades organizacionales, actividades y procesos, así como el periodo de tiempo cubierto</td>
-             
+
                 </tr>
                 <tr>
-                    <td>3.5 Autenticación</td>
+                    <td>3.5 </td>
+                    <td>Autenticación</td>
                     <td>"Garantía de que una característica reivindicada de una entidad es correcta"</td>
                     <td>En el contexto de los sistemas informáticos, la autenticación es un proceso que garantiza y confirma la identidad de un usuario. La autenticación es uno de los aspectos básicos en la seguridad de la informacion, junto con los tres pilares, a saber: la integridad, disponibilidad, y confidencialidad.
 
@@ -149,27 +155,30 @@
                     Una mejor forma de autenticación, la biométrica, depende de la presencia del usuario y la composición biológica (es decir, la retina o las huellas dactilares). Esta tecnología hace que sea más difícil para los piratas informáticos ingresar en los sistemas informáticos.
 
                     El método de autenticación de la infraestructura de clave pública (PKI) utiliza certificados digitales para probar la identidad de un usuario. También hay otras herramientas de autenticación, como tarjetas de claves y tokens USB. Una de las mayores amenazas de autenticación ocurre con el correo electrónico, donde la autenticidad suele ser difícil de verificar.</td>
-             
+
                 </tr>
                 <tr>
-                    <td>3.6 Autenticidad</td>
+                    <td>3.6</td>
+                    <td>Autenticidad</td>
                     <td>Propiedad que una entidad es lo que dice ser.</td>
                     <td>¿Qué es la autenticidad? ¿Qué entendemos por autenticidad en Seguridad de la Información? La autenticidad es la seguridad de que un mensaje, una transacción u otro intercambio de información proviene de la fuente de la que afirma ser. Autenticidad implica prueba de identidad.
 
                     Podemos verificar la autenticidad a través de la autenticación . El proceso de autenticación usualmente involucra más de una "prueba" de identidad (aunque una puede ser suficiente).
 
                     Asegurando la autenticidad. Para la interacción del usuario con los sistemas, programas y entre sí, la autenticación es fundamental. La entrada de ID de usuario y contraseña es el método de autenticación más frecuente. También parece presentar la mayoría de los problemas. Las contraseñas pueden ser robadas u olvidadas. Descifrar contraseñas puede ser simple para los hackers si las contraseñas no son lo suficientemente largas o no lo suficientemente complejas. Recordar docenas de contraseñas para docenas de aplicaciones puede ser frustrante para usuarios domésticos y usuarios empresariales</td>
-             
+
                 </tr>
                 <tr>
-                    <td>3.7 Disponibiidad</td>
+                    <td>3.7 </td>
+                    <td>Disponibiidad</td>
                     <td>Propiedad de ser accesible y utilizable a solicitud de una entidad autorizada</td>
                     <td>Los sistemas de almacenamiento de datos son los que en definitiva nos garantizan la disponibilidad de la información. El almacenamiento de datos por lo general puede ser local o en una instalación externa o en la nube. También pueden establecerse planes para garantizar la disponibilidad de la información en instalaciones externas cuando fallan los elementos de almacenamiento internos.
                     El caso es que la información debe estar disponible para en todo momento pero solo para aquellos con autorización para acceder a ella.</td>
-             
+
                 </tr>
                 <tr>
-                    <td>3.8 Medida Base</td>
+                    <td>3.8 </td>
+                    <td> Medida Base</td>
                     <td>Definida en términos de un atributo y el método para cuantificarlo.
                     Una medida base es funcionalmente independiente de otras medidas </td>
                     <td>Se ha realizado un trabajo considerable para desarrollar medidas e indicadores que puedan utilizarse para los resultados de los proyectos de desarrollo.
@@ -181,22 +190,24 @@
                     Un objetivo es el valor de un indicador que se espera alcanzar en un punto específico en el tiempo. A menudo se utiliza un punto de referencia para significar lo mismo.
                     Un índice es un conjunto de indicadores relacionados que pretenden proporcionar un medio para realizar comparaciones significativas y sistemáticas de desempeño entre programas que son similares en contenido y / o tienen las mismas metas y objetivos.
                     Un estándar es un conjunto de indicadores, puntos de referencia o índices relacionados que proporcionan información socialmente significativa con respecto al desempeño.</td>
-             
+
                 </tr>
-              
+
                 <tr>
-                    <td>3.9 Competencia</td>
+                    <td>3.9</td>
+                    <td>Competencia</td>
                     <td>Capacidad de aplicar conocimientos y habilidades para lograr los resultados esperados. </td>
                     <td>Hoy más que nunca, en el mundo interconectado y moderno se revela como algo absolutamente necesario, establecer requisitos en las competencias para los profesionales de seguridad de la información. Las peculiaridades del enfoque europeo para el desarrollo de las competencias profesionales de la seguridad de la información se discuten utilizando el ejemplo del Marco Europeo de Competencia Electrónica e-CF 3.0. Sobre esta base, se proponen dos incluso dos marcos específicos, si bien breves de contenido, como son las nuevas normas internacionales ISO / IEC 27021 e ISO / IEC 19896.
 
                     Por otro lado, la cultura corporativa de una organización influye en el comportamiento de los empleados y, en última instancia, contribuye a la efectividad de una organización. La información es un activo vital para la mayoría de las organizaciones. Por lo tanto, idealmente, una cultura corporativa debe incorporar controles de seguridad de la información en las rutinas diarias y el comportamiento implícito de los empleados.
 
                     Sin duda el nivel de madurez de la “competencia “en seguridad de la información es un posible método para evaluar en qué medida la seguridad de la información está incorporada en la cultura corporativa actual de una organización.</td>
-                         
+
                 </tr>
 
                 <tr>
-                    <td>3.10 Confidencialidad</td>
+                    <td>3.10</td>
+                    <td>Confidencialidad</td>
                     <td>Propiedad por la que la información no se pone a disposición o se divulga a personas, entidades o procesos no autorizados </td>
                     <td>La confidencialidad, cuando nos referimos a sistemas de información, permite a los usuarios autorizados acceder a datos confidenciales y protegidos. Existen mecanismos específicos garantizan la confidencialidad y salvaguardan los datos de intrusos no deseados o que van a causar daño.
 
@@ -211,10 +222,11 @@
                     * Un proceso de autenticación, que garantiza que a los usuarios autorizados se les asignen identificaciones de usuario y contraseñas confidenciales. Otro tipo de autenticación es la biométrica.
                     * Se pueden emplear métodos de seguridad basados en roles para garantizar la autorización del usuario o del espectador. Por ejemplo, los niveles de acceso a los datos pueden asignarse al personal del departamento específico.
                     * Los controles de acceso aseguran que las acciones del usuario permanezcan dentro de sus roles. Por ejemplo, si un usuario está autorizado para leer pero no escribir datos, los controles del sistema definidos pueden integrarse.</td>
-             
+
                 </tr>
                 <tr>
-                    <td>3.11 Conformidad</td>
+                    <td>3.11</td>
+                    <td>Conformidad</td>
                     <td>Cumplimiento de un requisito </td>
                     <td>La conformidad es el “cumplimiento de un requisito”. Cumplir significa cumplir o cumplir con los requisitos. Hay muchos tipos de requisitos. Existen requisitos de calidad, requisitos del cliente, requisitos del producto, requisitos de gestión, requisitos legales, requisitos de la seguridad de la información etc. Los requisitos pueden especificarse explícitamente (como los requisitos de la norma ISO 27001) o estar implícitos. Un requisito específico es uno que se ha establecido (en un documento, por ejemplo la política de seguridad o de uso del correo electrónico). Cuando su organización cumple con un requisito, puede decir que cumple con ese requisito.
 
@@ -227,15 +239,16 @@
                     No conformidad Mayor: cualquier no conformidad que no sea crítica, que puede dar lugar a fallas o reducir sustancialmente la seguridad de la información, la capacidad de uso del producto para el propósito previsto y que no pueda ser completamente eliminada por medidas correctivas o reducido a una no conformidad menor por un un control establecido.
 
                     No conformidad crítica: cualquier no conformidad sobre la seguridad de la información que pueda causar daño a las personas, su imagen o su reputación, tanto las que usan, mantienen o dependen del producto, o aquellas que impiden el desempeño de procesos críticos para la organización.</td>
-             
+
                 </tr>
 
                 <tr>
-                    <td>3.12 Consecuencia</td>
+                    <td>3.12 </td>
+                    <td>Consecuencia</td>
                     <td>Resultado de un evento que afecta a los objetivos </td>
                     <td>Como vemos las consecuencias son algo relacionado con los eventos y los objetivos de la seguridad de la información.
 
-                    EVENTOS  
+                    EVENTOS
 
                     Un evento en la seguridad de la información es un cambio en las operaciones diarias de una red o servicio de tecnología de la información que indica que una política de seguridad puede haber sido violada o que un control de seguridad puede haber fallado.
 
@@ -280,11 +293,12 @@
                     Confidencialidad los datos y la información son revelados solamente a aquellos que tienen derecho a saber de ella
                     La Integridad los datos y la información están protegidos contra modificaciones no autorizadas (integridad).
                     La prioridad relativa y la importancia de la disponibilidad, la confidencialidad y la integridad varían de acuerdo con los datos y su clasificación dentro del sistema de información y el contexto empresarial en el que se utiliza.</td>
-             
+
                 </tr>
 
                 <tr>
-                    <td>3.13 Mejora Continua</td>
+                    <td>3.13 </td>
+                    <td>Mejora Continua</td>
                     <td>Actividad recurrente para mejorar el rendimiento </td>
                     <td>Si la mejora se define como acciones que se traducen en una mejora de los resultados, entonces la mejora continua es simplemente identificar y realizar cambios enfocados a conseguir la mejora del rendimiento y resultados de una organización. La mejora continua es un concepto que es fundamental para las teorías y programas de gestión de la calidad y de la seguridad de la información. La mejora continua es clave para la gestión de la seguridad de la Información
 
@@ -301,10 +315,11 @@
                     Mejorar la seguridad requiere algo más que arreglar lo que está roto. Requiere medir la efectividad de las operaciones de seguridad; Tecnología, personas y procesos. La evaluación continua de los controles de seguridad definidos y la medición de los resultados a lo largo del tiempo crea un marco para medir las operaciones de seguridad.
 
                     Establecer la expectativa de que la mejora es el objetivo, dará como resultado una mejor seguridad.</td>
-             
+
                 </tr>
                  <tr>
-                    <td>3.14 Control</td>
+                    <td>3.14</td>
+                    <td>Control</td>
                     <td>Medida que modifica un riesgo.</td>
                     <td>Los controles de seguridad son medidas de seguridad técnicas o administrativas para evitar, contrarrestar o minimizar la pérdida o falta de disponibilidad debido a las amenazas que actúan por una vulnerabilidad asociada a la amenaza. En esto consiste un riesgo de seguridad.
 
@@ -325,11 +340,12 @@
                     Controles preventivos para evitar que la amenaza entre en contacto con la debilidad.
                     Controles de detección para identificar que la amenaza ha aterrizado en nuestros sistemas.
                     Controles correctivos para mitigar o disminuir los efectos de la amenaza que se manifiesta.</td>
-             
+
                 </tr>
 
                 <tr>
-                    <td>3.15 Objetivo de Control</td>
+                    <td>3.15 </td>
+                    <td>Objetivo de Control</td>
                     <td>Declaración que describe lo que se debe lograr como resultado de la implementación de controles (3.14)</td>
                     <td>Este concepto hace posible cumplir con la filosofía de la norma ISO 27001 donde la base de la misma se encuentra el ciclo PDCA donde se hace imprescindible conocer y averiguar hasta qué punto se alcanzan los objetivos
 
@@ -344,11 +360,12 @@
                     Objetivos medibles para los procesos de Gestión de Seguridad de la Información y en general para todo el SGSI
                     Objetivos para los controles de seguridad
                     Esto no quita que podamos definir objetivos a otros niveles como departamentos, personales etc.</td>
-             
+
                 </tr>
 
                 <tr>
-                    <td>3.16 Corrección</td>
+                    <td>3.16</td>
+                    <td>Corrección</td>
                     <td>Acción para eliminar una no conformidad detectada</td>
                     <td>Una no conformidad es cualquier incumplimiento de un requisito. VEASE 3.11
 
@@ -359,28 +376,31 @@
                     Corregir una no conformidad tratando las consecuencias inmediatas
                     Determinar las causas de la no conformidad para eliminarlas mediante una acción correctiva de forma que ya no se vuelva a producir
                     En este sentido una correccción se define como la acción tomada para evitar las consecuencias inmediatas de una no conformidad.</td>
-             
+
                 </tr>
 
                  <tr>
-                    <td>3.17 Acción Correctiva</td>
+                   <td>3.17 </td>
+                    <td>Acción Correctiva</td>
                     <td>Acción para eliminar la causa de una no conformidad y para prevenir la recurrencia.</td>
                     <td>Una acción correctiva se define como la acción tomada para evitar la repetición de una no conformidad mediante la identificación y tratamiento de las causas que la provocaron.</td>
-             
+
                 </tr>
 
                 <tr>
-                    <td>3.18 Medida Derivada</td>
+                    <td>3.18 </td>
+                    <td>Medida Derivada</td>
                     <td>Medida (3.42) que se define como una función de dos o más valores de medidas base (3.8)</td>
                     <td>Las medidas o indicadores derivados son aquellos que se establecen en base a otro indicador existente. Los indicadores derivados normalmente se refieren a:
 
                     Fórmulas de Cálculo como los subtotales o funciones de agregación dinámica de datos como son los datos pre-calculados como por ejemplo sumas continuas etc.
                     Datos o indicadores y de funciones sin agregación dinámica intrínseca o propia como pueden ser cálculos de promedios o conteo de ocurrencias de la variable o medida base.</td>
-             
+
                 </tr>
 
                 <tr>
-                    <td>3.19 Información Documentada</td>
+                    <td>3.19</td>
+                    <td>Información Documentada</td>
                     <td>Se refiere a la información necesaria que una organización debe controlar y mantener actualizada tomando en cuenta y el soporte en que se encuentra. La información documentada puede estar en cualquier formato (audio, video, ficheros de texto etc.) así como en cualquier tipo de soporte o medio independientemente de la fuente de dicha información. En general la información documentada se refiere a:
 
                     * Al sistema de gestión y sus procesos
@@ -393,11 +413,12 @@
                     A veces una estructura demasiado compleja con distintos niveles de información y accesos diferenciados puede no ser necesaria y complicar las cosas innecesariamente
 
                     Nuestra experiencia nos enseña que la mayoría de las veces basta con una buena asesoría de implementación en Sistemas de Gestión para organizar la información de acuerdo a lo que la organización necesita y que diseñas un sistema propio de gestión documental puede resultar costoso y un gasto de tiempo y recursos que no siempre es necesario.</td>
-             
+
                 </tr>
 
                 <tr>
-                    <td>3.20 Efectividad</td>
+                    <td>3.20 </td>
+                    <td>Efectividad</td>
                     <td>En qué medida se realizan las actividades planificadas y se logran los resultados planificados.</td>
                     <td>Un sistema de Gestión para la seguridad de la información es un conjunto de elementos interrelacionados entre sí mediante las múltiples actividades de la organización. Cada actividad definida por un proceso tendrá una o varias entradas así como salidas, necesarias por lo demás para su control. Todas las salidas de los procesos estarán enfocadas a la consecución de los objetivos de la seguridad de la información de la organización. La eficacia por tanto es la medida en que los procesos contribuyen a la consecución de los objetivos de la Seguridad de la Información. En el caso la eficacia de los procesos se medirá en el orden en que contribuyen a la consecución de los objetivos de seguridad de la información
 
@@ -406,11 +427,12 @@
                     De manera similar, los resultados planificados son efectivos si estos resultados se logran realmente.
 
                     La efectividad consiste en hacer lo planificado, completar las actividades y alcanzar los objetivos.</td>
-             
+
                 </tr>
 
                 <tr>
-                    <td>3.21 Evento</td>
+                    <td>3.21</td>
+                    <td>Evento</td>
                     <td>Ocurrencia o cambio de un conjunto particular de circunstancias
 
                     Un evento puede ser repetitivo y puede tener varias causas.
@@ -425,11 +447,12 @@
                     Un incidente de seguridad es un evento de seguridad que provoca daños como la pérdida de datos. Los incidentes también pueden incluir eventos que no implican daños, pero son riesgos viables. Por ejemplo, un empleado que hace clic en un enlace en un correo electrónico no deseado que lo hizo a través de los filtros puede ser visto como un incidente.
 
                     Los eventos de seguridad pasan en su mayoría inadvertidos para los usuarios. En el momento que los usuarios detectan actividad sospechosa, normalmente se recomienda que se reporte como un incidente.</td>
-             
+
                 </tr>
 
                 <tr>
-                    <td>3.22 Contexto Externo</td>
+                    <td>3.22 </td>
+                    <td>Contexto Externo</td>
                     <td>Entorno externo en el que la organización busca alcanzar sus objetivos el contexto externo puede incluir :
 
                     El entorno cultural, social, político, jurídico, reglamentario, financiero, tecnológico, económico, natural y competitivo, ya sea internacional, nacional, regional o local;
@@ -447,33 +470,12 @@
                     Los factores tecnológicos incluyendo sistemas informáticos, avances o limitaciones tecnológicas, inteligencia artificial, robótica, automatización, incentivos tecnológicos, la tasa de cambio tecnológico, investigación y desarrollo, etc.
                     Jurídico – Cuestiones legislativas o reglamentarias y sensibilidades.
                     Los factores ambientales incluyen el clima global, regional y local, el clima adverso, los peligros naturales, los desechos peligrosos y las tendencias relacionadas.</td>
-                         
+
                 </tr>
 
                 <tr>
-                    <td>3.22 Contexto Externo</td>
-                    <td>Entorno externo en el que la organización busca alcanzar sus objetivos el contexto externo puede incluir :
-
-                    El entorno cultural, social, político, jurídico, reglamentario, financiero, tecnológico, económico, natural y competitivo, ya sea internacional, nacional, regional o local;
-                    Influencias y tendencias clave que tienen impacto en los objetivos de la organización
-                    los valores de actores externos y como es percibida la organización (sus relaciones con el entorno externo)</td>
-                    <td>Para definir correctamente el contexto externo podríamos comenzar por un análisis del entorno centrándonos en aquellos factores que podrían afectar a la organización o que están relacionados con las actividades y objetivos de la organización.
-
-                    El proceso de definición del contexto externo no es un proceso que se realiza una sola vez y ya hemos terminado, sino que necesitamos controlar en todo momento los cambios en los entornos externos, y tener en cuenta los puntos de vista de las partes interesadas.
-
-                    También podemos investigar el entorno externo de forma sistemática. Un enfoque simple para realizar esta tareas seria comenzar con una lista de puntos en torno a los siguientes factores, que luego pueden desarrollarse:
-
-                    Los factores políticos son la medida en que los gobiernos o las influencias políticas pueden impactar o impulsar las tendencias o culturas globales, regionales, nacionales, locales y comunitarias. Pueden incluir estabilidad política, política exterior, prácticas comerciales y relaciones laborales.
-                    Los factores económicos incluyen tendencias y factores globales, nacionales y locales, mercados financieros, ciclos crediticios, crecimiento económico, tasas de interés, tasas de cambio, tasas de inflación y costo de capital.
-                    Los factores sociales incluyen cultura, conciencia de salud, demografía, educación, crecimiento de la población, actitudes profesionales y énfasis en la seguridad.
-                    Los factores tecnológicos incluyendo sistemas informáticos, avances o limitaciones tecnológicas, inteligencia artificial, robótica, automatización, incentivos tecnológicos, la tasa de cambio tecnológico, investigación y desarrollo, etc.
-                    Jurídico – Cuestiones legislativas o reglamentarias y sensibilidades.
-                    Los factores ambientales incluyen el clima global, regional y local, el clima adverso, los peligros naturales, los desechos peligrosos y las tendencias relacionadas.</td>
-                         
-                </tr>
-
-                <tr>
-                    <td>3.23 Gobernanza de la Seguridad de la Información</td>
+                    <td>3.23 </td>
+                    <td>Gobernanza de la Seguridad de la Información</td>
                     <td>Sistema por el cual las actividades de seguridad de la información de una organización son dirigidas y controladas.</td>
                     <td>El gobierno de la seguridad de la información es la estrategia de una empresa para reducir el riesgo de acceso no autorizado a los sistemas y datos de tecnología de la información.
 
@@ -486,11 +488,12 @@
                     El desarrollo y el mantenimiento de la gobernanza de la seguridad de la información pueden requerís la realización de pruebas de análisis de amenazas, vulnerabilidades y riesgos que son específicas para la industria de la empresa.
 
                     El gobierno de la seguridad de la información también se refiere a la estrategia de la empresa para reducir la posibilidad de que los activos físicos que son propiedad de la empresa puedan ser robados o dañados. En este contexto, el gobierno de la seguridad incluye barreras físicas, cerraduras, sistemas de cercado y respuesta a incendios, así como sistemas de iluminación, detección de intrusos, alarmas y cámaras.</td>
-                         
+
                 </tr>
 
                 <tr>
-                    <td>3.24 Órgano Rector</td>
+                    <td>3.24 </td>
+                    <td>Órgano Rector</td>
                     <td>Persona o grupo de personas que son responsables del desempeño de la organización. El órgano rector puede ser una junta directiva o consejo de administración. </td>
                     <td>En el caso de la seguridad de la información el órgano rector será el responsable del desempeño o el resultado del sistema de gestión de la seguridad de la información. EN definitiva, el órgano rector tendrá la responsabilidad de rendir cuentas del rendimiento del sistema de gestión de la seguridad de la información
 
@@ -499,11 +502,12 @@
                     El problema al que nos enfrentamos es bastante más frecuente de lo que imaginamos. Basta pensar que en la actualidad simplemente cuesta aun encontrar una reunión del consejo de administración de una gran empresa, dedicado a los riesgos de tecnología de la información y las estrategias para abordar los riesgos.
 
                     Es por ello que la norma insiste en dedicar todo un capítulo de LIDERAZGO a dejar claro que la responsabilidad de impulsar y mantener el sistema de gestión para la seguridad de la información reside en los órganos rectores de cada organización.</td>
-                         
+
                 </tr>
 
                 <tr>
-                    <td>3.25 Indicador</td>
+                    <td>3.25</td>
+                    <td>Indicador</td>
                     <td>Medida que proporciona una estimación o evaluación.</td>
                     <td>Los indicadores para la evaluación de la seguridad de la información a menudo sirven como evidencia forense de posibles intrusiones en un sistema o red host.
 
@@ -527,7 +531,8 @@
                 </tr>
 
                 <tr>
-                    <td>3.26 Necesidad de Información</td>
+                    <td>3.26 </td>
+                    <td>Necesidad de Información</td>
                     <td>Conocimiento necesario para gestionar objetivos, riesgos y problemas.</td>
                     <td>Este es un concepto relacionado con el desarrollo de procesos de medición que determinen qué información de medición se requiere, cómo se deben aplicar las medidas y los resultados del análisis, y cómo determinar si los resultados del análisis son válidos más que nada en escenarios aplicables a las disciplinas de ingeniería y gestión de sistemas y software.
 
@@ -537,7 +542,8 @@
                 </tr>
 
                 <tr>
-                    <td>3.27 Instalaciones de Procesamiento de Información</td>
+                    <td>3.27</td>
+                    <td>Instalaciones de Procesamiento de Información</td>
                     <td>Cualquier sistema de procesamiento de información, servicio o infraestructura, o la ubicación física que lo alberga.</td>
                     <td>Las instalaciones de procesamiento de información en una empresa, deben ser consideradas como un activo de información que es necesario alcanzar las metas y objetivos de la organización
 
@@ -547,7 +553,8 @@
                 </tr>
 
                 <tr>
-                    <td>3.28 Seguridad de la Información</td>
+                    <td>3.28 </td>
+                    <td>Seguridad de la Información</td>
                     <td>Preservación de la confidencialidad, integridad y disponibilidad de la información
 
                     Además hay que considerar otras propiedades, como la autenticidad, la responsabilidad, el no repudio y la confiabilidad también pueden estar involucrados.</td>
@@ -563,7 +570,8 @@
                 </tr>
 
                 <tr>
-                    <td>3.29 Continuidad de la Seguridad de la Información</td>
+                    <td>3.29 </td>
+                    <td>Continuidad de la Seguridad de la Información</td>
                     <td>Procesos y procedimientos para garantizar la continuidad de las operaciones de seguridad de la información</td>
                     <td>El termino continuidad de la seguridad de la información se utiliza dentro de la norma ISO 27001 para describir el proceso que garantice la confidencialidad, integridad y disponibilidad de la información cuando un incidente ocurre o una amenaza se materializa.
 
@@ -579,7 +587,8 @@
                 </tr>
 
                 <tr>
-                    <td>3.30 Evento de Seguridad de la Información</td>
+                    <td>3.30 </td>
+                    <td>Evento de Seguridad de la Información</td>
                     <td>Ocurrencia identificada de un sistema, servicio o estado de red que indica un posible incumplimiento de la política de seguridad de la información o falla de los controles o una situación desconocida que puede ser relevante para la seguridad.</td>
                     <td>Podríamos considerar como un evento en la seguridad de la información a cualquier cambio observado en el comportamiento normal de un sistema de información, entorno, proceso, flujo de trabajo o persona y que pueda afectar a la seguridad de la información. Por ejemplo: si se encuentran modificaciones en las listas de control de acceso para un router o modificaciones en las reglas de configuración de un firewall.
 
@@ -587,23 +596,8 @@
                 </tr>
 
                 <tr>
-                    <td>3.31 Incidente de Seguridad de la Información</td>
-                    <td>Un evento o una serie de eventos de seguridad de la información no deseados o inesperados que tienen una probabilidad significativa de comprometer las operaciones comerciales y amenazar la seguridad de la información.</td>
-                    <td>Un incidente de seguridad de la información puede definirse también como cualquier evento que tenga el potencial de afectar la preservación de la confidencialidad, integridad, disponibilidad o valor de la información
-
-                    Aquí les dejamos una lista con varios ejemplos típicos de incidentes en la seguridad de la información:
-
-                    Revelación no autorizada o accidental de información clasificada o sensible; p.ej. envió de un correo electrónico que contiene información confidencial o clasificada enviada a destinatarios incorrectos.
-                    Robo o pérdida de información clasificada o sensible; p.ej. copia impresa de clasificados o sensibles
-                    Información robada de un maletín olvidado en un restaurante o perdido
-                    Modificación no autorizada de información clasificada o sensible; p.ej. alterando copia maestra de registro de estudiante o personal
-                    Robo o pérdida de equipo que contiene información clasificada o sensible; p.ej. ordenador portátil que contiene información confidencial o clasificada
-                    Acceso no autorizado a los sistemas de información de la Organización; p.ej. Ejemplo de virus, malware, ataque de denegación de servicio.
-                    Acceso no autorizado a áreas que contienen equipo de TI que almacena información confidencial o confidencial; p.ej. entrada no autorizada en un centro de datos o salas de control de la red informática.</td>
-                </tr>
-
-                <tr>
-                    <td>3.31 Incidente de Seguridad de la Información</td>
+                    <td>3.31</td>
+                    <td>Incidente de Seguridad de la Información</td>
                     <td>Un evento o una serie de eventos de seguridad de la información no deseados o inesperados que tienen una probabilidad significativa de comprometer las operaciones comerciales y amenazar la seguridad de la información.</td>
                     <td>Un incidente de seguridad de la información puede definirse también como cualquier evento que tenga el potencial de afectar la preservación de la confidencialidad, integridad, disponibilidad o valor de la información
 
@@ -619,8 +613,11 @@
                 </tr>
 
 
+
+
                 <tr>
-                    <td>3.32 Gestión de Incidentes de Seguridad de a Información</td>
+                    <td>3.32</td>
+                    <td>Gestión de Incidentes de Seguridad de a Información</td>
                     <td>Conjunto de procesos para detectar, informar, evaluar, responder, tratar y aprender de los incidentes de seguridad de la información.</td>
                     <td>El conjunto de procesos para tratar los incidentes de la seguridad de la información debe
 

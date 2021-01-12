@@ -1200,6 +1200,86 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 298,
+                'title' => 'gap_uno_create',
+            ],
+            [
+                'id'    => 299,
+                'title' => 'gap_uno_edit',
+            ],
+            [
+                'id'    => 300,
+                'title' => 'gap_uno_show',
+            ],
+            [
+                'id'    => 301,
+                'title' => 'gap_uno_delete',
+            ],
+            [
+                'id'    => 302,
+                'title' => 'gap_uno_access',
+            ],
+            [
+                'id'    => 303,
+                'title' => 'gap_do_create',
+            ],
+            [
+                'id'    => 304,
+                'title' => 'gap_do_edit',
+            ],
+            [
+                'id'    => 305,
+                'title' => 'gap_do_show',
+            ],
+            [
+                'id'    => 306,
+                'title' => 'gap_do_delete',
+            ],
+            [
+                'id'    => 307,
+                'title' => 'gap_do_access',
+            ],
+            [
+                'id'    => 308,
+                'title' => 'gap_tre_create',
+            ],
+            [
+                'id'    => 309,
+                'title' => 'gap_tre_edit',
+            ],
+            [
+                'id'    => 310,
+                'title' => 'gap_tre_show',
+            ],
+            [
+                'id'    => 311,
+                'title' => 'gap_tre_delete',
+            ],
+            [
+                'id'    => 312,
+                'title' => 'gap_tre_access',
+            ],
+            [
+                'id'    => 313,
+                'title' => 'lista_de_verificacion_access',
+            ],
+            [
+                'id'    => 314,
+                'title' => 'control_documento_create',
+            ],
+            [
+                'id'    => 315,
+                'title' => 'control_documento_edit',
+            ],
+            [
+                'id'    => 316,
+                'title' => 'control_documento_delete',
+            ],
+            [
+                'id'    => 317,
+                'title' => 'control_documento_access',
+            ],
+            [
+                'id'    => 318,
                 'title' => 'profile_password_edit',
             ],
         ];

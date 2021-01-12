@@ -11,14 +11,14 @@
     <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.recursos.create') }}">
-              Agregar <strong>+<strong>
+              Agregar <strong>+</strong>
             </a>
         </div>
     </div>
 @endcan
 
 
-    <div class="card-body">
+<div class="card-body">
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Recurso">
             <thead>
                 <tr>
@@ -32,7 +32,16 @@
                         {{ trans('cruds.recurso.fields.cursoscapacitaciones') }}
                     </th>
                     <th>
+                        {{ trans('cruds.recurso.fields.fecha_curso') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.recurso.fields.participantes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.recurso.fields.instructor') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.recurso.fields.certificado') }}
                     </th>
                     <th>
                         &nbsp;
@@ -48,12 +57,19 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                    </td>
+                    <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($users as $key => $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                     <td>
                     </td>
@@ -112,7 +128,10 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'cursoscapacitaciones', name: 'cursoscapacitaciones' },
+{ data: 'fecha_curso', name: 'fecha_curso' },
 { data: 'participantes', name: 'participantes.name' },
+{ data: 'instructor', name: 'instructor' },
+{ data: 'certificado', name: 'certificado', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -124,14 +143,28 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  $('.datatable thead').on('input', '.search', function () {
+  
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
       let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
       table
-        .column($(this).parent().index())
+        .column(index)
         .search(value, strict)
         .draw()
   });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 });
 
 </script>

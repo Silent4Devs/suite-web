@@ -73,7 +73,7 @@
 			 El administrador del sistema aprobará su solicitud en un lapso de 48 horas y se le notificará a través de su correo electrónico.
 		</p>
 		<div class="caja_btn">
-			<a href="{{ url("/welcome") }}">
+			<a href="{{ url("/login") }}">
 				<div class="btn">
 					Inicio
 				</div>
