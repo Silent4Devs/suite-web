@@ -64,11 +64,12 @@
         border-color: rgba(0,0,0,0);
     }
 
-    .active, .c-active{
+
+
+    #sidebar .active, #sidebar .c-active{
             position: relative;
-            color: #fff;
     }
-    .active:before, .c-active:before{
+    #sidebar .active:before, #sidebar .c-active:before{
         content: "";
         background: #380caf;
         z-index: -1;
@@ -78,14 +79,14 @@
         left: 0;
         position: absolute;
     }
-    a.active font, a.c-active font, a.c-active .letra_blanca{
+    #sidebar a.active font, #sidebar a.c-active font, #sidebar a.c-active .letra_blanca{
         color: #fff;
     }
 
-    li a:hover font{
+    #sidebar li a:hover font{
         color: #fff;
     }
-    li a:hover .letra_blanca{
+    #sidebar li a:hover .letra_blanca{
         color: #fff;
     }
 

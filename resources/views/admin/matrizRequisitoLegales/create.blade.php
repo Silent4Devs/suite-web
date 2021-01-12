@@ -9,7 +9,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.matriz-requisito-legales.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group col-sm-12">
+            <div class="form-group col-12">
                 <label class="required" for="nombrerequisito"> <i class="fas fa-clipboard-list iconos-crear"></i> {{ trans('cruds.matrizRequisitoLegale.fields.nombrerequisito') }}</label>
                 <input class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }}" type="text" name="nombrerequisito" id="nombrerequisito" value="{{ old('nombrerequisito', '') }}" required>
                 @if($errors->has('nombrerequisito'))

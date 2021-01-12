@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Silent4business</title>
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" type="text/css" href="css/reportes.css">
+
+	<script defer src="js/all.min.js"></script><!-- icons -->
+	<script src="jquery/libreria.js"></script>
+</head>
+<body>
+	<header>
+		<h1>Silent4business</h1>
+	</header>
+	<nav>
+		<a href="index.html"><img src="img/logo_silent.png"></a>
+		
+		<a href="simulador.html"><div class="opcion" style="border-top: 1px solid #fff;"><div class="icono"><i class="fas fa-virus"></i></div>Simulador</div></a>
+		<a href="reportes.html"><div class="opcion"><div class="icono"><i class="fas fa-chart-bar"></i></div>Reportes</div></a>
+		<a href="comparativo.html"><div class="opcion"><div class="icono"><i class="fas fa-balance-scale"></i></div>Comparativos</div></a>
+		<a href="glosario.html"><div class="opcion"><div class="icono"><i class="fas fa-book-open"></i></div>Glosario</div></a>
+		<a href="historial.html"><div class="opcion"><div class="icono"><i class="fas fa-file-alt"></i></div>Historial</div></a>
+	</nav>
+
+
+	<div class="contenido">
+		<h1>Reportes</h1>
+		
+		<div class="caja3">
+			<div class="estado">
+				<label>Estado de Ataque:</label>
+				<textarea>Equipo Vulnerado</textarea>
+			</div>
+
+			<div class="vulnerable">
+				<label>% Vulnerabilidad</label>
+				<div class="barraVulnerable">0%</div>
+			</div>
+
+			<div class="indicadores">
+				<label>Indicadores de Compromiso</label>
+				<textarea></textarea>
+			</div>
+
+			<div class="reporte">
+				<label>Reporte de Ataque</label>
+				<div class="reporteGraficas">
+					<img src="img/graficas.png">
+				</div>
+			</div>
+
+			<input type="submit" name="descarga" value="Descarga Reporte" class="boton" id="descarga">
+		</div>
+		
+	</div>
+	<footer>
+		
+	</footer>
+</body>
+</html>
