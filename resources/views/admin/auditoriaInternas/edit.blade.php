@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.auditoriaInterna.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Auditoría Interna </h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.auditoria-internas.update", [$auditoriaInterna->id]) }}" enctype="multipart/form-data">
+        <form method="POST" class="row" action="{{ route("admin.auditoria-internas.update", [$auditoriaInterna->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
-                <label class="required" for="alcance">{{ trans('cruds.auditoriaInterna.fields.alcance') }}</label>
+            <div class="form-group col-12">
+                <label class="required" for="alcance"><i class="fas fa-chart-line iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.alcance') }}</label>
                 <input class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}" type="text" name="alcance" id="alcance" value="{{ old('alcance', $auditoriaInterna->alcance) }}" required>
                 @if($errors->has('alcance'))
                     <div class="invalid-feedback">
@@ -20,8 +20,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="clausulas_id">{{ trans('cruds.auditoriaInterna.fields.clausulas') }}</label>
+            <div class="form-group col-md-6">
+                <label for="clausulas_id"><i class="fas fa-grip-horizontal iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.clausulas') }}</label>
                 <select class="form-control select2 {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas_id" id="clausulas_id">
                     @foreach($clausulas as $id => $clausulas)
                         <option value="{{ $id }}" {{ (old('clausulas_id') ? old('clausulas_id') : $auditoriaInterna->clausulas->id ?? '') == $id ? 'selected' : '' }}>{{ $clausulas }}</option>
@@ -34,8 +34,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.clausulas_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="fechaauditoria">{{ trans('cruds.auditoriaInterna.fields.fechaauditoria') }}</label>
+            <div class="form-group col-md-6">
+                <label for="fechaauditoria"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.fechaauditoria') }}</label>
                 <input class="form-control date {{ $errors->has('fechaauditoria') ? 'is-invalid' : '' }}" type="text" name="fechaauditoria" id="fechaauditoria" value="{{ old('fechaauditoria', $auditoriaInterna->fechaauditoria) }}">
                 @if($errors->has('fechaauditoria'))
                     <div class="invalid-feedback">
@@ -44,8 +44,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.fechaauditoria_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="auditorlider_id">{{ trans('cruds.auditoriaInterna.fields.auditorlider') }}</label>
+            <div class="form-group col-md-6">
+                <label for="auditorlider_id"><i class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.auditorlider') }}</label>
                 <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}" name="auditorlider_id" id="auditorlider_id">
                     @foreach($auditorliders as $id => $auditorlider)
                         <option value="{{ $id }}" {{ (old('auditorlider_id') ? old('auditorlider_id') : $auditoriaInterna->auditorlider->id ?? '') == $id ? 'selected' : '' }}>{{ $auditorlider }}</option>
@@ -58,8 +58,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.auditorlider_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="equipoauditoria_id">{{ trans('cruds.auditoriaInterna.fields.equipoauditoria') }}</label>
+            <div class="form-group col-md-6">
+                <label for="equipoauditoria_id"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.equipoauditoria') }}</label>
                 <select class="form-control select2 {{ $errors->has('equipoauditoria') ? 'is-invalid' : '' }}" name="equipoauditoria_id" id="equipoauditoria_id">
                     @foreach($equipoauditorias as $id => $equipoauditoria)
                         <option value="{{ $id }}" {{ (old('equipoauditoria_id') ? old('equipoauditoria_id') : $auditoriaInterna->equipoauditoria->id ?? '') == $id ? 'selected' : '' }}>{{ $equipoauditoria }}</option>
@@ -72,8 +72,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.equipoauditoria_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="hallazgos">{{ trans('cruds.auditoriaInterna.fields.hallazgos') }}</label>
+            <div class="form-group col-12">
+                <label for="hallazgos"><i class="fas fa-microscope iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.hallazgos') }}</label>
                 <textarea class="form-control {{ $errors->has('hallazgos') ? 'is-invalid' : '' }}" name="hallazgos" id="hallazgos">{{ old('hallazgos', $auditoriaInterna->hallazgos) }}</textarea>
                 @if($errors->has('hallazgos'))
                     <div class="invalid-feedback">
@@ -82,7 +82,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.hallazgos_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
                 <div class="form-check {{ $errors->has('cheknoconformidadmenor') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="cheknoconformidadmenor" value="0">
                     <input class="form-check-input" type="checkbox" name="cheknoconformidadmenor" id="cheknoconformidadmenor" value="1" {{ $auditoriaInterna->cheknoconformidadmenor || old('cheknoconformidadmenor', 0) === 1 ? 'checked' : '' }}>
@@ -95,7 +95,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.cheknoconformidadmenor_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-9">
                 <label for="totalnoconformidadmenor">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmenor') }}</label>
                 <input class="form-control {{ $errors->has('totalnoconformidadmenor') ? 'is-invalid' : '' }}" type="number" name="totalnoconformidadmenor" id="totalnoconformidadmenor" value="{{ old('totalnoconformidadmenor', $auditoriaInterna->totalnoconformidadmenor) }}" step="0.01" max="99">
                 @if($errors->has('totalnoconformidadmenor'))
@@ -105,7 +105,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmenor_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
                 <div class="form-check {{ $errors->has('checknoconformidadmayor') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="checknoconformidadmayor" value="0">
                     <input class="form-check-input" type="checkbox" name="checknoconformidadmayor" id="checknoconformidadmayor" value="1" {{ $auditoriaInterna->checknoconformidadmayor || old('checknoconformidadmayor', 0) === 1 ? 'checked' : '' }}>
@@ -118,7 +118,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.checknoconformidadmayor_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-9">
                 <label for="totalnoconformidadmayor">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmayor') }}</label>
                 <input class="form-control {{ $errors->has('totalnoconformidadmayor') ? 'is-invalid' : '' }}" type="number" name="totalnoconformidadmayor" id="totalnoconformidadmayor" value="{{ old('totalnoconformidadmayor', $auditoriaInterna->totalnoconformidadmayor) }}" step="0.01" max="99">
                 @if($errors->has('totalnoconformidadmayor'))
@@ -128,7 +128,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmayor_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
                 <div class="form-check {{ $errors->has('checkobservacion') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="checkobservacion" value="0">
                     <input class="form-check-input" type="checkbox" name="checkobservacion" id="checkobservacion" value="1" {{ $auditoriaInterna->checkobservacion || old('checkobservacion', 0) === 1 ? 'checked' : '' }}>
@@ -141,7 +141,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.checkobservacion_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-9">
                 <label for="totalobservacion">{{ trans('cruds.auditoriaInterna.fields.totalobservacion') }}</label>
                 <input class="form-control {{ $errors->has('totalobservacion') ? 'is-invalid' : '' }}" type="number" name="totalobservacion" id="totalobservacion" value="{{ old('totalobservacion', $auditoriaInterna->totalobservacion) }}" step="0.01" max="99">
                 @if($errors->has('totalobservacion'))
@@ -151,7 +151,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.totalobservacion_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
                 <div class="form-check {{ $errors->has('checkmejora') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="checkmejora" value="0">
                     <input class="form-check-input" type="checkbox" name="checkmejora" id="checkmejora" value="1" {{ $auditoriaInterna->checkmejora || old('checkmejora', 0) === 1 ? 'checked' : '' }}>
@@ -164,7 +164,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.checkmejora_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-9">
                 <label for="totalmejora">{{ trans('cruds.auditoriaInterna.fields.totalmejora') }}</label>
                 <input class="form-control {{ $errors->has('totalmejora') ? 'is-invalid' : '' }}" type="number" name="totalmejora" id="totalmejora" value="{{ old('totalmejora', $auditoriaInterna->totalmejora) }}" step="0.01" max="99">
                 @if($errors->has('totalmejora'))
@@ -174,8 +174,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.totalmejora_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="logotipo">{{ trans('cruds.auditoriaInterna.fields.logotipo') }}</label>
+            <div class="form-group col-12">
+                <label for="logotipo"><i class="fas fa-image iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.logotipo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('logotipo') ? 'is-invalid' : '' }}" id="logotipo-dropzone">
                 </div>
                 @if($errors->has('logotipo'))
@@ -185,7 +185,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.logotipo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 text-right">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
