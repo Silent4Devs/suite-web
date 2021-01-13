@@ -9,7 +9,8 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.matriz-riesgos.store") }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-6">
                 <label for="proceso"><i class="fas fa-spinner iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.proceso') }}</label>
                 <input class="form-control {{ $errors->has('proceso') ? 'is-invalid' : '' }}" type="text" name="proceso" id="proceso" value="{{ old('proceso', '') }}">
                 @if($errors->has('proceso'))
@@ -19,7 +20,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.proceso_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6 col-sm-6">
                 <label for="activo_id"><i class="fas fa-atom iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.activo') }}</label>
                 <select class="form-control select2 {{ $errors->has('activo') ? 'is-invalid' : '' }}" name="activo_id" id="activo_id">
                     @foreach($activos as $id => $activo)
@@ -33,6 +34,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.activo_helper') }}</span>
             </div>
+          </div>
+
             <div class="form-group">
                 <label for="responsableproceso"><i class="fas fa-user-alt iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.responsableproceso') }}</label>
                 <input class="form-control {{ $errors->has('responsableproceso') ? 'is-invalid' : '' }}" type="text" name="responsableproceso" id="responsableproceso" value="{{ old('responsableproceso', '') }}">
@@ -43,7 +46,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
             </div>
-            <div class="form-group">
+
+          <div class="row">
+            <div class="form-group col-sm-6">
                 <label for="amenaza"><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.amenaza') }}</label>
                 <input class="form-control {{ $errors->has('amenaza') ? 'is-invalid' : '' }}" type="text" name="amenaza" id="amenaza" value="{{ old('amenaza', '') }}">
                 @if($errors->has('amenaza'))
@@ -53,7 +58,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
             </div>
-            <div class="form-group">
+
+
+            <div class="form-group col-sm-6">
                 <label for="vulnerabilidad"><i class="fas fa-shield-alt iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad') }}</label>
                 <input class="form-control {{ $errors->has('vulnerabilidad') ? 'is-invalid' : '' }}" type="text" name="vulnerabilidad" id="vulnerabilidad" value="{{ old('vulnerabilidad', '') }}">
                 @if($errors->has('vulnerabilidad'))
@@ -63,7 +70,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
             </div>
-            <div class="form-group">
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-6">
                 <label for="descripcionriesgo"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.descripcionriesgo') }}</label>
                 <input class="form-control {{ $errors->has('descripcionriesgo') ? 'is-invalid' : '' }}" type="text" name="descripcionriesgo" id="descripcionriesgo" value="{{ old('descripcionriesgo', '') }}">
                 @if($errors->has('descripcionriesgo'))
@@ -73,7 +83,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.descripcionriesgo_helper') }}</span>
             </div>
-            <div class="form-group">
+
+
+
+            <div class="form-group col-sm-6">
                 <label><i class="fas fa-exclamation-triangle iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.tipo_riesgo') }}</label>
                 <select class="form-control {{ $errors->has('tipo_riesgo') ? 'is-invalid' : '' }}" name="tipo_riesgo" id="tipo_riesgo">
                     <option value disabled {{ old('tipo_riesgo', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -88,7 +101,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.tipo_riesgo_helper') }}</span>
             </div>
-            <div class="form-group">
+          </div>
+            <div class="form-group ">
                 <label for="confidencialidad"><i class="fas fa-user-lock iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}</label>
                 <input class="form-control {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}" type="number" name="confidencialidad" id="confidencialidad" value="{{ old('confidencialidad', '') }}" step="0.01">
                 @if($errors->has('confidencialidad'))
@@ -98,7 +112,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.confidencialidad_helper') }}</span>
             </div>
-            <div class="form-group">
+
+          <div class="row">
+            <div class="form-group col-sm-6">
                 <label for="integridad"><i class="fab fa-joomla iconos-crear"></i></i>{{ trans('cruds.matrizRiesgo.fields.integridad') }}</label>
                 <input class="form-control {{ $errors->has('integridad') ? 'is-invalid' : '' }}" type="number" name="integridad" id="integridad" value="{{ old('integridad', '') }}" step="0.01">
                 @if($errors->has('integridad'))
@@ -108,7 +124,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.integridad_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label for="disponibilidad"><i class="fas fa-clipboard-check iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}</label>
                 <input class="form-control {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}" type="number" name="disponibilidad" id="disponibilidad" value="{{ old('disponibilidad', '') }}" step="0.01">
                 @if($errors->has('disponibilidad'))
@@ -118,7 +134,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.disponibilidad_helper') }}</span>
             </div>
-            <div class="form-group">
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-6">
                 <label><i class="fas fa-dice iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.probabilidad') }}</label>
                 <select class="form-control {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}" name="probabilidad" id="probabilidad">
                     <option value disabled {{ old('probabilidad', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -133,7 +152,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.probabilidad_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label><i class="fab fa-ubuntu iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.impacto') }}</label>
                 <select class="form-control {{ $errors->has('impacto') ? 'is-invalid' : '' }}" name="impacto" id="impacto">
                     <option value disabled {{ old('impacto', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -148,7 +167,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.impacto_helper') }}</span>
             </div>
-            <div class="form-group">
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-6">
                 <label for="nivelriesgo"><i class="fas fa-chart-bar iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.nivelriesgo') }}</label>
                 <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}" type="number" name="nivelriesgo" id="nivelriesgo" value="{{ old('nivelriesgo', '') }}" step="0.01">
                 @if($errors->has('nivelriesgo'))
@@ -158,7 +180,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.nivelriesgo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label for="riesgototal"><i class="fas fa-times-circle iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.riesgototal') }}</label>
                 <input class="form-control {{ $errors->has('riesgototal') ? 'is-invalid' : '' }}" type="number" name="riesgototal" id="riesgototal" value="{{ old('riesgototal', '') }}" step="0.01">
                 @if($errors->has('riesgototal'))
@@ -168,6 +190,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.riesgototal_helper') }}</span>
             </div>
+          </div>
+
+
             <div class="form-group">
                 <label for="resultadoponderacion"><i class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.resultadoponderacion') }}</label>
                 <input class="form-control {{ $errors->has('resultadoponderacion') ? 'is-invalid' : '' }}" type="number" name="resultadoponderacion" id="resultadoponderacion" value="{{ old('resultadoponderacion', '') }}" step="0.01">
@@ -178,7 +203,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.resultadoponderacion_helper') }}</span>
             </div>
-            <div class="form-group">
+
+
+          <div class="row">
+            <div class="form-group col-sm-6">
                 <label for="riesgoresidual"><i class="fas fa-tachometer-alt iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.riesgoresidual') }}</label>
                 <input class="form-control {{ $errors->has('riesgoresidual') ? 'is-invalid' : '' }}" type="number" name="riesgoresidual" id="riesgoresidual" value="{{ old('riesgoresidual', '') }}" step="0.01">
                 @if($errors->has('riesgoresidual'))
@@ -188,7 +216,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.riesgoresidual_helper') }}</span>
             </div>
-            <div class="form-group">
+
+
+
+            <div class="form-group col-sm-6">
                 <label for="controles_id"><i class="fas fa-broadcast-tower iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.controles') }}</label>
                 <select class="form-control select2 {{ $errors->has('controles') ? 'is-invalid' : '' }}" name="controles_id" id="controles_id">
                     @foreach($controles as $id => $controles)
@@ -202,6 +233,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.controles_helper') }}</span>
             </div>
+          </div>
+
+
+
             <div class="form-group">
                 <label for="justificacion"> <i class="fas fa-file-alt iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.justificacion') }}</label>
                 <input class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}" type="text" name="justificacion" id="justificacion" value="{{ old('justificacion', '') }}">
@@ -212,7 +247,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.justificacion_helper') }}</span>
             </div>
-            <div class="form-group">
+          </div>
+            <div class="form-group col-12 text-right">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

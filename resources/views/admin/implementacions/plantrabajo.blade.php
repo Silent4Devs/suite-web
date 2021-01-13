@@ -1,4 +1,14 @@
+<style>
+th{
+background-color: #ffffff;
+}
 
+td{
+background-color: #ffffff;  
+}
+
+
+</style>
 
 <div  style="margin-bottom: 10px; margin-left:10px; margin-top:20px; "class="row">
         <div class="col-lg-12">
@@ -10,6 +20,7 @@
 
 </div>
 @can('plan_base_actividade_create')
+
 
     <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
@@ -27,31 +38,29 @@
         <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-PlanBaseActividade">
             <thead>
                 <tr>
-                    <th width="10" >
+                    <th width="10" style="background-color:#ffffff;" >
 
                     </th>
                     <th>
                         {{ trans('cruds.planBaseActividade.fields.id') }}
                     </th>
-                    <th>
+                    <th  >
                         {{ trans('cruds.planBaseActividade.fields.actividad') }}
                     </th>
-                    <th>
+                    <th >
                         {{ trans('cruds.planBaseActividade.fields.actividad_padre') }}
                     </th>
-                    <th>
+                    <th >
                         {{ trans('cruds.planBaseActividade.fields.ejecutar') }}
                     </th>
-                    <th>
-                        {{ trans('cruds.planBaseActividade.fields.guia') }}
-                    </th>
+
                     <th>
                         {{ trans('cruds.planBaseActividade.fields.estatus') }}
                     </th>
-                    <th>
+                    <th >
                         {{ trans('cruds.planBaseActividade.fields.responsable') }}
                     </th>
-                    <th>
+                    <th >
                         {{ trans('cruds.planBaseActividade.fields.colaborador') }}
                     </th>
                     <th>
@@ -90,10 +99,10 @@
                             <option value>{{ trans('global.all') }}</option>
 
                         </select>
-                    </td>
+                    </td >
                     <td>
                     </td>
-                    <td>
+                    <td >
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
 

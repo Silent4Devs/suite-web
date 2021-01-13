@@ -34,7 +34,7 @@
                 <span class="help-block">{{ trans('cruds.competencium.fields.perfilpuesto_helper') }}</span>
             </div>
             <div class="form-group col-12">
-                <label for="certificados"><i class="far fa-file iconos-crear"></i>{{ trans('cruds.competencium.fields.certificados') }}</label>
+                <label for="certificados"><i class="far fa-file iconos-crear"></i>Certificados (Archivo PDF o JPG)</label>
                 <div class="needsclick dropzone {{ $errors->has('certificados') ? 'is-invalid' : '' }}" id="certificados-dropzone">
                 </div>
                 @if($errors->has('certificados'))

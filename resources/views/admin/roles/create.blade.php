@@ -38,7 +38,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 text-right"  style="margin-left:15px;">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
