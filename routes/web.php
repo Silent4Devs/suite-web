@@ -16,6 +16,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('analisis-brechas','AnalisisBController@index');
     Route::post('analisis-brechas/update','AnalisisBController@update');
 
+
+    //gantt
+    Route::get('gantt','GanttController@index');
+    Route::post('gantt/update','GanttController@update');
+
     // Roles
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
@@ -616,7 +621,8 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 
 Route::view('sitemap', 'admin.sitemap.index');
 Route::view('stepper', 'stepper');
-Route::view('admin/gantt', 'admin.gantt.grap');
+//Route::view('admin/gantt', 'admin.gantt.grap');
+
 //URL::forceScheme('https');
 
 
