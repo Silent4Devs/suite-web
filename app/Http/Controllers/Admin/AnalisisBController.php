@@ -58,17 +58,52 @@ class AnalisisBController extends Controller
         $gapa182 = GapDo::get()->where('control-dos', '=', 'A18.2');
         $gap1porcentaje = GapUno::select('id', 'valoracion')->where('id', '<', '3')->get();
         $gap12porcentaje = GapUno::select('id', 'valoracion')->where('id', '>=', '3')->get();
+        $gap1satisfactorios = GapUno::select('id')->where('valoracion', '=', '1')->count();
+        $gap1parcialmente = GapUno::select('id')->where('valoracion', '=', '2')->count();
+        $gap1nocumple = GapUno::select('id')->where('valoracion', '=', '3')->count();
         $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->count();
         $gap2satisfactorio = GapDo::select('id', 'valoracion')->where('valoracion', '=', '1')->count();
         $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->count();
+        $gap2nocumple = GapDo::select('id', 'valoracion')->where('valoracion', '=', '3')->count();
         $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->count();
         $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->get();
         $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->get();
+        $gap3satisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->count();
+        $gap3parcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->count();
+        $gap3nocumple = GapTre::select('id')->where('valoracion', '=', '3')->where('estado', '=', 'verificar')->count();
+        $gap3asatisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'actuar')->count();
+        $gap3aparcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'actuar')->count();
+        $gap3anocumple = GapTre::select('id')->where('valoracion', '=', '3')->where('estado', '=', 'actuar')->count();
+
         $total = 114 - $gap2noaplica;
         $gapunoPorc = new Porcentaje();
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
         $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
         $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
+
+        $conteos = [
+            'Gap1' => [
+                'satisfactorio' => $gap1satisfactorios,
+                'parcialmente' => $gap1parcialmente,
+                'nocumple' => $gap1nocumple,
+            ],
+            'Gap2' => [
+                'satisfactorio' => $gap2satisfactorio,
+                'parcialmente' => $gap2parcialmente,
+                'nocumple' => $gap2nocumple,
+                'noaplica' => $gap2noaplica,
+            ],
+            'Gap3verif' => [
+                'satisfactorio' => $gap3satisfactorios,
+                'parcialmente' => $gap3parcialmente,
+                'nocumple' => $gap3nocumple,
+            ],
+            'Gap3actuar' => [
+                'satisfactorio' => $gap3asatisfactorios,
+                'parcialmente' => $gap3aparcialmente,
+                'nocumple' => $gap3anocumple,
+            ],
+        ];
 
         return view('dashboard.index', compact('gaptresVerif', 'gaptresAct'))
             ->with('gapunos', $gapuno)->with('gapda5s', $gapa5)->with('gapda6s', $gapa6)
@@ -81,7 +116,7 @@ class AnalisisBController extends Controller
             ->with('gapda141s', $gapa141)->with('gapda142s', $gapa142)->with('gapda143s', $gapa143)->with('gapda151s', $gapa151)
             ->with('gapda152s', $gapa152)->with('gapda161s', $gapa161)->with('gapda171s', $gapa171)->with('gapda172s', $gapa172)
             ->with('gapda181s', $gapa181)->with('gapda182s', $gapa182)->with('porcentajeGap1', $porcentajeGap1)
-            ->with('porcentajeGap2', $porcentajeGap2)->with('porcentajeGap3', $porcentajeGap3);
+            ->with('porcentajeGap2', $porcentajeGap2)->with('porcentajeGap3', $porcentajeGap3)->with('conteos', $conteos);
     }
 
     /**

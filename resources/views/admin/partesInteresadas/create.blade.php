@@ -3,7 +3,9 @@
 
 <div class="card mt-4">
     <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Partes Interesadas </h3>
+
+       <h3 class="mb-1  text-center text-white"> <strong>Registrar:</strong> Partes Interesadas </h3>
+
     </div>
 
     <div class="card-body">
@@ -31,14 +33,14 @@
                 <span class="help-block">{{ trans('cruds.partesInteresada.fields.requisitos_helper') }}</span>
             </div>
             <div class="form-group col-md-12">
-                <label for="clausala"> <i class="far fa-file iconos-crear"></i> {{ trans('cruds.partesInteresada.fields.clausala') }}</label>
+                <label for="clausala"> <i class="far fa-file iconos-crear"></i> Cláusula</label>
                 <textarea class="form-control {{ $errors->has('clausala') ? 'is-invalid' : '' }}" name="clausala" id="clausala">{{ old('clausala') }}</textarea>
                 @if($errors->has('clausala'))
                     <div class="invalid-feedback">
                         {{ $errors->first('clausala') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.partesInteresada.fields.clausala_helper') }}</span>
+                <span class="help-block">Cláusula que satisface el requisito de la parte interesada</span>
             </div>
             <div class="form-group col-md-12 text-right">
                 <button class="btn btn-danger" type="submit">

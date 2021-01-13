@@ -12,7 +12,7 @@
         <form method="POST" action="{{ route("admin.alcance-sgsis.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="alcancesgsi"> <i class="fas fa-shield-alt iconos-crear"></i> {{ trans('cruds.alcanceSgsi.fields.alcancesgsi') }}</label>
+                <label for="alcancesgsi"> <i class="fas fa-shield-alt iconos-crear"></i>Alcance SGSI</label>
                 <textarea class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }}" name="alcancesgsi" id="alcancesgsi">{{ old('alcancesgsi') }}</textarea>
                 @if($errors->has('alcancesgsi'))
                     <div class="invalid-feedback">

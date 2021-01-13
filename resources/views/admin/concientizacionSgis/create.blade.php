@@ -74,7 +74,7 @@
                 <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.fecha_publicacion_helper') }}</span>
             </div>
             <div class="form-group col-12">
-                <label for="archivo"><i class="far fa-file iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.archivo') }}</label>
+                <label for="archivo"><i class="far fa-file iconos-crear"></i>Archivo PDF o JPEG</label>
                 <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
                 </div>
                 @if($errors->has('archivo'))

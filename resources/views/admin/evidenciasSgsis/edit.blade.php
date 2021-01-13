@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.evidenciasSgsi.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
+          <h3 class="mb-1  text-center text-white"> <strong>Editar:</strong> Evidencias de Asignación de Recursos al SGSI</h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.evidencias-sgsis.update", [$evidenciasSgsi->id]) }}" enctype="multipart/form-data">
+        <form method="POST" class="row" action="{{ route("admin.evidencias-sgsis.update", [$evidenciasSgsi->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
-                <label class="required" for="objetivodocumento">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento') }}</label>
+            <div class="form-group col-md-6">
+                <label class="required" for="objetivodocumento"><i class="far fa-file iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento') }}</label>
                 <input class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" type="text" name="objetivodocumento" id="objetivodocumento" value="{{ old('objetivodocumento', $evidenciasSgsi->objetivodocumento) }}" required>
                 @if($errors->has('objetivodocumento'))
                     <div class="invalid-feedback">
@@ -20,8 +20,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="responsable_id">{{ trans('cruds.evidenciasSgsi.fields.responsable') }}</label>
+            <div class="form-group col-md-6">
+                <label for="responsable_id"><i class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.responsable') }}</label>
                 <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}" name="responsable_id" id="responsable_id">
                     @foreach($responsables as $id => $responsable)
                         <option value="{{ $id }}" {{ (old('responsable_id') ? old('responsable_id') : $evidenciasSgsi->responsable->id ?? '') == $id ? 'selected' : '' }}>{{ $responsable }}</option>
@@ -34,8 +34,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.responsable_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="arearesponsable">{{ trans('cruds.evidenciasSgsi.fields.arearesponsable') }}</label>
+            <div class="form-group col-md-6">
+                <label for="arearesponsable"><i class="fas fa-chart-area iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.arearesponsable') }}</label>
                 <input class="form-control {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" type="text" name="arearesponsable" id="arearesponsable" value="{{ old('arearesponsable', $evidenciasSgsi->arearesponsable) }}">
                 @if($errors->has('arearesponsable'))
                     <div class="invalid-feedback">
@@ -44,8 +44,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.arearesponsable_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="fechadocumento">{{ trans('cruds.evidenciasSgsi.fields.fechadocumento') }}</label>
+            <div class="form-group col-md-6">
+                <label for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.fechadocumento') }}</label>
                 <input class="form-control date {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="text" name="fechadocumento" id="fechadocumento" value="{{ old('fechadocumento', $evidenciasSgsi->fechadocumento) }}">
                 @if($errors->has('fechadocumento'))
                     <div class="invalid-feedback">
@@ -54,8 +54,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.fechadocumento_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="archivopdf">{{ trans('cruds.evidenciasSgsi.fields.archivopdf') }}</label>
+            <div class="form-group col-12">
+                <label for="archivopdf"><i class="far fa-file-pdf iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.archivopdf') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('archivopdf') ? 'is-invalid' : '' }}" id="archivopdf-dropzone">
                 </div>
                 @if($errors->has('archivopdf'))
@@ -65,7 +65,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.archivopdf_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 text-right">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

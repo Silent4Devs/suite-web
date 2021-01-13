@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.comunicacionSgi.title_singular') }}
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Comunicación SGSI </h3>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.comunicacion-sgis.update", [$comunicacionSgi->id]) }}" enctype="multipart/form-data">
+        <form method="POST" class="row" action="{{ route("admin.comunicacion-sgis.update", [$comunicacionSgi->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
-                <label class="required" for="descripcion">{{ trans('cruds.comunicacionSgi.fields.descripcion') }}</label>
+            <div class="form-group col-12">
+                <label class="required" for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.comunicacionSgi.fields.descripcion') }}</label>
                 <input class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion" id="descripcion" value="{{ old('descripcion', $comunicacionSgi->descripcion) }}" required>
                 @if($errors->has('descripcion'))
                     <div class="invalid-feedback">
@@ -20,8 +20,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.comunicacionSgi.fields.descripcion_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="archivo">{{ trans('cruds.comunicacionSgi.fields.archivo') }}</label>
+            <div class="form-group col-12">
+                <label for="archivo"><i class="far fa-file iconos-crear"></i>{{ trans('cruds.comunicacionSgi.fields.archivo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
                 </div>
                 @if($errors->has('archivo'))
@@ -31,7 +31,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.comunicacionSgi.fields.archivo_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 text-right">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

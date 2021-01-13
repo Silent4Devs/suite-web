@@ -241,7 +241,7 @@ return [
             'parteinteresada_helper' => ' ',
             'requisitos'             => 'Requisitos',
             'requisitos_helper'      => ' ',
-            'clausala'               => 'Clausala',
+            'clausala'               => 'Clausula',
             'clausala_helper'        => 'Clausula que satisface el requisito de la parte interesada',
             'created_at'             => 'Created at',
             'created_at_helper'      => ' ',
