@@ -19,7 +19,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
             </div>
-            <div class="form-group">
+
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-6">
                 <label class="required" for="email"><i class="fas fa-envelope iconos-crear"></i>{{ trans('cruds.user.fields.email') }}</label>
                 <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email') }}" required>
                 @if($errors->has('email'))
@@ -29,7 +31,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6 col-sm-6">
                 <label class="required" for="password"><i class="fas fa-lock iconos-crear"></i>{{ trans('cruds.user.fields.password') }}</label>
                 <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password" required>
                 @if($errors->has('password'))
@@ -39,7 +41,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
             </div>
-            <div class="form-group">
+          </div>
+            <div class="form-group" style="margin-left:515px;">
                 <div class="form-check {{ $errors->has('approved') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="approved" value="0">
                     <input class="form-check-input" type="checkbox" name="approved" id="approved" value="1" {{ old('approved', 0) == 1 ? 'checked' : '' }}>
@@ -84,7 +87,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.organizacion_helper') }}</span>
             </div>
-            <div class="form-group">
+
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-6">
                 <label for="area_id"><i class="fas fa-street-view iconos-crear"></i>{{ trans('cruds.user.fields.area') }}</label>
                 <select class="form-control select2 {{ $errors->has('area') ? 'is-invalid' : '' }}" name="area_id" id="area_id">
                     @foreach($areas as $id => $area)
@@ -98,7 +103,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.area_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6 col-sm-6">
                 <label for="puesto_id"><i class="fas fa-id-card-alt iconos-crear"></i>{{ trans('cruds.user.fields.puesto') }}</label>
                 <select class="form-control select2 {{ $errors->has('puesto') ? 'is-invalid' : '' }}" name="puesto_id" id="puesto_id">
                     @foreach($puestos as $id => $puesto)
@@ -112,6 +117,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.puesto_helper') }}</span>
             </div>
+          </div>
             <div class="form-group">
                 <label for="team_id"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.user.fields.team') }}</label>
                 <select class="form-control select2 {{ $errors->has('team') ? 'is-invalid' : '' }}" name="team_id" id="team_id">
@@ -126,7 +132,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.team_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 text-right" style="margin-left:15px;">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
