@@ -10,18 +10,10 @@
 
 </div>
 @can('plan_base_actividade_create')
-    <div style="margin-top:-30px; margin-right: 10px;" class="row text-right">
-        <div class="col-lg-12">
-            <a  class="btn btn-success" href="{{ route('admin.plan-base-actividades.create') }}">
-
-                Agregar<strong>+</strong>
-            </a>
-        </div>
-    </div>
 
     <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.faq-questions.create') }}">
+              <a  class="btn btn-success" href="{{ route('admin.plan-base-actividades.create') }}">
                 Agregar <strong>+</strong>
             </a>
         </div>
