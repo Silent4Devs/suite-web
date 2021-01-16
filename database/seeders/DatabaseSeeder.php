@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
             GapunoTableSeeder::class,
             GaptresTableSeeder::class,
             GapdosTableSeeder::class,
+            EstadodocumentosTableSeeder::class,
+            EstadoincidentesTableSeeder::class,
+            EstusplatrabajoTableSeeder::class,
+            PlanBaseSeeder::class,
         ]);
     }
 }
