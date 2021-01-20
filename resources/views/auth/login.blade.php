@@ -63,7 +63,7 @@
                         <div class="col-6 text-right">
                             @if(Route::has('password.request'))
                                 <a class="btn btn-link px-0" href="{{ route('password.request') }}" style="float: left;">
-                                    {{ trans('global.forgot_password') }}
+                                    ¿Olvidó su contraseña?
                                 </a><br>
                             @endif
                             <a class="btn btn-link px-0" href="{{ route('register') }}" style="float: left;">
