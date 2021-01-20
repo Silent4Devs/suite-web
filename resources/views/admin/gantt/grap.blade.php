@@ -40,17 +40,17 @@
                     <table class="table table-responsive" style="font-size: 12px;">
                         <thead class="thead-dark letras-dashboard2 align-middle">
                             <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Actividad</th>
-                                <th scope="col">Actividad Principal</th>
-                                <th scope="col">Ejecutar</th>
+                                <th scope="col" width="2%">No</th>
+                                <th scope="col" width="30%">Actividad</th>
+                                <th scope="col" width="10%">Actividad Principal</th>
+                                <th scope="col" width="10%">Ejecutar</th>
                                 <th scope="col">Estado </th>
                                 <th scope="col">Responsable</th>
                                 <th scope="col">Colaborador</th>
-                                <th scope="col">Fecha Inicio</th>
-                                <th scope="col">Fecha Fin </th>
+                                <th scope="col" width="20%">Fecha Inicio  </th>
+                                <th scope="col" width="20%">Fecha Fin </th>
                               <th scope="col">Fecha Compromiso</th>
-                                <th scope="col">Fecha Real</th>
+                                <th scope="col" width="17%">Fecha Real</th>
                          
                             </tr>
                         </thead>
@@ -64,17 +64,32 @@
                                     {{$actividadplan->actividad}}
                                 </td>
                                 <td>
+                                    {{$actividadplan->actividad_padre_id}}
+                                </td>
+                                <td>
+                                    {{$actividadplan->ejecutar_id}}
+                                </td>
+                                <td>
                                     <a href="#" data-type="select" data-pk="{{$actividadplan->id}}" data-url="{{route("admin.plan-base-actividades.update",  $actividadplan->id)}}" data-title="Seleccionar estado" data-value="{{$actividadplan->estatus_id}}" class="estatus_id" data-name="estatus_id">
                                     </a>
                                 </td>
+                                <th scope="row">
+                                    {{$actividadplan->responsable_id}}
+                                </th>
+                                <th scope="row">
+                                    {{$actividadplan->colaborador_id}}
+                                </th>
                                 <th scope="row">
                                     {{$actividadplan->fecha_inicio}}
                                 </th>
                                 <th scope="row">
                                     {{$actividadplan->fecha_fin}}
                                 </th>
+                             <th scope="row">
+                                    {{$actividadplan->compromiso}}
+                                </th>
                                 <th scope="row">
-                                    {{$actividadplan->responsable_id}}
+                                    {{$actividadplan->real}}
                                 </th>
                             </tr>
                             @endforeach
@@ -114,6 +129,8 @@
             new Date("2021-1-2"),new Date("2021-1-2"),
             
             new Date("2021-1-4"), new Date("2021-1-9"), new Date("2021-1-10")];
+      
+            
             var ctx = document.getElementById("myChart").getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'horizontalBar',
