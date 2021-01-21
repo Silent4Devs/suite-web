@@ -64,7 +64,20 @@
     </div>
 </div>
 
+<script>
+  if (localStorage.getItem('tab_plan') === 'true') {
+          document.getElementById('plan-tab-just').classList.add('active');
+          document.getElementById('plan-just').classList.add('active');
+          document.getElementById('plan-just').classList.add('show');
 
+
+          document.getElementById('home-tab-just').classList.remove('active');
+          document.getElementById('home-just').classList.remove('active');
+          document.getElementById('home-just').classList.remove('show');
+
+          localStorage.setItem('tab_plan', 'false');
+      }
+</script>
 
 @endsection
 

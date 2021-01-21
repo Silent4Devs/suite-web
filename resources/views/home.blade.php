@@ -76,7 +76,7 @@ height:20px;
                             <div class="row align-items-start">
 
                               <div class="col-lg-2 col-md-2 col-sm-2" style="margin-top:20px; " >
-                              <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/implementacions#plan-just">
+                              <a id="a_plan" class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/implementacions#plan-just">
                                     Ver Plan >>
                               </a>
                               </div>
@@ -232,6 +232,14 @@ height:20px;
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js">
 </script>{!! $chart1->renderJs() !!}{!! $chart2->renderJs() !!}{!! $chart3->renderJs() !!}{!! $chart4->renderJs() !!}
+
+<script>
+
+    const a_plan = document.querySelector('#a_plan');
+    a_plan.addEventListener('click', () => {
+        localStorage.setItem('tab_plan', 'true');
+    });
+</script>
 <script>
 
 
