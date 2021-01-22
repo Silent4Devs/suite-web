@@ -46,6 +46,17 @@
         border: none;
         color: #fff;
     }
+    .list-group-item.nav-item.color_dark.a_guia{
+        overflow: hidden;
+    }
+    .list-group-item.nav-item.color_dark.a_guia .nav-link.active{
+        background: #E3F2EF;
+        box-shadow: 0px 0px 0px 100px #E3F2EF;
+    }
+    body.c-dark-theme .list-group-item.nav-item.color_dark.a_guia .nav-link.active{
+        background-color: #07404e;
+        box-shadow: 0px 0px 0px 100px #07404e;
+    }
 </style>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
@@ -83,22 +94,22 @@
                     </div>
 
 
-                    <li class="list-group-item nav-item color_dark">
-                        <a class="nav-link" id="informacion-tab-dos" data-toggle="tab" href="#informacion-dos" role="tab" aria-controls="informacion-dos" aria-selected="false"><span class="color_letra";">Objetivo del SGSI
+                    <li class="list-group-item nav-item color_dark a_guia">
+                        <a class="nav-link active" id="informacion-tab-dos" data-toggle="tab" href="#informacion-dos" role="tab" aria-controls="informacion-dos" aria-selected="false"><span class="color_letra";">Objetivo del SGSI
                             </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-tres" data-toggle="tab" href="#informacion-tres" role="tab" aria-controls="informacion-tres" aria-selected="false"><span class="color_letra";">4.1 Entendimiento de<br> la Organización</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-cinco" data-toggle="tab" href="#informacion-cinco" role="tab" aria-controls="informacion-cinco" aria-selected="false"><span class="color_letra";">4.2 Partes Interesadas</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-seis" data-toggle="tab" href="#informacion-seis" role="tab" aria-controls="informacion-seis" aria-selected="false"><span class="color_letra";">4.3 Alcance del Sistema <br>de Gestión </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-sgsi" data-toggle="tab" href="#informacion-sgsi" role="tab" aria-controls="informacion-sgsi" aria-selected="false"><span class="color_letra";">4.4 Sistema de Gestión <br>de Seguridad de la Información</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
                 </ul>
@@ -109,7 +120,7 @@
                 <div class="tab-content" id="myTabContentJust" style="margin-top:15px;">
 
 
-                    <div class="tab-pane fade" id="informacion-dos" role="tabpanel" aria-labelledby="informacion-tab-dos">
+                    <div class="tab-pane fade active show" id="informacion-dos" role="tabpanel" aria-labelledby="informacion-tab-dos">
 
                         <div class="card">
                         <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
@@ -536,15 +547,15 @@ Objetivo del SGSI.
                     </div>
 
 
-                    <li class="list-group-item nav-item color_dark">
-                        <a class="nav-link" id="informacion-tab-liderazgo" data-toggle="tab" href="#informacion-liderazgo" role="tab" aria-controls="informacion-liderazgo" aria-selected="false"><span class="color_letra";">5.1 Liderazgo y Compromiso
+                    <li class="list-group-item nav-item color_dark a_guia">
+                        <a class="nav-link active" id="informacion-tab-liderazgo" data-toggle="tab" href="#informacion-liderazgo" role="tab" aria-controls="informacion-liderazgo" aria-selected="false"><span class="color_letra";">5.1 Liderazgo y Compromiso
                             </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-politicaseg" data-toggle="tab" href="#informacion-politicaseg" role="tab" aria-controls="informacion-politicaseg" aria-selected="false"><span class="color_letra";">5.2 Política de Seguridad</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-rolesresp" data-toggle="tab" href="#informacion-rolesresp" role="tab" aria-controls="informacion-rolesresp" aria-selected="false"><span class="color_letra";">5.3 Roles y Responsabilidades</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
@@ -556,7 +567,7 @@ Objetivo del SGSI.
                 <div class="tab-content" id="myTabContentJust" style="margin-top:15px;">
 
 
-                    <div class="tab-pane fade" id="informacion-liderazgo" role="tabpanel" aria-labelledby="informacion-tab-liderazgo">
+                    <div class="tab-pane fade active show" id="informacion-liderazgo" role="tabpanel" aria-labelledby="informacion-tab-liderazgo">
 
                         <div class="card">
 
@@ -670,12 +681,12 @@ La alta dirección debe asegurarse de que las responsabilidades y autoridades pa
                     </div>
 
 
-                    <li class="list-group-item nav-item color_dark">
-                        <a class="nav-link" id="informacion-tab-evaluacionriesg" data-toggle="tab" href="#informacion-evaluacionriesg" role="tab" aria-controls="informacion-evaluacionriesg" aria-selected="false"><span class="color_letra";">6.1 Riesgos y Oportunidades
+                    <li class="list-group-item nav-item color_dark a_guia">
+                        <a class="nav-link active" id="informacion-tab-evaluacionriesg" data-toggle="tab" href="#informacion-evaluacionriesg" role="tab" aria-controls="informacion-evaluacionriesg" aria-selected="false"><span class="color_letra";">6.1 Riesgos y Oportunidades
                             </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-tratamientoriesg" data-toggle="tab" href="#informacion-tratamientoriesg" role="tab" aria-controls="informacion-tratamientoriesg" aria-selected="false"><span class="color_letra";">6.2 Objetivos de Seguridad</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
@@ -688,7 +699,7 @@ La alta dirección debe asegurarse de que las responsabilidades y autoridades pa
                 <div class="tab-content" id="myTabContentJust" style="margin-top:15px;">
 
 
-                    <div class="tab-pane fade" id="informacion-evaluacionriesg" role="tabpanel" aria-labelledby="informacion-tab-evaluacionriesg">
+                    <div class="tab-pane fade active show" id="informacion-evaluacionriesg" role="tabpanel" aria-labelledby="informacion-tab-evaluacionriesg">
 
                         <div class="card">
 
@@ -785,21 +796,21 @@ La empresa debe establecer los objetivos de seguridad de la información en las 
                     </div>
 
 
-                    <li class="list-group-item nav-item color_dark">
-                        <a class="nav-link" id="informacion-tab-clausoporte" data-toggle="tab" href="#informacion-clausoporte" role="tab" aria-controls="informacion-clausoporte" aria-selected="false"><span class="color_letra";">7.1 Recursos
+                    <li class="list-group-item nav-item color_dark a_guia">
+                        <a class="nav-link active" id="informacion-tab-clausoporte" data-toggle="tab" href="#informacion-clausoporte" role="tab" aria-controls="informacion-clausoporte" aria-selected="false"><span class="color_letra";">7.1 Recursos
                             </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-competencia" data-toggle="tab" href="#informacion-competencia" role="tab" aria-controls="informacion-competencia" aria-selected="false"><span class="color_letra";">7.2 Competencia</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-concientizacion" data-toggle="tab" href="#informacion-concientizacion" role="tab" aria-controls="informacion-concientizacion" aria-selected="false"><span class="color_letra";">7.3 Concienciación</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-comunicacionsiet" data-toggle="tab" href="#informacion-comunicacionsiet" role="tab" aria-controls="informacion-comunicacionsiet" aria-selected="false"><span class="color_letra";">7.4 Comunicación</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-informaciondoc" data-toggle="tab" href="#informacion-informaciondoc" role="tab" aria-controls="informacion-informaciondoc" aria-selected="false"><span class="color_letra";">7.5 Información documentada</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
@@ -811,7 +822,7 @@ La empresa debe establecer los objetivos de seguridad de la información en las 
                 <div class="tab-content" id="myTabContentJust" style="margin-top:15px;">
 
 
-                    <div class="tab-pane fade" id="informacion-clausoporte" role="tabpanel" aria-labelledby="informacion-tab-clausoporte">
+                    <div class="tab-pane fade active show" id="informacion-clausoporte" role="tabpanel" aria-labelledby="informacion-tab-clausoporte">
 
                         <div class="card">
 
@@ -991,15 +1002,15 @@ c) Revisión y aprobación con respecto a la identidad y adecuación
                     </div>
 
 
-                    <li class="list-group-item nav-item color_dark">
-                        <a class="nav-link" id="informacion-tab-clausoperacion" data-toggle="tab" href="#informacion-clausoperacion" role="tab" aria-controls="informacion-clausoperacion" aria-selected="false"><span class="color_letra";">8.1 Operación
+                    <li class="list-group-item nav-item color_dark a_guia">
+                        <a class="nav-link active" id="informacion-tab-clausoperacion" data-toggle="tab" href="#informacion-clausoperacion" role="tab" aria-controls="informacion-clausoperacion" aria-selected="false"><span class="color_letra";">8.1 Operación
                             </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-evaluacionriesgo" data-toggle="tab" href="#informacion-evaluacionriesgo" role="tab" aria-controls="informacion-evaluacionriesgo" aria-selected="false"><span class="color_letra";">8.2 Evaluación de riesgos de la <br>seguridad de la información</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-tratamientriesg" data-toggle="tab" href="#informacion-tratamientriesg" role="tab" aria-controls="informacion-tratamientriesg" aria-selected="false"><span class="color_letra";">8.3 Tratamiento de riesgos de <br>seguridad de la información</span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
@@ -1011,7 +1022,7 @@ c) Revisión y aprobación con respecto a la identidad y adecuación
                 <div class="tab-content" id="myTabContentJust" style="margin-top:15px;">
 
 
-                    <div class="tab-pane fade" id="informacion-clausoperacion" role="tabpanel" aria-labelledby="informacion-tab-clausoperacion">
+                    <div class="tab-pane fade active show" id="informacion-clausoperacion" role="tabpanel" aria-labelledby="informacion-tab-clausoperacion">
 
                         <div class="card">
 
@@ -1113,13 +1124,13 @@ La organización debe implantar el plan de tratamiento de riesgo de la seguridad
 
 
 
-                    <li class="list-group-item nav-item color_dark">
-                        <a class="nav-link  text-black" id="informacion-tab-segnaeva" data-toggle="tab" href="#informacion-segnaeva" role="tab" aria-controls="informacion-segnaeva" aria-selected="false"><span class="color_letra";"><span class="color_letra";">9.1 Seguimiento, medición, <br> análisis y evaluación</span></span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
+                    <li class="list-group-item nav-item color_dark a_guia">
+                        <a class="nav-link active text-black" id="informacion-tab-segnaeva" data-toggle="tab" href="#informacion-segnaeva" role="tab" aria-controls="informacion-segnaeva" aria-selected="false"><span class="color_letra";"><span class="color_letra";">9.1 Seguimiento, medición, <br> análisis y evaluación</span></span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-auditint" data-toggle="tab" href="#informacion-auditint" role="tab" aria-controls="informacion-auditint" aria-selected="false"><span class="color_letra";"><span class="color_letra";">9.2 Auditorías internas</span></span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-revisdir" data-toggle="tab" href="#informacion-revisdir" role="tab" aria-controls="informacion-revisdir" aria-selected="false"><span class="color_letra";"><span class="color_letra";">9.3 Revisión por la dirección</span></span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
 
@@ -1133,7 +1144,7 @@ La organización debe implantar el plan de tratamiento de riesgo de la seguridad
 
 
                     <!--informacion dos-->
-                    <div class=" tab-pane fade" id="informacion-segnaeva" role="tabpanel" aria-labelledby="informacion-tab-segnaeva">
+                    <div class=" tab-pane fade active show" id="informacion-segnaeva" role="tabpanel" aria-labelledby="informacion-tab-segnaeva">
                         <div class="card">
                         <div class="card-header font-weight-bold  text-white" style="background-color:#048c74;" align="justify">
 
@@ -1248,11 +1259,11 @@ La alta dirección debe revisar el Sistema de Gestión de Seguridad de la Inform
                     </div>
 
 
-                    <li class="list-group-item nav-item color_dark">
-                        <a class="nav-link" id="informacion-tab-nocoformidad" data-toggle="tab" href="#informacion-nocoformidad" role="tab" aria-controls="informacion-nocoformidad" aria-selected="false"><span class="color_letra";">10.1 No Conformidades y <br> Acciónes Correctivas
+                    <li class="list-group-item nav-item color_dark a_guia">
+                        <a class="nav-link active" id="informacion-tab-nocoformidad" data-toggle="tab" href="#informacion-nocoformidad" role="tab" aria-controls="informacion-nocoformidad" aria-selected="false"><span class="color_letra";">10.1 No Conformidades y <br> Acciónes Correctivas
                             </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
-                    <li class="list-group-item nav-item color_dark">
+                    <li class="list-group-item nav-item color_dark a_guia">
                         <a class="nav-link" id="informacion-tab-mcontinua" data-toggle="tab" href="#informacion-mcontinua" role="tab" aria-controls="informacion-mcontinua" aria-selected="false"><span class="color_letra";">10.2 Mejora Continua
                             </span><i class="fas fa-arrow-alt-circle-right" style="float:right; -webkit-transform:scale(1.3); color:#048c74;"></i></a>
                     </li>
@@ -1267,7 +1278,7 @@ La alta dirección debe revisar el Sistema de Gestión de Seguridad de la Inform
                 <div class="tab-content" id="myTabContentJust" style="margin-top:15px;">
 
 
-                    <div class="tab-pane fade" id="informacion-nocoformidad" role="tabpanel" aria-labelledby="informacion-tab-nocoformidad">
+                    <div class="tab-pane fade active show" id="informacion-nocoformidad" role="tabpanel" aria-labelledby="informacion-tab-nocoformidad">
 
                         <div class="card">
 
@@ -1348,3 +1359,30 @@ La empresa debe mejorar continuamente la conveniencia, adecuación y Sistema de 
         <!--termino contenido tab clausula 10-->
     </div>
 </div>
+
+
+
+<!--
+<script>
+    document.getElementById('informacion-dos').classList.add('active');
+    document.getElementById('informacion-dos').classList.add('show'); 
+
+    document.getElementById('informacion-liderazgo').classList.add('active');
+    document.getElementById('informacion-liderazgo').classList.add('show'); 
+
+    document.getElementById('informacion-evaluacionriesg').classList.add('active');
+    document.getElementById('informacion-evaluacionriesg').classList.add('show'); 
+
+    document.getElementById('informacion-clausoporte').classList.add('active');
+    document.getElementById('informacion-clausoporte').classList.add('show');  
+
+    document.getElementById('informacion-clausoperacion').classList.add('active');
+    document.getElementById('informacion-clausoperacion').classList.add('show');
+
+    document.getElementById('informacion-segnaeva').classList.add('active');
+    document.getElementById('informacion-segnaeva').classList.add('show');
+
+    document.getElementById('informacion-nocoformidad').classList.add('active');
+    document.getElementById('informacion-nocoformidad').classList.add('show');
+</script>
+-->

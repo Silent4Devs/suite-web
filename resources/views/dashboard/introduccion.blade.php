@@ -11,9 +11,8 @@
                     controles. Para lograr este objetivo emplearemos el
                     Análisis de Brechas (Gap Analysis).
                 </p>
-                <a type="button"
-                   class="btn btn-success card-link float-right">Ejecutar
-                    Análisis</a>
+                <button type="button" id="btn_ejecutar" class="btn btn-success float-right"><font style="color: #fff;">Ejecutar
+                    Análisis</font></button>
             </div>
         </div>
     </div>
@@ -25,3 +24,9 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+

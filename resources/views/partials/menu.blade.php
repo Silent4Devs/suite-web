@@ -941,7 +941,7 @@
                     <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
                     </i>
-                    {{ trans('cruds.listaDeVerificacion.title') }}
+                    <font class="letra_blanca"> {{ trans('cruds.listaDeVerificacion.title') }} </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('control_documento_access')
@@ -950,7 +950,7 @@
                                 <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
                                 </i>
-                                {{ trans('cruds.controlDocumento.title') }}
+                                <font class="letra_blanca">{{ trans('cruds.controlDocumento.title') }}</font>
                             </a>
                         </li>
                     @endcan

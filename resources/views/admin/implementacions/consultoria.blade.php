@@ -91,30 +91,30 @@
 		margin-top: 30px;
 		display: none;
 	}
-	table{
+	.contacto table{
 		width: 670px;
 		margin: auto;
 		color: #fff;
 	}
-	table thead tr{
+	.contacto table thead tr{
 		background-color: #008398;
 		transform: scale(1.01);
 		box-shadow: 0px 3px 5px -3px #000;
 	}
-	table th{
+	.contacto table th{
 		border-bottom: 1px;
 		padding: 10px;
 		text-align: center;
 	}
-	table td{
+	.contacto table td{
 		padding: 10px;
 	}
-	table tbody tr{
+	.contacto table tbody tr{
 		border-bottom: 1px solid rgba(255,255,255,0.3);
 		background-color: rgba(0,0,0,0.4);
 		transition: 0.1s;
 	}
-	table tbody tr:hover{
+	.contacto table tbody tr:hover{
 		transform: scale(1.015);
 
 		background-color: rgba(0,0,0,0.5);
@@ -138,7 +138,7 @@
 
 
 	@media(max-width: 1100px){
-		table{
+		.contacto table{
 			width: 100%;
 		}
 	}
@@ -147,10 +147,10 @@
 			width: 90%;
 			margin-right: 5%;
 		}
-		table{
+		.contacto table{
 			width: 100%;
 		}
-		table tr{
+		.contacto table tr{
 			display: flex;
 			flex-direction: column;
 		}

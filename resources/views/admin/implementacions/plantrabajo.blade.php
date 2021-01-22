@@ -1,13 +1,4 @@
 <style>
-th{
-background-color: #ffffff;
-}
-
-td{
-background-color: #ffffff;  
-}
-
-
 </style>
 
 <div  style="margin-bottom: 10px; margin-left:10px; margin-top:20px; "class="row">
@@ -38,7 +29,7 @@ background-color: #ffffff;
         <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-PlanBaseActividade">
             <thead>
                 <tr>
-                    <th width="10" style="background-color:#ffffff;" >
+                    <th>
 
                     </th>
                     <th>

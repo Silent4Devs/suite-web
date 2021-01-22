@@ -54,6 +54,8 @@
                         @include('admin.implementacions.plantrabajo')
                     </div>
 
+
+
                     <div class="tab-pane fade" id="just" role="tabpanel" aria-labelledby="contact-tab-just" style="margin-top: 30px;">
                         @include('admin.implementacions.consultoria')
                     </div>
@@ -65,18 +67,19 @@
 </div>
 
 <script>
-  if (localStorage.getItem('tab_plan') === 'true') {
-          document.getElementById('plan-tab-just').classList.add('active');
-          document.getElementById('plan-just').classList.add('active');
-          document.getElementById('plan-just').classList.add('show');
+        
+    const ejecutar = document.querySelector('#profile-tab-classic');
+    ejecutar.addEventListener('click', () => {
+        document.getElementById('profile-tab-just').classList.add('active');
+        document.getElementById('profile-just').classList.add('active');
+        document.getElementById('profile-just').classList.add('show');
 
 
-          document.getElementById('home-tab-just').classList.remove('active');
-          document.getElementById('home-just').classList.remove('active');
-          document.getElementById('home-just').classList.remove('show');
-
-          localStorage.setItem('tab_plan', 'false');
-      }
+        document.getElementById('home-tab-just').classList.remove('active');
+        document.getElementById('home-just').classList.remove('active');
+        document.getElementById('home-just').classList.remove('show');
+    });
+      
 </script>
 
 @endsection

@@ -13,7 +13,7 @@
         trabajo base con las actividades generales de implementación de la norma y la asesoría
         en línea de nuestros consultores expertos.
         <br><br>
-        <a id="profile-tab-classic" data-toggle="tab" href="#test2" role="tab" aria-controls="profile-classic" aria-selected="true" class="btn btn-primary mt-4">Siguiente</a>
+        <a id="profile-tab-classic" data-toggle="tab" href="#test2" role="tab" aria-controls="profile-classic" aria-selected="true" class="btn btn-primary mt-4" style="margin-left: 80%;">Siguiente</a>
 
     </p>
 

@@ -2,225 +2,74 @@
 @section('content')
 
 <style>
-
-.tablac-titulos{
-
- margin-top:-40px;
- height:45px;
- margin-left:250px;
-
-}
-
-.titulo_capacitacion{
-
-background-color:#0B0C0B;
-height:20px;
- width:300px;
-
-}
-
-.titulo_incidente{
-  background-color:#0B0C0B;
-  height:20px;
-   width:300px;
-
-}
-
-	@media(max-width: 796px){
-    .tablac-titulos{
-
-      margin-left:150px;
-
+    .caja_graficas{
+        width: calc(33% - 20px);
+        margin: 10px;
+        padding: 20px;
     }
-
-    .titulo_capacitacion{
-
-
-     width:150px;
-
+    .caja_graficas a{
+        width: 150px;
+        height: 30px;
+        background: #459e9e;
+        margin-top: 30px;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.7;
+        transition: 0.1s;
+        margin-left: calc(100% - 150px);
     }
-
-    .titulo_incidente{
-
-     width:160px;
-     height: 30px;
-     font-size:12px;
+    .caja_graficas a:hover{
+        opacity: 1;
     }
-
-
-  }
 </style>
 <div class="content">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="card caja_graficas">
+            <canvas id="chartActividades"></canvas>
+            <a id="a_plan" class="btn_ver" href="admin/implementacions#plan-just">
+                Ver Plan 
+            </a>
 
-        <div class="card mt-5">
-            <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center "
-                 style="margin-top:-40px; ">
-                <h3 class="mb-2  text-center text-white"><strong>Tablero de Control</strong></h3>
-            </div>
-
-          <div class="row">
-              <div class="col-12">
-                  <div class="card diseño-caja" style="margin-left:30px;margin-right:30px; margin-top:80px;">
-                    <div class="card-body">
-
-                        <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos">
-                            <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Plan</strong></h4>
-                        </div>
-                        <div class="col-12 align-self-center" style="background-color:#0B0C0B;height:20px;">
-                        <h6 class="text-white text-center">PROGRESO GENERAL DEL PLAN</h6>
-                        </div>
-
-                        <div class="container">
-                            <div class="row align-items-start">
-
-                              <div class="col-lg-2 col-md-2 col-sm-2" style="margin-top:20px; " >
-                              <a id="a_plan" class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/implementacions#plan-just">
-                                    Ver Plan >>
-                              </a>
-                              </div>
-
-                              <div class="col-lg-9 col-md-9 col-sm-9"  style="margin-top:20px; ">
-                                <canvas id="chartActividades"></canvas>
-                              </div>
-
-                          </div>
-                        </div>
-
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-                <div class="row nogap">
-                     <div class="text-center col-md-6"><p>&nbsp;</p></div>
-
-                </div>
-
-      <div class="row">
-          <div class="col-12">
-              <div class="card diseño-caja" style="margin-left:30px;margin-right:30px;">
-                <div class="card-body">
-
-                  <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos ">
-                      <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Do</strong></h4>
-                  </div>
-                      <div class="row">
-                        <div class="col-4" style="background-color:#0B0C0B;height:20px;">
-                          <h6 class="text-white text-center">DOCUMENTACIÓN</h6>
-                        <canvas id="chartDocu" width="350" height="450"></canvas>
-                        <div class="col-lg-12">
-                        <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/carpeta">
-                              Ver Detalle >>
-                        </a>
-                         </div>
-                        </div>
-                        <div class="col-4" >
-                            <h6  class="text-white text-center titulo_capacitacion">CAPACITACION</h6>
-
-                        <canvas id="chartCapaci" width="350" height="450"></canvas>
-                        <div class="col-lg-8">
-                        <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/recursos">
-                              Ver Detalle >>
-                        </a>
-                         </div>
-                        </div>
-                        <div class="col-4" >
-                        <h6  class="text-white text-center titulo_incidente">INCIDENTES DE SEGURIDAD</h6>
-                        <canvas id="incidentechart" width="350" height="450"></canvas>
-                        <div class="col-lg-12">
-                        <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/incidentes-de-seguridads">
-                              Ver Detalle >>
-                        </a>
-                         </div>
-                        </div>
-                    </div>
-                </div>
-              </div>
-          </div>
         </div>
-
-                <div class="row nogap">
-       <div class="text-center col-md-6"><p>&nbsp;</p></div>
-
-</div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card diseño-caja" style="margin-left:30px;margin-right:30px;">
-                  <div class="card-body">
-
-                      <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos">
-                          <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Check</strong></h4>
-                      </div>
-                      <div class="container">
-                          <div class="row align-items-start">
-
-                            <div class="col-4  mb-4">
-                                 <a class="btn" style="background-color:#048c74;color:white;" href="admin/auditoria-anuals">
-                              Ver Detalle &nbsp;>>
-                                </a>
-                            </div>
-
-                          <div class="col-7  mb-4">
-                              <canvas id="chartAuditoria" ></canvas>
-                          </div>
-
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card diseño-caja" style="margin-left:30px;margin-right:30px;margin-top:50px;">
-                  <div class="card-body">
-
-                    <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos">
-                        <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Act</strong></h4>
-                    </div>
-
-                    <div class="container">
-                        <div class="row align-items-start">
-
-                            <div class="col-4 text-left row">
-                                <div class="text-value col-12 mb-4">{{ number_format($settings5['total_number']) }}
-                                {{ $settings5['chart_title'] }}</div>
-                                <br />
-                                <div class="text-value col-12 mb-4">{{ number_format($settings6['total_number']) }}
-                                {{ $settings6['chart_title'] }}</div>
-                                <br />
-                                <div class="col-12 text-left mb-4">
-                                     <a class="btn" style="background-color:#048c74;color:white;" href="admin/accion-correctivas">
-                                  Ver Acción Correctiva &nbsp;>>
-                                    </a>
-                             </div>
-                             <div class="col-12 text-left mb-4">
-                            <a class="btn" style="background-color:#048c74;color:white;" href="admin/registromejoras">
-                                  Ver Registro de Mejora >>
-                            </a>
-                             </div>
-                            </div>
-
-
-
-                            <div class="col-8">
-                                <canvas id="myChart" width="0" height="300px"></canvas>
-                            </div>
-                      </div>
-                    </div>
-                 </div>
-              </div>
-          </div>
+        <div class="card caja_graficas">
+            <canvas id="chartDocu"></canvas>
+            <a id="a_plan" class="btn_ver" href="admin/carpeta">
+                Ver Plan 
+            </a>
         </div>
-      </div><!--content-->
+        <div class="card caja_graficas">
+            <canvas id="chartCapaci"></canvas>
+            <a id="a_plan" class="btn_ver" href="admin/recursos">
+                Ver Plan 
+            </a>
+        </div>
+        <div class="card caja_graficas">
+            <canvas id="incidentechart"></canvas>
+            <a id="a_plan" class="btn_ver" href="admin/incidentes-de-seguridads">
+                Ver Plan 
+            </a>
+        </div>
+        <div class="card caja_graficas">
+            <canvas id="chartAuditoria"></canvas>
+            <a id="a_plan" class="btn_ver" href="admin/auditoria-anuals">
+                Ver Plan 
+            </a>
+        </div>
+        <div class="card caja_graficas">
+            <canvas id="myChart"></canvas>
+            <div style="display: inline-block;">
+                <a id="a_plan" class="btn_ver" href="admin/accion-correctivas">
+                    Ver Plan 
+                </a>
+                <a id="a_plan" class="btn_ver" href="admin/registromejoras">
+                    Ver Plan 
+                </a>
+            </div>
+        </div>
     </div><!--row-->
  </div><!--col-->
 
