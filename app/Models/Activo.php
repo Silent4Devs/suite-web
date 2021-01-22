@@ -23,6 +23,7 @@ class Activo extends Model
     protected $fillable = [
         'tipoactivo_id',
         'subtipo_id',
+        'nombre_activo',
         'descripcion',
         'dueno_id',
         'ubicacion_id',

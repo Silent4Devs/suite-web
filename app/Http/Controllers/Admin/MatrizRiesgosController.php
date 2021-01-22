@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyMatrizRiesgoRequest;
 use App\Http\Requests\StoreMatrizRiesgoRequest;
 use App\Http\Requests\UpdateMatrizRiesgoRequest;
 use App\Models\Activo;
+use App\Models\Tipoactivo;
 use App\Models\Controle;
 use App\Models\MatrizRiesgo;
 use App\Models\Team;
@@ -119,7 +120,11 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activos = Activo::all()->pluck('descripcion', 'id')->prepend(trans('global.pleaseSelect'), '');
+        /*$activos = Activo::all()->pluck('descripcion', 'id')->prepend(trans('global.pleaseSelect'), '');*/
+
+        $activos = Tipoactivo::all();
+
+        dd($activos);
 
         $controles = Controle::all()->pluck('numero', 'id')->prepend(trans('global.pleaseSelect'), '');
 

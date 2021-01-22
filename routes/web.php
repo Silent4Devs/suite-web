@@ -17,6 +17,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('analisis-brechas/update','AnalisisBController@update');
 
 
+        // Declaracion de Aplicabilidad
+        Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
+        Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
+
     //gantt
     Route::get('gantt','GanttController@index');
     Route::post('gantt/update','GanttController@update');
@@ -328,7 +332,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
      // Gap Tres
      Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
      Route::resource('gap-tres', 'GapTresController');
-        
+
      // Control Documentos
     Route::delete('control-documentos/destroy', 'ControlDocumentosController@massDestroy')->name('control-documentos.massDestroy');
     Route::resource('control-documentos', 'ControlDocumentosController', ['except' => ['show']]);
@@ -394,6 +398,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     // Matriz Requisito Legales
     Route::delete('matriz-requisito-legales/destroy', 'MatrizRequisitoLegalesController@massDestroy')->name('matriz-requisito-legales.massDestroy');
     Route::resource('matriz-requisito-legales', 'MatrizRequisitoLegalesController');
+
 
     // Alcance Sgsis
     Route::delete('alcance-sgsis/destroy', 'AlcanceSgsiController@massDestroy')->name('alcance-sgsis.massDestroy');

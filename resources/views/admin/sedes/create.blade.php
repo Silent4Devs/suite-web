@@ -3,7 +3,7 @@
 
 <div class="card mt-4">
     <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Sede</h3>
+        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Sede - Ubicación</h3>
     </div>
 
     <div class="card-body">
@@ -19,6 +19,18 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.sede.fields.sede_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label class="required" for="direccion"><i class="fas fa-map-marker-alt iconos-crear"></i> Dirección</label>
+                <input class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" type="text" name="direccion" id="direccion" value="{{ old('direccion', '') }}" required>
+                @if($errors->has('direccion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('direccion') }}
+                    </div>
+                @endif
+                <span class="help-block"></span>
+            </div>
+
             <div class="form-group">
                 <label for="descripcion"><i class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.sede.fields.descripcion') }}</label>
                 <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>

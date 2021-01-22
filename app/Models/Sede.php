@@ -22,6 +22,7 @@ class Sede extends Model
 
     protected $fillable = [
         'sede',
+        'direccion',
         'descripcion',
         'organizacion_id',
         'created_at',

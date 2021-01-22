@@ -88,7 +88,7 @@ margin-left:100px;
             <div class="row">
                 <div class="form-group col-sm-6">
                     <label class="required" for="empresa"><i
-                            class="far fa-building iconos-crear"></i> {{ trans('cruds.organizacion.fields.empresa') }}
+                            class="far fa-building iconos-crear"></i> Nombre de la Empresa
                     </label>
                     <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
                            name="empresa" id="empresa" value="{{ $organizacion->empresa }}" disabled>
@@ -115,7 +115,7 @@ margin-left:100px;
                 </div>
                 <div class="form-group col-sm-6">
                     <label for="telefono"> <i
-                            class="fas fa-phone iconos-crear"></i> {{ trans('cruds.organizacion.fields.telefono') }}
+                            class="fas fa-phone iconos-crear"></i> Teléfono
                     </label>
                     <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number"
                            name="telefono" id="telefono" value="{{ $organizacion->telefono  }}" disabled>
@@ -141,7 +141,7 @@ margin-left:100px;
                 </div>
                 <div class="form-group col-sm-6">
                     <label for="pagina_web"> <i
-                            class="fas fa-pager iconos-crear"></i> {{ trans('cruds.organizacion.fields.pagina_web') }}
+                            class="fas fa-pager iconos-crear"></i> Página Web
                     </label>
                     <input class="form-control {{ $errors->has('pagina_web') ? 'is-invalid' : '' }}" type="text"
                            name="pagina_web" id="pagina_web" value="{{ $organizacion->pagina_web  }}" disabled>
@@ -179,8 +179,7 @@ margin-left:100px;
                     <span class="help-block">{{ trans('cruds.organizacion.fields.servicios_helper') }}</span>
                 </div>
                 <div class="form-group col-sm-6">
-                    <label for="mision"> <i
-                            class="far fa-eye iconos-crear"></i> {{ trans('cruds.organizacion.fields.mision') }}</label>
+                    <label for="mision"> <i class="fas fa-flag iconos-crear"></i> {{ trans('cruds.organizacion.fields.mision') }}</label>
                     <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision"
                               id="mision" disabled>{{ $organizacion->mision }}</textarea>
                     @if($errors->has('mision'))

@@ -10,7 +10,7 @@
         <form method="POST" action="{{ route("admin.organizacions.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-sm-6">
-                <label class="required" for="empresa"><i class="far fa-building iconos-crear"></i> {{ trans('cruds.organizacion.fields.empresa') }}</label>
+                <label class="required" for="empresa"><i class="far fa-building iconos-crear"></i> Nombre de la Empresa</label>
                 <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}" required>
                 @if($errors->has('empresa'))
                     <div class="invalid-feedback">
@@ -30,7 +30,7 @@
                 <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
             </div>
             <div class="form-group col-sm-6">
-                <label for="telefono"> <i class="fas fa-phone iconos-crear"></i> {{ trans('cruds.organizacion.fields.telefono') }}</label>
+                <label for="telefono"> <i class="fas fa-phone iconos-crear"></i> Teléfono</label>
                 <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number" name="telefono" id="telefono" value="{{ old('telefono', '') }}" step="1">
                 @if($errors->has('telefono'))
                     <div class="invalid-feedback">
@@ -50,7 +50,7 @@
                 <span class="help-block">{{ trans('cruds.organizacion.fields.correo_helper') }}</span>
             </div>
             <div class="form-group col-sm-6">
-                <label for="pagina_web"> <i class="fas fa-pager iconos-crear"></i> {{ trans('cruds.organizacion.fields.pagina_web') }}</label>
+                <label for="pagina_web"> <i class="fas fa-pager iconos-crear"></i> Página Web</label>
                 <input class="form-control {{ $errors->has('pagina_web') ? 'is-invalid' : '' }}" type="text" name="pagina_web" id="pagina_web" value="{{ old('pagina_web', '') }}">
                 @if($errors->has('pagina_web'))
                     <div class="invalid-feedback">
@@ -80,7 +80,7 @@
                 <span class="help-block">{{ trans('cruds.organizacion.fields.servicios_helper') }}</span>
             </div>
             <div class="form-group col-sm-6">
-                <label for="mision"> <i class="far fa-eye iconos-crear"></i> {{ trans('cruds.organizacion.fields.mision') }}</label>
+                <label for="mision"> <i class="fas fa-flag iconos-crear"></i> {{ trans('cruds.organizacion.fields.mision') }}</label>
                 <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision" id="mision">{{ old('mision') }}</textarea>
                 @if($errors->has('mision'))
                     <div class="invalid-feedback">
