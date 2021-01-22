@@ -47,6 +47,11 @@ class ActivosController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
+
+            $table->editColumn('nombre_activo', function ($row) {
+                return $row->nombre_activo ? $row->nombre_activo: "";
+            });
+
             $table->addColumn('tipoactivo_tipo', function ($row) {
                 return $row->tipoactivo ? $row->tipoactivo->tipo : '';
             });

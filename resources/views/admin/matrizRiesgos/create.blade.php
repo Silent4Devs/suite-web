@@ -11,7 +11,7 @@
             @csrf
           <div class="row">
             <div class="form-group col-md-6 col-sm-6">
-                <label for="proceso"><i class="fas fa-spinner iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.proceso') }}</label>
+                <label for="proceso"><i class="fas fa-cog iconos-crear"></i>Nombre del Proceso</label>
                 <input class="form-control {{ $errors->has('proceso') ? 'is-invalid' : '' }}" type="text" name="proceso" id="proceso" value="{{ old('proceso', '') }}">
                 @if($errors->has('proceso'))
                     <div class="invalid-feedback">
@@ -21,7 +21,7 @@
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.proceso_helper') }}</span>
             </div>
             <div class="form-group col-md-6 col-sm-6">
-                <label for="activo_id"><i class="fas fa-atom iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.activo') }}</label>
+                <label for="activo_id"><i class="fas fa-atom iconos-crear"></i>Tipo de Activo</label>
                 <select class="form-control select2 {{ $errors->has('activo') ? 'is-invalid' : '' }}" name="activo_id" id="activo_id">
                     @foreach($activos as $id => $activo)
                         <option value="{{ $id }}" {{ old('activo_id') == $id ? 'selected' : '' }}>{{ $activo }}</option>
@@ -49,7 +49,7 @@
 
           <div class="row">
             <div class="form-group col-sm-6">
-                <label for="amenaza"><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.amenaza') }}</label>
+                <label for="amenaza"><i class="fas fa-radiation iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.amenaza') }}</label>
                 <input class="form-control {{ $errors->has('amenaza') ? 'is-invalid' : '' }}" type="text" name="amenaza" id="amenaza" value="{{ old('amenaza', '') }}">
                 @if($errors->has('amenaza'))
                     <div class="invalid-feedback">
@@ -102,8 +102,14 @@
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.tipo_riesgo_helper') }}</span>
             </div>
           </div>
-            <div class="form-group ">
-                <label for="confidencialidad"><i class="fas fa-user-lock iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}</label>
+
+          <div class="form-group" style="margin-top:15px; width:1000px; height:25px; background-color:#1BB0B0"  >
+            <p class"text-center text-light" style="font-size:11pt; margin-left:280px; color:#ffffff;">Indique en que aspecto de la triada de seguridad impacta el riesgo:</p>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-4 ">
+                <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}</label>
                 <input class="form-control {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}" type="number" name="confidencialidad" id="confidencialidad" value="{{ old('confidencialidad', '') }}" step="0.01">
                 @if($errors->has('confidencialidad'))
                     <div class="invalid-feedback">
@@ -113,9 +119,9 @@
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.confidencialidad_helper') }}</span>
             </div>
 
-          <div class="row">
-            <div class="form-group col-sm-6">
-                <label for="integridad"><i class="fab fa-joomla iconos-crear"></i></i>{{ trans('cruds.matrizRiesgo.fields.integridad') }}</label>
+
+            <div class="form-group col-sm-4">
+                <label for="integridad"><i class="fas fa-puzzle-piece iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.integridad') }}</label>
                 <input class="form-control {{ $errors->has('integridad') ? 'is-invalid' : '' }}" type="number" name="integridad" id="integridad" value="{{ old('integridad', '') }}" step="0.01">
                 @if($errors->has('integridad'))
                     <div class="invalid-feedback">
@@ -124,8 +130,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.integridad_helper') }}</span>
             </div>
-            <div class="form-group col-sm-6">
-                <label for="disponibilidad"><i class="fas fa-clipboard-check iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}</label>
+            <div class="form-group col-sm-4">
+                <label for="disponibilidad"><i class="fas fa-eye iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}</label>
                 <input class="form-control {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}" type="number" name="disponibilidad" id="disponibilidad" value="{{ old('disponibilidad', '') }}" step="0.01">
                 @if($errors->has('disponibilidad'))
                     <div class="invalid-feedback">
@@ -153,7 +159,7 @@
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.probabilidad_helper') }}</span>
             </div>
             <div class="form-group col-sm-6">
-                <label><i class="fab fa-ubuntu iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.impacto') }}</label>
+                <label><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.matrizRiesgo.fields.impacto') }}</label>
                 <select class="form-control {{ $errors->has('impacto') ? 'is-invalid' : '' }}" name="impacto" id="impacto">
                     <option value disabled {{ old('impacto', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\MatrizRiesgo::IMPACTO_SELECT as $key => $label)

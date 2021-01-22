@@ -13,7 +13,7 @@
                 @csrf
                 <input type="hidden" name="org_id" value="{{$organizacion->id}}">
                 <div class="form-group">
-                    <label class="required" for="empresa">{{ trans('cruds.organizacion.fields.empresa') }}</label>
+                    <label class="required" for="empresa">Nombre de la Empresa</label>
                     <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
                            name="empresa" id="empresa" value="{{ old('empresa', $organizacion->empresa) }}" required>
                     @if($errors->has('empresa'))
@@ -23,6 +23,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span>
                 </div>
+
                 <div class="form-group">
                     <label class="required" for="direccion">{{ trans('cruds.organizacion.fields.direccion') }}</label>
                     <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" name="direccion"
@@ -35,7 +36,7 @@
                     <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label for="telefono">{{ trans('cruds.organizacion.fields.telefono') }}</label>
+                    <label for="telefono">Teléfono</label>
                     <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number"
                            name="telefono" id="telefono" value="{{ old('telefono', $organizacion->telefono) }}"
                            step="1">
@@ -58,7 +59,7 @@
                     <span class="help-block">{{ trans('cruds.organizacion.fields.correo_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label for="pagina_web">{{ trans('cruds.organizacion.fields.pagina_web') }}</label>
+                    <label for="pagina_web">Página Web</label>
                     <input class="form-control {{ $errors->has('pagina_web') ? 'is-invalid' : '' }}" type="text"
                            name="pagina_web" id="pagina_web" value="{{ old('pagina_web', $organizacion->pagina_web) }}">
                     @if($errors->has('pagina_web'))
@@ -91,7 +92,7 @@
                     <span class="help-block">{{ trans('cruds.organizacion.fields.servicios_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label for="mision">{{ trans('cruds.organizacion.fields.mision') }}</label>
+                    <label for="mision"><i class="fas fa-flag iconos-crear"></i> </label>
                     <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision"
                               id="mision">{{ old('mision', $organizacion->mision) }}</textarea>
                     @if($errors->has('mision'))
