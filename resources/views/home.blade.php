@@ -6,6 +6,18 @@
         width: calc(33% - 20px);
         margin: 10px;
         padding: 20px;
+        box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.12);
+    }
+    .caja_graficas h5{
+        width: 100%;
+        height: 30px;
+        color: #fff;
+        box-shadow: 0px 3px 5px 1px #888;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 7px;
     }
     .caja_graficas a{
         width: 150px;
@@ -18,55 +30,98 @@
         align-items: center;
         color: #fff;
         text-decoration: none;
-        opacity: 0.7;
+        opacity: 0.8;
         transition: 0.1s;
         margin-left: calc(100% - 150px);
+        box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.3);
     }
     .caja_graficas a:hover{
         opacity: 1;
+        box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.2);
+    } 
+    .especificaciones .iconos_espec{
+        font-size: 15pt;
     }
+    .especificaciones label{
+        font-size: 12pt;
+        margin-left: 20px;
+        color: #888;
+    }
+    .espec{
+        background-color: #A13D86;
+    }
+    .plan{
+        background-color: #3D72A1;
+    }
+    .check{
+        background-color: #DBA82D;
+    }
+    .act{
+        background-color: #2DB7DB;
+    }
+
+
+    body.c-dark-theme .caja_graficas h5{
+        box-shadow: 0px 3px 5px 1px rgba(0,0,0,0.5);
+    } 
 </style>
 <div class="content">
     <div class="row">
+
+        <h3 style="margin-bottom: -30px; color: #888; margin-left: 1%;">Dashboard ISO 27001</h3>
+        <div class="especificaciones col-12 text-right">
+
+            <label>Plan <i class="fas fa-square iconos_espec" style="color: #3D72A1;"></i></label>
+            <label>Do <i class="fas fa-square iconos_espec" style="color: #A13D86;"></i></label>
+            <label>Check <i class="fas fa-square iconos_espec" style="color: #DBA82D;"></i></label>
+            <label>Act <i class="fas fa-square iconos_espec" style="color: #2DB7DB;"></i></label>
+            
+        </div>
         <div class="card caja_graficas">
+            <h5 class="plan">Progreso General del Plan</h5>
             <canvas id="chartActividades"></canvas>
             <a id="a_plan" class="btn_ver" href="admin/implementacions#plan-just">
-                Ver Plan 
+                Ver Detalle 
             </a>
 
         </div>
         <div class="card caja_graficas">
+            <h5 class="espec">Documentación</h5>
             <canvas id="chartDocu"></canvas>
             <a id="a_plan" class="btn_ver" href="admin/carpeta">
-                Ver Plan 
+                Ver Detalle 
             </a>
         </div>
         <div class="card caja_graficas">
+            <h5 class="espec">Capacitación</h5>
             <canvas id="chartCapaci"></canvas>
             <a id="a_plan" class="btn_ver" href="admin/recursos">
-                Ver Plan 
+                Ver Detalle 
             </a>
         </div>
-        <div class="card caja_graficas">
+        <div class="card caja_graficas" style="width: 48%;">
+            <h5 class="check">Incidentes de Seguridad</h5>
             <canvas id="incidentechart"></canvas>
             <a id="a_plan" class="btn_ver" href="admin/incidentes-de-seguridads">
-                Ver Plan 
+                Ver Detalle 
             </a>
         </div>
-        <div class="card caja_graficas">
+        <div class="card caja_graficas" style="width: 48%;">
+            <h5 class="act">Auditorias</h5>
             <canvas id="chartAuditoria"></canvas>
             <a id="a_plan" class="btn_ver" href="admin/auditoria-anuals">
-                Ver Plan 
+                Ver Detalle 
             </a>
         </div>
-        <div class="card caja_graficas">
+        <div class="card caja_graficas" style="width: 100%;">
+            <h5 class="act">Registro de Acciones</h5>
             <canvas id="myChart"></canvas>
-            <div style="display: inline-block;">
-                <a id="a_plan" class="btn_ver" href="admin/accion-correctivas">
-                    Ver Plan 
+            <div style="display: inline-flex; justify-content: center;">
+                <a id="a_plan" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
+                    Ver Detalle 
                 </a>
-                <a id="a_plan" class="btn_ver" href="admin/registromejoras">
-                    Ver Plan 
+                <a id="a_plan" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
+                    Ver Detalle 
                 </a>
             </div>
         </div>
