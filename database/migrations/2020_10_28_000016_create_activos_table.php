@@ -10,6 +10,7 @@ class CreateActivosTable extends Migration
     {
         Schema::create('activos', function (Blueprint $table) {
             $table->increments('id');
+            $table->longText('nombreactivo')->nullable();
             $table->longText('descripcion')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -78,8 +78,7 @@
                                         <th COLSPAN="2">CONTROL</th>
                                         <th scope="col">VALORACIÓN</th>
                                         <th scope="col">EVIDENCIA DE
-                                            CUMPLIMIENTO
-                                        </th>
+                                            CUMPLIMIENTO</th>
                                         <th scope="col">RECOMENDACIÓN</th>
                                     </tr>
                                     </thead>
@@ -260,7 +259,7 @@
                                         <th scope="col">EVIDENCIA DE
                                             CUMPLIMIENTO
                                         </th>
-                                        <th scope="col">RECOMENDACIÓN</th>
+                                        <th scope="col">RECOMENDACIÓ</th>
                                     </tr>
                                     </thead>
                                     <tbody>

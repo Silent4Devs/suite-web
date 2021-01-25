@@ -51,6 +51,9 @@ class SedeController extends Controller
             $table->editColumn('sede', function ($row) {
                 return $row->sede ? $row->sede : "";
             });
+            $table->editColumn('direccion', function ($row) {
+                return $row->direccion ? $row->direccion : "";
+            });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
             });

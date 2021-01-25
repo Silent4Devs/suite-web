@@ -3,13 +3,25 @@
 
 <div class="card mt-4">
     <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Apreciación de Riesgos </h3>
+        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Alta de Activo </h3>
     </div>
 
     <div class="card-body">
         <form method="POST" class="row" action="{{ route("admin.activos.update", [$activo->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
+            <div class="form-group col-md-12">
+                <label for="nombreactivo_id"><i class="fas fa-chart-line iconos-crear"></i>Nombre del Activo</label>
+                <input class="form-control select2 {{ $errors->has('nombre_activo') ? 'is-invalid' : '' }}" name="nombre_activo" id="nombre_activo" value={{ old('nombre_activo', $activo->nombre_activo) }} >
+                @if($errors->has('nombre_activo'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('nombre_activo') }}
+                    </div>
+                @endif
+                  <span class="help-block"></span>
+            </div>
+
+
             <div class="form-group col-md-6">
                 <label for="tipoactivo_id"><i class="fas fa-chart-line iconos-crear"></i>{{ trans('cruds.activo.fields.tipoactivo') }}</label>
                 <select class="form-control select2 {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}" name="tipoactivo_id" id="tipoactivo_id">
