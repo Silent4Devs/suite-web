@@ -11,6 +11,7 @@ use App\Models\Tipoactivo;
 use App\Models\Controle;
 use App\Models\MatrizRiesgo;
 use App\Models\Team;
+use DB;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,14 +70,16 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('tipo_riesgo', function ($row) {
                 return $row->tipo_riesgo ? MatrizRiesgo::TIPO_RIESGO_SELECT[$row->tipo_riesgo] : '';
             });
+
+
             $table->editColumn('confidencialidad', function ($row) {
-                return $row->confidencialidad ? $row->confidencialidad : "";
+                    return $row->confidencialidad ? $row->confidencialidad : "";
             });
             $table->editColumn('integridad', function ($row) {
                 return $row->integridad ? $row->integridad : "";
             });
             $table->editColumn('disponibilidad', function ($row) {
-                return $row->disponibilidad ? $row->disponibilidad : "";
+                return $row->disponibilidad ? $row->disponibilidad: "";
             });
             $table->editColumn('probabilidad', function ($row) {
                 return $row->probabilidad ? MatrizRiesgo::PROBABILIDAD_SELECT[$row->probabilidad] : '';
@@ -109,6 +112,32 @@ class MatrizRiesgosController extends Controller
             return $table->make(true);
         }
 
+//        $matrizRiesgo  = MatrizRiesgo::SELECT('confidencialidad', 'disponibilidad', 'integridad')->get();
+        //$matrizRiesgo = MatrizRiesgo::all();
+
+
+        $desglose = "SELECT * FROM gestion_normativa.matriz_riesgos";
+        $result1 = DB::SELECT($desglose);
+        $matrizRiesgo = DB::table('matriz_riesgos')->select('confidencialidad', 'disponibilidad', 'integridad')->get();
+        $conf = 0;
+        $disp = 0;
+        $intg = 0;
+
+        foreach ($matrizRiesgo as $key) {
+            if ($key['confidencialidad'] = "SI") {
+              $conf += 3.3;
+            }
+            if ($key['disponibilidad'] = "SI") {
+              $disp += 3.3;
+            }else {
+              $disp += 0;
+            }
+            if ($key['integridad'] = "SI") {
+              $intg += 3.3;
+            }
+
+        }
+        dd($matrizRiesgo);
         $activos   = Activo::get();
         $controles = Controle::get();
         $teams     = Team::get();
@@ -124,7 +153,7 @@ class MatrizRiesgosController extends Controller
 
         $activos = Tipoactivo::all();
 
-        dd($activos);
+      /*  dd($activos);*/
 
         $controles = Controle::all()->pluck('numero', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -134,6 +163,7 @@ class MatrizRiesgosController extends Controller
     public function store(StoreMatrizRiesgoRequest $request)
     {
         $matrizRiesgo = MatrizRiesgo::create($request->all());
+        //dd($matrizRiesgo);
 
         return redirect()->route('admin.matriz-riesgos.index');
     }

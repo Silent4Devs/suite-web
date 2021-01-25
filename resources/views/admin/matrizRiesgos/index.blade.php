@@ -5,13 +5,13 @@
 <div class="card mt-5">
     <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center "
          style="margin-top:-40px; ">
-        <h3 class="mb-2  text-center text-white"><strong>Matriz de Riesgo</strong></h3>
+        <h3 class="mb-2  text-center text-white"><strong><i class="fas fa-table letra_blanca" style="font-size:20pt; margin-right:15px;" ></i>Matriz de Riesgo</strong></h3>
     </div>
 
     <div style="margin-bottom:10px; margin-left:12px;"  class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.matriz-riesgos.create') }}">
-                Agregar <strong>+<strong>
+                Agregar Riesgo
             </a>
         </div>
     </div>
@@ -59,6 +59,9 @@
                         {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}
                     </th>
                     <th>
+                        {{ trans('cruds.matrizRiesgo.fields.resultadoponderacion') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.matrizRiesgo.fields.probabilidad') }}
                     </th>
                     <th>
@@ -69,9 +72,6 @@
                     </th>
                     <th>
                         {{ trans('cruds.matrizRiesgo.fields.riesgototal') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.matrizRiesgo.fields.resultadoponderacion') }}
                     </th>
                     <th>
                         {{ trans('cruds.matrizRiesgo.fields.riesgoresidual') }}
@@ -120,17 +120,32 @@
                             <option value>{{ trans('global.all') }}</option>
                             @foreach(App\Models\MatrizRiesgo::TIPO_RIESGO_SELECT as $key => $item)
                                 <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
+                              @endforeach
                         </select>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                      <select class="search" strict="true">
+                          <option value>{{ trans('global.all') }}</option>
+                          @if($errors->has('confidencialidad'))
+                              <option value="{{ $key }}">{{ $item }}</option>
+                        @endif
+                      </select>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                      <select class="search" strict="true">
+                          <option value>{{ trans('global.all') }}</option>
+                          @if($errors->has('integridad'))
+                              <option value="{{ $key }}">{{ $item }}</option>
+                          @endif
+                      </select>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                      <select class="search" strict="true">
+                          <option value>{{ trans('global.all') }}</option>
+                        @if($errors->has('disponibilidad'))
+                              <option value="{{ $key }}">{{ $item }}</option>
+                          @endif
+                      </select>
                     </td>
                     <td>
                         <select class="search" strict="true">
@@ -237,11 +252,11 @@
 { data: 'confidencialidad', name: 'confidencialidad' },
 { data: 'integridad', name: 'integridad' },
 { data: 'disponibilidad', name: 'disponibilidad' },
+{ data: 'resultadoponderacion', name: 'resultadoponderacion' },
 { data: 'probabilidad', name: 'probabilidad' },
 { data: 'impacto', name: 'impacto' },
 { data: 'nivelriesgo', name: 'nivelriesgo' },
 { data: 'riesgototal', name: 'riesgototal' },
-{ data: 'resultadoponderacion', name: 'resultadoponderacion' },
 { data: 'riesgoresidual', name: 'riesgoresidual' },
 { data: 'controles_numero', name: 'controles.numero' },
 { data: 'justificacion', name: 'justificacion' },

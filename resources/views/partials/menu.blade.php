@@ -112,10 +112,10 @@
         @can('organizacion_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.organizacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizacions") || request()->is("admin/organizacions/*") ? "active" : "" }}">
-                    <i class="fa-fw fas fa-home iconos_menu letra_blanca">
+                    <i class="far fa-building iconos_menu letra_blanca">
 
                     </i>
-                    <font class="letra_blanca"> {{ trans('cruds.organizacion.title') }} </font>
+                    <font class="letra_blanca" style="margin-left:5px;"> {{ trans('cruds.organizacion.title') }} </font>
                 </a>
             </li>
         @endcan
@@ -182,18 +182,18 @@
         @can('analisis_riesgo_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/matriz-riesgos*") ? "c-show" : "" }} {{ request()->is("admin/gap-unos*") ? "c-show" : "" }} {{ request()->is("admin/gap-dos*") ? "c-show" : "" }} {{ request()->is("admin/gap-tres*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
+                  <i class="fas fa-exclamation-triangle iconos_menu letra_blanca">
 
-                    </i>
+                  </i>
+
                     <font class="letra_blanca"> {{ trans('cruds.analisisRiesgo.title') }} </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('matriz_riesgo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.matriz-riesgos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/matriz-riesgos") || request()->is("admin/matriz-riesgos/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
-
-                                </i>
+                              <i class="fas fa-table  iconos_menu letra_blanca">
+                              </i>
                                 <font class="letra_blanca"> {{ trans('cruds.matrizRiesgo.title') }} </font>
                             </a>
                         </li>
@@ -712,7 +712,69 @@
                 </ul>
             </li>
         @endcan
+
         <li class="c-sidebar-nav-title"><font class="letra_blanca">Administración</font></li>
+        @can('faq_management_access')
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fas fa-file-alt iconos_menu letra_blanca">
+
+                    </i>
+                    <font class="letra_blanca"> Configuracion de Datos </font>
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                  @can('organizacione_access')
+                      <li class="c-sidebar-nav-item">
+                          <a href="{{ route("admin.organizaciones.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizaciones") || request()->is("admin/organizaciones/*") ? "active" : "" }}">
+                              <i class="fa-fw fas fa-university iconos_menu letra_blanca" >
+
+                              </i>
+                              <font class="letra_blanca"> {{ trans('cruds.organizacione.title') }} </font>
+                          </a>
+                      </li>
+                  @endcan
+                  @can('sede_access')
+                      <li class="c-sidebar-nav-item">
+                          <a href="{{ route("admin.sedes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sedes") || request()->is("admin/sedes/*") ? "active" : "" }}">
+                              <i class="fa-fw fas fa-building iconos_menu letra_blanca" >
+
+                              </i>
+                              <font class="letra_blanca"> Sedes - Ubicación </font>
+                          </a>
+                      </li>
+                  @endcan
+                  @can('area_access')
+                      <li class="c-sidebar-nav-item">
+                          <a href="{{ route("admin.areas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
+                              <i class="fa-fw far fa-building iconos_menu letra_blanca" >
+
+                              </i>
+                              <font class="letra_blanca"> {{ trans('cruds.area.title') }} </font>
+                          </a>
+                      </li>
+                  @endcan
+                  @can('activo_access')
+                      <li class="c-sidebar-nav-item">
+                          <a href="{{ route("admin.activos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/activos") || request()->is("admin/activos/*") ? "active" : "" }}">
+                            <i class="fa-fw fas fa-laptop iconos_menu letra_blanca" >
+
+                            </i>
+                              <font class="letra_blanca"> Inventario de Activos</font>
+                          </a>
+                      </li>
+                  @endcan
+                  @can('tipoactivo_access')
+                      <li class="c-sidebar-nav-item">
+                          <a href="{{ route("admin.tipoactivos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/tipoactivos") || request()->is("admin/tipoactivos/*") ? "active" : "" }}">
+                        <i class="fas fa-th-list  iconos_menu letra_blanca"></i>
+                              <font class="letra_blanca"> Categorias de Activos</font>
+                          </a>
+                      </li>
+                  @endcan
+                </ul>
+            </li>
+        @endcan
+
         @can('user_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -772,44 +834,6 @@
                             </a>
                         </li>
                     @endcan
-                    @can('area_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.areas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
-                                <i class="fa-fw far fa-building iconos_menu letra_blanca" >
-
-                                </i>
-                                <font class="letra_blanca"> {{ trans('cruds.area.title') }} </font>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('organizacione_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.organizaciones.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizaciones") || request()->is("admin/organizaciones/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-university iconos_menu letra_blanca" >
-
-                                </i>
-                                <font class="letra_blanca"> {{ trans('cruds.organizacione.title') }} </font>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('activo_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.activos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/activos") || request()->is("admin/activos/*") ? "active" : "" }}">
-                              <i class="fa-fw fas fa-laptop iconos_menu letra_blanca" >
-
-                              </i>
-                                <font class="letra_blanca"> Inventario de Activos</font>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('tipoactivo_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.tipoactivos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/tipoactivos") || request()->is("admin/tipoactivos/*") ? "active" : "" }}">
-                          <i class="fas fa-th-list  iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> Categorias de Activos</font>
-                            </a>
-                        </li>
-                    @endcan
                     @can('puesto_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.puestos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/puestos") || request()->is("admin/puestos/*") ? "active" : "" }}">
@@ -827,16 +851,6 @@
 
                                 </i>
                                 <font class="letra_blanca"> {{ trans('cruds.userAlert.title') }} </font>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('sede_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.sedes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sedes") || request()->is("admin/sedes/*") ? "active" : "" }}">
-                                <i class="fa-fw fas fa-building iconos_menu letra_blanca" >
-
-                                </i>
-                                <font class="letra_blanca"> Sedes - Ubicación </font>
                             </a>
                         </li>
                     @endcan
