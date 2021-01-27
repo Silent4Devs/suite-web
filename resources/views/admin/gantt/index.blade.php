@@ -14,11 +14,14 @@
 
     <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
             <div id="containergantt"></div>
     
 
 
+            </div>
+            <div class="col-12">
+                @include('admin.gantt.grap')
             </div>
         </div>
     </div>

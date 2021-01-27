@@ -140,9 +140,8 @@
         @can('implementacion_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.implementacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/implementacions") || request()->is("admin/implementacions/*") ? "active" : "" }}">
-                    <i class="fa-fw far fa-window-restore iconos_menu letra_blanca">
-
-                    </i>
+                    
+                    <i class="fas fa-paper-plane iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> {{ trans('cruds.implementacion.title') }} </font>
                 </a>
             </li>
