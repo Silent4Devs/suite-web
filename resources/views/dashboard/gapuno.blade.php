@@ -7,7 +7,10 @@
                     Y PRIVACIDAD DE LA ORGANIZACIÓN ({{number_format($porcentajeGap1, 2, '.', '')}}%)</h6>
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                         aria-valuenow="{{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}" aria-valuemin="0" aria-valuemax="100" style="width: {{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}%">{{number_format($porcentajeGap1, 2, '.', '')}}%
+                         aria-valuenow="{{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}" aria-valuemin="0"
+                         aria-valuemax="100"
+                         style="width: {{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}%">{{number_format($porcentajeGap1, 2, '.', '')}}
+                        %
                     </div>
                 </div>
                 <div class="card">
@@ -95,9 +98,11 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="#" data-type="text" data-pk="{{$gapuno->id}}"
+                                        <a href="#" data-type="text"
+                                           data-pk="{{$gapuno->id}}"
                                            data-url="{{route("admin.gap-unos.update", $gapuno->id)}}"
-                                           data-title="Evidencia" data-value="{{$gapuno->evidencia}}" class="evidencia"
+                                           data-title="Evidencia" data-value="{{$gapuno->evidencia}}"
+                                           class="evidencia"
                                            data-name="evidencia">
                                         </a>
                                     </td>

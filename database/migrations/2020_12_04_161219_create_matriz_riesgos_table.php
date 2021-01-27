@@ -21,14 +21,14 @@ class CreateMatrizRiesgosTable extends Migration
             $table->string('vulnerabilidad')->nullable();
             $table->string('descripcionriesgo')->nullable();
             $table->string('tipo_riesgo')->nullable();
-            $table->float('confidencialidad', 5, 2)->nullable();
-            $table->float('integridad', 5, 2)->nullable();
-            $table->float('disponibilidad', 5, 2)->nullable();
+            $table->string('confidencialidad')->nullable();
+            $table->string('integridad')->nullable();
+            $table->string('disponibilidad')->nullable();
             $table->string('probabilidad')->nullable();
             $table->string('impacto')->nullable();
             $table->float('nivelriesgo', 5, 2)->nullable();
             $table->float('riesgototal', 5, 2)->nullable();
-            $table->float('resultadoponderacion', 5, 2)->nullable();
+            $table->decimal('resultadoponderacion', 10, 2)->nullable();
             $table->float('riesgoresidual', 5, 2)->nullable();
             $table->string('justificacion')->nullable();
             $table->timestamps();

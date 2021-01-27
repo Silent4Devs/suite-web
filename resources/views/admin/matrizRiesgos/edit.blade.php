@@ -89,35 +89,52 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.tipo_riesgo_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label for="confidencialidad">{{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}</label>
-                <input class="form-control {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}" type="number" name="confidencialidad" id="confidencialidad" value="{{ old('confidencialidad', $matrizRiesgo->confidencialidad) }}" step="0.01">
-                @if($errors->has('confidencialidad'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('confidencialidad') }}
-                    </div>
+                <select class="form-control" class="validate" required="" aria-required="true">
+                    <option value="" disabled selected>Escoga una opción</option>
+                    <option value="0">Si</option>
+                    <option value="3.33">No</option>
+                </select>
+                  @if($errors->has('confidencialidad'))
+                  <div class="invalid-feedback">
+                      {{ $errors->first('confidencialidad') }}
+                  </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.confidencialidad_helper') }}</span>
             </div>
+
+
             <div class="form-group">
                 <label for="integridad">{{ trans('cruds.matrizRiesgo.fields.integridad') }}</label>
-                <input class="form-control {{ $errors->has('integridad') ? 'is-invalid' : '' }}" type="number" name="integridad" id="integridad" value="{{ old('integridad', $matrizRiesgo->integridad) }}" step="0.01">
-                @if($errors->has('integridad'))
+                  <select class="form-control" class="validate" required="" aria-required="true">
+                      <option value="" disabled selected>Escoga una opción</option>
+                      <option value="0">Si</option>
+                      <option value="3.33">No</option>
+                  </select>
+                    @if($errors->has('integridad'))
                     <div class="invalid-feedback">
                         {{ $errors->first('integridad') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.integridad_helper') }}</span>
+                  <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.integridad_helper') }}</span>
             </div>
+
+
             <div class="form-group">
                 <label for="disponibilidad">{{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}</label>
-                <input class="form-control {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}" type="number" name="disponibilidad" id="disponibilidad" value="{{ old('disponibilidad', $matrizRiesgo->disponibilidad) }}" step="0.01">
-                @if($errors->has('disponibilidad'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('disponibilidad') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.disponibilidad_helper') }}</span>
+                <select class="form-control" class="validate" required="" aria-required="true" name="integridad">
+                    <option value="" disabled selected>Escoga una opción</option>
+                    <option value="0">Si</option>
+                    <option value="3.33">No</option>
+                </select>
+                  @if($errors->has('integridad'))
+                  <div class="invalid-feedback">
+                      {{ $errors->first('integridad') }}
+                  </div>
+              @endif
+                <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.integridad_helper') }}</span>
             </div>
             <div class="form-group">
                 <label>{{ trans('cruds.matrizRiesgo.fields.probabilidad') }}</label>

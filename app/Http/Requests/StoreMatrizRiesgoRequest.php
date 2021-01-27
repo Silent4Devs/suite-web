@@ -38,13 +38,16 @@ class StoreMatrizRiesgoRequest extends FormRequest
                 'nullable',
             ],
             'confidencialidad'     => [
-                'numeric',
+              'string',
+              'nullable',
             ],
             'integridad'           => [
-                'numeric',
+              'string',
+              'nullable',
             ],
             'disponibilidad'       => [
-                'numeric',
+              'string',
+              'nullable',
             ],
             'nivelriesgo'          => [
                 'numeric',

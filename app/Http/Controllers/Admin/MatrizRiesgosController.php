@@ -11,10 +11,12 @@ use App\Models\Tipoactivo;
 use App\Models\Controle;
 use App\Models\MatrizRiesgo;
 use App\Models\Team;
+use DB;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Functions\Mriesgos;
 
 class MatrizRiesgosController extends Controller
 {
@@ -30,9 +32,9 @@ class MatrizRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'matriz_riesgo_show';
-                $editGate      = 'matriz_riesgo_edit';
-                $deleteGate    = 'matriz_riesgo_delete';
+                $viewGate = 'matriz_riesgo_show';
+                $editGate = 'matriz_riesgo_edit';
+                $deleteGate = 'matriz_riesgo_delete';
                 $crudRoutePart = 'matriz-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -69,6 +71,8 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('tipo_riesgo', function ($row) {
                 return $row->tipo_riesgo ? MatrizRiesgo::TIPO_RIESGO_SELECT[$row->tipo_riesgo] : '';
             });
+
+
             $table->editColumn('confidencialidad', function ($row) {
                 return $row->confidencialidad ? $row->confidencialidad : "";
             });
@@ -109,9 +113,9 @@ class MatrizRiesgosController extends Controller
             return $table->make(true);
         }
 
-        $activos   = Activo::get();
+        $activos = Activo::get();
         $controles = Controle::get();
-        $teams     = Team::get();
+        $teams = Team::get();
 
         return view('admin.matrizRiesgos.index', compact('activos', 'controles', 'teams'));
     }
@@ -124,7 +128,7 @@ class MatrizRiesgosController extends Controller
 
         $activos = Tipoactivo::all();
 
-        dd($activos);
+        /*  dd($activos);*/
 
         $controles = Controle::all()->pluck('numero', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -133,6 +137,9 @@ class MatrizRiesgosController extends Controller
 
     public function store(StoreMatrizRiesgoRequest $request)
     {
+        $calculo = new Mriesgos();
+        $res = $calculo->CalculoD($request);
+        $request->request->add(['resultadoponderacion' => $res]);
         $matrizRiesgo = MatrizRiesgo::create($request->all());
 
         return redirect()->route('admin.matriz-riesgos.index');
@@ -153,6 +160,9 @@ class MatrizRiesgosController extends Controller
 
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
     {
+        $calculo = new Mriesgos();
+        $res = $calculo->CalculoD($request);
+        $request->request->add(['resultadoponderacion' => $res]);
         $matrizRiesgo->update($request->all());
 
         return redirect()->route('admin.matriz-riesgos.index');

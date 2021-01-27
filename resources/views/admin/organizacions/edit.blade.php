@@ -1,10 +1,12 @@
 @extends('layouts.admin')
 @section('content')
 
-    <div class="card">
-        <div class="card-header">
-            {{ trans('global.edit') }} {{ trans('cruds.organizacion.title_singular') }}
-        </div>
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Mi organización </h3>
+    </div>
+
+
 
         <div class="card-body">
             <form method="POST" action="{{ route("admin.organizacions.update", [$organizacion->id]) }}"
@@ -145,7 +147,7 @@
                     <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-danger float-right" type="submit">
+                    <button class="btn btn-danger float-right "type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
