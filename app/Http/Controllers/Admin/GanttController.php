@@ -17,8 +17,8 @@ class GanttController extends Controller
         $planbase = PlanBaseActividade::get();
         $responsable = User::get();
         $responsablenom =  User::select('name')->where('id', '=', '3');
-        
-        return view('admin.gantt.grap', compact('planbase','responsable',))
+        //dd($planbase, $responsable, $responsablenom);
+        return view('admin.gantt.index', compact('planbase','responsable',))
             ->with('planbases', $planbase);
     }
   

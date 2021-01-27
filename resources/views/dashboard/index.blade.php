@@ -96,8 +96,26 @@
 @endsection
 @section('scripts')
 
+<script>
+        
+    const ejecutar = document.querySelector('#btn_ejecutar');
+    ejecutar.addEventListener('click', () => {
+        document.getElementById('profile-tab').classList.add('active');
+        document.getElementById('gapuno').classList.add('active');
+        document.getElementById('gapuno').classList.add('show');
+
+
+        document.getElementById('home-tab').classList.remove('active');
+        document.getElementById('home').classList.remove('active');
+        document.getElementById('home').classList.remove('show');
+    });
+      
+</script>
+
 @endsection
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+
+

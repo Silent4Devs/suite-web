@@ -3,16 +3,39 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Gate;
+use App\Models\PlanBaseActividade;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Functions\Porcentaje;
+use App\Models\User;
 
-class ImplementacionController extends Controller
+class implementacionController extends Controller
 {
+    //
+
     public function index()
     {
-        abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $planbase = PlanBaseActividade::get();
+        $responsable = User::get();
+        $responsablenom =  User::select('name')->where('id', '=', '3');
+        //dd($planbase, $responsable, $responsablenom);
+        return view('admin.implementacions.index', compact('planbase','responsable',))
+            ->with('planbases', $planbase);
+    }
+  
+    public function update(Request $request, $id)
+    {
 
-        return view('admin.implementacions.index');
+        if ($request->ajax()) {
+            switch ($request->name) {
+                case 'estatus_id':
+                    $planbas = PlanBaseActividade::findOrFail($id);
+                    $planbas->estatus_id = $request->value;
+                    $planbas->save();
+                    return response()->json(['success' => true]);
+                    break;
+              
+            }
+        }
+
     }
 }

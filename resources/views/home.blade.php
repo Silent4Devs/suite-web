@@ -2,225 +2,129 @@
 @section('content')
 
 <style>
-
-.tablac-titulos{
-
- margin-top:-40px;
- height:45px;
- margin-left:250px;
-
-}
-
-.titulo_capacitacion{
-
-background-color:#0B0C0B;
-height:20px;
- width:300px;
-
-}
-
-.titulo_incidente{
-  background-color:#0B0C0B;
-  height:20px;
-   width:300px;
-
-}
-
-	@media(max-width: 796px){
-    .tablac-titulos{
-
-      margin-left:150px;
-
+    .caja_graficas{
+        width: calc(33% - 20px);
+        margin: 10px;
+        padding: 20px;
+        box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.12);
+    }
+    .caja_graficas h5{
+        width: 100%;
+        height: 40px;
+        color: #fff;
+        box-shadow: 0px 3px 5px 1px #888;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 7px;
+    }
+    .caja_graficas a{
+        width: 150px;
+        height: 30px;
+        background: #459e9e;
+        margin-top: 30px;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.8;
+        transition: 0.1s;
+        margin-left: calc(100% - 150px);
+        box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.3);
+    }
+    .caja_graficas a:hover{
+        opacity: 1;
+        box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.2);
+    } 
+    .especificaciones .iconos_espec{
+        font-size: 15pt;
+    }
+    .especificaciones label{
+        font-size: 12pt;
+        margin-left: 20px;
+        color: #888;
+    }
+    .espec{
+        background-color: #A13D86;
+    }
+    .plan{
+        background-color: #3D72A1;
+    }
+    .check{
+        background-color: #DBA82D;
+    }
+    .act{
+        background-color: #2DB7DB;
     }
 
-    .titulo_capacitacion{
 
-
-     width:150px;
-
-    }
-
-    .titulo_incidente{
-
-     width:160px;
-     height: 30px;
-     font-size:12px;
-    }
-
-
-  }
+    body.c-dark-theme .caja_graficas h5{
+        box-shadow: 0px 3px 7px -1px rgba(0,0,0,0.3);
+    } 
 </style>
 <div class="content">
     <div class="row">
-        <div class="col-lg-12">
 
-        <div class="card mt-5">
-            <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center "
-                 style="margin-top:-40px; ">
-                <h3 class="mb-2  text-center text-white"><strong>Tablero de Control</strong></h3>
-            </div>
+        <h3 style="margin-bottom: -30px; color: #888; margin-left: 1%;">Dashboard ISO 27001</h3>
+        <div class="especificaciones col-12 text-right">
 
-          <div class="row">
-              <div class="col-12">
-                  <div class="card diseño-caja" style="margin-left:30px;margin-right:30px; margin-top:80px;">
-                    <div class="card-body">
-
-                        <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos">
-                            <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Plan</strong></h4>
-                        </div>
-                        <div class="col-12 align-self-center" style="background-color:#0B0C0B;height:20px;">
-                        <h6 class="text-white text-center">PROGRESO GENERAL DEL PLAN</h6>
-                        </div>
-
-                        <div class="container">
-                            <div class="row align-items-start">
-
-                              <div class="col-lg-2 col-md-2 col-sm-2" style="margin-top:20px; " >
-                              <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/implementacions#plan-just">
-                                    Ver Plan >>
-                              </a>
-                              </div>
-
-                              <div class="col-lg-9 col-md-9 col-sm-9"  style="margin-top:20px; ">
-                                <canvas id="chartActividades"></canvas>
-                              </div>
-
-                          </div>
-                        </div>
-
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-                <div class="row nogap">
-                     <div class="text-center col-md-6"><p>&nbsp;</p></div>
-
-                </div>
-
-      <div class="row">
-          <div class="col-12">
-              <div class="card diseño-caja" style="margin-left:30px;margin-right:30px;">
-                <div class="card-body">
-
-                  <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos ">
-                      <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Do</strong></h4>
-                  </div>
-                      <div class="row">
-                        <div class="col-4" style="background-color:#0B0C0B;height:20px;">
-                          <h6 class="text-white text-center">DOCUMENTACIÓN</h6>
-                        <canvas id="chartDocu" width="350" height="450"></canvas>
-                        <div class="col-lg-12">
-                        <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/carpeta">
-                              Ver Detalle >>
-                        </a>
-                         </div>
-                        </div>
-                        <div class="col-4" >
-                            <h6  class="text-white text-center titulo_capacitacion">CAPACITACION</h6>
-
-                        <canvas id="chartCapaci" width="350" height="450"></canvas>
-                        <div class="col-lg-8">
-                        <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/recursos">
-                              Ver Detalle >>
-                        </a>
-                         </div>
-                        </div>
-                        <div class="col-4" >
-                        <h6  class="text-white text-center titulo_incidente">INCIDENTES DE SEGURIDAD</h6>
-                        <canvas id="incidentechart" width="350" height="450"></canvas>
-                        <div class="col-lg-12">
-                        <a class="btn float-sm-right" style="background-color:#048c74;color:white;" href="admin/incidentes-de-seguridads">
-                              Ver Detalle >>
-                        </a>
-                         </div>
-                        </div>
-                    </div>
-                </div>
-              </div>
-          </div>
+            <label>Plan <i class="fas fa-square iconos_espec" style="color: #3D72A1;"></i></label>
+            <label>Do <i class="fas fa-square iconos_espec" style="color: #A13D86;"></i></label>
+            <label>Check <i class="fas fa-square iconos_espec" style="color: #DBA82D;"></i></label>
+            <label>Act <i class="fas fa-square iconos_espec" style="color: #2DB7DB;"></i></label>
+            
         </div>
+        <div class="card caja_graficas">
+            <h5 class="plan">Progreso General del Plan</h5>
+            <canvas id="chartActividades"></canvas>
+            <a id="a_plan" class="btn_ver" href="admin/implementacions#plan-just">
+                Ver Detalle 
+            </a>
 
-                <div class="row nogap">
-       <div class="text-center col-md-6"><p>&nbsp;</p></div>
-
-</div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card diseño-caja" style="margin-left:30px;margin-right:30px;">
-                  <div class="card-body">
-
-                      <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos">
-                          <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Check</strong></h4>
-                      </div>
-                      <div class="container">
-                          <div class="row align-items-start">
-
-                            <div class="col-4  mb-4">
-                                 <a class="btn" style="background-color:#048c74;color:white;" href="admin/auditoria-anuals">
-                              Ver Detalle &nbsp;>>
-                                </a>
-                            </div>
-
-                          <div class="col-7  mb-4">
-                              <canvas id="chartAuditoria" ></canvas>
-                          </div>
-
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card diseño-caja" style="margin-left:30px;margin-right:30px;margin-top:50px;">
-                  <div class="card-body">
-
-                    <div class="col-md-5 col-sm-5 py-3 card card-body bg-primary align-self-center tablac-titulos">
-                        <h4 class="mb-2  text-center text-white" style="margin-top:-10px;"><strong>Act</strong></h4>
-                    </div>
-
-                    <div class="container">
-                        <div class="row align-items-start">
-
-                            <div class="col-4 text-left row">
-                                <div class="text-value col-12 mb-4">{{ number_format($settings5['total_number']) }}
-                                {{ $settings5['chart_title'] }}</div>
-                                <br />
-                                <div class="text-value col-12 mb-4">{{ number_format($settings6['total_number']) }}
-                                {{ $settings6['chart_title'] }}</div>
-                                <br />
-                                <div class="col-12 text-left mb-4">
-                                     <a class="btn" style="background-color:#048c74;color:white;" href="admin/accion-correctivas">
-                                  Ver Acción Correctiva &nbsp;>>
-                                    </a>
-                             </div>
-                             <div class="col-12 text-left mb-4">
-                            <a class="btn" style="background-color:#048c74;color:white;" href="admin/registromejoras">
-                                  Ver Registro de Mejora >>
-                            </a>
-                             </div>
-                            </div>
-
-
-
-                            <div class="col-8">
-                                <canvas id="myChart" width="0" height="300px"></canvas>
-                            </div>
-                      </div>
-                    </div>
-                 </div>
-              </div>
-          </div>
         </div>
-      </div><!--content-->
+        <div class="card caja_graficas">
+            <h5 class="espec">Documentación</h5>
+            <canvas id="chartDocu"></canvas>
+            <a id="a_plan" class="btn_ver" href="admin/carpeta">
+                Ver Detalle 
+            </a>
+        </div>
+        <div class="card caja_graficas">
+            <h5 class="espec">Capacitación</h5>
+            <canvas id="chartCapaci"></canvas>
+            <a id="a_plan" class="btn_ver" href="admin/recursos">
+                Ver Detalle 
+            </a>
+        </div>
+        <div class="card caja_graficas" style="width: 48%;">
+            <h5 class="check">Incidentes de Seguridad</h5>
+            <canvas id="incidentechart"></canvas>
+            <a id="a_plan" class="btn_ver" href="admin/incidentes-de-seguridads">
+                Ver Detalle 
+            </a>
+        </div>
+        <div class="card caja_graficas" style="width: 48%;">
+            <h5 class="act">Auditorias</h5>
+            <canvas id="chartAuditoria"></canvas>
+            <a id="a_plan" class="btn_ver" href="admin/auditoria-anuals">
+                Ver Detalle 
+            </a>
+        </div>
+        <div class="card caja_graficas" style="width: 100%;">
+            <h5 class="act">Registro de Acciones</h5>
+            <canvas id="myChart"></canvas>
+            <div style="display: inline-flex; justify-content: center;">
+                <a id="a_plan" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
+                    Ver Detalle 
+                </a>
+                <a id="a_plan" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
+                    Ver Detalle 
+                </a>
+            </div>
+        </div>
     </div><!--row-->
  </div><!--col-->
 
@@ -232,6 +136,14 @@ height:20px;
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js">
 </script>{!! $chart1->renderJs() !!}{!! $chart2->renderJs() !!}{!! $chart3->renderJs() !!}{!! $chart4->renderJs() !!}
+
+<script>
+
+    const a_plan = document.querySelector('#a_plan');
+    a_plan.addEventListener('click', () => {
+        localStorage.setItem('tab_plan', 'true');
+    });
+</script>
 <script>
 
 

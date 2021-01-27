@@ -294,8 +294,15 @@
 <script src="{{ asset('js/main.js') }}"></script>
 
 <!-- x editable -->
-<script
-    src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+         $('.c-sidebar-nav').animate({
+         scrollTop: $(".c-active").offset().top - 350
+         },0);
+    });
+</script>
 
 <script>
     $('div.alert').not('.alert-important').delay(3000).fadeOut(350);

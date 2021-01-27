@@ -6,7 +6,7 @@
 
 <div class="card mt-5">
   <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-      <h3 class="mb-2  text-center text-white"><strong>Implementación de ISO 27001</strong></h3>
+      <h3 class="mb-2  text-center text-white"><i class="fas fa-paper-plane" style="margin-right: 15px;"></i> <strong> Implementación de ISO 27001</strong></h3>
   </div>
 
     <div class="card-body">
@@ -54,6 +54,8 @@
                         @include('admin.implementacions.plantrabajo')
                     </div>
 
+
+
                     <div class="tab-pane fade" id="just" role="tabpanel" aria-labelledby="contact-tab-just" style="margin-top: 30px;">
                         @include('admin.implementacions.consultoria')
                     </div>
@@ -64,7 +66,21 @@
     </div>
 </div>
 
+<script>
+        
+    const ejecutar = document.querySelector('#profile-tab-classic');
+    ejecutar.addEventListener('click', () => {
+        document.getElementById('profile-tab-just').classList.add('active');
+        document.getElementById('profile-just').classList.add('active');
+        document.getElementById('profile-just').classList.add('show');
 
+
+        document.getElementById('home-tab-just').classList.remove('active');
+        document.getElementById('home-just').classList.remove('active');
+        document.getElementById('home-just').classList.remove('show');
+    });
+      
+</script>
 
 @endsection
 
