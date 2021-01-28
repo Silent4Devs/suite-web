@@ -145,7 +145,9 @@ class PlanBaseActividadesController extends Controller
 
     public function update(UpdatePlanBaseActividadeRequest $request, PlanBaseActividade $planBaseActividade)
     {
-        $planBaseActividade->update($request->all());
+
+
+       /*$planBaseActividade->update($request->all());
 
         if ($request->input('guia', false)) {
             if (!$planBaseActividade->guia || $request->input('guia') !== $planBaseActividade->guia->file_name) {
@@ -159,8 +161,33 @@ class PlanBaseActividadesController extends Controller
             $planBaseActividade->guia->delete();
         }
 
-        return redirect()->route('admin.plan-base-actividades.index');
+        return redirect()->route('admin.plan-base-actividades.index');*/
+
+        if ($request->ajax()) {​​
+            switch ($request->name) {​​
+                case 'estatus_id':
+                    $planBaseActividade = PlanBaseActividade::findOrFail($id);
+                    $planBaseActividade->estatus_id = $request->value;
+                    $planBaseActividade->save();
+                    return response()->json(['success' => true]);
+                break;
+            }​
+        }
     }
+
+    /*public function update(Request $request, $id){
+    if ($request->ajax()) {​​
+        switch ($request->name) {​​
+            case 'estatus_id':
+                $gapun = PlanBaseActividade::findOrFail($id);
+                $gapun->estatus_id = $request->value;
+                $gapun->save();
+                return response()->json(['success' => true]);
+                break;
+            }​
+        }
+    }*/
+   
 
     public function show(PlanBaseActividade $planBaseActividade)
     {
