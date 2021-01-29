@@ -84,10 +84,11 @@ class MatrizRiesgo extends Model
         $this->save();
     }
 
-    public function tipoactivo()
+    //modificar este modelo
+    /*public function tipoactivo()
     {
         return $this->belongsTo(Tipoactivo::class, 'activo_id');
-    }
+    }*/
 
     public function controles()
     {
