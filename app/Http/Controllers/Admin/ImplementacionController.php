@@ -32,7 +32,7 @@ class implementacionController extends Controller
                     $planbas->estatus_id = $request->value;
                     $planbas->save();
                     return response()->json(['success' => true]);
-                    break;
+                break;
               
             }
         }
