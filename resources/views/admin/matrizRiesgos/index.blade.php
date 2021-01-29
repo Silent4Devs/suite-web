@@ -2,6 +2,28 @@
 @section('content')
 @can('matriz_riesgo_create')
 
+<style>
+
+th{
+ background-color:#1BB0B0;
+ color:#ffff;
+
+ }
+
+.iconos-tabla{
+color:#fff;
+font-size:10pt;
+
+}
+
+.iconos-top{
+
+  margin-right:5px;
+  margin-top:5px;
+}
+
+</style>
+
 <div class="card mt-5">
     <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center "
          style="margin-top:-40px; ">
@@ -19,9 +41,20 @@
 
 
     <div class="card-body">
+
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-MatrizRiesgo">
+
             <thead>
+
+              <tr class="negras">
+                <th class="text-center" style="background-color:#14D8AC;" colspan="9">Descripción General </th>
+                <th class="text-center" style="background-color:#23C29F;" colspan="3">Impacto en la triada CID</th>
+                <th class="text-center" style="background-color:#31D3B0;" colspan="9">Evaluación de Riesgo Inicial</th>
+
+              </tr>
+
                 <tr>
+
                     <th width="10">
 
                     </th>
@@ -29,58 +62,58 @@
                         {{ trans('cruds.matrizRiesgo.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.proceso') }}
+                      <i class="fas fa-cog iconos-crear iconos-tabla"></i>Proceso
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.activo') }}
+                    <div >  <i class="fas fa-shield-alt iconos-tabla"></i>  Activo</div>
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.responsableproceso') }}
+                      <i class="fas fa-user-alt iconos-tabla" ></i> Responsable del proceso
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.amenaza') }}
+                      <i class="fas fa-radiation  iconos-tabla"></i> Amenaza
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.vulnerabilidad') }}
+                      <i class="fas fa-shield-alt  iconos-tabla"></i> Vulnerabilidad
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.descripcionriesgo') }}
+                        <i class="fas fa-exclamation-triangle iconos-tabla"></i> {{ trans('cruds.matrizRiesgo.fields.descripcionriesgo') }}
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.tipo_riesgo') }}
+                      <label style=""> <i class="fas fa-exclamation-triangle  iconos-tabla"></i> {{ trans('cruds.matrizRiesgo.fields.tipo_riesgo') }} </label>
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}
+                      <label style="display:inline-flex;">  <i class="fas fa-lock  iconos-tabla iconos-top" ></i> {{ trans('cruds.matrizRiesgo.fields.confidencialidad') }} </label>
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.integridad') }}
+                      <label style="display:inline-flex;"> <i class="fas fa-puzzle-piece  iconos-tabla iconos-top"></i> {{ trans('cruds.matrizRiesgo.fields.integridad') }} </label>
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}
+                      <label style="display:inline-flex;">  <i class="fas fa-eye  iconos-tabla iconos-top"></i> {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }} </label>
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.resultadoponderacion') }}
+                        Ponderación por Factores
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.probabilidad') }}
+                      <label style="display:inline-flex;"> <i class="fas fa-dice  iconos-tabla iconos-top "></i> {{ trans('cruds.matrizRiesgo.fields.probabilidad') }} </label>
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.impacto') }}
+                        <i class="fas fa-bullseye  iconos-tabla"></i> {{ trans('cruds.matrizRiesgo.fields.impacto') }}
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.nivelriesgo') }}
+                        <i class="fas fa-chart-bar  iconos-tabla"></i> {{ trans('cruds.matrizRiesgo.fields.nivelriesgo') }}
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.riesgototal') }}
+                      <i class="fas fa-times-circle  iconos-tabla"></i> {{ trans('cruds.matrizRiesgo.fields.riesgototal') }}
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.riesgoresidual') }}
+                      <i class="fas fa-tachometer-alt  iconos-tabla"></i> {{ trans('cruds.matrizRiesgo.fields.riesgoresidual') }}
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.controles') }}
+                    <label style="display:inline-flex;">   <i class="fas fa-broadcast-tower iconos-top iconos-tabla"></i> {{ trans('cruds.matrizRiesgo.fields.controles') }}</label>
                     </th>
                     <th>
-                        {{ trans('cruds.matrizRiesgo.fields.justificacion') }}
+                      <i class="fas fa-file-alt  iconos-tabla"></i>  {{ trans('cruds.matrizRiesgo.fields.justificacion') }}
                     </th>
                     <th>
                         &nbsp;
@@ -98,8 +131,8 @@
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($activos as $key => $item)
-                                <option value="{{ $item->descripcion }}">{{ $item->descripcion }}</option>
+                            @foreach($tipoactivos as $key => $item)
+                                <option value="{{ $item->tipo }}">{{ $item->tipo }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -191,6 +224,7 @@
                 </tr>
             </thead>
         </table>
+      </div>
     </div>
 </div>
 
@@ -243,7 +277,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'proceso', name: 'proceso' },
-{ data: 'activo_descripcion', name: 'activo.descripcion' },
+{ data: 'activo_id', name: 'activo_id' },
 { data: 'responsableproceso', name: 'responsableproceso' },
 { data: 'amenaza', name: 'amenaza' },
 { data: 'vulnerabilidad', name: 'vulnerabilidad' },
