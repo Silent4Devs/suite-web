@@ -30,7 +30,7 @@
             <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2  text-center text-white"><strong>Plan de trabajo base</strong></h3>
             </div>
-         
+
             <div class="row align-self-center">
                 <div class="col-md-12" align="center">
                 <div class="col-md-12 col-sm-9 mt-2 py-1 card card-body bg-secondary align-self-center " style="margin-top:-40px; ">
@@ -51,7 +51,7 @@
                                 <th scope="col" width="20%">Fecha Fin </th>
                               <th scope="col">Fecha Compromiso</th>
                                 <th scope="col" width="17%">Fecha Real</th>
-                         
+
                             </tr>
                         </thead>
                         <tbody>
@@ -70,7 +70,14 @@
                                     {{$actividadplan->ejecutar_id}}
                                 </td>
                                 <td>
-                                    <a href="#" data-type="select" data-pk="{{$actividadplan->id}}" data-url="{{route("admin.plan-base-actividades.update",  $actividadplan->id)}}" data-title="Seleccionar estado" data-value="{{$actividadplan->estatus_id}}" class="estatus_id" data-name="estatus_id">
+                                    <a href="#"
+                                       data-type="select"
+                                       data-pk="{{$actividadplan->id}}"
+                                       data-url="{{route("admin.implementacions.update",  $actividadplan->id)}}"
+                                       data-title="Seleccionar estado"
+                                       data-value="{{$actividadplan->estatus_id}}"
+                                       class="estatus_id"
+                                       data-name="estatus_id">
                                     </a>
                                 </td>
                                 <th scope="row">
@@ -101,10 +108,10 @@
                 <div class="col-md-12 col-sm-9 mt-2 py-1 card card-body bg-secondary align-self-center " style="margin-top:-40px; ">
                     <h3 class="mb-2  text-center text-white"><strong>Diagrama de Gantt</strong></h3>
                     </div>
-             
+
                     <canvas id="myChart" width="850" height="550px"></canvas>
                 </div>
-              
+
             </div>
         </div>
         @endsection
@@ -127,10 +134,10 @@
             new Date("2021-2-2"),new Date("2021-2-2"),new Date("2021-1-2"),new Date("2021-1-2"),new Date("2021-1-2"),
             new Date("2021-1-2"),new Date("2021-1-2"),new Date("2021-1-2"),new Date("2021-1-2"),new Date("2021-1-2"),
             new Date("2021-1-2"),new Date("2021-1-2"),
-            
+
             new Date("2021-1-4"), new Date("2021-1-9"), new Date("2021-1-10")];
-      
-            
+
+
             var ctx = document.getElementById("myChart").getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'horizontalBar',

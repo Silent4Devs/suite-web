@@ -10,7 +10,7 @@ class CreatePlanBaseActividadesTable extends Migration
     {
         Schema::create('plan_base_actividades', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('actividad');
+            $table->string('actividad')->nullable();
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
             $table->date('compromiso')->nullable();
