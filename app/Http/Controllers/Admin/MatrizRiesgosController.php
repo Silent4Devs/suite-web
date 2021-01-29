@@ -25,7 +25,8 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('matriz_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = MatrizRiesgo::with(['activo_id', 'controles', 'team'])->select(sprintf('%s.*', (new MatrizRiesgo)->table));
+            //Esta es el error , activo_id no lo encuentra, hay que modificar la relacion en el modelo de matrizriesgo
+            $query = MatrizRiesgo::with([/*'activo_id',*/ 'controles', 'team'])->select(sprintf('%s.*', (new MatrizRiesgo)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -52,9 +53,9 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('proceso', function ($row) {
                 return $row->proceso ? $row->proceso : "";
             });
-            $table->addColumn('activo_id', function ($row) {
+            /*$table->addColumn('activo_id', function ($row) {
                 return $row->tipoactivo ? $row->tipoactivo->tipo : '';
-            });
+            });*/
 
             $table->editColumn('responsableproceso', function ($row) {
                 return $row->responsableproceso ? $row->responsableproceso : "";
@@ -113,7 +114,6 @@ class MatrizRiesgosController extends Controller
             return $table->make(true);
         }
 
-        $tipoactivos = Tipoactivo::get();
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $teams = Team::get();
