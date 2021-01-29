@@ -38,13 +38,13 @@ class UpdateMatrizRiesgoRequest extends FormRequest
                 'nullable',
             ],
             'confidencialidad'     => [
-                'numeric',
+                'string',
             ],
             'integridad'           => [
-                'numeric',
+                'string',
             ],
             'disponibilidad'       => [
-                'numeric',
+                'string',
             ],
             'nivelriesgo'          => [
                 'numeric',

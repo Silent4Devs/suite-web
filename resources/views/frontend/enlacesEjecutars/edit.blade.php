@@ -4,10 +4,10 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
 
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('global.edit') }} {{ trans('cruds.enlacesEjecutar.title_singular') }}
-                </div>
+          <div class="card mt-4">
+              <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
+                  <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Matriz de Riesgo </h3>
+              </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route("frontend.enlaces-ejecutars.update", [$enlacesEjecutar->id]) }}" enctype="multipart/form-data">

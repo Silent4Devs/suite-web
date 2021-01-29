@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMatrizRiesgoRequest;
 use App\Http\Requests\StoreMatrizRiesgoRequest;
 use App\Http\Requests\UpdateMatrizRiesgoRequest;
-use App\Models\Activo;
 use App\Models\Tipoactivo;
+use App\Models\Activo;
 use App\Models\Controle;
 use App\Models\MatrizRiesgo;
 use App\Models\Team;
@@ -25,7 +25,7 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('matriz_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = MatrizRiesgo::with(['activo', 'controles', 'team'])->select(sprintf('%s.*', (new MatrizRiesgo)->table));
+            $query = MatrizRiesgo::with(['activo_id', 'controles', 'team'])->select(sprintf('%s.*', (new MatrizRiesgo)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -52,8 +52,8 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('proceso', function ($row) {
                 return $row->proceso ? $row->proceso : "";
             });
-            $table->addColumn('activo_descripcion', function ($row) {
-                return $row->activo ? $row->activo->descripcion : '';
+            $table->addColumn('activo_id', function ($row) {
+                return $row->tipoactivo ? $row->tipoactivo->tipo : '';
             });
 
             $table->editColumn('responsableproceso', function ($row) {
@@ -108,16 +108,24 @@ class MatrizRiesgosController extends Controller
                 return $row->justificacion ? $row->justificacion : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'activo', 'controles']);
+            $table->rawColumns(['actions', 'placeholder', 'activo_id', 'controles']);
 
             return $table->make(true);
         }
 
-        $activos = Activo::get();
+        $tipoactivos = Tipoactivo::get();
+        $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $teams = Team::get();
 
-        return view('admin.matrizRiesgos.index', compact('activos', 'controles', 'teams'));
+        /*$datos = MatrizRiesgo::select('*')
+        ->join('activos', 'matriz_riesgos.activo_id', '=', 'activos.id')
+        //->join('tipoactivos', 'activos.tipoactivo_id', '=', 'tipoactivos.id')
+        ->get();
+        dd($datos);*/
+
+        return view('admin.matrizRiesgos.index', compact('tipoactivos', 'tipoactivos', 'controles', 'teams'));
+
     }
 
     public function create()
@@ -126,13 +134,17 @@ class MatrizRiesgosController extends Controller
 
         /*$activos = Activo::all()->pluck('descripcion', 'id')->prepend(trans('global.pleaseSelect'), '');*/
 
-        $activos = Tipoactivo::all();
 
-        /*  dd($activos);*/
+        //$activos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tipoactivos = Tipoactivo::get();
+
+        //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+//       dd($tipoactivos);
 
         $controles = Controle::all()->pluck('numero', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.matrizRiesgos.create', compact('activos', 'controles'));
+        return view('admin.matrizRiesgos.create', compact('tipoactivos', 'controles'));
     }
 
     public function store(StoreMatrizRiesgoRequest $request)
@@ -149,13 +161,18 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('matriz_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activos = Activo::all()->pluck('descripcion', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $controles = Controle::all()->pluck('numero', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $matrizRiesgo->load('activo', 'controles', 'team');
+        $matrizRiesgo->load('activo_id', 'controles', 'team');
+        $disponibilidadcons = MatrizRiesgo::find($matrizRiesgo->id);
+        $disponibilidad = $disponibilidadcons->disponibilidad;
+        $integridad = $disponibilidadcons->integridad;
+        $confidencialidad = $disponibilidadcons->confidencialidad;
 
-        return view('admin.matrizRiesgos.edit', compact('activos', 'controles', 'matrizRiesgo'));
+
+        return view('admin.matrizRiesgos.edit', compact('activo_id', 'controles', 'matrizRiesgo', 'disponibilidad', 'integridad', 'confidencialidad',));
     }
 
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
@@ -172,7 +189,7 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $matrizRiesgo->load('activo', 'controles', 'team');
+        $matrizRiesgo->load('activo_id', 'controles', 'team');
 
         return view('admin.matrizRiesgos.show', compact('matrizRiesgo'));
     }
