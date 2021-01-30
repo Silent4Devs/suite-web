@@ -30,6 +30,22 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
           rel="stylesheet"/>
     <style type="text/css">
+        body::before{
+            content: "";
+            position: fixed;
+            background: url({{ asset('img/auth-bg2.jpg')}});
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: -1;
+            filter: grayscale(100%) brightness(230%);
+            opacity: 0.2;
+        }
         .iconos-crear{
             font-size: 15pt;
             color: #9FA2A5;
@@ -44,9 +60,6 @@
         .iconos_cabecera{
             color: #fff;
             font-size:28px;
-        }
-        body.c-dark-theme #sidebar{
-            background-color: #2a2b36;
         }
         body.c-dark-theme .iconos_cabecera{
             color: #000;
@@ -67,6 +80,10 @@
 
         .flex-column{
             background: rgba(0,0,0,0);
+        }
+
+        header{
+            box-shadow: 6px 0px 6px 1px rgba(0,0,0,0.6);
         }
         
         

@@ -4,21 +4,22 @@
 
 <style type="text/css">
     body{
-        color: #fff;
+        
     }
     .fondo{
-        height: 100%; 
-        width: 100%; 
+        width: 100%;
+        height: 100%;
         position: absolute; 
         top: 0;
-        background: #fff;
+        background: rgba(0,0,0,0);
     }
-    .fondo::before{
+    body::before{
         content: "";
         background: url({{ asset('img/auth-bg2.jpg')}});
         background-size: cover; 
         background-position: center; 
         background-repeat: no-repeat;
+        background-attachment: fixed;
         top: 0;
         left: 0;
         bottom: 0;
@@ -84,34 +85,34 @@
 
     @keyframes anima_logo{
         0%{
-            transform: scale(1.5);
+            transform: scale(0.5);
             filter: none;
-            right: calc(85% - 150px);
+            right: calc(60% - 150px);
             opacity: 0;
             margin: 0;
-            top: 60%;
+            top: 45%;
         }
         20%{
-            transform: scale(1.5);
+            transform: scale(1);
             filter: none;
-            right: calc(85% - 150px);
+            right: calc(60% - 150px);
             opacity: 0;
             margin: 0;
-            top: 60%;
+            top: 45%;
         }
         40%{
             transform: scale(1.5);
             filter: none;
-            right: calc(75% - 150px);
+            right: calc(60% - 150px);
             margin: 0;
-            top: 60%;
+            top: 45%;
         }
         70%{
             transform: scale(1.5);
             filter: none;
-            right: calc(75% - 150px);
+            right: calc(60% - 150px);
             margin: 0;
-            top: 60%;
+            top: 45%;
         }
         100%{
             transform: scale(1);
