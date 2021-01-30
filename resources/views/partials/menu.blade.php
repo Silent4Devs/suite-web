@@ -64,7 +64,14 @@
         border-color: rgba(0,0,0,0);
     }
 
-
+    #sidebar{
+        background: rgba(255,255,255,0.05);
+        box-shadow: 0px 7px 7px 1px rgba(0,0,0,0.3);
+        z-index: 999999;
+    }
+    #sidebar::before{
+        
+    }
 
     #sidebar .active, #sidebar .c-active{
             position: relative;
