@@ -4,7 +4,7 @@
 
 <style type="text/css">
     body{
-        
+        background-image: url(none);
     }
     .fondo{
         width: 100%;
