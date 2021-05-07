@@ -20,6 +20,7 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/Silent4Business-Logo-Color.png') }}">
     @yield('styles')
+    @livewireStyles
 </head>
 
 
@@ -31,7 +32,7 @@
         </div>
     </div>
     @yield('scripts')
-
+    @livewireScripts
 </body>
 
 </html>
