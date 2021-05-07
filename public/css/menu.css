@@ -1,0 +1,104 @@
+
+    body.c-dark-theme .letra_blanca{
+        color: #fff;
+    }
+    body.c-dark-theme .img_logo{
+        filter: grayscale(100%) invert(0.5) brightness(200%);
+    }
+    .iconos_menu{
+        font-size: 14pt;
+        margin-right: 15px;
+        margin-left: 2px;
+    }
+    .dark_mode1, .img_logo{
+        transition: 0s;
+    }
+    ul, div img, .card{
+        transition: 0s;
+    }
+    input{
+        transition: 0s;
+    }
+    body.c-dark-theme input{
+        background-color: #000;
+        color: #ccc;
+        border-color: rgba(0,0,0,0);
+    }
+    body.c-dark-theme input:focus{
+        background-color: #000;
+    }
+    textarea{
+        transition: 0s;
+    }
+    body.c-dark-theme textarea{
+        background-color: #000;
+        color: #ccc;
+        border-color: rgba(0,0,0,0);
+    }
+    body.c-dark-theme textarea:focus{
+        background-color: #000;
+    }
+    span{
+        transition: 0s;
+    }
+    body.c-dark-theme .form-group span{
+        background-color: #000;
+        color: #ccc;
+        border-color: rgba(0,0,0,0);
+    }
+     body.c-dark-theme .form-group span:focus{
+        background-color: #000;
+    }
+    body.c-dark-theme select{
+        background-color: #000;
+        color: #ccc;
+        border-color: rgba(0,0,0,0);
+    }
+     body.c-dark-theme select:focus{
+        background-color: #000;
+    }
+    body.c-dark-theme .needsclick{
+        background-color: #000;
+        color: #ccc;
+        border-color: rgba(0,0,0,0);
+    }
+
+    #sidebar{
+        background: rgba(255,255,255,0.05);
+        box-shadow: 0px 7px 7px 1px rgba(0,0,0,0.3);
+        z-index: 999999;
+    }
+    #sidebar::before{
+        
+    }
+
+    #sidebar .active, #sidebar .c-active{
+            position: relative;
+    }
+    #sidebar .active:before, #sidebar .c-active:before{
+        content: "";
+        background: #380caf;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+    }
+    #sidebar a.active font, #sidebar a.c-active font, #sidebar a.c-active .letra_blanca{
+        color: #fff;
+    }
+
+    #sidebar li a:hover font{
+        color: #fff;
+    }
+    #sidebar li a:hover .letra_blanca{
+        color: #fff;
+    }
+
+    .caja_img_logo {
+        width: 50% !important;
+        padding: 0 !important;
+        margin: 4px !important;
+    }
+
