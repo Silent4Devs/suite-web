@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 @section('content')
 
+
+<link rel="stylesheet" type="text/css" href="{{asset('css/colores.css')}}">
+
 <style>
 
 .tarjeta{
@@ -61,9 +64,9 @@ margin-left:100px;
  }
 </style>
 
-        <div class="card mt-5">
-            <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2  text-center text-white"><strong><i class="far fa-building" style="color:#ffffff; font-size:20pt; margin-right:10px;" ></i>  Mi Organización</strong></h3>
+        <div class="mt-5 card">
+            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+                <h3 class="mb-2 text-center text-white"><strong><i class="far fa-building" style="color:#ffffff; font-size:20pt; margin-right:10px;" ></i>  Mi Organización</strong></h3>
             </div>
 
         <br>
@@ -79,14 +82,36 @@ margin-left:100px;
                 </a>
             @endif
             <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}"
-               class='btn btn-info float-right'>
+               class='float-right btn btn-info'>
                 Editar Organización
             </a>
         </div>
 
         <div class="card-body">
             <div class="row">
-                <div class="form-group col-sm-6">
+
+                <div class="ml-4 row justify-content-center" style="margin-top:-85px;">
+                    <div class="p-5 col-sm-6">
+                        <label for="logotipo"></label>
+                            <img class="p-3 bg-light card card-accent-info"  src="{{ url('images/'.$logotipo->logotipo) }}" alt="Card image" style=" width:100%;">
+                                @if($errors->has('logotipo'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('logotipo') }}
+                                        </div>
+                                @endif
+                        <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
+                    </div>
+                 </div>
+
+            
+                 <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <p class="mb-1 text-center text-white">DATOS GENERALES</p>
+                    </div>
+                </div>
+
+           
+                <div class="form-group col-sm-12 col-md-6">
                     <label class="required" for="empresa"><i
                             class="far fa-building iconos-crear"></i> Nombre de la Empresa
                     </label>
@@ -99,7 +124,7 @@ margin-left:100px;
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group col-sm-12 col-md-6">
                     <label class="required" for="direccion"> <i
                             class="fas fa-map-marker-alt iconos-crear"></i> {{ trans('cruds.organizacion.fields.direccion') }}
                     </label>
@@ -113,7 +138,7 @@ margin-left:100px;
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group col-sm-12 col-md-6">
                     <label for="telefono"> <i
                             class="fas fa-phone iconos-crear"></i> Teléfono
                     </label>
@@ -126,7 +151,7 @@ margin-left:100px;
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.telefono_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group col-sm-12 col-md-6">
                     <label for="correo"> <i
                             class="far fa-envelope iconos-crear"></i> {{ trans('cruds.organizacion.fields.correo') }}
                     </label>
@@ -139,7 +164,7 @@ margin-left:100px;
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.correo_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group col-sm-12 col-md-12">
                     <label for="pagina_web"> <i
                             class="fas fa-pager iconos-crear"></i> Página Web
                     </label>
@@ -152,7 +177,15 @@ margin-left:100px;
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-6">
+
+                <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <p class="mb-1 text-center text-white">DATOS COMPLEMENTARIOS</p>
+                    </div>
+                </div>
+
+                
+                <div class="form-group col-sm-12 col-md-6">
                     <label for="giro"> <i
                             class="fas fa-briefcase iconos-crear"></i> {{ trans('cruds.organizacion.fields.giro') }}
                     </label>
@@ -165,7 +198,7 @@ margin-left:100px;
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.giro_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-12">
+                <div class="form-group col-sm-12 col-md-6">
                     <label for="servicios"><i
                             class="fas fa-briefcase iconos-crear"></i> {{ trans('cruds.organizacion.fields.servicios') }}
                     </label>
@@ -178,7 +211,8 @@ margin-left:100px;
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.servicios_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-6">
+
+                <div class="form-group col-sm-12 col-md-6">
                     <label for="mision"> <i class="fas fa-flag iconos-crear"></i> {{ trans('cruds.organizacion.fields.mision') }}</label>
                     <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision"
                               id="mision" disabled>{{ $organizacion->mision }}</textarea>
@@ -189,7 +223,7 @@ margin-left:100px;
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.mision_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group col-sm-12 col-md-6">
                     <label for="vision"> <i
                             class="far fa-eye iconos-crear"></i> {{ trans('cruds.organizacion.fields.vision') }}</label>
                     <textarea class="form-control {{ $errors->has('vision') ? 'is-invalid' : '' }}" name="vision"
@@ -201,7 +235,7 @@ margin-left:100px;
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.vision_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group col-sm-12 col-md-6">
                     <label for="valores"> <i
                             class="far fa-heart iconos-crear"></i> {{ trans('cruds.organizacion.fields.valores') }}
                     </label>
@@ -214,19 +248,8 @@ margin-left:100px;
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
                 </div>
-                <div class="form-group col-sm-6">
-                    <label for="logotipo"> <i
-                            class="fas fa-image iconos-crear" ></i> {{ trans('cruds.organizacion.fields.logotipo') }}
-                    </label>
-                    <img src="{{ url('images/'.$logotipo->logotipo) }}" alt="" style="width: 480px; height: 150px;">
-                @if($errors->has('logotipo'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('logotipo') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
-                </div>
-                <div class="form-group col-sm-12">
+
+                <div class="form-group col-sm-12 col-md-6">
                     <label for="antecedentes"> <i
                             class="far fa-file-alt iconos-crear"></i> Antecedentes
                     </label>

@@ -128,11 +128,24 @@ class OrganizacionController extends Controller
 
     public function store(StoreOrganizacionRequest $request)
     {
-        $organizacion = Organizacion::create($request->all());
-
-        if ($request->input('logotipo', false)) {
-            $organizacion->addMedia(storage_path('tmp/uploads/' . $request->input('logotipo')))->toMediaCollection('logotipo');
-        }
+        
+        $organizacions = Organizacion::create($request->all());
+        
+        $file = $request->file('logotipo');
+        if ($file != null) {
+            //$dataImg = $file->get();
+            $nombre = $file->getClientOriginalName();
+            //\Storage::disk('local')->put($nombre,  \File::get($file));
+            $file->move(base_path('public/images'), $file->getClientOriginalName());
+            //\Storage::delete($organizacions->logotipo);
+            $organizacions->logotipo = $nombre;
+            //dd($nombre);
+            $organizacions->save();
+            }
+    //    $organizacion = Organizacion::create($request->all());
+    //    if ($request->input('logotipo', false)) {
+    //       $organizacion->addMedia(storage_path('tmp/uploads/' . $request->input('logotipo')))->toMediaCollection('logotipo');
+    //    }
 
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $organizacion->id]);
@@ -143,6 +156,7 @@ class OrganizacionController extends Controller
 
     public function edit(Organizacion $organizacion)
     {
+       // dd($organizacion->logotipo);
         abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacion->load('team');
@@ -163,6 +177,7 @@ class OrganizacionController extends Controller
             $organizacions = Organizacion::find(request()->org_id);
             //\Storage::delete($organizacions->logotipo);
             $organizacions->logotipo = $nombre;
+            //dd($nombre);
             $organizacions->save();
             }
 
