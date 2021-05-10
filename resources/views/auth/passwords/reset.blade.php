@@ -2,8 +2,8 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <div class="card mx-4">
-            <div class="card-body p-4">
+        <div class="mx-4 card">
+            <div class="p-4 card-body">
                 <h1>{{ trans('panel.site_title') }}</h1>
 
                 <p class="text-muted">{{ trans('global.reset_password') }}</p>
@@ -14,7 +14,7 @@
                     <input name="token" value="{{ $token }}" type="hidden">
 
                     <div class="form-group">
-                        <input id="email" type="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autocomplete="email" autofocus placeholder="{{ trans('global.login_email') }}" value="{{ $email ?? old('email') }}">
+                        <input id="email" type="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autocomplete="email" autofocus placeholder="{{ trans('global.login_email') }}" value="{{ $email ?? old('email') }}" readonly>
 
                         @if($errors->has('email'))
                             <div class="invalid-feedback">
