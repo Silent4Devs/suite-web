@@ -14,6 +14,7 @@ class CampanaNotificacionesComponent extends Component
         'echo:notificaciones-campana,AccionCorrectivaEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,RegistroMejoraEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,RecursosEvent' => 'getTotalNotificaciones',
+        'NotificationMarkedAsReadList' => 'getTotalNotificaciones'
     ];
 
     public $notificaciones_sin_leer;

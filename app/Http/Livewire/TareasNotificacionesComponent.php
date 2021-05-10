@@ -11,7 +11,8 @@ class TareasNotificacionesComponent extends Component
     public $notificaciones_sin_leer;
 
     protected $listeners = [
-        "render-task-count" => 'getTotalNotificaciones'
+        "render-task-count" => 'getTotalNotificaciones',
+        'TaskMarkedAsReadList' => 'getTotalNotificaciones'
     ];
 
     public function mount()

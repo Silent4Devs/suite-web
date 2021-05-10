@@ -49,7 +49,18 @@
             filter: grayscale(100%) brightness(230%);
             opacity: 0.2;
         }
-
+        .btn-read{
+                display: inline-block;
+                cursor: pointer;
+                transition: .2s ease-out;
+                padding: 1px 4px;
+                border-radius: 5px;
+        }
+        .btn-read:hover{
+            color: rgb(47, 231, 1);
+            transform: scale(1.2);
+            transition: .2s ease-in;
+        }
         .iconos-crear {
             font-size: 15pt;
             color: #9FA2A5;
@@ -291,6 +302,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     
     <script>
         window.Laravel = {!! json_encode([
@@ -309,7 +322,9 @@
                 scrollTop: $(".c-active").offset().top - 350
             }, 0);
         });
-
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 
     <script>

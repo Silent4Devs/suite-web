@@ -43,11 +43,17 @@ class NotificarRecursos extends Command
     public function handle()
     {
         foreach (Recurso::get() as $recurso) {
-            $diferencia_dias = Carbon::parse($recurso->fecha_curso)->diff(Carbon::now(), false)->days;
-            if ($diferencia_dias > 0 && $diferencia_dias <= 3) {
+            $diferencia_dias = Carbon::now()->diffInDays(Carbon::parse($recurso->fecha_curso)->format('d/m/Y'), false);
+            if ($diferencia_dias >= 0 && $diferencia_dias <= 3) {
                 foreach ($recurso->participantes as $participante) {
-                    $dias_faltantes = $diferencia_dias == 1 ? "Falta " . $diferencia_dias . " día" : "Faltan " . $diferencia_dias . " días";
-                    $mensaje = $dias_faltantes . " para el curso y capacitación siguiente: " . $recurso->cursoscapacitaciones;
+                    $mensaje = "";
+                    if ($diferencia_dias == 0) {
+                        $mensaje = "Hoy tienes el curso y capacitación siguiente: " . $recurso->cursoscapacitaciones;
+                    } else if ($diferencia_dias == 1) {
+                        $mensaje = "Falta " . $diferencia_dias . " día para el curso y capacitación siguiente: " . $recurso->cursoscapacitaciones;
+                    } else {
+                        $mensaje = "Faltan " . $diferencia_dias . " días para el curso y capacitación siguiente: " . $recurso->cursoscapacitaciones;
+                    }
                     Notification::send($participante, new TaskRecursosNotification('recurso', 'Recurso', $mensaje, $participante, 'task'));
                 }
             }

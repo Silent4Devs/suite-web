@@ -15,6 +15,7 @@ class ListaCampanaNotificacionesComponent extends Component
         'echo:notificaciones-campana,AccionCorrectivaEvent' => 'render',
         'echo:notificaciones-campana,RegistroMejoraEvent' => 'render',
         'echo:notificaciones-campana,RecursosEvent' => 'render',
+        'NotificationMarkedAsReadList' => 'render'
     ];
 
     public function mount($notificaciones_sin_leer)

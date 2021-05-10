@@ -10,7 +10,8 @@ class ListaTareasNotificacionesComponent extends Component
     public $notificaciones_sin_leer;
 
     protected $listeners = [
-        "render-task-list" => 'render'
+        "render-task-list" => 'render',
+        'TaskMarkedAsReadList' => 'render'
     ];
 
     public function mount($notificaciones_sin_leer)
