@@ -592,7 +592,7 @@
                 </ul>
             </li>
         @endcan
-        @can('isoveintidostresuno_access')
+        {{-- @can('isoveintidostresuno_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-globe-africa iconos_menu letra_blanca">
@@ -635,7 +635,7 @@
                     @endcan
                 </ul>
             </li>
-        @endcan
+        @endcan --}}
 
         <li class="c-sidebar-nav-title"><font class="letra_blanca">Administración</font></li>
         @can('faq_management_access')

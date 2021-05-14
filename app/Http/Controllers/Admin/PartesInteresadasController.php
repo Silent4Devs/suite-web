@@ -76,11 +76,10 @@ class PartesInteresadasController extends Controller
     {
         $partesInteresada = PartesInteresada::create($request->all());
         //dd($request['pdf-value'], $request->all());
-      //  $generar = new GeneratePdf();
+        //  $generar = new GeneratePdf();
         //$generar->Generate($request['pdf-value'], $request);
-      //  $generar->Generate($request['pdf-value'], $partesInteresada);
+        //  $generar->Generate($request['pdf-value'], $partesInteresada);
         return redirect()->route('admin.partes-interesadas.index');
-
     }
 
     public function edit(PartesInteresada $partesInteresada)
