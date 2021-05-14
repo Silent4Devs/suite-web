@@ -26,7 +26,7 @@ class MatrizRiesgosController extends Controller
 
         if ($request->ajax()) {
             //Esta es el error , activo_id no lo encuentra, hay que modificar la relacion en el modelo de matrizriesgo
-            $query = MatrizRiesgo::with([/*'activo_id',*/ 'controles', 'team'])->select(sprintf('%s.*', (new MatrizRiesgo)->table));
+            $query = MatrizRiesgo::with([/*'activo_id',*/'controles', 'team'])->select(sprintf('%s.*', (new MatrizRiesgo)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -72,8 +72,6 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('tipo_riesgo', function ($row) {
                 return $row->tipo_riesgo ? MatrizRiesgo::TIPO_RIESGO_SELECT[$row->tipo_riesgo] : '';
             });
-
-
             $table->editColumn('confidencialidad', function ($row) {
                 return $row->confidencialidad ? $row->confidencialidad : "";
             });
@@ -125,7 +123,6 @@ class MatrizRiesgosController extends Controller
         dd($datos);*/
 
         return view('admin.matrizRiesgos.index', compact('tipoactivos', 'tipoactivos', 'controles', 'teams'));
-
     }
 
     public function create()
@@ -140,7 +137,7 @@ class MatrizRiesgosController extends Controller
 
         //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-//       dd($tipoactivos);
+        //       dd($tipoactivos);
 
         $controles = Controle::all()->pluck('numero', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -159,20 +156,24 @@ class MatrizRiesgosController extends Controller
 
     public function edit(MatrizRiesgo $matrizRiesgo)
     {
+
         abort_if(Gate::denies('matriz_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $controles = Controle::all()->pluck('numero', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $matrizRiesgo->load('activo_id', 'controles', 'team');
+        if (!is_null($matrizRiesgo->activo_id)) {
+            $matrizRiesgo->load('activo_id', 'controles', 'team');
+        }
+
         $disponibilidadcons = MatrizRiesgo::find($matrizRiesgo->id);
         $disponibilidad = $disponibilidadcons->disponibilidad;
         $integridad = $disponibilidadcons->integridad;
         $confidencialidad = $disponibilidadcons->confidencialidad;
 
 
-        return view('admin.matrizRiesgos.edit', compact('activo_id', 'controles', 'matrizRiesgo', 'disponibilidad', 'integridad', 'confidencialidad',));
+        return view('admin.matrizRiesgos.edit', compact('tipoactivos', 'controles', 'matrizRiesgo', 'disponibilidad', 'integridad', 'confidencialidad',));
     }
 
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
@@ -187,9 +188,11 @@ class MatrizRiesgosController extends Controller
 
     public function show(MatrizRiesgo $matrizRiesgo)
     {
-        abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $matrizRiesgo->load('activo_id', 'controles', 'team');
+        abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if (!is_null($matrizRiesgo->activo_id)) {
+            $matrizRiesgo->load('activo_id', 'controles', 'team');
+        }
 
         return view('admin.matrizRiesgos.show', compact('matrizRiesgo'));
     }

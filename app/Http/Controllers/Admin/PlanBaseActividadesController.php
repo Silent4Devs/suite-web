@@ -54,31 +54,31 @@ class PlanBaseActividadesController extends Controller
             $table->editColumn('actividad', function ($row) {
                 return $row->actividad ? $row->actividad : "";
             });
-            $table->addColumn('actividad_padre_actividad', function ($row) {
+            $table->editColumn('actividad_padre', function ($row) {
                 return $row->actividad_padre ? $row->actividad_padre->actividad : '';
             });
 
-            $table->addColumn('ejecutar_ejecutar', function ($row) {
+            $table->editColumn('ejecutar', function ($row) {
                 return $row->ejecutar ? $row->ejecutar->ejecutar : '';
             });
 
             $table->editColumn('guia', function ($row) {
                 return $row->guia ? '<a href="' . $row->guia->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
-            $table->addColumn('estatus_estado', function ($row) {
+            $table->editColumn('estado', function ($row) {
                 return $row->estatus ? $row->estatus->estado : '';
             });
 
-            $table->addColumn('responsable_name', function ($row) {
+            $table->editColumn('responsable', function ($row) {
                 return $row->responsable ? $row->responsable->name : '';
             });
 
-            $table->addColumn('colaborador_name', function ($row) {
+            $table->editColumn('colaborador', function ($row) {
                 return $row->colaborador ? $row->colaborador->name : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'actividad_padre', 'ejecutar', 'guia', 'estatus', 'responsable', 'colaborador']);
-
+            //$table->rawColumns(['actions', 'placeholder']);
             return $table->make(true);
         }
 
@@ -144,9 +144,7 @@ class PlanBaseActividadesController extends Controller
 
     public function update(UpdatePlanBaseActividadeRequest $request, PlanBaseActividade $planBaseActividade)
     {
-
-
-       /*$planBaseActividade->update($request->all());
+        $planBaseActividade->update($request->all());
 
         if ($request->input('guia', false)) {
             if (!$planBaseActividade->guia || $request->input('guia') !== $planBaseActividade->guia->file_name) {
@@ -160,18 +158,30 @@ class PlanBaseActividadesController extends Controller
             $planBaseActividade->guia->delete();
         }
 
-        return redirect()->route('admin.plan-base-actividades.index');*/
+        return redirect()->route('admin.plan-base-actividades.index');
+        // if ($request->ajax()) {
+        //     switch ($request->name) {
+        //         case 'estatus_id':
+        //             $planBaseActividade = PlanBaseActividade::findOrFail($request->id);
+        //             $planBaseActividade->estatus_id = $request->value;
+        //             $planBaseActividade->save();
+        //             return response()->json(['success' => true]);
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
 
-        if ($request->ajax()) {​​
-            switch ($request->name) {​​
-                case 'estatus_id':
-                    $planBaseActividade = PlanBaseActividade::findOrFail($id);
-                    $planBaseActividade->estatus_id = $request->value;
-                    $planBaseActividade->save();
-                    return response()->json(['success' => true]);
-                break;
-            }​
-        }
+        // if ($request->ajax()) {​​
+        //     switch ($request->name) {​​
+        //         case 'estatus_id':
+        //             $planBaseActividade = PlanBaseActividade::findOrFail($id);
+        //             $planBaseActividade->estatus_id = $request->value;
+        //             $planBaseActividade->save();
+        //             return response()->json(['success' => true]);
+        //         break;
+        //     }​
+        // }
     }
 
     /*public function update(Request $request, $id){
@@ -186,7 +196,7 @@ class PlanBaseActividadesController extends Controller
             }​
         }
     }*/
-   
+
 
     public function show(PlanBaseActividade $planBaseActividade)
     {
