@@ -261,7 +261,9 @@ class HomeController
       
         $auditexterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Interna')->count('id');
         $auditinterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Externa')->count('id');
-      
+
+        $exist_doc = ControlDocumento::select('deleted_at')->where('deleted_at', '=', null)->count();
+        
 
         return view('home', compact(
             'auditexterna',
@@ -291,7 +293,8 @@ class HomeController
             'documentoAprob',
             'documentorev',
             'documentoElab',
-            'docunoelab'
+            'docunoelab',
+            'exist_doc'
         ));
     }
 }

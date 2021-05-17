@@ -29,6 +29,7 @@
     <!-- x-editable -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
           rel="stylesheet"/>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css" integrity="sha512-4E8WH1J08+TC3LLRtjJdA8OlggQvj5LN+TciGGwJWaQtFXj0BoZPKT9gIHol283GiUfpKPVk54LJfur5jfiRxA==" crossorigin="anonymous" />
     <style type="text/css">
         body::before{
             content: "";
@@ -312,7 +313,7 @@
 
 <!-- x editable -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/js/jquery-ui-1.10.3.custom.min.js" integrity="sha512-cUhdyzcRjImXKxkUU2Kklqmll9uEigbFB57TPJs6F+xAEZwjJrpKosucBT/6AU8hLG5IfHtpW/0DLMT5yq3GWQ==" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
          $('.c-sidebar-nav').animate({

@@ -12,6 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use \DateTimeInterface;
 use App\Models\User;
+use App\Models\ActividadFase;
 
 
 class PlanBaseActividade extends Model implements HasMedia
@@ -139,5 +140,9 @@ class PlanBaseActividade extends Model implements HasMedia
     public function user(){
         return $this->belongsTo(User::class, 'id');
         //return $this->belongsTo('User');
+   }
+
+   public function fase(){
+        return $this->belongsTo(ActividadFase::class, 'id');
    }
 }

@@ -107,10 +107,37 @@
         </div>
         <div class="card caja_graficas graf_2" style="width: calc(33.33% - 20px);">
             <h5 class="espec">Documentación</h5>
-            <canvas id="chartDocu"></canvas>
-            <a id="a_plan" class="btn_ver" href="admin/carpeta">
-                Ver Detalle 
-            </a>
+            @if(!empty($exist_doc))
+                <style type="text/css">
+                    .chartDocu{
+                        display: block;
+                    }
+                    .chartDocu_falsa{
+                        display: none;
+                    }
+                </style>
+            @else
+                <style type="text/css">
+                    .chartDocu{
+                        display: none;
+                    }
+                    .chartDocu_falsa{
+                        display: block;
+                    }
+                </style>
+            @endif
+            
+            <div class="chartDocu"><canvas id="chartDocu"></canvas></div>
+            <div class="chartDocu_falsa"><canvas id="chartDocu_falsa"></canvas></div>
+
+            <div style="display: inline-flex; justify-content: center;">
+                <a id="" class="btn_ver" style="margin-left: 0;" href="admin/carpeta">
+                    Carpetas
+                </a>
+                <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/control-documentos">
+                    Lista de documentos
+                </a>
+            </div>
         </div>
         <div class="card caja_graficas graf_3" style="width: calc(33.33% - 20px);">
             <h5 class="espec">Capacitación</h5>
@@ -137,10 +164,10 @@
             <h5 class="act">Registro de Acciones</h5>
             <canvas id="myChart"></canvas>
             <div style="display: inline-flex; justify-content: center;">
-                <a id="a_plan" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
+                <a id="" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
                     Ver Detalle 
                 </a>
-                <a id="a_plan" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
+                <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
                     Ver Detalle 
                 </a>
             </div>
@@ -375,6 +402,8 @@
         
         }
     });
+
+
     var canvasdoc = document.getElementById("chartDocu");
     var pieDoc = new Chart(canvasdoc, {
         type: 'pie',
@@ -418,6 +447,52 @@
         
         }
     });
+
+
+    var canvasdoc = document.getElementById("chartDocu_falsa");
+    var pieDoc = new Chart(canvasdoc, {
+        type: 'pie',
+        labels: {
+            render: 'value'
+        },
+        data: {
+            labels: [
+                "Publicados",
+                "Aprobados",
+                "En revisión",
+                "Elaborado",
+                "No elaborado"
+            ],
+            datasets: [{
+                label: '% Documentación',
+                data: [0,0,0,0,1,],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(43, 65, 233 , 0.6)', 
+                    'rgba(244, 208, 63, 0.6)',  
+                    'rgba(133, 193, 233 , 0.6)', 
+                    'rgba(231, 76, 60, 0.6)',
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: "black",
+                    boxWidth: 20,
+                    padding: 8
+                }
+            },
+            tooltips: {
+            mode: 'label'
+        },
+        
+        }
+    });
+
 
 	var popCanvas1 = document.getElementById("chartActividades");
     var barChart1 = new Chart(popCanvas1, {

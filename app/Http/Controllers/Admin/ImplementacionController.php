@@ -10,10 +10,12 @@ use App\Models\User;
 
 class implementacionController extends Controller
 {
-    //
+    
 
     public function index()
     {
+        // dd(PlanBaseActividade::with('fase')->get()[0]->fase);
+
         $planbase = PlanBaseActividade::get();
         $responsable = User::get();
         $responsablenom = User::select('name')->where('id', '=', '3');
@@ -30,7 +32,13 @@ class implementacionController extends Controller
                     $planbas = PlanBaseActividade::findOrFail($id);
                     $planbas->estatus_id = $request->value;
                     $planbas->save();
-                    return response()->json(['success' => true]);
+                    return response()->json(['success' => $request]);
+                    break;
+                case 'fecha_inicio_p':
+                    $planbas = PlanBaseActividade::findOrFail($id);
+                    $planbas->fecha_inicio = $request->value;
+                    $planbas->save();
+                    return response()->json(['success' => $request]);
                     break;
             }
         }
