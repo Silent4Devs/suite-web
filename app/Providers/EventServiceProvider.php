@@ -2,6 +2,28 @@
 
 namespace App\Providers;
 
+use App\Events\AccionCorrectivaEvent;
+use App\Events\AuditoriaAnualEvent;
+use App\Events\IncidentesDeSeguridadEvent;
+use App\Events\RecursosEvent;
+use App\Events\TaskRecursosEvent;
+use App\Events\RegistroMejoraEvent;
+use App\Listeners\AccionCorrectivaListener;
+use App\Listeners\AuditoriaAnualListener;
+use App\Listeners\IncidentesDeSeguridadListener;
+use App\Listeners\RecursosListener;
+use App\Listeners\RegistroMejoraListener;
+use App\Listeners\TaskRecursosListener;
+use App\Models\AccionCorrectiva;
+use App\Models\AuditoriaAnual;
+use App\Models\IncidentesDeSeguridad;
+use App\Models\Recurso;
+use App\Models\Registromejora;
+use App\Observers\AccionCorrectivaObserver;
+use App\Observers\AuditoriaAnualObserver;
+use App\Observers\IncidentesDeSeguridadObserver;
+use App\Observers\RecursosObserver;
+use App\Observers\RegistroMejoraObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +40,24 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        IncidentesDeSeguridadEvent::class => [
+            IncidentesDeSeguridadListener::class
+        ],
+        AuditoriaAnualEvent::class => [
+            AuditoriaAnualListener::class
+        ],
+        AccionCorrectivaEvent::class => [
+            AccionCorrectivaListener::class
+        ],
+        RegistroMejoraEvent::class => [
+            RegistroMejoraListener::class
+        ],
+        RecursosEvent::class => [
+            RecursosListener::class
+        ],
+        TaskRecursosEvent::class => [
+            TaskRecursosListener::class
+        ]
     ];
 
     /**
@@ -27,6 +67,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        IncidentesDeSeguridad::observe(IncidentesDeSeguridadObserver::class);
+        AuditoriaAnual::observe(AuditoriaAnualObserver::class);
+        AccionCorrectiva::observe(AccionCorrectivaObserver::class);
+        Registromejora::observe(RegistroMejoraObserver::class);
+        Recurso::observe(RecursosObserver::class);
     }
 }

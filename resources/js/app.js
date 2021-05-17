@@ -4,51 +4,117 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-//require('./bootstrap');
-try {
-    window.$ = window.jQuery = require('jquery');
-    window.Popper = require('popper.js');
-
-    //require('bootstrap-sass');
-    require('bootstrap');
-} catch (e) {}
-
-//datatables
-require('datatables.net/js/jquery.dataTables.min');
-
-//datatables bs
-require('datatables.net-bs/js/dataTables.bootstrap.min');
-
-//datatables buttons
-require('datatables.net-buttons/js/dataTables.buttons.min');
-
-//datatables select
-require('datatables.net-select/js/dataTables.select.min');
-
-//perfect scrollbar
-require('perfect-scrollbar/dist/perfect-scrollbar');
-
-window.Vue = require('vue');
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-const app = new Vue({
-    el: '#app',
+require('./bootstrap');
+Echo.channel('notificaciones-campana')
+    .listen('IncidentesDeSeguridadEvent', (e) => {
+        let mensaje = "";
+        switch (e.tipo_consulta) {
+            case "create":
+                mensaje = `Se ha creado un nuevo ${e.slug}`;
+                toastr.success(mensaje);
+                break;
+            case "update":
+                mensaje = `El ${e.slug} con folio ${e.incidentesDeSeguridad.folio} ha sido actualizado`;
+                toastr.info(mensaje);
+                break;
+            case "delete":
+                mensaje = `El ${e.slug} con folio ${e.incidentesDeSeguridad.folio} ha sido eliminado`;
+                toastr.error(mensaje);
+                break;
+            default:
+                break;
+         }
 });
+
+Echo.channel('notificaciones-campana')
+    .listen('AuditoriaAnualEvent', (e) => {
+        let mensaje = "";
+        switch (e.tipo_consulta) {
+            case "create":
+                mensaje = `Se ha creado una nueva ${e.slug}`;
+                toastr.success(mensaje);
+                break;
+            case "update":
+                mensaje = `La ${e.slug} con fecha de inicio ${e.auditoria_anual.fechainicio} ha sido actualizada`;
+                toastr.info(mensaje);
+                break;
+            case "delete":
+                mensaje = `La ${e.slug} con fecha de inicio ${e.auditoria_anual.fechainicio} ha sido eliminada`;
+                toastr.error(mensaje);
+                break;
+            default:
+                break;
+         }
+});
+
+Echo.channel('notificaciones-campana')
+    .listen('AccionCorrectivaEvent', (e) => {
+        let mensaje = "";
+        switch (e.tipo_consulta) {
+            case "create":
+                mensaje = `Se ha creado una nueva ${e.slug}`;
+                toastr.success(mensaje);
+                break;
+            case "update":
+                mensaje = `La ${e.slug} con tema ${e.accion_correctiva.tema != null ? e.accion_correctiva.tema : "N/A"} ha sido actualizada`;
+                toastr.info(mensaje);
+                break;
+            case "delete":
+                mensaje = `La ${e.slug} con tema ${e.accion_correctiva.tema != null ? e.accion_correctiva.tema : "N/A"} ha sido eliminada`;
+                toastr.error(mensaje);
+                break;
+            default:
+                break;
+         }
+});
+
+Echo.channel('notificaciones-campana')
+    .listen('RegistroMejoraEvent', (e) => {
+        let mensaje = "";
+        switch (e.tipo_consulta) {
+            case "create":
+                mensaje = `Se ha creado un nuevo ${e.slug}`;
+                toastr.success(mensaje);
+                break;
+            case "update":
+                mensaje = `El ${e.slug} con nombre ${e.registro_mejora.nombre} ha sido actualizado`;
+                toastr.info(mensaje);
+                break;
+            case "delete":
+                mensaje = `EL ${e.slug} con nombre ${e.registro_mejora.nombre} ha sido eliminado`;
+                toastr.error(mensaje);
+                break;
+            default:
+                break;
+         }
+});
+
+Echo.channel('notificaciones-campana')
+    .listen('RecursosEvent', (e) => {
+        let mensaje = "";
+        switch (e.tipo_consulta) {
+            case "create":
+                mensaje = `Se ha creado un nuevo ${e.slug}`;
+                toastr.success(mensaje);
+                break;
+            case "update":
+                mensaje = `El ${e.slug} con nombre ${e.recurso.cursoscapacitaciones} ha sido actualizado`;
+                toastr.info(mensaje);
+                break;
+            case "delete":
+                mensaje = `EL ${e.slug} con nombre ${e.recurso.cursoscapacitaciones} ha sido eliminado`;
+                toastr.error(mensaje);
+                break;
+            default:
+                break;
+         }
+});
+
+
+Echo.private("App.Models.User."+ window.Laravel.user)
+    .notification((e) => {
+        toastr.info(e.mensaje);
+        Livewire.emit('render-task-count');
+        Livewire.emit('render-task-list');
+});
+

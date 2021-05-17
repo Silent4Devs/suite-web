@@ -1,14 +1,27 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong>Mi organización </h3>
+<link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}">
+
+
+
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white align-items-centera"><strong> Registrar: </strong>Mi organización </h3>
     </div>
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.organizacions.store") }}" enctype="multipart/form-data" class="row">
             @csrf
+
+
+                <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <p class="mb-1 text-center text-white">DATOS GENERALES</p>
+                    </div>
+                </div>
+
+
             <div class="form-group col-sm-6">
                 <label class="required" for="empresa"><i class="far fa-building iconos-crear"></i> Nombre de la Empresa</label>
                 <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}" required>
@@ -60,16 +73,30 @@
                 <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
             </div>
             <div class="form-group col-sm-6">
-                <label for="giro"> <i class="fas fa-briefcase iconos-crear"></i> {{ trans('cruds.organizacion.fields.giro') }}</label>
-                <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text" name="giro" id="giro" value="{{ old('giro', '') }}">
-                @if($errors->has('giro'))
+                <label for="logotipo"> <i class="fas fa-image iconos-crear"></i> {{ trans('cruds.organizacion.fields.logotipo') }}</label>
+                <div class="mb-3 input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" class="needsclick dropzone" name="logotipo" id="logotipo" class="form-control {{ $errors->has('logotipo') ? 'is-invalid' : '' }}"  id="logotipo-dropzone" accept="image/*" value="{{ old('logotipo', '') }}">
+                        <label class="custom-file-label" for="inputGroupFile02"></label>
+                    </div>
+                </div>
+                    @if($errors->has('logotipo'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('giro') }}
+                        {{ $errors->first('logotipo') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.organizacion.fields.giro_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
             </div>
-            <div class="form-group col-sm-12">
+
+
+            <div class="col-md-12 col-sm-12">
+                <div class="card vrd-agua">
+                    <p class="mb-1 text-center text-white">DATOS COMPLEMENTARIOS</p>
+                </div>
+            </div>
+
+
+            <div class="form-group col-sm-6">
                 <label for="servicios"><i class="fas fa-briefcase iconos-crear"></i> {{ trans('cruds.organizacion.fields.servicios') }}</label>
                 <input class="form-control {{ $errors->has('servicios') ? 'is-invalid' : '' }}" type="text" name="servicios" id="servicios" value="{{ old('servicios', '') }}">
                 @if($errors->has('servicios'))
@@ -79,6 +106,18 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.servicios_helper') }}</span>
             </div>
+
+            <div class="form-group col-sm-6">
+                <label for="giro"> <i class="fas fa-briefcase iconos-crear"></i> {{ trans('cruds.organizacion.fields.giro') }}</label>
+                <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text" name="giro" id="giro" value="{{ old('giro', '') }}">
+                @if($errors->has('giro'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('giro') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.organizacion.fields.giro_helper') }}</span>
+            </div>
+
             <div class="form-group col-sm-6">
                 <label for="mision"> <i class="fas fa-flag iconos-crear"></i> {{ trans('cruds.organizacion.fields.mision') }}</label>
                 <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision" id="mision">{{ old('mision') }}</textarea>
@@ -109,23 +148,12 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
             </div>
+
             <div class="form-group col-sm-6">
-                <label for="logotipo"> <i class="fas fa-image iconos-crear"></i> {{ trans('cruds.organizacion.fields.logotipo') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('logotipo') ? 'is-invalid' : '' }}" id="logotipo-dropzone">
-                </div>
-                @if($errors->has('logotipo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('logotipo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
+                <label><i class="far fa-file-alt iconos-crear"></i>Antecedentes</label>
+                <textarea class="form-control {{ $errors->has('antecedentes') ? 'is-invalid' : '' }}" name="antecedentes" id="antecedentes">{{ old('antecedentes') }}</textarea>
             </div>
-            <div class="form-group col-12">
-                <i class="far fa-file-alt iconos-crear"></i>
-                <label>Antecedentes</label>
-                <textarea class="form-control"></textarea>
-            </div>
-            <div class="form-group col-12 text-right">
+            <div class="text-right form-group col-12">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -139,6 +167,16 @@
 @endsection
 
 @section('scripts')
+
+<script>
+
+document.querySelector('.custom-file-input').addEventListener('change',function(e){
+  var fileName = document.getElementById("logotipo").files[0].name;
+  var nextSibling = e.target.nextElementSibling
+  nextSibling.innerText = fileName
+})
+
+</script>
 <script>
     Dropzone.options.logotipoDropzone = {
     url: '{{ route('admin.organizacions.storeMedia') }}',

@@ -122,9 +122,9 @@ class User extends Authenticatable
         $this->notify(new ResetPassword($token));
     }*/
     public function sendPasswordResetNotification($token)
-{
-    $this->notify(new MyResetPassword($token));
-}
+    {
+        $this->notify(new MyResetPassword($token));
+    }
 
     public function getVerifiedAtAttribute($value)
     {

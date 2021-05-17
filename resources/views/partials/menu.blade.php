@@ -1,115 +1,33 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
-<style type="text/css">
-    body.c-dark-theme .letra_blanca{
-        color: #fff;
-    }
-    body.c-dark-theme .img_logo{
-        filter: grayscale(100%) invert(0.5) brightness(200%);
-    }
-    .iconos_menu{
-        font-size: 14pt;
-        margin-right: 15px;
-        margin-left: 2px;
-    }
-    .dark_mode1, .img_logo{
-        transition: 0s;
-    }
-    ul, div img, .card{
-        transition: 0s;
-    }
-    input{
-        transition: 0s;
-    }
-    body.c-dark-theme input{
-        background-color: #000;
-        color: #ccc;
-        border-color: rgba(0,0,0,0);
-    }
-    body.c-dark-theme input:focus{
-        background-color: #000;
-    }
-    textarea{
-        transition: 0s;
-    }
-    body.c-dark-theme textarea{
-        background-color: #000;
-        color: #ccc;
-        border-color: rgba(0,0,0,0);
-    }
-    body.c-dark-theme textarea:focus{
-        background-color: #000;
-    }
-    span{
-        transition: 0s;
-    }
-    body.c-dark-theme .form-group span{
-        background-color: #000;
-        color: #ccc;
-        border-color: rgba(0,0,0,0);
-    }
-     body.c-dark-theme .form-group span:focus{
-        background-color: #000;
-    }
-    body.c-dark-theme select{
-        background-color: #000;
-        color: #ccc;
-        border-color: rgba(0,0,0,0);
-    }
-     body.c-dark-theme select:focus{
-        background-color: #000;
-    }
-    body.c-dark-theme .needsclick{
-        background-color: #000;
-        color: #ccc;
-        border-color: rgba(0,0,0,0);
-    }
+<link rel="stylesheet" type="text/css" href="{{ asset('css/menu.css') }}">
 
-    #sidebar{
-        background: rgba(255,255,255,0.05);
-        box-shadow: 0px 7px 7px 1px rgba(0,0,0,0.3);
-        z-index: 999999;
-    }
-    #sidebar::before{
-        
-    }
-
-    #sidebar .active, #sidebar .c-active{
-            position: relative;
-    }
-    #sidebar .active:before, #sidebar .c-active:before{
-        content: "";
-        background: #380caf;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        position: absolute;
-    }
-    #sidebar a.active font, #sidebar a.c-active font, #sidebar a.c-active .letra_blanca{
-        color: #fff;
-    }
-
-    #sidebar li a:hover font{
-        color: #fff;
-    }
-    #sidebar li a:hover .letra_blanca{
-        color: #fff;
-    }
-
-
-</style>
 
 
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style="border: none;">
 
-<div class="c-sidebar-brand d-md-down-none bg-transparent">
+<div class="bg-transparent c-sidebar-brand d-md-down-none">
 
-    <div class="text-center dark_mode1" style="padding-top: 20px;">
-            <a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 40%;" class="img_logo"></a>
-        </div>
+   <!-- <div class="text-center dark_mode1" style="padding-top: 20px;">-->
+           {{--<a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 40%;" class="img_logo"></a> --}} 
+        <div class="caja_img_logo">
+           <?php
+            use Illuminate\Support\Facades\DB;
+            $users = DB::table('organizacions')
+            ->select('logotipo')
+            ->first();
 
+            if (isset($users)) { ?>
+            <img src="{{ url('images/' . $users->logotipo) }}" class="img_logo w-100">
+            <?php } elseif (!isset($users)) { ?>
+            <img src="{{ url('img/Silent4Business-Logo-Color.png') }}" class="img_logo w-100">
+            <?php } else { ?>
+            <img src="{{ url('img/Silent4Business-Logo-Color.png') }}" class="img_logo w-100">
+            <?php }
+            ?>
+       
     </div>
+
+</div>
 
 
 
@@ -198,7 +116,7 @@
                     @can('matriz_riesgo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.matriz-riesgos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/matriz-riesgos") || request()->is("admin/matriz-riesgos/*") ? "c-active" : "" }}">
-                              <i class="fas fa-table  iconos_menu letra_blanca">
+                              <i class="fas fa-table iconos_menu letra_blanca">
                               </i>
                                 <font class="letra_blanca"> {{ trans('cruds.matrizRiesgo.title') }} </font>
                             </a>
@@ -674,7 +592,7 @@
                 </ul>
             </li>
         @endcan
-        @can('isoveintidostresuno_access')
+        {{-- @can('isoveintidostresuno_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-globe-africa iconos_menu letra_blanca">
@@ -717,7 +635,7 @@
                     @endcan
                 </ul>
             </li>
-        @endcan
+        @endcan --}}
 
         <li class="c-sidebar-nav-title"><font class="letra_blanca">Administración</font></li>
         @can('faq_management_access')
@@ -772,7 +690,7 @@
                   @can('tipoactivo_access')
                       <li class="c-sidebar-nav-item">
                           <a href="{{ route("admin.tipoactivos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/tipoactivos") || request()->is("admin/tipoactivos/*") ? "active" : "" }}">
-                        <i class="fas fa-th-list  iconos_menu letra_blanca"></i>
+                        <i class="fas fa-th-list iconos_menu letra_blanca"></i>
                               <font class="letra_blanca"> Categorias de Activos</font>
                           </a>
                       </li>
