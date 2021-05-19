@@ -45,29 +45,32 @@ class MyResetPassword extends Notification
 
     public function toMail($notifiable)
     {
-        
-            return (new MailMessage)
-        ->subject('TABANTAJ: Restablecimiento de contraseña.')
-        ->line([
-            'Recibimos una solicitud de restablecimiento de contraseña para su cuenta.',
+
+        return (new MailMessage)
+            ->subject('TABANTAJ: Restablecimiento de contraseña.')
+            ->line([
+                'Recibimos una solicitud de restablecimiento de contraseña para su cuenta.',
             ])
-        ->line([
-            'Este enlace caducará en 60 minutos.',
-                    ])
-        ->line([
-            'En caso de cualquier duda, favor de contactar al equipo de soporte',
-            'contacto@silent4business.com',
-    
-        ])
-        ->line([
-            
-            'Haga clic en el botón de abajo para restablecer su contraseña:',
-        ])
-        ->action('Restablecer contraseña', url('password/reset', $this->token))
-        ->line('Si usted no solicitó un restablecimiento de contraseña, no se requiere ninguna otra acción');
+            ->line([
+                'Este enlace caducará en 60 minutos.',
+            ])
+            ->line([
+                'En caso de cualquier duda, favor de contactar al equipo de soporte',
+                'contacto@silent4business.com',
+
+            ])
+            ->line([
+
+                'Haga clic en el botón de abajo para restablecer su contraseña:',
+            ])
+            ->action('Restablecer contraseña', url(route('password.reset', [
+                'token' => $this->token,
+                'email' => $notifiable->getEmailForPasswordReset(),
+            ], false)))
+            ->line('Si usted no solicitó un restablecimiento de contraseña, no se requiere ninguna otra acción');
     }
-    
-    
+
+
     /**
      * Get the array representation of the notification.
      *

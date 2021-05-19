@@ -68,7 +68,7 @@ return [
      * set null, 0 - if you don't need cache (default)
      * if you want use cache - set the number of minutes for which the value should be cached
      */
-    'cache' => 60,
+    'cache' => null,
 
     /**
      * File manager modules configuration
@@ -111,7 +111,7 @@ return [
      *
      * default - false(OFF)
      */
-    'acl' => true,
+    'acl' => false,
 
     /**
      * Hide files and folders from file-manager if user doesn't have access
@@ -134,7 +134,7 @@ return [
      *
      * null or value in minutes
      */
-    'aclRulesCache' => 60,
+    'aclRulesCache' => null,
 
     //********* Default configuration for DefaultConfigRepository END **********
 
@@ -161,7 +161,7 @@ return [
         // null - for not authenticated users
         null => [
             //['disk' => 'public', 'path' => '/', 'access' => 2],
-            ['disk' => 'Documentacion', 'path' => '/*.gitignore', 'access' => 0],
+            //['disk' => 'Documentacion', 'path' => '/*.gitignore', 'access' => 0],
         ],
         1 => [
             //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],

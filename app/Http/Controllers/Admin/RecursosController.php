@@ -10,8 +10,11 @@ use App\Http\Requests\UpdateRecursoRequest;
 use App\Models\Recurso;
 use App\Models\Team;
 use App\Models\User;
+use App\Notifications\TaskRecursosNotification;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -22,6 +25,7 @@ class RecursosController extends Controller
 
     public function index(Request $request)
     {
+
         abort_if(Gate::denies('recurso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
@@ -101,9 +105,9 @@ class RecursosController extends Controller
 
     public function store(StoreRecursoRequest $request)
     {
-        $recurso = Recurso::create($request->all());
-        $recurso->participantes()->sync($request->input('participantes', []));
 
+        $recurso = Recurso::create($request->all());
+        // $recurso->participantes()->sync($request->input('participantes', []));
         foreach ($request->input('certificado', []) as $file) {
             $recurso->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificado');
         }
@@ -129,7 +133,7 @@ class RecursosController extends Controller
     public function update(UpdateRecursoRequest $request, Recurso $recurso)
     {
         $recurso->update($request->all());
-        $recurso->participantes()->sync($request->input('participantes', []));
+        //$recurso->participantes()->sync($request->input('participantes', []));
 
         if (count($recurso->certificado) > 0) {
             foreach ($recurso->certificado as $media) {

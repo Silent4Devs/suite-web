@@ -1,217 +1,370 @@
 <style type="text/css">
-    .tbla_12 th {
-        vertical-align: center;
-    }
+    
+.accordion-container {
+    width: 100%;
+    margin-top: 5px;
+    clear:both;
+}
 
-    .tabla_12 thead tr {
-        background: #28ab77;
-        color: #fff;
-    }
+.accordion-titulo {
+    position: relative;
+    display: block;
+    padding: 10px;
+    font-size: 13pt;
+    font-weight: 20pt;
+    background: #2c3e50;
+    color: #fff;
+    text-decoration: none;
+}
+.accordion-titulo.open {
+    background: #16a085;
+    color: #fff;
+}
+.accordion-titulo:hover {
+    background: #1abc9c;
+}
 
-    .tabla_12 tbody tr:nth-child(even) {
-        background: rgba(40, 171, 119, 0.1);
-        margi
+.accordion-titulo span.toggle-icon:before {
+    content:"+";
+}
+
+.accordion-titulo.open span.toggle-icon:before {
+    content:"-";
+}
+
+.accordion-titulo span.toggle-icon {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    font-size: 38px;
+    font-weight:bold;
+}
+
+.accordion-content {
+    display: none;
+    padding: 20px;
+    max-height: 400px;
+    overflow: scroll;
+}
+
+.accordion-content p{
+    margin:0;
+}
+
+.accordion-content img {
+    display: block;
+    float: left;
+    margin: 0 15px 10px 0;
+    width: 50%;
+    height: auto;
+}
+
+
+@media (max-width: 767px) {
+    .accordion-content {
+        padding: 10px 0;
     }
+}
+
+
+
+
+
+
+table thead{
+    background-color: #eee;
+}
+table th{
+    text-align: center;
+    padding: 10px;
+}
+table tbody tr{
+    border-bottom: 1px solid #ccc;
+}
+
+table td{
+    padding: 10px;
+}
+
 </style>
 
+    <div class="accordion-container">
+        <a href="#" class="accordion-titulo">ANALISIS INICIAL<span class="toggle-icon"></span></a>
+        <div class="accordion-content">
+            <table>
+                <thead class="">
+                    <tr>
+                        <th>No</th>
+                        <th>Actividad</th>
+                        <th>Actividad Principal</th>
+                        <th>Ejecutar</th>
+                        <th>Estado</th>
+                        <th>Responsable</th>
+                        <th>Colaborador</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Fecha Compromiso</th>
+                        <th>Fecha Real</th>
 
-<div class="scrollme">
-    <table class="table table-responsive tabla_12" style="font-size: 12px;">
-        <thead class="letras-dashboard2 align-middle">
-        <tr>
-            <th scope="col" width="2%">No</th>
-            <th scope="col" width="30%">Actividad</th>
-            <th scope="col" width="10%">Actividad Principal</th>
-            <th scope="col" width="10%">Ejecutar</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Responsable</th>
-            <th scope="col">Colaborador</th>
-            <th scope="col" width="20%">Fecha Inicio</th>
-            <th scope="col" width="20%">Fecha Fin</th>
-            <th scope="col">Fecha Compromiso</th>
-            <th scope="col" width="17%">Fecha Real</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($planbases as $actividadplan)
-            <tr>
-                <td scope="row">
-                    {{$actividadplan->id}}
-                </td>
-                <td>
-                    {{$actividadplan->actividad}}
-                </td>
-                <td>
-                    {{$actividadplan->actividad_padre_id}}
-                </td>
-                <td>
-                    {{$actividadplan->ejecutar_id}}
-                </td>
-                <td>
-                    <a href="#"
-                       data-type="select"
-                       data-pk="{{$actividadplan->id}}"
-                       data-url="{{route("admin.implementacions.update",  $actividadplan->id)}}"
-                       data-title="Seleccionar estado"
-                       data-value="{{$actividadplan->estatus_id}}"
-                       class="estatus_id"
-                       data-name="estatus_id">
-                    </a>
-                </td>
-                <td scope="row">
-                    {{$actividadplan->responsable_id}}
-                </td>
-                <td scope="row">
-                    {{$actividadplan->colaborador_id}}
-                </td>
-                <td scope="row">
-                    {{$actividadplan->fecha_inicio}}
-                </td>
-                <td scope="row">
-                    {{$actividadplan->fecha_fin}}
-                </td>
-                <td scope="row">
-                    {{$actividadplan->compromiso}}
-                </td>
-                <td scope="row">
-                    {{$actividadplan->real}}
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-</div>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($planbases as $actividadplan)
+                        <tr>
+                            <td>{{$actividadplan->id}}</td>
+                            <td>{{$actividadplan->actividad}}</td>
+                            <td>{{$actividadplan->actividad_padre_id}}</td>
+                            <td>{{$actividadplan->ejecutar_id}}</td>
+                            <td>{{$actividadplan->estatus_id}}</td>
+                            <td>{{$actividadplan->responsable_id}}</td>
+                            <td>{{$actividadplan->colaborador_id}}</td>
+                            <td>{{$actividadplan->fecha_inicio}}</td>
+                            <td>{{$actividadplan->fecha_fin}}</td>
+                            <td>{{$actividadplan->compromiso}}</td>
+                            <td>{{$actividadplan->real}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 
-@section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js">
-    </script>
-    <script>
-        var dates = [new Date("2020-12-24"), new Date("2020-12-26"), new Date("2020-12-30"), new Date("2021-1-2"),
-            new Date("2021-1-2"),
-            new Date("2021-1-3"),
-            new Date("2021-1-5"),
-            new Date("2021-1-6"),
-            new Date("2021-1-7"),
-            new Date("2021-1-8"),
-            new Date("2021-1-8"),
-            new Date("2021-1-9"),
-            new Date("2021-2-2"), new Date("2021-2-2"), new Date("2021-1-2"), new Date("2021-1-2"), new Date("2021-1-2"),
-            new Date("2021-1-2"), new Date("2021-1-2"), new Date("2021-1-2"), new Date("2021-1-2"), new Date("2021-1-2"),
-            new Date("2021-1-2"), new Date("2021-1-2"),
 
-            new Date("2021-1-4"), new Date("2021-1-9"), new Date("2021-1-10")];
+    <div class="accordion-container">
+        <a href="#" class="accordion-titulo">PLANEACIÓN<span class="toggle-icon"></span></a>
+        <div class="accordion-content">    
+            <table>
+                <thead class="">
+                    <tr>
+                        <th>No</th>
+                        <th>Actividad</th>
+                        <th>Actividad Principal</th>
+                        <th>Ejecutar</th>
+                        <th>Estado</th>
+                        <th>Responsable</th>
+                        <th>Colaborador</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Fecha Compromiso</th>
+                        <th>Fecha Real</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($planbases as $actividadplan)
+                        <tr>
+                            <td>{{$actividadplan->id}}</td>
+                            <td>{{$actividadplan->actividad}}</td>
+                            <td>{{$actividadplan->actividad_padre_id}}</td>
+                            <td>{{$actividadplan->ejecutar_id}}</td>
+                            <td>{{$actividadplan->estatus_id}}</td>
+                            <td>{{$actividadplan->responsable_id}}</td>
+                            <td>{{$actividadplan->colaborador_id}}</td>
+                            <td>{{$actividadplan->fecha_inicio}}</td>
+                            <td>{{$actividadplan->fecha_fin}}</td>
+                            <td>{{$actividadplan->compromiso}}</td>
+                            <td>{{$actividadplan->real}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'horizontalBar',
-            data: {
-                labels: dates.map((d, i) => " " + i).splice(1),
-                datasets: [{
-                    label: 'Actividades',
-                    data: dates.map((d, i) => i == 0 ? null : [dates[i - 1], d]).slice(1),
-                    backgroundColor: 'teal',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                legend: {
-                    display: false,
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function (tooltipItem, data) {
-                            console.log(tooltipItem, data)
-                            let values = data.datasets[0].data[tooltipItem.index]
-                            console.log(values)
-                            console.log(moment(values[0]).format('YYYY-MM-DD'), moment(values[0]))
-                            return moment(values[0]).format('YYYY-MM-DD') + ' al ' + moment(values[1]).format('YYYY-MM-DD')
-                        }
-                    },
-                    yAlign: 'top'
-                },
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        time: {
-                            displayFormats: {
-                                day: 'YYYY-MM-DD'
-                            }
-                        },
-                        ticks: {
-                            min: dates[0].getTime(),
-                            max: dates[dates.length - 1].getTime()
-                        }
-                    }]
-                }
+
+
+     <div class="accordion-container">
+        <a href="#" class="accordion-titulo">SOPORTE<span class="toggle-icon"></span></a>
+        <div class="accordion-content">    
+            <table>
+                <thead class="">
+                    <tr>
+                        <th>No</th>
+                        <th>Actividad</th>
+                        <th>Actividad Principal</th>
+                        <th>Ejecutar</th>
+                        <th>Estado</th>
+                        <th>Responsable</th>
+                        <th>Colaborador</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Fecha Compromiso</th>
+                        <th>Fecha Real</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($planbases as $actividadplan)
+                        <tr>
+                            <td>{{$actividadplan->id}}</td>
+                            <td>{{$actividadplan->actividad}}</td>
+                            <td>{{$actividadplan->actividad_padre_id}}</td>
+                            <td>{{$actividadplan->ejecutar_id}}</td>
+                            <td>{{$actividadplan->estatus_id}}</td>
+                            <td>{{$actividadplan->responsable_id}}</td>
+                            <td>{{$actividadplan->colaborador_id}}</td>
+                            <td>{{$actividadplan->fecha_inicio}}</td>
+                            <td>{{$actividadplan->fecha_fin}}</td>
+                            <td>{{$actividadplan->compromiso}}</td>
+                            <td>{{$actividadplan->real}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+     <div class="accordion-container">
+        <a href="#" class="accordion-titulo">OPERACIÓN DE SGSI<span class="toggle-icon"></span></a>
+        <div class="accordion-content">    
+            <table>
+                <thead class="">
+                    <tr>
+                        <th>No</th>
+                        <th>Actividad</th>
+                        <th>Actividad Principal</th>
+                        <th>Ejecutar</th>
+                        <th>Estado</th>
+                        <th>Responsable</th>
+                        <th>Colaborador</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Fecha Compromiso</th>
+                        <th>Fecha Real</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($planbases as $actividadplan)
+                        <tr>
+                            <td>{{$actividadplan->id}}</td>
+                            <td>{{$actividadplan->actividad}}</td>
+                            <td>{{$actividadplan->actividad_padre_id}}</td>
+                            <td>{{$actividadplan->ejecutar_id}}</td>
+                            <td>{{$actividadplan->estatus_id}}</td>
+                            <td>{{$actividadplan->responsable_id}}</td>
+                            <td>{{$actividadplan->colaborador_id}}</td>
+                            <td>{{$actividadplan->fecha_inicio}}</td>
+                            <td>{{$actividadplan->fecha_fin}}</td>
+                            <td>{{$actividadplan->compromiso}}</td>
+                            <td>{{$actividadplan->real}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+     <div class="accordion-container">
+        <a href="#" class="accordion-titulo">EVALUACIÓN<span class="toggle-icon"></span></a>
+        <div class="accordion-content">    
+            <table>
+                <thead class="">
+                    <tr>
+                        <th>No</th>
+                        <thstado</th>
+                        <th>Responsable</th>
+                        <th>Colaborador</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Fecha Compromiso</th>
+                        <th>Fecha Real</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($planbases as $actividadplan)
+                        <tr>
+                            <td>{{$actividadplan->id}}</td>
+                            <td>{{$actividadplan->actividad}}</td>
+                            <td>{{$actividadplan->actividad_padre_id}}</td>
+                            <td>{{$actividadplan->ejecutar_id}}</td>
+                            <td>{{$actividadplan->estatus_id}}</td>
+                            <td>{{$actividadplan->responsable_id}}</td>
+                            <td>{{$actividadplan->colaborador_id}}</td>
+                            <td>{{$actividadplan->fecha_inicio}}</td>
+                            <td>{{$actividadplan->fecha_fin}}</td>
+                            <td>{{$actividadplan->compromiso}}</td>
+                            <td>{{$actividadplan->real}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+     <div class="accordion-container">
+        <a href="#" class="accordion-titulo">MEJORA CONTINUA<span class="toggle-icon"></span></a>
+        <div class="accordion-content">    
+            <table>
+                <thead class="">
+                    <tr>
+                        <th>No</th>
+                        <thstado</th>
+                        <th>Responsable</th>
+                        <th>Colaborador</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Fecha Compromiso</th>
+                        <th>Fecha Real</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($planbases as $actividadplan)
+                        <tr>
+                            <td>{{$actividadplan->id}}</td>
+                            <td>{{$actividadplan->actividad}}</td>
+                            <td>{{$actividadplan->actividad_padre_id}}</td>
+                            <td>{{$actividadplan->ejecutar_id}}</td>
+                            <td>{{$actividadplan->estatus_id}}</td>
+                            <td>{{$actividadplan->responsable_id}}</td>
+                            <td>{{$actividadplan->colaborador_id}}</td>
+                            <td>{{$actividadplan->fecha_inicio}}</td>
+                            <td>{{$actividadplan->fecha_fin}}</td>
+                            <td>{{$actividadplan->compromiso}}</td>
+                            <td>{{$actividadplan->real}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $(".accordion-titulo").click(function(e){
+               
+            e.preventDefault();
+        
+            var contenido=$(this).next(".accordion-content");
+
+            if(contenido.css("display")=="none"){ //open        
+              contenido.slideDown(250);         
+              $(this).addClass("open");
             }
-        });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-
-            $.fn.editable.defaults.mode = 'popup';
-            $.fn.editable.defaults.send = "always";
-
-            $.fn.editable.defaults.params = function (params) {
-                params._token = $("#_token").data("token");
-                return params;
-            };
-
-            $('#investmentName').editable({
-
-                type: 'text',
-                url: '/',
-                send: 'always'
-
-            });
-        });
-    </script>
-    <script>
-        @section('x-editable')
-        $(document).ready(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            //categories table
-            $(".estatus_id").editable({
-                dataType: 'json',
-                source: [{
-                    value: '1',
-                    text: 'Sin iniciar'
-                },
-                    {
-                        value: '2',
-                        text: 'En proceso'
-                    },
-                    {
-                        value: '3',
-                        text: 'Completada'
-                    },
-                    {
-                        value: '4',
-                        text: 'Retrasada'
-                    },
-                    {
-                        value: '5',
-                        text: 'Cancelada'
-                    },
-                ],
-                success: function (response, newValue) {
-                    console.log('Actualizado, response')
-                }
-            });
+            else{ //close       
+              contenido.slideUp(250);
+              $(this).removeClass("open");  
+            }
 
         });
-        @endsection
-    </script>
-
-@endsection
+    });
+</script>

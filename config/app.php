@@ -171,11 +171,12 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Emotality\TawkTo\TawkToServiceProvider::class,
         Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
 
     ],
@@ -230,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'TawkTo' => Emotality\TawkTo\TawkTo::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

@@ -1,6 +1,10 @@
 <?php
 
 //Route::view('/', 'welcome');
+
+use App\Http\Controllers\NotificacionesController;
+use App\Http\Livewire\NotificacionesComponent;
+
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
 Auth::routes();
@@ -13,17 +17,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //analisis brechas
     //Route::resource('analisis-brechas', 'AnalisisBController');
-    Route::get('analisis-brechas','AnalisisBController@index');
-    Route::post('analisis-brechas/update','AnalisisBController@update');
+    Route::get('analisis-brechas', 'AnalisisBController@index');
+    Route::post('analisis-brechas/update', 'AnalisisBController@update');
 
 
-        // Declaracion de Aplicabilidad
-        Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
-        Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
+    // Declaracion de Aplicabilidad
+    Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
+    Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
+    Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
 
     //gantt
-    Route::get('gantt','GanttController@index');
-    Route::post('gantt/update','GanttController@update');
+    Route::get('gantt', 'GanttController@index');
+    Route::post('gantt/update', 'GanttController@update');
 
     // Roles
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
@@ -246,7 +251,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
     Route::resource('accion-correctivas', 'AccionCorrectivaController');
     Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
-    Route::post('accion-correctivas/editarplan','PlanaccionCorrectivaController@update');
+    Route::post('accion-correctivas/editarplan', 'PlanaccionCorrectivaController@update');
     Route::post('plan-correctivas-storeedit', 'PlanaccionCorrectivaController@storeEdit');
     Route::post('planaccion-storered', 'PlanaccionCorrectivaController@storeRedirect')->name('storered');
 
@@ -318,25 +323,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
     Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
 
-     // Matriz Riesgos
-     Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
-     Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+    // Matriz Riesgos
+    Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
+    Route::resource('matriz-riesgos', 'MatrizRiesgosController');
 
-     // Gap Unos
-     Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
-     Route::resource('gap-unos', 'GapUnoController');
+    // Gap Unos
+    Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
+    Route::resource('gap-unos', 'GapUnoController');
 
-     // Gap Dos
-     Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
-     Route::resource('gap-dos', 'GapDosController');
+    // Gap Dos
+    Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
+    Route::resource('gap-dos', 'GapDosController');
 
-     // Gap Tres
-     Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
-     Route::resource('gap-tres', 'GapTresController');
+    // Gap Tres
+    Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
+    Route::resource('gap-tres', 'GapTresController');
 
-     // Control Documentos
+    // Control Documentos
     Route::delete('control-documentos/destroy', 'ControlDocumentosController@massDestroy')->name('control-documentos.massDestroy');
-    Route::resource('control-documentos', 'ControlDocumentosController', ['except' => ['show']]);
+    Route::resource('control-documentos', 'ControlDocumentosController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
@@ -440,7 +445,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     // Competencia
     Route::delete('competencia/destroy', 'CompetenciasController@massDestroy')->name('competencia.massDestroy');
     Route::resource('competencia', 'CompetenciasController');
-  // Concientizacion Sgis
+    // Concientizacion Sgis
     Route::delete('concientizacion-sgis/destroy', 'ConcientizacionSgiController@massDestroy')->name('concientizacion-sgis.massDestroy');
     Route::resource('concientizacion-sgis', 'ConcientizacionSgiController');
 
@@ -609,12 +614,15 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('frontend/profile/destroy', 'ProfileController@destroy')->name('profile.destroy');
     Route::post('frontend/profile/password', 'ProfileController@password')->name('profile.password');
     Route::post('profile/toggle-two-factor', 'ProfileController@toggleTwoFactor')->name('profile.toggle-two-factor');
-
 });
 
+########################
+#### NOTIFICACIONES ###
+######################
 
-
-
+// Route::get('/notificaciones', [\App\Http\Livewire\NotificacionesComponent::class, '__invoke'])->name('notificaciones');
+Route::get('/notificaciones', 'NotificacionesController@index')->name('notificaciones');
+Route::get('/tareas', 'TareasNotificacionesController@index')->name('tareas');
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
     // Two Factor Authentication
