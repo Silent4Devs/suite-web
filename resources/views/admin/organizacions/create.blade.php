@@ -73,11 +73,12 @@
                 <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
             </div>
             <div class="form-group col-sm-6">
-                <label for="logotipo"> <i class="fas fa-image iconos-crear"></i> {{ trans('cruds.organizacion.fields.logotipo') }}</label>
+                <label for="logotipo"> <i class="fas fa-image iconos-crear"></i> Logotipo <strong> (Selecciona tu imagen en formato .png) </strong></label>
                 <div class="mb-3 input-group">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" class="needsclick dropzone" name="logotipo" id="logotipo" class="form-control {{ $errors->has('logotipo') ? 'is-invalid' : '' }}"  id="logotipo-dropzone" accept="image/*" value="{{ old('logotipo', '') }}">
                         <label class="custom-file-label" for="inputGroupFile02"></label>
+                 
                     </div>
                 </div>
                     @if($errors->has('logotipo'))

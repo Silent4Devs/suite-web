@@ -94,7 +94,7 @@
 
                     <div class="form-group col-sm-6">
                      {{--@dump($organizacion['logotipo'])--}} 
-                        <label for="logotipo">{{ trans('cruds.organizacion.fields.logotipo') }}</label>
+                        <label for="logotipo">Logotipo <strong>(Selecciona tu imagen en formato .png)</strong></label>
                         <div class="mb-3 input-group">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="logotipo" id="logotipo" accept="image/*">
