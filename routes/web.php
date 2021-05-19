@@ -66,7 +66,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
 
     // Entendimiento Organizacions
-    Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController', ['except' => ['show', 'destroy']]);
 
     // Partes Interesadas
     Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
@@ -348,6 +348,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('user-alerts/read', 'UserAlertsController@read');
     Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
     Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
+
+    //REPORTES CONTEXTO 27001
+    Route::get('reportes-contexto/', 'ReporteContextoController@index')->name('reportes-contexto.index');
+    Route::post('reportes-contexto/create', 'ReporteContextoController@store')->name('reportes-contexto.store');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {

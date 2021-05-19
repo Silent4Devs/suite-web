@@ -1282,6 +1282,18 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 318,
                 'title' => 'profile_password_edit',
             ],
+            [
+                'id'    => 319,
+                'title' => 'entendimiento_organizacion_create',
+            ],
+            [
+                'id'    => 320,
+                'title' => 'entendimiento_organizacion_edit',
+            ],
+            [
+                'id'    => 321,
+                'title' => 'entendimiento_organizacion_delete',
+            ],
         ];
 
         Permission::insert($permissions);

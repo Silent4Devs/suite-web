@@ -177,8 +177,7 @@ return [
         Emotality\TawkTo\TawkToServiceProvider::class,
         Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-
-
+        Elibyy\TCPDF\ServiceProvider::class,
     ],
 
     /*
@@ -232,7 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'TawkTo' => Emotality\TawkTo\TawkTo::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-
+        'TPDF' => Elibyy\TCPDF\Facades\TCPDF::class
     ],
 
 
