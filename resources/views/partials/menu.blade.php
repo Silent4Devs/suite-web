@@ -201,7 +201,16 @@
                                         </a>
                                     </li>
                                 @endcan
+                                 @can('entendimiento_organizacion_access')
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ route("admin.entendimiento-organizacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/entendimiento-organizacions") || request()->is("admin/entendimiento-organizacions/*") ? "active" : "" }}">
+                                            <i class="">
 
+                                            </i>
+                                            <font class="letra_blanca"> FODA </font>
+                                        </a>
+                                    </li>
+                                @endcan
                                 @can('alcance_sgsi_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.alcance-sgsis.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/alcance-sgsis") || request()->is("admin/alcance-sgsis/*") ? "active" : "" }}">
@@ -212,6 +221,14 @@
                                         </a>
                                     </li>
                                 @endcan
+                                <li class="c-sidebar-nav-item">
+                                    <a href="{{ route("admin.reportes-contexto.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/reportes-contexto") || request()->is("admin/reportes-contexto/*") ? "active" : "" }}">
+                                        <i class="">
+
+                                        </i>
+                                        <font class="letra_blanca"> Generar Reporte </font>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     @endcan
@@ -589,6 +606,7 @@
                             </ul>
                         </li>
                     @endcan
+
                 </ul>
             </li>
         @endcan
