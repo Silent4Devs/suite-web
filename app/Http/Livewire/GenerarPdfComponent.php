@@ -18,8 +18,7 @@ use PhpOffice\PhpWord\SimpleType\DocProtect;
 use PhpOffice\PhpWord\Style\Language;
 use PhpOffice\PhpWord\Style\TOC;
 use PhpOffice\PhpWord\SimpleType\Jc;
-use Elibyy\TCPDF\Facades\TCPDF;
-
+use PhpOffice\PhpWord\Shared\Html;
 
 
 class GenerarPdfComponent extends Component
@@ -27,123 +26,25 @@ class GenerarPdfComponent extends Component
 
     const NUEVA_LINEA = '</w:t><w:br/><w:t>';
     const PASSWORD_WORD = '12345678';
+    public $nombre_documento;
+
+    public function mount($nombre_control_documento)
+    {
+        $this->nombre_documento = $nombre_control_documento;
+    }
+
     public function render()
     {
         return view('livewire.generar-pdf-component');
     }
 
-    public function generarPDF($valor = 'contexto')
-    {
-        $logo = DB::table('organizacions')
-            ->select('logotipo', 'empresa', 'antecedentes', 'direccion', 'telefono', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'correo')
-            ->first();
-        $logotipo = "";
-        if (isset($logo)) {
-            if ($logo->logotipo != null) {
-                $logotipo = 'images/' . $logo->logotipo;
-            } else {
-                $logotipo = "img/Silent4Business-Logo-Color.png";
-            }
-        } else {
-            $logotipo = "img/Silent4Business-Logo-Color.png";
-        }
-        $organizacion = null;
-        if (!$logo) {
-            session()->flash('error_organizacion', 'Aún no has registrado tu organización');
-            return response()->noContent();
-        } else {
-            $organizacion = $logo;
-        }
-        $matriz_requisitos_legales = MatrizRequisitoLegale::get();
-        $foda = EntendimientoOrganizacion::first();
-        $partes_interesadas = PartesInteresada::get();
-
-        switch ($valor) {
-            case 'contexto':
-                $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
-                if (!$control_documento) {
-                    session()->flash('error_control_documento', 'No existe el control de documento: Contexto de la organización');
-                    return response()->noContent();
-                } else {
-                    $filename = "Estudio de Contexto.docx";
-                    $filename_pdf = "Estudio de Contexto.pdf";
-                    // $documento = $this->generarEstudioContexto($filename);
-                    //\PhpOffice\PhpWord\Settings::setPdfRendererPath(base_path('/vendor/dompdf/dompdf'));
-                    //\PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
-                    // $this->emit('actualizarProgreso', 90);
-                    // $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($documento, 'Word2007');
-                    // $objWriter->save(storage_path('app/public/Normas/') . $filename);
-                    // $this->emit('actualizarProgreso', 100);
-
-                    //Load temp file
-                    // $phpWord = \PhpOffice\PhpWord\IOFactory::load(storage_path('app/public/Normas/') . $filename);
-                    //Save it
-                    // $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
-                    // $xmlWriter->save(storage_path('app/public/Normas/') . $filename_pdf);
-                    // $pdf = App::make('dompdf.wrapper');
-                    // $this->emit('actualizarProgreso', 10);
-                    // $file = 'Reporte de Contexto ' . Carbon::now()->format('d-m-Y') . '.pdf';
-                    // $this->emit('actualizarProgreso', 20);
-                    // $pdf->loadView('PDF.contexto.contexto', compact('control_documento', 'logotipo', 'organizacion', 'matriz_requisitos_legales', 'foda', 'partes_interesadas', 'pdf'));
-                    // $content = $pdf->download()->getOriginalContent();
-                    // $this->emit('actualizarProgreso', 90);
-                    // Storage::disk('Iso27001')->put('Evaluación/Auditoría Interna/' . $file, $content);
-                    // $this->emit('actualizarProgreso', 100);
-
-                    $pdf = new TCPDF();
-
-                    $pdf::SetTitle('Hello World');
-
-                    $pdf::AddPage();
-
-                    $pdf::write(0, 'Hola');
-
-                    // header("Content-disposition: attachment; filename=contexto.pdf");
-                    // header("Content-type: application/pdf");
-                    // readfile(public_path());
-                    $pdf::Output(storage_path('app/public/Normas/') . $filename_pdf);
-                }
-                break;
-            default:
-                //
-                break;
-        }
-
-        return response()->noContent();
-    }
-
-    public function generarWord($valor = 'contexto')
-    {
-        switch ($valor) {
-            case 'contexto':
-                $this->emit('actualizarProgreso', 10);
-                $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
-                if (!$control_documento) {
-                    session()->flash('error_control_documento', 'No existe el control de documento: Contexto de la organización');
-                    return response()->noContent();
-                } else {
-                    $filename = "Estudio de Contexto.docx";
-                    $documento = $this->generarEstudioContexto($filename);
-                    $this->emit('actualizarProgreso', 90);
-                    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($documento, 'Word2007');
-                    $objWriter->save(storage_path('app/public/Normas/') . $filename);
-                    $this->emit('actualizarProgreso', 100);
-                }
-                break;
-            default:
-                //
-                break;
-        }
-        return response()->noContent();
-    }
-
-    public function generarEstudioContexto($filename)
+    public function generarDocumento($valor = 'contexto')
     {
         $organizacion = DB::table('organizacions')
             ->select('logotipo', 'empresa', 'antecedentes', 'direccion', 'telefono', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'correo')
             ->first();
         $logotipo = "";
-        if (isset($logo)) {
+        if (isset($organizacion)) {
             if ($organizacion->logotipo != null) {
                 $logotipo = 'images/' . $organizacion->logotipo;
             } else {
@@ -154,19 +55,89 @@ class GenerarPdfComponent extends Component
         }
 
         if (!$organizacion) {
-            session()->flash('error_organizacion', 'Aún no has registrado tu organización');
+            $this->emit('showErrorAlert', 'Aún no has registrado tu organización');
             return response()->noContent();
         }
 
         $matriz_requisitos_legales = MatrizRequisitoLegale::get();
         $foda = EntendimientoOrganizacion::first();
-        $partes_interesadas = PartesInteresada::get();
-
-        $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
-        if (!$control_documento) {
-            session()->flash('error_control_documento', 'No existe el control de documento: Contexto de la organización');
+        if (!$foda) {
+            $this->emit('showErrorAlert', 'Aún no has realizado en análisis FODA');
             return response()->noContent();
         }
+
+        $partes_interesadas = PartesInteresada::get();
+
+        switch ($valor) {
+            case 'Contexto de la organización':
+                $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
+                if (!$control_documento) {
+                    $this->emit('showErrorAlert', 'No existe el control de documento:' . $control_documento->nombre);
+                    return response()->noContent();
+                } else {
+                    if (is_null($control_documento->clave) || is_null($control_documento->fecha_creacion) || is_null($control_documento->elaboro_id) || is_null($control_documento->reviso_id)) {
+                        $this->emit('showErrorAlert', 'Tienes que llenar los campos faltantes del control de documento: ' . $control_documento->nombre);
+                        return response()->noContent();
+                    }
+                    $control_documento->update([
+                        "version" => $control_documento->version + 1,
+                        "estado_id" => 4,
+                    ]);
+                    $file = 'Contexto de la organización v' . $control_documento->version . '.pdf';
+
+                    $pdf = App::make('dompdf.wrapper');
+                    $pdf->loadView('PDF.contexto.contexto', compact('control_documento', 'logotipo', 'organizacion', 'matriz_requisitos_legales', 'foda', 'partes_interesadas', 'pdf'));
+                    $content = $pdf->download()->getOriginalContent();
+                    Storage::disk('Iso27001')->put('/' . $file, $content);
+                    $filename = "Contexto de la organización v" . $control_documento->version . ".docx";
+                    $this->generarWord('contexto', $filename, $organizacion, $logotipo, $matriz_requisitos_legales, $foda, $partes_interesadas, $control_documento);
+
+                    $this->emit('showSuccessAlert', 'Documento PDF y Word generados con éxito');
+                }
+                break;
+            case 'Test':
+                $control_documento = ControlDocumento::where('nombre', '=', 'Test')->first();
+                $this->emit('showSuccessAlert', 'En construcción');
+                break;
+            default:
+                $this->emit('showErrorAlert', 'Algo salió, no existe el control de documento con el nombre: ' . $this->nombre_documento);
+                break;
+        }
+
+        return response()->noContent();
+    }
+
+    public function generarWord($valor = 'contexto', $file_name, $organizacion, $logotipo, $matriz_requisitos_legales, $foda, $partes_interesadas, $control_documento)
+    {
+        switch ($valor) {
+            case 'contexto':
+                $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
+                if (!$control_documento) {
+                    session()->flash('error_control_documento', 'No existe el control de documento: Contexto de la organización');
+                    return response()->noContent();
+                } else {
+                    $documento = $this->generarEstudioContexto($file_name, $organizacion, $logotipo, $matriz_requisitos_legales, $foda, $partes_interesadas, $control_documento);
+                    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($documento, 'Word2007');
+                    $objWriter->save(storage_path('app/public/Normas/ISO27001/') . $file_name);
+                    // session()->flash('success', 'Archivo Word Generado con éxito');
+                    $this->emit('showSuccessAlert', 'Archivo Word Generado con éxito');
+                }
+                break;
+            default:
+                session()->flash('error_general', 'Algo salió mal al generar el archivo Word, intenta nuevamente.');
+                break;
+        }
+        return response()->noContent();
+    }
+
+    public function generarEstudioContexto($filename, $organizacion, $logotipo, $matriz_requisitos_legales, $foda, $partes_interesadas, $control_documento)
+    {
+
+        // $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
+        // if (!$control_documento) {
+        //     session()->flash('error_control_documento', 'No existe el control de documento: Contexto de la organización');
+        //     return response()->noContent();
+        // }
 
         $texto_encabezado = $control_documento->clave . GenerarPdfComponent::NUEVA_LINEA . GenerarPdfComponent::NUEVA_LINEA . 'Versión: '
             . $control_documento->version . GenerarPdfComponent::NUEVA_LINEA . GenerarPdfComponent::NUEVA_LINEA .
@@ -396,6 +367,7 @@ class GenerarPdfComponent extends Component
             $table_marco_legal->addCell(null)->addText('');
         }
 
+
         // Factores Internos y Externos
         $section->addTextBreak(1);
         $section->addTitle("Factores Internos y Externos", 1);
@@ -408,16 +380,20 @@ class GenerarPdfComponent extends Component
         $table_foda->addCell(7000, $secundario_tabla)->addText('DEBILIDADES', $texto_negrita);
         $table_foda->addRow();
         $table_foda->addCell(1000, $secundario_tabla)->addText('ORIGEN INTERNO');
-        $table_foda->addCell(7000)->addText($foda->fortalezas, null, $texto_justificado);
-        $table_foda->addCell(7000)->addText($foda->debilidades, null, $texto_justificado);
+        $fortalezas = $table_foda->addCell(7000);
+        Html::addHtml($fortalezas, preg_replace("/\t/", "", preg_replace("/\r|\n/", "", $foda->fortalezas))); //Se eliminan tabs,return,nueva linea de los tag html
+        $debilidades = $table_foda->addCell(7000);
+        Html::addHtml($debilidades, preg_replace("/\t/", "", preg_replace("/\r|\n/", "", $foda->debilidades)));
         $table_foda->addRow();
         $table_foda->addCell(1000)->addText('');
         $table_foda->addCell(7000, $secundario_tabla)->addText('OPORTUNIDADES', $texto_negrita);
         $table_foda->addCell(7000, $secundario_tabla)->addText('AMENAZAS', $texto_negrita);
         $table_foda->addRow();
         $table_foda->addCell(1000, $secundario_tabla)->addText('ORIGEN EXTERNO');
-        $table_foda->addCell(7000)->addText($foda->oportunidades, null, $texto_justificado);
-        $table_foda->addCell(7000)->addText($foda->amenazas, null, $texto_justificado);
+        $oportunidades = $table_foda->addCell(7000);
+        Html::addHtml($oportunidades, preg_replace("/\t/", "", preg_replace("/\r|\n/", "", $foda->oportunidades)));
+        $amenazas = $table_foda->addCell(7000);
+        Html::addHtml($amenazas, preg_replace("/\t/", "", preg_replace("/\r|\n/", "", $foda->amenazas)));
 
         // Determinación de las partes interesadas
         $section->addTextBreak(1);
@@ -428,15 +404,15 @@ class GenerarPdfComponent extends Component
         $table_partes_interesadas->addRow();
         $table_partes_interesadas->addCell(15000, array('gridSpan' => 3, 'valign' => 'center', 'bgColor' => '000000'))->addText('PARTES INTERESADAS', null, $texto_alinear_centro);
         $table_partes_interesadas->addRow();
-        $table_partes_interesadas->addCell(4000, $secundario_tabla)->addText('Nombre', null, $texto_alinear_centro);
-        $table_partes_interesadas->addCell(5000, $secundario_tabla)->addText('Requisito', null, $texto_alinear_centro);
-        $table_partes_interesadas->addCell(6000, $secundario_tabla)->addText('Cláusula que satisface el requisito de la parte interesada', null, $texto_alinear_centro);
+        $table_partes_interesadas->addCell(4000, $secundario_tabla)->addText('Nombre');
+        $table_partes_interesadas->addCell(5000, $secundario_tabla)->addText('Requisito');
+        $table_partes_interesadas->addCell(6000, $secundario_tabla)->addText('Cláusula que satisface el requisito de la parte interesada');
         if ($partes_interesadas) {
             foreach ($partes_interesadas as $parte_interesada) {
                 $table_partes_interesadas->addRow();
-                $table_partes_interesadas->addCell(4000, $secundario_tabla)->addText($parte_interesada->parteinteresada);
-                $table_partes_interesadas->addCell(5000, $secundario_tabla)->addText($parte_interesada->requisitos);
-                $table_partes_interesadas->addCell(6000, $secundario_tabla)->addText($parte_interesada->clausala);
+                $table_partes_interesadas->addCell(4000)->addText($parte_interesada->parteinteresada);
+                $table_partes_interesadas->addCell(5000)->addText($parte_interesada->requisitos);
+                $table_partes_interesadas->addCell(6000)->addText($parte_interesada->clausala);
             }
         } else {
             $table_partes_interesadas->addRow();
@@ -458,25 +434,25 @@ class GenerarPdfComponent extends Component
         $section->addPageBreak();
         $section->addTextBreak(2);
         $phpWord->addTableStyle('tabla_firmas', $tableStyle);
-        $table_foda = $section->addTable('tabla_firmas');
-        $table_foda->addRow();
-        $table_foda->addCell(7000, $secundario_tabla)->addText('Elaboró', $texto_negrita, $texto_alinear_centro);
-        $table_foda->addCell(7000, $secundario_tabla)->addText('Firma', $texto_negrita, $texto_alinear_centro);
-        $table_foda->addRow();
-        $elaboro = $table_foda->addCell(7000);
+        $table_firmas = $section->addTable('tabla_firmas');
+        $table_firmas->addRow();
+        $table_firmas->addCell(7000, $secundario_tabla)->addText('Elaboró', $texto_negrita, $texto_alinear_centro);
+        $table_firmas->addCell(7000, $secundario_tabla)->addText('Firma', $texto_negrita, $texto_alinear_centro);
+        $table_firmas->addRow();
+        $elaboro = $table_firmas->addCell(7000);
         $elaboro->addText('José Luis García Muciño', null, $texto_alinear_centro);
         $elaboro->addTextBreak(0.02);
         $elaboro->addText('Coordinador Ejecutivo en Procesos Administrativos', null, $texto_alinear_centro);
-        $table_foda->addCell(7000)->addText('');
-        $table_foda->addRow();
-        $table_foda->addCell(7000, $secundario_tabla)->addText('Revisó', $texto_negrita, $texto_alinear_centro);
-        $table_foda->addCell(7000, $secundario_tabla)->addText('Firma', $texto_negrita, $texto_alinear_centro);
-        $table_foda->addRow();
-        $reviso = $table_foda->addCell(7000);
+        $table_firmas->addCell(7000)->addText('');
+        $table_firmas->addRow();
+        $table_firmas->addCell(7000, $secundario_tabla)->addText('Revisó', $texto_negrita, $texto_alinear_centro);
+        $table_firmas->addCell(7000, $secundario_tabla)->addText('Firma', $texto_negrita, $texto_alinear_centro);
+        $table_firmas->addRow();
+        $reviso = $table_firmas->addCell(7000);
         $reviso->addText('Salvador Mariano González Font', null, $texto_alinear_centro);
         $reviso->addTextBreak(0.02);
         $reviso->addText('Jefe de Departamento de Informática, Base de Datos y Seguridad', null, $texto_alinear_centro);
-        $table_foda->addCell(7000)->addText('');
+        $table_firmas->addCell(7000)->addText('');
 
         # Para que no diga que se abre en modo de compatibilidad
         $phpWord->getCompatibility()->setOoxmlVersion(15);

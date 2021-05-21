@@ -341,7 +341,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Control Documentos
     Route::delete('control-documentos/destroy', 'ControlDocumentosController@massDestroy')->name('control-documentos.massDestroy');
-    Route::resource('control-documentos', 'ControlDocumentosController');
+    Route::resource('control-documentos', 'ControlDocumentosController', ['except' => ['create']]);
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');

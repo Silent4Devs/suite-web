@@ -108,7 +108,7 @@
     <!-- Wrap the content of your PDF inside a main tag -->
     <main>
         {{-- <p style="page-break-after: never;"></p> --}}
-        <p class="text-primary">CONTENIDO</p>
+        {{-- <p class="text-primary">CONTENIDO</p> --}}
         <h1 style="font-size: 16px" class="text-primary titulo_1">Introducción</h1>
         <p class="parrafo">{{ $organizacion->empresa }} determinará a través de este documento las cuestiones externas
             e
@@ -350,8 +350,8 @@
                 @if ($foda)
                     <tr>
                         <td class="sombreado">ORIGEN INTERNO</td>
-                        <td>{{ $foda->fortalezas }}</td>
-                        <td>{{ $foda->debilidades }}</td>
+                        <td>{!! $foda->fortalezas !!}</td>
+                        <td>{!! $foda->debilidades !!}</td>
                     </tr>
                     <tr>
                         <td style="border: none !important">&nbsp;</td>
@@ -360,8 +360,8 @@
                     </tr>
                     <tr>
                         <td class="sombreado">ORIGEN EXTERNO</td>
-                        <td>{{ $foda->oportunidades }}</td>
-                        <td>{{ $foda->amenazas }}</td>
+                        <td>{!! $foda->oportunidades !!}</td>
+                        <td>{!! $foda->amenazas !!}</td>
                     </tr>
                 @else
                     <tr>
@@ -460,8 +460,5 @@
         </p> --}}
     </main>
 </body>
-<script type="text/php">
-
-</script>
 
 </html>

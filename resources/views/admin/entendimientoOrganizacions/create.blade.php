@@ -18,60 +18,62 @@
 
     <script src="{{ asset('js/dark_mode.js') }}"></script>
 @endsection
-<script>
-    $(document).ready(function() {
-        CKEDITOR.replace('fortalezas', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            CKEDITOR.replace('fortalezas', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('debilidades', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('oportunidades', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
+            CKEDITOR.replace('amenazas', {
+                toolbar: [{
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'Bold', 'Italic'
+                    ]
+                }, {
+                    name: 'clipboard',
+                    items: ['Link', 'Unlink']
+                }, ]
+            });
         });
-        CKEDITOR.replace('debilidades', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-        CKEDITOR.replace('oportunidades', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-        CKEDITOR.replace('amenazas', {
-            toolbar: [{
-                name: 'paragraph',
-                groups: ['list', 'indent', 'blocks', 'align'],
-                items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                    'Bold', 'Italic'
-                ]
-            }, {
-                name: 'clipboard',
-                items: ['Link', 'Unlink']
-            }, ]
-        });
-    });
 
-</script>
+    </script>
+@endsection
