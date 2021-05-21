@@ -3,7 +3,6 @@
 
 <style>
     .caja_graficas{
-        width: calc(33% - 20px);
         margin: 10px;
         padding: 20px;
         box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.12);
@@ -64,6 +63,27 @@
     body.c-dark-theme .caja_graficas h5{
         box-shadow: 0px 3px 7px -1px rgba(0,0,0,0.3);
     } 
+
+
+
+    @media(max-width: 1131px){
+        .caja_graficas{
+            width: calc(50% - 20px) !important;
+        }
+    }
+
+    @media(max-width: 780px){
+        .caja_graficas{
+            width: 100% !important;
+        }
+    }
+
+    @media(max-width: 600px){
+        .especificaciones{
+            margin-top: 60px;
+        }
+    }
+    
 </style>
 <div class="content">
     <div class="row">
@@ -77,7 +97,7 @@
             <label>Act <i class="fas fa-square iconos_espec" style="color: #2DB7DB;"></i></label>
             
         </div>
-        <div class="card caja_graficas">
+        <div class="card caja_graficas graf_1" style="width: calc(33.33% - 20px);">
             <h5 class="plan">Progreso General del Plan</h5>
             <canvas id="chartActividades"></canvas>
             <a id="a_plan" class="btn_ver" href="admin/implementacions#plan-just">
@@ -85,42 +105,69 @@
             </a>
 
         </div>
-        <div class="card caja_graficas">
+        <div class="card caja_graficas graf_2" style="width: calc(33.33% - 20px);">
             <h5 class="espec">Documentación</h5>
-            <canvas id="chartDocu"></canvas>
-            <a id="a_plan" class="btn_ver" href="admin/carpeta">
-                Ver Detalle 
-            </a>
+            @if(!empty($exist_doc))
+                <style type="text/css">
+                    .chartDocu{
+                        display: block;
+                    }
+                    .chartDocu_falsa{
+                        display: none;
+                    }
+                </style>
+            @else
+                <style type="text/css">
+                    .chartDocu{
+                        display: none;
+                    }
+                    .chartDocu_falsa{
+                        display: block;
+                    }
+                </style>
+            @endif
+            
+            <div class="chartDocu"><canvas id="chartDocu"></canvas></div>
+            <div class="chartDocu_falsa"><canvas id="chartDocu_falsa"></canvas></div>
+
+            <div style="display: inline-flex; justify-content: center;">
+                <a id="" class="btn_ver" style="margin-left: 0;" href="admin/carpeta">
+                    Carpetas
+                </a>
+                <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/control-documentos">
+                    Lista de documentos
+                </a>
+            </div>
         </div>
-        <div class="card caja_graficas">
+        <div class="card caja_graficas graf_3" style="width: calc(33.33% - 20px);">
             <h5 class="espec">Capacitación</h5>
             <canvas id="chartCapaci"></canvas>
             <a id="a_plan" class="btn_ver" href="admin/recursos">
                 Ver Detalle 
             </a>
         </div>
-        <div class="card caja_graficas" style="width: 48%;">
+        <div class="card caja_graficas graf_4" style="width: calc(50% - 20px);">
             <h5 class="check">Incidentes de Seguridad</h5>
             <canvas id="incidentechart"></canvas>
             <a id="a_plan" class="btn_ver" href="admin/incidentes-de-seguridads">
                 Ver Detalle 
             </a>
         </div>
-        <div class="card caja_graficas" style="width: 48%;">
+        <div class="card caja_graficas graf_5" style="width: calc(50% - 20px);">
             <h5 class="act">Auditorias</h5>
             <canvas id="chartAuditoria"></canvas>
             <a id="a_plan" class="btn_ver" href="admin/auditoria-anuals">
                 Ver Detalle 
             </a>
         </div>
-        <div class="card caja_graficas" style="width: 100%;">
+        <div class="card caja_graficas graf_6" style="width: calc(50% - 20px);">
             <h5 class="act">Registro de Acciones</h5>
             <canvas id="myChart"></canvas>
             <div style="display: inline-flex; justify-content: center;">
-                <a id="a_plan" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
+                <a id="" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
                     Ver Detalle 
                 </a>
-                <a id="a_plan" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
+                <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
                     Ver Detalle 
                 </a>
             </div>
@@ -157,10 +204,7 @@
                         data: [{!!$accionc!!}],
                         borderWidth: 2,
                         backgroundColor: [
-                            'rgba(22, 160, 133, 0.6)',
-                            'rgba(244, 208, 63, 0.6)',
                             'rgba(231, 76, 60, 0.6)',
-                            'rgba(133, 193, 233 , 0.6)',
                         ],
                         borderWidth: 0,
                         borderColor: 'transparent',
@@ -173,25 +217,25 @@
                         label: 'Acciones de Mejora',
                         data: [{!!$registro!!}],
                         borderWidth: 2,
-                        backgroundColor: 'rgba(231, 76, 60, 0.6)',
+                        backgroundColor: 'rgba(22, 160, 133, 0.6)',
                         borderWidth: 0,
                         borderColor: 'transparent',
                         pointBorderWidth: 0,
                         pointRadius: 5.5,
                         pointBackgroundColor: 'transparent',
                         pointHoverBackgroundColor: 'rgba(63,82,227,.8)',
-                    }
+                    },
                 ]
             },
             options: {
             responsive: true,
             legend: {
                 display: true,
-                position: 'left',
+                position: 'right',
                 labels: {
                     fontColor: "black",
                     boxWidth: 20,
-                    padding: 20
+                    padding: 8
                 }
             },
             tooltips: {
@@ -279,8 +323,22 @@
                     },
                 ]
             },
+            
             options:  {
-    "hover": {
+                responsive: true,
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: "black",
+                        boxWidth: 20,
+                        padding: 8,
+                    }
+                },
+                tooltips: {
+                    mode: 'label',
+                },
+                "hover": {
 					      "animationDuration": 0
 					    },
 					    "animation": {
@@ -326,8 +384,26 @@
 
                 ]
             }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: "black",
+                    boxWidth: 20,
+                    padding: 8
+                }
+            },
+            tooltips: {
+            mode: 'label'
+        },
+        
         }
     });
+
+
     var canvasdoc = document.getElementById("chartDocu");
     var pieDoc = new Chart(canvasdoc, {
         type: 'pie',
@@ -347,15 +423,76 @@
                 data: [{!!$documentoPubli!!},{!!$documentoAprob!!},{!!$documentorev!!},{!!$documentoElab!!},{!!$docunoelab!!},],
                 backgroundColor: [
                     'rgba(22, 160, 133, 0.6)',
-                    'rgba(244, 208, 63, 0.6)',
+                    'rgba(43, 65, 233 , 0.6)', 
+                    'rgba(244, 208, 63, 0.6)',  
+                    'rgba(133, 193, 233 , 0.6)', 
                     'rgba(231, 76, 60, 0.6)',
-                    'rgba(133, 193, 233 , 0.6)',
-                    'rgba(43, 65, 233 , 0.6)',
-
                 ]
             }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: "black",
+                    boxWidth: 20,
+                    padding: 8
+                }
+            },
+            tooltips: {
+            mode: 'label'
+        },
+        
         }
     });
+
+
+    var canvasdoc = document.getElementById("chartDocu_falsa");
+    var pieDoc = new Chart(canvasdoc, {
+        type: 'pie',
+        labels: {
+            render: 'value'
+        },
+        data: {
+            labels: [
+                "Publicados",
+                "Aprobados",
+                "En revisión",
+                "Elaborado",
+                "No elaborado"
+            ],
+            datasets: [{
+                label: '% Documentación',
+                data: [0,0,0,0,1,],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(43, 65, 233 , 0.6)', 
+                    'rgba(244, 208, 63, 0.6)',  
+                    'rgba(133, 193, 233 , 0.6)', 
+                    'rgba(231, 76, 60, 0.6)',
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: "black",
+                    boxWidth: 20,
+                    padding: 8
+                }
+            },
+            tooltips: {
+            mode: 'label'
+        },
+        
+        }
+    });
+
 
 	var popCanvas1 = document.getElementById("chartActividades");
     var barChart1 = new Chart(popCanvas1, {
@@ -374,30 +511,67 @@
                 label: '% Implementación por fase',
                 data: [{!!$actividadsininici!!},{!!$actividadenproc!!},{!!$actividadcompl!!},{!!$actividadretr!!},],
                 backgroundColor: [
-                    'rgba(22, 160, 133, 0.6)',
-                    'rgba(244, 208, 63, 0.6)',
-                    'rgba(231, 76, 60, 0.6)',
+                    
                     'rgba(133, 193, 233 , 0.6)',
+                    'rgba(244, 208, 63, 0.6)',
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(231, 76, 60, 0.6)'
                 ]
-            }]
+            },]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: "black",
+                    boxWidth: 20,
+                    padding: 8,
+                }
+            },
+            tooltips: {
+                mode: 'label',
+            },
         }
     });
 
     var popCanvas2 = document.getElementById("chartAuditoria").getContext('2d');
     var barAudit = new Chart(popCanvas2, {
         type: 'bar',
+        labels: {
+            render: 'value'
+        },
         data: {
-            labels: ["Interna", "Externa"],
+            labels: [   
+                "Interna", 
+                "Externa"
+            ],
             datasets: [{
                 label: 'Tipo de auditoria',
-                data: [{!!$auditinterna!!},{!!$auditexterna!!},],
+                data: [{!!$auditinterna!!}, {!!$auditexterna!!}],
                     backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
                     'rgba(54, 162, 235, 0.6)',
                 ]
-            }]
-
+            },]
         },
+
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: "black",
+                    boxWidth: 20,
+                    padding: 8,
+                }
+            },
+            tooltips: {
+                mode: 'label',
+            },
+        }
 
 
     });
