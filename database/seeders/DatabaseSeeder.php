@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
             EstadodocumentosTableSeeder::class,
             EstadoincidentesTableSeeder::class,
             EstusplatrabajoTableSeeder::class,
-            PlanBaseSeeder::class,
             ActividadFaseSeeder::class,
+            PlanBaseSeeder::class,
         ]);
     }
 }

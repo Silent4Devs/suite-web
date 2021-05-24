@@ -7,6 +7,7 @@ use App\Models\PlanBaseActividade;
 use Illuminate\Http\Request;
 use App\Functions\Porcentaje;
 use App\Models\User;
+use App\Models\ActividadFase;
 
 class implementacionController extends Controller
 {
@@ -14,13 +15,18 @@ class implementacionController extends Controller
 
     public function index()
     {
-        // dd(PlanBaseActividade::with('fase')->get()[0]->fase);
+        // dd(ActividadFase::with('plan_base_actividades')->get());
 
-        $planbase = PlanBaseActividade::get();
+        $fases = ActividadFase::with('plan_base_actividades')->get();
+        
+
+        // PlanBaseActividade::with('fase')->get()
+
+        $planbase = PlanBaseActividade::with('actividad_fase')->get();
         $responsable = User::get();
         $responsablenom = User::select('name')->where('id', '=', '3');
         //dd($planbase, $responsable, $responsablenom);
-        return view('admin.implementacions.index', compact('planbase', 'responsable',))
+        return view('admin.implementacions.index', compact('planbase', 'responsable', 'fases'))
             ->with('planbases', $planbase);
     }
 

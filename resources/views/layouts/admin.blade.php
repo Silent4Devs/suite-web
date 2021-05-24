@@ -304,77 +304,7 @@
         <!-- incluir de footer -->
         @include('partials.footer')
     </div>
-<<<<<<< HEAD
-    <!-- incluir de footer -->
-    @include('partials.footer')
-</div>
 
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"></script>
-<script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="//cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
-<script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
-<script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
-
-<!-- x editable -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/js/jquery-ui-1.10.3.custom.min.js" integrity="sha512-cUhdyzcRjImXKxkUU2Kklqmll9uEigbFB57TPJs6F+xAEZwjJrpKosucBT/6AU8hLG5IfHtpW/0DLMT5yq3GWQ==" crossorigin="anonymous"></script>
-<script>
-    $(document).ready(function() {
-         $('.c-sidebar-nav').animate({
-         scrollTop: $(".c-active").offset().top - 350
-         },0);
-    });
-</script>
-
-<script>
-    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-</script>
-<!-- x-editable -->
-<script>
-    $.fn.editable.defaults.mode = 'inline';
-    $.fn.editable.defaults.ajaxOptions = {type: 'PUT'};
-
-    @yield('x-editable')
-
-</script>
-<!-- x-editable -->
-
-
-<script>
-    $(function () {
-        let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
-        let csvButtonTrans = '{{ trans('global.datatables.csv') }}'
-        let excelButtonTrans = '{{ trans('global.datatables.excel') }}'
-        let pdfButtonTrans = '{{ trans('global.datatables.pdf') }}'
-        let printButtonTrans = '{{ trans('global.datatables.print') }}'
-        let colvisButtonTrans = '{{ trans('global.datatables.colvis') }}'
-        let selectAllButtonTrans = '{{ trans('global.select_all') }}'
-        let selectNoneButtonTrans = '{{ trans('global.deselect_all') }}'
-
-        let languages = {
-            'es': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
-=======
 
     <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -437,7 +367,6 @@
         $.fn.editable.defaults.mode = 'inline';
         $.fn.editable.defaults.ajaxOptions = {
             type: 'PUT'
->>>>>>> 0397337058b0471a30f5b4be2367e7df360b2e61
         };
 
         @yield('x-editable')
