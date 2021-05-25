@@ -126,18 +126,59 @@
               ge.init($("#workSpace"));
               loadI18n(); //overwrite with localized ones
 
+
+              
+             $.ajax({
+
+                    type: "POST",
+
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+
+               
+
+                    url: "{{route('admin.implementacions.loadProyect')}}",
+
+
+
+                    success: function (response) {
+                      ge.loadProject(response);
+                      ge.checkpoint(); //empty the undo stack 
+
+                      console.log(ge.tasks);
+
+                      initializeHistoryManagement(ge.tasks[0].id);
+                    }
+
+                });
+              
+
+                    
+
+             
+
+              
+            
+
+
+              
+
+
+
+
+
+
               //in order to force compute the best-fitting zoom level
               delete ge.gantt.zoom;
 
-              var project=loadFromLocalStorage();
+              // var project=loadFromLocalStorage();
 
-              if (!project.canWrite)
-                $(".ganttButtonBar button.requireWrite").attr("disabled","true");
+              // if (!project.canWrite)
+              //   $(".ganttButtonBar button.requireWrite").attr("disabled","true");
 
-              ge.loadProject(project);
-              ge.checkpoint(); //empty the undo stack
+              // ge.loadProject(project);
+              // ge.checkpoint(); 
 
-              initializeHistoryManagement(ge.tasks[0].id);
+
             });
 
             let it_ln = [
@@ -217,10 +258,18 @@
             function upload(uploadedFile) {
               var fileread = new FileReader();
               
+
+                    
+
               fileread.onload = function(e) {
+
+
+
                 var content = e.target.result;
                 var intern = JSON.parse(content); // Array of Objects.
                 //console.log(intern); // You can index every object
+
+
                 
                 ge.loadProject(intern);
                 ge.checkpoint(); //empty the undo stack
@@ -230,6 +279,8 @@
               fileread.readAsText(uploadedFile);
             }
 
+
+
             function saveGanttOnServer() {
 
               //this is a simulation: save data to the local storage or to the textarea
@@ -237,7 +288,30 @@
 
               var prj = ge.saveProject();
 
-              download(JSON.stringify(prj, null, '\t'), "MyProject.json", "application/json");
+              // console.log(JSON.stringify(prj, null, '\t'));
+
+              var txt_prj = JSON.stringify(prj, null, '\t');
+
+              $.ajax({
+
+                type: "post",
+
+
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+
+               
+
+                url: "{{route('admin.implementacions.saveProyect')}}",
+
+                data: {txt_prj},
+
+                success: function (response) {
+                  
+                }
+
+            });
+
+              // download(JSON.stringify(prj, null, '\t'), "MyProject.json", "application/json");
 
               /*
 
