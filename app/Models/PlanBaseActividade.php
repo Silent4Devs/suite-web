@@ -37,7 +37,7 @@ class PlanBaseActividade extends Model implements HasMedia
 
     protected $fillable = [
         'actividad',
-        'actividad_padre_id',
+        'actividad_fase_id',
         'ejecutar_id',
         'estatus_id',
         'responsable_id',
@@ -63,10 +63,10 @@ class PlanBaseActividade extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function actividad_padre()
-    {
-        return $this->belongsTo(PlanBaseActividade::class, 'actividad_padre_id');
-    }
+    // public function actividad_padre()
+    // {
+    //     return $this->belongsTo(PlanBaseActividade::class, 'actividad_padre_id');
+    // }
 
     public function ejecutar()
     {
@@ -142,7 +142,7 @@ class PlanBaseActividade extends Model implements HasMedia
         //return $this->belongsTo('User');
    }
 
-   public function fase(){
-        return $this->belongsTo(ActividadFase::class, 'id');
+   public function actividad_fase(){
+        return $this->belongsTo(ActividadFase::class);
    }
 }
