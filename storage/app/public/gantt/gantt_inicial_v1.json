@@ -13,8 +13,8 @@
 			"status": "STATUS_ACTIVE",
 			"depends": "",
 			"start": 1621486800000,
-			"duration": 3,
-			"end": 1621918799999,
+			"duration": 9,
+			"end": 1622609999999,
 			"startIsMilestone": false,
 			"endIsMilestone": false,
 			"collapsed": false,
@@ -38,9 +38,9 @@
 			"level": 1,
 			"status": "STATUS_UNDEFINED",
 			"depends": "3",
-			"start": 1621832400000,
-			"duration": 1,
-			"end": 1621918799999,
+			"start": 1622178000000,
+			"duration": 3,
+			"end": 1622609999999,
 			"startIsMilestone": false,
 			"endIsMilestone": false,
 			"collapsed": false,
@@ -65,8 +65,8 @@
 			"status": "STATUS_UNDEFINED",
 			"depends": "4",
 			"start": 1621573200000,
-			"duration": 1,
-			"end": 1621659599999,
+			"duration": 5,
+			"end": 1622177999999,
 			"startIsMilestone": false,
 			"endIsMilestone": false,
 			"collapsed": false,
@@ -1535,7 +1535,46 @@
 			"url": ""
 		}
 	],
-	"selectedRow": 0,
+	"selectedRow": 1,
 	"deletedTaskIds": [],
-	"zoom": "1w"
+	"resources": [
+		{
+			"id": "tmp_1",
+			"name": "Resource 1"
+		},
+		{
+			"id": "tmp_2",
+			"name": "Resource 2"
+		},
+		{
+			"id": "tmp_3",
+			"name": "Resource 3"
+		},
+		{
+			"id": "tmp_4",
+			"name": "Resource 4"
+		}
+	],
+	"roles": [
+		{
+			"id": "tmp_1",
+			"name": "Project Manager"
+		},
+		{
+			"id": "tmp_2",
+			"name": "Worker"
+		},
+		{
+			"id": "tmp_3",
+			"name": "Stakeholder"
+		},
+		{
+			"id": "tmp_4",
+			"name": "Customer"
+		}
+	],
+	"canAdd": true,
+	"canWrite": true,
+	"canWriteOnParent": true,
+	"zoom": "1M"
 }
