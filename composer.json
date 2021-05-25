@@ -28,6 +28,7 @@
         "laraveldaily/laravel-charts": "^0.1.24",
         "livewire/livewire": "^2.4",
         "nuovo/spreadsheet-reader": "^0.5.11",
+        "phpoffice/phpword": "^0.18.1",
         "pusher/pusher-php-server": "^5.0",
         "spatie/laravel-medialibrary": "^8.7",
         "yajra/laravel-datatables-oracle": "^9.11"

@@ -18,6 +18,7 @@
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet"/>-->
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css"
           rel="tylesheet"/>-->
+    <link rel="stylesheet" href="{{ asset('bs-stepper/dist/css/bs-stepper.min.css') }}">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/Silent4Business-Logo-Color.png') }}">
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"/>-->
@@ -326,7 +327,7 @@
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js" defer></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
+    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
@@ -334,7 +335,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-    
+    <script src="{{ asset('bs-stepper/dist/js/bs-stepper.min.js') }}"></script>
+    <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
     <script>
         window.Laravel = {!! json_encode([
             'user' => auth()->check() ? auth()->user()->id : null,
@@ -627,6 +629,7 @@
     </script>
 
     @yield('scripts')
+    
 
 </body>
 

@@ -7,7 +7,8 @@
             </div>
         @endcan
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-ControlDocumento">
+            @livewire('alertas-control-documento-component')
+            <table id="tbl_documentos_control" class="table table-bordered w-100 datatable-ControlDocumento">
                 <thead class="thead-dark">
                     <tr>
                         <th style="vertical-align: top">
@@ -83,7 +84,7 @@
                         </td>
                     </tr> --}}
                 </thead>
-                {{-- <tbody>
+                <tbody>
                     @foreach ($controlDocumentos as $key => $controlDocumento)
                         <tr data-entry-id="{{ $controlDocumento->id }}">
                             <td>
@@ -108,33 +109,38 @@
                                 {{ $controlDocumento->reviso->name ?? '' }}
                             </td>
                             <td>
-                                {{ $controlDocumento->estado->estado ?? '' }}
+                                {{ $controlDocumento->estado->descripcion ?? '' }}
                             </td>
                             <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    @can('control_documento_edit')
+                                        <a class="btn btn-sm btn-info"
+                                            href="{{ route('admin.control-documentos.edit', $controlDocumento->id) }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    @endcan
 
-                                @can('control_documento_edit')
-                                    <a class="btn btn-xs btn-info"
-                                        href="{{ route('admin.control-documentos.edit', $controlDocumento->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
+                                    {{-- @can('control_documento_delete')
+                                        <form action="{{ route('admin.control-documentos.destroy', $controlDocumento->id) }}"
+                                            method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                            style="display: inline-block;">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="ml-2 btn btn-sm btn-danger">
+                                                <i class="fas fa-trash" data-toggle="tooltip" data-placement="top"
+                                                    title="Editar"></i>
+                                            </button>
+                                        </form>
+                                    @endcan --}}
+                                    @livewire('generar-pdf-component',['nombre_control_documento'=>$controlDocumento->nombre])
 
-                                @can('control_documento_delete')
-                                    <form action="{{ route('admin.control-documentos.destroy', $controlDocumento->id) }}"
-                                        method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
-                                        style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger"
-                                            value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
+                                    @livewire('visualizar-documentos-generados-component',['nombre_control_documento'=>$controlDocumento->nombre])
+                                </div>
                             </td>
 
                         </tr>
                     @endforeach
-                </tbody> --}}
+                </tbody>
             </table>
         </div>
     </div>
@@ -210,19 +216,7 @@
                 }
 
             ];
-            @can('control_documento_create')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar documento',
-                url: "{{ route('admin.control-documentos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
-            @endcan
+
             @can('control_documento_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
                 let deleteButton = {
@@ -259,51 +253,53 @@
                     [1, 'desc']
                 ]
             });
-            let table = $('.datatable-ControlDocumento:not(.ajaxTable)').DataTable({
+            let table = $('#tbl_documentos_control').DataTable({
                 buttons: dtButtons,
-                processing: true,
-                serverSide: true,
-                retrieve: true,
-                aaSorting: [],
-                ajax: "{{ route('admin.control-documentos.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'clave',
-                        name: 'clave'
-                    },
-                    {
-                        data: 'nombre',
-                        name: 'nombre'
-                    },
-                    {
-                        data: 'fecha_creacion',
-                        name: 'fecha_creacion'
-                    },
-                    {
-                        data: 'version',
-                        name: 'version'
-                    },
-                    {
-                        data: 'elaboro',
-                        name: 'elaboro.name'
-                    },
-                    {
-                        data: 'reviso',
-                        name: 'reviso.name'
-                    },
-                    {
-                        data: 'estado',
-                        name: 'estado.estado'
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
-                ],
-            })
+            });
+
+            // processing: true,
+            // serverSide: true,
+            // retrieve: true,
+            // aaSorting: [],
+            // ajax: "{{ route('admin.control-documentos.index') }}",
+            // columns: [{
+            //         data: 'id',
+            //         name: 'id'
+            //     },
+            //     {
+            //         data: 'clave',
+            //         name: 'clave'
+            //     },
+            //     {
+            //         data: 'nombre',
+            //         name: 'nombre'
+            //     },
+            //     {
+            //         data: 'fecha_creacion',
+            //         name: 'fecha_creacion'
+            //     },
+            //     {
+            //         data: 'version',
+            //         name: 'version'
+            //     },
+            //     {
+            //         data: 'elaboro',
+            //         name: 'elaboro.name'
+            //     },
+            //     {
+            //         data: 'reviso',
+            //         name: 'reviso.name'
+            //     },
+            //     {
+            //         data: 'estado',
+            //         name: 'estado.estado'
+            //     },
+            //     {
+            //         data: 'actions',
+            //         name: '{{ trans('global.actions') }}'
+            //     }
+            // ],
+
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();

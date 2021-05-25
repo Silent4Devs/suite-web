@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             GapdosTableSeeder::class,
             declaracion_aplicabilidad_table::class,
             EstadodocumentosTableSeeder::class,
+            ControlDocumentosSeeder::class,
             EstadoincidentesTableSeeder::class,
             EstusplatrabajoTableSeeder::class,
             ActividadFaseSeeder::class,
