@@ -1,41 +1,3 @@
-<div>
-
-
-
-
-
-
-
-
-  
-
-
-  <link rel=stylesheet href="{{asset('gantt/platform.css')}}" type="text/css">
-  <link rel=stylesheet href="{{asset('gantt/libs/jquery/dateField/jquery.dateField.css')}}" type="text/css">
-
-  <link rel=stylesheet href="{{asset('gantt/gantt.css')}}" type="text/css">
-  <link rel=stylesheet href="{{asset('gantt/ganttPrint.css')}}" type="text/css" media="print">
-  <link rel=stylesheet href="{{asset('gantt/libs/jquery/valueSlider/mb.slider.css')}}" type="text/css" media="print">
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-  <div id="ndo" style="position:absolute;right:5px;top:5px;width:378px;padding:5px;background-color: #FFF5E6; border:1px solid #F9A22F; font-size:12px" class="noprint">
-  This Gantt editor is free thanks to <a href="http://twproject.com" target="_blank">Twproject</a> where it can be used on a complete and flexible project management solution.<br> Get your projects done! Give <a href="http://twproject.com" target="_blank">Twproject a try now</a>.
-</div>
-<div id="workSpace" style="padding:0px; overflow-y:auto; overflow-x:hidden;border:1px solid #e5e5e5;position:relative;margin:0 5px"></div>
 
 <style>
   .resEdit {
@@ -57,18 +19,45 @@
     margin-left: 10px;
   }
 
+  #TWGanttArea{
+    height: 550px !important;
+  }
+
+
+  .bwinPopupd{
+    width: calc(80% - 300px) !important;
+    max-width: calc(100% - 300px) !important;
+    min-width: calc(100% - 300px) !important;
+    height: 80% !important;
+    top: 40px !important;
+    right: 10px !important;
+    position: absolute !important;
+    z-index: 9999999999 !important;
+  }
+
+  
+
 </style>
 
+
+<div>
+
+  <link rel=stylesheet href="{{asset('gantt/platform.css')}}" type="text/css">
+  <link rel=stylesheet href="{{asset('gantt/libs/jquery/dateField/jquery.dateField.css')}}" type="text/css">
+
+  <link rel=stylesheet href="{{asset('gantt/gantt.css')}}" type="text/css">
+  <link rel=stylesheet href="{{asset('gantt/ganttPrint.css')}}" type="text/css" media="print">
+  <link rel=stylesheet href="{{asset('gantt/libs/jquery/valueSlider/mb.slider.css')}}" type="text/css" media="print">
+
+
+  <div id="ndo" style="position:absolute;right:5px;top:5px;width:378px;padding:5px;background-color: #FFF5E6; border:1px solid #F9A22F; font-size:12px; display: none;" class="noprint">
+  This Gantt editor is free thanks to <a href="http://twproject.com" target="_blank">Twproject</a> where it can be used on a complete and flexible project management solution.<br> Get your projects done! Give <a href="http://twproject.com" target="_blank">Twproject a try now</a>.
+</div>
+<div id="workSpace" style="padding:0px; overflow-y:auto; overflow-x:hidden;border:1px solid #e5e5e5;position:relative;margin:0 5px"></div>
+
+
+
 <form id="gimmeBack" style="display:none;" action="../gimmeBack.jsp" method="post" target="_blank"><input type="hidden" name="prj" id="gimBaPrj"></form>
-
-
-
-
-
-
-
-
-
 
 
 </div>
@@ -565,7 +554,7 @@ function showBaselineInfo (event,element){
   <!--
   <div class="ganttButtonBar noprint">
     <div class="buttons">
-      <a href="https://gantt.twproject.com/"><img src="res/twGanttLogo.png" alt="Twproject" align="absmiddle" style="max-width: 136px; padding-right: 15px"></a>
+      <a href="https://gantt.twproject.com/"><img src="res/twGanttLogo.png" alt="Twproject" align="absmiddle" style="max-width: 136px; padding-right: 15p; display: none;x"></a>
 
       <button onclick="$('#workSpace').trigger('undo.gantt');return false;" class="button textual icon requireCanWrite" title="undo"><span class="teamworkIcon">&#39;</span></button>
       <button onclick="$('#workSpace').trigger('redo.gantt');return false;" class="button textual icon requireCanWrite" title="redo"><span class="teamworkIcon">&middot;</span></button>
@@ -604,10 +593,10 @@ function showBaselineInfo (event,element){
     </div>
 
     <div>
-      <button onclick="saveGanttOnServer();" class="button first big requireWrite" title="Save">Save</button>
-      <input type="file" name="load-file" id="load-file">
-      <label for="load-file">Load</label>
-      <button onclick='newProject();' class='button requireWrite newproject'><em>clear project</em></button>
+      <button onclick="saveGanttOnServer();" class="button first big requireWrite" title="Save" style="margin-top: 10px;">Guardar</button>
+      <input type="file" name="load-file" id="load-file" style="display: none;">
+      <label for="load-file" style="display: none;">Load</label>
+      <button style="display: none;" onclick='newProject();' class='button requireWrite newproject'><em>clear project</em></button>
       <button class="button login" title="login/enroll" onclick="loginEnroll($(this));" style="display:none;">login/enroll</button>
       <button class="button opt collab" title="Start with Twproject" onclick="collaborate($(this));" style="display:none;"><em>collaborate</em></button>
     </div>
@@ -703,7 +692,7 @@ function showBaselineInfo (event,element){
 
 <div class="__template__" type="TASK_EDITOR"><!--
   <div class="ganttTaskEditor">
-    <h2 class="taskData">Task editor</h2>
+    <h2 class="taskData">Tarea</h2>
     <table  cellspacing="1" cellpadding="5" width="100%" class="taskData table" border="0">
           <tr>
         <td width="200" style="height: 80px"  valign="top">
@@ -762,7 +751,7 @@ function showBaselineInfo (event,element){
           </tr>
         </table>
 
-    <h2>Assignments</h2>
+    <h2>Asignaciones</h2>
   <table  cellspacing="1" cellpadding="0" width="100%" id="assigsTable">
     <tr>
       <th style="width:100px;">name</th>
@@ -773,7 +762,7 @@ function showBaselineInfo (event,element){
   </table>
 
   <div style="text-align: right; padding-top: 20px">
-    <span id="saveButton" class="button first" onClick="$(this).trigger('saveFullEditor.gantt');">Save</span>
+    <span id="saveButton" class="button first" onClick="$(this).trigger('saveFullEditor.gantt');">Guardar</span>
   </div>
 
   </div>
