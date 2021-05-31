@@ -44,6 +44,7 @@
       27 => 'Emotality\\TawkTo\\TawkToServiceProvider',
       28 => 'Alexusmai\\LaravelFileManager\\FileManagerServiceProvider',
       29 => 'Barryvdh\\DomPDF\\ServiceProvider',
+      30 => 'Intervention\\Image\\ImageServiceProvider',
     ),
     'aliases' => 
     array (
@@ -85,6 +86,7 @@
       'View' => 'Illuminate\\Support\\Facades\\View',
       'TawkTo' => 'Emotality\\TawkTo\\TawkTo',
       'PDF' => 'Barryvdh\\DomPDF\\Facade',
+      'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
   'auth' => 
@@ -238,7 +240,6 @@
     ),
     'allowed_origins_patterns' => 
     array (
-      0 => '*',
     ),
     'allowed_headers' => 
     array (
@@ -246,7 +247,6 @@
     ),
     'exposed_headers' => 
     array (
-      0 => '*',
     ),
     'max_age' => 0,
     'supports_credentials' => true,
