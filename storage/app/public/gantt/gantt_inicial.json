@@ -1535,7 +1535,16 @@
 			"url": ""
 		}
 	],
-	"selectedRow": 0,
-	"deletedTaskIds": [],
-	"zoom": "1w"
-}
+	"selectedRow": 2, "deletedTaskIds": [],
+      "resources": [
+      {"id": "tmp_1", "name": "Resource 1"},
+      {"id": "tmp_2", "name": "Resource 2"},
+      {"id": "tmp_3", "name": "Resource 3"},
+      {"id": "tmp_4", "name": "Resource 4"}
+    ],
+      "roles":       [
+      {"id": "tmp_1", "name": "Project Manager"},
+      {"id": "tmp_2", "name": "Worker"},
+      {"id": "tmp_3", "name": "Stakeholder"},
+      {"id": "tmp_4", "name": "Customer"}
+    ], "canWrite":    true, "canDelete":true, "canWriteOnParent": true, "canAdd":true}

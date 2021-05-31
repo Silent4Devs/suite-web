@@ -89,10 +89,10 @@ class implementacionController extends Controller
             $file = Storage::disk('public')->put('gantt/gantt_inicial_v'. $ultima_version .'.json', $proyecto);
 
             if($file){
-                return "Proyecto guardado";
+                return response()->json(['success' => true], 200);
             }
             else { 
-                return "Oops! Error creating json file...";
+                return response()->json(['error' => true], 401);
             }
 
         }

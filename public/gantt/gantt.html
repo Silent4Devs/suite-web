@@ -1,38 +1,52 @@
-<div>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>Teamwork</title>
+
+  <link rel=stylesheet href="platform.css" type="text/css">
+  <link rel=stylesheet href="libs/jquery/dateField/jquery.dateField.css" type="text/css">
+
+  <link rel=stylesheet href="gantt.css" type="text/css">
+  <link rel=stylesheet href="ganttPrint.css" type="text/css" media="print">
+  <link rel=stylesheet href="libs/jquery/valueSlider/mb.slider.css" type="text/css" media="print">
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+  <script src="libs/jquery/jquery.livequery.1.1.1.min.js"></script>
+  <script src="libs/jquery/jquery.timers.js"></script>
+
+  <script src="libs/utilities.js"></script>
+  <script src="libs/forms.js"></script>
+  <script src="libs/date.js"></script>
+  <script src="libs/dialogs.js"></script>
+  <script src="libs/layout.js"></script>
+  <script src="libs/i18nJs.js"></script>
+  <script src="libs/jquery/dateField/jquery.dateField.js"></script>
+  <script src="libs/jquery/JST/jquery.JST.js"></script>
+  <script src="libs/jquery/valueSlider/jquery.mb.slider.js"></script>
+
+  <script type="text/javascript" src="libs/jquery/svg/jquery.svg.min.js"></script>
+  <script type="text/javascript" src="libs/jquery/svg/jquery.svgdom.1.8.js"></script>
 
 
+  <script src="ganttUtilities.js"></script>
+  <script src="ganttTask.js"></script>
+  <script src="ganttDrawerSVG.js"></script>
+  <script src="ganttZoom.js"></script>
+  <script src="ganttGridEditor.js"></script>
+  <script src="ganttMaster.js"></script>  
 
 
+  <!--<script src="libs/profiling.js"></script>-->
+  <!--<script type="text/javascript" src="ganttTestSuite.js"></script>-->
+</head>
+<body style="background-color: #fff;">
 
 
-
-
-  
-
-
-  <link rel=stylesheet href="{{asset('gantt/platform.css')}}" type="text/css">
-  <link rel=stylesheet href="{{asset('gantt/libs/jquery/dateField/jquery.dateField.css')}}" type="text/css">
-
-  <link rel=stylesheet href="{{asset('gantt/gantt.css')}}" type="text/css">
-  <link rel=stylesheet href="{{asset('gantt/ganttPrint.css')}}" type="text/css" media="print">
-  <link rel=stylesheet href="{{asset('gantt/libs/jquery/valueSlider/mb.slider.css')}}" type="text/css" media="print">
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-  <div id="ndo" style="position:absolute;right:5px;top:5px;width:378px;padding:5px;background-color: #FFF5E6; border:1px solid #F9A22F; font-size:12px" class="noprint">
+<div id="ndo" style="position:absolute;right:5px;top:5px;width:378px;padding:5px;background-color: #FFF5E6; border:1px solid #F9A22F; font-size:12px" class="noprint">
   This Gantt editor is free thanks to <a href="http://twproject.com" target="_blank">Twproject</a> where it can be used on a complete and flexible project management solution.<br> Get your projects done! Give <a href="http://twproject.com" target="_blank">Twproject a try now</a>.
 </div>
 <div id="workSpace" style="padding:0px; overflow-y:auto; overflow-x:hidden;border:1px solid #e5e5e5;position:relative;margin:0 5px"></div>
@@ -49,6 +63,9 @@
     border: 1px solid #d0d0d0;
   }
 
+  body {
+    overflow: hidden;
+  }
 
   .ganttButtonBar h1{
     color: #000000;
@@ -61,54 +78,7 @@
 
 <form id="gimmeBack" style="display:none;" action="../gimmeBack.jsp" method="post" target="_blank"><input type="hidden" name="prj" id="gimBaPrj"></form>
 
-
-
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-@section('scripts')
-
- @parent
-
-  {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" defer></script> --}}
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
-
-  <script src="{{asset('gantt/libs/jquery/jquery.livequery.1.1.1.min.js')}}"></script>
-  <script src="{{asset('gantt/libs/jquery/jquery.timers.js')}}"></script>
-
-  <script src="{{asset('gantt/libs/utilities.js')}}"></script>
-  <script src="{{asset('gantt/libs/forms.js')}}"></script>
-  <script src="{{asset('gantt/libs/date.js')}}"></script>
-  <script src="{{asset('gantt/libs/dialogs.js')}}"></script>
-  <script src="{{asset('gantt/libs/layout.js')}}"></script>
-  <script src="{{asset('gantt/libs/i18nJs.js')}}"></script>
-  <script src="{{asset('gantt/libs/jquery/dateField/jquery.dateField.js')}}"></script>
-  <script src="{{asset('gantt/libs/jquery/JST/jquery.JST.js')}}"></script>
-  <script src="{{asset('gantt/libs/jquery/valueSlider/jquery.mb.slider.js')}}"></script>
-
-  <script type="text/javascript" src="{{asset('gantt/libs/jquery/svg/jquery.svg.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('gantt/libs/jquery/svg/jquery.svgdom.1.8.js')}}"></script>
-
-
-  <script src="{{asset('gantt/ganttUtilities.js')}}"></script>
-  <script src="{{asset('gantt/ganttTask.js')}}"></script>
-  <script src="{{asset('gantt/ganttDrawerSVG.js')}}"></script>
-  <script src="{{asset('gantt/ganttZoom.js')}}"></script>
-  <script src="{{asset('gantt/ganttGridEditor.js')}}"></script>
-  <script src="{{asset('gantt/ganttMaster.js')}}"></script>
-
-
-  <script type="text/javascript">
+<script type="text/javascript">
 
 var ge;
 $(function() {
@@ -126,7 +96,7 @@ $(function() {
   //in order to force compute the best-fitting zoom level
   delete ge.gantt.zoom;
 
-  var project=loadGanttFromServer();
+  var project=loadFromLocalStorage();
 
   if (!project.canWrite)
     $(".ganttButtonBar button.requireWrite").attr("disabled","true");
@@ -142,8 +112,27 @@ $(function() {
 function getDemoProject(){
   //console.debug("getDemoProject")
 ret= {"tasks":    [
-{"id": -1, }
-], "canWrite":    true, "canDelete":true, "canWriteOnParent": true, canAdd:true}
+      {"id": -1, "name": "Gantt editor", "progress": 0, "progressByWorklog": false, "relevance": 0, "type": "", "typeId": "", "description": "", "code": "", "level": 0, "status": "STATUS_ACTIVE", "depends": "", "canWrite": true, "start": 1396994400000, "duration": 20, "end": 1399586399999, "startIsMilestone": false, "endIsMilestone": false, "collapsed": false, "assigs": [], "hasChild": true},
+      {"id": -2, "name": "coding", "progress": 0, "progressByWorklog": false, "relevance": 0, "type": "", "typeId": "", "description": "", "code": "", "level": 1, "status": "STATUS_ACTIVE", "depends": "", "canWrite": true, "start": 1396994400000, "duration": 10, "end": 1398203999999, "startIsMilestone": false, "endIsMilestone": false, "collapsed": false, "assigs": [], "hasChild": true},
+      {"id": -3, "name": "gantt part", "progress": 0, "progressByWorklog": false, "relevance": 0, "type": "", "typeId": "", "description": "", "code": "", "level": 2, "status": "STATUS_ACTIVE", "depends": "", "canWrite": true, "start": 1396994400000, "duration": 2, "end": 1397167199999, "startIsMilestone": false, "endIsMilestone": false, "collapsed": false, "assigs": [], "hasChild": false},
+      {"id": -4, "name": "editor part", "progress": 0, "progressByWorklog": false, "relevance": 0, "type": "", "typeId": "", "description": "", "code": "", "level": 2, "status": "STATUS_SUSPENDED", "depends": "3", "canWrite": true, "start": 1397167200000, "duration": 4, "end": 1397685599999, "startIsMilestone": false, "endIsMilestone": false, "collapsed": false, "assigs": [], "hasChild": false},
+      {"id": -5, "name": "testing", "progress": 0, "progressByWorklog": false, "relevance": 0, "type": "", "typeId": "", "description": "", "code": "", "level": 1, "status": "STATUS_SUSPENDED", "depends": "2:5", "canWrite": true, "start": 1398981600000, "duration": 5, "end": 1399586399999, "startIsMilestone": false, "endIsMilestone": false, "collapsed": false, "assigs": [], "hasChild": true},
+      {"id": -6, "name": "test on safari", "progress": 0, "progressByWorklog": false, "relevance": 0, "type": "", "typeId": "", "description": "", "code": "", "level": 2, "status": "STATUS_SUSPENDED", "depends": "", "canWrite": true, "start": 1398981600000, "duration": 2, "end": 1399327199999, "startIsMilestone": false, "endIsMilestone": false, "collapsed": false, "assigs": [], "hasChild": false},
+      {"id": -7, "name": "test on ie", "progress": 0, "progressByWorklog": false, "relevance": 0, "type": "", "typeId": "", "description": "", "code": "", "level": 2, "status": "STATUS_SUSPENDED", "depends": "6", "canWrite": true, "start": 1399327200000, "duration": 3, "end": 1399586399999, "startIsMilestone": false, "endIsMilestone": false, "collapsed": false, "assigs": [], "hasChild": false},
+      {"id": -8, "name": "test on chrome", "progress": 0, "progressByWorklog": false, "relevance": 0, "type": "", "typeId": "", "description": "", "code": "", "level": 2, "status": "STATUS_SUSPENDED", "depends": "6", "canWrite": true, "start": 1399327200000, "duration": 2, "end": 1399499999999, "startIsMilestone": false, "endIsMilestone": false, "collapsed": false, "assigs": [], "hasChild": false}
+    ], "selectedRow": 2, "deletedTaskIds": [],
+      "resources": [
+      {"id": "tmp_1", "name": "Resource 1"},
+      {"id": "tmp_2", "name": "Resource 2"},
+      {"id": "tmp_3", "name": "Resource 3"},
+      {"id": "tmp_4", "name": "Resource 4"}
+    ],
+      "roles":       [
+      {"id": "tmp_1", "name": "Project Manager"},
+      {"id": "tmp_2", "name": "Worker"},
+      {"id": "tmp_3", "name": "Stakeholder"},
+      {"id": "tmp_4", "name": "Customer"}
+    ], "canWrite":    true, "canDelete":true, "canWriteOnParent": true, canAdd:true}
 
 
     //actualize data
@@ -162,42 +151,27 @@ function loadGanttFromServer(taskId, callback) {
   var ret=loadFromLocalStorage();
 
   //this is the real implementation
-  
+  /*
   //var taskId = $("#taskSelector").val();
-  // var prof = new Profiler("loadServerSide");
-  // prof.reset();
+  var prof = new Profiler("loadServerSide");
+  prof.reset();
 
-  // $.getJSON("ganttAjaxController.jsp", {CM:"LOADPROJECT",taskId:taskId}, function(response) {
+  $.getJSON("ganttAjaxController.jsp", {CM:"LOADPROJECT",taskId:taskId}, function(response) {
     //console.debug(response);
-    
-  // });
-  
+    if (response.ok) {
+      prof.stop();
 
+      ge.loadProject(response.project);
+      ge.checkpoint(); //empty the undo stack
 
-  $.ajax({
-
-                    type: "POST",
-
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-
-               
-
-                    url: "{{route('admin.implementacions.loadProyect')}}",
-
-
-
-                    success: function (response) {
-                      
-                        // prof.stop();
-
-                        ge.loadProject(response);
-                        ge.checkpoint(); //empty the undo stack
-
-                        
-                      
-                    }
-
-                });
+      if (typeof(callback)=="function") {
+        callback(response);
+      }
+    } else {
+      jsonErrorHandling(response);
+    }
+  });
+  */
 
   return ret;
 }
@@ -225,44 +199,7 @@ function saveGanttOnServer() {
 
   var prj = ge.saveProject();
 
-              // console.log(JSON.stringify(prj, null, '\t'));
-
-  var txt_prj = JSON.stringify(prj, null, '\t');
-
-  $.ajax({
-
-    type: "post",
-
-
-    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-
-   
-
-    url: "{{route('admin.implementacions.saveProyect')}}",
-
-    data: {txt_prj},
-
-    success: function (response) {
-      if(response.success){
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Your work has been saved',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-      if (response.error) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-          
-        })
-      }
-    }
-
-  });
+  download(JSON.stringify(prj, null, '\t'), "MyProject.json", "application/json");
 
   /*
 
@@ -908,4 +845,9 @@ $(document).on("change", "#load-file", function() {
 </script>
 
 
-@endsection
+
+
+
+
+</body>
+</html>

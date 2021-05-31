@@ -11,9 +11,6 @@
     <div class="col-12 mt-4">
         @include('admin.implementacions.gantt')
     </div>
-    <div class="col-12">
-        {{-- @include('admin.implementacions.grap') --}}
-    </div>
 
 </div>
 
