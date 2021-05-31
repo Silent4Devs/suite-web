@@ -1294,22 +1294,6 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 321,
                 'title' => 'entendimiento_organizacion_delete',
             ],
-            [
-                'id'    => 322,
-                'title' => 'empleados_create',
-            ],
-            [
-                'id'    => 323,
-                'title' => 'empleados_edit',
-            ],
-            [
-                'id'    => 324,
-                'title' => 'empleados_delete',
-            ],
-            [
-                'id'    => 325,
-                'title' => 'empleados_access',
-            ],
         ];
 
         Permission::insert($permissions);

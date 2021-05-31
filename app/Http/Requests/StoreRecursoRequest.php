@@ -18,7 +18,8 @@ class StoreRecursoRequest extends FormRequest
     {
         return [
             'fecha_curso'     => [
-                'date_format:' . config('panel.date_format'),
+                // 'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
             'participantes.*' => [

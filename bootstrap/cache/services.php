@@ -51,7 +51,6 @@
     47 => 'Emotality\\TawkTo\\TawkToServiceProvider',
     48 => 'Alexusmai\\LaravelFileManager\\FileManagerServiceProvider',
     49 => 'Barryvdh\\DomPDF\\ServiceProvider',
-    50 => 'Intervention\\Image\\ImageServiceProvider',
   ),
   'eager' => 
   array (
@@ -91,7 +90,6 @@
     33 => 'Emotality\\TawkTo\\TawkToServiceProvider',
     34 => 'Alexusmai\\LaravelFileManager\\FileManagerServiceProvider',
     35 => 'Barryvdh\\DomPDF\\ServiceProvider',
-    36 => 'Intervention\\Image\\ImageServiceProvider',
   ),
   'deferred' => 
   array (
