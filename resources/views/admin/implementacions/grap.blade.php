@@ -96,7 +96,7 @@ table td{
                     <tr>
                         <th>No</th>
                         <th>Actividad</th>
-                        <th>Actividad Principal</th>
+                        <th>Fase</th>
                         <th>Ejecutar</th>
                         <th>Estado</th>
                         <th>Responsable</th>
@@ -113,7 +113,11 @@ table td{
                         <tr>
                             <td>{{$actividadplan->id}}</td>
                             <td>{{$actividadplan->actividad}}</td>
-                            <td>{{$actividadplan->actividad_padre_id}}</td>
+                            <td>
+                                @if($actividadplan->actividad_fase != null)
+                                    {{$actividadplan->actividad_fase->fase_nombre}}
+                                @endif
+                            </td>
                             <td>{{$actividadplan->ejecutar_id}}</td>
                             <td>{{$actividadplan->estatus_id}}</td>
                             <td>{{$actividadplan->responsable_id}}</td>
@@ -124,6 +128,7 @@ table td{
                             <td>{{$actividadplan->real}}</td>
                         </tr>
                     @endforeach
+
                 </tbody>
             </table>
         </div>
