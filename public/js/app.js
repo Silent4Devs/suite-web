@@ -11913,11 +11913,37 @@ if (typeof this !== 'undefined' && this.Sweetalert2){  this.swal = this.sweetAle
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+// Vue
+// import Vue from 'vue';
+// import Vuex from 'vuex'
+// // import 'livewire-vue'
+// import FileManager from 'laravel-file-manager'
+// window.Vue = Vue //this is important! Do not use require('vue')
+// Vue.use(Vuex);
+// // create Vuex store, if you don't have it
+// const store = new Vuex.Store({
+//     // mutations: {
+//     //     selectDirectory (state) {
+//     //        state.fm.left.selectedDisk = "Iso27001"
+//     //     }
+//     // }
+// });
+// Vue.use(FileManager,  {store});
+// // store.commit('selectDirectory');
+// // Vue.component('file-managers',require("./components/FileManagers.vue").default);
+// const app = new Vue({
+//     el: "#app",
+//     store,
+//     data(){
+//     return {
+//         settings: {
+//             baseUrl: 'http://tabantaj.test/file-manager', 
+//             lang: 'es',
+//         }
+//     }
+// }
+// });
+// Laravel Echo
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 Echo.channel('notificaciones-campana').listen('IncidentesDeSeguridadEvent', function (e) {
@@ -12070,8 +12096,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "ba7bf6ff4052dd0920ed",
-  cluster: "us2",
+  key: "",
+  cluster: "mt1",
   forceTLS: true
 });
 

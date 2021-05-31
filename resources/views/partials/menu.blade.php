@@ -756,6 +756,17 @@
                             </a>
                         </li>
                     @endcan
+                    @can('user_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.empleados.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/empleados") || request()->is("admin/empleados/*") ? "active" : "" }}">
+                            <i class="fa-fw fas fa-user iconos_menu letra_blanca" >
+
+                            </i>
+                            <font class="letra_blanca"> Empleados </font>
+                        </a>
+                    </li>
+                     @endcan
+
                     @can('controle_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.controles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/controles") || request()->is("admin/controles/*") ? "active" : "" }}">

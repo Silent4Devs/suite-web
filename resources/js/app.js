@@ -1,9 +1,40 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+// Vue
+// import Vue from 'vue';
+// import Vuex from 'vuex'
+// // import 'livewire-vue'
+// import FileManager from 'laravel-file-manager'
 
+// window.Vue = Vue //this is important! Do not use require('vue')
+// Vue.use(Vuex);
+
+// // create Vuex store, if you don't have it
+// const store = new Vuex.Store({
+//     // mutations: {
+//     //     selectDirectory (state) {
+//     //        state.fm.left.selectedDisk = "Iso27001"
+//     //     }
+//     // }
+// });
+
+// Vue.use(FileManager,  {store});
+// // store.commit('selectDirectory');
+// // Vue.component('file-managers',require("./components/FileManagers.vue").default);
+
+// const app = new Vue({
+//     el: "#app",
+//     store,
+//     data(){
+//     return {
+//         settings: {
+//             baseUrl: 'http://tabantaj.test/file-manager', 
+//             lang: 'es',
+//         }
+//     }
+// }
+// });
+
+
+// Laravel Echo
 require('./bootstrap');
 Echo.channel('notificaciones-campana')
     .listen('IncidentesDeSeguridadEvent', (e) => {

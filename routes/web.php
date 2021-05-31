@@ -39,6 +39,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('users/get', 'UsersController@getUsers')->name('users.get');
     Route::resource('users', 'UsersController');
 
+    // Empleados
+    Route::resource('empleados','EmpleadoController');
+
     // Organizacions
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
     Route::post('organizacions/media', 'OrganizacionController@storeMedia')->name('organizacions.storeMedia');
@@ -49,6 +52,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Implementacions
+    Route::post('implementacions/guardar-proyecto', 'ImplementacionController@saveImplementationProyect')->name('implementacions.saveProyect');
+    Route::post('implementacions/cargar-proyecto', 'ImplementacionController@loadProyect')->name('implementacions.loadProyect');
     Route::resource('implementacions', 'ImplementacionController');
 
 
