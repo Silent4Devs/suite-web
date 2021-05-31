@@ -275,7 +275,7 @@
             <main class="c-main">
 
 
-                <div class="container-fluid">
+                <div class="container-fluid" id="app">
                     @if (session('message'))
                         <div class="mb-2 row">
                             <div class="col-lg-12">
@@ -364,6 +364,7 @@
 
     </script>
     @livewireScripts
+    <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
     <!-- x-editable -->
     <script>
         $.fn.editable.defaults.mode = 'inline';

@@ -86,6 +86,21 @@
                 </thead>
                 <tbody>
                     @foreach ($controlDocumentos as $key => $controlDocumento)
+                        @php
+                            $rutaFolder = '';
+                        @endphp
+                        @switch($controlDocumento->nombre)
+                            @case('Contexto de la organización')
+                                @php
+                                    $rutaFolder = 'http://tabantaj.test/admin/carpeta?leftPath=Normas/ISO27001';
+                                @endphp
+                            @break
+                            @php
+                                $rutaFolder = 'http://tabantaj.test/admin/carpeta';
+                            @endphp
+                            @default
+
+                        @endswitch
                         <tr data-entry-id="{{ $controlDocumento->id }}">
                             <td>
                                 {{ $controlDocumento->id ?? '' }}
@@ -135,6 +150,11 @@
                                     @livewire('generar-pdf-component',['nombre_control_documento'=>$controlDocumento->nombre])
 
                                     @livewire('visualizar-documentos-generados-component',['nombre_control_documento'=>$controlDocumento->nombre])
+
+                                    <a href="{{ $rutaFolder }}" class="ml-2 rounded btn btn-sm btn-warning">
+                                        <i class="fas fa-folder"></i>
+                                    </a>
+
                                 </div>
                             </td>
 
@@ -146,187 +166,187 @@
     </div>
 @endsection
 @section('scripts')
-    @parent
-    <script>
-        $(function() {
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [5, 20, 5, 20];
-                        // doc.styles.tableHeader.fontSize = 6.5;
-                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10 
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
+@parent
+<script>
+    $(function() {
+        let dtButtons = [{
+                extend: 'csvHtml5',
+                title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
+                text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                className: "btn-sm rounded pr-2",
+                titleAttr: 'Exportar CSV',
+                exportOptions: {
+                    columns: ['th:not(:last-child):visible']
                 }
+            },
+            {
+                extend: 'excelHtml5',
+                title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
+                text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                className: "btn-sm rounded pr-2",
+                titleAttr: 'Exportar Excel',
+                exportOptions: {
+                    columns: ['th:not(:last-child):visible']
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
+                text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                className: "btn-sm rounded pr-2",
+                titleAttr: 'Exportar PDF',
+                orientation: 'portrait',
+                exportOptions: {
+                    columns: ['th:not(:last-child):visible']
+                },
+                customize: function(doc) {
+                    doc.pageMargins = [5, 20, 5, 20];
+                    // doc.styles.tableHeader.fontSize = 6.5;
+                    // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10 
+                }
+            },
+            {
+                extend: 'print',
+                title: `Control de Documentos ${new Date().toLocaleDateString().trim()}`,
+                text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                className: "btn-sm rounded pr-2",
+                titleAttr: 'Imprimir',
+                exportOptions: {
+                    columns: ['th:not(:last-child):visible']
+                }
+            },
+            {
+                extend: 'colvis',
+                text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                className: "btn-sm rounded pr-2",
+                titleAttr: 'Seleccionar Columnas',
+            },
+            {
+                extend: 'colvisGroup',
+                text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                className: "btn-sm rounded pr-2",
+                show: ':hidden',
+                titleAttr: 'Ver todo',
+            },
+            {
+                extend: 'colvisRestore',
+                text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                className: "btn-sm rounded pr-2",
+                titleAttr: 'Restaurar a estado anterior',
+            }
 
-            ];
+        ];
 
-            @can('control_documento_delete')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-                let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.control-documentos.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-                return $(entry).data('entry-id')
-                });
-            
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-            
-                return
-                }
-            
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
-
-            $.extend(true, $.fn.dataTable.defaults, {
-                orderCellsTop: true,
-                order: [
-                    [1, 'desc']
-                ]
+        @can('control_documento_delete')
+            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+            let deleteButton = {
+            text: deleteButtonTrans,
+            url: "{{ route('admin.control-documentos.massDestroy') }}",
+            className: 'btn-danger',
+            action: function (e, dt, node, config) {
+            var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+            return $(entry).data('entry-id')
             });
-            let table = $('#tbl_documentos_control').DataTable({
-                buttons: dtButtons,
-            });
+        
+            if (ids.length === 0) {
+            alert('{{ trans('global.datatables.zero_selected') }}')
+        
+            return
+            }
+        
+            if (confirm('{{ trans('global.areYouSure') }}')) {
+            $.ajax({
+            headers: {'x-csrf-token': _token},
+            method: 'POST',
+            url: config.url,
+            data: { ids: ids, _method: 'DELETE' }})
+            .done(function () { location.reload() })
+            }
+            }
+            }
+            //dtButtons.push(deleteButton)
+        @endcan
 
-            // processing: true,
-            // serverSide: true,
-            // retrieve: true,
-            // aaSorting: [],
-            // ajax: "{{ route('admin.control-documentos.index') }}",
-            // columns: [{
-            //         data: 'id',
-            //         name: 'id'
-            //     },
-            //     {
-            //         data: 'clave',
-            //         name: 'clave'
-            //     },
-            //     {
-            //         data: 'nombre',
-            //         name: 'nombre'
-            //     },
-            //     {
-            //         data: 'fecha_creacion',
-            //         name: 'fecha_creacion'
-            //     },
-            //     {
-            //         data: 'version',
-            //         name: 'version'
-            //     },
-            //     {
-            //         data: 'elaboro',
-            //         name: 'elaboro.name'
-            //     },
-            //     {
-            //         data: 'reviso',
-            //         name: 'reviso.name'
-            //     },
-            //     {
-            //         data: 'estado',
-            //         name: 'estado.estado'
-            //     },
-            //     {
-            //         data: 'actions',
-            //         name: '{{ trans('global.actions') }}'
-            //     }
-            // ],
+        $.extend(true, $.fn.dataTable.defaults, {
+            orderCellsTop: true,
+            order: [
+                [1, 'desc']
+            ]
+        });
+        let table = $('#tbl_documentos_control').DataTable({
+            buttons: dtButtons,
+        });
 
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
+        // processing: true,
+        // serverSide: true,
+        // retrieve: true,
+        // aaSorting: [],
+        // ajax: "{{ route('admin.control-documentos.index') }}",
+        // columns: [{
+        //         data: 'id',
+        //         name: 'id'
+        //     },
+        //     {
+        //         data: 'clave',
+        //         name: 'clave'
+        //     },
+        //     {
+        //         data: 'nombre',
+        //         name: 'nombre'
+        //     },
+        //     {
+        //         data: 'fecha_creacion',
+        //         name: 'fecha_creacion'
+        //     },
+        //     {
+        //         data: 'version',
+        //         name: 'version'
+        //     },
+        //     {
+        //         data: 'elaboro',
+        //         name: 'elaboro.name'
+        //     },
+        //     {
+        //         data: 'reviso',
+        //         name: 'reviso.name'
+        //     },
+        //     {
+        //         data: 'estado',
+        //         name: 'estado.estado'
+        //     },
+        //     {
+        //         data: 'actions',
+        //         name: '{{ trans('global.actions') }}'
+        //     }
+        // ],
 
-            // let visibleColumnsIndexes = null;
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
+        // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+        //     $($.fn.dataTable.tables(true)).DataTable()
+        //         .columns.adjust();
+        // });
 
-            //     let index = $(this).parent().index()
-            //     if (visibleColumnsIndexes !== null) {
-            //         index = visibleColumnsIndexes[index]
-            //     }
+        // let visibleColumnsIndexes = null;
+        // $('.datatable thead').on('input', '.search', function() {
+        //     let strict = $(this).attr('strict') || false
+        //     let value = strict && this.value ? "^" + this.value + "$" : this.value
 
-            //     table
-            //         .column(index)
-            //         .search(value, strict)
-            //         .draw()
-            // });
-            // table.on('column-visibility.dt', function(e, settings, column, state) {
-            //     visibleColumnsIndexes = []
-            //     table.columns(":visible").every(function(colIdx) {
-            //         visibleColumnsIndexes.push(colIdx);
-            //     });
-            // })
-        })
+        //     let index = $(this).parent().index()
+        //     if (visibleColumnsIndexes !== null) {
+        //         index = visibleColumnsIndexes[index]
+        //     }
 
-    </script>
+        //     table
+        //         .column(index)
+        //         .search(value, strict)
+        //         .draw()
+        // });
+        // table.on('column-visibility.dt', function(e, settings, column, state) {
+        //     visibleColumnsIndexes = []
+        //     table.columns(":visible").every(function(colIdx) {
+        //         visibleColumnsIndexes.push(colIdx);
+        //     });
+        // })
+    })
+
+</script>
 @endsection
