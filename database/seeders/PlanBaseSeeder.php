@@ -29,7 +29,7 @@ class PlanBaseSeeder extends Seeder
                 'fecha_inicio'            => Carbon::now(),
                 'fecha_fin'            => Carbon::now(),  
                 'estatus_id' => 1, 
-                'actividad_fase_id' => 1,
+         //       'actividad_fase_id' => 1,
             ],
             [
                 'id'                 => 3,
