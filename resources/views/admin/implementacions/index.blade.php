@@ -41,7 +41,8 @@
                 <div class="tab-content card" id="myTabContentJust">
 
                     <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just" style="margin-top: 30px; padding: 0 30px;">
-                        @include('admin.implementacions.introduccion')
+                      @include('admin.implementacions.plantrabajo')
+                        {{-- @include('admin.implementacions.introduccion') --}}
                     </div>
 
 
@@ -51,7 +52,7 @@
                     </div>
                     
                     <div class="tab-pane fade" id="plan-just" role="tabpanel" aria-labelledby="plan-tab-just">
-                        @include('admin.implementacions.plantrabajo')
+                         
                     </div>
 
 
@@ -83,4 +84,6 @@
 </script>
 
 @endsection
+
+
 

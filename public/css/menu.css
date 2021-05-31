@@ -102,3 +102,13 @@
         margin: 4px !important;
     }
 
+
+
+
+
+    @media(max-width: 991px){
+        #sidebar{
+            background: rgba(255,255,255,0.8);
+        }
+    }
+

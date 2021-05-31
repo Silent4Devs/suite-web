@@ -1610,6 +1610,44 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/admin/implementacions/guardar-proyecto' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.implementacions.saveProyect',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/admin/implementacions/cargar-proyecto' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.implementacions.loadProyect',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/admin/implementacions' => 
       array (
         0 => 
@@ -27807,6 +27845,82 @@ app('router')->setCompiledRoutes(
         'as' => 'admin.dashboards.index',
         'uses' => 'App\\Http\\Controllers\\Admin\\DashboardController@index',
         'controller' => 'App\\Http\\Controllers\\Admin\\DashboardController@index',
+        'namespace' => 'App\\Http\\Controllers\\Admin',
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'admin.implementacions.saveProyect' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'admin/implementacions/guardar-proyecto',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => '2fa',
+          3 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\ImplementacionController@saveImplementationProyect',
+        'controller' => 'App\\Http\\Controllers\\Admin\\ImplementacionController@saveImplementationProyect',
+        'as' => 'admin.implementacions.saveProyect',
+        'namespace' => 'App\\Http\\Controllers\\Admin',
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'admin.implementacions.loadProyect' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'admin/implementacions/cargar-proyecto',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => '2fa',
+          3 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\ImplementacionController@loadProyect',
+        'controller' => 'App\\Http\\Controllers\\Admin\\ImplementacionController@loadProyect',
+        'as' => 'admin.implementacions.loadProyect',
         'namespace' => 'App\\Http\\Controllers\\Admin',
         'prefix' => '/admin',
         'where' => 
