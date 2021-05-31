@@ -105,18 +105,35 @@ class RecursosController extends Controller
 
     public function store(StoreRecursoRequest $request)
     {
+        if ($request->ajax()) {
+            $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
+            $recurso = Recurso::create([
+                "cursoscapacitaciones" => $request->cursoscapacitaciones,
+                "tipo" => $request->tipo,
+                "fecha_curso" => $request->fecha_curso,
+                "fecha_fin" => $request->fecha_fin,
+                "duracion" => $duracion,
+                "instructor" => $request->instructor,
+                "descripcion" => $request->descripcion,
+            ]);
 
-        $recurso = Recurso::create($request->all());
-        // $recurso->participantes()->sync($request->input('participantes', []));
-        foreach ($request->input('certificado', []) as $file) {
-            $recurso->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificado');
+            // $recurso->participantes()->sync($request->input('participantes', []));
+            // foreach ($request->input('certificado', []) as $file) {
+            //     $recurso->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificado');
+            // }
+
+            // if ($media = $request->input('ck-media', false)) {
+            //     Media::whereIn('id', $media)->update(['model_id' => $recurso->id]);
+            // }
+            if ($recurso) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+
+            // return redirect()->route('admin.recursos.index');
+
         }
-
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $recurso->id]);
-        }
-
-        return redirect()->route('admin.recursos.index');
     }
 
     public function edit(Recurso $recurso)
@@ -132,26 +149,36 @@ class RecursosController extends Controller
 
     public function update(UpdateRecursoRequest $request, Recurso $recurso)
     {
-        $recurso->update($request->all());
-        //$recurso->participantes()->sync($request->input('participantes', []));
 
-        if (count($recurso->certificado) > 0) {
-            foreach ($recurso->certificado as $media) {
-                if (!in_array($media->file_name, $request->input('certificado', []))) {
-                    $media->delete();
-                }
+        if ($request->ajax()) {
+            $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
+            $recurso_actualizado = $recurso->update([
+                "cursoscapacitaciones" => $request->cursoscapacitaciones,
+                "tipo" => $request->tipo,
+                "fecha_curso" => $request->fecha_curso,
+                "fecha_fin" => $request->fecha_fin,
+                "duracion" => $duracion,
+                "instructor" => $request->instructor,
+                "descripcion" => $request->descripcion,
+            ]);
+
+            // $recurso_actualizado->participantes()->sync($request->input('participantes', []));
+            // foreach ($request->input('certificado', []) as $file) {
+            //     $recurso_actualizado->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificado');
+            // }
+
+            // if ($media = $request->input('ck-media', false)) {
+            //     Media::whereIn('id', $media)->update(['model_id' => $recurso_actualizado->id]);
+            // }
+            if ($recurso_actualizado) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
             }
+
+            // return redirect()->route('admin.recursos.index');
+
         }
-
-        $media = $recurso->certificado->pluck('file_name')->toArray();
-
-        foreach ($request->input('certificado', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $recurso->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificado');
-            }
-        }
-
-        return redirect()->route('admin.recursos.index');
     }
 
     public function show(Recurso $recurso)

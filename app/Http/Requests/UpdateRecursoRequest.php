@@ -17,19 +17,24 @@ class UpdateRecursoRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha_curso'     => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
+            'tipo' => [
+                'required'
             ],
-            'participantes.*' => [
-                'integer',
+            'fecha_curso' => [
+                'date',
+                'required',
             ],
-            'participantes'   => [
-                'array',
+            'fecha_fin' => [
+                'date',
+                'required',
             ],
-            'instructor'      => [
+            'instructor' => [
                 'string',
-                'nullable',
+                'required',
+            ],
+            'cursoscapacitaciones' => [
+                'string',
+                'required',
             ],
         ];
     }

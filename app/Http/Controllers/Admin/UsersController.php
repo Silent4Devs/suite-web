@@ -175,4 +175,18 @@ class UsersController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function getUsers(Request $request)
+    {
+        if ($request->ajax()) {
+            $nombre = $request->nombre;
+            $usuarios = User::select('id', 'name', 'email')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
+            $lista = "<ul class='list-group' id='empleados-lista'>";
+            foreach ($usuarios as $usuario) {
+                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . "</button>";
+            }
+            $lista .= "</ul>";
+            return $lista;
+        }
+    }
 }

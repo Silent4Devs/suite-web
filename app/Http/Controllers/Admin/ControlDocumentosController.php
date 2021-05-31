@@ -21,7 +21,7 @@ class ControlDocumentosController extends Controller
     {
         abort_if(Gate::denies('control_documento_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
+        /*if ($request->ajax()) {
             $query = ControlDocumento::with(['elaboro', 'reviso', 'estado', 'team'])->select(sprintf('%s.*', (new ControlDocumento)->table));
             $table = DataTables::of($query);
 
@@ -72,20 +72,12 @@ class ControlDocumentosController extends Controller
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
-        }
+        }*/
 
         $teams = Team::get();
 
-
-        // $controlDocumentos = ControlDocumento::with(['elaboro', 'reviso', 'estado', 'team'])->get();
-
-        // $users = User::get();
-
-        // $estado_documentos = EstadoDocumento::get();
-
-        // $teams = Team::get();
-
-        return view('admin.controlDocumentos.index', compact('teams'));
+        $controlDocumentos =  ControlDocumento::with(['elaboro', 'reviso', 'estado', 'team'])->get();
+        return view('admin.controlDocumentos.index', compact('controlDocumentos'));
     }
 
     public function create()
@@ -140,7 +132,15 @@ class ControlDocumentosController extends Controller
 
     public function update(UpdateControlDocumentoRequest $request, ControlDocumento $controlDocumento)
     {
-        $controlDocumento->update($request->all());
+
+        $controlDocumento->update([
+            "clave" => $request->clave,
+            //"nombre" => $request->nombre,
+            "fecha_creacion" => $request->fecha_creacion,
+            //"version" => $request->version,
+            "elaboro_id" => $request->elaboro_id,
+            "reviso_id" => $request->reviso_id,
+        ]);
 
         return redirect()->route('admin.control-documentos.index');
     }

@@ -21,31 +21,31 @@ class EstadodocumentosTableSeeder extends Seeder
                 'id'                 => 1,
                 'estado'               => 'Publicados',
                 'descripcion'              => 'Publicados',
-           
+
             ],
             [
                 'id'                 => 2,
                 'estado'               => 'Aprobados',
                 'descripcion'              => 'Aprobados',
-           
+
             ],
             [
                 'id'                 => 3,
                 'estado'               => 'En revision',
                 'descripcion'              => 'En revisión',
-           
+
             ],
             [
                 'id'                 => 4,
                 'estado'               => 'Elaborado',
-                'descripcion'              => 'Elaborado',
-           
+                'descripcion'              => 'Generado',
+
             ],
             [
                 'id'                 => 5,
                 'estado'               => 'No elaborado',
-                'descripcion'              => 'No elaborado',
-           
+                'descripcion'              => 'No generado',
+
             ],
         ];
         EstadoDocumento::insert($estadodoc);
