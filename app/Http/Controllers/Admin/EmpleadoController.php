@@ -21,12 +21,12 @@ class EmpleadoController extends Controller
     public function index(Request $request)
     {
 
-    abort_if(Gate::denies('empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Empleado::get();
             $table = DataTables::of($query);
-      
+
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
@@ -48,7 +48,7 @@ class EmpleadoController extends Controller
 
             //     return "<img src=".public_path() . '/storage/empleados/imagenes/' .$row->foto.">";
             // });
-            
+
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
@@ -57,8 +57,7 @@ class EmpleadoController extends Controller
             });
 
             $table->editColumn('foto', function ($row) {
-                return $row->foto ? $row->foto:'';
-                
+                return $row->foto ? $row->foto : '';
             });
 
             $table->editColumn('area', function ($row) {
@@ -94,7 +93,6 @@ class EmpleadoController extends Controller
         }
 
         return view('admin.empleados.index');
-
     }
 
     /**
@@ -106,7 +104,6 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.empleados.create');
-
     }
 
     /**
@@ -118,10 +115,10 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'n_empleado'=>'unique:empleados'
+            'n_empleado' => 'unique:empleados'
         ]);
 
-       
+
         $empleado = Empleado::create([
             "name" => $request->name,
             "area" =>  $request->area,
@@ -177,10 +174,10 @@ class EmpleadoController extends Controller
     {
 
         abort_if(Gate::denies('empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleado=Empleado::findOrfail($id);
-        
+        $empleado = Empleado::findOrfail($id);
 
-        return view('admin.empleados.edit',compact('empleado'));
+
+        return view('admin.empleados.edit', compact('empleado'));
     }
 
     /**
@@ -194,15 +191,15 @@ class EmpleadoController extends Controller
     {
         //$empleado->update($request->all());
         $request->validate([
-            'n_empleado'=>'unique:empleados,n_empleado,'.$id
+            'n_empleado' => 'unique:empleados,n_empleado,' . $id
         ]);
-        
+
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
         if ($request->file('foto') != null or !empty($request->file('foto'))) {
 
             //Si existe la imagen entonces se elimina al editarla
-        
+
             $isExists = Storage::disk('public')->exists('empleados/imagenes/' . $empleado->foto);
             if ($isExists) {
                 if ($empleado->foto != null) {
@@ -222,7 +219,7 @@ class EmpleadoController extends Controller
         }
 
         $empleado->update([
-            'name'=>$request->name,
+            'name' => $request->name,
             "area" =>  $request->area,
             "puesto" =>  $request->puesto,
             "jefe" =>  $request->jefe,
@@ -247,6 +244,21 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-       
+    }
+
+    public function getEmpleados(Request $request)
+    {
+        if ($request->ajax()) {
+            $nombre = $request->nombre;
+            if ($nombre != null) {
+                $usuarios = Empleado::select('id', 'name', 'email')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
+                $lista = "<ul class='list-group' id='empleados-lista'>";
+                foreach ($usuarios as $usuario) {
+                    $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . "</button>";
+                }
+                $lista .= "</ul>";
+                return $lista;
+            }
+        }
     }
 }

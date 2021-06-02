@@ -87,4 +87,9 @@ class Recurso extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function empleados()
+    {
+        return $this->belongsToMany(Empleado::class)->withPivot('certificado', 'calificacion');
+    }
 }
