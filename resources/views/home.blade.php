@@ -2,12 +2,16 @@
 @section('content')
 
 <style>
-    .caja_graficas{
+    html{
+        scroll-behavior: smooth;
+    }
+
+    .caja_graficas, .caja_table{
         margin: 10px;
         padding: 20px;
         box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.12);
     }
-    .caja_graficas h5{
+    .caja_graficas h5, .caja_table h5{
         width: 100%;
         height: 40px;
         color: #fff;
@@ -59,10 +63,95 @@
         background-color: #2DB7DB;
     }
 
+    .card_info{
+        position: relative;
+        padding: 0;
+        margin: 10px;
+        box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.12);
+        height: 100px;
+    }
+    .card_info div{
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        width: 70px;
+        height: 70px;
+        border-radius: 100px;
+        background-color: rgba(255, 255, 255, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .card_info i{
+        font-size: 25pt;
+        color: #fff;
+    }
+    .card_info h6{
+        position: absolute;
+        font-size: 16pt;
+        color: #fff;
+        top: 20px;
+        left: 120px;
+        font-weight: bolder;
+    }
+    .card_info span{
+        position: absolute;
+        color: #fff;
+        font-size: 16pt;
+        top: 50px;
+        left: 120px;
+    }
+
 
     body.c-dark-theme .caja_graficas h5{
         box-shadow: 0px 3px 7px -1px rgba(0,0,0,0.3);
     } 
+
+
+
+    .menu_a{
+        width: 100%;
+        background-color: #1a84cd;
+        height: 40px;
+        position: sticky;
+        top: 56px;
+        z-index: 99999999999999999999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        opacity: 0.5;
+        transition: 0.1s;
+        border-bottom-right-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+    .menu_a:hover{
+        opacity: 1;
+    }
+
+    .menu_a a{
+        width: 200px;
+        height: 30px;
+        background-color: #fff;
+        margin: 10px;
+        color: #fff;
+        font-size: 15pt;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 6px;
+        transition: 0.1s;
+    }
+    .menu_a a:hover{
+        text-decoration: none;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    section:target{
+        padding-top: 100px;
+        margin-top: -100px;
+    }
 
 
 
@@ -86,93 +175,184 @@
     
 </style>
 <div class="content">
-    <div class="row">
 
-        <h3 style="margin-bottom: -30px; color: #888; margin-left: 1%;">Dashboard ISO 27001</h3>
-        <div class="especificaciones col-12 text-right">
+    <div class="menu_a">
+        <a href="#iso27001">ISO 27001</a>
+        <a href="#capacitaciones">Capacitaciones</a>
+    </div>
 
-            <label>Plan <i class="fas fa-square iconos_espec" style="color: #3D72A1;"></i></label>
-            <label>Do <i class="fas fa-square iconos_espec" style="color: #A13D86;"></i></label>
-            <label>Check <i class="fas fa-square iconos_espec" style="color: #DBA82D;"></i></label>
-            <label>Act <i class="fas fa-square iconos_espec" style="color: #2DB7DB;"></i></label>
-            
-        </div>
-        <div class="card caja_graficas graf_1" style="width: calc(33.33% - 20px);">
-            <h5 class="plan">Progreso General del Plan</h5>
-            <canvas id="chartActividades"></canvas>
-            <a id="a_plan" class="btn_ver" href="admin/implementacions#plan-just">
-                Ver Detalle 
-            </a>
 
-        </div>
-        <div class="card caja_graficas graf_2" style="width: calc(33.33% - 20px);">
-            <h5 class="espec">Documentación</h5>
-            @if(!empty($exist_doc))
-                <style type="text/css">
-                    .chartDocu{
-                        display: block;
-                    }
-                    .chartDocu_falsa{
-                        display: none;
-                    }
-                </style>
-            @else
-                <style type="text/css">
-                    .chartDocu{
-                        display: none;
-                    }
-                    .chartDocu_falsa{
-                        display: block;
-                    }
-                </style>
-            @endif
-            
-            <div class="chartDocu"><canvas id="chartDocu"></canvas></div>
-            <div class="chartDocu_falsa"><canvas id="chartDocu_falsa"></canvas></div>
+    <section id="iso27001">
+        <div class="row">
 
-            <div style="display: inline-flex; justify-content: center;">
-                <a id="" class="btn_ver" style="margin-left: 0;" href="admin/carpeta">
-                    Carpetas
-                </a>
-                <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/control-documentos">
-                    Lista de documentos
-                </a>
+            <h3 style="margin-bottom: -30px; color: #888; margin-left: 1%;">Dashboard ISO 27001</h3>
+            <div class="especificaciones col-12 text-right">
+
+                <label>Plan <i class="fas fa-square iconos_espec" style="color: #3D72A1;"></i></label>
+                <label>Do <i class="fas fa-square iconos_espec" style="color: #A13D86;"></i></label>
+                <label>Check <i class="fas fa-square iconos_espec" style="color: #DBA82D;"></i></label>
+                <label>Act <i class="fas fa-square iconos_espec" style="color: #2DB7DB;"></i></label>
+                
             </div>
-        </div>
-        <div class="card caja_graficas graf_3" style="width: calc(33.33% - 20px);">
-            <h5 class="espec">Capacitación</h5>
-            <canvas id="chartCapaci"></canvas>
-            <a id="a_plan" class="btn_ver" href="admin/recursos">
-                Ver Detalle 
-            </a>
-        </div>
-        <div class="card caja_graficas graf_4" style="width: calc(50% - 20px);">
-            <h5 class="check">Incidentes de Seguridad</h5>
-            <canvas id="incidentechart"></canvas>
-            <a id="a_plan" class="btn_ver" href="admin/incidentes-de-seguridads">
-                Ver Detalle 
-            </a>
-        </div>
-        <div class="card caja_graficas graf_5" style="width: calc(50% - 20px);">
-            <h5 class="act">Auditorias</h5>
-            <canvas id="chartAuditoria"></canvas>
-            <a id="a_plan" class="btn_ver" href="admin/auditoria-anuals">
-                Ver Detalle 
-            </a>
-        </div>
-        <div class="card caja_graficas graf_6" style="width: calc(50% - 20px);">
-            <h5 class="act">Registro de Acciones</h5>
-            <canvas id="myChart"></canvas>
-            <div style="display: inline-flex; justify-content: center;">
-                <a id="" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
+            <div class="card caja_graficas graf_1" style="width: calc(33.33% - 20px);">
+                <h5 class="plan">Progreso General del Plan</h5>
+                <canvas id="chartActividades"></canvas>
+                <a id="a_plan" class="btn_ver" href="admin/implementacions#plan-just">
                     Ver Detalle 
                 </a>
-                <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
+
+            </div>
+            <div class="card caja_graficas graf_2" style="width: calc(33.33% - 20px);">
+                <h5 class="espec">Documentación</h5>
+                @if(!empty($exist_doc))
+                    <style type="text/css">
+                        .chartDocu{
+                            display: block;
+                        }
+                        .chartDocu_falsa{
+                            display: none;
+                        }
+                    </style>
+                @else
+                    <style type="text/css">
+                        .chartDocu{
+                            display: none;
+                        }
+                        .chartDocu_falsa{
+                            display: block;
+                        }
+                    </style>
+                @endif
+                
+                <div class="chartDocu"><canvas id="chartDocu"></canvas></div>
+                <div class="chartDocu_falsa"><canvas id="chartDocu_falsa"></canvas></div>
+
+                <div style="display: inline-flex; justify-content: center;">
+                    <a id="" class="btn_ver" style="margin-left: 0;" href="admin/carpeta">
+                        Carpetas
+                    </a>
+                    <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/control-documentos">
+                        Lista de documentos
+                    </a>
+                </div>
+            </div>
+            <div class="card caja_graficas graf_3" style="width: calc(33.33% - 20px);">
+                <h5 class="espec">Capacitación</h5>
+                <canvas id="chartCapaci"></canvas>
+                <a id="a_plan" class="btn_ver" href="admin/recursos">
                     Ver Detalle 
                 </a>
             </div>
+            <div class="card caja_graficas graf_4" style="width: calc(50% - 20px);">
+                <h5 class="check">Incidentes de Seguridad</h5>
+                <canvas id="incidentechart"></canvas>
+                <a id="a_plan" class="btn_ver" href="admin/incidentes-de-seguridads">
+                    Ver Detalle 
+                </a>
+            </div>
+            <div class="card caja_graficas graf_5" style="width: calc(50% - 20px);">
+                <h5 class="act">Auditorias</h5>
+                <canvas id="chartAuditoria"></canvas>
+                <a id="a_plan" class="btn_ver" href="admin/auditoria-anuals">
+                    Ver Detalle 
+                </a>
+            </div>
+            <div class="card caja_graficas graf_6" style="width: calc(50% - 20px);">
+                <h5 class="act">Registro de Acciones</h5>
+                <canvas id="myChart"></canvas>
+                <div style="display: inline-flex; justify-content: center;">
+                    <a id="" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
+                        Ver Detalle 
+                    </a>
+                    <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
+                        Ver Detalle 
+                    </a>
+                </div>
+            </div>
+        </div><!--row-->
+    </section> {{-- seccion --}}
+
+
+
+    <section id="capacitaciones" class="mt-5">
+        <div class="row">
+            <h3 style="margin-bottom: -30px; color: #888; margin-left: 1%;">Capacitaciones</h3>
+
+            <div class="especificaciones col-12 text-right">
+
+                <label>Plan <i class="fas fa-square iconos_espec" style="color: #3D72A1;"></i></label>
+                <label>Do <i class="fas fa-square iconos_espec" style="color: #A13D86;"></i></label>
+                <label>Check <i class="fas fa-square iconos_espec" style="color: #DBA82D;"></i></label>
+                <label>Act <i class="fas fa-square iconos_espec" style="color: #2DB7DB;"></i></label>
+                
+            </div>
+
+            
+            <div class="col-12">
+                <div class="card caja_table" style="width: 100%;">
+                    <h5 class="espec">Total de capacitaciones</h5>
+                    <table id="table_total_capaci" class="table col-12 w-100">
+                        <thead>
+                            <tr>
+                                <th>thead1</th>
+                                <th>thead1</th>
+                                <th>thead1</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Info cled 1</td>
+                                <td>Info cled 1</td>
+                                <td>Info cled 1</td>
+                            </tr>
+                            <tr>
+                                <td>Info cled 1</td>
+                                <td>Info cled 1</td>
+                                <td>Info cled 1</td>
+                            </tr>
+                            <tr>
+                                <td>Info cled 1</td>
+                                <td>Info cled 1</td>
+                                <td>Info cled 1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card card_info" style="width: calc(33.33% - 20px); background: #307ab4;">
+                <div><i class="fas fa-calendar-alt"></i></div>
+                <h6> Fecha de curso</h6>
+                <span>info</span>
+            </div>
+            <div class="card card_info" style="width: calc(33.33% - 20px); background: #a634b4;">
+                <div><i class="fas fa-chalkboard-teacher"></i></div>
+                <h6> Instructor:</h6>
+                <span>info</span>
+            </div>
+            <div class="card card_info" style="width: calc(33.33% - 20px); background: #1dcd1a;">
+                <div><i class="fas fa-user-graduate"></i></div>
+                <h6> Total de alumnos:</h6>
+                <span>info</span>
+            </div>
+
+            <div class="card caja_graficas graf_3" style="width: calc(50% - 20px);">
+                <h5 class="espec">Alumnos</h5>
+                <canvas id="chart_alumnos_capaci"></canvas>
+                <a id="a_plan" class="btn_ver" href="admin/recursos">
+                    Ver Detalle 
+                </a>
+            </div>
+
+            <div class="card caja_graficas graf_3" style="width: calc(50% - 20px);">
+                <h5 class="espec">Aprovados</h5>
+                <canvas id="chart_alumnos_aprovados"></canvas>
+                <a id="a_plan" class="btn_ver" href="admin/recursos">
+                    Ver Detalle 
+                </a>
+            </div>
         </div>
-    </div><!--row-->
+    </section>
  </div><!--col-->
 
 
@@ -240,20 +420,20 @@
             },
             tooltips: {
             mode: 'label'
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                gridLines: {
+                    offsetGridLines: true
                 }
-            }],
-            xAxes: [{
-            gridLines: {
-                offsetGridLines: true
+            }]
             }
-        }]
-        }
-        }
+            }
         });
 
         var ctx2 = document.getElementById("incidentechart").getContext('2d');
@@ -576,5 +756,122 @@
 
     });
 
+
+    var canvasdoc = document.getElementById("chart_alumnos_capaci");
+    var pieDoc = new Chart(canvasdoc, {
+        type: 'bar',
+        labels: {
+            render: 'value'
+        },
+        data: {
+            labels: [
+                "Publicados",
+                "Aprobados",
+                "En revisión",
+                "Elaborado",
+                "No elaborado"
+            ],
+            datasets: [{
+                label: '% Documentación',
+                data: [0,0,0,0,1,],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(43, 65, 233 , 0.6)', 
+                    'rgba(244, 208, 63, 0.6)',  
+                    'rgba(133, 193, 233 , 0.6)', 
+                    'rgba(231, 76, 60, 0.6)',
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: "black",
+                    boxWidth: 20,
+                    padding: 8
+                }
+            },
+            tooltips: {
+            mode: 'label'
+        },
+        
+        }
+    });
+
+    var canvasdoc = document.getElementById("chart_alumnos_aprovados");
+    var pieDoc = new Chart(canvasdoc, {
+        type: 'pie',
+        labels: {
+            render: 'value'
+        },
+        data: {
+            labels: [
+                "Publicados",
+                "Aprobados",
+                "En revisión",
+                "Elaborado",
+                "No elaborado"
+            ],
+            datasets: [{
+                label: '% Documentación',
+                data: [0,0,0,0,1,],
+                backgroundColor: [
+                    'rgba(22, 160, 133, 0.6)',
+                    'rgba(43, 65, 233 , 0.6)', 
+                    'rgba(244, 208, 63, 0.6)',  
+                    'rgba(133, 193, 233 , 0.6)', 
+                    'rgba(231, 76, 60, 0.6)',
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: "black",
+                    boxWidth: 20,
+                    padding: 8
+                }
+            },
+            tooltips: {
+            mode: 'label'
+        },
+        
+        }
+    });
+
 </script>
+
+
+
+
+@endsection
+
+@section('scripts')
+
+    <script>
+        $(document).ready(function(){
+            $("#table_total_capaci").DataTable({
+                buttons: []
+            });
+        });
+
+
+    </script>
+
+{{-- <script>
+        $(document).ready(function() {
+            $('#table_total_capaci').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                }
+            });
+        });
+
+    </script> --}}
 @endsection
