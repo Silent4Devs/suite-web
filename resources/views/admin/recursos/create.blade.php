@@ -18,7 +18,7 @@
                                 </font>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" id="participantes-tab" data-toggle="tab" href="#participantes" role="tab"
                                 aria-controls="participantes" aria-selected="false" onclick="participantesDataTable()">
                                 <font class="letra_blanca">
@@ -26,7 +26,7 @@
                                     Alta de participantes
                                 </font>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                     <div class="tab-content card" id="myTabContentJust">
                         <div class="px-4 mt-4 tab-pane fade show active" id="general" role="tabpanel"
@@ -59,9 +59,14 @@
                                         <label for="tipo"><i class="fab fa-discourse iconos-crear"></i> Tipo</label>
                                         <select name="tipo" id="tipo" class="form-control">
                                             <option value="" selected disabled>-- Selecciona una opción --</option>
-                                            <option value="curso"> Curso</option>
-                                            <option value="diplomado"> Diplomado</option>
-                                            <option value="certificacion"> Certificación</option>
+                                            <option value="curso" {{ old('tipo') == 'curso' ? 'selected' : '' }}> Curso
+                                            </option>
+                                            <option value="diplomado" {{ old('tipo') == 'diplomado' ? 'selected' : '' }}>
+                                                Diplomado</option>
+                                            <option value="certificacion"
+                                                {{ old('tipo') == 'certificacion' ? 'selected' : '' }}>
+                                                Certificación
+                                            </option>
                                         </select>
                                         @if ($errors->has('tipo'))
                                             <div class="invalid-feedback">
@@ -77,7 +82,7 @@
                                         <label for="fecha_curso"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
                                             Inicio</label>
                                         <input class="form-control" type="datetime-local" id="fecha_curso"
-                                            name="fecha_curso">
+                                            name="fecha_curso" value="{{ old('fecha_curso') }}">
                                         @if ($errors->has('fecha_curso'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('fecha_curso') }}
@@ -87,7 +92,8 @@
                                     <div class="form-group col-sm-12 col-md-12 col-lg-6">
                                         <label for="fecha_fin"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
                                             Finalización</label>
-                                        <input class="form-control" type="datetime-local" id="fecha_fin" name="fecha_fin">
+                                        <input class="form-control" type="datetime-local" id="fecha_fin" name="fecha_fin"
+                                            value="{{ old('fecha_fin') }}">
                                         @if ($errors->has('fecha_fin'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('fecha_fin') }}
@@ -121,81 +127,91 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-12">
-                                    <button class="mt-4 btnNext btn btn-primary" style="float: right">
+                                    {{-- <button class="mt-4 btnNext btn btn-primary" style="float: right">
                                         Siguiente
                                         <i class="ml-1 fas fa-arrow-right"></i>
+                                    </button> --}}
+                                    <button id="btn-general" class="btn btn-success" type="submit"
+                                        style="position: relative; float: right;">
+                                        Guardar y salir
+                                        {{-- <i class="ml-1 fas fa-check-circle"></i>
+                                        <i id="guardando_capacitacion" class="fas fa-cog fa-spin text-muted"
+                                            style="position: absolute; top: 7px;right: 12px;"></i> --}}
                                     </button>
                                 </div>
                             </form>
                         </div>
-                        <div class="px-4 mt-4 mb-3 tab-pane fade" id="participantes" role="tabpanel"
-                            aria-labelledby="participantes-tab">
-                            <div class="w-100" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold;">
-                                    Alta de participantes</span>
-                            </div>
-                            <form action="POST" class="mt-3 row" id="form-participantes">
-                                <div class="pl-3 row w-100">
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                        <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
-                                            participante</label>
-                                        <input class="form-control" type="text" id="participantes"
-                                            placeholder="Busca un empleado" style="position: relative" />
-                                        <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 43px; right: 25px;"></i>
-                                        <div id="participantes_sugeridos"></div>
-                                        @if ($errors->has('participantes'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('participantes') }}
-                                            </div>
-                                        @endif
-                                        <span
-                                            class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                        <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
-                                        <input class="form-control" type="text" id="email"
-                                            placeholder="Correo del participante" readonly style="cursor: not-allowed" />
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="mr-3 btn btn-sm btn-primary" style="float: right">Suscribir
-                                        Participante</button>
-                                </div>
-                            </form>
-                            <div class="mt-3 col-12 datatable-fix">
-                                <table class="table w-100" id="tbl-participantes">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Email</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Roberto</td>
-                                            <td>roberto@gmail.com</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="mt-3 form-group col-12">
-                                <div class="btn-group" role="group" aria-label="Terminar capacitacion" style="float: right">
-                                    <button class="btnPrevious btn btn-danger">
-                                        <i class="ml-1 fas fa-arrow-left"></i>
-                                        Anterior
-                                    </button>
-                                    <button id="btn-general" class="btn btn-success" style="position: relative">
+                        <!--<div class="px-4 mt-4 mb-3 tab-pane fade" id="participantes" role="tabpanel"
+                                                        aria-labelledby="participantes-tab">
+                                                        <div class="w-100" style="border-bottom: solid 2px #0CA193;">
+                                                            <span style="font-size: 17px; font-weight: bold;">
+                                                                Alta de participantes</span>
+                                                        </div>
+                                                        <form action="POST" class="mt-3 row" id="form-participantes">
+                                                            <div class="pl-3 row w-100">
+                                                                <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                                    <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
+                                                                        participante</label>
+                                                                    <input class="form-control" type="text" id="participantes_search"
+                                                                        placeholder="Busca un empleado" style="position: relative" autocomplete="off" />
+                                                                    <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
+                                                                        style="position: absolute; top: 43px; right: 25px;"></i>
+                                                                    <div id="participantes_sugeridos"></div>
+                                                                    @if ($errors->has('participantes'))
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $errors->first('participantes') }}
+                                                                        </div>
+                                                                    @endif
+                                                                    <span
+                                                                        class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
+                                                                </div>
+                                                                <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                                    <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
+                                                                    <input class="form-control" type="text" id="email"
+                                                                        placeholder="Correo del participante" readonly style="cursor: not-allowed" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <button id="btn-alta-participantes" type="submit" class="mr-3 btn btn-sm btn-primary"
+                                                                    style="float: right">
+                                                                    <i class="mr-1 fas fa-check-circle"></i>
+                                                                    Dar de alta
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                        <div class="mt-3 col-12 datatable-fix">
+                                                            <table class="table w-100" id="tbl-participantes">
+                                                                <thead class="thead-dark">
+                                                                    <tr>
+                                                                        <th scope="col">#</th>
+                                                                        <th scope="col">Nombre</th>
+                                                                        <th scope="col">Email</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">1</th>
+                                                                        <td>Roberto</td>
+                                                                        <td>roberto@gmail.com</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="mt-3 form-group col-12">
+                                                            <div class="btn-group" role="group" aria-label="Terminar capacitacion" style="float: right">
+                                                                <button class="btnPrevious btn btn-danger">
+                                                                    <i class="ml-1 fas fa-arrow-left"></i>
+                                                                    Anterior
+                                                                </button>
+                                                                {{-- <button id="btn-general" class="btn btn-success" style="position: relative">
                                         Guardar
                                         <i class="ml-1 fas fa-check-circle"></i>
                                         <i id="guardando_capacitacion" class="fas fa-cog fa-spin text-muted"
                                             style="position: absolute; top: 7px;right: 12px;"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                                    </button> --}}
+                                                            </div>
+                                                        </div>
+                                                    </div>-->
                     </div>
                 </div>
             </div>
@@ -204,7 +220,7 @@
 @endsection
 
 @section('scripts')
-    <script>
+    {{-- <script>
         function participantesDataTable() {
             if (!$.fn.dataTable.isDataTable('#tbl-participantes')) {
                 $('#tbl-participantes').DataTable({
@@ -212,6 +228,7 @@
                 });
             }
         }
+
 
         $(document).ready(function() {
             $('.btnNext').click(function(e) {
@@ -262,8 +279,8 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            let url = "{{ route('admin.users.get') }}";
-            $("#participantes").keyup(function() {
+            let url = "{{ route('admin.empleados.get') }}";
+            $("#participantes_search").keyup(function() {
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -281,7 +298,7 @@
                             "#participantes_sugeridos");
                         sugeridos.innerHTML = data;
 
-                        $("#participantes").css("background", "#FFF");
+                        $("#participantes_search").css("background", "#FFF");
                     }
                 });
             });
@@ -308,6 +325,6 @@
             $("#participantes_sugeridos").hide();
         }
 
-    </script>
+    </script> --}}
 
 @endsection
