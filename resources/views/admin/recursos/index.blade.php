@@ -27,9 +27,6 @@
                             {{ trans('cruds.recurso.fields.instructor') }}
                         </th>
                         <th>
-                            Certificado&nbsp;(PDF&nbsp;/PNG)
-                        </th>
-                        <th>
                             Opciones
                         </th>
                     </tr>
@@ -207,23 +204,7 @@
                         data: 'instructor',
                         name: 'instructor'
                     },
-                    {
-                        data: 'certificado',
-                        name: 'certificado',
-                        // render: function(data, type, row) {
-                        //     let imagenes = "";
-                        //     if (row.media.length > 0) {
-                        //         row.media.map(element => {
-                        //             return imagenes +=
-                        //                 `<img src="{{ asset('images/') }}/${element.file_name}" />`;
-                        //         });
-                        //     }
-                        //     console.log(imagenes);
-                        //     return row;
-                        // },
-                        sortable: false,
-                        searchable: false
-                    },
+
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
