@@ -177,8 +177,8 @@
 <div class="content">
 
     <div class="menu_a">
-        <a href="#iso27001">iso 27001</a>
-        <a href="#capacitaciones">capacitaciones</a>
+        <a href="#iso27001">ISO 27001</a>
+        <a href="#capacitaciones">Capacitaciones</a>
     </div>
 
 
