@@ -342,7 +342,7 @@
                                             <i class="">
 
                                             </i>
-                                            <font class="letra_blanca"> {{ trans('cruds.recurso.title') }} </font>
+                                            <font class="letra_blanca"> Capacitaciones </font>
                                         </a>
                                     </li>
                                 @endcan

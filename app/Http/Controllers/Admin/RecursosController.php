@@ -107,35 +107,34 @@ class RecursosController extends Controller
 
     public function store(StoreRecursoRequest $request)
     {
-        if ($request->ajax()) {
-            $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
-            $recurso = Recurso::create([
-                "cursoscapacitaciones" => $request->cursoscapacitaciones,
-                "tipo" => $request->tipo,
-                "fecha_curso" => $request->fecha_curso,
-                "fecha_fin" => $request->fecha_fin,
-                "duracion" => $duracion,
-                "instructor" => $request->instructor,
-                "descripcion" => $request->descripcion,
-            ]);
-
-            // $recurso->participantes()->sync($request->input('participantes', []));
-            // foreach ($request->input('certificado', []) as $file) {
-            //     $recurso->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificado');
-            // }
-
-            // if ($media = $request->input('ck-media', false)) {
-            //     Media::whereIn('id', $media)->update(['model_id' => $recurso->id]);
-            // }
-            if ($recurso) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => true]);
-            }
-
-            // return redirect()->route('admin.recursos.index');
-
-        }
+        $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
+        $recurso = Recurso::create([
+            "cursoscapacitaciones" => $request->cursoscapacitaciones,
+            "tipo" => $request->tipo,
+            "fecha_curso" => $request->fecha_curso,
+            "fecha_fin" => $request->fecha_fin,
+            "duracion" => $duracion,
+            "instructor" => $request->instructor,
+            "descripcion" => $request->descripcion,
+        ]);
+        // if ($request->ajax()) {
+        //     $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
+        //     $recurso = Recurso::create([
+        //         "cursoscapacitaciones" => $request->cursoscapacitaciones,
+        //         "tipo" => $request->tipo,
+        //         "fecha_curso" => $request->fecha_curso,
+        //         "fecha_fin" => $request->fecha_fin,
+        //         "duracion" => $duracion,
+        //         "instructor" => $request->instructor,
+        //         "descripcion" => $request->descripcion,
+        //     ]);
+        //     if ($recurso) {
+        //         return response()->json(['success' => true]);
+        //     } else {
+        //         return response()->json(['error' => true]);
+        //     }
+        // }
+        return redirect()->route('admin.recursos.index');
     }
 
     public function edit(Recurso $recurso)

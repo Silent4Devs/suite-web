@@ -2,7 +2,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            {{ trans('global.edit') }} {{ trans('cruds.recurso.title_singular') }}
+            {{ trans('global.edit') }} Capacitación
         </div>
         <div id="errores_alert"></div>
         <div class="card-body">
@@ -266,14 +266,14 @@
                             render: function(data, type, row, meta) {
                                 let foto = row.foto != null ? row.foto : "no-photo.png";
                                 let html = `<div class="row align-items-center">
-                    <div class="col-4">
-                        <img src="{{ asset('storage/empleados/imagenes') }}/${foto}" width="35px" class="mr-2 rounded-circle" />
-                    </div>
-                    <div class="col-8">
-                        <p class="p-0 m-0"><strong>${data}</strong></p>
-                        <p class="p-0 m-0"><span class="badge badge-primary">${row.area}</span></p>
-                    </div>
-                </div>`;
+                        <div class="col-4">
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${foto}" width="35px" class="mr-2 rounded-circle" />
+                        </div>
+                        <div class="col-8">
+                            <p class="p-0 m-0"><strong>${data}</strong></p>
+                            <p class="p-0 m-0"><span class="badge badge-primary">${row.area}</span></p>
+                        </div>
+                    </div>`;
                                 return html;
                             }
                         },
@@ -289,8 +289,8 @@
                                 let nombre_capacitacion = "{{ $recurso->cursoscapacitaciones }}";
                                 if (data != null) {
                                     return `<a target="_blank" href="{{ asset('storage/capacitaciones/certificados/') }}/${nombre_capacitacion}/${data}">
-                                    <img src="{{ asset('storage/capacitaciones/certificados/') }}/${nombre_capacitacion}/${data}" width="45px" />
-                                </a>`;
+                                        <img src="{{ asset('storage/capacitaciones/certificados/') }}/${nombre_capacitacion}/${data}" width="45px" />
+                                    </a>`;
                                 } else {
                                     return "";
                                 }
@@ -304,14 +304,14 @@
                                 let calificacion = row.pivot.calificacion;
                                 let boton_html =
                                     `<div class="btn-group" role="group" aria-label="Basic example">
-                    <button onclick='calificarParticipante(${data},"${certificado}","${calificacion}","${row.name}")' type="button" class="btn btn-sm btn-outline-success">
-                        <i class="fas fa-check-circle"></i>
-                    </button>
-                    <button onclick='eliminarParticipante(${data})' type="button" class="btn btn-sm btn-outline-danger">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-                `;
+                        <button onclick='calificarParticipante(${data},"${certificado}","${calificacion}","${row.name}")' type="button" class="btn btn-sm btn-outline-success">
+                            <i class="fas fa-check-circle"></i>
+                        </button>
+                        <button onclick='eliminarParticipante(${data})' type="button" class="btn btn-sm btn-outline-danger">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                    `;
                                 return boton_html;
                             }
                         }
