@@ -1,65 +1,54 @@
 @extends('layouts.admin')
 @section('content')
-    @can('recurso_create')
+    @can('user_create')
+
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Capacitaciones</strong></h3>
+                <h3 class="mb-2 text-center text-white"><strong>Lista de Empleados</strong></h3>
             </div>
         @endcan
+
         <div class="card-body datatable-fix">
-            <table class="table table-bordered datatable-Recurso w-100">
+            <table class="table table-bordered w-100 datatable-Empleado">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
-                            {{ trans('cruds.recurso.fields.id') }}
+                        <th style="vertical-align: top">
+                               No de empleado
                         </th>
-                        <th>
-                            Nombre&nbsp;del&nbsp;curso
+                        <th style="vertical-align: top">
+                            {{ trans('cruds.user.fields.name') }}
                         </th>
-                        <th>
-                            Fecha&nbsp;del&nbsp;curso
+                        <th style="vertical-align: top">
+                           Foto
                         </th>
-                        <th>
-                            {{ trans('cruds.recurso.fields.participantes') }}
+                        <th style="vertical-align: top">
+                            Correo&nbsp;electrónico
                         </th>
-                        <th>
-                            {{ trans('cruds.recurso.fields.instructor') }}
+                        <th style="vertical-align: top">
+                            Teléfono
                         </th>
-                        <th>
-                            Certificado&nbsp;(PDF&nbsp;/PNG)
+                        <th style="vertical-align: top">
+                            Área
                         </th>
-                        <th>
+                        <th style="vertical-align: top">
+                            Puesto
+                        </th>
+                        <th style="vertical-align: top">
+                            Jefe Inmediato
+                        </th>
+                        <th style="vertical-align: top">
+                            Antiguedad
+                        </th>
+                        <th style="vertical-align: top">
+                           Estatus
+                        </th>
+                        
+                        <th style="vertical-align: top">
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+ 
                 </thead>
             </table>
         </div>
@@ -71,7 +60,7 @@
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
-                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
@@ -81,7 +70,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
@@ -91,23 +80,23 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
+                    orientation: 'landscape',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     },
                     customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        doc.pageMargins = [5, 20, 5, 20];
+                        // doc.styles.tableHeader.fontSize = 6.5;
+                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10 
                     }
                 },
                 {
                     extend: 'print',
-                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
@@ -136,12 +125,11 @@
                 }
 
             ];
-
-            @can('recurso_create')
+            @can('empleados_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar curso y capacitación',
-                url: "{{ route('admin.recursos.create') }}",
+                titleAttr: 'Agregar empleado',
+                url: "{{ route('admin.empleados.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -150,11 +138,11 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('recurso_delete')
+            @can('empleados_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.recursos.massDestroy') }}",
+                url: "{{ route('admin.users.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -177,52 +165,58 @@
                 }
                 }
                 }
-                //dtButtons.push(deleteButton)
+                // dtButtons.push(deleteButton)
             @endcan
 
-            let dtOverrideGlobals = {
+           let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.recursos.index') }}",
+                ajax: "{{ route('admin.empleados.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'n_empleado',
+                        name: 'n_empleado'
                     },
                     {
-                        data: 'cursoscapacitaciones',
-                        name: 'cursoscapacitaciones'
+                        data: 'name',
+                        name: 'name'
                     },
                     {
-                        data: 'fecha_curso',
-                        name: 'fecha_curso'
+                        data: 'foto',
+                        name: 'foto',
+                        render: function ( data, type, row, meta ){
+                            return `<div class="text-center w-100"><img style="width:${data!=""?"93px":"50px"}" src="{{asset('storage/empleados/imagenes/')}}/${data !=""?data:"no-photo.png"}"></div>`;
+                        }
                     },
                     {
-                        data: 'participantes',
-                        name: 'participantes.name'
+                        data: 'email',
+                        name: 'email'
                     },
                     {
-                        data: 'instructor',
-                        name: 'instructor'
+                        data: 'telefono',
+                        name: 'telefono'
                     },
                     {
-                        data: 'certificado',
-                        name: 'certificado',
-                        // render: function(data, type, row) {
-                        //     let imagenes = "";
-                        //     if (row.media.length > 0) {
-                        //         row.media.map(element => {
-                        //             return imagenes +=
-                        //                 `<img src="{{ asset('images/') }}/${element.file_name}" />`;
-                        //         });
-                        //     }
-                        //     console.log(imagenes);
-                        //     return row;
-                        // },
-                        sortable: false,
-                        searchable: false
+                        data: 'area',
+                        name: 'area'
+                    },
+                    {
+                        data: 'puesto',
+                        name: 'puesto'
+                    },
+                    {
+                        data: 'jefe',
+                        name: 'jefe'
+                    },
+                    {
+                        data: 'antiguedad',
+                        name: 'antiguedad'
+                    },
+                    {
+                        data: 'estatus',
+                        name: 'estatus'
                     },
                     {
                         data: 'actions',
@@ -234,33 +228,19 @@
                     [1, 'desc']
                 ]
             };
-            let table = $('.datatable-Recurso').DataTable(dtOverrideGlobals);
+            let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();
             // });
-
-            // let visibleColumnsIndexes = null;
             // $('.datatable thead').on('input', '.search', function() {
             //     let strict = $(this).attr('strict') || false
             //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-
-            //     let index = $(this).parent().index()
-            //     if (visibleColumnsIndexes !== null) {
-            //         index = visibleColumnsIndexes[index]
-            //     }
-
             //     table
-            //         .column(index)
+            //         .column($(this).parent().index())
             //         .search(value, strict)
             //         .draw()
             // });
-            // table.on('column-visibility.dt', function(e, settings, column, state) {
-            //     visibleColumnsIndexes = []
-            //     table.columns(":visible").every(function(colIdx) {
-            //         visibleColumnsIndexes.push(colIdx);
-            //     });
-            // })
         });
 
     </script>

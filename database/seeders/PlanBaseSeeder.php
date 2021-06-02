@@ -28,8 +28,8 @@ class PlanBaseSeeder extends Seeder
                 'actividad'               => 'Realizar levantamiento de información con formulario de estado actual',
                 'fecha_inicio'            => Carbon::now(),
                 'fecha_fin'            => Carbon::now(),  
-                'estatus_id' => 1,
-                'actividad_fase_id' => 1,
+                'estatus_id' => 1, 
+         //       'actividad_fase_id' => 1,
             ],
             [
                 'id'                 => 3,
