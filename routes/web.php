@@ -2,6 +2,7 @@
 
 //Route::view('/', 'welcome');
 
+use App\Http\Controllers\Admin\CategoriaCapacitacionController;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Livewire\NotificacionesComponent;
 
@@ -119,6 +120,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('objetivosseguridads/destroy', 'ObjetivosseguridadController@massDestroy')->name('objetivosseguridads.massDestroy');
     Route::resource('objetivosseguridads', 'ObjetivosseguridadController');
 
+    Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
+
     // Recursos
     Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
     Route::post('recursos/media', 'RecursosController@storeMedia')->name('recursos.storeMedia');
@@ -127,6 +130,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('recursos/cancelar/', 'RecursosController@eliminarParticipante')->name('recursos.cancelar');
     Route::post('recursos/calificar/', 'RecursosController@calificarParticipante')->name('recursos.calificar');
     Route::get('recursos/{recurso}/participantes/', 'RecursosController@participantes')->name('recursos.participantes');
+    Route::get('recursos/{recurso}/participantes/get', 'RecursosController@getParticipantes')->name('recursos.getParticipantes');
     Route::resource('recursos', 'RecursosController');
 
     // Competencia

@@ -41,7 +41,7 @@
                                 @method('PUT')
                                 @csrf
                                 <div class="pl-3 row w-100">
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
                                         <label for="cursoscapacitaciones">
                                             <i class="fab fa-discourse iconos-crear"></i> Título
                                         </label>
@@ -51,6 +51,29 @@
                                             value="{{ old('cursoscapacitaciones', $recurso->cursoscapacitaciones) }}"
                                             autocomplete="off">
                                         <span class="text-danger error_text cursoscapacitaciones_error"></span>
+                                    </div>
+                                </div>
+                                <div class="pl-3 row w-100">
+                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                        <label for="categoria_capacitacion_id"><i class="fab fa-discourse iconos-crear"></i>
+                                            Categoría</label>
+                                        <select name="categoria_capacitacion_id" id="categoria_capacitacion_id"
+                                            class="form-control">
+                                            <option value="" selected disabled>-- Selecciona una categoría --</option>
+                                            @foreach ($categorias as $categoria)
+                                                <option value="{{ $categoria->id }}"
+                                                    {{ old('categoria_capacitacion_id', $categoria->nombre) == $categoria->nombre ? 'selected' : '' }}>
+                                                    {{ $categoria->nombre }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('categoria_capacitacion_id'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('categoria_capacitacion_id') }}
+                                            </div>
+                                        @endif
+                                        <span
+                                            class="help-block">{{ trans('cruds.recurso.fields.cursoscapacitaciones_helper') }}</span>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-12 col-lg-6">
                                         <label for="tipo"><i class="fab fa-discourse iconos-crear"></i> Tipo</label>
@@ -266,14 +289,14 @@
                             render: function(data, type, row, meta) {
                                 let foto = row.foto != null ? row.foto : "no-photo.png";
                                 let html = `<div class="row align-items-center">
-                        <div class="col-4">
-                            <img src="{{ asset('storage/empleados/imagenes') }}/${foto}" width="35px" class="mr-2 rounded-circle" />
-                        </div>
-                        <div class="col-8">
-                            <p class="p-0 m-0"><strong>${data}</strong></p>
-                            <p class="p-0 m-0"><span class="badge badge-primary">${row.area}</span></p>
-                        </div>
-                    </div>`;
+                                <div class="col-4">
+                                    <img src="{{ asset('storage/empleados/imagenes') }}/${foto}" width="35px" class="mr-2 rounded-circle" />
+                                </div>
+                                <div class="col-8">
+                                    <p class="p-0 m-0"><strong>${data}</strong></p>
+                                    <p class="p-0 m-0"><span class="badge badge-primary">${row.area}</span></p>
+                                </div>
+                            </div>`;
                                 return html;
                             }
                         },
@@ -289,8 +312,8 @@
                                 let nombre_capacitacion = "{{ $recurso->cursoscapacitaciones }}";
                                 if (data != null) {
                                     return `<a target="_blank" href="{{ asset('storage/capacitaciones/certificados/') }}/${nombre_capacitacion}/${data}">
-                                        <img src="{{ asset('storage/capacitaciones/certificados/') }}/${nombre_capacitacion}/${data}" width="45px" />
-                                    </a>`;
+                                                <img src="{{ asset('storage/capacitaciones/certificados/') }}/${nombre_capacitacion}/${data}" width="45px" />
+                                            </a>`;
                                 } else {
                                     return "";
                                 }
@@ -304,14 +327,14 @@
                                 let calificacion = row.pivot.calificacion;
                                 let boton_html =
                                     `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button onclick='calificarParticipante(${data},"${certificado}","${calificacion}","${row.name}")' type="button" class="btn btn-sm btn-outline-success">
-                            <i class="fas fa-check-circle"></i>
-                        </button>
-                        <button onclick='eliminarParticipante(${data})' type="button" class="btn btn-sm btn-outline-danger">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                    `;
+                                <button onclick='calificarParticipante(${data},"${certificado}","${calificacion}","${row.name}")' type="button" class="btn btn-sm btn-outline-success">
+                                    <i class="fas fa-check-circle"></i>
+                                </button>
+                                <button onclick='eliminarParticipante(${data})' type="button" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                            `;
                                 return boton_html;
                             }
                         }

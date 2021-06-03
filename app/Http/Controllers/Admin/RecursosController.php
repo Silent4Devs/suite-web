@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRecursoRequest;
 use App\Http\Requests\StoreRecursoRequest;
 use App\Http\Requests\UpdateRecursoRequest;
+use App\Models\CategoriaCapacitacion;
 use App\Models\Recurso;
 use App\Models\Team;
 use App\Models\User;
@@ -27,16 +28,15 @@ class RecursosController extends Controller
 
     public function index(Request $request)
     {
-
         abort_if(Gate::denies('recurso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Recurso::with(['participantes', 'team'])->select(sprintf('%s.*', (new Recurso)->table));
+            $query = Recurso::with(['participantes', 'team', 'categoria_capacitacion'])->select(sprintf('%s.*', (new Recurso)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
-
+            $table->addIndexColumn();
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'recurso_show';
                 $editGate      = 'recurso_edit';
@@ -101,16 +101,18 @@ class RecursosController extends Controller
         abort_if(Gate::denies('recurso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $participantes = User::all()->pluck('name', 'id');
-
-        return view('admin.recursos.create', compact('participantes'));
+        $categorias = CategoriaCapacitacion::get();
+        return view('admin.recursos.create', compact('participantes', 'categorias'));
     }
 
     public function store(StoreRecursoRequest $request)
     {
+
         $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
         $recurso = Recurso::create([
             "cursoscapacitaciones" => $request->cursoscapacitaciones,
             "tipo" => $request->tipo,
+            "categoria_capacitacion_id" => $request->categoria_capacitacion_id,
             "fecha_curso" => $request->fecha_curso,
             "fecha_fin" => $request->fecha_fin,
             "duracion" => $duracion,
@@ -144,8 +146,9 @@ class RecursosController extends Controller
         $participantes = User::all()->pluck('name', 'id');
 
         $recurso->load('participantes', 'team');
+        $categorias = CategoriaCapacitacion::get();
 
-        return view('admin.recursos.edit', compact('participantes', 'recurso'));
+        return view('admin.recursos.edit', compact('participantes', 'recurso', 'categorias'));
     }
 
     public function update(UpdateRecursoRequest $request, Recurso $recurso)
@@ -163,6 +166,7 @@ class RecursosController extends Controller
             $recurso_actualizado = $recurso->update([
                 "cursoscapacitaciones" => $request->cursoscapacitaciones,
                 "tipo" => $request->tipo,
+                "categoria_capacitacion_id" => $request->categoria_capacitacion_id,
                 "fecha_curso" => $request->fecha_curso,
                 "fecha_fin" => $request->fecha_fin,
                 "duracion" => $duracion,
@@ -249,6 +253,14 @@ class RecursosController extends Controller
         $int_recurso = intval($recurso);
         $recurso_data = Recurso::find($int_recurso);
         return datatables()->of($recurso_data->empleados)->toJson();
+    }
+
+    public function getParticipantes($recurso)
+    {
+        $int_recurso = intval($recurso);
+        $recurso_data = Recurso::find($int_recurso);
+        $recurso_info = ['recurso' => $recurso_data, 'empleados' => $recurso_data->empleados];
+        return $recurso_info;
     }
 
     public function calificarParticipante(Request $request)
