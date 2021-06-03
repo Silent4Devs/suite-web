@@ -40,6 +40,7 @@ class Recurso extends Model implements HasMedia
         'fecha_fin',
         'duracion',
         'tipo',
+        'categoria_capacitacion_id',
         'instructor',
         'descripcion',
         'created_at',
@@ -61,7 +62,8 @@ class Recurso extends Model implements HasMedia
 
     public function getFechaCursoAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        // return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y H:i') : null;
         //return Carbon::parse($value)->format('d/m/Y H:i'); // Se cambio formato corroborar que nada se rompe
     }
 
@@ -91,5 +93,10 @@ class Recurso extends Model implements HasMedia
     public function empleados()
     {
         return $this->belongsToMany(Empleado::class)->withPivot('certificado', 'calificacion');
+    }
+
+    public function categoria_capacitacion()
+    {
+        return $this->belongsTo(CategoriaCapacitacion::class);
     }
 }

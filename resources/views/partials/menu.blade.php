@@ -713,6 +713,14 @@
                           </a>
                       </li>
                   @endcan
+                   @can('tipoactivo_access')
+                      <li class="c-sidebar-nav-item">
+                          <a href="{{ route("admin.categoria-capacitacion.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/tipoactivos") || request()->is("admin/tipoactivos/*") ? "active" : "" }}">
+                        <i class="fas fa-th-list iconos_menu letra_blanca"></i>
+                              <font class="letra_blanca"> Categorias de Capacitaciones</font>
+                          </a>
+                      </li>
+                  @endcan
                 </ul>
             </li>
         @endcan

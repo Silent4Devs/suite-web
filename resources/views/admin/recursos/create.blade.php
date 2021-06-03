@@ -39,7 +39,7 @@
                                 enctype="multipart/form-data" class="mt-3 row">
                                 @csrf
                                 <div class="pl-3 row w-100">
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
                                         <label for="cursoscapacitaciones">
                                             <i class="fab fa-discourse iconos-crear"></i> Título
                                         </label>
@@ -50,6 +50,29 @@
                                         @if ($errors->has('cursoscapacitaciones'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('cursoscapacitaciones') }}
+                                            </div>
+                                        @endif
+                                        <span
+                                            class="help-block">{{ trans('cruds.recurso.fields.cursoscapacitaciones_helper') }}</span>
+                                    </div>
+                                </div>
+                                <div class="pl-3 row w-100">
+                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                        <label for="categoria_capacitacion_id"><i class="fab fa-discourse iconos-crear"></i>
+                                            Categoría</label>
+                                        <select name="categoria_capacitacion_id" id="categoria_capacitacion_id"
+                                            class="form-control">
+                                            <option value="" selected disabled>-- Selecciona una categoría --</option>
+                                            @foreach ($categorias as $categoria)
+                                                <option value="{{ $categoria->id }}"
+                                                    {{ old('categoria_capacitacion_id') == $categoria->nombre ? 'selected' : '' }}>
+                                                    {{ $categoria->nombre }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('categoria_capacitacion_id'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('categoria_capacitacion_id') }}
                                             </div>
                                         @endif
                                         <span
@@ -142,76 +165,76 @@
                             </form>
                         </div>
                         <!--<div class="px-4 mt-4 mb-3 tab-pane fade" id="participantes" role="tabpanel"
-                                                        aria-labelledby="participantes-tab">
-                                                        <div class="w-100" style="border-bottom: solid 2px #0CA193;">
-                                                            <span style="font-size: 17px; font-weight: bold;">
-                                                                Alta de participantes</span>
-                                                        </div>
-                                                        <form action="POST" class="mt-3 row" id="form-participantes">
-                                                            <div class="pl-3 row w-100">
-                                                                <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                                                    <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
-                                                                        participante</label>
-                                                                    <input class="form-control" type="text" id="participantes_search"
-                                                                        placeholder="Busca un empleado" style="position: relative" autocomplete="off" />
-                                                                    <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
-                                                                        style="position: absolute; top: 43px; right: 25px;"></i>
-                                                                    <div id="participantes_sugeridos"></div>
-                                                                    @if ($errors->has('participantes'))
-                                                                        <div class="invalid-feedback">
-                                                                            {{ $errors->first('participantes') }}
-                                                                        </div>
-                                                                    @endif
-                                                                    <span
-                                                                        class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
-                                                                </div>
-                                                                <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                                                    <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
-                                                                    <input class="form-control" type="text" id="email"
-                                                                        placeholder="Correo del participante" readonly style="cursor: not-allowed" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <button id="btn-alta-participantes" type="submit" class="mr-3 btn btn-sm btn-primary"
-                                                                    style="float: right">
-                                                                    <i class="mr-1 fas fa-check-circle"></i>
-                                                                    Dar de alta
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                        <div class="mt-3 col-12 datatable-fix">
-                                                            <table class="table w-100" id="tbl-participantes">
-                                                                <thead class="thead-dark">
-                                                                    <tr>
-                                                                        <th scope="col">#</th>
-                                                                        <th scope="col">Nombre</th>
-                                                                        <th scope="col">Email</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th scope="row">1</th>
-                                                                        <td>Roberto</td>
-                                                                        <td>roberto@gmail.com</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="mt-3 form-group col-12">
-                                                            <div class="btn-group" role="group" aria-label="Terminar capacitacion" style="float: right">
-                                                                <button class="btnPrevious btn btn-danger">
-                                                                    <i class="ml-1 fas fa-arrow-left"></i>
-                                                                    Anterior
-                                                                </button>
-                                                                {{-- <button id="btn-general" class="btn btn-success" style="position: relative">
+                                                                                                    aria-labelledby="participantes-tab">
+                                                                                                    <div class="w-100" style="border-bottom: solid 2px #0CA193;">
+                                                                                                        <span style="font-size: 17px; font-weight: bold;">
+                                                                                                            Alta de participantes</span>
+                                                                                                    </div>
+                                                                                                    <form action="POST" class="mt-3 row" id="form-participantes">
+                                                                                                        <div class="pl-3 row w-100">
+                                                                                                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                                                                                <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
+                                                                                                                    participante</label>
+                                                                                                                <input class="form-control" type="text" id="participantes_search"
+                                                                                                                    placeholder="Busca un empleado" style="position: relative" autocomplete="off" />
+                                                                                                                <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
+                                                                                                                    style="position: absolute; top: 43px; right: 25px;"></i>
+                                                                                                                <div id="participantes_sugeridos"></div>
+                                                                                                                @if ($errors->has('participantes'))
+                                                                                                                    <div class="invalid-feedback">
+                                                                                                                        {{ $errors->first('participantes') }}
+                                                                                                                    </div>
+                                                                                                                @endif
+                                                                                                                <span
+                                                                                                                    class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
+                                                                                                            </div>
+                                                                                                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                                                                                <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
+                                                                                                                <input class="form-control" type="text" id="email"
+                                                                                                                    placeholder="Correo del participante" readonly style="cursor: not-allowed" />
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="col-12">
+                                                                                                            <button id="btn-alta-participantes" type="submit" class="mr-3 btn btn-sm btn-primary"
+                                                                                                                style="float: right">
+                                                                                                                <i class="mr-1 fas fa-check-circle"></i>
+                                                                                                                Dar de alta
+                                                                                                            </button>
+                                                                                                        </div>
+                                                                                                    </form>
+                                                                                                    <div class="mt-3 col-12 datatable-fix">
+                                                                                                        <table class="table w-100" id="tbl-participantes">
+                                                                                                            <thead class="thead-dark">
+                                                                                                                <tr>
+                                                                                                                    <th scope="col">#</th>
+                                                                                                                    <th scope="col">Nombre</th>
+                                                                                                                    <th scope="col">Email</th>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                <tr>
+                                                                                                                    <th scope="row">1</th>
+                                                                                                                    <td>Roberto</td>
+                                                                                                                    <td>roberto@gmail.com</td>
+                                                                                                                </tr>
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                    <div class="mt-3 form-group col-12">
+                                                                                                        <div class="btn-group" role="group" aria-label="Terminar capacitacion" style="float: right">
+                                                                                                            <button class="btnPrevious btn btn-danger">
+                                                                                                                <i class="ml-1 fas fa-arrow-left"></i>
+                                                                                                                Anterior
+                                                                                                            </button>
+                                                                                                            {{-- <button id="btn-general" class="btn btn-success" style="position: relative">
                                         Guardar
                                         <i class="ml-1 fas fa-check-circle"></i>
                                         <i id="guardando_capacitacion" class="fas fa-cog fa-spin text-muted"
                                             style="position: absolute; top: 7px;right: 12px;"></i>
                                     </button> --}}
-                                                            </div>
-                                                        </div>
-                                                    </div>-->
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>-->
                     </div>
                 </div>
             </div>
