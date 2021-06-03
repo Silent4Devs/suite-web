@@ -13,14 +13,16 @@
             <table class="table table-bordered w-100 datatable-Empleado">
                 <thead class="thead-dark">
                     <tr>
+                        <th id="numero" style="vertical-align: top">
+                        </th>
                         <th style="vertical-align: top">
-                               No de empleado
+                            Foto
+                         </th>
+                        <th style="vertical-align: top">
+                               N°&nbsp;de&nbsp;empleado
                         </th>
                         <th style="vertical-align: top">
                             {{ trans('cruds.user.fields.name') }}
-                        </th>
-                        <th style="vertical-align: top">
-                           Foto
                         </th>
                         <th style="vertical-align: top">
                             Correo&nbsp;electrónico
@@ -56,8 +58,11 @@
 @endsection
 @section('scripts')
     @parent
+    
     <script>
         $(function() {
+           let numero = document.querySelector('#numero');
+           numero.innerHTML='N°';
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
@@ -175,20 +180,25 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.empleados.index') }}",
-                columns: [{
+                columns: [
+                    {
+                     data:'DT_RowIndex',
+                     name:'DT_RowIndex'
+                    },
+                    {
+                        data: 'foto',
+                        name: 'foto',
+                        render: function ( data, type, row, meta ){
+                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"35px"}" src="{{asset('storage/empleados/imagenes/')}}/${data !=""?data:"user.png"}"></div>`;
+                        }
+                    },      
+                    {
                         data: 'n_empleado',
                         name: 'n_empleado'
                     },
                     {
                         data: 'name',
                         name: 'name'
-                    },
-                    {
-                        data: 'foto',
-                        name: 'foto',
-                        render: function ( data, type, row, meta ){
-                            return `<div class="text-center w-100"><img style="width:${data!=""?"93px":"50px"}" src="{{asset('storage/empleados/imagenes/')}}/${data !=""?data:"no-photo.png"}"></div>`;
-                        }
                     },
                     {
                         data: 'email',
@@ -229,6 +239,7 @@
                 ]
             };
             let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
+            
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();

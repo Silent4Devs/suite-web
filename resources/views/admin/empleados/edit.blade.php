@@ -6,6 +6,7 @@
         <h3 class="mb-1 text-center text-white"><strong> Editar: </strong>Empleado </h3>
     </div>
 
+    
     <div class="card-body">
         <form method="POST" action="{{ route("admin.empleados.update", [$empleado->id]) }}" enctype="multipart/form-data">
             @method('PUT')
@@ -28,9 +29,8 @@
                         {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+                
             </div>
-
 
 
             <div class="form-group col-sm-6">
@@ -51,14 +51,14 @@
 
 
             <div class="form-group col-sm-6">
-                <label class="required" for="n_empleado"><i class="fas fa-street-view iconos-crear"></i>No de empleado</label>
-                <input class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}" type="text" name="n_empleado" id="n_empleado" value="{{ old('n_empleado', $empleado->n_empleado) }}" required>
+                <label class="required" for="n_empleado"><i class="fas fa-street-view iconos-crear"></i>N° de empleado</label>
+                <input class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}" type="text" name="n_empleado" id="n_empleado" value="{{ old('n_empleado', $empleado->n_empleado) }}" disabled>
                 @if($errors->has('n_empleado'))
                     <div class="invalid-feedback">
                         {{ $errors->first('n_empleado') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+                
             </div>
 
  
@@ -70,7 +70,7 @@
                         {{ $errors->first('area') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+                
             </div>
             
 
@@ -88,7 +88,7 @@
                         {{ $errors->first('puesto') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+                
             </div>
 
             <div class="form-group col-sm-6">
@@ -99,7 +99,7 @@
                         {{ $errors->first('jefe') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+                
             </div>
 
 
@@ -110,14 +110,14 @@
         <div class="row">
 
             <div class="form-group col-sm-6">
-                <label class="required" for="antiguedad"><i class="fas fa-address-card iconos-crear"></i>Antiguedad</label>
-                <input class="form-control {{ $errors->has('antiguedad') ? 'is-invalid' : '' }}" type="text" name="antiguedad" id="antiguedad" value="{{ old('antiguedad', $empleado->antiguedad) }}" required>
+                <label class="required" for="antiguedad"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de ingreso</label>
+                <input class="form-control {{ $errors->has('antiguedad') ? 'is-invalid' : '' }}" type="date" name="antiguedad" id="antiguedad" value="{{ old('antiguedad', $empleado->antiguedad) }}" required>
                 @if($errors->has('antiguedad'))
                     <div class="invalid-feedback">
                         {{ $errors->first('antiguedad') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+                
             </div>
 
 
@@ -133,7 +133,7 @@
                         {{ $errors->first('estatus') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+               
             </div>
             
 
@@ -144,14 +144,14 @@
 
 
             <div class="form-group col-sm-6">
-                <label class="required" for="telefono"><i class="far fa-envelope iconos-crear"></i>Telefono</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="telefono" id="telefono" value="{{ old('telefono', $empleado->telefono) }}" required>
+                <label for="telefono"><i class="far fa-envelope iconos-crear"></i>Telefono</label>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="telefono" id="telefono" value="{{ old('telefono', $empleado->telefono) }}">
                 @if($errors->has('telefono'))
                     <div class="invalid-feedback">
                         {{ $errors->first('telefono') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+               
             </div>
 
             <div class="form-group col-sm-6">
@@ -162,7 +162,7 @@
                         {{ $errors->first('email') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+                
             </div>
 
         </div>

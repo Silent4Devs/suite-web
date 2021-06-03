@@ -21,5 +21,6 @@ class Empleado extends Model
         'email',
         'n_empleado',
         'telefono',
+        'n_registro',
     ];
 }
