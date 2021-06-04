@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Gate;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +22,8 @@ class EmpleadoController extends Controller
     public function index(Request $request)
     {
 
-        abort_if(Gate::denies('empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+     
 
         if ($request->ajax()) {
             $query = Empleado::get();
@@ -29,6 +31,7 @@ class EmpleadoController extends Controller
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
+            $table->addIndexColumn();
 
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'empleados_show';
@@ -60,6 +63,9 @@ class EmpleadoController extends Controller
                 return $row->foto ? $row->foto : '';
             });
 
+           // $dt = CarbonLocale::now();
+           // dd($dt->diffForHumans($dt->copy()->subMinutes(15)));
+
             $table->editColumn('area', function ($row) {
                 return $row->area ? $row->area : "";
             });
@@ -70,7 +76,7 @@ class EmpleadoController extends Controller
                 return $row->jefe ? $row->jefe : "";
             });
             $table->editColumn('antiguedad', function ($row) {
-                return $row->antiguedad ? $row->antiguedad : "";
+            return Carbon::parse(Carbon::parse($row->antiguedad))->diffForHumans(Carbon::now()->subDays());
             });
             $table->editColumn('estatus', function ($row) {
                 return $row->estatus ? $row->estatus : "";
@@ -87,11 +93,16 @@ class EmpleadoController extends Controller
                 return $row->n_empleado ? $row->n_empleado : "";
             });
 
+            $table->editColumn('n_registro', function ($row) {
+                return $row->n_empleado ? $row->n_registro : "";
+            });
+
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
 
+        
         return view('admin.empleados.index');
     }
 
@@ -114,11 +125,11 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
-            'n_empleado' => 'unique:empleados'
+            'n_empleado'=>'unique:empleados'], ['n_empleado.unique' => 'El número de empleado ya ha sido tomado'
         ]);
-
-
+       
         $empleado = Empleado::create([
             "name" => $request->name,
             "area" =>  $request->area,
@@ -129,6 +140,7 @@ class EmpleadoController extends Controller
             "email" =>  $request->email,
             "telefono" =>  $request->telefono,
             "n_empleado" =>  $request->n_empleado,
+            "n_registro" =>  $request->n_empleado,
         ]);
         $image = null;
         if ($request->file('foto') != null or !empty($request->file('foto'))) {
@@ -190,10 +202,10 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         //$empleado->update($request->all());
-        $request->validate([
-            'n_empleado' => 'unique:empleados,n_empleado,' . $id
-        ]);
-
+       // $request->validate([
+       //  'n_empleado'=>'unique:empleados'], ['n_empleado.unique' => 'El número de empleado ya ha sido tomado'
+       // ]);
+        
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
         if ($request->file('foto') != null or !empty($request->file('foto'))) {
@@ -228,6 +240,7 @@ class EmpleadoController extends Controller
             "email" =>  $request->email,
             "telefono" =>  $request->telefono,
             "n_empleado" =>  $request->n_empleado,
+            "n_registro" =>  $request->n_empleado,
             'foto' => $image
         ]);
 
@@ -242,23 +255,14 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Empleado $empleado)
     {
+        abort_if(Gate::denies('empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $empleado->delete();
+
+        return back();  
     }
 
-    public function getEmpleados(Request $request)
-    {
-        if ($request->ajax()) {
-            $nombre = $request->nombre;
-            if ($nombre != null) {
-                $usuarios = Empleado::select('id', 'name', 'email')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
-                $lista = "<ul class='list-group' id='empleados-lista'>";
-                foreach ($usuarios as $usuario) {
-                    $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . "</button>";
-                }
-                $lista .= "</ul>";
-                return $lista;
-            }
-        }
-    }
+
 }
