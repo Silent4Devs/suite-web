@@ -2,6 +2,7 @@
 
 //Route::view('/', 'welcome');
 
+use App\Http\Controllers\Admin\CategoriaCapacitacionController;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Livewire\NotificacionesComponent;
 
@@ -36,11 +37,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
-    Route::post('users/get', 'UsersController@getUsers')->name('users.get');
+    //Route::post('users/get', 'UsersController@getUsers')->name('users.get');
     Route::resource('users', 'UsersController');
 
     // Empleados
-    Route::resource('empleados','EmpleadoController');
+    Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
+    Route::resource('empleados', 'EmpleadoController');
 
     // Organizacions
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
@@ -118,10 +120,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('objetivosseguridads/destroy', 'ObjetivosseguridadController@massDestroy')->name('objetivosseguridads.massDestroy');
     Route::resource('objetivosseguridads', 'ObjetivosseguridadController');
 
+    Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
+
     // Recursos
     Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
     Route::post('recursos/media', 'RecursosController@storeMedia')->name('recursos.storeMedia');
     Route::post('recursos/ckmedia', 'RecursosController@storeCKEditorImages')->name('recursos.storeCKEditorImages');
+    Route::post('recursos/suscribir/', 'RecursosController@suscribir')->name('recursos.suscribir');
+    Route::post('recursos/cancelar/', 'RecursosController@eliminarParticipante')->name('recursos.cancelar');
+    Route::post('recursos/calificar/', 'RecursosController@calificarParticipante')->name('recursos.calificar');
+    Route::get('recursos/{recurso}/participantes/', 'RecursosController@participantes')->name('recursos.participantes');
+    Route::get('recursos/{recurso}/participantes/get', 'RecursosController@getParticipantes')->name('recursos.getParticipantes');
     Route::resource('recursos', 'RecursosController');
 
     // Competencia

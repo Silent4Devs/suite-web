@@ -28,7 +28,7 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $query = Empleado::get();
             $table = DataTables::of($query);
-      
+
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
             $table->addIndexColumn();
@@ -51,7 +51,7 @@ class EmpleadoController extends Controller
 
             //     return "<img src=".public_path() . '/storage/empleados/imagenes/' .$row->foto.">";
             // });
-            
+
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
@@ -60,8 +60,7 @@ class EmpleadoController extends Controller
             });
 
             $table->editColumn('foto', function ($row) {
-                return $row->foto ? $row->foto:'';
-                
+                return $row->foto ? $row->foto : '';
             });
 
            // $dt = CarbonLocale::now();
@@ -105,7 +104,6 @@ class EmpleadoController extends Controller
 
         
         return view('admin.empleados.index');
-
     }
 
     /**
@@ -117,7 +115,6 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.empleados.create');
-
     }
 
     /**
@@ -189,10 +186,10 @@ class EmpleadoController extends Controller
     {
 
         abort_if(Gate::denies('empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleado=Empleado::findOrfail($id);
-        
+        $empleado = Empleado::findOrfail($id);
 
-        return view('admin.empleados.edit',compact('empleado'));
+
+        return view('admin.empleados.edit', compact('empleado'));
     }
 
     /**
@@ -214,7 +211,7 @@ class EmpleadoController extends Controller
         if ($request->file('foto') != null or !empty($request->file('foto'))) {
 
             //Si existe la imagen entonces se elimina al editarla
-        
+
             $isExists = Storage::disk('public')->exists('empleados/imagenes/' . $empleado->foto);
             if ($isExists) {
                 if ($empleado->foto != null) {
@@ -234,7 +231,7 @@ class EmpleadoController extends Controller
         }
 
         $empleado->update([
-            'name'=>$request->name,
+            'name' => $request->name,
             "area" =>  $request->area,
             "puesto" =>  $request->puesto,
             "jefe" =>  $request->jefe,

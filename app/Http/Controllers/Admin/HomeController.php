@@ -12,6 +12,8 @@ use App\Models\IncidentesDeSeguridad;
 use App\Models\ControlDocumento;
 use App\Models\PlanBaseActividade;
 use App\Models\AuditoriaAnual;
+use App\Models\CategoriaCapacitacion;
+use App\Models\Recurso;
 
 class HomeController
 {
@@ -258,12 +260,48 @@ class HomeController
         $actividadenproc =  PlanBaseActividade::select('id')->where('estatus_id', '=', '2')->count('id');
         $actividadcompl = PlanBaseActividade::select('id')->where('estatus_id', '=', '3')->count('id');
         $actividadretr = PlanBaseActividade::select('id')->where('estatus_id', '=', '4')->count('id');
-      
+
         $auditexterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Interna')->count('id');
         $auditinterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Externa')->count('id');
 
         $exist_doc = ControlDocumento::select('deleted_at')->where('deleted_at', '=', null)->count();
-        
+        $capacitaciones = Recurso::get();
+        $categorias_arr = [];
+        $recursos_categoria_arr = [];
+        $categorias = CategoriaCapacitacion::with('recursos')->get();
+        foreach ($categorias as $categoria) {
+            array_push($categorias_arr, $categoria->nombre);
+            array_push($recursos_categoria_arr, count($categoria->recursos));
+        }
+        $tipos_total_arr = [];
+        $diplomado = 0;
+        $certificado = 0;
+        $curso = 0;
+        $tipos = Recurso::get();
+
+        foreach ($tipos as $tipo) {
+            if ($tipo->tipo == 'diplomado') {
+                $diplomado++;
+            } elseif ($tipo->tipo == 'certificacion') {
+                $certificado++;
+            } elseif ($tipo->tipo == 'curso') {
+                $curso++;
+            }
+        }
+        array_push($tipos_total_arr, $diplomado);
+        array_push($tipos_total_arr, $certificado);
+        array_push($tipos_total_arr, $curso);
+
+        $capacitaciones_year_actual = Recurso::whereYear('fecha_curso', date('Y'))->count();
+        $arr_fechas_cursos = [];
+        $arr_participantes = [];
+        $recursos = Recurso::whereYear('fecha_curso', date('Y'))->orderBy('fecha_curso', 'asc')->get();
+        // dd(Carbon::parse($recursos[0]->fecha_curso)->diff());
+        foreach ($recursos as $recurso) {
+            array_push($arr_fechas_cursos, Carbon::parse($recurso->fecha_curso)->format('M d Y'));
+            array_push($arr_participantes, count($recurso->empleados));
+        }
+
 
         return view('home', compact(
             'auditexterna',
@@ -294,7 +332,15 @@ class HomeController
             'documentorev',
             'documentoElab',
             'docunoelab',
-            'exist_doc'
+            'exist_doc',
+            'capacitaciones',
+            'categorias',
+            'categorias_arr',
+            'recursos_categoria_arr',
+            'tipos_total_arr',
+            'capacitaciones_year_actual',
+            'arr_fechas_cursos',
+            'arr_participantes'
         ));
     }
 }

@@ -97,7 +97,7 @@ class LaravelChart
                     $query->with($this->options['relationship_name']);
                 }
 
-                if(isset($this->options['withoutGlobalScopes']) && $this->options['withoutGlobalScopes']){
+                if (isset($this->options['withoutGlobalScopes']) && $this->options['withoutGlobalScopes']) {
                     $collection = $query->withoutGlobalScopes()->get();
                 } else {
                     $collection = $query->get();
@@ -124,12 +124,14 @@ class LaravelChart
                                     ->format($this->options['date_format'] ?? self::GROUP_PERIODS[$this->options['group_by_period']]);
                             } else {
                                 if ($entry->{$this->options['group_by_field']} && $this->options['group_by_field_format']) {
-                                    return \Carbon\Carbon::createFromFormat($this->options['group_by_field_format'],
+                                    return \Carbon\Carbon::createFromFormat(
+                                        $this->options['group_by_field_format'],
                                         $entry->{$this->options['group_by_field']}
                                     )
                                         ->format($this->options['date_format'] ?? self::GROUP_PERIODS[$this->options['group_by_period']]);
-                                }else if ($entry->{$this->options['group_by_field']}) {
-                                    return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
+                                } else if ($entry->{$this->options['group_by_field']}) {
+                                    return \Carbon\Carbon::createFromFormat(
+                                        'Y-m-d H:i:s',
                                         $entry->{$this->options['group_by_field']}
                                     )
                                         ->format($this->options['date_format'] ?? self::GROUP_PERIODS[$this->options['group_by_period']]);
@@ -244,6 +246,6 @@ class LaravelChart
      */
     public function renderChartJsLibrary()
     {
-        return '<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>';
+        return '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>';
     }
 }
