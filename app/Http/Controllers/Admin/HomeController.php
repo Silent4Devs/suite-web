@@ -50,20 +50,20 @@ class HomeController
 
         $chart2 = new LaravelChart($settings2);
 
-        $settings3 = [
-            'chart_title'        => 'Progreso general del plan',
-            'chart_type'         => 'pie',
-            'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\PlanBaseActividade',
-            'group_by_field'     => 'estado',
-            'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
-            'column_class'       => 'col-md-12',
-            'entries_number'     => '5',
-            'relationship_name'  => 'estatus',
-        ];
+        // $settings3 = [
+        //     'chart_title'        => 'Progreso general del plan',
+        //     'chart_type'         => 'pie',
+        //     'report_type'        => 'group_by_relationship',
+        //     'model'              => 'App\Models\PlanBaseActividade',
+        //     'group_by_field'     => 'estado',
+        //     'aggregate_function' => 'count',
+        //     'filter_field'       => 'created_at',
+        //     'column_class'       => 'col-md-12',
+        //     'entries_number'     => '5',
+        //     'relationship_name'  => 'estatus',
+        // ];
 
-        $chart3 = new LaravelChart($settings3);
+        // $chart3 = new LaravelChart($settings3);
 
         $settings4 = [
             'chart_title'        => 'Documentación',
@@ -302,6 +302,15 @@ class HomeController
             array_push($arr_participantes, count($recurso->empleados));
         }
 
+        // Gantt
+        $gantt_path = 'storage/gantt/';
+
+
+
+        $version_gantt = glob($gantt_path . "gantt_inicial*.json");
+
+        $path_gantt = end($version_gantt);
+
 
         return view('home', compact(
             'auditexterna',
@@ -314,7 +323,6 @@ class HomeController
             'settings5',
             'chart1',
             'chart2',
-            'chart3',
             'chart4',
             'chart7',
             'chart8',
@@ -340,7 +348,8 @@ class HomeController
             'tipos_total_arr',
             'capacitaciones_year_actual',
             'arr_fechas_cursos',
-            'arr_participantes'
+            'arr_participantes',
+            'path_gantt'
         ));
     }
 }

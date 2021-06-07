@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-6 p-0">
                 <div class="card caja_graficas graf_3">
                     <h5 class="espec" style="background-color: #2DB7DB">Categorias</h5>
                     <canvas id="chart_categorias"></canvas>
@@ -43,7 +43,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-6 p-0">
                 <div class="card caja_graficas graf_3">
                     <h5 class="espec" style="background-color: #2DB7DB">Tipos</h5>
                     <canvas id="chart_tipos"></canvas>
@@ -53,43 +53,44 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 p-0">
                 <div class="card caja_graficas graf_3">
                     <h5 class="espec" style="background-color: #2DB7DB">Capacitaciones en {{ date('Y') }}</h5>
-                    <canvas id="line"></canvas>
+                    <canvas id="line" height="200px"></canvas>
                     <a id="a_plan" class="btn_ver" href="admin/recursos">
                         Ver Detalle
                     </a>
                 </div>
             </div>
-        </div>
-        <div class="card caja_table datatable-fix" style="width: 100%; position: relative;">
-            <h5 class="espec">Total de capacitaciones</h5>
-            <table id="table_total_capaci" class="table col-12 w-100">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
-                        <th>Instructor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($capacitaciones as $index => $capacitacion)
+            <div class="card caja_table graf_3 datatable-fix" style="width: 100%; position: relative;">
+                <h5 class="espec">Lista de capacitaciones</h5>
+                <table id="table_total_capaci" class="table col-12 w-100">
+                    <thead class="thead-dark">
                         <tr>
-                            <td>{{ $capacitacion->id }}</td>
-                            <td>{{ $capacitacion->cursoscapacitaciones }}</td>
-                            <td>{{ $capacitacion->fecha_curso }}</td>
-                            <td>{{ $capacitacion->fecha_fin }}</td>
-                            <td>{{ $capacitacion->instructor }}</td>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Instructor</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <div id="cargando_informacion_capacitacion">
-                <div class="circulo"></div>
+                    </thead>
+                    <tbody>
+                        @foreach ($capacitaciones as $index => $capacitacion)
+                            <tr>
+                                <td>{{ $capacitacion->id }}</td>
+                                <td>{{ $capacitacion->cursoscapacitaciones }}</td>
+                                <td>{{ $capacitacion->fecha_curso }}</td>
+                                <td>{{ $capacitacion->fecha_fin }}</td>
+                                <td>{{ $capacitacion->instructor }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div id="cargando_informacion_capacitacion">
+                    <div class="circulo"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -127,7 +128,7 @@
 
     </style>
 
-    <div id="contenedor_card_participantes" class="w-100 row"></div>
+    <div id="contenedor_card_participantes" class="col-12"></div>
 
 </div>
 @section('scripts')
@@ -271,37 +272,50 @@
                         let contenedor = document.querySelector('#contenedor_card_participantes');
                         let renderHTML =
                             `
-                                                                                                                                                <div class="card card_info" style="width: calc(33.33% - 20px); background: #307ab4;">
-                                                                                                                                                    <div><i class="fas fa-calendar-alt"></i></div>
-                                                                                                                                                    <h6> Fecha de curso</h6>
-                                                                                                                                                    <span>${fecha_inicio} - ${fecha_fin} (${duracion} días)</span>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="card card_info" style="width: calc(33.33% - 20px); background: #a634b4;">
-                                                                                                                                                    <div><i class="fas fa-chalkboard-teacher"></i></div>
-                                                                                                                                                    <h6> Instructor:</h6>
-                                                                                                                                                    <span style="font-size:14pt">${instructor}</span>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="card card_info" style="width: calc(33.33% - 20px); background: #DBA82D;">
-                                                                                                                                                    <div><i class="fas fa-user-graduate"></i></div>
-                                                                                                                                                    <h6 style="font-size:14pt"> Total de participantes:</h6>
-                                                                                                                                                    <span style="font-size:14pt">${total_participantes}</span>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="card caja_graficas graf_3" style="width: calc(50% - 20px);">
-                                                                                                                                                    <h5 class="espec">Participantes</h5>
-                                                                                                                                                    <canvas id="chart_alumnos_capaci"></canvas>
-                                                                                                                                                    <a id="a_plan" class="btn_ver" href="admin/recursos">
-                                                                                                                                                        Ver Detalle
-                                                                                                                                                    </a>
-                                                                                                                                                </div>
-
-                                                                                                                                                <div class="card caja_graficas graf_3" style="width: calc(50% - 20px);">
-                                                                                                                                                    <h5 class="espec">Aprobados/Reprobados</h5>
-                                                                                                                                                    <canvas id="chart_alumnos_aprovados"></canvas>
-                                                                                                                                                    <a id="a_plan" class="btn_ver" href="admin/recursos">
-                                                                                                                                                        Ver Detalle
-                                                                                                                                                    </a>
-                                                                                                                                                </div>
-                                                                                                                                            `;
+                              <div class="row">
+                                <div class="col-4 p-0">
+                                    <div class="card card_info graf_3" style="background: #307ab4;">
+                                        <div><i class="fas fa-calendar-alt"></i></div>
+                                        <h6> Fecha de curso</h6>
+                                        <span>${fecha_inicio} - ${fecha_fin} (${duracion} días)</span>
+                                    </div>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <div class="card card_info" style="background: #a634b4;">
+                                        <div><i class="fas fa-chalkboard-teacher"></i></div>
+                                        <h6> Instructor:</h6>
+                                        <span style="font-size:14pt">${instructor}</span>
+                                    </div>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <div class="card card_info" style="background: #DBA82D;">
+                                        <div><i class="fas fa-user-graduate"></i></div>
+                                        <h6 style="font-size:14pt"> Total de participantes:</h6>
+                                        <span style="font-size:14pt">${total_participantes}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 p-0">
+                                    <div class="card caja_graficas graf_3">
+                                        <h5 class="espec">Participantes</h5>
+                                        <canvas id="chart_alumnos_capaci"></canvas>
+                                        <a id="a_plan" class="btn_ver" href="admin/recursos">
+                                            Ver Detalle
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-6 p-0">
+                                    <div class="card caja_graficas graf_3">
+                                        <h5 class="espec">Aprobados/Reprobados</h5>
+                                        <canvas id="chart_alumnos_aprovados"></canvas>
+                                        <a id="a_plan" class="btn_ver" href="admin/recursos">
+                                            Ver Detalle
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                         contenedor.innerHTML = renderHTML;
                         let calificaciones = response.empleados.map(empleado => {
                             return empleado.pivot.calificacion != null ? Number(empleado.pivot
