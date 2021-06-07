@@ -3,9 +3,9 @@
 
 
 
-<div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style="border: none; width: 50px;">
+<div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style="border: none;">
 
-    <div class="bg-transparent c-sidebar-brand d-md-down-none">
+    <div class="bg-transparent c-sidebar-brand d-md-down-none caja_caja_img_logo">
 
        <!-- <div class="text-center dark_mode1" style="padding-top: 20px;">-->
                {{--<a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 40%;" class="img_logo"></a> --}} 

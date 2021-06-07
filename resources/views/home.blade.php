@@ -115,7 +115,7 @@
         height: 40px;
         position: sticky;
         top: 56px;
-        z-index: 99999999999999999999;
+        z-index: 9;
         display: flex;
         justify-content: center;
         align-items: center;
