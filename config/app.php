@@ -178,6 +178,7 @@ return [
         Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        // Jenssegers\Date\DAteServiceProvider::class,
 
     ],
 

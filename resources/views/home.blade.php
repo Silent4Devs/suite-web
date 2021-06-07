@@ -1,9 +1,11 @@
 @extends('layouts.admin')
 @section('content')
 
+
     <style>
         html {
             scroll-behavior: smooth;
+
         }
 
         .caja_graficas,
@@ -43,10 +45,12 @@
             box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.3);
         }
 
+
         .caja_graficas a:hover {
             opacity: 1;
             box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.2);
         }
+
 
         .especificaciones .iconos_espec {
             font-size: 15pt;

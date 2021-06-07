@@ -155,6 +155,10 @@
             font-style: normal;
         }
 
+
+        
+        
+        
     </style>
     @yield('styles')
     @livewireStyles
@@ -171,7 +175,7 @@
             </button>
 
 
-            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar"
+            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="body"
                 data-class="c-sidebar-lg-show" responsive="true">
                 <i id="btnMenu" class="fas fa-fw fa-bars" style="color:white"></i>
             </button>
