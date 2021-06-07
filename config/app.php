@@ -178,7 +178,7 @@ return [
         Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Jenssegers\Date\DAteServiceProvider::class,
+        // Jenssegers\Date\DAteServiceProvider::class,
     ],
 
     /*
@@ -233,7 +233,7 @@ return [
         'TawkTo' => Emotality\TawkTo\TawkTo::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Date' => Jenssegers\Date\Date::class,
+        // 'Date' => Jenssegers\Date\Date::class,
     ],
 
 
