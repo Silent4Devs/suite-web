@@ -116,6 +116,7 @@ class MatrizRiesgosController extends Controller
         $controles = Controle::get();
         $teams = Team::get();
 
+
         /*$datos = MatrizRiesgo::select('*')
         ->join('activos', 'matriz_riesgos.activo_id', '=', 'activos.id')
         //->join('tipoactivos', 'activos.tipoactivo_id', '=', 'tipoactivos.id')

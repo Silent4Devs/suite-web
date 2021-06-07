@@ -8,7 +8,7 @@
             </div>
         @endcan
         <div class="card-body datatable-fix">
-            <table class="table table-bordered datatable-Recurso w-100">
+            <table class="table table-bordered tbl-categorias w-100">
                 <thead class="thead-dark">
                     <tr>
                         <th></th>
@@ -16,48 +16,13 @@
                             {{ trans('cruds.recurso.fields.id') }}
                         </th>
                         <th>
-                            Nombre&nbsp;del&nbsp;curso
-                        </th>
-                        <th>
-                            Fecha&nbsp;del&nbsp;curso
-                        </th>
-                        <th>
-                            {{ trans('cruds.recurso.fields.participantes') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.recurso.fields.instructor') }}
+                            Nombre
                         </th>
                         <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+
                 </thead>
             </table>
         </div>
@@ -139,7 +104,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar curso y capacitación',
-                url: "{{ route('admin.recursos.create') }}",
+                url: "{{ route('admin.categoria-capacitacion.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -148,35 +113,6 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('recurso_delete')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.recursos.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-            
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-            
-                return
-                }
-            
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -184,7 +120,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.recursos.index') }}",
+                ajax: "{{ route('admin.categoria-capacitacion.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -194,22 +130,9 @@
                         visible: false
                     },
                     {
-                        data: 'cursoscapacitaciones',
-                        name: 'cursoscapacitaciones'
+                        data: 'nombre',
+                        name: 'nombre'
                     },
-                    {
-                        data: 'fecha_curso',
-                        name: 'fecha_curso'
-                    },
-                    {
-                        data: 'participantes',
-                        name: 'participantes.name'
-                    },
-                    {
-                        data: 'instructor',
-                        name: 'instructor'
-                    },
-
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
@@ -220,33 +143,8 @@
                     [1, 'desc']
                 ]
             };
-            let table = $('.datatable-Recurso').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
+            let table = $('.tbl-categorias').DataTable(dtOverrideGlobals);
 
-            // let visibleColumnsIndexes = null;
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-
-            //     let index = $(this).parent().index()
-            //     if (visibleColumnsIndexes !== null) {
-            //         index = visibleColumnsIndexes[index]
-            //     }
-
-            //     table
-            //         .column(index)
-            //         .search(value, strict)
-            //         .draw()
-            // });
-            // table.on('column-visibility.dt', function(e, settings, column, state) {
-            //     visibleColumnsIndexes = []
-            //     table.columns(":visible").every(function(colIdx) {
-            //         visibleColumnsIndexes.push(colIdx);
-            //     });
-            // })
         });
 
     </script>

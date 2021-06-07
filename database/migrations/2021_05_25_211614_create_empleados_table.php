@@ -20,7 +20,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('area')->nullable();
             $table->string('puesto')->nullable();
             $table->string('jefe')->nullable();
-            $table->string('antiguedad')->nullable();
+            $table->date('antiguedad')->nullable();
             $table->string('estatus')->nullable();
             $table->string('email')->nullable();
             $table->timestamps();

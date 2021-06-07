@@ -10,7 +10,7 @@
     'locale' => 'es',
     'fallback_locale' => 'es',
     'faker_locale' => 'es_ES',
-    'key' => 'base64:Kk8icFF2U42btMFo3yheodL5MjA19vd+jmoMQxuXVe0=',
+    'key' => 'base64:Jd07Te5+C3neVeu5bZeG8kFAyDsOFi2ANo7lU1FMwTI=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -45,6 +45,7 @@
       28 => 'Alexusmai\\LaravelFileManager\\FileManagerServiceProvider',
       29 => 'Barryvdh\\DomPDF\\ServiceProvider',
       30 => 'Intervention\\Image\\ImageServiceProvider',
+      31 => 'Jenssegers\\Date\\DAteServiceProvider',
     ),
     'aliases' => 
     array (
@@ -87,6 +88,7 @@
       'TawkTo' => 'Emotality\\TawkTo\\TawkTo',
       'PDF' => 'Barryvdh\\DomPDF\\Facade',
       'Image' => 'Intervention\\Image\\Facades\\Image',
+      'Date' => 'Jenssegers\\Date\\Date',
     ),
   ),
   'auth' => 
@@ -737,7 +739,7 @@
     array (
       'font_dir' => 'C:\\laragon\\www\\tabantaj\\storage\\fonts/',
       'font_cache' => 'C:\\laragon\\www\\tabantaj\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\PEDRO~1.GAR\\AppData\\Local\\Temp',
+      'temp_dir' => 'C:\\Users\\KAREN~1.ROD\\AppData\\Local\\Temp',
       'chroot' => 'C:\\laragon\\www\\tabantaj',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
