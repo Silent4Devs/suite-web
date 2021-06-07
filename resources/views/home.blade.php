@@ -279,14 +279,11 @@
             <h3 style="margin-bottom: -30px; color: #888; margin-left: 1%;">Capacitaciones</h3>
 
             <div class="especificaciones col-12 text-right">
-
                 <label>Plan <i class="fas fa-square iconos_espec" style="color: #3D72A1;"></i></label>
                 <label>Do <i class="fas fa-square iconos_espec" style="color: #A13D86;"></i></label>
                 <label>Check <i class="fas fa-square iconos_espec" style="color: #DBA82D;"></i></label>
                 <label>Act <i class="fas fa-square iconos_espec" style="color: #2DB7DB;"></i></label>
-                
             </div>
-
             
             <div class="col-12">
                 <div class="card caja_table" style="width: 100%;">
