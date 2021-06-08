@@ -158,26 +158,48 @@
         }
 
 
+        .card.vrd-agua{
+            border-radius: 100px !important;
+            overflow: hidden;
+        }
+
         
         .card{
             border: none !important;
             box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.12);
         }
 
-        .card-body.bg-primary.align-self-center{
-            margin-top: -60px !important;   
-            padding: 0 !important;
-            align-self: flex-start !important;
-            width: auto !important;
+        .card-body.align-self-center{
+            margin-top: -65px !important;   
+            
             background-color: rgba(0, 0, 0, 0) !important;
             box-shadow: none !important;
-            border-bottom: 2px solid #008186 !important;
             border-radius: 0 !important;
 
         }
-        .card-body.bg-primary.align-self-center h3, .card-body.bg-primary.align-self-center h3 i{
-            text-align: left !important;
+        .card-body.align-self-center h3, .card-body.align-self-center h3 i{
             color: #008186 !important;
+        }
+
+
+
+
+        .btn.btn-success{
+            width: 150px;
+            height: 35px;
+            background-color: #00abb2 !important;
+            color: #fff !important;
+            border-radius: 100px;
+            border: none !important;
+        }
+        .btn:hover.btn-success{
+            color: #00abb2 !important;
+            background-color: rgba(0, 0, 0, 0) !important;
+            box-shadow: 0 0 0 1px #00abb2 ;
+        }
+        .btn:hover.btn-success font{
+            color: #00abb2 !important;
+            background-color: rgba(0, 0, 0, 0) !important;
         }
         
     </style>
