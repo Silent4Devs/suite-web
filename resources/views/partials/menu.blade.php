@@ -3,7 +3,7 @@
 
 
 
-<div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style="border: none;">
+<div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style=" border: none;">
 
     <div class="bg-transparent c-sidebar-brand d-md-down-none caja_caja_img_logo">
 
