@@ -235,7 +235,7 @@ body{
 
 .ganttButtonBar{
   position:relative;
-  z-index: 2;
+  z-index: 3 !important;
   /*background-color: #fff;*/
   border-bottom: 1px solid #959595;
   padding: 5px 0 5px 10px;
@@ -465,19 +465,19 @@ input[readonly]{
   cursor: pointer;
 }
 .taskStatus[status=STATUS_ACTIVE]{
-  background-color: #3BBF67;
+  background-color: #F9C154;
   color: #fff;
 }
 .taskStatus[status=STATUS_DONE]{
-  background-color: #6EBEF4;
+  background-color: #3BBF67;
   color:#000;
 }
 .taskStatus[status=STATUS_FAILED]{
-  background-color: #763A96;
+  background-color: #ec2805;
   color: #fff;
 }
 .taskStatus[status=STATUS_SUSPENDED]{
-  background-color: #F9C154;
+  background-color: #e7e7e7;
   color:#000;
 }
 .taskStatus[status=STATUS_WAITING]{
@@ -485,7 +485,7 @@ input[readonly]{
   color:#000;
 }
 .taskStatus[status=STATUS_UNDEFINED]{
-  background-color: #dededf;
+  background-color: #0d0df5;
   color:#000;
 }
 .taskStatus.selected{
@@ -597,22 +597,22 @@ select.taskStatus{
 }
 
 .colorByStatus .taskStatusSVG[status=STATUS_ACTIVE]{
-  fill: #3BBF67;
+  fill:#F9C154;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_DONE]{
-  fill: #6EBEF4;
+  fill: #3BBF67;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_FAILED]{
-  fill: #763A96;
+  fill: #ec2805;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_SUSPENDED]{
-  fill: #f9c154;
+  fill: #e7e7e7;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_UNDEFINED]{
-  fill: #dededf;
+  fill: #0d0df5;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_UNDEFINED] .taskLayout{
-  stroke: #ccc;
+  stroke: #0d0df5;
   stroke-width:1;
 }
 

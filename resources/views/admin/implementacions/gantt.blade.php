@@ -29,7 +29,7 @@
     max-width: calc(100% - 300px) !important;
     min-width: calc(100% - 300px) !important;
     height: 80% !important;
-    top: 40px !important;
+    top: 80px !important;
     right: 10px !important;
     position: absolute !important;
     z-index: 9999999999 !important;
@@ -54,7 +54,6 @@
   This Gantt editor is free thanks to <a href="http://twproject.com" target="_blank">Twproject</a> where it can be used on a complete and flexible project management solution.<br> Get your projects done! Give <a href="http://twproject.com" target="_blank">Twproject a try now</a>.
 </div>
 <div id="workSpace" style="padding:0px; overflow-y:auto; overflow-x:hidden;border:1px solid #e5e5e5;position:relative;margin:0 5px"></div>
-
 
 
 <form id="gimmeBack" style="display:none;" action="../gimmeBack.jsp" method="post" target="_blank"><input type="hidden" name="prj" id="gimBaPrj"></form>
@@ -158,36 +157,17 @@ function loadGanttFromServer(taskId, callback) {
 
   // $.getJSON("ganttAjaxController.jsp", {CM:"LOADPROJECT",taskId:taskId}, function(response) {
     //console.debug(response);
-    
   // });
-  
-
-
   $.ajax({
-
-                    type: "POST",
-
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-
-               
-
-                    url: "{{route('admin.implementacions.loadProyect')}}",
-
-
-
-                    success: function (response) {
-                      
-                        // prof.stop();
-
-                        ge.loadProject(response);
-                        ge.checkpoint(); //empty the undo stack
-
-                        
-                      
-                    }
-
-                });
-
+      type: "POST",
+      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      url: "{{route('admin.implementacions.loadProyect')}}",
+      success: function (response) {
+          // prof.stop();
+          ge.loadProject(response);
+          ge.checkpoint(); //empty the undo stac
+      }
+  });
   return ret;
 }
 
@@ -236,7 +216,7 @@ function saveGanttOnServer() {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Your work has been saved',
+          title: 'Tu proyecto ha sido guardado',
           showConfirmButton: false,
           timer: 1500
         })
@@ -245,7 +225,7 @@ function saveGanttOnServer() {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong!',
+          text: 'Algo ocasionó un error!',
           
         })
       }
@@ -363,6 +343,35 @@ function saveInLocalStorage() {
 
 
 //-------------------------------------------  Open a black popup for managing resources. This is only an axample of implementation (usually resources come from server) ------------------------------------------------------
+function loadVersionProject(url) {
+  let path = @json($path_asset);
+  let url_gantt =  `${path}/${url}`;
+  $.ajax({
+      type: "POST",
+      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      url: url_gantt,
+      beforeSend: function (param) {
+        let c_version_actual_gantt = document.querySelector("#version_actual_gantt");
+        c_version_actual_gantt.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Cambiando archivo...`;
+      },
+      success: function (response) {
+        // prof.stop();
+        let c_version_actual_gantt = document.querySelector("#version_actual_gantt");
+        c_version_actual_gantt.innerHTML = url;
+        ge.loadProject(response);
+        ge.checkpoint(); //empty the undo stac
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `Tu proyecto: ${url.replaceAll('_',' ').replaceAll('.json','')} ha sido cargado`,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+  });
+  
+}
+
 function editResources(){
 
   //make resource editor
@@ -556,49 +565,64 @@ function showBaselineInfo (event,element){
     <div class="buttons">
       <a href="https://gantt.twproject.com/"><img src="res/twGanttLogo.png" alt="Twproject" align="absmiddle" style="max-width: 136px; padding-right: 15p; display: none;x"></a>
 
-      <button onclick="$('#workSpace').trigger('undo.gantt');return false;" class="button textual icon requireCanWrite" title="undo"><span class="teamworkIcon">&#39;</span></button>
-      <button onclick="$('#workSpace').trigger('redo.gantt');return false;" class="button textual icon requireCanWrite" title="redo"><span class="teamworkIcon">&middot;</span></button>
+      <button onclick="$('#workSpace').trigger('undo.gantt');return false;" class="button textual icon requireCanWrite" title="Deshacer"><span class="teamworkIcon">&#39;</span></button>
+      <button onclick="$('#workSpace').trigger('redo.gantt');return false;" class="button textual icon requireCanWrite" title="Rehacer"><span class="teamworkIcon">&middot;</span></button>
       <span class="ganttButtonSeparator requireCanWrite requireCanAdd"></span>
-      <button onclick="$('#workSpace').trigger('addAboveCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="insert above"><span class="teamworkIcon">l</span></button>
-      <button onclick="$('#workSpace').trigger('addBelowCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="insert below"><span class="teamworkIcon">X</span></button>
+      <button onclick="$('#workSpace').trigger('addAboveCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="Insertar debajo"><span class="teamworkIcon">l</span></button>
+      <button onclick="$('#workSpace').trigger('addBelowCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="Insertar arriba"><span class="teamworkIcon">X</span></button>
       <span class="ganttButtonSeparator requireCanWrite requireCanInOutdent"></span>
-      <button onclick="$('#workSpace').trigger('outdentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="un-indent task"><span class="teamworkIcon">.</span></button>
-      <button onclick="$('#workSpace').trigger('indentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="indent task"><span class="teamworkIcon">:</span></button>
+      <button onclick="$('#workSpace').trigger('outdentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Quitar identación de tarea"><span class="teamworkIcon">.</span></button>
+      <button onclick="$('#workSpace').trigger('indentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Identar tarea"><span class="teamworkIcon">:</span></button>
       <span class="ganttButtonSeparator requireCanWrite requireCanMoveUpDown"></span>
-      <button onclick="$('#workSpace').trigger('moveUpCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="move up"><span class="teamworkIcon">k</span></button>
-      <button onclick="$('#workSpace').trigger('moveDownCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="move down"><span class="teamworkIcon">j</span></button>
+      <button onclick="$('#workSpace').trigger('moveUpCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia abajo"><span class="teamworkIcon">k</span></button>
+      <button onclick="$('#workSpace').trigger('moveDownCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia bajo"><span class="teamworkIcon">j</span></button>
       <span class="ganttButtonSeparator requireCanWrite requireCanDelete"></span>
       <button onclick="$('#workSpace').trigger('deleteFocused.gantt');return false;" class="button textual icon delete requireCanWrite" title="Elimina"><span class="teamworkIcon">&cent;</span></button>
       <span class="ganttButtonSeparator"></span>
-      <button onclick="$('#workSpace').trigger('expandAll.gantt');return false;" class="button textual icon " title="EXPAND_ALL"><span class="teamworkIcon">6</span></button>
-      <button onclick="$('#workSpace').trigger('collapseAll.gantt'); return false;" class="button textual icon " title="COLLAPSE_ALL"><span class="teamworkIcon">5</span></button>
+      <button onclick="$('#workSpace').trigger('expandAll.gantt');return false;" class="button textual icon " title="Expandir"><span class="teamworkIcon">6</span></button>
+      <button onclick="$('#workSpace').trigger('collapseAll.gantt'); return false;" class="button textual icon " title="Colapsar"><span class="teamworkIcon">5</span></button>
 
     <span class="ganttButtonSeparator"></span>
-      <button onclick="$('#workSpace').trigger('zoomMinus.gantt'); return false;" class="button textual icon " title="zoom out"><span class="teamworkIcon">)</span></button>
-      <button onclick="$('#workSpace').trigger('zoomPlus.gantt');return false;" class="button textual icon " title="zoom in"><span class="teamworkIcon">(</span></button>
+      <button onclick="$('#workSpace').trigger('zoomMinus.gantt'); return false;" class="button textual icon " title="Decrementar Zoom"><span class="teamworkIcon">)</span></button>
+      <button onclick="$('#workSpace').trigger('zoomPlus.gantt');return false;" class="button textual icon " title="Incrementar Zoom"><span class="teamworkIcon">(</span></button>
     <span class="ganttButtonSeparator"></span>
-      <button onclick="$('#workSpace').trigger('print.gantt');return false;" class="button textual icon " title="Print"><span class="teamworkIcon">p</span></button>
+      <button onclick="$('#workSpace').trigger('print.gantt');return false;" class="button textual icon " title="Imprimir"><span class="teamworkIcon">p</span></button>
     <span class="ganttButtonSeparator"></span>
-      <button onclick="ge.gantt.showCriticalPath=!ge.gantt.showCriticalPath; ge.redraw();return false;" class="button textual icon requireCanSeeCriticalPath" title="CRITICAL_PATH"><span class="teamworkIcon">&pound;</span></button>
+      <button onclick="ge.gantt.showCriticalPath=!ge.gantt.showCriticalPath; ge.redraw();return false;" class="button textual icon requireCanSeeCriticalPath" title="Ruta crítica"><span class="teamworkIcon">&pound;</span></button>
     <span class="ganttButtonSeparator requireCanSeeCriticalPath"></span>
       <button onclick="ge.splitter.resize(.1);return false;" class="button textual icon" ><span class="teamworkIcon">F</span></button>
       <button onclick="ge.splitter.resize(50);return false;" class="button textual icon" ><span class="teamworkIcon">O</span></button>
       <button onclick="ge.splitter.resize(100);return false;" class="button textual icon"><span class="teamworkIcon">R</span></button>
       <span class="ganttButtonSeparator"></span>
-      <button onclick="$('#workSpace').trigger('fullScreen.gantt');return false;" class="button textual icon" title="FULLSCREEN" id="fullscrbtn"><span class="teamworkIcon">@</span></button>
       <button onclick="ge.element.toggleClass('colorByStatus' );return false;" class="button textual icon"><span class="teamworkIcon">&sect;</span></button>
-
-    <button onclick="editResources();" class="button textual requireWrite" title="edit resources"><span class="teamworkIcon">M</span></button>
+      <button onclick="editResources();" class="button textual requireWrite" title="Editar recursos"><span class="teamworkIcon">M</span></button>
       &nbsp; &nbsp; &nbsp; &nbsp;
+      <button onclick="saveGanttOnServer();" class="first big requireWrite btn btn-sm btn-success" title="Guardar"><i class="mr-1 fas fa-check-circle"></i>Guardar</button>
+      <div class="ml-2 btn-group dropright">
+      <button type="button" class="rounded btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" title="Cargar proyecto">
+          <i class="fas fa-folder"></i>
+      </button>
+      <div class="dropdown-menu" style="max-height: 100px; overflow: auto">
+          @foreach ($archivos_gantt as $archivo_gantt)
+              <button class="dropdown-item" target="_blank" onclick="loadVersionProject('{{basename($archivo_gantt)}}')" style="text-transform:capitalize">
+                  <i class="far fa-file-code text-primary"></i>
+                  {{ str_replace('.json', '', str_replace('_', ' ', basename($archivo_gantt))) }}
+              </button>
+          @endforeach
+      </div>
+    </div>
     </div>
 
     <div>
-      <button onclick="saveGanttOnServer();" class="button first big requireWrite" title="Save" style="margin-top: 10px;">Guardar</button>
       <input type="file" name="load-file" id="load-file" style="display: none;">
       <label for="load-file" style="display: none;">Load</label>
       <button style="display: none;" onclick='newProject();' class='button requireWrite newproject'><em>clear project</em></button>
       <button class="button login" title="login/enroll" onclick="loginEnroll($(this));" style="display:none;">login/enroll</button>
       <button class="button opt collab" title="Start with Twproject" onclick="collaborate($(this));" style="display:none;"><em>collaborate</em></button>
+    </div>
+    <div>
+      <span>Leyendo Archivo:</span> <strong id="version_actual_gantt" style="text-transform:capitalize">{{ str_replace('.json', '', str_replace('_', ' ', basename($gant_readed))) }}</strong>
     </div>
   </div>
   -->
@@ -610,13 +634,13 @@ function showBaselineInfo (event,element){
     <tr style="height:40px">
       <th class="gdfColHeader" style="width:35px; border-right: none"></th>
       <th class="gdfColHeader" style="width:25px;"></th>
-      <th class="gdfColHeader gdfResizable" style="width:100px;">code/short name</th>
-      <th class="gdfColHeader gdfResizable" style="width:300px;">name</th>
-      <th class="gdfColHeader"  align="center" style="width:17px;" title="Start date is a milestone."><span class="teamworkIcon" style="font-size: 8px;">^</span></th>
+      <th class="gdfColHeader gdfResizable" style="width:100px;">Código/Nombre corto</th>
+      <th class="gdfColHeader gdfResizable" style="width:300px;">Nombre</th>
+      <th class="gdfColHeader"  align="center" style="width:17px;" title="Fecha inicio como milestone."><span class="teamworkIcon" style="font-size: 8px;">^</span></th>
       <th class="gdfColHeader gdfResizable" style="width:80px;">start</th>
-      <th class="gdfColHeader"  align="center" style="width:17px;" title="End date is a milestone."><span class="teamworkIcon" style="font-size: 8px;">^</span></th>
-      <th class="gdfColHeader gdfResizable" style="width:80px;">End</th>
-      <th class="gdfColHeader gdfResizable" style="width:50px;">dur.</th>
+      <th class="gdfColHeader"  align="center" style="width:17px;" title="Fecha fin como milestone."><span class="teamworkIcon" style="font-size: 8px;">^</span></th>
+      <th class="gdfColHeader gdfResizable" style="width:80px;">Finalización</th>
+      <th class="gdfColHeader gdfResizable" style="width:50px;">Duración</th>
       <th class="gdfColHeader gdfResizable" style="width:20px;">%</th>
       <th class="gdfColHeader gdfResizable requireCanSeeDep" style="width:50px;">depe.</th>
       <th class="gdfColHeader gdfResizable" style="width:1000px; text-align: left; padding-left: 10px;">assignees</th>
@@ -629,7 +653,7 @@ function showBaselineInfo (event,element){
   <tr id="tid_(#=obj.id#)" taskId="(#=obj.id#)" class="taskEditRow (#=obj.isParent()?'isParent':''#) (#=obj.collapsed?'collapsed':''#)" level="(#=level#)">
     <th class="gdfCell edit" align="right" style="cursor:pointer;"><span class="taskRowIndex">(#=obj.getRow()+1#)</span> <span class="teamworkIcon" style="font-size:12px;" >e</span></th>
     <td class="gdfCell noClip" align="center"><div class="taskStatus cvcColorSquare" status="(#=obj.status#)"></div></td>
-    <td class="gdfCell"><input type="text" name="code" value="(#=obj.code?obj.code:''#)" placeholder="code/short name"></td>
+    <td class="gdfCell"><input type="text" name="code" value="(#=obj.code?obj.code:''#)" placeholder="Código/Nombre corto"></td>
     <td class="gdfCell indentCell" style="padding-left:(#=obj.level*10+18#)px;">
       <div class="exp-controller" align="center"></div>
       <input type="text" name="name" value="(#=obj.name#)" placeholder="name">
@@ -678,12 +702,12 @@ function showBaselineInfo (event,element){
 
 <div class="__template__" type="CHANGE_STATUS"><!--
     <div class="taskStatusBox">
-    <div class="taskStatus cvcColorSquare" status="STATUS_ACTIVE" title="Active"></div>
-    <div class="taskStatus cvcColorSquare" status="STATUS_DONE" title="Completed"></div>
-    <div class="taskStatus cvcColorSquare" status="STATUS_FAILED" title="Failed"></div>
-    <div class="taskStatus cvcColorSquare" status="STATUS_SUSPENDED" title="Suspended"></div>
-    <div class="taskStatus cvcColorSquare" status="STATUS_WAITING" title="Waiting" style="display: none;"></div>
-    <div class="taskStatus cvcColorSquare" status="STATUS_UNDEFINED" title="Undefined"></div>
+    <div class="taskStatus cvcColorSquare" status="STATUS_ACTIVE" title="En proceso"></div>
+    <div class="taskStatus cvcColorSquare" status="STATUS_DONE" title="Completada"></div>
+    <div class="taskStatus cvcColorSquare" status="STATUS_FAILED" title="Con retraso"></div>
+    <div class="taskStatus cvcColorSquare" status="STATUS_SUSPENDED" title="Suspendida"></div>
+    {{-- <div class="taskStatus cvcColorSquare" status="STATUS_WAITING" title="En espera" style="display: none;"></div> --}}
+    <div class="taskStatus cvcColorSquare" status="STATUS_UNDEFINED" title="Sin iniciar"></div>
     </div>
   --></div>
 
@@ -693,51 +717,51 @@ function showBaselineInfo (event,element){
 <div class="__template__" type="TASK_EDITOR"><!--
   <div class="ganttTaskEditor">
     <h2 class="taskData">Tarea</h2>
-    <table  cellspacing="1" cellpadding="5" width="100%" class="taskData table" border="0">
+    <table  cellspacing="1" cellpadding="5" width="100%" class="table taskData" border="0">
           <tr>
         <td width="200" style="height: 80px"  valign="top">
-          <label for="code">code/short name</label><br>
+          <label for="code">Código/Nombre corto</label><br>
           <input type="text" name="code" id="code" value="" size=15 class="formElements" autocomplete='off' maxlength=255 style='width:100%' oldvalue="1">
         </td>
-        <td colspan="3" valign="top"><label for="name" class="required">name</label><br><input type="text" name="name" id="name"class="formElements" autocomplete='off' maxlength=255 style='width:100%' value="" required="true" oldvalue="1"></td>
+        <td colspan="3" valign="top"><label for="name" class="required">Nombre</label><br><input type="text" name="name" id="name"class="formElements" autocomplete='off' maxlength=255 style='width:100%' value="" required="true" oldvalue="1"></td>
           </tr>
 
 
       <tr class="dateRow">
         <td nowrap="">
           <div style="position:relative">
-            <label for="start">start</label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="checkbox" id="startIsMilestone" name="startIsMilestone" value="yes"> &nbsp;<label for="startIsMilestone">is milestone</label>&nbsp;
+            <label for="start">Inicio</label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="checkbox" id="startIsMilestone" name="startIsMilestone" value="yes"> &nbsp;<label for="startIsMilestone">del milestone</label>&nbsp;
             <br><input type="text" name="start" id="start" size="8" class="formElements dateField validated date" autocomplete="off" maxlength="255" value="" oldvalue="1" entrytype="DATE">
             <span title="calendar" id="starts_inputDate" class="teamworkIcon openCalendar" onclick="$(this).dateField({inputField:$(this).prevAll(':input:first'),isSearchField:false});">m</span>          </div>
         </td>
         <td nowrap="">
-          <label for="end">End</label>&nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="checkbox" id="endIsMilestone" name="endIsMilestone" value="yes"> &nbsp;<label for="endIsMilestone">is milestone</label>&nbsp;
+          <label for="end">Fin</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="checkbox" id="endIsMilestone" name="endIsMilestone" value="yes"> &nbsp;<label for="endIsMilestone">del milestone</label>&nbsp;
           <br><input type="text" name="end" id="end" size="8" class="formElements dateField validated date" autocomplete="off" maxlength="255" value="" oldvalue="1" entrytype="DATE">
           <span title="calendar" id="ends_inputDate" class="teamworkIcon openCalendar" onclick="$(this).dateField({inputField:$(this).prevAll(':input:first'),isSearchField:false});">m</span>
         </td>
         <td nowrap="" >
-          <label for="duration" class=" ">Days</label><br>
+          <label for="duration" class="">Días</label><br>
           <input type="text" name="duration" id="duration" size="4" class="formElements validated durationdays" title="Duration is in working days." autocomplete="off" maxlength="255" value="" oldvalue="1" entrytype="DURATIONDAYS">&nbsp;
         </td>
       </tr>
 
       <tr>
         <td  colspan="2">
-          <label for="status" class=" ">status</label><br>
+          <label for="status" class="">Estatus</label><br>
           <select id="status" name="status" class="taskStatus" status="(#=obj.status#)"  onchange="$(this).attr('STATUS',$(this).val());">
-            <option value="STATUS_ACTIVE" class="taskStatus" status="STATUS_ACTIVE" >active</option>
-            <option value="STATUS_WAITING" class="taskStatus" status="STATUS_WAITING" >suspended</option>
-            <option value="STATUS_SUSPENDED" class="taskStatus" status="STATUS_SUSPENDED" >suspended</option>
-            <option value="STATUS_DONE" class="taskStatus" status="STATUS_DONE" >completed</option>
-            <option value="STATUS_FAILED" class="taskStatus" status="STATUS_FAILED" >failed</option>
-            <option value="STATUS_UNDEFINED" class="taskStatus" status="STATUS_UNDEFINED" >undefined</option>
+            <option value="STATUS_ACTIVE" class="taskStatus" status="STATUS_ACTIVE" >En Proceso</option>
+            {{-- <option value="STATUS_WAITING" class="taskStatus" status="STATUS_WAITING" >En Espera</option> --}}
+            <option value="STATUS_SUSPENDED" class="taskStatus" status="STATUS_SUSPENDED" >Suspendida</option>
+            <option value="STATUS_DONE" class="taskStatus" status="STATUS_DONE" >Completada</option>
+            <option value="STATUS_FAILED" class="taskStatus" status="STATUS_FAILED" >Con Retraso</option>
+            <option value="STATUS_UNDEFINED" class="taskStatus" status="STATUS_UNDEFINED" >Sin Iniciar</option>
           </select>
         </td>
 
         <td valign="top" nowrap>
-          <label>progress</label><br>
+          <label>Progreso</label><br>
           <input type="text" name="progress" id="progress" size="7" class="formElements validated percentile" autocomplete="off" maxlength="255" value="" oldvalue="1" entrytype="PERCENTILE">
         </td>
       </tr>
@@ -745,7 +769,7 @@ function showBaselineInfo (event,element){
           </tr>
           <tr>
             <td colspan="4">
-              <label for="description">Description</label><br>
+              <label for="description">Descripción</label><br>
               <textarea rows="3" cols="30" id="description" name="description" class="formElements" style="width:100%"></textarea>
             </td>
           </tr>
@@ -754,8 +778,8 @@ function showBaselineInfo (event,element){
     <h2>Asignaciones</h2>
   <table  cellspacing="1" cellpadding="0" width="100%" id="assigsTable">
     <tr>
-      <th style="width:100px;">name</th>
-      <th style="width:70px;">Role</th>
+      <th style="width:100px;">Nombre</th>
+      <th style="width:70px;">Rol</th>
       <th style="width:30px;">est.wklg.</th>
       <th style="width:30px;" id="addAssig"><span class="teamworkIcon" style="cursor: pointer">+</span></th>
     </tr>
@@ -784,15 +808,15 @@ function showBaselineInfo (event,element){
 <div class="__template__" type="RESOURCE_EDITOR"><!--
   <div class="resourceEditor" style="padding: 5px;">
 
-    <h2>Project team</h2>
+    <h2>Equipos</h2>
     <table  cellspacing="1" cellpadding="0" width="100%" id="resourcesTable">
       <tr>
-        <th style="width:100px;">name</th>
+        <th style="width:100px;">Nombre</th>
         <th style="width:30px;" id="addResource"><span class="teamworkIcon" style="cursor: pointer">+</span></th>
       </tr>
     </table>
 
-    <div style="text-align: right; padding-top: 20px"><button id="resSaveButton" class="button big">Save</button></div>
+    <div style="text-align: right; padding-top: 20px"><button id="resSaveButton" class="button big">Guardar</button></div>
   </div>
   --></div>
 

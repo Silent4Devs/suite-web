@@ -96,7 +96,7 @@
       <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 
       {{-- <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"> --}}
-      </script>{!! $chart1->renderJs() !!}{!! $chart2->renderJs() !!}{!! $chart3->renderJs() !!}{!! $chart4->renderJs() !!}
+      </script>{!! $chart1->renderJs() !!}{!! $chart2->renderJs() !!}{!! $chart4->renderJs() !!}
 
       <script>
           const a_plan = document.querySelector('#a_plan');
@@ -408,50 +408,7 @@
               }
           });
 
-
-          var popCanvas1 = document.getElementById("chartActividades");
-          var barChart1 = new Chart(popCanvas1, {
-              type: 'doughnut',
-              labels: {
-                  render: 'value'
-              },
-              data: {
-                  labels: [
-                      "Sin iniciar",
-                      "En proceso",
-                      "Completadas",
-                      "Retrasadas"
-                  ],
-                  datasets: [{
-                      label: '% Implementación por fase',
-                      data: [{!! $actividadsininici !!}, {!! $actividadenproc !!}, {!! $actividadcompl !!},
-                          {!! $actividadretr !!},
-                      ],
-                      backgroundColor: [
-
-                          'rgba(133, 193, 233 , 0.6)',
-                          'rgba(244, 208, 63, 0.6)',
-                          'rgba(22, 160, 133, 0.6)',
-                          'rgba(231, 76, 60, 0.6)'
-                      ]
-                  }, ]
-              },
-              options: {
-                  responsive: true,
-                  legend: {
-                      display: true,
-                      position: 'right',
-                      labels: {
-                          fontColor: "black",
-                          boxWidth: 20,
-                          padding: 8,
-                      }
-                  },
-                  tooltips: {
-                      mode: 'label',
-                  },
-              }
-          });
+          renderProgresoGeneralPlan();
 
           var popCanvas2 = document.getElementById("chartAuditoria").getContext('2d');
           var barAudit = new Chart(popCanvas2, {
@@ -492,11 +449,94 @@
 
 
           });
-          // aprobados
+          // Progreso general Plan
+          function renderProgresoGeneralPlan() {
+              //   let url = @json($path_gantt);
+              let current_url = "{{ asset($path_gantt) }}";
+              $.ajax({
+                  type: "GET",
+                  url: current_url,
+                  success: function(response) {
+                      let cantidad_done = 0; // Completadas
+                      let cantidad_undefined = 0; // Sin iniciar
+                      let cantidad_active = 0; // En proceso
+                      let cantidad_failed = 0; // Con retraso
+                      let cantidad_suspended = 0; // Suspendida
+                      let arr_cantidad_por_estatus = [];
+                      let arr_estatus = ['Completadas', 'Sin iniciar', 'En proceso', 'Con retraso',
+                          'Suspendida'
+                      ];
+                      response.tasks.forEach(task => {
+                          switch (task.status) {
+                              case 'STATUS_DONE':
+                                  cantidad_done++;
+                                  break;
+                              case 'STATUS_UNDEFINED':
+                                  cantidad_undefined++;
+                                  break;
+                              case 'STATUS_ACTIVE':
+                                  cantidad_active++;
+                                  break;
+                              case 'STATUS_FAILED':
+                                  cantidad_failed++;
+                                  break;
+                              case 'STATUS_SUSPENDED':
+                                  cantidad_suspended++;
+                                  break;
+                              default:
+                                  cantidad_undefined++;
+                                  break;
+                          }
+                      });
+                      arr_cantidad_por_estatus.push(cantidad_done);
+                      arr_cantidad_por_estatus.push(cantidad_undefined);
+                      arr_cantidad_por_estatus.push(cantidad_active);
+                      arr_cantidad_por_estatus.push(cantidad_failed);
+                      arr_cantidad_por_estatus.push(cantidad_suspended);
+                      renderGraficaProgresoGeneralPlan(arr_estatus, arr_cantidad_por_estatus)
+                  }
+              });
+          }
+
+          function renderGraficaProgresoGeneralPlan(arr_estatus, arr_cantidad_por_estatus) {
+              var canvasdoc = document.getElementById("chartActividades");
+              var pieDoc = new Chart(canvasdoc, {
+                  type: 'pie',
+                  labels: {
+                      render: 'value'
+                  },
+                  data: {
+                      labels: arr_estatus,
+                      datasets: [{
+                          data: arr_cantidad_por_estatus,
+                          backgroundColor: [
+                              '#3BBF67',
+                              '#0d0df5',
+                              '#F9C154',
+                              '#ec2805',
+                              '#e7e7e7',
+                          ]
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                          display: true,
+                          position: 'right',
+                          labels: {
+                              fontColor: "black",
+                              boxWidth: 20,
+                              padding: 8
+                          }
+                      },
+                      tooltips: {
+                          mode: 'label'
+                      },
+
+                  }
+              });
+          }
 
       </script>
-
-
-
 
   @endsection

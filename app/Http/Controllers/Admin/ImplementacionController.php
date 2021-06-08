@@ -14,22 +14,24 @@ use Illuminate\Support\Facades\Storage;
 
 class implementacionController extends Controller
 {
-    
+
 
     public function index()
     {
         // dd(ActividadFase::with('plan_base_actividades')->get());
 
         $fases = ActividadFase::with('plan_base_actividades')->get();
-        
-
+        $gantt_path = 'storage/gantt/';
+        $path = public_path($gantt_path);
+        $archivos_gantt = glob($path . "gantt_inicial*.json");
         // PlanBaseActividade::with('fase')->get()
-
+        $path_asset = asset($gantt_path);
+        $gant_readed = end($archivos_gantt);
         $planbase = PlanBaseActividade::with('actividad_fase')->get();
         $responsable = User::get();
         $responsablenom = User::select('name')->where('id', '=', '3');
         //dd($planbase, $responsable, $responsablenom);
-        return view('admin.implementacions.index', compact('planbase', 'responsable', 'fases'))
+        return view('admin.implementacions.index', compact('planbase', 'responsable', 'fases', 'archivos_gantt', 'path_asset', 'gant_readed'))
             ->with('planbases', $planbase);
     }
 
@@ -55,7 +57,8 @@ class implementacionController extends Controller
 
 
 
-    public function saveImplementationProyect(Request $request){
+    public function saveImplementationProyect(Request $request)
+    {
 
         $gantt_path = 'storage/gantt/';
 
@@ -69,39 +72,31 @@ class implementacionController extends Controller
             $ultima_version = count($version_gantt);
         }
 
-
-        
-
-
-
-
-         if($request->ajax()){
+        if ($request->ajax()) {
 
             $proyecto = $request->get('txt_prj');
-            
+
             // dd($proyecto);
 
             // $json = json_encode($proyecto);
 
-         
+
             // $file = file_put_contents(storage_path('app/public/gantt/gantt_inicial.json'), $json);
 
-            $file = Storage::disk('public')->put('gantt/gantt_inicial_v'. $ultima_version .'.json', $proyecto);
+            $file = Storage::disk('public')->put('gantt/gantt_inicial_v' . $ultima_version . '.json', $proyecto);
 
-            if($file){
+            if ($file) {
                 return response()->json(['success' => true], 200);
-            }
-            else { 
+            } else {
                 return response()->json(['error' => true], 401);
             }
-
         }
-
     }
 
 
 
-     public function loadProyect(Request $request){
+    public function loadProyect(Request $request)
+    {
 
         $gantt_path = 'storage/gantt/';
 
@@ -110,10 +105,8 @@ class implementacionController extends Controller
         $version_gantt = glob($path . "gantt_inicial*.json");
 
         $path = end($version_gantt);
-        $json_code =  json_decode(file_get_contents($path), true); 
+        $json_code =  json_decode(file_get_contents($path), true);
 
         return $json_code;
-
     }
-
 }
