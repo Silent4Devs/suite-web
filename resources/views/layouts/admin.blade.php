@@ -64,7 +64,7 @@
             border-collapse: collapse !important;
         }
        
-        body::before {
+        /*body::before {
             content: "";
             position: fixed;
             background: url({{ asset('img/auth-bg2.jpg') }});
@@ -79,7 +79,7 @@
             z-index: -1;
             filter: grayscale(100%) brightness(230%);
             opacity: 0.2;
-        }
+        }*/
         .btn-read{
                 display: inline-block;
                 cursor: pointer;
@@ -94,7 +94,7 @@
         }
         .iconos-crear {
             font-size: 15pt;
-            color: #9FA2A5;
+            color: #00a57e;
             margin-right: 10px;
         }
 
@@ -107,12 +107,8 @@
         }
 
         .iconos_cabecera {
-            color: #fff;
+            color: #00abb2;
             font-size: 1.2rem;
-        }
-
-        body.c-dark-theme .iconos_cabecera {
-            color: #000;
         }
 
 
@@ -136,7 +132,8 @@
         }
 
         header {
-            box-shadow: 6px 0px 6px 1px rgba(0, 0, 0, 0.6);
+            box-shadow: 6px 0px 6px 1px rgba(0, 0, 0, 0.5);
+            z-index: 6;
         }
 
 
@@ -157,7 +154,26 @@
 
 
         
-        
+        .card{
+            border: none !important;
+            box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-body.bg-primary.align-self-center{
+            margin-top: -60px !important;   
+            padding: 0 !important;
+            align-self: flex-start !important;
+            width: auto !important;
+            background-color: rgba(0, 0, 0, 0) !important;
+            box-shadow: none !important;
+            border-bottom: 2px solid #008186 !important;
+            border-radius: 0 !important;
+
+        }
+        .card-body.bg-primary.align-self-center h3, .card-body.bg-primary.align-self-center h3 i{
+            text-align: left !important;
+            color: #008186 !important;
+        }
         
     </style>
     @yield('styles')
@@ -168,16 +184,16 @@
     @include('partials.menu')
     <div class="c-wrapper">
         <header class="px-3 c-header c-header-fixed"
-            style="background: linear-gradient(60deg, rgb(35,57,91) 40%, rgb(62,142,207) 70%, rgb(13,164,160) 100%) !important; border: none;">
+            style="border: none;">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
-                <i class="fas fa-fw fa-bars"></i>
+                <i class="fas fa-fw fa-bars iconos_cabecera"></i>
             </button>
 
 
             <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="body"
                 data-class="c-sidebar-lg-show" responsive="true">
-                <i id="btnMenu" class="fas fa-fw fa-bars" style="color:white"></i>
+                <i id="btnMenu" class="fas fa-fw fa-bars" style=""></i>
             </button>
 
 
