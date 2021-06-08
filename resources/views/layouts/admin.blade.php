@@ -118,6 +118,10 @@
             transition: 0s;
         }
 
+        body{
+            background-color: #F2F4F6;
+        }
+
         #btnDark {
             cursor: pointer;
         }

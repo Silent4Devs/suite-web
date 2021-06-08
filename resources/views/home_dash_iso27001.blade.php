@@ -1,91 +1,180 @@
-  <div class="row">
-
-      <h3 style="margin-bottom: -30px; color: #888; margin-left: 1%;">Dashboard ISO 27001</h3>
-      <div class="text-right especificaciones col-12">
-
-          <label>Plan <i class="fas fa-square iconos_espec" style="color: #3D72A1;"></i></label>
-          <label>Do <i class="fas fa-square iconos_espec" style="color: #A13D86;"></i></label>
-          <label>Check <i class="fas fa-square iconos_espec" style="color: #DBA82D;"></i></label>
-          <label>Act <i class="fas fa-square iconos_espec" style="color: #2DB7DB;"></i></label>
-
-      </div>
-      <div class="card caja_graficas graf_1" style="width: calc(33.33% - 20px);">
-          <h5 class="plan">Progreso General del Plan</h5>
-          <canvas id="chartActividades"></canvas>
-          <a id="a_plan" class="btn_ver" href="admin/implementacions#plan-just">
-              Ver Detalle
-          </a>
-
-      </div>
-      <div class="card caja_graficas graf_2" style="width: calc(33.33% - 20px);">
-          <h5 class="espec">Documentación</h5>
-          @if (!empty($exist_doc))
-              <style type="text/css">
-                  .chartDocu {
-                      display: block;
-                  }
-
-                  .chartDocu_falsa {
-                      display: none;
-                  }
-
-              </style>
-          @else
-              <style type="text/css">
-                  .chartDocu {
-                      display: none;
-                  }
-
-                  .chartDocu_falsa {
-                      display: block;
-                  }
-
-              </style>
-          @endif
-
-          <div class="chartDocu"><canvas id="chartDocu"></canvas></div>
-          <div class="chartDocu_falsa"><canvas id="chartDocu_falsa"></canvas></div>
-
-          <div style="display: inline-flex; justify-content: center;">
-              <a id="" class="btn_ver" style="margin-left: 0;" href="admin/carpeta">
-                  Carpetas
-              </a>
-              <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/control-documentos">
-                  Lista de documentos
-              </a>
+  <div class="container-fluid mb-3">
+      <div class="row">
+          <div class="col-6">
+              <h3 class="text-muted">Dashboard ISO 27001</h3>
+          </div>
+          <div class="col-6">
+              <div class="text-right especificaciones">
+                  <label>Plan <i class="fas fa-square iconos_espec" style="color: #3D72A1;"></i></label>
+                  <label>Do <i class="fas fa-square iconos_espec" style="color: #A13D86;"></i></label>
+                  <label>Check <i class="fas fa-square iconos_espec" style="color: #DBA82D;"></i></label>
+                  <label>Act <i class="fas fa-square iconos_espec" style="color: #2DB7DB;"></i></label>
+              </div>
           </div>
       </div>
-      <div class="card caja_graficas graf_3" style="width: calc(33.33% - 20px);">
-          <h5 class="espec">Capacitación</h5>
-          <canvas id="chartCapaci"></canvas>
-          <a id="a_plan" class="btn_ver" href="admin/recursos">
-              Ver Detalle
-          </a>
+      <div class="row">
+          <div class="col-md-7">
+              <div class="row">
+                  <div class="col-md-6 card_new pr-0">
+                      <div class="row bg-white rounded shadow-propia p-3 mb-2" style="margin-right: 10px;">
+                          <div class="header">
+                              <font class="circulo_iso_27001" style="
+                                    width: 10px;
+                                    height: 10px;
+                                    background-color: #3D72A1;
+                                    border-radius: 100%;
+                                    position: absolute;
+                                    top: 29px;
+                                    left: 18px;
+                                "></font>
+                              <h5 class="ml-3" style="font-size: 16px">Progreso General del Plan</h5>
+                          </div>
+                          <canvas id="chartActividades"></canvas>
+                          <a id="a_plan" class="btn_ver" href="admin/implementacions#plan-just">
+                              Ver Detalle
+                          </a>
+                      </div>
+                  </div>
+                  <div class="col-md-6 card_new pr-0">
+                      <div class="row bg-white rounded shadow-propia p-3 mb-2" style="margin-right: 10px;">
+                          <div class="header">
+                              <font class="circulo_iso_27001" style="
+                                    width: 10px;
+                                    height: 10px;
+                                    background-color: #A13D86;
+                                    border-radius: 100%;
+                                    position: absolute;
+                                    top: 29px;
+                                    left: 18px;
+                                "></font>
+                              <h5 class="ml-3" style="font-size: 16px">Documentación</h5>
+                          </div>
+                          <canvas id="chartDocu"></canvas>
+                          <div style="display: inline-flex; justify-content: center;">
+                              <a id="" class="btn_ver" style="margin-left: 0;" href="admin/carpeta">
+                                  Carpetas
+                              </a>
+                              <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/control-documentos">
+                                  Lista de documentos
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6 card_new pr-0">
+                      <div class="row bg-white rounded shadow-propia p-3 mb-2" style="margin-right: 10px;">
+                          <div class="header">
+                              <font class="circulo_iso_27001" style="
+                                    width: 10px;
+                                    height: 10px;
+                                    background-color: #A13D86;
+                                    border-radius: 100%;
+                                    position: absolute;
+                                    top: 29px;
+                                    left: 18px;
+                                "></font>
+                              <h5 class="ml-3" style="font-size: 16px">Capacitación</h5>
+                          </div>
+                          <canvas id="chartCapaci"></canvas>
+                          <a id="a_plan" class="btn_ver" href="admin/recursos">
+                              Ver Detalle
+                          </a>
+                      </div>
+                  </div>
+                  <div class="col-md-6 card_new pr-0">
+                      <div class="row bg-white rounded shadow-propia p-3 mb-2" style="margin-right: 10px;">
+                          <div class="header">
+                              <font class="circulo_iso_27001" style="
+                                    width: 10px;
+                                    height: 10px;
+                                    background-color: #A13D86;
+                                    border-radius: 100%;
+                                    position: absolute;
+                                    top: 29px;
+                                    left: 18px;
+                                "></font>
+                              <h5 class="ml-3" style="font-size: 16px">Indicadores SGSI</h5>
+                          </div>
+                          <canvas id="chartIndicadoresSGSI"></canvas>
+                          <a id="a_plan" class="btn_ver" href="admin/recursos">
+                              Ver Detalle
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-5">
+              <div class="row">
+                  <div class="col-md-12 card_new">
+                      <div class="row bg-white rounded shadow-propia p-3 mb-3">
+                          <div class="header">
+                              <font class="circulo_iso_27001" style="
+                                    width: 10px;
+                                    height: 10px;
+                                    background-color: #DBA82D;
+                                    border-radius: 100%;
+                                    position: absolute;
+                                    top: 29px;
+                                    left: 20px;
+                                "></font>
+                              <h5 style="font-size: 16px; margin-left: 18px;">Incidentes de Seguridad</h5>
+                          </div>
+                          <div class="w-100" style="min-height: 385px">
+                              <canvas id="incidentechart"></canvas>
+                              {{-- <a id="a_plan" class="btn_ver" href="admin/incidentes-de-seguridads">
+                                  Ver Detalle
+                              </a> --}}
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-      <div class="card caja_graficas graf_4" style="width: calc(50% - 20px);">
-          <h5 class="check">Incidentes de Seguridad</h5>
-          <canvas id="incidentechart"></canvas>
-          <a id="a_plan" class="btn_ver" href="admin/incidentes-de-seguridads">
-              Ver Detalle
-          </a>
-      </div>
-      <div class="card caja_graficas graf_5" style="width: calc(50% - 20px);">
-          <h5 class="act">Auditorias</h5>
-          <canvas id="chartAuditoria"></canvas>
-          <a id="a_plan" class="btn_ver" href="admin/auditoria-anuals">
-              Ver Detalle
-          </a>
-      </div>
-      <div class="card caja_graficas graf_6" style="width: calc(50% - 20px);">
-          <h5 class="act">Registro de Acciones</h5>
-          <canvas id="myChart"></canvas>
-          <div style="display: inline-flex; justify-content: center;">
-              <a id="" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
-                  Ver Detalle
-              </a>
-              <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
-                  Ver Detalle
-              </a>
+      <div class="row">
+          <div class="col-md-6 card_new pr-0">
+              <div class="row bg-white rounded shadow-propia p-3 mb-3" style="margin-right: 10px;">
+                  <div class="header">
+                      <font class="circulo_iso_27001" style="
+                                    width: 10px;
+                                    height: 10px;
+                                    background-color: #2DB7DB;
+                                    border-radius: 100%;
+                                    position: absolute;
+                                    top: 29px;
+                                    left: 18px;
+                                "></font>
+                      <h5 class="ml-3" style="font-size: 16px">Auditorias</h5>
+                  </div>
+                  <canvas id="chartAuditoria"></canvas>
+                  <a id="a_plan" class="btn_ver" href="admin/auditoria-anuals">
+                      Ver Detalle
+                  </a>
+              </div>
+          </div>
+          <div class="col-md-6 card_new pr-0">
+              <div class="row bg-white rounded shadow-propia p-3 mb-3" style="margin-right: 1px;">
+                  <div class="header">
+                      <font class="circulo_iso_27001" style="
+                                    width: 10px;
+                                    height: 10px;
+                                    background-color: #2DB7DB;
+                                    border-radius: 100%;
+                                    position: absolute;
+                                    top: 29px;
+                                    left: 18px;
+                                "></font>
+                      <h5 class="ml-3" style="font-size: 16px">Registro de Acciones</h5>
+                  </div>
+                  <canvas id="myChart"></canvas>
+                  <div style="display: inline-flex; justify-content: center;">
+                      <a id="" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
+                          Ver Detalle
+                      </a>
+                      <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
+                          Ver Detalle
+                      </a>
+                  </div>
+              </div>
           </div>
       </div>
   </div>
@@ -238,6 +327,7 @@
 
               options: {
                   responsive: true,
+                  maintainAspectRatio: false,
                   legend: {
                       display: true,
                       position: 'right',
@@ -316,32 +406,24 @@
               }
           });
 
-
-          var canvasdoc = document.getElementById("chartDocu");
-          var pieDoc = new Chart(canvasdoc, {
+          var canvas_sgsi = document.getElementById("chartIndicadoresSGSI");
+          var pie_sgsi = new Chart(canvas_sgsi, {
               type: 'pie',
               labels: {
                   render: 'value'
               },
               data: {
                   labels: [
-                      "Publicados",
-                      "Aprobados",
-                      "En revisión",
-                      "Elaborado",
-                      "No elaborado"
+                      "Capacitados",
+                      "No capacitados"
                   ],
                   datasets: [{
-                      label: '% Documentación',
-                      data: [{!! $documentoPubli !!}, {!! $documentoAprob !!}, {!! $documentorev !!},
-                          {!! $documentoElab !!}, {!! $docunoelab !!},
-                      ],
+                      label: '% Capacitacion',
+                      data: [10, 1],
                       backgroundColor: [
                           'rgba(22, 160, 133, 0.6)',
-                          'rgba(43, 65, 233 , 0.6)',
                           'rgba(244, 208, 63, 0.6)',
-                          'rgba(133, 193, 233 , 0.6)',
-                          'rgba(231, 76, 60, 0.6)',
+
                       ]
                   }]
               },
@@ -362,9 +444,7 @@
 
               }
           });
-
-
-          var canvasdoc = document.getElementById("chartDocu_falsa");
+          var canvasdoc = document.getElementById("chartDocu");
           var pieDoc = new Chart(canvasdoc, {
               type: 'pie',
               labels: {
@@ -380,7 +460,9 @@
                   ],
                   datasets: [{
                       label: '% Documentación',
-                      data: [0, 0, 0, 0, 1, ],
+                      data: [{!! $documentoPubli !!}, {!! $documentoAprob !!}, {!! $documentorev !!},
+                          {!! $documentoElab !!}, {!! $docunoelab !!},
+                      ],
                       backgroundColor: [
                           'rgba(22, 160, 133, 0.6)',
                           'rgba(43, 65, 233 , 0.6)',

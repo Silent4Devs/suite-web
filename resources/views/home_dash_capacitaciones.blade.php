@@ -27,18 +27,18 @@
 
     .card_new .header p {
         font-style: normal;
-        font-weight: 700;
-        font-size: 22px;
-        line-height: 36px;
-        color: #1f2937;
-    }
-
-    .card_new .header h5 {
-        font-style: normal;
         font-weight: 400;
         font-size: 20px;
         line-height: 30px;
         color: #374151;
+    }
+
+    .card_new .header h5 {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 36px;
+        color: #1f2937;
     }
 
     .card_new .main p {
@@ -47,6 +47,48 @@
         font-size: 14px;
         line-height: 21px;
         color: #6b7280;
+    }
+
+    .card_texto {
+        font-family: 'Inter', sans-serif;
+
+    }
+
+    .card_texto .header {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 21px;
+        color: #9ca3af;
+    }
+
+    .card_texto .header p {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 36px;
+        color: #1f2937;
+    }
+
+    .card_texto .header h5 {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 21px;
+        color: #6b7280;
+    }
+
+    .card_texto .main p {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 36px;
+        color: #1f2937;
+    }
+
+
+    .shadow-propia {
+        box-shadow: 0px 5px 5px 1px rgba(0, 0, 0, 0.1);
     }
 
 </style>
@@ -87,20 +129,27 @@
     }
 
 </style>
-<div class="container-fluid mb-3">
+<div class="container-fluid mb-3 pl-0">
+    <div class="row">
+        <div class="col-6" style="padding-left: 30px">
+            <h3 class="text-muted">Capacitaciones</h3>
+        </div>
+        <div class="col-6"></div>
+    </div>
     <div class="row">
         <div class="col-md-8 card_new">
-            <div class="bg-white rounded shadow p-3 mb-3">
-                <div class="header">
-                    <h5>Historico/Capacitaciones {{ date('Y') }}</h5>
-                    <p>{{ $capacitaciones_year_actual }} capacitaciones</p>
+            <div class="bg-white rounded shadow-propia p-3 mb-3">
+                <div class="header d-flex align-items-baseline">
+                    <h5>Histórico/Capacitaciones {{ date('Y') }}: </h5>
+                    <p class="ml-3">{{ $capacitaciones_year_actual }} capacitaciones</p>
                 </div>
                 <canvas id="line" height="150px"></canvas>
             </div>
-            <div class="bg-white text-dark rounded shadow p-3 datatable-fix" style="width: 100%; position: relative;">
-                <div class="header">
-                    <h5>Lista de capacitaciones</h5>
-                    <p>{{ count($capacitaciones) }} capacitaciones en total</p>
+            <div class="bg-white text-dark rounded shadow-propia p-3 datatable-fix"
+                style="width: 100%; position: relative;">
+                <div class="header d-flex align-items-baseline">
+                    <h5>Lista de capacitaciones: </h5>
+                    <p class="ml-3">{{ count($capacitaciones) }} capacitaciones en total</p>
                 </div>
                 <table id="table_total_capaci" class="table w-100">
                     <thead class="thead-light">
@@ -117,8 +166,10 @@
                             <tr>
                                 <td>{{ $capacitacion->id }}</td>
                                 <td>{{ $capacitacion->cursoscapacitaciones }}</td>
-                                <td>{{ $capacitacion->fecha_curso }}</td>
-                                <td>{{ $capacitacion->fecha_fin }}</td>
+                                <td>{{ \Carbon\Carbon::parse($capacitacion->fecha_curso)->format('d D, M Y') }}
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($capacitacion->fecha_fin)->format('d D, M Y') }}
+                                </td>
                                 <td>{{ $capacitacion->instructor }}</td>
                             </tr>
                         @endforeach
@@ -131,18 +182,53 @@
         </div>
         <div class="col-md-4">
             <div class="row">
-                <div class="col-md-12 card_new">
-                    <div class="row bg-white rounded shadow p-3 mb-3">
+                <div class="col-md-12 card_texto">
+                    <div class="row bg-white rounded shadow-propia p-3 mb-3">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                             <div class="text-center" style="font-size: 24pt">
-                                <i class="fas fa-calendar-alt bg-light p-3 rounded"></i>
+                                <i class="fas fa-chalkboard-teacher bg-success text-white p-3 rounded"></i>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0">
                             <div class="header">
-                                Total capacitaciones
-                                <p class="p-0">{{ count($capacitaciones) }} <span
-                                        style="font-size: 20px">capacitaciones</span></p>
+                                <span class="text-success">Total capacitaciones</span>
+                                <p class="p-0">{{ count($capacitaciones) }} <span>capacitaciones</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 card_texto">
+                    <div class="row bg-white rounded shadow-propia p-3 mb-3">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                            <div class="text-center" style="font-size: 24pt">
+                                <i class="fas fa-calendar-week bg-primary text-white p-3 rounded"></i>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0">
+                            <div class="header">
+                                <span class="text-primary">Capacitaciones en {{ date('Y') - 1 }}</span>
+                                <p class="p-0">{{ $capacitaciones_year_actual_uno_antes }}
+                                    <span>capacitaciones</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 card_texto">
+                    <div class="row bg-white rounded shadow-propia p-3 mb-3">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                            <div class="text-center" style="font-size: 24pt">
+                                <i class="fas fa-calendar-week bg-primary text-white p-3 rounded"></i>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0">
+                            <div class="header">
+                                <span class="text-primary">Capacitaciones en {{ date('Y') }}</span>
+                                <p class="p-0">{{ $capacitaciones_year_actual }} <span>capacitaciones</span></p>
                             </div>
                         </div>
                     </div>
@@ -150,46 +236,10 @@
             </div>
             <div class="row">
                 <div class="col-md-12 card_new">
-                    <div class="row bg-white rounded shadow p-3 mb-3">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-                            <div class="text-center" style="font-size: 24pt">
-                                <i class="fas fa-calendar-alt bg-light p-3 rounded"></i>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0">
-                            <div class="header">
-                                Capacitaciones en {{ date('Y') - 1 }}
-                                <p class="p-0">{{ $capacitaciones_year_actual_uno_antes }} <span
-                                        style="font-size: 20px">capacitaciones</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 card_new">
-                    <div class="row bg-white rounded shadow p-3 mb-3">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-                            <div class="text-center" style="font-size: 24pt">
-                                <i class="fas fa-calendar-alt bg-light p-3 rounded"></i>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0">
-                            <div class="header">
-                                Capacitaciones en {{ date('Y') }}
-                                <p class="p-0">{{ $capacitaciones_year_actual }} <span
-                                        style="font-size: 20px">capacitaciones</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 card_new">
-                    <div class="row bg-white rounded shadow p-3 mb-3">
-                        <div class="header">
-                            <h5>Categorías</h5>
-                            <p>{{ count($categorias_arr) }} categorias</p>
+                    <div class="row bg-white rounded shadow-propia p-3 mb-3">
+                        <div class="header d-flex align-items-baseline">
+                            <h5>Categorías: </h5>
+                            <p class="ml-3">{{ count($categorias_arr) }} categorías</p>
                         </div>
                         <canvas id="chart_categorias"></canvas>
                         <a id="a_plan" class="btn_ver" href="admin/recursos">
@@ -200,10 +250,10 @@
             </div>
             <div class="row">
                 <div class="col-md-12 card_new">
-                    <div class="row bg-white rounded shadow p-3">
-                        <div class="header">
-                            <h5>Tipos</h5>
-                            <p>{{ count($tipos_total_arr) }} tipos</p>
+                    <div class="row bg-white rounded shadow-propia p-3">
+                        <div class="header d-flex align-items-baseline">
+                            <h5>Tipos: </h5>
+                            <p class="ml-3">{{ count($tipos_total_arr) }} tipos</p>
                         </div>
                         <canvas id="chart_tipos"></canvas>
                         <a id="a_plan" class="btn_ver" href="admin/recursos">
@@ -216,7 +266,7 @@
     </div>
 </div>
 <div class="container-fluid mb-3 card_new">
-    <div id="contenedor_card_participantes" class="row"></div>
+    <div id="contenedor_card_participantes"></div>
 </div>
 
 @section('scripts')
@@ -227,7 +277,7 @@
             moment.lang('es', {
                 months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'
                     .split('_'),
-                monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
+                monthsShort: 'Ene_Feb_Mar_Abr_May_Jun_Jul_Ago_Sept_Oct_Nov_Dic.'.split('_'),
                 weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
                 weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
                 weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
@@ -367,6 +417,7 @@
                 success: function(response) {
                     $("#cargando_informacion_capacitacion").hide();
                     if (response != null) {
+                        console.log(response);
                         let fecha_inicio = response.recurso.fecha_curso;
                         let fecha_fin = response.recurso.fecha_fin;
                         let duracion = response.recurso.duracion;
@@ -377,135 +428,148 @@
                         let categoria = response.recurso.categoria_capacitacion.nombre;
                         let contenedor = document.querySelector('#contenedor_card_participantes');
                         let renderHTML = `
-                                            <div class="col-12">
-                                                <h3 class="text-muted mb-3">Información detallada del curso: <span class="text-dark">${nombre}</span></h3>
+                                    <div class="row">
+                        <div class="col-12">
+                            <h3 class="text-muted mb-3">Información detallada de la capacitación: <span
+                                    class="text-dark">${nombre}</span></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 card_texto mb-3 p-0 pr-2">
+                            <div class="bg-white text-dark rounded shadow-propia p-3">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                        <div class="text-center" style="font-size: 24pt">
+                                            <i class="fas fa-user text-white bg-info p-3 rounded"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                        <div class="header">
+                                            <span class="text-info">Instructor</span>                                        
+                                            <p class="p-0 m-0" title="${instructor}" style="text-transform:capitalize">${instructor.length >= 20 ? instructor.substr(0,20)+'...':instructor}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 card_texto mb-3 p-0 pr-2">
+                            <div class="bg-white text-dark rounded shadow-propia p-3">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                        <div class="text-center" style="font-size: 24pt">
+                                            <i class="fas fa-th-list text-white bg-success p-3 rounded"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                        <div class="header">
+                                            <span class="text-success">Categoría</span>
+                                            <p class="p-0 m-0" title="${categoria}">${categoria.length >= 20 ? categoria.substr(0,20)+'...':categoria}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 card_texto mb-3 p-0">
+                            <div class="bg-white text-dark rounded shadow-propia p-3">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                        <div class="text-center" style="font-size: 24pt">
+                                            <i class="fas fa-th-list text-white bg-success p-3 rounded"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                        <div class="header">
+                                            <span class="text-success">Tipo</span>
+                                            <p class="p-0 m-0" title="${tipo}">${tipo.length >= 20 ? tipo.substr(0,20)+'...':tipo}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 card_new pl-0">
+                            <div class="col-md-12 card_texto mb-3">
+                                <div class="row bg-white rounded shadow-propia p-3">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-3 justify-content-center d-flex p-0">
+                                        <div class="text-center" style="font-size: 24pt">
+                                            <i class="fas fa-users bg-info text-white p-3 rounded"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-9 p-0 d-flex align-items-center">
+                                        <div class="header">
+                                            <span class="text-info">No. Participantes</span>
+                                            <p class="p-0 m-0">${total_participantes} participantes inscritos</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded shadow-propia p-3 mb-3">
+                                <div class="header">
+                                    <h5>Participantes</h5>
+                                    <p></p>
+                                </div>
+                                <canvas id="chart_alumnos_capaci"></canvas>
+                                <a id="a_plan" class="btn_ver" href="admin/recursos">
+                                    Ver Detalle
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6 card_texto mb-3 p-0 pr-2">
+                                    <div class="bg-white text-dark rounded shadow-propia p-3">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                                <div class="text-center" style="font-size: 24pt">
+                                                    <i class="fas fa-calendar-day bg-primary text-white p-3 rounded"></i>
+                                                </div>
                                             </div>
-                                            <div class="col-md-8 card_new">
-                                                <div class="bg-white rounded shadow p-3 mb-3">
-                                                    <div class="header">
-                                                        <h5>Participantes</h5>
-                                                        <p></p>
-                                                    </div>
-                                                    <canvas id="chart_alumnos_capaci"></canvas>
-                                                    <a id="a_plan" class="btn_ver" href="admin/recursos">
-                                                        Ver Detalle
-                                                    </a>
-                                                </div>
-                                                <div class="bg-white rounded shadow p-3 mb-3">
-                                                    <div class="header">
-                                                        <h5>Aprobados/Reprobados</h5>
-                                                        <p></p>
-                                                    </div>
-                                                    <canvas id="chart_alumnos_aprovados"></canvas>
-                                                    <a id="a_plan" class="btn_ver" href="admin/recursos">
-                                                        Ver Detalle
-                                                    </a>
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                                <div class="header">
+                                                    <span class="text-primary">Fecha de Inicio</span>
+                                                    <p class="p-0 m-0">${moment(fecha_inicio).locale('es').format("dddd DD, MMM YYYY hh:mm a")}</p>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="row">
-                                                    <div class="col-md-12 card_new mb-3">
-                                                        <div class="row bg-white rounded shadow p-3">
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-3 justify-content-center d-flex p-0">
-                                                                <div class="text-center" style="font-size: 24pt">
-                                                                    <i class="fas fa-calendar-alt bg-light p-3 rounded"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-9 p-0 d-flex align-items-center">
-                                                                <div class="header">
-                                                                    Fecha de Inicio
-                                                                    <p class="p-0 m-0" style="font-size:20px">${moment(fecha_inicio).locale('es').format("dddd MMM YYYY hh:mm a")}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 card_texto mb-3 p-0">
+                                    <div class="bg-white text-dark rounded shadow-propia p-3">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                                <div class="text-center" style="font-size: 24pt">
+                                                    <i class="fas fa-calendar-day bg-primary text-white p-3 rounded"></i>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12 card_new mb-3">
-                                                        <div class="row bg-white rounded shadow p-3">
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-3 justify-content-center d-flex p-0">
-                                                                <div class="text-center" style="font-size: 24pt">
-                                                                    <i class="fas fa-calendar-alt bg-light p-3 rounded"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-9 p-0 d-flex align-items-center">
-                                                                <div class="header">
-                                                                    Fecha de Fin
-                                                                    <p class="p-0 m-0" style="font-size:20px">${moment(fecha_fin).locale('es').format("dddd MMM YYYY hh:mm a")}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                                <div class="header">
+                                                    <span class="text-primary">Fecha de Fin</span>
+                                                    <p class="p-0 m-0">${moment(fecha_fin).locale('es').format("dddd DD, MMM YYYY hh:mm a")}
+                                                    </p>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12 card_new mb-3">
-                                                        <div class="row bg-white rounded shadow p-3">
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-3 justify-content-center d-flex p-0">
-                                                                <div class="text-center" style="font-size: 24pt">
-                                                                    <i class="fas fa-chalkboard-teacher bg-light p-3 rounded"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-9 p-0 d-flex align-items-center">
-                                                                <div class="header">
-                                                                    Instructor
-                                                                    <p class="p-0 m-0">${instructor}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12 card_new mb-3">
-                                                        <div class="row bg-white rounded shadow p-3">
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-3 justify-content-center d-flex p-0">
-                                                                <div class="text-center" style="font-size: 24pt">
-                                                                    <i class="fas fa-user-graduate bg-light p-3 rounded"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-9 p-0 d-flex align-items-center">
-                                                                <div class="header">
-                                                                    No. Participantes
-                                                                    <p class="p-0 m-0">${total_participantes}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12 card_new mb-3">
-                                                        <div class="row bg-white rounded shadow p-3">
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-3 justify-content-center d-flex p-0">
-                                                                <div class="text-center" style="font-size: 24pt">
-                                                                    <i class="fas fa-calendar-alt bg-light p-3 rounded"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-9 p-0 d-flex align-items-center">
-                                                                <div class="header">
-                                                                    Tipo
-                                                                    <p class="p-0 m-0" style="text-transform:capitalize">${tipo}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12 card_new mb-3">
-                                                        <div class="row bg-white rounded shadow p-3">
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-3 justify-content-center d-flex p-0">
-                                                                <div class="text-center" style="font-size: 24pt">
-                                                                    <i class="fas fa-calendar-alt bg-light p-3 rounded"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-9 p-0 d-flex align-items-center">
-                                                                <div class="header">
-                                                                    Categoría
-                                                                    <p class="p-0 m-0" style="text-transform:capitalize">${categoria}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>`;
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="card_new w-100">
+                                    <div class="bg-white rounded shadow-propia p-3 mb-3">
+                                        <div class="header">
+                                            <h5>Aprobados/Reprobados</h5>
+                                            <p></p>
+                                        </div>
+                                        <canvas id="chart_alumnos_aprovados"></canvas>
+                                        <a id="a_plan" class="btn_ver" href="admin/recursos">
+                                            Ver Detalle
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                    `;
                         contenedor.innerHTML = renderHTML;
                         let calificaciones = response.empleados.map(empleado => {
                             return empleado.pivot.calificacion != null ? Number(empleado.pivot
