@@ -5,10 +5,10 @@
           </div>
           <div class="col-6">
               <div class="text-right especificaciones">
-                  <label>Plan <i class="fas fa-square iconos_espec" style="color: #3D72A1;"></i></label>
-                  <label>Do <i class="fas fa-square iconos_espec" style="color: #A13D86;"></i></label>
-                  <label>Check <i class="fas fa-square iconos_espec" style="color: #DBA82D;"></i></label>
-                  <label>Act <i class="fas fa-square iconos_espec" style="color: #2DB7DB;"></i></label>
+                  <label>Plan <i class="fas fa-circle" style="color: #3D72A1; font-size: 13px"></i></label>
+                  <label>Do <i class="fas fa-circle" style="color: #A13D86; font-size: 13px"></i></label>
+                  <label>Check <i class="fas fa-circle" style="color: #DBA82D; font-size: 13px"></i></label>
+                  <label>Act <i class="fas fa-circle" style="color: #2DB7DB; font-size: 13px"></i></label>
               </div>
           </div>
       </div>
