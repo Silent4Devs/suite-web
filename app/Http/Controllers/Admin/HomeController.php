@@ -293,6 +293,8 @@ class HomeController
         array_push($tipos_total_arr, $curso);
 
         $capacitaciones_year_actual = Recurso::whereYear('fecha_curso', date('Y'))->count();
+        $capacitaciones_year_actual_uno_antes = Recurso::whereYear('fecha_curso', date('Y') - 1)->count();
+
         $arr_fechas_cursos = [];
         $arr_participantes = [];
         $recursos = Recurso::whereYear('fecha_curso', date('Y'))->orderBy('fecha_curso', 'asc')->get();
@@ -347,6 +349,7 @@ class HomeController
             'recursos_categoria_arr',
             'tipos_total_arr',
             'capacitaciones_year_actual',
+            'capacitaciones_year_actual_uno_antes',
             'arr_fechas_cursos',
             'arr_participantes',
             'path_gantt'
