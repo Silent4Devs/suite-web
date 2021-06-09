@@ -66,7 +66,7 @@ margin-left:100px;
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong><i class="far fa-building" style="color:#ffffff; font-size:20pt; margin-right:10px;" ></i>  Mi Organización</strong></h3>
+                <h3 class="mb-2 text-center text-white"><strong>  Mi organización</strong></h3>
             </div>
 
         <br>
@@ -106,7 +106,7 @@ margin-left:100px;
             
                  <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">
-                        <p class="mb-1 text-center text-white">DATOS GENERALES</p>
+                        <span class="mb-1 text-center text-white">DATOS GENERALES</span>
                     </div>
                 </div>
 
@@ -262,22 +262,22 @@ margin-left:100px;
         @else
 
 
-    <div class="row">
+    <div class="row" style="display: flex; justify-content: center; align-items: center;">
 
-              <div class=" tarjeta">
+              <div class="col-md-5" style="text-align:center; border:none;">
                   @if(!empty($count == 1))
                   @else
                       <span>Agregue los datos generales de su organización</span>
                       <br>
                       <br>
-                      <a class="btn btn-success boton_organizacion"  href="{{ route('admin.organizacions.create') }}">
-                          Agregar <strong>+</strong>
+                      <a class="btn btn-success"  href="{{ route('admin.organizacions.create') }}">
+                          Agregar 
                       </a>
                   @endif
               </div>
 
-              <div class=" imagen_organizacion">
-                  <img src="../img/organizacion.jpeg" width="100%">
+              <div class=" col-md-7"  style="border: none;">
+                  <img src="../img/organizacion.png" width="100%">
               </div>
 
       </div><!--row-->
