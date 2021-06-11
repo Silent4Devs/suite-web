@@ -6,6 +6,7 @@ use Gate;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -23,12 +24,31 @@ class EmpleadoController extends Controller
     {
 
     abort_if(Gate::denies('empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-     
+    
+        
 
         if ($request->ajax()) {
-            $query = Empleado::get();
+            $query=DB::table('empleados')->select(DB::raw('id,
+            name,
+            foto,
+            area,
+            puesto,
+            jefe,
+            antiguedad as "fecha ingreso",
+            if(estatus = 1, "Activo", "Inactivo") as "estado",
+            concat(timestampdiff(year, antiguedad, NOW()), " año con ",
+            FLOOR(( datediff(now(), antiguedad) / 365.25 - FLOOR(datediff(now(), antiguedad) / 365.25)) * 12), " meses y ",
+            DAY(CURDATE()) - DAY(antiguedad) +30 * (DAY(CURDATE()) < DAY(antiguedad)) , " días."
+            ) as antiguedad,
+            email,
+            telefono,
+            n_empleado,
+            estatus,
+            n_registro
+            '))->whereNull('deleted_at')->get();
             $table = DataTables::of($query);
 
+      
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
             $table->addIndexColumn();
@@ -51,7 +71,7 @@ class EmpleadoController extends Controller
 
             //     return "<img src=".public_path() . '/storage/empleados/imagenes/' .$row->foto.">";
             // });
-
+            
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
@@ -60,7 +80,8 @@ class EmpleadoController extends Controller
             });
 
             $table->editColumn('foto', function ($row) {
-                return $row->foto ? $row->foto : '';
+                return $row->foto ? $row->foto:'';
+                
             });
 
            // $dt = CarbonLocale::now();
@@ -76,7 +97,7 @@ class EmpleadoController extends Controller
                 return $row->jefe ? $row->jefe : "";
             });
             $table->editColumn('antiguedad', function ($row) {
-            return Carbon::parse(Carbon::parse($row->antiguedad))->diffForHumans(Carbon::now()->subDays());
+            return $row->antiguedad ? $row->antiguedad :"";
             });
             $table->editColumn('estatus', function ($row) {
                 return $row->estatus ? $row->estatus : "";
@@ -104,6 +125,7 @@ class EmpleadoController extends Controller
 
         
         return view('admin.empleados.index');
+
     }
 
     /**
@@ -115,6 +137,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.empleados.create');
+
     }
 
     /**
@@ -186,10 +209,10 @@ class EmpleadoController extends Controller
     {
 
         abort_if(Gate::denies('empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleado = Empleado::findOrfail($id);
+        $empleado=Empleado::findOrfail($id);
+        
 
-
-        return view('admin.empleados.edit', compact('empleado'));
+        return view('admin.empleados.edit',compact('empleado'));
     }
 
     /**
@@ -202,16 +225,18 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         //$empleado->update($request->all());
-       // $request->validate([
-       //  'n_empleado'=>'unique:empleados'], ['n_empleado.unique' => 'El número de empleado ya ha sido tomado'
-       // ]);
+       // dump($request->all());
+        //die();
+        $request->validate([
+       'n_empleado'=>'unique:empleados,n_empleado,'.$id], ['n_empleado.unique' => 'El número de empleado ya ha sido tomado'
+        ]);
         
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
         if ($request->file('foto') != null or !empty($request->file('foto'))) {
 
             //Si existe la imagen entonces se elimina al editarla
-
+        
             $isExists = Storage::disk('public')->exists('empleados/imagenes/' . $empleado->foto);
             if ($isExists) {
                 if ($empleado->foto != null) {
@@ -231,7 +256,7 @@ class EmpleadoController extends Controller
         }
 
         $empleado->update([
-            'name' => $request->name,
+            'name'=>$request->name,
             "area" =>  $request->area,
             "puesto" =>  $request->puesto,
             "jefe" =>  $request->jefe,
@@ -266,3 +291,4 @@ class EmpleadoController extends Controller
 
 
 }
+
