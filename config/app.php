@@ -235,7 +235,6 @@ return [
         'TawkTo' => Emotality\TawkTo\TawkTo::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Date' => Jenssegers\Date\Date::class,
     ],
 
 

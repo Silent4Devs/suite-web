@@ -26,7 +26,7 @@ class UpdateControlDocumentoRequest extends FormRequest
                 'nullable',
             ],
             'fecha_creacion' => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
             'version'        => [

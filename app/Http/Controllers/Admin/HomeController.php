@@ -50,20 +50,20 @@ class HomeController
 
         $chart2 = new LaravelChart($settings2);
 
-        $settings3 = [
-            'chart_title'        => 'Progreso general del plan',
-            'chart_type'         => 'pie',
-            'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\PlanBaseActividade',
-            'group_by_field'     => 'estado',
-            'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
-            'column_class'       => 'col-md-12',
-            'entries_number'     => '5',
-            'relationship_name'  => 'estatus',
-        ];
+        // $settings3 = [
+        //     'chart_title'        => 'Progreso general del plan',
+        //     'chart_type'         => 'pie',
+        //     'report_type'        => 'group_by_relationship',
+        //     'model'              => 'App\Models\PlanBaseActividade',
+        //     'group_by_field'     => 'estado',
+        //     'aggregate_function' => 'count',
+        //     'filter_field'       => 'created_at',
+        //     'column_class'       => 'col-md-12',
+        //     'entries_number'     => '5',
+        //     'relationship_name'  => 'estatus',
+        // ];
 
-        $chart3 = new LaravelChart($settings3);
+        // $chart3 = new LaravelChart($settings3);
 
         $settings4 = [
             'chart_title'        => 'Documentación',
@@ -293,6 +293,8 @@ class HomeController
         array_push($tipos_total_arr, $curso);
 
         $capacitaciones_year_actual = Recurso::whereYear('fecha_curso', date('Y'))->count();
+        $capacitaciones_year_actual_uno_antes = Recurso::whereYear('fecha_curso', date('Y') - 1)->count();
+
         $arr_fechas_cursos = [];
         $arr_participantes = [];
         $recursos = Recurso::whereYear('fecha_curso', date('Y'))->orderBy('fecha_curso', 'asc')->get();
@@ -301,6 +303,15 @@ class HomeController
             array_push($arr_fechas_cursos, Carbon::parse($recurso->fecha_curso)->format('M d Y'));
             array_push($arr_participantes, count($recurso->empleados));
         }
+
+        // Gantt
+        $gantt_path = 'storage/gantt/';
+
+
+
+        $version_gantt = glob($gantt_path . "gantt_inicial*.json");
+
+        $path_gantt = end($version_gantt);
 
 
         return view('home', compact(
@@ -314,7 +325,6 @@ class HomeController
             'settings5',
             'chart1',
             'chart2',
-            'chart3',
             'chart4',
             'chart7',
             'chart8',
@@ -339,8 +349,10 @@ class HomeController
             'recursos_categoria_arr',
             'tipos_total_arr',
             'capacitaciones_year_actual',
+            'capacitaciones_year_actual_uno_antes',
             'arr_fechas_cursos',
-            'arr_participantes'
+            'arr_participantes',
+            'path_gantt'
         ));
     }
 }

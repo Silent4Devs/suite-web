@@ -1,9 +1,11 @@
 @extends('layouts.admin')
 @section('content')
 
+
     <style>
         html {
             scroll-behavior: smooth;
+
         }
 
         .caja_graficas,
@@ -43,10 +45,12 @@
             box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.3);
         }
 
+
         .caja_graficas a:hover {
             opacity: 1;
             box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.2);
         }
+
 
         .especificaciones .iconos_espec {
             font-size: 15pt;
@@ -126,24 +130,21 @@
 
         .menu_a {
             width: 100%;
-            background-color: #1a84cd;
+            background-color: #00abb2;
             height: 40px;
             position: sticky;
             top: 56px;
-            z-index: 99999999999999999999;
+            z-index: 2;
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
-            opacity: 0.5;
             transition: 0.1s;
             border-bottom-right-radius: 6px;
             border-bottom-left-radius: 6px;
         }
 
-        .menu_a:hover {
-            opacity: 1;
-        }
+       
 
         .menu_a a {
             width: 200px;
@@ -155,14 +156,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.1);
             border-radius: 6px;
             transition: 0.1s;
         }
 
         .menu_a a:hover {
             text-decoration: none;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.2);
         }
 
         section:target {
@@ -198,13 +199,9 @@
             <a href="#capacitaciones">Capacitaciones</a>
         </div>
 
-
         <section id="iso27001">
-
             @include('home_dash_iso27001')
         </section> {{-- seccion --}}
-
-
 
         <section id="capacitaciones" class="mt-5">
             @include('home_dash_capacitaciones')

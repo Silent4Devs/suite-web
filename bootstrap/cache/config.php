@@ -4,13 +4,13 @@
     'name' => 'Laravel',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost',
+    'url' => 'http://tabantaj.test/',
     'asset_url' => NULL,
     'timezone' => 'UTC',
     'locale' => 'es',
     'fallback_locale' => 'es',
     'faker_locale' => 'es_ES',
-    'key' => 'base64:Jd07Te5+C3neVeu5bZeG8kFAyDsOFi2ANo7lU1FMwTI=',
+    'key' => 'base64:CAEHKuABhhkn/uThAWUkAubGTYTK36I2TlY74pamrDo=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -88,7 +88,6 @@
       'TawkTo' => 'Emotality\\TawkTo\\TawkTo',
       'PDF' => 'Barryvdh\\DomPDF\\Facade',
       'Image' => 'Intervention\\Image\\Facades\\Image',
-      'Date' => 'Jenssegers\\Date\\Date',
     ),
   ),
   'auth' => 
@@ -132,18 +131,18 @@
   ),
   'broadcasting' => 
   array (
-    'default' => 'log',
+    'default' => 'pusher',
     'connections' => 
     array (
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => '',
-        'secret' => '',
-        'app_id' => '',
+        'key' => 'ba7bf6ff4052dd0920ed',
+        'secret' => '075c09bce38c5d5aa3d8',
+        'app_id' => '1199252',
         'options' => 
         array (
-          'cluster' => 'mt1',
+          'cluster' => 'us2',
           'useTLS' => true,
         ),
       ),
@@ -395,28 +394,28 @@
       array (
         'driver' => 'local',
         'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public/images',
-        'url' => 'http://localhost/storage',
+        'url' => 'http://tabantaj.test//storage',
         'visibility' => 'public',
       ),
       'Documentacion' => 
       array (
         'driver' => 'local',
         'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public',
-        'url' => 'http://localhost/storage',
+        'url' => 'http://tabantaj.test//storage',
         'visibility' => 'private',
       ),
       'Iso27001' => 
       array (
         'driver' => 'local',
         'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public/Normas/ISO27001',
-        'url' => 'http://localhost/storage',
+        'url' => 'http://tabantaj.test//storage',
         'visibility' => 'private',
       ),
       'public' => 
       array (
         'driver' => 'local',
         'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public',
-        'url' => 'http://localhost/storage',
+        'url' => 'http://tabantaj.test//storage',
         'visibility' => 'public',
       ),
       's3' => 
@@ -570,9 +569,9 @@
         'transport' => 'smtp',
         'host' => 'smtp.mailtrap.io',
         'port' => '2525',
-        'encryption' => NULL,
-        'username' => NULL,
-        'password' => NULL,
+        'encryption' => 'tls',
+        'username' => '3e2bf525c46fdb',
+        'password' => '2720004335c5c8',
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
@@ -605,7 +604,7 @@
     ),
     'from' => 
     array (
-      'address' => NULL,
+      'address' => 'tabantaj@silent4business.com',
       'name' => 'Laravel',
     ),
     'markdown' => 
@@ -739,7 +738,7 @@
     array (
       'font_dir' => 'C:\\laragon\\www\\tabantaj\\storage\\fonts/',
       'font_cache' => 'C:\\laragon\\www\\tabantaj\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\KAREN~1.ROD\\AppData\\Local\\Temp',
+      'temp_dir' => 'C:\\Users\\URIEL~1.SAN\\AppData\\Local\\Temp',
       'chroot' => 'C:\\laragon\\www\\tabantaj',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',

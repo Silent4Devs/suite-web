@@ -64,7 +64,8 @@ class ControlDocumento extends Model
 
     public function setFechaCreacionAttribute($value)
     {
-        $this->attributes['fecha_creacion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+
+        $this->attributes['fecha_creacion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), Carbon::parse($value)->format('d-m-Y'))->format('Y-m-d') : null;
     }
 
     public function elaboro()

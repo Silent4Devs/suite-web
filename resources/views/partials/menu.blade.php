@@ -3,31 +3,31 @@
 
 
 
-<div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style="border: none;">
+<div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style=" border: none;">
 
-<div class="bg-transparent c-sidebar-brand d-md-down-none">
+    <div class="bg-transparent c-sidebar-brand d-md-down-none caja_caja_img_logo">
 
-   <!-- <div class="text-center dark_mode1" style="padding-top: 20px;">-->
-           {{--<a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 40%;" class="img_logo"></a> --}} 
-        <div class="caja_img_logo">
-           <?php
-            use Illuminate\Support\Facades\DB;
-            $users = DB::table('organizacions')
-            ->select('logotipo')
-            ->first();
+       <!-- <div class="text-center dark_mode1" style="padding-top: 20px;">-->
+               {{--<a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 40%;" class="img_logo"></a> --}} 
+            <div class="caja_img_logo">
+               <?php
+                use Illuminate\Support\Facades\DB;
+                $users = DB::table('organizacions')
+                ->select('logotipo')
+                ->first();
 
-            if (isset($users)) { ?>
-            <img src="{{ url('images/' . $users->logotipo) }}" class="img_logo w-100">
-            <?php } elseif (!isset($users)) { ?>
-            <img src="{{ url('img/Silent4Business-Logo-Color.png') }}" class="img_logo w-100">
-            <?php } else { ?>
-            <img src="{{ url('img/Silent4Business-Logo-Color.png') }}" class="img_logo w-100">
-            <?php }
-            ?>
-       
+                if (isset($users)) { ?>
+                <img src="{{ url('images/' . $users->logotipo) }}" class="img_logo w-100">
+                <?php } elseif (!isset($users)) { ?>
+                <img src="{{ url('img/Silent4Business-Logo-Color.png') }}" class="img_logo w-100">
+                <?php } else { ?>
+                <img src="{{ url('img/Silent4Business-Logo-Color.png') }}" class="img_logo w-100">
+                <?php }
+                ?>
+           
+        </div>
+
     </div>
-
-</div>
 
 
 
