@@ -45,7 +45,7 @@
       28 => 'Alexusmai\\LaravelFileManager\\FileManagerServiceProvider',
       29 => 'Barryvdh\\DomPDF\\ServiceProvider',
       30 => 'Intervention\\Image\\ImageServiceProvider',
-      31 => 'Jenssegers\\Date\\DAteServiceProvider',
+      31 => 'Jenssegers\\Date\\DateServiceProvider',
     ),
     'aliases' => 
     array (

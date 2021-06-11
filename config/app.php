@@ -162,6 +162,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
+
         /*
          * Package Service Providers...
          */
@@ -178,7 +180,7 @@ return [
         Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Jenssegers\Date\DAteServiceProvider::class,
+        Jenssegers\Date\DateServiceProvider::class
     ],
 
     /*
