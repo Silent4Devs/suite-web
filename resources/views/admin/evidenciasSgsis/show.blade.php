@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+    
+    {{ Breadcrumbs::render('admin.evidencias-sgsis.create') }}
 
 <div class="card">
     <div class="card-header">

@@ -11,6 +11,9 @@ Route::get('/', 'Auth\LoginController@showLoginForm');
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
+
+    Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
+
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -367,6 +370,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //REPORTES CONTEXTO 27001
     Route::get('reportes-contexto/', 'ReporteContextoController@index')->name('reportes-contexto.index');
     Route::post('reportes-contexto/create', 'ReporteContextoController@store')->name('reportes-contexto.store');
+
+
+
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
@@ -662,3 +668,9 @@ Route::view('stepper', 'stepper');
 Route::view('post_register', 'auth.post_register');
 
 Route::view('test', 'auth.test');
+
+
+
+
+
+

@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.control-accesos.index') }}
+    
     @can('control_acceso_create')
 
         <div class="mt-5 card">

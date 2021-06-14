@@ -146,7 +146,15 @@
 
         <li class="c-sidebar-nav-title"><font class="letra_blanca">Normas</font></li>
         @can('isoveinticieteuno_access')
-            <li class="c-sidebar-nav-dropdown">
+
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route("admin.iso27001.index") }}">
+                    <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> ISO 27001 </font>
+                </a>
+            </li>
+
+            {{-- <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca">
 
@@ -608,7 +616,7 @@
                     @endcan
 
                 </ul>
-            </li>
+            </li> --}}
         @endcan
         {{-- @can('isoveintidostresuno_access')
             <li class="c-sidebar-nav-dropdown">

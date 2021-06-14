@@ -196,6 +196,27 @@
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
         }
+
+
+
+
+
+
+
+        ol.breadcrumb{
+            background-color: rgba(0, 0, 0, 0);
+            top: 50px;
+            margin-left: -20px;
+            margin-top: -40px;
+            margin-bottom: 60px;
+            border: none;
+            opacity: 0.6;
+        }
+        ol.breadcrumb:hover{
+            opacity: 1;
+        }
+
+
         
     </style>
     @yield('styles')

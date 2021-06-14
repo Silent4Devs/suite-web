@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
+    
     @can('minutasaltadireccion_create')
 
 

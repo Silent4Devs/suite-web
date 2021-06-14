@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
+    
     @can('politica_sgsi_create')
 
         <div class="mt-5 card">

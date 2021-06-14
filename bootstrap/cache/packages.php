@@ -24,6 +24,17 @@
       'PDF' => 'Barryvdh\\DomPDF\\Facade',
     ),
   ),
+  'davejamesmiller/laravel-breadcrumbs' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'DaveJamesMiller\\Breadcrumbs\\BreadcrumbsServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Breadcrumbs' => 'DaveJamesMiller\\Breadcrumbs\\Facades\\Breadcrumbs',
+    ),
+  ),
   'emotality/tawk-laravel' => 
   array (
     'providers' => 

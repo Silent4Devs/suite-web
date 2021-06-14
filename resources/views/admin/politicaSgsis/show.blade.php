@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 
+    {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
+
 <div class="card">
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.politicaSgsi.title') }}
