@@ -39,7 +39,8 @@
         integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
         crossorigin="anonymous" />
     <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style type="text/css">
     /* DATATABLE */
         .datatable-fix table.dataTable thead .sorting:after {
@@ -115,6 +116,10 @@
         body,
         .iconos_cabecera {
             transition: 0s;
+        }
+
+        body{
+            background-color: #F2F4F6;
         }
 
         #btnDark {

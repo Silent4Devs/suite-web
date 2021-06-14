@@ -20,6 +20,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",
+        "jenssegers/date": "^4.0",
         "laracasts/flash": "^3.0",
         "laravel/dusk": "^6.6",
         "laravel/framework": "^8.0",

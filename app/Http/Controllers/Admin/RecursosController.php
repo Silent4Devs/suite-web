@@ -252,13 +252,14 @@ class RecursosController extends Controller
     {
         $int_recurso = intval($recurso);
         $recurso_data = Recurso::find($int_recurso);
+
         return datatables()->of($recurso_data->empleados)->toJson();
     }
 
     public function getParticipantes($recurso)
     {
         $int_recurso = intval($recurso);
-        $recurso_data = Recurso::find($int_recurso);
+        $recurso_data = Recurso::with('categoria_capacitacion')->find($int_recurso);
         $recurso_info = ['recurso' => $recurso_data, 'empleados' => $recurso_data->empleados];
         return $recurso_info;
     }
