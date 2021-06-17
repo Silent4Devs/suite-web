@@ -1,14 +1,27 @@
 @extends('layouts.admin')
 @section('content')
-    @can('user_create')
-
-
-        <div class="mt-5 card">
+    <div class="mt-5 card">
+        @can('user_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Lista de Empleados</strong></h3>
             </div>
         @endcan
-
+        @if (!$ceo_exists)
+            <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">No se ha definido el nodo raíz (CEO) de la
+                            organización, defina uno editando un registro o creando uno nuevo</p>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Empleado">
                 <thead class="thead-dark">
@@ -17,9 +30,9 @@
                         </th>
                         <th style="vertical-align: top">
                             Foto
-                         </th>
+                        </th>
                         <th style="vertical-align: top">
-                               N°&nbsp;de&nbsp;empleado
+                            N°&nbsp;de&nbsp;empleado
                         </th>
                         <th style="vertical-align: top">
                             {{ trans('cruds.user.fields.name') }}
@@ -43,14 +56,14 @@
                             Antiguedad
                         </th>
                         <th style="vertical-align: top">
-                           Estatus
+                            Estatus
                         </th>
-                        
+
                         <th style="vertical-align: top">
                             Opciones
                         </th>
                     </tr>
- 
+
                 </thead>
             </table>
         </div>
@@ -58,11 +71,11 @@
 @endsection
 @section('scripts')
     @parent
-    
+
     <script>
         $(function() {
-           let numero = document.querySelector('#numero');
-           numero.innerHTML='N°';
+            let numero = document.querySelector('#numero');
+            numero.innerHTML = 'N°';
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
@@ -130,19 +143,21 @@
                 }
 
             ];
-            @can('empleados_create')
-                let btnAgregar = {
+
+            let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
                 url: "{{ route('admin.empleados.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
-                };
-                dtButtons.push(btnAgregar);
-            @endcan
+            };
+            dtButtons.push(btnAgregar);
+
             @can('empleados_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
@@ -173,25 +188,24 @@
                 // dtButtons.push(deleteButton)
             @endcan
 
-           let dtOverrideGlobals = {
+            let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.empleados.index') }}",
-                columns: [
-                    {
-                     data:'DT_RowIndex',
-                     name:'DT_RowIndex'
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
                     },
                     {
                         data: 'foto',
                         name: 'foto',
-                        render: function ( data, type, row, meta ){
-                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"35px"}" src="{{asset('storage/empleados/imagenes/')}}/${data !=""?data:"user.png"}"></div>`;
+                        render: function(data, type, row, meta) {
+                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"35px"}" src="{{ asset('storage/empleados/imagenes/') }}/${data !=""?data:"user.png"}"></div>`;
                         }
-                    },      
+                    },
                     {
                         data: 'n_empleado',
                         name: 'n_empleado'
@@ -239,7 +253,7 @@
                 ]
             };
             let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
-            
+
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();

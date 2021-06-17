@@ -37,4 +37,9 @@ class Area extends Model
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function empleados()
+    {
+        return $this->hasMany(Empleado::class);
+    }
 }

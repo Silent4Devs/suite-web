@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             EstadoincidentesTableSeeder::class,
             EstusplatrabajoTableSeeder::class,
             ActividadFaseSeeder::class,
-            PlanBaseSeeder::class,
+            //PlanBaseSeeder::class,
         ]);
     }
 }

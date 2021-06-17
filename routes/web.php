@@ -50,6 +50,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('organizacions/ckmedia', 'OrganizacionController@storeCKEditorImages')->name('organizacions.storeCKEditorImages');
     Route::resource('organizacions', 'OrganizacionController');
 
+    Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
+    Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
+
     // Dashboards
     Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
