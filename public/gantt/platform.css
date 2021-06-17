@@ -21,7 +21,7 @@
 body styles
 -------------------------------------------------------
 */
-BODY, TBODY {
+#sistema_gantt BODY, #sistema_gantt TBODY {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   /*font-family: 'Open Sans', sans-serif;*/
   font-size: 14px;
@@ -30,7 +30,7 @@ BODY, TBODY {
   text-decoration: none;
 }
 
-a {
+#sistema_gantt a {
   text-decoration: none;
   font-weight: bold;
   /*color: #16ABDD;*/
@@ -41,13 +41,13 @@ a {
 
 }
 
-a:hover, a.aHover {
+#sistema_gantt a:hover, #sistema_gantt a.aHover {
   color: #0C85AD;
   color: #2575be;
   text-decoration: underline;
 }
 
-h1 {
+#sistema_gantt h1 {
   font-size: 32px;
   line-height: 34px;
   color: #91B4B7;
@@ -55,21 +55,21 @@ h1 {
   margin: 0 0 10px 0
 }
 
-h2 {
+#sistema_gantt h2 {
   font-size: 28px;
   color: #34495e;
   font-weight: normal;
   margin: 0 0 10px 0
 }
 
-h3 {
+#sistema_gantt h3 {
   text-decoration: none;
   color: #1e2f41;
   font-size: 16px;
   margin: 0;
 }
 
-h4 {
+#sistema_gantt h4 {
   font-size: 16px;
   padding: 5px 0;
   color: #617777;
@@ -251,12 +251,12 @@ table styles
   width: 100%;
 }
 
-TH, .tableHeader {
-  font-weight: normal;
+#sistema_gantt TH, .tableHeader {
+  /*font-weight: normal;*/
   color: #555;
-  border: none;
-  background-color: #f0f0f0;
-  padding: 2px
+  /*border: none;*/
+  background-color: #fff;
+  /*padding: 2px*/
 }
 
 .list td{
@@ -282,7 +282,7 @@ TH, .tableHeader {
   border-color: #CECECE
 }
 
-table .resRow td, table .assigEditRow td {
+#sistema_gantt table .resRow td, #sistema_gantt table .assigEditRow td {
   border-bottom: 1px solid #cecece;
   padding: 5px 0
 }
@@ -558,7 +558,7 @@ Buttons
 
 .button:hover {
   background-color: #506b84;
-  color: rgba(255, 255, 255, 0.75);
+  /*color: rgba(255, 255, 255, 0.75);*/
 }
 
 a.button:hover {
@@ -569,7 +569,7 @@ a.button:hover {
   background-color: transparent;
 }
 
-span.separator {
+#sistema_gantt span.separator {
   display: inline-block;
 }
 
@@ -581,12 +581,12 @@ span.separator {
   color: #009E94;
 }
 
-form {
+#sistema_gantt form {
   margin: 0;
   padding: 0;
 }
 
-select {
+#sistema_gantt select {
   border: 1px solid #91B4B7;
   padding: 4px;
   font-size: 16px;
@@ -617,16 +617,17 @@ select {
   background: url("../../applications/gantt/distrib/res/alert.gif") no-repeat;
 }
 
-span#FLD_LOGIN_NAMEerror, span#FLD_PWDerror {
+#sistema_gantt span#FLD_LOGIN_NAMEerror, #sistema_gantt span#FLD_PWDerror {
   margin-left: -23px;
   margin-top: 2px;
 }
 
-input {
+#sistema_gantt input {
   background-color: white;
+  color: #666666;
   padding: 4px;
-  font-size: 16px;
-  border: 1px solid #91B4B7;
+  font-size: 12px;
+  border: none;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -o-border-radius: 3px;

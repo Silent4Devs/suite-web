@@ -221,7 +221,15 @@
             opacity: 1;
         }
 
+        .c-header.c-header-fixed{
+            z-index: 10 !important;
+        }
 
+
+
+        .c-sidebar-backdrop{
+            z-index: 9 !important;
+        }
         
     </style>
     @yield('styles')

@@ -14,6 +14,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
 
+
+    Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
+
+
+    Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
+    Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
+    Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
+
+
+
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -57,8 +67,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Implementacions
-    Route::post('implementacions/guardar-proyecto', 'ImplementacionController@saveImplementationProyect')->name('implementacions.saveProyect');
-    Route::post('implementacions/cargar-proyecto', 'ImplementacionController@loadProyect')->name('implementacions.loadProyect');
+   
     Route::resource('implementacions', 'ImplementacionController');
 
 
