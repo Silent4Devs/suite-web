@@ -24,14 +24,9 @@ class EmpleadoController extends Controller
     public function index(Request $request)
     {
 
-<<<<<<< HEAD
-    abort_if(Gate::denies('empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-    
-        
 
-=======
         // abort_if(Gate::denies('empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
->>>>>>> d06797bd0e6ea2c42e347fbf9bd69909a65c7e0d
+
         if ($request->ajax()) {
             $query=DB::table('empleados')->select(DB::raw('id,
             name,
@@ -102,11 +97,9 @@ class EmpleadoController extends Controller
                 return $row->supervisor ? $row->supervisor->name : "";
             });
             $table->editColumn('antiguedad', function ($row) {
-<<<<<<< HEAD
-            return $row->antiguedad ? $row->antiguedad :"";
-=======
-                return Carbon::parse(Carbon::parse($row->antiguedad))->diffForHumans(Carbon::now()->subDays());
->>>>>>> d06797bd0e6ea2c42e347fbf9bd69909a65c7e0d
+
+            return Carbon::parse(Carbon::parse($row->antiguedad))->diffForHumans(Carbon::now()->subDays());
+
             });
             $table->editColumn('estatus', function ($row) {
                 return $row->estatus ? $row->estatus : "";
@@ -132,14 +125,10 @@ class EmpleadoController extends Controller
             return $table->make(true);
         }
 
-<<<<<<< HEAD
-        
-        return view('admin.empleados.index');
 
-=======
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         return view('admin.empleados.index', compact('ceo_exists'));
->>>>>>> d06797bd0e6ea2c42e347fbf9bd69909a65c7e0d
+
     }
 
     /**
@@ -149,17 +138,13 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
-        abort_if(Gate::denies('empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.empleados.create');
 
-=======
         // abort_if(Gate::denies('empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
         return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas'));
->>>>>>> d06797bd0e6ea2c42e347fbf9bd69909a65c7e0d
+
     }
 
     /**
@@ -246,13 +231,7 @@ class EmpleadoController extends Controller
     public function edit($id)
     {
 
-<<<<<<< HEAD
-        abort_if(Gate::denies('empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleado=Empleado::findOrfail($id);
-        
 
-        return view('admin.empleados.edit',compact('empleado'));
-=======
         // abort_if(Gate::denies('empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::findOrfail($id);
         $empleados = Empleado::get();
@@ -261,7 +240,7 @@ class EmpleadoController extends Controller
         $area = Area::findOrfail($empleado->area_id);
 
         return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area'));
->>>>>>> d06797bd0e6ea2c42e347fbf9bd69909a65c7e0d
+
     }
 
     /**
@@ -273,15 +252,7 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-<<<<<<< HEAD
-        //$empleado->update($request->all());
-       // dump($request->all());
-        //die();
-        $request->validate([
-       'n_empleado'=>'unique:empleados,n_empleado,'.$id], ['n_empleado.unique' => 'El número de empleado ya ha sido tomado'
-        ]);
-        
-=======
+
         $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
@@ -309,7 +280,7 @@ class EmpleadoController extends Controller
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado'
         ]);
 
->>>>>>> d06797bd0e6ea2c42e347fbf9bd69909a65c7e0d
+
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
         if ($request->file('foto') != null or !empty($request->file('foto'))) {
@@ -335,13 +306,10 @@ class EmpleadoController extends Controller
         }
 
         $empleado->update([
-<<<<<<< HEAD
-            'name'=>$request->name,
-            "area" =>  $request->area,
-=======
+
             'name' => $request->name,
             "area_id" =>  $request->area_id,
->>>>>>> d06797bd0e6ea2c42e347fbf9bd69909a65c7e0d
+
             "puesto" =>  $request->puesto,
             "supervisor_id" =>  $request->supervisor_id,
             "antiguedad" =>  $request->antiguedad,

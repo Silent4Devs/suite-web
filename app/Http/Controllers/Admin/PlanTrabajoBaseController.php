@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Functions\Porcentaje;
 use App\Models\User;
 use App\Models\ActividadFase;
+use App\Models\Empleado;
 use Illuminate\Support\Facades\Storage;
 
 class PlanTrabajoBaseController extends Controller
@@ -19,7 +20,10 @@ class PlanTrabajoBaseController extends Controller
         $path_asset = asset($gantt_path);
         $gant_readed = end($archivos_gantt);
         //dd($planbase, $responsable, $responsablenom);
-        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed'));
+
+        $empleados = Empleado::select("name")->get();
+
+        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados'));
     }
 
      public function saveImplementationProyect(Request $request)

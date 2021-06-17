@@ -1023,6 +1023,8 @@
 	  });
 
 	  $.JST.loadDecorator("ASSIGNMENT_ROW", function(assigTr, taskAssig){
+	  	var empleados = @json($empleados);
+	  	console.log(empleados);
 	    var resEl = assigTr.find("[name=resourceId]");
 	    var opt = $("<option>");
 	    resEl.append(opt);
@@ -1104,6 +1106,10 @@
 		  upload(uploadedFile);
 		});
 	</script>
+
+
+
+
 
 
 	<script type="text/javascript">
