@@ -35,13 +35,28 @@
 
     <li class="c-sidebar-nav-title"><font class="letra_blanca">Menu</font></li>
         @can('organizacion_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.organizacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizacions") || request()->is("admin/organizacions/*") ? "active" : "" }}">
-                    <i class="far fa-building iconos_menu letra_blanca">
-
-                    </i>
-                    <font class="letra_blanca" style="margin-left:5px;"> {{ trans('cruds.organizacion.title') }} </font>
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/matriz-riesgos*") ? "c-show" : "" }} {{ request()->is("admin/gap-unos*") ? "c-show" : "" }} {{ request()->is("admin/gap-dos*") ? "c-show" : "" }} {{ request()->is("admin/gap-tres*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                  <i class="fas fa-building iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> Organización </font>
                 </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.organizacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organizacions") || request()->is("admin/organizacions/*") ? "active" : "" }}">
+                            <i class="far fa-building iconos_menu letra_blanca">
+
+                            </i>
+                            <font class="letra_blanca" style="margin-left:5px;"> {{ trans('cruds.organizacion.title') }} </font>
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.organigrama.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/organigrama") || request()->is("admin/organigrama/*") ? "c-active" : "" }}">
+                            <i class="fas fa-users iconos_menu letra_blanca">
+                            </i>
+                            <font class="letra_blanca"> Organigrama </font>
+                        </a>
+                    </li>
+                </ul>
             </li>
         @endcan
         @can('dashboard_access')
