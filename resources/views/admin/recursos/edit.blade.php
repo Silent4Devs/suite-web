@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.recursos.create') }}
+    
     <div class="card">
         <div class="card-header">
             {{ trans('global.edit') }} Capacitación

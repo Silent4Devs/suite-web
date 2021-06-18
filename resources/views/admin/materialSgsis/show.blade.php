@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 @section('content')
 
+    {{ Breadcrumbs::render('admin.material-sgsis.create') }}
+
+
 <div class="card">
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.materialSgsi.title') }}

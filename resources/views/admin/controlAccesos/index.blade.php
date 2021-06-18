@@ -1,47 +1,50 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.control-accesos.index') }}
+    
     @can('control_acceso_create')
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Control de Acceso</strong></h3>
             </div>
-        @endcan
-        <div class="card-body datable-fix">
-            <table class="table table-bordered w-100 datatable-ControlAcceso">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>
-                            {{ trans('cruds.controlAcceso.fields.id') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.controlAcceso.fields.descripcion') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.controlAcceso.fields.archivo') }}
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
-                </thead>
-            </table>
+            @endcan
+            <div class="card-body datable-fix">
+                <table class="table table-bordered w-100 datatable-ControlAcceso">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>
+                                {{ trans('cruds.controlAcceso.fields.id') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.controlAcceso.fields.descripcion') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.controlAcceso.fields.archivo') }}
+                            </th>
+                            <th>
+                                Opciones
+                            </th>
+                        </tr>
+                        {{-- <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                            </td>
+                            <td>
+                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr> --}}
+                    </thead>
+                </table>
+            </div>
         </div>
-    </div>
 @endsection
 @section('scripts')
     @parent

@@ -33,8 +33,8 @@ body{
 .gdfCell {
   overflow: hidden;
   padding:4px 2px;
-  border-bottom: 1px solid #eee;
-  border-right: 1px solid #eee;
+  /*border-bottom: 1px solid #eee;*/
+  /*border-right: 1px solid #eee;*/
   font-family: arial, helvetica, sans-serif;
 }
 
@@ -45,22 +45,23 @@ body{
 .gdfColHeader {
   min-width: 5px;
   height: 30px;
-  background-color: #eee;
-  border-bottom:2px solid #bbb;
+  background-color: #fff;
+  border-bottom: 1px solid #bbb;
   border-right: 1px solid #bbb;
+  padding: 10px;
 }
 
 .gdfColHeader:last-of-type {
-  border-right: none;
+  /*border-right: none;*/
 }
 
 .gdfCell:last-of-type {
-  border-right: none;
+  /*border-right: none;*/
 }
 
 
 .gdfCellInput {
-  border: 0 none;
+  /*border: 0 none;*/
   font-size: 12px;
   height: 20px;
   margin: 0;
@@ -70,7 +71,7 @@ body{
 }
 
 .gdfCellWrap {
-  border: 0 none;
+  /*border: 0 none;*/
   font-size: 12px;
   height: 17px;
   margin: 0;
@@ -118,12 +119,12 @@ body{
   text-align: center;
   color: white;
   box-shadow: 0 0 3px rgba(0, 0, 0, .4);
-  background: rgba(170, 170, 170, .2) url("res/ganttSplitterGrip.png") no-repeat center center;
+  background: rgba(255, 255, 255, 1) url("res/ganttSplitterGrip.png") no-repeat center center;
   z-index: 5;
 }
 
 .unselectable .vSplitBar, .vSplitBar:hover  {
-  background-color: rgba(170, 170, 170, .5);
+  background-color: rgba(255, 255, 255, 1);
   box-shadow: 0 0 5px rgba(0, 0, 0, .5);
 
 }
@@ -188,10 +189,10 @@ body{
 }
 
 .ganttHead1 th{
-  border-left:1px solid #b0b0b0;
+  /*border-left:1px solid #b0b0b0;*/
   padding: 0;
   margin: 0;
-  /*border-right: 1px solid #bbb;*/
+  border-right: 1px solid #bbb;
   border-bottom:1px solid #bbb;
   background: #EEEEEE;
   white-space: pre-line;
@@ -207,9 +208,9 @@ body{
 .ganttHead2 th{
   padding: 0;
   margin: 0;
-  border-left:1px solid #b0b0b0;
-  /*border-right: 1px solid #bbb;*/
-  border-bottom:2px solid #bbb;
+  /*border-left:1px solid #b0b0b0;*/
+  border-right: 1px solid #bbb;
+  /*border-bottom:2px solid #bbb;*/
   background: #EEEEEE;
 }
 
@@ -226,7 +227,7 @@ body{
   top:0;
   width:1px;
   height:100%;
-  border-left:2px dotted #13AFA5;
+  /*border-left:2px dotted #13AFA5;*/
 }
 
 .ganttTitle img {
@@ -237,12 +238,12 @@ body{
   position:relative;
   z-index: 3 !important;
   /*background-color: #fff;*/
-  border-bottom: 1px solid #959595;
+  /*border-bottom: 1px solid #959595;*/
   padding: 5px 0 5px 10px;
 }
 
 .dataTable .ganttButtonBar{
-  border-bottom: none;
+  /*border-bottom: none;*/
 }
 
 .ganttButtonBar .buttons {
@@ -287,7 +288,7 @@ body{
 
 
 .ganttButtonSeparator{
-  border-left:1px solid #dadada;
+  /*border-left:1px solid #dadada;*/
   margin:0 10px;
   font-size: 130%;
   vertical-align: middle;
@@ -297,7 +298,7 @@ body{
   position:absolute;
   width:100%;
   height:1px;
-  border-top:1px solid #eee;
+  /*border-top:1px solid #eee;*/
   z-index:1;
 }
 
@@ -307,7 +308,7 @@ body{
 
 
 .ganttTable td.end{
-  border-right: 2px dotted #ddd;
+  /*border-right: 2px dotted #ddd;*/
 }
 
 .ganttHead2 th.holy{
@@ -332,7 +333,7 @@ body{
   color:#DB2727;
   border-radius:2px;
   background: #eee; /* Old browsers */
-  border:1px solid #bbb;
+  /*border:1px solid #bbb;*/
 }
 
 .taskBoxDiv .taskStatus {
@@ -359,7 +360,7 @@ body{
 }
 
 .taskBoxDiv.hasChild .layout{
-  border-top:2px solid black;
+  /*border-top:2px solid black;*/
 }
 
 .taskBoxDiv .taskProgress{
@@ -386,7 +387,7 @@ body{
 
 
 .taskDepLine {
-  border: 1px solid #9999ff;
+  /*border: 1px solid #9999ff;*/
   overflow: hidden;
   position: absolute;
 }
@@ -397,7 +398,7 @@ body{
 }
 
 .taskEditRow input, .columnWidthTest{
-  border: 0 none;
+  /*border: 0 none;*/
   font-size: 14px;
   height: 20px;
   margin: 0;
@@ -446,7 +447,7 @@ input[readonly]{
   position:absolute;
   /*width:100px;*/
   height:26px;
-  border:1px solid #a0a0a0;
+  /*border:1px solid #a0a0a0;*/
   background-color:#fff;
   margin-top:-21px;
   margin-left:-2px;
@@ -461,7 +462,7 @@ input[readonly]{
   position:relative;
   box-shadow: none;
   border-radius: 50%;
-  border:0;
+  /*border:0;*/
   cursor: pointer;
 }
 .taskStatus[status=STATUS_ACTIVE]{
@@ -489,7 +490,7 @@ input[readonly]{
   color:#000;
 }
 .taskStatus.selected{
-  border:#666 2px solid;
+  /*border:#666 2px solid;*/
 }
 
 select.taskStatus{
@@ -532,7 +533,7 @@ select.taskStatus{
   background-image: url(res/toggle-expand.png);
 }
 
-.ui-resizable-helper { border: 1px dotted #00F;  }
+/*.ui-resizable-helper { border: 1px dotted #00F;  }*/
 .ui-resizable-e, .ui-resizable-w {width: 5px;}
 .ui-draggable{
   cursor:move;
@@ -567,25 +568,19 @@ select.taskStatus{
 }
 
 .ganttLinesSVG{
-  fill:transparent;
-  stroke-width:1;
-  stroke:#eee;
+  fill: #fff !important;
 }
 
 .isGanttList .ganttLinesSVG:nth-child(even){
-  fill:transparent;
-  stroke-width:1;
-  stroke:#fff;
+  fill: #fff !important;
 
 }
 .isGanttList  .ganttLinesSVG:nth-child(odd){
-  fill:transparent;
-  stroke-width:1;
-  stroke:#eee;
+  fill: #fff !important;
 }
 
 .ganttLinesSVG.rowSelected{
-  fill: rgb(234, 248, 255) !important;
+  fill: #fff !important;
   /*fill: rgba(255, 255, 153, 0.50) !important;*/
 }
 
@@ -597,19 +592,19 @@ select.taskStatus{
 }
 
 .colorByStatus .taskStatusSVG[status=STATUS_ACTIVE]{
-  fill:#F9C154;
+  fill:#ecde00;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_DONE]{
-  fill: #3BBF67;
+  fill: #17d300;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_FAILED]{
-  fill: #ec2805;
+  fill: #e10000;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_SUSPENDED]{
   fill: #e7e7e7;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_UNDEFINED]{
-  fill: #0d0df5;
+  fill: #00b1e1;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_UNDEFINED] .taskLayout{
   stroke: #0d0df5;
@@ -691,7 +686,7 @@ select.taskStatus{
   position: absolute;
   width: 660px;
   height: 300px;
-  border: 1px solid red;
+  /*border: 1px solid red;*/
   background-color: white;
   box-shadow: 0 0 5px rgba(0,0,0,0.3);
   top:120px;
@@ -760,7 +755,7 @@ select.taskStatus{
   padding: 1px;
   width: 27px;
   height: 27px;
-  border: 1px solid #dedede
+  /*border: 1px solid #dedede*/
 }
 
 /*--------------------------------------------------- Media queries  --------------------------------------------------*/

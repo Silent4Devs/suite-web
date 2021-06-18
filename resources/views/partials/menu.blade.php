@@ -70,6 +70,14 @@
             </li>
         @endcan
         <li class="c-sidebar-nav-item">
+            <a href="{{ route("admin.planTrabajoBase.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/planTrabajoBase") || request()->is("admin/planTrabajoBase/*") ? "active" : "" }}">
+                <i class="fas fa-clipboard-list iconos_menu letra_blanca"></i>
+
+                </i>
+                <font class="letra_blanca"> Plan de trabajo base </font>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item">
             <a href="{{ url('/admin/analisis-brechas') }}" class="c-sidebar-nav-link">
                 <i class="iconos_menu letra_blanca fas fa-fw fa-file-signature">
 
@@ -78,13 +86,13 @@
             </a>
         </li>
         @can('implementacion_access')
-            <li class="c-sidebar-nav-item">
+            {{-- <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.implementacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/implementacions") || request()->is("admin/implementacions/*") ? "active" : "" }}">
                     
                     <i class="fas fa-paper-plane iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> {{ trans('cruds.implementacion.title') }} </font>
                 </a>
-            </li>
+            </li> --}}
         @endcan
         @can('documentacion_access')
             <li class="c-sidebar-nav-item">
@@ -145,7 +153,7 @@
                 <i class="iconos_menu letra_blanca fa-fw fas fa-calendar">
 
                 </i>
-                <font class="letra_blanca"> {{ trans('global.systemCalendar') }} </font>
+                <font class="letra_blanca"> Agenda </font>
             </a>
         </li>
         @can('glosario_access')
@@ -158,10 +166,25 @@
                 </a>
             </li>
         @endcan
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route("admin.soporte.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/soporte.index") || request()->is("admin/soporte/*") ? "active" : "" }}">
+                 <i class="fas fa-user-cog iconos_menu letra_blanca"></i>
+
+                <font class="letra_blanca"> Soporte </font>
+            </a>
+        </li>
 
         <li class="c-sidebar-nav-title"><font class="letra_blanca">Normas</font></li>
         @can('isoveinticieteuno_access')
-            <li class="c-sidebar-nav-dropdown">
+
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route("admin.iso27001.index") }}">
+                    <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> ISO 27001 </font>
+                </a>
+            </li>
+
+            {{-- <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca">
 
@@ -623,7 +646,7 @@
                     @endcan
 
                 </ul>
-            </li>
+            </li> --}}
         @endcan
         {{-- @can('isoveintidostresuno_access')
             <li class="c-sidebar-nav-dropdown">

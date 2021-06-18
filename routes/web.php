@@ -11,6 +11,19 @@ Route::get('/', 'Auth\LoginController@showLoginForm');
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
+
+    Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
+
+
+    Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
+
+
+    Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
+    Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
+    Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
+
+
+
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -57,8 +70,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Implementacions
-    Route::post('implementacions/guardar-proyecto', 'ImplementacionController@saveImplementationProyect')->name('implementacions.saveProyect');
-    Route::post('implementacions/cargar-proyecto', 'ImplementacionController@loadProyect')->name('implementacions.loadProyect');
+   
     Route::resource('implementacions', 'ImplementacionController');
 
 
@@ -370,6 +382,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //REPORTES CONTEXTO 27001
     Route::get('reportes-contexto/', 'ReporteContextoController@index')->name('reportes-contexto.index');
     Route::post('reportes-contexto/create', 'ReporteContextoController@store')->name('reportes-contexto.store');
+
+
+
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
@@ -665,3 +680,9 @@ Route::view('stepper', 'stepper');
 Route::view('post_register', 'auth.post_register');
 
 Route::view('test', 'auth.test');
+
+
+
+
+
+
