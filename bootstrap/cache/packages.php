@@ -24,6 +24,17 @@
       'PDF' => 'Barryvdh\\DomPDF\\Facade',
     ),
   ),
+  'davejamesmiller/laravel-breadcrumbs' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'DaveJamesMiller\\Breadcrumbs\\BreadcrumbsServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Breadcrumbs' => 'DaveJamesMiller\\Breadcrumbs\\Facades\\Breadcrumbs',
+    ),
+  ),
   'emotality/tawk-laravel' => 
   array (
     'providers' => 
@@ -69,6 +80,17 @@
     'aliases' => 
     array (
       'Image' => 'Intervention\\Image\\Facades\\Image',
+    ),
+  ),
+  'jenssegers/date' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Jenssegers\\Date\\DateServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Date' => 'Jenssegers\\Date\\Date',
     ),
   ),
   'laracasts/flash' => 

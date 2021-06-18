@@ -14,7 +14,9 @@
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet"/>-->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet"/>-->
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css"
           rel="tylesheet"/>-->
@@ -200,6 +202,35 @@
         .btn:hover.btn-success font{
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
+        }
+
+
+
+
+
+
+
+        ol.breadcrumb{
+            background-color: rgba(0, 0, 0, 0);
+            top: 50px;
+            margin-left: -20px;
+            margin-top: -40px;
+            margin-bottom: 60px;
+            border: none;
+            opacity: 0.6;
+        }
+        ol.breadcrumb:hover{
+            opacity: 1;
+        }
+
+        .c-header.c-header-fixed{
+            z-index: 10 !important;
+        }
+
+
+
+        .c-sidebar-backdrop{
+            z-index: 9 !important;
         }
         
     </style>

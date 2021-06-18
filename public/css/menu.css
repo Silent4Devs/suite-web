@@ -160,7 +160,7 @@ body.c-sidebar-lg-show .c-sidebar-nav-dropdown-items .c-sidebar-nav-item .c-side
 
     @media(max-width: 991px){
         #sidebar{
-            background: rgba(255,255,255,0.8);
+            background: rgba(255,255,255,1);
         }
     }
 

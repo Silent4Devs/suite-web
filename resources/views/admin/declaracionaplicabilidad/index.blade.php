@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.declaracion-aplicabilidad.index') }}
+
     <div class="mt-5 card" id="d-aplicabilidad">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Declaración de Aplicabilidad</strong></h3>

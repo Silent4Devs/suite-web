@@ -291,8 +291,32 @@
 
             @endforeach
 
+            @foreach($file_gant['tasks'] as $task)
+                 {
+                    id: 'recurasdsos{{$task['id']}}',
+                    calendarId: '4',
+                    title: 'Fase: {{$task['name']}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ \Carbon\Carbon::createFromTimestamp($task['start'] / 1000)->toDateTimeString()
+                     }}',
+                    end: '{{ \Carbon\Carbon::createFromTimestamp($task['end'] / 1000)->toDateTimeString()
+                     }}',
+                    isReadOnly : true,
+
+                },
+            @endforeach
+
+            
 
         ];
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            let gant = @json($file_gant);
+            console.log (gant.tasks);
+        });
+
     </script>
     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
 

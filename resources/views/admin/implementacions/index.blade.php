@@ -24,12 +24,12 @@
                            aria-selected="false"><font class="letra_blanca">Guía
                             de Implementación</font></a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" id="plan-tab-just" data-toggle="tab" href="#plan-just" role="tab"
                            aria-controls="plan-just"
                            aria-selected="false"><font class="letra_blanca">Plan
                             de Trabajo Base</font></a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#just" role="tab"
                            aria-controls="contact-just"
@@ -41,8 +41,8 @@
                 <div class="tab-content card" id="myTabContentJust">
 
                     <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just" style="margin-top: 30px; padding: 0 30px;">
-                      @include('admin.implementacions.plantrabajo')
-                        {{-- @include('admin.implementacions.introduccion') --}}
+                      
+                        @include('admin.implementacions.introduccion')
                     </div>
 
 
@@ -50,10 +50,12 @@
                     <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just" style="margin-top: 30px;">
                        @include('admin.implementacions.guia')
                     </div>
+
                     
-                    <div class="tab-pane fade" id="plan-just" role="tabpanel" aria-labelledby="plan-tab-just">
-                         
-                    </div>
+                    
+                    {{-- <div class="tab-pane fade" id="plan-just" role="tabpanel" aria-labelledby="plan-tab-just">
+                         @include('admin.implementacions.plantrabajo')
+                    </div> --}}
 
 
 

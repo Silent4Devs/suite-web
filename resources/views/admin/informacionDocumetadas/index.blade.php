@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+    
+    {{ Breadcrumbs::render('admin.informacion-documetadas.index') }}
+    
     @can('informacion_documetada_create')
 
         <div class="mt-5 card">
