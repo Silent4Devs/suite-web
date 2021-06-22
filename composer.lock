@@ -4,7 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8836b75ac7a766b645ab4b05cf37bb3",
+
+    "content-hash": "6eced354fccd68035252a6652c7dc0b0",
+
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -1621,6 +1623,7 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/master"
             },
             "time": "2020-06-29T00:56:53+00:00"
+<<<<<<< HEAD
         },
         {
             "name": "facade/ignition-contracts",
@@ -1674,6 +1677,8 @@
                 "source": "https://github.com/facade/ignition-contracts/tree/1.0.2"
             },
             "time": "2020-10-16T08:27:54+00:00"
+=======
+>>>>>>> 5f7822d2534d00b36831c74a98d3e0a28aa66a66
         },
         {
             "name": "fideloper/proxy",

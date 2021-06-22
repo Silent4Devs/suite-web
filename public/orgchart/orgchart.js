@@ -70,12 +70,14 @@ export default class OrgChart {
         downloadBtn = document.createElement('a');
       
       exportBtn.setAttribute('class', 'oc-export-btn btn btn-lg' + (opts.chartClass !== '' ? ' ' + opts.chartClass : ''));
-      exportBtn.style.marginTop = "0.4rem";
+      exportBtn.style.marginTop = "0.32rem";
+      exportBtn.style.fontSize = "15pt";
       exportBtn.innerHTML = '<i class="fas fa-camera" title="Tomar Captura"></i>';
       exportBtn.addEventListener('click', this._clickExportButton.bind(this));
       if (options.urlExportCSV != null) {
         exportCSV.setAttribute('class', 'oc-export-csv-btn btn btn-lg' + (opts.chartClass !== '' ? ' ' + opts.chartClass : ''));
-        exportCSV.style.marginTop = "0.4rem";
+        exportCSV.style.marginTop = "0.32rem";
+        exportBtn.style.fontSize = "14pt";
         exportCSV.title = "Exportar Organigrama a Excel/CSV";
         exportCSV.innerHTML = '<i class="fas fa-file-csv" title="Exportar"></i>';
         exportCSV.addEventListener('click', this._clickExportCSVButton.bind(this));
@@ -441,20 +443,41 @@ export default class OrgChart {
     title_info_text.classList.add('side');
     c_more.classList.add('c_more');
     let content_more = `
+      <h4 class="m-0">Información de Contácto</h4>
+      <div class="row container mb-2">
+        ${dataSourceJSON.telefono != null ? '<div class="col-4 p-0"><a href="https://wa.me/'+dataSourceJSON.telefono+'" class="btn text-success p-0" target="_blank" title="Enviar Mensaje" style="text-align:left;"><i class="fab fa-whatsapp" style="margin:0;font-size:15pt"></i></a></div>':''}
+        ${dataSourceJSON.telefono != null ? '<div class="col-4 p-0"><a href="tel:'+dataSourceJSON.telefono+'" class="btn text-primary p-0" title="Realizar llamada" style="text-align:left;"><i class="fas fa-phone-alt" style="margin:0;font-size:13pt; color: #374151;"></i></a></div>':''}
+        ${dataSourceJSON.email != null ? '<div class="col-4 p-0"><a href="mailto:'+dataSourceJSON.email+'" class="btn text-danger p-0" title="Enviar correo" style="text-align:left;"><i class="fas fa-envelope" style="margin:0;font-size:15pt; color: #374151;"></i></a></div>':''}
+      </div>
       <h4>Más Información</h4>
       <p class="it_1"><i class="fas fa-calendar-day"></i>Ingreso: <span>${dataSourceJSON.antiguedad == null ? 'Sin dato':dataSourceJSON.antiguedad}</span></p>
-      <p class="it_2">${dataSourceJSON.email != null ? '<a href="mailto:'+dataSourceJSON.email+'" style="display: inline;padding: 0;margin: 0 4px 0 0px;font-size:13px;color:#1588cc;" title="Contactar por correo"><i class="fas fa-envelope-open-text" style="margin:0"></i></a>':'<i class="fas fa-mail-bulk" style="margin: 0 7px 0 0px;"></i>'}
+      <p class="it_3"><i class="fas fa-info-circle"></i>Estatus: <span class="text-capitalize badge badge-${dataSourceJSON.estatus == 'alta' ? 'success':'danger'}">${dataSourceJSON.estatus == null ? 'Sin dato':dataSourceJSON.estatus}</span></p>
+      <p class="it_4"><i class="fas fa-info-circle"></i>No. empleado: <span>${dataSourceJSON.n_empleado == null ? 'Sin dato':dataSourceJSON.n_empleado}</span></p>
+      <p class="it_2"><i class="fas fa-info-circle" style="margin: 0 7px 0 0px;"></i>
         Email: <span>${dataSourceJSON.email == null ? 'Sin dato':dataSourceJSON.email}</span>
       </p>
-      <p class="it_3"><i class="fas fa-info-circle"></i>Estatus: <span>${dataSourceJSON.estatus == null ? 'Sin dato':dataSourceJSON.estatus}</span></p>
-      <p class="it_4"><i class="fas fa-info-circle"></i>No. empleado: <span>${dataSourceJSON.n_empleado == null ? 'Sin dato':dataSourceJSON.n_empleado}</span></p>
-      <p class="it_5">${dataSourceJSON.telefono != null ? '<a href="https://wa.me/'+dataSourceJSON.telefono+'" style="display: inline;padding: 0;margin: 0 7px 0 0px;font-size:15px;color:#1ebea5;" target="_blank" title="Contactar por WhatsApp"><i class="fab fa-whatsapp" style="margin:0"></i></a><a href="tel:'+dataSourceJSON.telefono+'" style="display: inline;padding: 0;margin: 0 4px 0 0px;font-size:13px;color:#1588cc;" title="Contactar por teléfono"><i class="fas fa-phone-alt" style="margin:0"></i></a>':'<i class="fab fa-whatsapp" style="margin: 0 7px 0 0px;"></i>'}
+      <p class="it_5"><i class="fas fa-info-circle" style="margin: 0 7px 0 0px;"></i>
         Teléfono: <span>${dataSourceJSON.telefono == null ? 'Sin dato':dataSourceJSON.telefono}</span>
-      </p>`;
-      if (dataSourceJSON.supervisor != null) {
+      </p>
+      `;
+        if (dataSourceJSON.supervisor != null) {
+          let photo_s;
+          if (dataSourceJSON.supervisor.foto == null) {
+            if (dataSourceJSON.supervisor.genero == 'H') {
+                photo_s = `${this.options.nodeRepositoryImages}/man.png`;
+              } else if(dataSourceJSON.supervisor.genero == 'M') {
+                photo_s = `${this.options.nodeRepositoryImages}/woman.png`;
+              }else{
+                photo_s = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
+              } 
+          }
+        else {
+          photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;  
+        }
         content_more += `
               <div class="supervisor">
               <h4 class="supervisor-title">Supervisado Por:</h4>
+              <img src="${photo_s}" alt="Admin" class="rounded-circle mb-2" style="height: 80px;width: 80px;margin: auto;">
               <p class="supervisor-name"><i class="fas fa-user"></i><span>${dataSourceJSON.supervisor.name}</span></p>
               <p class="supervisor-puesto"><i class="fas fa-info-circle"></i><span>${dataSourceJSON.supervisor.puesto}</span></p>
             </div>
