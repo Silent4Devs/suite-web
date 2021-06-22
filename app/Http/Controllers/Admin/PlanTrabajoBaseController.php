@@ -98,4 +98,31 @@ class PlanTrabajoBaseController extends Controller
 
         return $json_code;
     }
+
+
+
+    public function saveCurrentProyect(Request $request)
+    {
+        if ($request->ajax()) {
+
+           $gantt_path = 'storage/gantt/';
+
+            $path = public_path($gantt_path);
+
+            $files = glob($path . "gantt_inicial*.json");
+            $version_gantt = [];
+
+            sort($files, SORT_NATURAL | SORT_FLAG_CASE);
+            foreach ($files as $clave => $valor) {
+                array_push($version_gantt, $valor);
+            }
+
+
+            $path = end($version_gantt);
+
+            $store = file_put_contents($path, $request->gantt);
+
+            return response('guardado con exito', 200);
+        }
+    }
 }
