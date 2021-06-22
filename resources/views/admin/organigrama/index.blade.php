@@ -422,12 +422,13 @@
                                 <div class="row h-100 align-items-center" style="margin-top: -12px;">
                                     <div class="pl-0 col-3">
                                         <button class="btn btn-lg" id="reloadOrg" title="Recargar organigrama"
-                                            style="margin-top: 0.4rem;"><i class="fas fa-redo-alt"></i></button>
+                                            style="margin-top: 0.4rem; font-size: 13pt;"><i
+                                                class="fas fa-redo-alt"></i></button>
                                     </div>
                                     <div class="col-3">
                                         <div class="mt-2 d-flex justify-content-center">
                                             <img src="{{ asset('orgchart/orientation_assests/top.png') }}"
-                                                alt="Orientacion" id="orientacion" width="32" style="cursor:pointer;"
+                                                alt="Orientacion" id="orientacion" style="cursor:pointer; width:20px;"
                                                 title="Cambiar orientación del diagrama">
                                         </div>
                                     </div>
