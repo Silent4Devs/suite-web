@@ -100,8 +100,9 @@
 	.botones_vistas_gantt{
 		width: 100%;
 		text-align: right;
+		display: block;
 	}
-	.botones_vistas_gantt div{
+	.botones_vistas_gantt a{
 		width: 100px;
 		display: inline-block;
 		height: auto;
@@ -115,7 +116,7 @@
 		text-align: center;
 		vertical-align: middle;
 	}
-	.botones_vistas_gantt div:hover{
+	.botones_vistas_gantt a:hover{
 		border: 1px solid #00abb2;
 		background-color: #00abb2;
 		color: #fff;
@@ -126,10 +127,14 @@
 		color: #fff !important;
 	}
 
-	.botones_vistas_gantt div i{
+	.botones_vistas_gantt a i{
 		font-size: 11pt;
 		margin-right: 5px;
 	}
+
+
+
+
 
 	select.formElements option{
 		text-transform: capitalize !important;
@@ -156,6 +161,34 @@
 
 
 
+
+	.caja_tabs_general{
+		position: relative;
+		width: 100%;
+		height: auto;
+		overflow: hidden;
+		scroll-behavior: smooth;
+	}
+	.caja_tabs{
+		width: 300%;
+		height: auto;
+		top: 0;
+		left: 0;
+		display: flex;
+	}
+	section{
+		width: 33.333%;
+	}
+	section:target{
+		margin-top: -200px;
+		padding-top: 200px;
+	}
+
+
+
+
+
+
 	@media print{
 		header, footer, .sistema_gantt p, .botones_vistas_gantt, body.font-lato{
 			display: none !important;
@@ -174,23 +207,27 @@
 
 	    	
 	    	<div class="botones_vistas_gantt">
-	    		<div class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</div>
-	    		<div class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</div>
-	    		<div class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i></i>Calendario</div>
+	    		<a href="#original_gantt" class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
+	    		<a href="#tabla_gantt" class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
+	    		<a href="#calendario_gantt" class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i></i>Calendario</a>
 	    	</div>
 
-	    	<section id="original_gantt">
-	    		@include('admin.planTrabajoBase.gantt')
-			</section>
 
-			<section id="tabla_gantt" style="display: none;">
-				@include('admin.planTrabajoBase.tabla')
-			</section>
+	    	<div class="caja_tabs_general">
+	    		<div class="caja_tabs">
+			    	<section id="original_gantt">
+			    		@include('admin.planTrabajoBase.gantt')
+					</section>
 
-			<section id="calendario_gantt" style="display: none;">
-				@include('admin.planTrabajoBase.calendario')
-			</section>
+					<section id="tabla_gantt">
+						@include('admin.planTrabajoBase.tabla')
+					</section>
 
+					<section id="calendario_gantt">
+						@include('admin.planTrabajoBase.calendario')
+					</section>
+				</div>
+			</div>
 
 	</div>
 
@@ -202,7 +239,7 @@
 
 @section('scripts')
 
-	<script type="text/javascript">
+	{{-- <script type="text/javascript">
 		$(".btn_gantt_vista").click(function(){
 			$("section").css("display","none");
 			$("#original_gantt").css("display","block");
@@ -216,13 +253,13 @@
 			$("section").css("display","none");
 			$("#calendario_gantt").css("display","block");
 		});		
-	</script>
+	</script> --}}
 
 
 	<script type="text/javascript">
-		$(".botones_vistas_gantt div").click(function(){
-			$(".botones_vistas_gantt div").removeClass("boton_activo");
-			$(".botones_vistas_gantt div:hover").addClass("boton_activo");
+		$(".botones_vistas_gantt a").click(function(){
+			$(".botones_vistas_gantt a").removeClass("boton_activo");
+			$(".botones_vistas_gantt a:hover").addClass("boton_activo");
 		});
 	</script>
 @endsection
