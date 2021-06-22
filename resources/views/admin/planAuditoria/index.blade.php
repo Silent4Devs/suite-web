@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.plan-auditoria.index') }}
+    
     @can('plan_auditorium_create')
 
     @endcan

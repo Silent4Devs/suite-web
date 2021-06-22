@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.auditoria-anuals.index') }}
+    
     @can('auditoria_anual_create')
 
     @endcan

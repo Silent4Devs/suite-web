@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.indicadores-sgsis.index') }}
+    
     @can('indicadores_sgsi_create')
 
     @endcan

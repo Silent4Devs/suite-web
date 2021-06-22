@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 
+    {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
+
 <div class="card">
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.indicadoresSgsi.title') }}

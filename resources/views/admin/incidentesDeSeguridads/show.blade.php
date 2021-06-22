@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 
+    {{ Breadcrumbs::render('admin.incidentes-de-seguridads.create') }}
+
 <div class="card">
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.incidentesDeSeguridad.title') }}

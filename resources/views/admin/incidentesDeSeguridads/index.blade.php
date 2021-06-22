@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.incidentes-de-seguridads.index') }}
+    
     @can('incidentes_de_seguridad_create')
 
     @endcan

@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.competencia.index') }}
+    
     @can('competencium_create')
 
 

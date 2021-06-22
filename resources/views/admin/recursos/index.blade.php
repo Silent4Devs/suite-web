@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.recursos.index') }}
+    
     @can('recurso_create')
 
         <div class="mt-5 card">

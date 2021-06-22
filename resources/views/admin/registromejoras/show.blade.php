@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+    
+    {{ Breadcrumbs::render('admin.registromejoras.create') }}
 
 <div class="card">
     <div class="card-header">

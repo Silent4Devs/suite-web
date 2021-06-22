@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+    
+    {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
     @can('alcance_sgsi_create')
 
         <div class="mt-5 card">

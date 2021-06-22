@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+    
+    {{ Breadcrumbs::render('admin.roles-responsabilidades.index') }}
+    
     @can('roles_responsabilidade_create')
 
         <div class="mt-5 card">

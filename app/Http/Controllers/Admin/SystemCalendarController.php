@@ -66,12 +66,28 @@ class SystemCalendarController extends Controller
         //     }
         // }
 
+
+        $gantt_path = 'storage/gantt/';
+
+        $version_gantt = glob($gantt_path . "gantt_inicial*.json");
+
+        $path_gantt = end($version_gantt);
+
+        $file_gant = json_decode(file_get_contents($path_gantt), true);
+
+
+        
+        
+
+
+
+
         $plan_base = PlanBaseActividade::get();
 
         $auditorias_anual = AuditoriaAnual::get();
 
         $recursos = Recurso::get();
 
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos'));
+        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'file_gant'));
     }
 }
