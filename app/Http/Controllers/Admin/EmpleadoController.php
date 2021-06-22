@@ -206,7 +206,27 @@ class EmpleadoController extends Controller
             'foto' => $image
         ]);
 
+        $gantt_path = 'storage/gantt/';
+        $path = public_path($gantt_path);
 
+
+
+        $files = glob($path . "gantt_inicial*.json");
+
+
+        $version_gantt = [];
+
+        sort($files, SORT_NATURAL | SORT_FLAG_CASE);
+        foreach ($files as $clave => $valor) {
+            array_push($version_gantt, $valor);
+        }
+
+
+        $path = end($version_gantt);
+        $json_code = json_decode(file_get_contents($path), true);
+        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        $write_empleados = $json_code;
+        file_put_contents($path, json_encode($write_empleados));
 
         return redirect()->route('admin.empleados.index');
     }
@@ -321,6 +341,28 @@ class EmpleadoController extends Controller
             "n_registro" =>  $request->n_empleado,
             'foto' => $image
         ]);
+
+        $gantt_path = 'storage/gantt/';
+        $path = public_path($gantt_path);
+
+        $files = glob($path . "gantt_inicial*.json");
+
+
+        $version_gantt = [];
+
+        sort($files, SORT_NATURAL | SORT_FLAG_CASE);
+        foreach ($files as $clave => $valor) {
+            array_push($version_gantt, $valor);
+        }
+
+
+        $path = end($version_gantt);
+        $json_code = json_decode(file_get_contents($path), true);
+        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        $write_empleados = $json_code;
+        file_put_contents($path, json_encode($write_empleados));
+
+
 
 
 
