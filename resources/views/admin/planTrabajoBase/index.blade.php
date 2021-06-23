@@ -101,6 +101,8 @@
 		width: 100%;
 		text-align: right;
 		display: block;
+		position: relative;
+		z-index: 2;
 	}
 	.botones_vistas_gantt a{
 		width: 100px;
@@ -168,6 +170,9 @@
 		height: auto;
 		overflow: hidden;
 		scroll-behavior: smooth;
+		margin-top: -200px;
+		padding-top: 200px;
+		z-index: 0;
 	}
 	.caja_tabs{
 		width: 300%;
@@ -178,10 +183,12 @@
 	}
 	section{
 		width: 33.333%;
+		height: 100px;
 	}
 	section:target{
 		margin-top: -200px;
 		padding-top: 200px;
+		height: auto;
 	}
 
 
@@ -216,15 +223,21 @@
 	    	<div class="caja_tabs_general">
 	    		<div class="caja_tabs">
 			    	<section id="original_gantt">
-			    		@include('admin.planTrabajoBase.gantt')
+			    		<div class="dentro_section">
+			    			@include('admin.planTrabajoBase.gantt')
+			    		</div>
 					</section>
 
 					<section id="tabla_gantt">
-						@include('admin.planTrabajoBase.tabla')
+						<div class="dentro_section">
+							@include('admin.planTrabajoBase.tabla')
+						</div>
 					</section>
 
 					<section id="calendario_gantt">
-						@include('admin.planTrabajoBase.calendario')
+						<div class="dentro_section">
+							@include('admin.planTrabajoBase.calendario')
+						</div>
 					</section>
 				</div>
 			</div>
@@ -260,6 +273,11 @@
 		$(".botones_vistas_gantt a").click(function(){
 			$(".botones_vistas_gantt a").removeClass("boton_activo");
 			$(".botones_vistas_gantt a:hover").addClass("boton_activo");
+
+		});
+
+		$(".botones_vistas_gantt").click(function(){
+			$("html").scrollTop(0);
 		});
 	</script>
 @endsection

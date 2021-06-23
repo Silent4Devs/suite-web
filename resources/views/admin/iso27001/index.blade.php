@@ -36,10 +36,6 @@
 			text-align: left;
 			padding: 10px;
 		}
-		section:target{
-			margin-top: -100%;
-			padding-top: calc(100% + 10px);
-		}
 
 
 		section ul{
@@ -405,6 +401,7 @@
 		$(".caja_btn_a a").click(function(){
 			$(".caja_btn_a a").removeClass("btn_a_seleccionado");
 			$(".caja_btn_a a:hover").addClass("btn_a_seleccionado");
+			$(".c-wrapper").scrollTop(0);
 		});
 	</script>	
 @endsection
