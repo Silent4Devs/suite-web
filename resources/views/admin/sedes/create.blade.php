@@ -1,23 +1,45 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Sede - Ubicación</h3>
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Sedes</h3>
     </div>
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.sedes.store") }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
-                <label class="required" for="sede"><i class="fas fa-building iconos-crear"></i>{{ trans('cruds.sede.fields.sede') }}</label>
-                <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" type="text" name="sede" id="sede" value="{{ old('sede', '') }}" required>
-                @if($errors->has('sede'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('sede') }}
+
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label class="required" for="sede"><i class="fas fa-building iconos-crear"></i>{{ trans('cruds.sede.fields.sede') }}</label>
+                    <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" type="text" name="sede" id="sede" value="{{ old('sede', '') }}" required>
+                    @if($errors->has('sede'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('sede') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.sede.fields.sede_helper') }}</span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label for="foto_sedes"> Fotografía de la Sede</label>
+                    <div class="mb-3 input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" class="needsclick dropzone" name="foto_sedes"
+                                id="foto_sedes" class="form-control {{ $errors->has('foto_sedes') ? 'is-invalid' : '' }}"
+                                id="foto-dropzone" accept="image/*" value="{{ old('foto_sedes', '') }}">
+                            <label class="custom-file-label" for="inputGroupFile02"></label>
+
+                        </div>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.sede.fields.sede_helper') }}</span>
+                    @if ($errors->has('foto_sedes'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('foto_sedes') }}
+                        </div>
+                    @endif
+
+                </div>
             </div>
 
             <div class="form-group">
@@ -42,7 +64,7 @@
                 <span class="help-block">{{ trans('cruds.sede.fields.descripcion_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="organizacion_id"><i class="fas fa-building iconos-crear"></i>{{ trans('cruds.sede.fields.organizacion') }}</label>
+                <label for="organizacion_id"><i class="fas fa-building iconos-crear"></i>Organización</label>
                 <select class="form-control select2 {{ $errors->has('organizacion') ? 'is-invalid' : '' }}" name="organizacion_id" id="organizacion_id">
                     @foreach($organizacions as $id => $organizacion)
                         <option value="{{ $id }}" {{ old('organizacion_id') == $id ? 'selected' : '' }}>{{ $organizacion }}</option>
@@ -55,7 +77,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
             </div>
-            <div class="form-group col-12 text-right" style="margin-left:15px;">
+            <div class="text-right form-group col-12" style="margin-left:15px;">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
