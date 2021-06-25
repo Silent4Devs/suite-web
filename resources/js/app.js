@@ -35,9 +35,11 @@
 
 // Laravel Echo
 require("./bootstrap");
+
 Echo.channel("notificaciones-campana").listen(
-    "IncidentesDeSeguridadEvent",
+    ".IncidentesDeSeguridadEvent",
     e => {
+
         let mensaje = "";
         switch (e.tipo_consulta) {
             case "create":
@@ -58,23 +60,12 @@ Echo.channel("notificaciones-campana").listen(
     }
 );
 
-Echo.channel("notificaciones-campana").listen("AuditoriaAnualEvent", e => {
+Echo.channel("notificaciones-campana").listen(".AuditoriaAnualEvent", e => {
     let mensaje = "";
     switch (e.tipo_consulta) {
         case "create":
             mensaje = `Se ha creado una nueva ${e.slug}`;
             toastr.success(mensaje);
-
-            Push.create("Has recibido una nueva notificación!", {
-                body: mensaje,
-                icon:
-                    "https://netstorage-legit.akamaized.net/images/b55a981e8cd2f483.jpg",
-                timeout: 2500,
-                onClick: function() {
-                    window.focus();
-                    this.close();
-                }
-            });
 
             break;
         case "update":
@@ -82,16 +73,6 @@ Echo.channel("notificaciones-campana").listen("AuditoriaAnualEvent", e => {
             console.log("SE ESTA CORRIENDO EL EVENTO");
             toastr.info(mensaje);
 
-            Push.create("Has recibido una nueva notificación!", {
-                body: mensaje,
-                icon:
-                    "https://netstorage-legit.akamaized.net/images/b55a981e8cd2f483.jpg",
-                timeout: 2500,
-                onClick: function() {
-                    window.focus();
-                    this.close();
-                }
-            });
             break;
         case "delete":
             mensaje = `La ${e.slug} con fecha de inicio ${e.auditoria_anual.fechainicio} ha sido eliminada`;
@@ -102,7 +83,8 @@ Echo.channel("notificaciones-campana").listen("AuditoriaAnualEvent", e => {
     }
 });
 
-Echo.channel("notificaciones-campana").listen("AccionCorrectivaEvent", e => {
+Echo.channel("notificaciones-campana").listen(".AccionCorrectivaEvent", e => {
+
     let mensaje = "";
     switch (e.tipo_consulta) {
         case "create":
@@ -130,7 +112,8 @@ Echo.channel("notificaciones-campana").listen("AccionCorrectivaEvent", e => {
     }
 });
 
-Echo.channel("notificaciones-campana").listen("RegistroMejoraEvent", e => {
+Echo.channel("notificaciones-campana").listen(".RegistroMejoraEvent", e => {
+
     let mensaje = "";
     switch (e.tipo_consulta) {
         case "create":
@@ -150,7 +133,8 @@ Echo.channel("notificaciones-campana").listen("RegistroMejoraEvent", e => {
     }
 });
 
-Echo.channel("notificaciones-campana").listen("RecursosEvent", e => {
+Echo.channel("notificaciones-campana").listen(".RecursosEvent", e => {
+
     let mensaje = "";
     switch (e.tipo_consulta) {
         case "create":
@@ -175,3 +159,5 @@ Echo.private("App.Models.User." + window.Laravel.user).notification(e => {
     Livewire.emit("render-task-count");
     Livewire.emit("render-task-list");
 });
+
+//Echo.channel("notificaciones-campana");
