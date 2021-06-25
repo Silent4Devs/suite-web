@@ -9354,6 +9354,27 @@ var PusherChannel = /*#__PURE__*/function (_Channel) {
       return this;
     }
     /**
+     * Listen for all events on the channel instance.
+     */
+
+  }, {
+    key: "listenToAll",
+    value: function listenToAll(callback) {
+      var _this2 = this;
+
+      this.subscription.bind_global(function (event, data) {
+        if (event.startsWith('pusher:')) {
+          return;
+        }
+
+        var namespace = _this2.options.namespace.replace(/\./g, '\\');
+
+        var formattedEvent = event.startsWith(namespace) ? event.substring(namespace.length + 1) : '.' + event;
+        callback(formattedEvent, data);
+      });
+      return this;
+    }
+    /**
      * Stop listening for an event on the channel instance.
      */
 
@@ -9364,6 +9385,21 @@ var PusherChannel = /*#__PURE__*/function (_Channel) {
         this.subscription.unbind(this.eventFormatter.format(event), callback);
       } else {
         this.subscription.unbind(this.eventFormatter.format(event));
+      }
+
+      return this;
+    }
+    /**
+     * Stop listening for all events on the channel instance.
+     */
+
+  }, {
+    key: "stopListeningToAll",
+    value: function stopListeningToAll(callback) {
+      if (callback) {
+        this.subscription.unbind_global(callback);
+      } else {
+        this.subscription.unbind_global();
       }
 
       return this;
@@ -15343,7 +15379,7 @@ runtime.setup(pusher_Pusher);
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
-* sweetalert2 v10.16.7
+* sweetalert2 v10.16.9
 * Released under the MIT License.
 */
 (function (global, factory) {
@@ -18969,7 +19005,7 @@ runtime.setup(pusher_Pusher);
     };
   });
   SweetAlert.DismissReason = DismissReason;
-  SweetAlert.version = '10.16.7';
+  SweetAlert.version = '10.16.9';
 
   var Swal = SweetAlert;
   Swal["default"] = Swal;
@@ -19023,7 +19059,7 @@ if (typeof this !== 'undefined' && this.Sweetalert2){  this.swal = this.sweetAle
 // Laravel Echo
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-Echo.channel("notificaciones-campana").listen("IncidentesDeSeguridadEvent", function (e) {
+Echo.channel("notificaciones-campana").listen(".IncidentesDeSeguridadEvent", function (e) {
   var mensaje = "";
 
   switch (e.tipo_consulta) {
@@ -19046,38 +19082,19 @@ Echo.channel("notificaciones-campana").listen("IncidentesDeSeguridadEvent", func
       break;
   }
 });
-Echo.channel("notificaciones-campana").listen("AuditoriaAnualEvent", function (e) {
-  console.log("ocurrio evento anual");
+Echo.channel("notificaciones-campana").listen(".AuditoriaAnualEvent", function (e) {
   var mensaje = "";
 
   switch (e.tipo_consulta) {
     case "create":
       mensaje = "Se ha creado una nueva ".concat(e.slug);
       toastr.success(mensaje);
-      Push.create("Has recibido una nueva notificación!", {
-        body: mensaje,
-        icon: "https://netstorage-legit.akamaized.net/images/b55a981e8cd2f483.jpg",
-        timeout: 2500,
-        onClick: function onClick() {
-          window.focus();
-          this.close();
-        }
-      });
       break;
 
     case "update":
       mensaje = "La ".concat(e.slug, " con fecha de inicio ").concat(e.auditoria_anual.fechainicio, " ha sido actualizada");
       console.log("SE ESTA CORRIENDO EL EVENTO");
       toastr.info(mensaje);
-      Push.create("Has recibido una nueva notificación!", {
-        body: mensaje,
-        icon: "https://netstorage-legit.akamaized.net/images/b55a981e8cd2f483.jpg",
-        timeout: 2500,
-        onClick: function onClick() {
-          window.focus();
-          this.close();
-        }
-      });
       break;
 
     case "delete":
@@ -19089,7 +19106,7 @@ Echo.channel("notificaciones-campana").listen("AuditoriaAnualEvent", function (e
       break;
   }
 });
-Echo.channel("notificaciones-campana").listen("AccionCorrectivaEvent", function (e) {
+Echo.channel("notificaciones-campana").listen(".AccionCorrectivaEvent", function (e) {
   var mensaje = "";
 
   switch (e.tipo_consulta) {
@@ -19112,7 +19129,7 @@ Echo.channel("notificaciones-campana").listen("AccionCorrectivaEvent", function 
       break;
   }
 });
-Echo.channel("notificaciones-campana").listen("RegistroMejoraEvent", function (e) {
+Echo.channel("notificaciones-campana").listen(".RegistroMejoraEvent", function (e) {
   var mensaje = "";
 
   switch (e.tipo_consulta) {
@@ -19135,7 +19152,7 @@ Echo.channel("notificaciones-campana").listen("RegistroMejoraEvent", function (e
       break;
   }
 });
-Echo.channel("notificaciones-campana").listen("RecursosEvent", function (e) {
+Echo.channel("notificaciones-campana").listen(".RecursosEvent", function (e) {
   var mensaje = "";
 
   switch (e.tipo_consulta) {
@@ -19162,7 +19179,7 @@ Echo["private"]("App.Models.User." + window.Laravel.user).notification(function 
   toastr.info(e.mensaje);
   Livewire.emit("render-task-count");
   Livewire.emit("render-task-list");
-});
+}); //Echo.channel("notificaciones-campana");
 
 /***/ }),
 
