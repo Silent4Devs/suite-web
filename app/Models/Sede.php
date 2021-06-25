@@ -23,6 +23,7 @@ class Sede extends Model
     protected $fillable = [
         'sede',
         'direccion',
+        'foto_sedes',
         'descripcion',
         'organizacion_id',
         'created_at',
