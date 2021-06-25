@@ -130,13 +130,14 @@ class SedeController extends Controller
         return view('admin.sedes.edit', compact('organizacions', 'sede'));
     }
 
-    public function update(UpdateSedeRequest $request, Sede $sede)
+    public function update(Request $request, $id)
     {
-        $sede->update($request->all());
+       // $sede->update($request->all());
+
 
         $sede = Sede::find($id);
         $image = $sede->foto_sedes;
-        if ($request->file('foto') != null or !empty($request->file('foto_sedes'))) {
+        if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
 
             //Si existe la imagen entonces se elimina al editarla
         
@@ -158,13 +159,16 @@ class SedeController extends Controller
             })->save($route);
         }
 
-        $sede = Sede::create([
+        
+       $sede->update([
 
-            "sede" =>  $request->sede,
-            "foto_sedes" =>  $request->foto_sede,
-            "direccion" =>  $request->direccion,
-            "descripcion" =>  $request->descripcion,
-        ]);
+        "sede" =>  $request->sede,
+        "foto_sedes" =>  $request->foto_sede,
+        "direccion" =>  $request->direccion,
+        "descripcion" =>  $request->descripcion,
+        "foto_sedes"=>$image
+    ]);
+
 
         return redirect()->route('admin.sedes.index');
     }

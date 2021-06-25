@@ -12,8 +12,8 @@
             @csrf
 
             <div class="row">
-                <div class="form-group">
-                    <label class="required" for="sede">{{ trans('cruds.sede.fields.sede') }}</label>
+                <div class="form-group col-sm-6">
+                    <label class="required" for="sede"><i class="fas fa-building iconos-crear"></i>{{ trans('cruds.sede.fields.sede') }}</label>
                     <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" type="text" name="sede" id="sede" value="{{ old('sede', $sede->sede) }}" required>
                     @if($errors->has('sede'))
                         <div class="invalid-feedback">
@@ -24,20 +24,20 @@
                 </div>  
 
                 <div class="form-group col-sm-6">
-                    <label for="foto_sedes"><i class="fas fa-id-card-alt iconos-crear"></i>Fotografía de la Sede</label>
+                    <label for="foto_sedes"><i class="fas fa-images iconos-crear"></i>Fotografía de la Sede</label>
                     <div class="mb-3 input-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="foto_sedes" id="foto_sedes" accept="image/*"
-                                value="{{ $empleado->foto_sedes }}" readonly>
+                                value="{{ $sede->foto_sedes }}" readonly>
                             <label class="custom-file-label"
-                                for="inputGroupFile02">{{ $empleado->foto_sedes != null ? $empleado->foto_sedes : '' }}</label>
+                                for="inputGroupFile02">{{ $sede->foto_sedes != null ? $sede->foto_sedes : '' }}</label>
                         </div>
 
                     </div>
                 </div>
             </div>
 
-            <div class="form-group col-sm-6">
+            <div class="form-group">
                 <label class="required" for="direccion"><i class="fas fa-map-marker-alt iconos-crear"></i>Dirección</label>
                 <input class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" type="text" name="direccion" id="direccion" value="{{ old('direccion', $sede->direccion) }}" required>
                 @if($errors->has('direccion'))
@@ -50,7 +50,7 @@
 
 
             <div class="form-group">
-                <label for="descripcion">{{ trans('cruds.sede.fields.descripcion') }}</label>
+                <label for="descripcion"><i class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.sede.fields.descripcion') }}</label>
                 <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion', $sede->descripcion) }}</textarea>
                 @if($errors->has('descripcion'))
                     <div class="invalid-feedback">
@@ -60,7 +60,7 @@
                 <span class="help-block">{{ trans('cruds.sede.fields.descripcion_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="organizacion_id">Organización</label>
+                <label for="organizacion_id"><i class="fas fa-building iconos-crear"></i>Organización</label>
                 <select class="form-control select2 {{ $errors->has('organizacion') ? 'is-invalid' : '' }}" name="organizacion_id" id="organizacion_id">
                     @foreach($organizacions as $id => $organizacion)
                         <option value="{{ $id }}" {{ (old('organizacion_id') ? old('organizacion_id') : $sede->organizacion->id ?? '') == $id ? 'selected' : '' }}>{{ $organizacion }}</option>

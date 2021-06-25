@@ -26,6 +26,7 @@ class Empleado extends Model
         'genero',
         'n_registro',
         'supervisor_id',
+        'sede_id',
     ];
 
 
@@ -52,6 +53,10 @@ class Empleado extends Model
     public function area()
     {
         return $this->belongsTo(Area::class, 'area_id', 'id');
+    }
+    public function sede()
+    {
+        return $this->belongsTo(Sede::class, 'sede_id', 'id');
     }
 
     // public static function getAllEmpleados($empleado, $empleados = null)

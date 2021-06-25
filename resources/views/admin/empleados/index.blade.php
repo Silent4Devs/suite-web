@@ -58,7 +58,9 @@
                         <th style="vertical-align: top">
                             Estatus
                         </th>
-
+                        <th style="vertical-align: top">
+                            Sede
+                        </th>
                         <th style="vertical-align: top">
                             Opciones
                         </th>
@@ -241,6 +243,10 @@
                     {
                         data: 'estatus',
                         name: 'estatus'
+                    },
+                    {
+                        data: 'sede',
+                        name: 'sede'
                     },
                     {
                         data: 'actions',

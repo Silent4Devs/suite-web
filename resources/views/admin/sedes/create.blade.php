@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="form-group col-sm-6">
-                    <label for="foto_sedes"> Fotografía de la Sede</label>
+                    <label for="foto_sedes"> <i class="fas fa-images iconos-crear"></i>Fotografía de la Sede</label>
                     <div class="mb-3 input-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" class="needsclick dropzone" name="foto_sedes"
