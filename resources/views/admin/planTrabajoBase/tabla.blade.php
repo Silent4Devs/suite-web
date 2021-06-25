@@ -10,21 +10,20 @@
 
 	
 	.STATUS_ACTIVE, .STATUS_ACTIVE:hover{
-        background-color: #ecde00 !important;
-       	fill: #ecde00 !important;
+        background-color: rgb(253, 171, 61) !important;
+       	fill: rgb(253, 171, 61) !important;
     }
     .STATUS_DONE, .STATUS_DONE:hover{
-        background-color: #17d300 !important;
-       	fill: #17d300 !important;
+        background-color: rgb(0, 200, 117) !important;
+       	fill: rgb(0, 200, 117) !important;
     }
     .STATUS_FAILED, .STATUS_FAILED:hover{
-        background-color: #e10000 !important;
-       	fill: #e10000 !important;
+        background-color: rgb(226, 68, 92) !important;
+       	fill: rgb(226, 68, 92) !important;
     }
     .STATUS_SUSPENDED, .STATUS_SUSPENDED:hover{
-        background-color: #e7e7e7 !important;
-       	fill: #e7e7e7 !important;
-        color: #222222 !important;
+        background-color: #aaaaaa !important;
+       	fill: #aaaaaa !important;
     }
     .STATUS_UNDEFINED, .STATUS_UNDEFINED:hover{
         background-color: #00b1e1 !important;
