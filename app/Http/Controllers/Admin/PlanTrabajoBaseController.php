@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 class PlanTrabajoBaseController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $gantt_path = 'storage/gantt/';
         $path = public_path($gantt_path);
         $files = glob($path . "gantt_inicial*.json");
@@ -39,7 +40,7 @@ class PlanTrabajoBaseController extends Controller
         return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
     }
 
-     public function saveImplementationProyect(Request $request)
+    public function saveImplementationProyect(Request $request)
     {
 
         $gantt_path = 'storage/gantt/';
@@ -97,5 +98,45 @@ class PlanTrabajoBaseController extends Controller
         $json_code =  json_decode(file_get_contents($path), true);
 
         return $json_code;
+    }
+
+
+
+    public function saveCurrentProyect(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $gantt_path = 'storage/gantt/';
+
+            $path = public_path($gantt_path);
+
+            $files = glob($path . "gantt_inicial*.json");
+            $version_gantt = [];
+
+            sort($files, SORT_NATURAL | SORT_FLAG_CASE);
+            foreach ($files as $clave => $valor) {
+                array_push($version_gantt, $valor);
+            }
+
+
+            $path = end($version_gantt);
+
+            $store = file_put_contents($path, $request->gantt);
+
+            return response('guardado con exito', 200);
+        }
+    }
+
+    public function saveStatus(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $status_path = 'storage/gantt/status.json';
+            
+            $path = public_path($status_path);
+            file_put_contents($path, $request->estatuses);
+
+            return response('guardado con exito', 200);
+        }
     }
 }
