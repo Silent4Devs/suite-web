@@ -28,27 +28,27 @@ class EmpleadoController extends Controller
         // abort_if(Gate::denies('empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query=DB::table('empleados')->select(DB::raw('id,
-            name,
-            foto,
-            area,
-            puesto,
-            jefe,
-            antiguedad as "fecha ingreso",
-            if(estatus = 1, "Activo", "Inactivo") as "estado",
-            concat(timestampdiff(year, antiguedad, NOW()), " año con ",
-            FLOOR(( datediff(now(), antiguedad) / 365.25 - FLOOR(datediff(now(), antiguedad) / 365.25)) * 12), " meses y ",
-            DAY(CURDATE()) - DAY(antiguedad) +30 * (DAY(CURDATE()) < DAY(antiguedad)) , " días."
-            ) as antiguedad,
-            email,
-            telefono,
-            n_empleado,
-            estatus,
-            n_registro
-            '))->whereNull('deleted_at')->get();
+            // $query = DB::table('empleados')->select(DB::raw('id,
+            // name,
+            // foto,
+            // area,
+            // puesto,
+            // jefe,
+            // antiguedad as "fecha ingreso",
+            // if(estatus = 1, "Activo", "Inactivo") as "estado",
+            // concat(timestampdiff(year, antiguedad, NOW()), " año con ",
+            // FLOOR(( datediff(now(), antiguedad) / 365.25 - FLOOR(datediff(now(), antiguedad) / 365.25)) * 12), " meses y ",
+            // DAY(CURDATE()) - DAY(antiguedad) +30 * (DAY(CURDATE()) < DAY(antiguedad)) , " días."
+            // ) as antiguedad,
+            // email,
+            // telefono,
+            // n_empleado,
+            // estatus,
+            // n_registro
+            // '))->whereNull('deleted_at')->get();
+            $query = Empleado::get();
             $table = DataTables::of($query);
 
-      
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
             $table->addIndexColumn();
@@ -71,7 +71,7 @@ class EmpleadoController extends Controller
 
             //     return "<img src=".public_path() . '/storage/empleados/imagenes/' .$row->foto.">";
             // });
-            
+
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
@@ -80,8 +80,7 @@ class EmpleadoController extends Controller
             });
 
             $table->editColumn('foto', function ($row) {
-                return $row->foto ? $row->foto:'';
-                
+                return $row->foto ? $row->foto : '';
             });
 
             // $dt = CarbonLocale::now();
@@ -93,13 +92,14 @@ class EmpleadoController extends Controller
             $table->editColumn('puesto', function ($row) {
                 return $row->puesto ? $row->puesto : "";
             });
-            $table->editColumn('jefe', function ($row) {
-                return $row->supervisor ? $row->supervisor->name : "";
-            });
+            $table->editColumn(
+                'jefe',
+                function ($row) {
+                    return $row->supervisor ? $row->supervisor->name : "";
+                }
+            );
             $table->editColumn('antiguedad', function ($row) {
-
-            return Carbon::parse(Carbon::parse($row->antiguedad))->diffForHumans(Carbon::now()->subDays());
-
+                return Carbon::parse(Carbon::parse($row->antiguedad))->diffForHumans(Carbon::now()->subDays());
             });
             $table->editColumn('estatus', function ($row) {
                 return $row->estatus ? $row->estatus : "";
@@ -125,10 +125,8 @@ class EmpleadoController extends Controller
             return $table->make(true);
         }
 
-
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         return view('admin.empleados.index', compact('ceo_exists'));
-
     }
 
     /**
@@ -144,7 +142,6 @@ class EmpleadoController extends Controller
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
         return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas'));
-
     }
 
     /**
@@ -260,7 +257,6 @@ class EmpleadoController extends Controller
         $area = Area::findOrfail($empleado->area_id);
 
         return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area'));
-
     }
 
     /**
@@ -306,7 +302,7 @@ class EmpleadoController extends Controller
         if ($request->file('foto') != null or !empty($request->file('foto'))) {
 
             //Si existe la imagen entonces se elimina al editarla
-        
+
             $isExists = Storage::disk('public')->exists('empleados/imagenes/' . $empleado->foto);
             if ($isExists) {
                 if ($empleado->foto != null) {
@@ -400,4 +396,3 @@ class EmpleadoController extends Controller
         }
     }
 }
-

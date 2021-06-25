@@ -1,7 +1,5 @@
 
-
 <div id="sistema_gantt">
-
 					<p>
 			    		Se debera guardar los cambios realizados presionando el icono "Guardar" 
 			    	</p>
@@ -70,30 +68,34 @@
 
 			var ge;
 			$(function() {
-			  var canWrite=true; //this is the default for test purposes
-
-			  // here starts gantt initialization
-			  ge = new GanttMaster();
-			  ge.set100OnClose=true;
-
-			  ge.shrinkParent=true;
-
-			  ge.init($("#workSpace"));
-			  loadI18n(); //overwrite with localized ones
-
-			  //in order to force compute the best-fitting zoom level
-			  delete ge.gantt.zoom;
-
-			  var project=loadGanttFromServer();
-
-			  if (!project.canWrite)
-			    $(".ganttButtonBar button.requireWrite").attr("disabled","true");
-
-			  ge.loadProject(project);
-			  ge.checkpoint(); //empty the undo stack
-
-			  initializeHistoryManagement(ge.tasks[0].id);
+				initProject();
 			});
+
+			function initProject(){
+				var canWrite=true; //this is the default for test purposes
+
+				// here starts gantt initialization
+				ge = new GanttMaster();
+				ge.set100OnClose=true;
+
+				ge.shrinkParent=true;
+
+				ge.init($("#workSpace"));
+				loadI18n(); //overwrite with localized ones
+
+				//in order to force compute the best-fitting zoom level
+				delete ge.gantt.zoom;
+
+				var project=loadGanttFromServer();
+
+				if (!project.canWrite)
+					$(".ganttButtonBar button.requireWrite").attr("disabled","true");
+
+				ge.loadProject(project);
+				ge.checkpoint(); //empty the undo stack
+
+				initializeHistoryManagement(ge.tasks[0].id);
+			}
 
 
 
@@ -163,24 +165,12 @@
 			  //saveInLocalStorage();
 
 			  var prj = ge.saveProject();
-
-			              // console.log(JSON.stringify(prj, null, '\t'));
-
 			  var txt_prj = JSON.stringify(prj, null, '\t');
-
 			  $.ajax({
-
 			    type: "post",
-
-
 			    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-
-			   
-
 			    url: "{{route('admin.planTrabajoBase.saveProyect')}}",
-
 			    data: {txt_prj},
-
 			    success: function (response) {
 			      if(response.success){
 			        Swal.fire({
