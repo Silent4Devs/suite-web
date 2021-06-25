@@ -231,6 +231,21 @@
                         @endif
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="sede_id"><i class="fas fa-building iconos-crear"></i>Sede</label>
+                    <select class="form-control select2 {{ $errors->has('sedes') ? 'is-invalid' : '' }}" name="sede_id" id="sede_id">
+                        @foreach($sedes as $sede_actual)
+                            <option value="{{ $sede_actual->id }}" {{ old('sede_id', $sede_actual->id)  == $sede->id ? 'selected' : '' }}>{{ $sede_actual->sede }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('sede_id'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('sede_id') }}
+                        </div>
+                    @endif                
+                </div>
+
                 <div class="text-right form-group col-12">
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}

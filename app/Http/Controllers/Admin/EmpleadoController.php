@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use Gate;
+use App\Models\Area;
+use App\Models\Sede;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Area;
-use Intervention\Image\Facades\Image;
     use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,24 +29,25 @@ class EmpleadoController extends Controller
         // abort_if(Gate::denies('empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query=DB::table('empleados')->select(DB::raw('id,
-            name,
-            foto,
-            area,
-            puesto,
-            jefe,
-            antiguedad as "fecha ingreso",
-            if(estatus = 1, "Activo", "Inactivo") as "estado",
-            concat(timestampdiff(year, antiguedad, NOW()), " año con ",
-            FLOOR(( datediff(now(), antiguedad) / 365.25 - FLOOR(datediff(now(), antiguedad) / 365.25)) * 12), " meses y ",
-            DAY(CURDATE()) - DAY(antiguedad) +30 * (DAY(CURDATE()) < DAY(antiguedad)) , " días."
-            ) as antiguedad,
-            email,
-            telefono,
-            n_empleado,
-            estatus,
-            n_registro
-            '))->whereNull('deleted_at')->get();
+            // $query=DB::table('empleados')->select(DB::raw('id,
+            // name,
+            // foto,
+            // area,
+            // puesto,
+            // jefe,
+            // antiguedad as "fecha ingreso",
+            // if(estatus = 1, "Activo", "Inactivo") as "estado",
+            // concat(timestampdiff(year, antiguedad, NOW()), " año con ",
+            // FLOOR(( datediff(now(), antiguedad) / 365.25 - FLOOR(datediff(now(), antiguedad) / 365.25)) * 12), " meses y ",
+            // DAY(CURDATE()) - DAY(antiguedad) +30 * (DAY(CURDATE()) < DAY(antiguedad)) , " días."
+            // ) as antiguedad,
+            // email,
+            // telefono,
+            // n_empleado,
+            // estatus,
+            // n_registro
+            // '))->whereNull('deleted_at')->get();
+            $query=Empleado::get();
             $table = DataTables::of($query);
 
       
@@ -117,7 +119,12 @@ class EmpleadoController extends Controller
             });
 
             $table->editColumn('n_registro', function ($row) {
-                return $row->n_empleado ? $row->n_registro : "";
+                return $row->n_registro ? $row->n_registro : "";
+            });
+
+            $table->editColumn('sede', function ($row) {
+                return $row->sede ? $row->sede->sede:'';
+                
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -143,7 +150,8 @@ class EmpleadoController extends Controller
         $empleados = Empleado::get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas'));
+        $sedes = Sede::get();
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas','sedes'));
 
     }
 
@@ -170,6 +178,7 @@ class EmpleadoController extends Controller
             'antiguedad' => 'required',
             'estatus' => 'required',
             'email' => 'required|email',
+            'sede_id' => 'required|exists:sedes,id',
 
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado'
@@ -186,7 +195,8 @@ class EmpleadoController extends Controller
             "telefono" =>  $request->telefono,
             "genero" =>  $request->genero,
             "n_empleado" =>  $request->n_empleado,
-            "n_registro" =>  $request->n_empleado,
+            "n_registro" =>  $request->n_registro,
+            "sede_id" =>  $request->sede_id
         ]);
         $image = null;
         if ($request->file('foto') != null or !empty($request->file('foto'))) {
@@ -258,8 +268,9 @@ class EmpleadoController extends Controller
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
         $area = Area::findOrfail($empleado->area_id);
-
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area'));
+        $sedes = Sede::get();
+        $sede = Sede::findOrfail($empleado->sede_id);
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area','sede','sedes'));
 
     }
 
@@ -272,7 +283,7 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        //dd($request->all());
         $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
@@ -295,6 +306,7 @@ class EmpleadoController extends Controller
             'antiguedad' => 'required',
             'estatus' => 'required',
             'email' => 'required|email',
+            'sede_id' => 'required|exists:sedes,id',
 
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado'
@@ -329,7 +341,6 @@ class EmpleadoController extends Controller
 
             'name' => $request->name,
             "area_id" =>  $request->area_id,
-
             "puesto" =>  $request->puesto,
             "supervisor_id" =>  $request->supervisor_id,
             "antiguedad" =>  $request->antiguedad,
@@ -339,7 +350,8 @@ class EmpleadoController extends Controller
             "genero" =>  $request->genero,
             "n_empleado" =>  $request->n_empleado,
             "n_registro" =>  $request->n_empleado,
-            'foto' => $image
+            'foto' => $image,
+            "sede_id"=>$request->sede_id
         ]);
 
         $gantt_path = 'storage/gantt/';
