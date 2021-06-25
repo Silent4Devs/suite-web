@@ -36,7 +36,7 @@
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css" integrity="sha512-4E8WH1J08+TC3LLRtjJdA8OlggQvj5LN+TciGGwJWaQtFXj0BoZPKT9gIHol283GiUfpKPVk54LJfur5jfiRxA==" crossorigin="anonymous" />
 
 
-          
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
         integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
         crossorigin="anonymous" />
@@ -66,7 +66,7 @@
         table.dataTable{
             border-collapse: collapse !important;
         }
-       
+
         /*body::before {
             content: "";
             position: fixed;
@@ -165,15 +165,15 @@
             overflow: hidden;
         }
 
-        
+
         .card{
             border: none !important;
             box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.12);
         }
 
         .card-body.align-self-center{
-            margin-top: -65px !important;   
-            
+            margin-top: -65px !important;
+
             background-color: rgba(0, 0, 0, 0) !important;
             box-shadow: none !important;
             border-radius: 0 !important;
@@ -232,7 +232,7 @@
         .c-sidebar-backdrop{
             z-index: 9 !important;
         }
-        
+
     </style>
     @yield('styles')
     @livewireStyles
@@ -386,10 +386,10 @@
 
 
     <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-    
+    <script src="{{ asset('push/bin/push.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
     </script>
     {{-- <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script> --}}
@@ -416,12 +416,13 @@
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="{{ asset('bs-stepper/dist/js/bs-stepper.min.js') }}"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
+
     <script>
         window.Laravel = {!! json_encode([
             'user' => auth()->check() ? auth()->user()->id : null,
         ]) !!};
     </script>
-    
+
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <!-- x editable -->
@@ -542,7 +543,7 @@
                 //dom: 'lBfrtip<"actions">',
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
-                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",  
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 buttons: [{
                         extend: 'selectAll',
                         className: 'btn-primary',
@@ -709,7 +710,7 @@
     </script>
 
     @yield('scripts')
-    
+
 
 </body>
 

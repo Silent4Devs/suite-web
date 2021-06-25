@@ -19014,7 +19014,7 @@ if (typeof this !== 'undefined' && this.Sweetalert2){  this.swal = this.sweetAle
 //     data(){
 //     return {
 //         settings: {
-//             baseUrl: 'http://tabantaj.test/file-manager', 
+//             baseUrl: 'http://tabantaj.test/file-manager',
 //             lang: 'es',
 //         }
 //     }
@@ -19023,7 +19023,7 @@ if (typeof this !== 'undefined' && this.Sweetalert2){  this.swal = this.sweetAle
 // Laravel Echo
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-Echo.channel('notificaciones-campana').listen('IncidentesDeSeguridadEvent', function (e) {
+Echo.channel("notificaciones-campana").listen("IncidentesDeSeguridadEvent", function (e) {
   var mensaje = "";
 
   switch (e.tipo_consulta) {
@@ -19046,18 +19046,38 @@ Echo.channel('notificaciones-campana').listen('IncidentesDeSeguridadEvent', func
       break;
   }
 });
-Echo.channel('notificaciones-campana').listen('AuditoriaAnualEvent', function (e) {
+Echo.channel("notificaciones-campana").listen("AuditoriaAnualEvent", function (e) {
+  console.log("ocurrio evento anual");
   var mensaje = "";
 
   switch (e.tipo_consulta) {
     case "create":
       mensaje = "Se ha creado una nueva ".concat(e.slug);
       toastr.success(mensaje);
+      Push.create("Has recibido una nueva notificación!", {
+        body: mensaje,
+        icon: "https://netstorage-legit.akamaized.net/images/b55a981e8cd2f483.jpg",
+        timeout: 2500,
+        onClick: function onClick() {
+          window.focus();
+          this.close();
+        }
+      });
       break;
 
     case "update":
       mensaje = "La ".concat(e.slug, " con fecha de inicio ").concat(e.auditoria_anual.fechainicio, " ha sido actualizada");
+      console.log("SE ESTA CORRIENDO EL EVENTO");
       toastr.info(mensaje);
+      Push.create("Has recibido una nueva notificación!", {
+        body: mensaje,
+        icon: "https://netstorage-legit.akamaized.net/images/b55a981e8cd2f483.jpg",
+        timeout: 2500,
+        onClick: function onClick() {
+          window.focus();
+          this.close();
+        }
+      });
       break;
 
     case "delete":
@@ -19069,7 +19089,7 @@ Echo.channel('notificaciones-campana').listen('AuditoriaAnualEvent', function (e
       break;
   }
 });
-Echo.channel('notificaciones-campana').listen('AccionCorrectivaEvent', function (e) {
+Echo.channel("notificaciones-campana").listen("AccionCorrectivaEvent", function (e) {
   var mensaje = "";
 
   switch (e.tipo_consulta) {
@@ -19092,7 +19112,7 @@ Echo.channel('notificaciones-campana').listen('AccionCorrectivaEvent', function 
       break;
   }
 });
-Echo.channel('notificaciones-campana').listen('RegistroMejoraEvent', function (e) {
+Echo.channel("notificaciones-campana").listen("RegistroMejoraEvent", function (e) {
   var mensaje = "";
 
   switch (e.tipo_consulta) {
@@ -19115,7 +19135,7 @@ Echo.channel('notificaciones-campana').listen('RegistroMejoraEvent', function (e
       break;
   }
 });
-Echo.channel('notificaciones-campana').listen('RecursosEvent', function (e) {
+Echo.channel("notificaciones-campana").listen("RecursosEvent", function (e) {
   var mensaje = "";
 
   switch (e.tipo_consulta) {
@@ -19140,8 +19160,8 @@ Echo.channel('notificaciones-campana').listen('RecursosEvent', function (e) {
 });
 Echo["private"]("App.Models.User." + window.Laravel.user).notification(function (e) {
   toastr.info(e.mensaje);
-  Livewire.emit('render-task-count');
-  Livewire.emit('render-task-list');
+  Livewire.emit("render-task-count");
+  Livewire.emit("render-task-list");
 });
 
 /***/ }),
@@ -19175,8 +19195,8 @@ window.html2canvas = __webpack_require__(/*! html2canvas */ "./node_modules/html
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "",
-  cluster: "mt1",
+  key: "b4d6a27053d8aaaacac0",
+  cluster: "us2",
   forceTLS: true
 });
 
