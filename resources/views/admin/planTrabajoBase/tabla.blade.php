@@ -289,6 +289,7 @@
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Estatus</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Fecha Inicio</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Fecha Fin</th>
+								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Dependencia</th>
 							</tr>
 						</thead>
 						</tbody>
@@ -369,7 +370,7 @@
 							<td class="td_secundario td_fecha_fin" width="15%">
 								<input class="input_fecha_fin" type="date" value="${moment.unix((task.end)/1000).format("YYYY-MM-DD")}" />
 							</td>
-							<td class="td_secundario" width="15%">${task.depends != "" ? response.tasks[task.depends].name:''}</td>
+							<td class="td_secundario" width="15%">${task.depends != "" ? response.tasks[Number(task.depends)-1].name:''}</td>
 						</tr>
 					`;
 				}
