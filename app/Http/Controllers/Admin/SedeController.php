@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateSedeRequest;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Team;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,6 +53,10 @@ class SedeController extends Controller
             $table->editColumn('sede', function ($row) {
                 return $row->sede ? $row->sede : "";
             });
+            $table->editColumn('foto_sedes', function ($row) {
+                return $row->foto_sedes ? $row->foto_sedes:'';
+                
+            });
             $table->editColumn('direccion', function ($row) {
                 return $row->direccion ? $row->direccion : "";
             });
@@ -83,7 +89,32 @@ class SedeController extends Controller
 
     public function store(StoreSedeRequest $request)
     {
-        $sede = Sede::create($request->all());
+
+        $sede = Sede::create([
+            "sede" =>  $request->sede,
+            "foto_sedes" =>  $request->foto_sede,
+            "direccion" =>  $request->direccion,
+            "descripcion" =>  $request->descripcion,
+
+        ]);
+        
+        $image = null;
+        if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
+            $extension = pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $name_image = basename(pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+            $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
+            $route = storage_path() . '/app/public/sedes/imagenes/' . $new_name_image;
+            $image = $new_name_image;
+            //Usamos image_intervention para disminuir el peso de la imagen
+            $img_intervention = Image::make($request->file('foto_sedes'));
+            $img_intervention->resize(256, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($route);
+        }
+
+        $sede->update([
+            'foto_sedes' => $image
+        ]);
 
         return redirect()->route('admin.sedes.index');
     }
@@ -102,6 +133,38 @@ class SedeController extends Controller
     public function update(UpdateSedeRequest $request, Sede $sede)
     {
         $sede->update($request->all());
+
+        $sede = Sede::find($id);
+        $image = $sede->foto_sedes;
+        if ($request->file('foto') != null or !empty($request->file('foto_sedes'))) {
+
+            //Si existe la imagen entonces se elimina al editarla
+        
+            $isExists = Storage::disk('public')->exists('sedes/imagenes/' . $sede->foto_sedes);
+            if ($isExists) {
+                if ($sede->foto_sedes != null) {
+                    unlink(storage_path('/app/public/sedes/imagenes/' . $sede->foto_sedes));
+                }
+            }
+            $extension = pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $name_image = basename(pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+            $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
+            $route = storage_path() . '/app/public/sedes/imagenes/' . $new_name_image;
+            $image = $new_name_image;
+            //Usamos image_intervention para disminuir el peso de la imagen
+            $img_intervention = Image::make($request->file('foto_sedes'));
+            $img_intervention->resize(256, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($route);
+        }
+
+        $sede = Sede::create([
+
+            "sede" =>  $request->sede,
+            "foto_sedes" =>  $request->foto_sede,
+            "direccion" =>  $request->direccion,
+            "descripcion" =>  $request->descripcion,
+        ]);
 
         return redirect()->route('admin.sedes.index');
     }
