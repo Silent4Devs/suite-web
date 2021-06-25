@@ -55,7 +55,7 @@
     51 => 'Alexusmai\\LaravelFileManager\\FileManagerServiceProvider',
     52 => 'Barryvdh\\DomPDF\\ServiceProvider',
     53 => 'Intervention\\Image\\ImageServiceProvider',
-    54 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    54 => 'Jenssegers\\Date\\DateServiceProvider',
   ),
   'eager' => 
   array (
@@ -98,7 +98,7 @@
     36 => 'Alexusmai\\LaravelFileManager\\FileManagerServiceProvider',
     37 => 'Barryvdh\\DomPDF\\ServiceProvider',
     38 => 'Intervention\\Image\\ImageServiceProvider',
-    39 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    39 => 'Jenssegers\\Date\\DateServiceProvider',
   ),
   'deferred' => 
   array (

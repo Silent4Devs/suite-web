@@ -15,15 +15,28 @@ class PlanTrabajoBaseController extends Controller
     public function index(){
         $gantt_path = 'storage/gantt/';
         $path = public_path($gantt_path);
-        $archivos_gantt = glob($path . "gantt_inicial*.json");
+        $files = glob($path . "gantt_inicial*.json");
+        $archivos_gantt = [];
+
+        sort($files, SORT_NATURAL | SORT_FLAG_CASE);
+        foreach ($files as $clave => $valor) {
+            array_push($archivos_gantt, $valor);
+        }
+
         // PlanBaseActividade::with('fase')->get()
         $path_asset = asset($gantt_path);
         $gant_readed = end($archivos_gantt);
         //dd($planbase, $responsable, $responsablenom);
 
+        $file_gant = json_decode(file_get_contents($gant_readed), true);
+
         $empleados = Empleado::select("name")->get();
 
-        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados'));
+
+        $name_file_gantt = basename($gant_readed);
+
+
+        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
     }
 
      public function saveImplementationProyect(Request $request)
@@ -71,7 +84,14 @@ class PlanTrabajoBaseController extends Controller
 
         $path = public_path($gantt_path);
 
-        $version_gantt = glob($path . "gantt_inicial*.json");
+        $files = glob($path . "gantt_inicial*.json");
+        $version_gantt = [];
+
+        sort($files, SORT_NATURAL | SORT_FLAG_CASE);
+        foreach ($files as $clave => $valor) {
+            array_push($version_gantt, $valor);
+        }
+
 
         $path = end($version_gantt);
         $json_code =  json_decode(file_get_contents($path), true);
