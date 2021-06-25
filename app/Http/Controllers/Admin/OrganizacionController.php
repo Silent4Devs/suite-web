@@ -128,20 +128,36 @@ class OrganizacionController extends Controller
 
     public function store(StoreOrganizacionRequest $request)
     {
-        
-        $organizacions = Organizacion::create($request->all());
+      
         
         $file = $request->file('logotipo');
+        $nombre=null;
         if ($file != null) {
+            
             //$dataImg = $file->get();
             $nombre = $file->getClientOriginalName();
             //\Storage::disk('local')->put($nombre,  \File::get($file));
             $file->move(base_path('public/images'), $file->getClientOriginalName());
             //\Storage::delete($organizacions->logotipo);
-            $organizacions->logotipo = $nombre;
-            //dd($nombre);
-            $organizacions->save();
+
             }
+            
+       $organizacions = Organizacion::create([                                   
+        "empresa" => $request->empresa,
+        "direccion" => $request->direccion,
+        "telefono" => $request->telefono,
+        "correo" =>$request->correo,
+        "pagina_web" => $request->pagina_web,
+        "servicios" => $request->servicios,
+        "giro" => $request->giro,
+        "mision" => $request->mision,
+        "vision" => $request->vision,
+        "valores" => $request->valores,
+        "antecedentes" => $request->antecedentes,
+        "logotipo" => $nombre
+       ]);
+
+    // dd($organizacions);
     //    $organizacion = Organizacion::create($request->all());
     //    if ($request->input('logotipo', false)) {
     //       $organizacion->addMedia(storage_path('tmp/uploads/' . $request->input('logotipo')))->toMediaCollection('logotipo');

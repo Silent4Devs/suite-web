@@ -4,7 +4,7 @@
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Sedes - Ubicación</strong></h3>
+                <h3 class="mb-2 text-center text-white"><strong>Sedes</strong></h3>
             </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -18,6 +18,20 @@
                 </div>
             </div>
         @endcan
+        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre cada una de las sedes 
+                        con las que cuenta su organización</p>
+                </div>
+            </div>
+        </div>
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable datatable-Sede">
                 <thead class="thead-dark">
@@ -27,6 +41,9 @@
                         </th>
                         <th>
                             {{ trans('cruds.sede.fields.sede') }}
+                        </th>
+                        <th>
+                            Fotografía de la Sede
                         </th>
                         <th>
                             Dirección
@@ -213,6 +230,13 @@
                     {
                         data: 'sede',
                         name: 'sede'
+                    },
+                    {
+                        data: 'foto_sedes',
+                        name: 'foto_sedes',
+                        render: function(data, type, row, meta) {
+                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"35px"}" src="{{ asset('storage/sedes/imagenes/') }}/${data !=""?data:"office.png"}"></div>`;
+                        }
                     },
                     {
                         data: 'direccion',
