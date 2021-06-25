@@ -4,13 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< Updated upstream
 
     "content-hash": "6eced354fccd68035252a6652c7dc0b0",
 
-=======
-    "content-hash": "a8836b75ac7a766b645ab4b05cf37bb3",
->>>>>>> Stashed changes
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
