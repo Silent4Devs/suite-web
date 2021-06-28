@@ -73,7 +73,11 @@ class SedeController extends Controller
         }
 
         $organizacions = Organizacion::get();
+        //dd($organizacions);
         $teams         = Team::get();
+
+       // $sede_inicio = !is_null($sedes) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+
 
         return view('admin.sedes.index', compact('organizacions', 'teams'));
     }
