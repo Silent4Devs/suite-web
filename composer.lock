@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c41508f2e872101106281d8267b9e19b",
+    "content-hash": "342e5b4323073ffc8c3eba685ec1229f",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -2387,16 +2387,16 @@
         },
         {
             "name": "laminas/laminas-escaper",
-            "version": "2.7.1",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-escaper.git",
-                "reference": "67dac07c6b4857fbf2bd7a5257a4e1ca8a1c00d0"
+                "reference": "2d6dce99668b413610e9544183fa10392437f542"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/67dac07c6b4857fbf2bd7a5257a4e1ca8a1c00d0",
-                "reference": "67dac07c6b4857fbf2bd7a5257a4e1ca8a1c00d0",
+                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/2d6dce99668b413610e9544183fa10392437f542",
+                "reference": "2d6dce99668b413610e9544183fa10392437f542",
                 "shasum": ""
             },
             "require": {
@@ -2446,7 +2446,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-06-24T16:45:38+00:00"
+            "time": "2021-06-26T14:26:08+00:00"
         },
         {
             "name": "laminas/laminas-zendframework-bridge",
@@ -2643,16 +2643,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.48.1",
+            "version": "v8.48.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "edc138060a13c9e5f15c005fad5f6a39b4ccf5fa"
+                "reference": "4c50ebbb7d1a66c5f3511261413cd499d30ba4cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/edc138060a13c9e5f15c005fad5f6a39b4ccf5fa",
-                "reference": "edc138060a13c9e5f15c005fad5f6a39b4ccf5fa",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/4c50ebbb7d1a66c5f3511261413cd499d30ba4cd",
+                "reference": "4c50ebbb7d1a66c5f3511261413cd499d30ba4cd",
                 "shasum": ""
             },
             "require": {
@@ -2807,7 +2807,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-06-23T13:41:59+00:00"
+            "time": "2021-06-25T23:57:38+00:00"
         },
         {
             "name": "laravel/passport",
@@ -3267,16 +3267,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "1.6.4",
+            "version": "1.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "c3c8b7217c52572fb42aaf84211abccf75a151b2"
+                "reference": "44ffd8d3c4a9133e4bd0548622b09c55af39db5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/c3c8b7217c52572fb42aaf84211abccf75a151b2",
-                "reference": "c3c8b7217c52572fb42aaf84211abccf75a151b2",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/44ffd8d3c4a9133e4bd0548622b09c55af39db5f",
+                "reference": "44ffd8d3c4a9133e4bd0548622b09c55af39db5f",
                 "shasum": ""
             },
             "require": {
@@ -3364,7 +3364,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-19T20:08:14+00:00"
+            "time": "2021-06-26T11:57:13+00:00"
         },
         {
             "name": "league/event",
@@ -9052,16 +9052,16 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-            "version": "v9.18.0",
+            "version": "v9.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "b00f25b1941879b34e05f270835235a32b46567c"
+                "reference": "7148225d52bcdfdd77c24e8d456058f1150b84e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/b00f25b1941879b34e05f270835235a32b46567c",
-                "reference": "b00f25b1941879b34e05f270835235a32b46567c",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/7148225d52bcdfdd77c24e8d456058f1150b84e7",
+                "reference": "7148225d52bcdfdd77c24e8d456058f1150b84e7",
                 "shasum": ""
             },
             "require": {
@@ -9121,7 +9121,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables/issues",
-                "source": "https://github.com/yajra/laravel-datatables/tree/v9.18.0"
+                "source": "https://github.com/yajra/laravel-datatables/tree/v9.18.1"
             },
             "funding": [
                 {
@@ -9133,7 +9133,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-04-16T12:08:33+00:00"
+            "time": "2021-06-28T01:24:17+00:00"
         }
     ],
     "packages-dev": [
@@ -10501,6 +10501,69 @@
             "time": "2021-06-23T05:14:38+00:00"
         },
         {
+            "name": "reliese/laravel",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reliese/laravel.git",
+                "reference": "47eeb40326767d555c54b15380a960acd6853675"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reliese/laravel/zipball/47eeb40326767d555c54b15380a960acd6853675",
+                "reference": "47eeb40326767d555c54b15380a960acd6853675",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": ">=2.5",
+                "illuminate/console": ">=5.1",
+                "illuminate/contracts": ">=5.1",
+                "illuminate/database": ">=5.1",
+                "illuminate/filesystem": ">=5.1",
+                "illuminate/support": ">=5.1",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "mockery/mockery": ">=1.4",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Reliese\\Coders\\CodersServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Reliese\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Llanos",
+                    "email": "cristianllanos@outlook.com"
+                }
+            ],
+            "description": "Reliese Components for Laravel Framework code generation.",
+            "homepage": "http://cristianllanos.com",
+            "keywords": [
+                "laravel",
+                "reliese"
+            ],
+            "support": {
+                "issues": "https://github.com/reliese/laravel/issues",
+                "source": "https://github.com/reliese/laravel"
+            },
+            "time": "2021-04-29T14:36:44+00:00"
+        },
+        {
             "name": "sebastian/cli-parser",
             "version": "1.0.1",
             "source": {
@@ -11524,5 +11587,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
