@@ -10,7 +10,7 @@
     'locale' => 'es',
     'fallback_locale' => 'es',
     'faker_locale' => 'es_ES',
-    'key' => 'base64:Jd07Te5+C3neVeu5bZeG8kFAyDsOFi2ANo7lU1FMwTI=',
+    'key' => 'base64:Q0My+Z3O4kVdU4Q+Pau8M41srVT/wVIFLpEnpMUJ9qg=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -138,12 +138,12 @@
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => '',
-        'secret' => '',
-        'app_id' => '',
+        'key' => 'b4d6a27053d8aaaacac0',
+        'secret' => '517d300f93beb67d8771',
+        'app_id' => '1170946',
         'options' => 
         array (
-          'cluster' => 'mt1',
+          'cluster' => 'us2',
           'useTLS' => true,
         ),
       ),
@@ -739,7 +739,7 @@
     array (
       'font_dir' => 'C:\\laragon\\www\\tabantaj\\storage\\fonts/',
       'font_cache' => 'C:\\laragon\\www\\tabantaj\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\KAREN~1.ROD\\AppData\\Local\\Temp',
+      'temp_dir' => 'C:\\Users\\52552\\AppData\\Local\\Temp',
       'chroot' => 'C:\\laragon\\www\\tabantaj',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
