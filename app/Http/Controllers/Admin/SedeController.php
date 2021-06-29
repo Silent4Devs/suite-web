@@ -24,9 +24,9 @@ class SedeController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        //dd( Sede::with(['organizacion', 'team'])->get());
         if ($request->ajax()) {
-            $query = Sede::with(['organizacion', 'team'])->select(sprintf('%s.*', (new Sede)->table));
+            $query = Sede::with(['organizacion', 'team'])->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -72,10 +72,17 @@ class SedeController extends Controller
             return $table->make(true);
         }
 
-        $organizacions = Organizacion::get();
-        $teams         = Team::get();
+        $organizacions = Organizacion::all();
+        //$org = $organizacions->organizacion;
+        //dd($organizacions->organizacion, $organizacions);
+        $teams = Team::get();
+        $numero_sedes=Sede::count();
 
-        return view('admin.sedes.index', compact('organizacions', 'teams'));
+
+       //$sede_inicio = !is_null($sedes) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+
+
+        return view('admin.sedes.index', compact('organizacions', 'teams', 'numero_sedes'));
     }
 
     public function create()
@@ -91,6 +98,7 @@ class SedeController extends Controller
     {
 
         $sede = Sede::create([
+            "organizacion_id"=>$request->organizacion_id,
             "sede" =>  $request->sede,
             "foto_sedes" =>  $request->foto_sede,
             "direccion" =>  $request->direccion,

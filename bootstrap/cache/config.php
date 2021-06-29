@@ -617,6 +617,59 @@
       ),
     ),
   ),
+  'models' => 
+  array (
+    '*' => 
+    array (
+      'path' => 'C:\\laragon\\www\\tabantaj\\app\\Models',
+      'namespace' => 'App\\Models',
+      'parent' => 'Illuminate\\Database\\Eloquent\\Model',
+      'use' => 
+      array (
+      ),
+      'connection' => false,
+      'timestamps' => true,
+      'soft_deletes' => true,
+      'date_format' => 'Y-m-d H:i:s',
+      'per_page' => 15,
+      'base_files' => false,
+      'snake_attributes' => true,
+      'indent_with_space' => 0,
+      'qualified_tables' => false,
+      'hidden' => 
+      array (
+        0 => '*secret*',
+        1 => '*password',
+        2 => '*token',
+      ),
+      'guarded' => 
+      array (
+      ),
+      'casts' => 
+      array (
+        '*_json' => 'json',
+      ),
+      'except' => 
+      array (
+        0 => 'migrations',
+      ),
+      'only' => 
+      array (
+      ),
+      'table_prefix' => '',
+      'lower_table_name_first' => false,
+      'model_names' => 
+      array (
+      ),
+      'relation_name_strategy' => 'related',
+      'with_property_constants' => false,
+      'pluralize' => true,
+      'override_pluralize_for' => 
+      array (
+      ),
+      'fillable_in_base_files' => false,
+    ),
+  ),
   'panel' => 
   array (
     'date_format' => 'd-m-Y',
