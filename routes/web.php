@@ -50,6 +50,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
 
+    //macroprocesos
+    Route::resource('macroprocesos', 'MacroprocesoController');
+
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     //Route::post('users/get', 'UsersController@getUsers')->name('users.get');

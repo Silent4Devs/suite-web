@@ -8,7 +8,7 @@
     <div class="bg-transparent c-sidebar-brand d-md-down-none caja_caja_img_logo">
 
        <!-- <div class="text-center dark_mode1" style="padding-top: 20px;">-->
-               {{--<a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 40%;" class="img_logo"></a> --}} 
+               {{--<a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 40%;" class="img_logo"></a> --}}
             <div class="caja_img_logo">
                <?php
                 use Illuminate\Support\Facades\DB;
@@ -24,7 +24,7 @@
                 <img src="{{ url('img/Silent4Business-Logo-Color.png') }}" class="img_logo w-100">
                 <?php }
                 ?>
-           
+
         </div>
 
     </div>
@@ -111,7 +111,7 @@
         @can('implementacion_access')
             {{-- <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.implementacions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/implementacions") || request()->is("admin/implementacions/*") ? "active" : "" }}">
-                    
+
                     <i class="fas fa-paper-plane iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> {{ trans('cruds.implementacion.title') }} </font>
                 </a>
@@ -769,6 +769,14 @@
                           <a href="{{ route("admin.categoria-capacitacion.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/tipoactivos") || request()->is("admin/tipoactivos/*") ? "active" : "" }}">
                         <i class="fas fa-th-list iconos_menu letra_blanca"></i>
                               <font class="letra_blanca"> Categorias de Capacitaciones</font>
+                          </a>
+                      </li>
+                  @endcan
+                  @can('tipoactivo_access')
+                      <li class="c-sidebar-nav-item">
+                          <a href="{{ route("admin.macroprocesos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/tipoactivos") || request()->is("admin/tipoactivos/*") ? "active" : "" }}">
+                        <i class="fas fa-th-list iconos_menu letra_blanca"></i>
+                              <font class="letra_blanca"> Macroprocesos</font>
                           </a>
                       </li>
                   @endcan
