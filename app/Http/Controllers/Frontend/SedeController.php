@@ -20,6 +20,7 @@ class SedeController extends Controller
 
     public function index()
     {
+        
         abort_if(Gate::denies('sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sedes = Sede::all();

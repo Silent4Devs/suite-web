@@ -1,79 +1,75 @@
 <?php
 
+/**
+ * Created by Reliese Model.
+ */
+
 namespace App\Models;
 
-use App\Traits\MultiTenantModelTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use \DateTimeInterface;
 
-class Organizacion extends Model implements HasMedia
+/**
+ * Class Organizacion
+ * 
+ * @property int $id
+ * @property string $empresa
+ * @property string $direccion
+ * @property int|null $telefono
+ * @property string|null $correo
+ * @property string|null $pagina_web
+ * @property string|null $giro
+ * @property string|null $servicios
+ * @property string|null $mision
+ * @property string|null $vision
+ * @property string|null $valores
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $team_id
+ * @property string|null $antecedentes
+ * @property string|null $logotipo
+ * 
+ * @property Team|null $team
+ * @property Collection|Sede[] $sedes
+ *
+ * @package App\Models
+ */
+class Organizacion extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+	use SoftDeletes;
+	protected $table = 'organizacions';
 
-    public $table = 'organizacions';
+	protected $casts = [
+		'telefono' => 'int',
+		'team_id' => 'int'
+	];
 
-    public static $searchable = [
-        'mision',
-        'vision',
-        'valores',
-    ];
+	protected $fillable = [
+		'empresa',
+		'direccion',
+		'telefono',
+		'correo',
+		'pagina_web',
+		'giro',
+		'servicios',
+		'mision',
+		'vision',
+		'valores',
+		'team_id',
+		'antecedentes',
+		'logotipo'
+	];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+	public function team()
+	{
+		return $this->belongsTo(Team::class);
+	}
 
-    protected $fillable = [
-        'empresa',
-        'direccion',
-        'telefono',
-        'correo',
-        'pagina_web',
-        'giro',
-        'servicios',
-        'mision',
-        'vision',
-        'valores',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'team_id',
-        'antecedentes',
-        'logotipo',
-    ];
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
-        $this->addMediaConversion('preview')->fit('crop', 120, 120);
-    }
-
-    public function getLogotipoAttribute()
-    {
-        $file = $this->getMedia('logotipo')->last();
-
-        if ($file) {
-            $file->url       = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
-        }
-
-        return $file;
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
+	public function sedes()
+	{
+		return $this->hasMany(Sede::class);
+	}
 }
