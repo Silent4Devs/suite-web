@@ -50,6 +50,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
 
+    //procesos
+    Route::resource('procesos', 'ProcesoController');
+
     //macroprocesos
     Route::resource('macroprocesos', 'MacroprocesoController');
 
@@ -387,9 +390,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //REPORTES CONTEXTO 27001
     Route::get('reportes-contexto/', 'ReporteContextoController@index')->name('reportes-contexto.index');
     Route::post('reportes-contexto/create', 'ReporteContextoController@store')->name('reportes-contexto.store');
-
-
-
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
@@ -685,9 +685,3 @@ Route::view('stepper', 'stepper');
 Route::view('post_register', 'auth.post_register');
 
 Route::view('test', 'auth.test');
-
-
-
-
-
-

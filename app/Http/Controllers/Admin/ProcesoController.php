@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Laracasts\Flash\Flash;
-use App\Models\Macroproceso;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Proceso;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Http\Request;
 
-class MacroprocesoController extends Controller
+class ProcesoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +19,7 @@ class MacroprocesoController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Macroproceso::get();
+            $query = Proceso::get();
             $table = DataTables::of($query);
 
             $table->addColumn('actions', '&nbsp;');
@@ -29,7 +28,7 @@ class MacroprocesoController extends Controller
                 $viewGate      = 'recurso_show';
                 $editGate      = 'recurso_edit';
                 $deleteGate    = 'recurso_delete';
-                $crudRoutePart = 'macroprocesos';
+                $crudRoutePart = 'procesos';
 
                 return view('partials.datatablesActions', compact(
                     'viewGate',
@@ -49,8 +48,8 @@ class MacroprocesoController extends Controller
             $table->editColumn('nombre', function ($row) {
                 return $row->nombre ? $row->nombre : "";
             });
-            $table->editColumn('grupo', function ($row) {
-                return $row->grupo->nombre ? $row->grupo->nombre : "";
+            $table->editColumn('macroproceso', function ($row) {
+                return $row->macroproceso->nombre ? $row->macroproceso->nombre : "";
             });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
@@ -61,7 +60,7 @@ class MacroprocesoController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.macroprocesos.index');
+        return view('admin.procesos.index');
     }
 
     /**
@@ -71,10 +70,10 @@ class MacroprocesoController extends Controller
      */
     public function create()
     {
-        $grupos = DB::table('grupos')->select('id', 'nombre')->get();
+        $macroproceso = DB::table('macroprocesos')->select('id', 'codigo' ,'nombre')->get();
         //dd("teasdas". $organizaciones);
 
-        return view('admin.macroprocesos.create')->with('grupos', $grupos);
+        return view('admin.procesos.create')->with('macroprocesos', $macroproceso);
     }
 
     /**
@@ -89,71 +88,72 @@ class MacroprocesoController extends Controller
             [
                 'codigo' => 'required|string',
                 'nombre' => 'required|string',
-                'id_grupo' => 'required|integer',
+                'id_macroproceso' => 'required|integer',
                 'descripcion' => 'required|string'
             ],
         );
-        $macroprocesos = Macroproceso::create($request->all());
-        Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
-        return redirect()->route('admin.macroprocesos.index');
+        $procesos = proceso::create($request->all());
+        Flash::success('<h5 class="text-center">Proceso agregado satisfactoriamente</h5>');
+        return redirect()->route('admin.procesos.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Macroproceso  $macroproceso
+     * @param  \App\Models\Proceso  $proceso
      * @return \Illuminate\Http\Response
      */
-    public function show(Macroproceso $macroproceso)
+    public function show(Proceso $proceso)
     {
-        return view('admin.macroprocesos.show', compact('macroproceso'));
+        return view('admin.procesos.show', compact('proceso'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Macroproceso  $macroproceso
+     * @param  \App\Models\Proceso  $proceso
      * @return \Illuminate\Http\Response
      */
-    public function edit(Macroproceso $macroproceso)
+    public function edit(Proceso $proceso)
     {
-        $grupos = DB::table('grupos')->select('id', 'nombre')->get();
+        $macroproceso = DB::table('macroprocesos')->select('id', 'codigo' ,'nombre')->get();
 
-        return view('admin.macroprocesos.edit', compact('macroproceso'))->with('grupos', $grupos);
+        return view('admin.procesos.edit', compact('proceso'))->with('macroprocesos', $macroproceso);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Macroproceso  $macroproceso
+     * @param  \App\Models\Proceso  $proceso
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Macroproceso $macroproceso)
+    public function update(Request $request, Proceso $proceso)
     {
         $request->validate(
             [
                 'codigo' => 'required|string',
                 'nombre' => 'required|string',
-                'id_grupo' => 'required|integer',
+                'id_macroproceso' => 'required|integer',
                 'descripcion' => 'required|string'
             ],
         );
-        $macroproceso->update($request->all());
-        Flash::success('<h5 class="text-center">Macroproceso actualizado satisfactoriamente</h5>');
-        return redirect()->route('admin.macroprocesos.index');
+        $proceso->update($request->all());
+        Flash::success('<h5 class="text-center">Proceso actualizado satisfactoriamente</h5>');
+        return redirect()->route('admin.procesos.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Macroproceso  $macroproceso
+     * @param  \App\Models\Proceso  $proceso
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Macroproceso $macroproceso)
+    public function destroy(Proceso $proceso)
     {
-        $macroproceso->delete();
-        Flash::success('<h5 class="text-center">Macroproceso eliminado satisfactoriamente</h5>');
-        return redirect()->route('admin.macroprocesos.index');
+        $proceso->delete();
+        Flash::success('<h5 class="text-center">Proceso eliminado satisfactoriamente</h5>');
+        return redirect()->route('admin.procesos.index');
+
     }
 }
