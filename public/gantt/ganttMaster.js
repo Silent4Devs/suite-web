@@ -78,7 +78,7 @@ function GanttMaster() {
 
   this.currentTask; // task currently selected;
 
-  this.resourceUrl = "res/"; // URL to resources (images etc.)
+  this.resourceUrl = "/gantt/res/"; // URL to resources (images etc.)
   this.__currentTransaction;  // a transaction object holds previous state during changes
   this.__undoStack = [];
   this.__redoStack = [];
@@ -1647,30 +1647,32 @@ GanttMaster.prototype.manageSaveRequired=function(ev, showSave) {
   function checkChanges() {
     var changes = false;
     //there is somethin in the redo stack?
-    if (self.__undoStack.length > 0) {
-      var oldProject = JSON.parse(self.__undoStack[0]);
-      //si looppano i "nuovi" task
-      for (var i = 0; !changes && i < self.tasks.length; i++) {
-        var newTask = self.tasks[i];
-        //se è un task che c'erà già
-        if (!(""+newTask.id).startsWith("tmp_")) {
-          //si recupera il vecchio task
-          var oldTask;
-          for (var j = 0; j < oldProject.tasks.length; j++) {
-            if (oldProject.tasks[j].id == newTask.id) {
-              oldTask = oldProject.tasks[j];
+    if (self.__undoStack != null) {
+      if (self.__undoStack.length > 0) {
+        var oldProject = JSON.parse(self.__undoStack[0]);
+        //si looppano i "nuovi" task
+        for (var i = 0; !changes && i < self.tasks.length; i++) {
+          var newTask = self.tasks[i];
+          //se è un task che c'erà già
+          if (!(""+newTask.id).startsWith("tmp_")) {
+            //si recupera il vecchio task
+            var oldTask;
+            for (var j = 0; j < oldProject.tasks.length; j++) {
+              if (oldProject.tasks[j].id == newTask.id) {
+                oldTask = oldProject.tasks[j];
+                break;
+              }
+            }
+            // chack only status or dateChanges
+            if (oldTask && (oldTask.status != newTask.status || oldTask.start != newTask.start || oldTask.end != newTask.end)) {
+              changes = true;
               break;
             }
           }
-          // chack only status or dateChanges
-          if (oldTask && (oldTask.status != newTask.status || oldTask.start != newTask.start || oldTask.end != newTask.end)) {
-            changes = true;
-            break;
-          }
         }
       }
+      $("#LOG_CHANGES_CONTAINER").css("display", changes ? "inline-block" : "none"); 
     }
-    $("#LOG_CHANGES_CONTAINER").css("display", changes ? "inline-block" : "none");
   }
 
 

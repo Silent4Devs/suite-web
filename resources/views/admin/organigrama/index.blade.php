@@ -467,6 +467,7 @@
         import OrgChart from "{{ asset('orgchart/orgchart.js') }}"; // Se importan funcionalidades de OrgChart
 
         document.addEventListener('DOMContentLoaded', function() {
+            let isBlocked = JSON.parse(Cookies.get('bloqueo'));
             let orientaciones = ['t2b', 'l2r', 'r2l', 'b2t'];
             let imagenOrientaciones = ['top.png', 'left.png', 'right.png', 'bottom.png']
             let orientacion = orientaciones[0];
