@@ -803,6 +803,14 @@
                           </a>
                       </li>
                   @endcan
+                  @can('tipoactivo_access')
+                      <li class="c-sidebar-nav-item">
+                          <a href="{{ route("admin.procesos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/procesos") || request()->is("admin/procesos/*") ? "active" : "" }}">
+                        <i class="fas fa-th-list iconos_menu letra_blanca"></i>
+                              <font class="letra_blanca"> Procesos</font>
+                          </a>
+                      </li>
+                  @endcan
                 </ul>
             </li>
         @endcan

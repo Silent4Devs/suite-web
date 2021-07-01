@@ -563,7 +563,7 @@ function showBaselineInfo (event,element){
   <!--
   <div class="ganttButtonBar noprint">
     <div class="buttons">
-      <a href="https://gantt.twproject.com/"><img src="res/twGanttLogo.png" alt="Twproject" align="absmiddle" style="max-width: 136px; padding-right: 15p; display: none;x"></a>
+      <a href="https://gantt.twproject.com/"><img src="{{ asset('gantt/res/twGanttLogo.png') }}" alt="Twproject" align="absmiddle" style="max-width: 136px; padding-right: 15p; display: none;x"></a>
 
       <button onclick="$('#workSpace').trigger('undo.gantt');return false;" class="button textual icon requireCanWrite" title="Deshacer"><span class="teamworkIcon">&#39;</span></button>
       <button onclick="$('#workSpace').trigger('redo.gantt');return false;" class="button textual icon requireCanWrite" title="Rehacer"><span class="teamworkIcon">&middot;</span></button>

@@ -238,6 +238,63 @@
 			  */
 			}
 
+			function checkChangesGantt(vista) {
+			  var prj = ge.saveProject();
+			  var txt_prj = JSON.stringify(prj, null, '\t');
+			  $.ajax({
+			    type: "post",
+			    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			    url: "{{route('admin.planTrabajoBase.checkChanges')}}",
+			    data: {txt_prj},
+			    success: function (response) {
+			      if(response.existsChanges){
+					let confirmacion = confirm('Existen cambios en Gantt que no han sido guardados, ¿Desea Guardarlos?');
+					if (confirmacion) {
+						saveGanttOnServer();
+						switch (vista) {
+							case 'Gantt':
+								loadGanttFromServer();
+								break;
+							case 'Tabla':
+								initTable();
+								break;
+							case 'Calendario':
+								initCalendar();
+								break;
+							case 'Kanban':
+								initKanban();
+								break;
+							default:
+								loadGanttFromServer();
+								break;
+						}
+						// loadGanttFromServer();
+					}else{
+						loadGanttFromServer();
+					}
+					// 	Swal.fire({
+					// 		title: 'Existen cambios en Gantt, ¿Quieres guardarlos?',
+					// 		showDenyButton: true,
+					// 		showCancelButton: false,
+					// 		confirmButtonText: `Guardar`,
+					// 		denyButtonText: `Descartar`,
+					// 		}).then((result) => {
+					// 		/* Read more about isConfirmed, isDenied below */
+					// 		if (result.isConfirmed) {
+					// 			saveGanttOnServer();
+					// 			loadGanttFromServer();
+					// 		} else if (result.isDenied) {
+					// 			loadGanttFromServer();
+					// 		}
+					// 	})
+					}
+					if (response.notExistsChanges) {
+					loadGanttFromServer();
+					}
+			    }
+			  });
+			}
+
 			// Function to download data to a file
 			function download(data, filename, type) {
 			  var file = new Blob([data], {type: type});
@@ -523,7 +580,7 @@
 	  <!--
 	  <div class="ganttButtonBar noprint">
 	    <div class="buttons">
-	      <a href="https://gantt.twproject.com/"><img src="res/twGanttLogo.png" alt="Twproject" align="absmiddle" style="max-width: 136px; padding-right: 15p; display: none;x"></a>
+	      <a href="https://gantt.twproject.com/"><img src="{{ asset('gantt/res/twGanttLogo.png') }}" alt="Twproject" align="absmiddle" style="max-width: 136px; padding-right: 15p; display: none;x"></a>
 
 	      <button onclick="$('#workSpace').trigger('undo.gantt');return false;" class="button textual icon requireCanWrite" title="Deshacer"><span class="teamworkIcon">&#39;</span></button>
 	      <button onclick="$('#workSpace').trigger('redo.gantt');return false;" class="button textual icon requireCanWrite" title="Rehacer"><span class="teamworkIcon">&middot;</span></button>
@@ -582,7 +639,7 @@
 	      <button class="button opt collab" title="Start with Twproject" onclick="collaborate($(this));" style="display:none;"><em>collaborate</em></button>
 	    </div>
 	    <div class="mt-4">
-	      <span>Leyendo Archivo:</span> <strong id="version_actual_gantt" style="text-transform:capitalize">{{ str_replace('.json', '', str_replace('_', ' ', basename($gant_readed))) }}</strong>
+	      <span><strong id="version_actual_gantt" style="text-transform:capitalize"></strong>
 	    </div>
 	  </div>
 	  -->
@@ -592,18 +649,17 @@
 	  <table class="gdfTable" cellspacing="0" cellpadding="0">
 	    <thead>
 	    <tr style="height:40px">
-	      <th class="gdfColHeader" style="width:35px; border-right: none"></th>
-	      <th class="gdfColHeader" style="width:25px;"></th>
-	      <th class="gdfColHeader gdfResizable" style="width:100px;">Código</th>
-	      <th class="gdfColHeader gdfResizable" style="width:300px;">Nombre</th>
-	      <th class="gdfColHeader"  align="center" style="width:17px;" title="Fecha inicio como milestone."><span class="teamworkIcon" style="font-size: 8px;">^</span></th>
-	      <th class="gdfColHeader gdfResizable" style="width:80px;">Inicio</th>
-	      <th class="gdfColHeader"  align="center" style="width:17px;" title="Fecha fin como milestone."><span class="teamworkIcon" style="font-size: 8px;">^</span></th>
-	      <th class="gdfColHeader gdfResizable" style="width:80px;">Finalización</th>
-	      <th class="gdfColHeader gdfResizable" style="width:50px;">Duración</th>
-	      <th class="gdfColHeader gdfResizable" style="width:20px;">%</th>
+	      <th class="gdfColHeader gdfColHeaderNumber" style="width:35px; border-right: none"></th>
+	      <th class="gdfColHeader" style="width:30px !important;"></th>
+	      <th class="gdfColHeader gdfResizable gdfColHeaderName" style="width:300px;">Nombre</th>
+	      <th class="gdfColHeader gdfColHeaderFirstCheck"  align="center" style="width:17px;" title="Fecha inicio como milestone."><span class="teamworkIcon" style="font-size: 8px;">^</span></th>
+	      <th class="gdfColHeader gdfResizable gdfColHeaderStartDate" style="width:80px;">Inicio</th>
+	      <th class="gdfColHeader gdfColHeaderSecondCheck"  align="center" style="width:17px;" title="Fecha fin como milestone."><span class="teamworkIcon" style="font-size: 8px;">^</span></th>
+	      <th class="gdfColHeader gdfResizable gdfColHeaderEndDate" style="width:80px;">Finalización</th>
+	      <th class="gdfColHeader gdfResizable gdfColHeaderDuration" style="width:50px;">Duración</th>
+	      <th class="gdfColHeader gdfResizable gdfColHeaderProgress" style="width:20px;">%</th>
 	      <th class="gdfColHeader gdfResizable requireCanSeeDep" style="width:50px;">Dependencias</th>
-	      <th class="gdfColHeader gdfResizable" style="width:1000px; text-align: left; padding-left: 10px;">Asignaciones</th>
+	      <th class="gdfColHeader gdfResizable gdfColHeaderAssigs" style="width:1000px; text-align: left; padding-left: 10px;">Asignaciones</th>
 	    </tr>
 	    </thead>
 	  </table>
@@ -613,7 +669,6 @@
 	  <tr id="tid_(#=obj.id#)" taskId="(#=obj.id#)" class="taskEditRow (#=obj.isParent()?'isParent':''#) (#=obj.collapsed?'collapsed':''#)" level="(#=level#)">
 	    <th class="gdfCell edit" align="right" style="cursor:pointer;"><span class="taskRowIndex">(#=obj.getRow()+1#)</span> <span class="teamworkIcon" style="font-size:12px;" >e</span></th>
 	    <td class="gdfCell noClip" align="center"><div class="taskStatus cvcColorSquare" status="(#=obj.status#)"></div></td>
-	    <td class="gdfCell"><input type="text" name="code" value="(#=obj.code?obj.code:''#)" placeholder="Código/Nombre corto"></td>
 	    <td class="gdfCell indentCell" style="padding-left:(#=obj.level*10+18#)px;">
 	      <div class="exp-controller" align="center"></div>
 	      <input type="text" name="name" value="(#=obj.name#)" placeholder="name">
@@ -633,7 +688,6 @@
 	  <tr class="taskEditRow emptyRow" >
 	    <th class="gdfCell" align="right"></th>
 	    <td class="gdfCell noClip" align="center"></td>
-	    <td class="gdfCell"></td>
 	    <td class="gdfCell"></td>
 	    <td class="gdfCell"></td>
 	    <td class="gdfCell"></td>
@@ -679,14 +733,8 @@
 	    <h2 class="taskData">Tarea</h2>
 	    <table  cellspacing="1" cellpadding="5" width="100%" class="table taskData" border="0">
 	          <tr>
-	        <td width="200" style="height: 80px"  valign="top">
-	          <label for="code">Código/Nombre corto</label><br>
-	          <input type="text" name="code" id="code" value="" size=15 class="formElements" autocomplete='off' maxlength=255 style='width:100%' oldvalue="1">
-	        </td>
 	        <td colspan="3" valign="top"><label for="name" class="required">Nombre</label><br><input type="text" name="name" id="name"class="formElements" autocomplete='off' maxlength=255 style='width:100%' value="" required="true" oldvalue="1"></td>
 	          </tr>
-
-
 	      <tr class="dateRow">
 	        <td nowrap="">
 	          <div style="position:relative">

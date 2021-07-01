@@ -38,17 +38,81 @@ body{
   font-family: arial, helvetica, sans-serif;
 }
 
+.gdfCell.edit{
+  width: 30px !important;
+}
+
 .gdfCell.noClip{
   overflow: visible;
 }
 
 .gdfColHeader {
-  min-width: 5px;
+  min-width: 30px !important;
   height: 30px;
   background-color: #fff;
   border-bottom: 1px solid #bbb;
   border-right: 1px solid #bbb;
   padding: 10px;
+}
+
+.gdfColHeader.gdfColHeaderNumber{
+  width: 30px !important;
+}
+.gdfColHeader.gdfColHeaderName{
+  width: 200px !important;
+}
+
+.gdfColHeader.gdfColHeaderFirstCheck{
+  width: 10px !important;
+}
+
+.gdfColHeader.gdfColHeaderSecondCheck{
+  width: 10px !important;
+}
+
+.gdfColHeader.gdfColHeaderStartDate{
+  width: 80px !important;
+}
+
+.gdfColHeader.gdfColHeaderEndDate{
+  width: 80px !important;
+}
+
+.gdfColHeader.gdfColHeaderDuration{
+  width: 80px !important;
+}
+
+.gdfColHeader.gdfColHeaderProgress{
+  width: 40px !important;
+}
+
+.gdfColHeader.gdfColHeaderAssigs{
+  width: 500px !important;
+}
+
+.gdfCell.taskAssigs{
+  overflow: auto !important;
+}
+
+/* width */
+.taskAssigs::-webkit-scrollbar {
+    height: 2px;
+}
+
+/* Track */
+.taskAssigs::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
+}
+
+/* Handle */
+.taskAssigs::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+}
+
+/* Handle on hover */
+.taskAssigs::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .gdfColHeader:last-of-type {
@@ -369,7 +433,7 @@ body{
 }
 
 .taskBoxDiv .layout.extDep{
-  background-image:url(res/hasExternalDeps.png);
+  background-image:url(/public/gantt/res/hasExternalDeps.png);
 }
 
 
@@ -466,28 +530,28 @@ input[readonly]{
   cursor: pointer;
 }
 .taskStatus[status=STATUS_ACTIVE]{
-  background-color: #F9C154;
-  color: #fff;
+  background-color: rgb(253, 171, 61) !important;
+  fill: rgb(253, 171, 61) !important;
 }
 .taskStatus[status=STATUS_DONE]{
-  background-color: #3BBF67;
-  color:#000;
+  background-color: rgb(0, 200, 117) !important;
+  fill: rgb(0, 200, 117) !important;
 }
 .taskStatus[status=STATUS_FAILED]{
-  background-color: #ec2805;
-  color: #fff;
+  background-color: rgb(226, 68, 92) !important;
+  fill: rgb(226, 68, 92) !important;
 }
 .taskStatus[status=STATUS_SUSPENDED]{
-  background-color: #e7e7e7;
-  color:#000;
+  background-color: #aaaaaa !important;
+  fill: #aaaaaa !important;
 }
 .taskStatus[status=STATUS_WAITING]{
   background-color:#F79136;
   color:#000;
 }
 .taskStatus[status=STATUS_UNDEFINED]{
-  background-color: #0d0df5;
-  color:#000;
+  background-color: #00b1e1 !important;
+  fill: #00b1e1 !important;
 }
 .taskStatus.selected{
   /*border:#666 2px solid;*/
@@ -591,20 +655,26 @@ select.taskStatus{
   stroke-dasharray:2,2;
 }
 
+
 .colorByStatus .taskStatusSVG[status=STATUS_ACTIVE]{
-  fill:#ecde00;
+  background-color: rgb(253, 171, 61) !important;
+  fill: rgb(253, 171, 61) !important;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_DONE]{
-  fill: #17d300;
+  background-color: rgb(0, 200, 117) !important;
+  fill: rgb(0, 200, 117) !important;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_FAILED]{
-  fill: #e10000;
+background-color: rgb(226, 68, 92) !important;
+  fill: rgb(226, 68, 92) !important;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_SUSPENDED]{
-  fill: #e7e7e7;
+  background-color: #aaaaaa !important;
+  fill: #aaaaaa !important;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_UNDEFINED]{
-  fill: #00b1e1;
+  background-color: #00b1e1 !important;
+  fill: #00b1e1 !important;
 }
 .colorByStatus .taskStatusSVG[status=STATUS_UNDEFINED] .taskLayout{
   stroke: #0d0df5;
