@@ -6,7 +6,7 @@
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Áreas</strong></h3>
+                <h3 class="mb-2 text-center text-white"><strong>Registro de Áreas</strong></h3>
             </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -19,17 +19,44 @@
                     @include('csvImport.modal', ['model' => 'Area', 'route' => 'admin.areas.parseCsvImport'])
                 </div>
             </div>
-        @endcan
+    @endcan
+
+    <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="row w-100">
+            <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                <div class="w-100">
+                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                </div>
+            </div>
+            <div class="col-11">
+                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 2</p>
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización y dé
+                    clic en finalizar
+                    <a href="" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Finalizar</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
 
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Area">
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            {{ trans('cruds.area.fields.id') }}
+                            ID
                         </th>
                         <th>
-                            {{ trans('cruds.area.fields.area') }}
+                           Nombre de Área
+                        </th>
+                        <th>
+                            Grupo
+                        </th>
+                        <th>
+                            Reporta a
+                        </th>
+                        <th>
+                            Descripción
                         </th>
                         <th>
                             Opciones
@@ -92,7 +119,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -159,13 +186,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -195,6 +222,18 @@
                         name: 'area'
                     },
                     {
+                        data: 'grupo',
+                        name: 'grupo'
+                    },
+                    {
+                        data: 'reporta',
+                        name: 'reporta'
+                    },
+                    {
+                        data: 'descripcion',
+                        name: 'descripcion'
+                    },
+                    {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
                     }
@@ -218,6 +257,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection
