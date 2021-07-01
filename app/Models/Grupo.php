@@ -50,4 +50,9 @@ class Grupo extends Model
 	{
 		return $this->hasMany(Macroproceso::class, 'id_grupo');
 	}
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'team_id');
+    }
 }

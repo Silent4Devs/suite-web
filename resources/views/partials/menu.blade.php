@@ -51,7 +51,7 @@
                     </li>
                     @can('sede_access')
                     <li class="c-sidebar-nav-item">
-                        <a href="{{ route("admin.sedes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sedes") || request()->is("admin/sedes/*") ? "active" : "" }}">
+                        <a href="{{ route("admin.sedes.obtenerListaSedes") }}" class="c-sidebar-nav-link {{ request()->is("admin/sedes") || request()->is("admin/sedes/*") ? "active" : "" }}">
                             <i class="fas fa-map-marked-alt iconos_menu letra_blanca">
 
                             </i>
@@ -736,6 +736,29 @@
                           </a>
                       </li>
                   @endcan--}}
+                  @can('sede_access')
+                  <li class="c-sidebar-nav-item">
+                      <a href="{{ route("admin.sedes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sedes") || request()->is("admin/sedes/*") ? "active" : "" }}">
+                          <i class="fas fa-map-marked-alt iconos_menu letra_blanca">
+
+                          </i>
+                          <font class="letra_blanca"> Sedes</font>
+                      </a>
+                  </li>
+                @endcan
+                @can('area_access')
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("admin.grupoarea.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
+                        {{--<i class="fas fa-puzzle-piece iconos_menu letra_blanca">
+
+                        </i>--}}
+                        <i class="fab fa-adn iconos_menu letra_blanca">
+
+                        </i>
+                        <font class="letra_blanca"> {{ trans('cruds.area.title') }} </font>
+                    </a>
+                </li>
+                 @endcan
                   @can('user_access')
                   <li class="c-sidebar-nav-item">
                       <a href="{{ route("admin.empleados.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/empleados") || request()->is("admin/empleados/*") ? "active" : "" }}">
