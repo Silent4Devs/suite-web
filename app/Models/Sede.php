@@ -1,48 +1,73 @@
 <?php
 
+/**
+ * Created by Reliese Model.
+ */
+
 namespace App\Models;
 
-use App\Traits\MultiTenantModelTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
+/**
+ * Class Sede
+ * 
+ * @property int $id
+ * @property string $sede
+ * @property string|null $foto_sedes
+ * @property string|null $descripcion
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $organizacion_id
+ * @property int|null $team_id
+ * @property string|null $direccion
+ * 
+ * @property Organizacion|null $organizacion
+ * @property Team|null $team
+ * @property Collection|Activo[] $activos
+ * @property Collection|Empleado[] $empleados
+ *
+ * @package App\Models
+ */
 class Sede extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
+	use SoftDeletes;
+	protected $table = 'sedes';
 
-    public $table = 'sedes';
+	protected $casts = [
+		'organizacion_id' => 'int',
+		'team_id' => 'int'
+	];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+	protected $fillable = [
+		'sede',
+		'foto_sedes',
+		'descripcion',
+		'organizacion_id',
+		'team_id',
+		'direccion'
+	];
 
-    protected $fillable = [
-        'sede',
-        'direccion',
-        'descripcion',
-        'organizacion_id',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'team_id',
-    ];
+	public function organizacion()
+	{
+		return $this->belongsTo(Organizacion::class,'organizacion_id','id');
+	}
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
+	public function team()
+	{
+		return $this->belongsTo(Team::class);
+	}
 
-    public function organizacion()
-    {
-        return $this->belongsTo(Organizacion::class, 'organizacion_id');
-    }
+	public function activos()
+	{
+		return $this->hasMany(Activo::class, 'ubicacion_id');
+	}
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
+	public function empleados()
+	{
+		return $this->hasMany(Empleado::class);
+	}
 }

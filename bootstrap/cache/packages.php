@@ -187,6 +187,13 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
+  'reliese/laravel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Reliese\\Coders\\CodersServiceProvider',
+    ),
+  ),
   'spatie/laravel-medialibrary' => 
   array (
     'providers' => 
