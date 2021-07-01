@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                  fill: #fff !important;
-                                                                                                                                                                                                  height: 15px !important;
-                                                                                                                                                                                                 }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
 
 
         #workSpace {
@@ -217,60 +217,214 @@
             z-index: 2;
         }
 
+        select {
+            appearance: none;
+            background-color: transparent;
+            border: none;
+            padding: 0 1em 0 0;
+            margin: 0;
+            width: 100%;
+            min-width: 15ch;
+            max-width: 30ch;
+            font-family: inherit;
+            font-size: inherit;
+            cursor: inherit;
+            line-height: inherit;
+            outline: none;
+            cursor: pointer;
+        }
+
+        select::-ms-expand {
+            display: none;
+        }
+
     </style>
 
     <div class="mt-5 mb-5">
         <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Plan de Trabajo </strong></h3>
         </div>
-        <div class="botones_vistas_gantt">
-            <div class="row">
-                <div class="col-4">
-                    <h2 id="titlo-tab" class="text-capitalize">Gantt</h2>
+        <div id="bloqueado"></div>
+        <div id="plan_trabajo_workspace">
+            <div class="botones_vistas_gantt">
+                <div class="row">
+                    <div class="col-4">
+                        <h2 id="titlo-tab" class="text-capitalize">Gantt</h2>
+                    </div>
+                    <div class="text-right col-8">
+                        <a href="#original_gantt"
+                            onclick="loadGanttFromServer();cambiarTitulo('Gantt');checkChangesGantt('Gantt')"
+                            class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
+                        <a href="#tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');checkChangesGantt('Tabla')"
+                            class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
+                        <a href="#calendario_gantt"
+                            onclick="initCalendar();cambiarTitulo('Calendario');checkChangesGantt('Calendario')"
+                            class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
+                        <a href="#kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');checkChangesGantt('Kanban')"
+                            class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
+                    </div>
                 </div>
-                <div class="text-right col-8">
-                    <a href="#original_gantt" onclick="loadGanttFromServer();cambiarTitulo('Gantt');"
-                        class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
-                    <a href="#tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');" class="btn_gantt_tabla_vista"><i
-                            class="fas fa-table"></i>Tabla</a>
-                    <a href="#calendario_gantt" onclick="initCalendar();cambiarTitulo('Calendario');"
-                        class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
-                    <a href="#kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');"
-                        class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
+
+
+            </div>
+            <div class="caja_tabs_general">
+                <div class="caja_tabs">
+                    <section id="original_gantt">
+                        @include('admin.planTrabajoBase.gantt')
+                    </section>
+
+                    <section id="tabla_gantt">
+                        @include('admin.planTrabajoBase.tabla')
+                    </section>
+
+                    <section id="calendario_gantt">
+                        @include('admin.planTrabajoBase.calendario')
+                    </section>
+
+                    <section id="kanban_gantt">
+                        @include('admin.planTrabajoBase.kanban')
+                    </section>
                 </div>
             </div>
-
-
+            <div id="modales"></div>
         </div>
-        <div class="caja_tabs_general">
-            <div class="caja_tabs">
-                <section id="original_gantt">
-                    @include('admin.planTrabajoBase.gantt')
-                </section>
-
-                <section id="tabla_gantt">
-                    @include('admin.planTrabajoBase.tabla')
-                </section>
-
-                <section id="calendario_gantt">
-                    @include('admin.planTrabajoBase.calendario')
-                </section>
-
-                <section id="kanban_gantt">
-                    @include('admin.planTrabajoBase.kanban')
-                </section>
-            </div>
-        </div>
-        <div id="modales"></div>
     </div>
 @endsection
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script type="text/javascript">
         $(".botones_vistas_gantt a").click(function() {
             $(".botones_vistas_gantt a").removeClass("boton_activo");
             $(".botones_vistas_gantt a:hover").addClass("boton_activo");
         });
+
+        window.onbeforeunload = function(event) {
+            // checkChangesGantt();
+            estaBloqueado(event);
+        }
+        let idleTime = 0;
+        document.addEventListener('DOMContentLoaded', function() {
+            // let isBlocked = JSON.parse(Cookies.get('bloqueo'));
+            // if (!isBlocked.bloqueado) {
+            //     Cookies.set('bloqueo', '{"user":"Uriel", "bloqueado":true}');
+            // }
+
+            // console.log(isBlocked);
+            let idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+            // Zero the idle timer on mouse movement.
+            $(this).mousemove(function(e) {
+                idleTime = 0;
+            });
+            $(this).keypress(function(e) {
+                idleTime = 0;
+            });
+            obtenerBloqueo();
+        });
+
+        function timerIncrement() {
+            idleTime = idleTime + 1;
+            if (idleTime > 19) { // 20 minutes
+                window.location.reload();
+            }
+        }
+
+
+        function obtenerBloqueo() {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.lockedPlan.getLockedToPlanTrabajo') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    "user_id": "{{ auth()->user()->id }}",
+                },
+                success: function(response) {
+                    console.log(response);
+                    document.getElementById('bloqueado').innerHTML = "";
+                    let workspace = document.getElementById('plan_trabajo_workspace');
+                    workspace.style.opacity = "1";
+                    workspace.style.pointerEvents = "all";
+                    if (response.success) {
+                        ponerBloqueo();
+                    } else if (response.error) {
+                        document.getElementById('bloqueado').innerHTML = `
+                     <div class="px-3 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                        <div class="row w-100">
+                            <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                <div class="w-100">
+                                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                </div>
+                            </div>
+                            <div class="col-11">
+                                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
+                                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Plan de trabajo bloqueado debido a que está siendo modificado por el siguiente usuario: <strong><i class="mr-1 fas fa-user-circle"></i>${response.locked_by.name}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                        let workspace = document.getElementById('plan_trabajo_workspace');
+                        workspace.style.opacity = "0.5";
+                        workspace.style.pointerEvents = "none";
+                    }
+                }
+            });
+        }
+
+
+        function ponerBloqueo() {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.lockedPlan.setLockedToPlanTrabajo') }}",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    //console.log(response);
+                }
+            });
+        }
+
+        function estaBloqueado(event) {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.lockedPlan.isLockedToPlanTrabajo') }}",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    //console.log(response);
+                    if (response.blocked_by_self) {
+                        removerBloqueo();
+                        // let confirmacion = confirm("Está seguro de abandonar la página");
+                        // if (confirmacion) {
+                        //     removerBloqueo();
+                        // } else {
+                        //     event.preventDefault();
+                        //     window.location = "{{ route('admin.planTrabajoBase.index') }}";
+                        // }
+
+                    } else if (response.blocked) {
+
+                    } else {
+
+                    }
+                }
+            });
+        }
+
+        function removerBloqueo() {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.lockedPlan.removeLockedToPlanTrabajo') }}",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    //console.log(response);
+                }
+            });
+        }
 
         function cambiarTitulo(titulo) {
             setTimeout(() => {

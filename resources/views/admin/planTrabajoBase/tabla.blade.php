@@ -1,7 +1,28 @@
 <style type="text/css">
 
 	.caja_tabla{
-    	overflow: scroll;
+    	overflow: auto;
+    }
+
+	 /* width */
+    .caja_tabla::-webkit-scrollbar {
+        height: 5px;
+    }
+
+    /* Track */
+    .caja_tabla::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0);
+    }
+
+    /* Handle */
+    .caja_tabla::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 50px;
+    }
+
+    /* Handle on hover */
+    .caja_tabla::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.5);
     }
 
     .vista_tabla_gantt{
@@ -102,6 +123,7 @@
     .estatus_td{
 		color: #fff;
 		position: relative;
+		padding: 0px !important;	
 	}
     .tr_secundario, .td_secundario, .estatus_td{
     	text-align: center;
@@ -170,7 +192,7 @@
     	top: 0;
     	left: 0;
     	width: 100%;
-    	height: 100%;
+    	height: 42px;
     	background-color: rgba(0, 0, 0, 0) !important;
     	outline: none !important;
     	border: none !important;
@@ -196,6 +218,85 @@
 
 	.td_resources:hover{
 		background-color: #969696;
+	}
+
+	.input_fecha_inicio {
+		width: 100px;
+	}
+
+	.input_fecha_fin {
+		width: 100px;
+	}
+
+	.input_duracion{
+		width: 35px;
+		text-align: right
+	}
+
+	.texto-dias{
+		padding: 0;
+		text-align: left;
+		margin-left: 3px;
+		margin-top: 1px;
+	}
+
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+	}
+
+	/* Firefox */
+	input[type=number] {
+	-moz-appearance: textfield;
+	}
+
+	.icon-calendar{
+		position: absolute;
+		top: 10px;
+		right: 7px;
+	}
+	.icon-calendar i{
+		color: #000 !important;
+	}
+
+	.status-note-wrapper {
+		position: absolute;
+		right: -1px;
+		top: 0;
+		width: 12px;
+		z-index: 1;
+	}
+	.status-print-color {
+		-webkit-print-color-adjust: exact !important;
+	}
+
+	.estatus_td:hover .status-note, .estatus_td:hover .add-status-note, .estatus_td.add-status-note-open .status-note, .estatus_td.add-status-note-open .add-status-note {
+		transition: border-width .3s ease;
+		border-width: 0 18px 18px 0;
+	}
+
+	.estatus_td .add-status-note {
+		transition: border-width .3s .2s ease;
+		position: absolute;
+		top: 0;
+		right: 1px;
+		border-style: solid;
+		border-color: rgba(0,0,0,.2) #fff;
+		border-color: rgba(0,0,0,.2) #f0eff5;
+		border-width: 0;
+	}
+	.estatus_td:hover .fa-plus, .estatus_td.add-status-note-open .fa-plus {
+		display: block;
+	}
+
+	.estatus_td .fa-plus {
+		display: none;
+		position: absolute;
+		top: 2px;
+		right: 0;
+		font-size: 8px;
 	}
 </style>
 
@@ -283,11 +384,13 @@
 					<table class="tabla_gantt_fase">
 						<thead class="${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'th_activo' : '' : contador == 1 ? 'th_activo' : ''}">
 							<tr>
-								<th> <span><i class="fas ${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'fa-minus-circle' : 'fa-plus-circle' : contador == 1 ? 'fa-minus-circle' : 'fa-plus-circle'}"></i></span> ${task.name}</th>
+								<th style="width:10px;"><span><i class="fas ${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'fa-minus-circle' : 'fa-plus-circle' : contador == 1 ? 'fa-minus-circle' : 'fa-plus-circle'}"></i></span></th>
+								<th>${task.name}</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Responsable</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Estatus</th>
-								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Fecha Inicio</th>
-								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Fecha Fin</th>
+								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Fecha Inicio</th>
+								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Fecha Fin</th>
+								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Duración</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Dependencia</th>
 							</tr>
 						</thead>
@@ -299,11 +402,14 @@
 					html += `
 					
 						<tr id="${task.id}" numero-registro="${contador_registros}">
+							<td>${contador_registros}</td>
 							<td style="padding-left: ${task.level * 15}px;">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-up" viewBox="0 0 16 16">
-								  	<path fill-rule="evenodd" d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z"/>
-								</svg>
-								<input class="name_input" value="${task.name}" style="width: calc(100% - ${task.level * 15}px - 16px + ${task.level * 10}px);">
+								<div class="d-flex" style="width: calc(400px - ${task.level * 15}px);">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-up" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z"/>
+									</svg>
+									<input class="name_input" value="${task.name}" style="width: 100%">
+								</div>
 							</td>`;
 								
 								let assigs = task.assigs.map(asignado => {
@@ -348,6 +454,7 @@
 							<td class="td_secundario td_resources" width="15%">${imagenes}</td>
 
 							<td class="${task.status} estatus_td" width="15%">
+								<div class="status-note-wrapper"><div class="status-print-color" style="/* background-color: rgb(226, 68, 92); *//* border-bottom-color: rgb(206, 48, 72); */"><div class="add-status-note"></div><i class="fa fa-plus menu-dog-ear-color" style="color: rgb(226, 68, 92);"></i></div></div>
 								<select class="estatus_select">
 
 									<option class="STATUS_ACTIVE" value="STATUS_ACTIVE" 
@@ -363,13 +470,23 @@
 
 								</select>
 							</td>
-							<td class="td_secundario td_fecha_inicio" width="15%">
-								<input class="input_fecha_inicio" type="date" value="${moment.unix((task.start)/1000).format("YYYY-MM-DD")}" ${task.depends != "" ? 'disabled': ''} />
+							<td class="td_secundario td_fecha_inicio" style="width:10%; position:relative">
+								<input class="input_fecha_inicio" type="text" value="${moment.unix((task.start)/1000).format("YYYY-MM-DD")}" ${task.depends != "" ? 'disabled': ''} />
+								<span class="icon-calendar"><i class="fas fa-calendar-day"></i></span>
 							</td>
-							<td class="td_secundario td_fecha_fin" width="15%">
-								<input class="input_fecha_fin" type="date" value="${moment.unix((task.end)/1000).format("YYYY-MM-DD")}" />
+							<td class="td_secundario td_fecha_fin" style="width:10%;">
+								<input class="input_fecha_fin" type="text" value="${moment.unix((task.end)/1000).format("YYYY-MM-DD")}" />
+								<span class="icon-calendar"><i class="fas fa-calendar-day"></i></span>
 							</td>
-							<td class="td_secundario" width="15%">${task.depends != "" ? response.tasks[Number(task.depends)-1].name:''}</td>
+							<td class="td_secundario td_duracion" style="width:10%;">
+								<div class="d-flex" style="width:70px">
+									<input class="input_duracion" type="number" value="${task.duration}" />
+									<div class="col-sm-12 col-lg-6 texto-dias">
+										<span>Días</span>
+									</div>
+								</div>
+							</td>
+							<td class="td_secundario" style="width:10%;">${/*task.depends != "" ? response.tasks[Number(task.depends)-1].name.substr(0,20)+'...':''*/ task.depends}</td>
 						</tr>
 					`;
 				}
@@ -378,7 +495,86 @@
 
 			let c_tabla = document.querySelector('#cuerpo_tabla');
 			c_tabla.innerHTML = html;
+ 			$( ".input_fecha_inicio" ).datepicker(
+				 {
+					beforeShowDay: $.datepicker.noWeekends,
+					dateFormat: 'yy-mm-dd',
+					changeYear: true,
+					onSelect: function(dateText) {
+						console.log(this.closest('tbody').getAttribute('id'));
+						let id_row = Number(this.closest('tr').getAttribute('id'));
+						let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
+						let valor_nuevo = moment(this.value).valueOf();
+						let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
+						if (tarea_correspondiente.depends != "") {
+							let padre = document.querySelector(`tr[numero-registro="${tarea_correspondiente.depends}"]`);
+							let id_padre = Number(padre.getAttribute('id'));
+							let tarea_correspondiente_padre = response.tasks.find(t => t.id == id_padre);
+							let fecha_inicio_padre = moment.unix((tarea_correspondiente_padre.start)/1000).format("YYYY-MM-DD")
+							if (moment(this.value) != 0) {
+								alert('No se puede cambiar la fecha ya que esta tarea depende de otra');
+								this.value = moment.unix((tarea_correspondiente_padre.start)/1000).format("YYYY-MM-DD");
+							}
+						}else{
+							//establecer duracion
+							let new_fecha_fin = moment(moment(this.value, 'YYYY-MM-DD').businessAdd(tarea_correspondiente.duration)._d).format('YYYY-MM-DD')
+							let nueva_fecha_fin_menos_un_dia = moment(moment(new_fecha_fin, 'YYYY-MM-DD').businessSubtract(1)._d).format('YYYY-MM-DD');
+							let dependencias = response.tasks.filter(t => t.depends == numero_registro);
+							tarea_correspondiente.start = valor_nuevo;
+							tarea_correspondiente.end = moment(nueva_fecha_fin_menos_un_dia).valueOf();
 
+							dependencias.forEach(dependencia => {
+								let nueva_fecha_inicio = moment(moment(nueva_fecha_fin_menos_un_dia, 'YYYY-MM-DD').businessAdd(1)._d).format('YYYY-MM-DD');
+								let nueva_fecha_fin = moment(moment(nueva_fecha_inicio, 'YYYY-MM-DD').businessAdd(dependencia.duration)._d).format('YYYY-MM-DD');
+								
+								dependencia.start = moment(nueva_fecha_inicio).valueOf();
+								dependencia.end = moment(nueva_fecha_fin).valueOf();
+							});
+							let id_tbody = this.closest('tbody').getAttribute('id');
+							saveOnServer(response);
+							renderTable(response,id_tbody);
+						}
+					}
+				}
+			 );
+
+			 $( ".input_fecha_fin" ).datepicker(
+				 {
+					beforeShowDay: $.datepicker.noWeekends,
+					dateFormat: 'yy-mm-dd',
+					changeYear: true,
+					onSelect: function(dateText) {
+						console.log(this.closest('tbody').getAttribute('id'));
+						let id_row = Number(this.closest('tr').getAttribute('id'));
+						let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
+						let valor_nuevo = moment(this.value).valueOf();
+						let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
+						let fecha_inicio = moment.unix((tarea_correspondiente.start)/1000).format("YYYY-MM-DD");
+						let duracion = moment(this.value, 'YYYY-MM-DD').businessDiff(moment(fecha_inicio, 'YYYY-MM-DD'));	
+						
+						let dependencias = response.tasks.filter(t => t.depends == numero_registro);
+						let fecha_fin_actual = moment.unix(valor_nuevo/1000).format("YYYY-MM-DD");
+						console.log(fecha_inicio);
+						console.log(fecha_fin_actual);
+						tarea_correspondiente.duration = duracion+1;
+						tarea_correspondiente.end = valor_nuevo;
+
+						// Dependencias actualizadas
+						if (dependencias.length > 0) {
+							dependencias.forEach(dependencia => {
+								let nueva_fecha_inicio = moment(moment(fecha_fin_actual, 'YYYY-MM-DD').businessAdd(1)._d).format('YYYY-MM-DD');
+								let nueva_fecha_fin = moment(moment(nueva_fecha_inicio, 'YYYY-MM-DD').businessAdd(dependencia.duration)._d).format('YYYY-MM-DD');
+								
+								dependencia.start = moment(nueva_fecha_inicio).valueOf();
+								dependencia.end = moment(nueva_fecha_fin).valueOf();
+							});
+						}
+						let id_tbody = this.closest('tbody').getAttribute('id');
+						saveOnServer(response);
+						renderTable(response,id_tbody);
+					}
+				}
+			 );
 			let name_input = document.querySelectorAll('.name_input');
 			name_input.forEach(i_nombre =>{
 				i_nombre.addEventListener('change', function(){
@@ -407,38 +603,103 @@
 			});
 
 			//Evento Fecha Inicio
-			let fecha_inicio_inputs = document.querySelectorAll('.input_fecha_inicio');
-			fecha_inicio_inputs.forEach(fecha_inicio_input => {
-				fecha_inicio_input.addEventListener('change',function(){
-					let id_row = Number(this.closest('tr').getAttribute('id'));
-					let valor_nuevo = moment(this.value).valueOf();
-					let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
-					if (tarea_correspondiente.depends != "") {
-						let padre = document.querySelector(`tr[numero-registro="${tarea_correspondiente.depends}"]`);
-						let id_padre = Number(padre.getAttribute('id'));
-						let tarea_correspondiente_padre = response.tasks.find(t => t.id == id_padre);
-						let fecha_inicio_padre = moment.unix((tarea_correspondiente_padre.start)/1000).format("YYYY-MM-DD")
-						if (moment(this.value) != 0) {
-							alert('No se puede cambiar la fecha ya que esta tarea depende de otra');
-							this.value = moment.unix((tarea_correspondiente_padre.start)/1000).format("YYYY-MM-DD");
-						}
-					}else{
-						tarea_correspondiente.start = valor_nuevo;
-						saveOnServer(response);
-					}
-				});
-			});
+			// let fecha_inicio_inputs = document.querySelectorAll('.input_fecha_inicio');
+			// fecha_inicio_inputs.forEach(fecha_inicio_input => {
+			// 	fecha_inicio_input.addEventListener('change',function(){
+			// 		let id_row = Number(this.closest('tr').getAttribute('id'));
+			// 		let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
+			// 		let valor_nuevo = moment(this.value).valueOf();
+			// 		let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
+			// 		if (tarea_correspondiente.depends != "") {
+			// 			let padre = document.querySelector(`tr[numero-registro="${tarea_correspondiente.depends}"]`);
+			// 			let id_padre = Number(padre.getAttribute('id'));
+			// 			let tarea_correspondiente_padre = response.tasks.find(t => t.id == id_padre);
+			// 			let fecha_inicio_padre = moment.unix((tarea_correspondiente_padre.start)/1000).format("YYYY-MM-DD")
+			// 			if (moment(this.value) != 0) {
+			// 				alert('No se puede cambiar la fecha ya que esta tarea depende de otra');
+			// 				this.value = moment.unix((tarea_correspondiente_padre.start)/1000).format("YYYY-MM-DD");
+			// 			}
+			// 		}else{
+			// 			//establecer duracion
+			// 			let new_fecha_fin = moment(moment(this.value, 'YYYY-MM-DD').businessAdd(tarea_correspondiente.duration)._d).format('YYYY-MM-DD')
+			// 			let nueva_fecha_fin_menos_un_dia = moment(moment(new_fecha_fin, 'YYYY-MM-DD').businessSubtract(1)._d).format('YYYY-MM-DD');
+			// 			let dependencias = response.tasks.filter(t => t.depends == numero_registro);
+			// 			tarea_correspondiente.start = valor_nuevo;
+			// 			tarea_correspondiente.end = moment(nueva_fecha_fin_menos_un_dia).valueOf();
 
-			//Evento Fecha Inicio
-			let fecha_fin_inputs = document.querySelectorAll('.input_fecha_fin');
-			fecha_fin_inputs.forEach(fecha_fin_input => {
-				fecha_fin_input.addEventListener('change',function(){
+			// 			dependencias.forEach(dependencia => {
+			// 				let nueva_fecha_inicio = moment(moment(nueva_fecha_fin_menos_un_dia, 'YYYY-MM-DD').businessAdd(1)._d).format('YYYY-MM-DD');
+			// 				let nueva_fecha_fin = moment(moment(nueva_fecha_inicio, 'YYYY-MM-DD').businessAdd(dependencia.duration)._d).format('YYYY-MM-DD');
+							
+			// 				dependencia.start = moment(nueva_fecha_inicio).valueOf();
+			// 				dependencia.end = moment(nueva_fecha_fin).valueOf();
+			// 			});
+			// 			saveOnServer(response);
+			// 		}
+			// 	});
+			// });
+
+			//Evento Fecha Inicio ToDo Quitar fines de semana en datepicker
+			// let fecha_fin_inputs = document.querySelectorAll('.input_fecha_fin');
+			// fecha_fin_inputs.forEach(fecha_fin_input => {
+			// 	fecha_fin_input.addEventListener('change',function(){
+			// 		let id_row = Number(this.closest('tr').getAttribute('id'));
+			// 		let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
+			// 		let valor_nuevo = moment(this.value).valueOf();
+			// 		let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
+			// 		let fecha_inicio = moment.unix((tarea_correspondiente.start)/1000).format("YYYY-MM-DD");
+			// 		let duracion = moment(this.value, 'YYYY-MM-DD').businessDiff(moment(fecha_inicio, 'YYYY-MM-DD'));	
+
+			// 		tarea_correspondiente.duration = duracion+1;
+			// 		tarea_correspondiente.end = valor_nuevo;
+					
+			// 		// Dependencias actualizadas
+			// 		let dependencias = response.tasks.filter(t => t.depends == numero_registro);
+			// 		let fecha_fin_actual = moment.unix(valor_nuevo/1000).format("YYYY-MM-DD");
+			// 		if (dependencias.length > 0) {
+			// 			dependencias.forEach(dependencia => {
+			// 				let nueva_fecha_inicio = moment(moment(fecha_fin_actual, 'YYYY-MM-DD').businessAdd(1)._d).format('YYYY-MM-DD');
+			// 				let nueva_fecha_fin = moment(moment(nueva_fecha_inicio, 'YYYY-MM-DD').businessAdd(dependencia.duration)._d).format('YYYY-MM-DD');
+							
+			// 				dependencia.start = moment(nueva_fecha_inicio).valueOf();
+			// 				dependencia.end = moment(nueva_fecha_fin).valueOf();
+			// 			});
+			// 		}
+			// 		saveOnServer(response);
+			// 	});
+			// });
+
+				//Evento Fecha Inicio ToDo Quitar fines de semana en datepicker
+			let duracion_inputs = document.querySelectorAll('.input_duracion');
+			duracion_inputs.forEach(duracion_input => {
+				duracion_input.addEventListener('change',function(){
 					let id_row = Number(this.closest('tr').getAttribute('id'));
-					let valor_nuevo = moment(this.value).valueOf();
-					let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
-					tarea_correspondiente.end = valor_nuevo;
-					console.log(valor_nuevo);
-					saveOnServer(response);
+					if (Number(this.value) > 0) {
+						let valor_nuevo = Number(this.value);
+						let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
+						let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
+						let fecha_inicio = moment.unix((tarea_correspondiente.start)/1000).format("YYYY-MM-DD");
+						let new_fecha_fin = moment(moment(fecha_inicio, 'YYYY-MM-DD').businessAdd(valor_nuevo-1)._d).format('YYYY-MM-DD')
+						tarea_correspondiente.duration = valor_nuevo;
+						tarea_correspondiente.end = moment(new_fecha_fin).valueOf();
+
+						let dependencias = response.tasks.filter(t => t.depends == numero_registro);
+						let fecha_fin_actual = moment.unix(moment(new_fecha_fin).valueOf()/1000).format("YYYY-MM-DD");
+						if (dependencias.length > 0) {
+							dependencias.forEach(dependencia => {
+								let nueva_fecha_inicio = moment(moment(fecha_fin_actual, 'YYYY-MM-DD').businessAdd(1)._d).format('YYYY-MM-DD');
+								let nueva_fecha_fin = moment(moment(nueva_fecha_inicio, 'YYYY-MM-DD').businessAdd(dependencia.duration)._d).format('YYYY-MM-DD');
+								
+								dependencia.start = moment(nueva_fecha_inicio).valueOf();
+								dependencia.end = moment(nueva_fecha_fin).valueOf();
+							});
+						}
+						let id_tbody = duracion_input.closest('tbody').getAttribute('id');
+						saveOnServer(response);
+						renderTable(response,id_tbody);
+					}else{
+						alert('Debes elegir una duración de máximo 1 día');
+					}
 				});
 			});
 
@@ -536,9 +797,9 @@
 				$(".tabla_gantt_fase:hover .tr_secundario").toggleClass('d-none');
 
 				if ($(".tabla_gantt_fase:hover tbody").hasClass('d-none')) {
-					$(".tabla_gantt_fase:hover span i").addClass('fa-plus-circle').removeClass('fa-minus-circle');	
+					$(".tabla_gantt_fase:hover span i.fa-minus-circle").addClass('fa-plus-circle').removeClass('fa-minus-circle');	
 				}else{
-					$(".tabla_gantt_fase:hover span i").addClass('fa-minus-circle').removeClass('fa-plus-circle');
+					$(".tabla_gantt_fase:hover span i.fa-plus-circle").addClass('fa-minus-circle').removeClass('fa-plus-circle');
 				}
 
 				if ($(".tabla_gantt_fase tbody:not(.tabla_gantt_fase:hover tbody)").hasClass('d-none')) {
@@ -643,6 +904,7 @@
 				});
 			});
 		}
+		
 	</script>
 	<script src="https://unpkg.com/@popperjs/core@2"></script>
 	<script src="https://unpkg.com/tippy.js@6"></script>

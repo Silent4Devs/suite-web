@@ -109,7 +109,6 @@
         document.getElementById('home').classList.remove('active');
         document.getElementById('home').classList.remove('show');
     });
-      
 </script>
 
 @endsection

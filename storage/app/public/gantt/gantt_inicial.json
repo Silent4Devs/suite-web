@@ -2,13 +2,221 @@
 	"tasks": [
 		{
 			"id": 9001,
-			"name": "ANALISIS INICIAL",
-			"progress": 0,
+			"name": "ANALISIS INICIALw",
+			"progress": 100,
 			"progressByWorklog": false,
 			"relevance": 0,
 			"type": "",
 			"typeId": "",
 			"description": "",
+			"code": "",
+			"level": 0,
+			"status": "STATUS_DONE",
+			"depends": "",
+			"start": 1621573200000,
+			"duration": 5,
+			"end": 1622177999999,
+			"startIsMilestone": false,
+			"endIsMilestone": false,
+			"collapsed": false,
+			"canWrite": true,
+			"canAdd": true,
+			"canDelete": true,
+			"canAddIssue": true,
+			"assigs": [
+				{
+					"id": "tmp_1624058224391_1",
+					"resourceId": "tmp_1",
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
+			"id_fase": 1,
+			"url": ""
+		},
+		{
+			"id": 8003,
+			"name": "Evaluar tablero y presentar resultados a dirección test 1",
+			"progress": 100,
+			"progressByWorklog": false,
+			"relevance": 0,
+			"type": "",
+			"typeId": "",
+			"description": "",
+			"code": "",
+			"level": 1,
+			"status": "STATUS_FAILED",
+			"depends": "3",
+			"start": 1623819600000,
+			"duration": 2,
+			"end": 1623992399999,
+			"startIsMilestone": false,
+			"endIsMilestone": false,
+			"collapsed": false,
+			"canWrite": true,
+			"canAdd": true,
+			"canDelete": true,
+			"canAddIssue": true,
+			"assigs": [
+				{
+					"id": "tmp_16243912052616_16",
+					"resourceId": 16,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_1624391205268_8",
+					"resourceId": 8,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_1624566676044_1",
+					"resourceId": 26,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052610_10",
+					"resourceId": 10,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_1624391205269_9",
+					"resourceId": 9,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
+			"id_fase": 3,
+			"url": ""
+		},
+		{
+			"id": 8002,
+			"name": "Realizar levantamiento de información con formulario de estado test12",
+			"progress": 100,
+			"progressByWorklog": false,
+			"relevance": 0,
+			"type": "",
+			"typeId": "",
+			"description": "",
+			"code": "REL",
+			"level": 1,
+			"status": "STATUS_FAILED",
+			"depends": "",
+			"start": 1622523600000,
+			"duration": 11,
+			"end": 1623819599999,
+			"startIsMilestone": false,
+			"endIsMilestone": false,
+			"collapsed": false,
+			"canWrite": true,
+			"canAdd": true,
+			"canDelete": true,
+			"canAddIssue": true,
+			"assigs": [
+				{
+					"id": "tmp_1624391205268_8",
+					"resourceId": 8,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052611_11",
+					"resourceId": 11,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
+			"id_fase": 2,
+			"url": ""
+		},
+		{
+			"id": 8004,
+			"name": "Identificar brechas y esfuerzos",
+			"progress": 100,
+			"progressByWorklog": false,
+			"relevance": 0,
+			"type": "",
+			"typeId": "",
+			"description": "",
+			"level": 1,
+			"status": "STATUS_FAILED",
+			"depends": "3",
+			"start": 1623819600000,
+			"duration": 1,
+			"end": 1623905999999,
+			"startIsMilestone": false,
+			"endIsMilestone": false,
+			"collapsed": false,
+			"canWrite": true,
+			"canAdd": true,
+			"canDelete": true,
+			"canAddIssue": true,
+			"assigs": [
+				{
+					"id": "tmp_1624391205269_9",
+					"resourceId": 9,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052611_11",
+					"resourceId": 11,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052628_28",
+					"resourceId": 28,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052612_12",
+					"resourceId": 12,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052637_37",
+					"resourceId": 37,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052630_30",
+					"resourceId": 30,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_1624391205268_8",
+					"resourceId": 8,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052610_10",
+					"resourceId": 10,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
+			"id_fase": 4,
+			"url": ""
+		},
+		{
+			"id": 9002,
+			"name": "PLANEACIÓN",
+			"progress": 50,
+			"progressByWorklog": false,
+			"relevance": 0,
+			"type": "",
+			"typeId": "",
+			"description": "",
+			"code": "",
 			"level": 0,
 			"status": "STATUS_ACTIVE",
 			"depends": "",
@@ -17,110 +225,6 @@
 			"end": 1621659599999,
 			"startIsMilestone": false,
 			"endIsMilestone": false,
-			"collapsed": false,
-			"canWrite": true,
-			"canAdd": true,
-			"canDelete": true,
-			"canAddIssue": true,
-			"assigs": [],
-			"id_fase": 1,
-			"url": ""
-		},
-		{
-			"id": 8002,
-			"name": "Realizar levantamiento de información con formulario de estado actual",
-			"progress": 0,
-			"progressByWorklog": false,
-			"relevance": 0,
-			"type": "",
-			"typeId": "",
-			"description": "",
-			"level": 1,
-			"status": "STATUS_UNDEFINED",
-			"depends": "3",
-			"start": 1621573200000,
-			"duration": 1,
-			"end": 1621659599999,
-			"startIsMilestone": false,
-			"endIsMilestone": false,
-			"collapsed": false,
-			"canWrite": true,
-			"canAdd": true,
-			"canDelete": true,
-			"canAddIssue": true,
-			"assigs": [],
-			"id_fase": 2,
-			"url": ""
-		},
-		{
-			"id": 8003,
-			"name": "Evaluar tablero y presentar resultados a dirección",
-			"progress": 0,
-			"progressByWorklog": false,
-			"relevance": 0,
-			"type": "",
-			"typeId": "",
-			"description": "",
-			"level": 1,
-			"status": "STATUS_UNDEFINED",
-			"depends": "",
-			"start": 1621486800000,
-			"duration": 1,
-			"end": 1621573199999,
-			"startIsMilestone": false,
-			"endIsMilestone": false,
-			"collapsed": false,
-			"canWrite": true,
-			"canAdd": true,
-			"canDelete": true,
-			"canAddIssue": true,
-			"assigs": [],
-			"id_fase": 3,
-			"url": ""
-		},
-		{
-			"id": 8004,
-			"name": "Identificar brechas y esfuerzos",
-			"progress": 0,
-			"progressByWorklog": false,
-			"relevance": 0,
-			"type": "",
-			"typeId": "",
-			"description": "",
-			"level": 1,
-			"status": "STATUS_UNDEFINED",
-			"depends": "",
-			"start": 1621486800000,
-			"duration": 1,
-			"end": 1621573199999,
-			"startIsMilestone": false,
-			"endIsMilestone": false,
-			"collapsed": true,
-			"canWrite": true,
-			"canAdd": true,
-			"canDelete": true,
-			"canAddIssue": true,
-			"assigs": [],
-			"id_fase": 4,
-			"url": ""
-		},
-		{
-			"id": 9002,
-			"name": "PLANEACIÓN",
-			"progress": 0,
-			"progressByWorklog": false,
-			"relevance": 0,
-			"type": "",
-			"typeId": "",
-			"description": "",
-			"level": 0,
-			"status": "STATUS_ACTIVE",
-			"depends": "",
-			"start": 1621486800000,
-			"duration": 1,
-			"end": 1621573199999,
-			"startIsMilestone": false,
-			"endIsMilestone": false,
 			"collapsed": true,
 			"canWrite": true,
 			"canAdd": true,
@@ -128,37 +232,11 @@
 			"canAddIssue": true,
 			"assigs": [],
 			"id_fase": 2,
-			"url": ""
-		},
-		{
-			"id": 8006,
-			"name": "Identificar el Contexto de la Organización",
-			"progress": 0,
-			"progressByWorklog": false,
-			"relevance": 0,
-			"type": "",
-			"typeId": "",
-			"description": "",
-			"level": 1,
-			"status": "STATUS_UNDEFINED",
-			"depends": "",
-			"start": 1621486800000,
-			"duration": 1,
-			"end": 1621573199999,
-			"startIsMilestone": false,
-			"endIsMilestone": false,
-			"collapsed": false,
-			"canWrite": true,
-			"canAdd": true,
-			"canDelete": true,
-			"canAddIssue": true,
-			"assigs": [],
-			"id_fase": 6,
 			"url": ""
 		},
 		{
 			"id": 8007,
-			"name": "Entendimiento de las necesidades y expectativas de las partes interesadas",
+			"name": "Entendimiento test de las necesidades y expectativas de las partes interesadas",
 			"progress": 0,
 			"progressByWorklog": false,
 			"relevance": 0,
@@ -166,11 +244,11 @@
 			"typeId": "",
 			"description": "",
 			"level": 1,
-			"status": "STATUS_UNDEFINED",
+			"status": "STATUS_ACTIVE",
 			"depends": "",
-			"start": 1621486800000,
+			"start": 1622178000000,
 			"duration": 1,
-			"end": 1621573199999,
+			"end": 1622264399999,
 			"startIsMilestone": false,
 			"endIsMilestone": false,
 			"collapsed": false,
@@ -178,7 +256,14 @@
 			"canAdd": true,
 			"canDelete": true,
 			"canAddIssue": true,
-			"assigs": [],
+			"assigs": [
+				{
+					"id": "tmp_16243912052611_11",
+					"resourceId": 11,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
 			"id_fase": 7,
 			"url": ""
 		},
@@ -191,12 +276,12 @@
 			"type": "",
 			"typeId": "",
 			"description": "",
-			"level": 1,
-			"status": "STATUS_UNDEFINED",
+			"level": 2,
+			"status": "STATUS_ACTIVE",
 			"depends": "",
-			"start": 1621486800000,
+			"start": 1622178000000,
 			"duration": 1,
-			"end": 1621573199999,
+			"end": 1622264399999,
 			"startIsMilestone": false,
 			"endIsMilestone": false,
 			"collapsed": false,
@@ -204,7 +289,20 @@
 			"canAdd": true,
 			"canDelete": true,
 			"canAddIssue": true,
-			"assigs": [],
+			"assigs": [
+				{
+					"id": "tmp_1624391205268_8",
+					"resourceId": 8,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_1624391205269_9",
+					"resourceId": 9,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
 			"id_fase": 8,
 			"url": ""
 		},
@@ -217,12 +315,12 @@
 			"type": "",
 			"typeId": "",
 			"description": "",
-			"level": 1,
-			"status": "STATUS_UNDEFINED",
+			"level": 3,
+			"status": "STATUS_ACTIVE",
 			"depends": "",
-			"start": 1621486800000,
+			"start": 1622178000000,
 			"duration": 1,
-			"end": 1621573199999,
+			"end": 1622264399999,
 			"startIsMilestone": false,
 			"endIsMilestone": false,
 			"collapsed": false,
@@ -235,20 +333,53 @@
 			"url": ""
 		},
 		{
-			"id": 80010,
-			"name": "Determinar Alcance del SGSI",
-			"progress": 0,
+			"id": 8006,
+			"name": "Identificar el Contexto de la Organización",
+			"progress": 100,
 			"progressByWorklog": false,
 			"relevance": 0,
 			"type": "",
 			"typeId": "",
 			"description": "",
-			"level": 1,
-			"status": "STATUS_UNDEFINED",
+			"level": 4,
+			"status": "STATUS_DONE",
 			"depends": "",
-			"start": 1621486800000,
+			"start": 1622178000000,
 			"duration": 1,
-			"end": 1621573199999,
+			"end": 1622264399999,
+			"startIsMilestone": false,
+			"endIsMilestone": false,
+			"collapsed": false,
+			"canWrite": true,
+			"canAdd": true,
+			"canDelete": true,
+			"canAddIssue": true,
+			"assigs": [
+				{
+					"id": "tmp_1624391205268_8",
+					"resourceId": 8,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
+			"id_fase": 6,
+			"url": ""
+		},
+		{
+			"id": 80010,
+			"name": "Determinar Alcance del SGSI",
+			"progress": 100,
+			"progressByWorklog": false,
+			"relevance": 0,
+			"type": "",
+			"typeId": "",
+			"description": "",
+			"level": 5,
+			"status": "STATUS_DONE",
+			"depends": "",
+			"start": 1622178000000,
+			"duration": 1,
+			"end": 1622264399999,
 			"startIsMilestone": false,
 			"endIsMilestone": false,
 			"collapsed": false,
@@ -478,7 +609,7 @@
 			"typeId": "",
 			"description": "",
 			"level": 1,
-			"status": "STATUS_UNDEFINED",
+			"status": "STATUS_SUSPENDED",
 			"depends": "",
 			"start": 1621486800000,
 			"duration": 1,
@@ -490,7 +621,14 @@
 			"canAdd": true,
 			"canDelete": true,
 			"canAddIssue": true,
-			"assigs": [],
+			"assigs": [
+				{
+					"id": "tmp_1624391205268_8",
+					"resourceId": 8,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
 			"id_fase": 19,
 			"url": ""
 		},
@@ -504,7 +642,7 @@
 			"typeId": "",
 			"description": "",
 			"level": 1,
-			"status": "STATUS_UNDEFINED",
+			"status": "STATUS_ACTIVE",
 			"depends": "",
 			"start": 1621486800000,
 			"duration": 1,
@@ -516,7 +654,38 @@
 			"canAdd": true,
 			"canDelete": true,
 			"canAddIssue": true,
-			"assigs": [],
+			"assigs": [
+				{
+					"id": "tmp_16243912052610_10",
+					"resourceId": 10,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052611_11",
+					"resourceId": 11,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052612_12",
+					"resourceId": 12,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_16243912052613_13",
+					"resourceId": 13,
+					"roleId": "tmp_1",
+					"effort": 0
+				},
+				{
+					"id": "tmp_1624391205269_9",
+					"resourceId": 9,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
 			"id_fase": 20,
 			"url": ""
 		},
@@ -542,7 +711,14 @@
 			"canAdd": true,
 			"canDelete": true,
 			"canAddIssue": true,
-			"assigs": [],
+			"assigs": [
+				{
+					"id": "tmp_16243912052610_10",
+					"resourceId": 10,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
 			"id_fase": 21,
 			"url": ""
 		},
@@ -724,7 +900,14 @@
 			"canAdd": true,
 			"canDelete": true,
 			"canAddIssue": true,
-			"assigs": [],
+			"assigs": [
+				{
+					"id": "tmp_1624391205268_8",
+					"resourceId": 8,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
 			"id_fase": 28,
 			"url": ""
 		},
@@ -1250,7 +1433,7 @@
 		},
 		{
 			"id": 80049,
-			"name": "Auditoría Interna",
+			"name": "Auditoría Interna test",
 			"progress": 0,
 			"progressByWorklog": false,
 			"relevance": 0,
@@ -1258,7 +1441,7 @@
 			"typeId": "",
 			"description": "",
 			"level": 1,
-			"status": "STATUS_UNDEFINED",
+			"status": "STATUS_ACTIVE",
 			"depends": "",
 			"start": 1621486800000,
 			"duration": 1,
@@ -1270,7 +1453,14 @@
 			"canAdd": true,
 			"canDelete": true,
 			"canAddIssue": true,
-			"assigs": [],
+			"assigs": [
+				{
+					"id": "tmp_1624391205268_8",
+					"resourceId": 8,
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
 			"id_fase": 49,
 			"url": ""
 		},
@@ -1535,16 +1725,240 @@
 			"url": ""
 		}
 	],
-	"selectedRow": 2, "deletedTaskIds": [],
-      "resources": [
-      {"id": "tmp_1", "name": "Resource 1"},
-      {"id": "tmp_2", "name": "Resource 2"},
-      {"id": "tmp_3", "name": "Resource 3"},
-      {"id": "tmp_4", "name": "Resource 4"}
-    ],
-      "roles":       [
-      {"id": "tmp_1", "name": "Project Manager"},
-      {"id": "tmp_2", "name": "Worker"},
-      {"id": "tmp_3", "name": "Stakeholder"},
-      {"id": "tmp_4", "name": "Customer"}
-    ], "canWrite":    true, "canDelete":true, "canWriteOnParent": true, "canAdd":true}
+	"selectedRow": 0,
+	"deletedTaskIds": [],
+	"resources": [
+		{
+			"id": 8,
+			"name": "Layla Esperanza Delgadillo Aguilar",
+			"foto": "UID_8_LAYLA DELGADILLO.jpg",
+			"genero": "M"
+		},
+		{
+			"id": 9,
+			"name": "Ángel Jesús Beltran Acosta",
+			"foto": "UID_9_man.png",
+			"genero": null
+		},
+		{
+			"id": 10,
+			"name": "Daniela Castro Rivas",
+			"foto": "UID_10_woman.png",
+			"genero": null
+		},
+		{
+			"id": 11,
+			"name": "Eligio Rangel Castillo",
+			"foto": "UID_11_man.png",
+			"genero": null
+		},
+		{
+			"id": 12,
+			"name": "Gerardo Garibay Aymes",
+			"foto": "UID_12_Gerardo Garibay Aymes.jpg",
+			"genero": null
+		},
+		{
+			"id": 13,
+			"name": "Hector Reyes Rivera",
+			"foto": null,
+			"genero": "H"
+		},
+		{
+			"id": 14,
+			"name": "Juan Francisco Curiel Morales",
+			"foto": "UID_14_man.png",
+			"genero": null
+		},
+		{
+			"id": 15,
+			"name": "Lourdes Del Pilar Abadía Velasco",
+			"foto": "UID_15_woman.png",
+			"genero": null
+		},
+		{
+			"id": 16,
+			"name": "Marco Antonio Luna Robles",
+			"foto": "UID_16_man.png",
+			"genero": null
+		},
+		{
+			"id": 17,
+			"name": "Monica Adriana Soto Barrios",
+			"foto": "UID_17_woman.png",
+			"genero": null
+		},
+		{
+			"id": 18,
+			"name": "Oscar Francisco Castro Careaga",
+			"foto": "UID_18_man.png",
+			"genero": null
+		},
+		{
+			"id": 19,
+			"name": "Ma. Del Rosario Palomero Rivero",
+			"foto": "UID_19_ROSARIO PALOMERO.jpg",
+			"genero": null
+		},
+		{
+			"id": 20,
+			"name": "Arely Santillán Martínez",
+			"foto": "UID_20_woman.png",
+			"genero": null
+		},
+		{
+			"id": 21,
+			"name": "Gilberto Miranda Maltos",
+			"foto": "UID_21_man.png",
+			"genero": null
+		},
+		{
+			"id": 22,
+			"name": "Jenny Kalid Flores Montaño",
+			"foto": "UID_22_woman.png",
+			"genero": null
+		},
+		{
+			"id": 23,
+			"name": "Leticia Landeros Huerta",
+			"foto": "UID_23_woman.png",
+			"genero": null
+		},
+		{
+			"id": 24,
+			"name": "Eugenia Elizabeth Gomez Lima",
+			"foto": "UID_24_woman.png",
+			"genero": null
+		},
+		{
+			"id": 25,
+			"name": "Juana Judith Balderas León",
+			"foto": "UID_25_woman.png",
+			"genero": null
+		},
+		{
+			"id": 26,
+			"name": "Nancy Ivette Delgadillo Alburquerque",
+			"foto": "UID_26_woman.png",
+			"genero": null
+		},
+		{
+			"id": 27,
+			"name": "Melissa Bustos Cervantes",
+			"foto": null,
+			"genero": null
+		},
+		{
+			"id": 28,
+			"name": "Alejandra Ivonne Vela Saldaña",
+			"foto": "UID_28_woman.png",
+			"genero": null
+		},
+		{
+			"id": 29,
+			"name": "Jenifer Ashanti Vazquez Fuentes",
+			"foto": "UID_29_woman.png",
+			"genero": null
+		},
+		{
+			"id": 30,
+			"name": "Miguel Angel Gaspar Galicia",
+			"foto": "UID_30_man.png",
+			"genero": null
+		},
+		{
+			"id": 31,
+			"name": "Cesar Gabriel Borre Gonzalez",
+			"foto": "UID_31_man.png",
+			"genero": null
+		},
+		{
+			"id": 32,
+			"name": "Tania Michelle Garcia Aguillón",
+			"foto": "UID_32_woman.png",
+			"genero": null
+		},
+		{
+			"id": 33,
+			"name": "Alfredo Ramírez Olivera",
+			"foto": "UID_33_man.png",
+			"genero": "H"
+		},
+		{
+			"id": 34,
+			"name": "Arlen Raymundo Rodriguez",
+			"foto": null,
+			"genero": null
+		},
+		{
+			"id": 35,
+			"name": "Alan Rivera Lopez",
+			"foto": null,
+			"genero": null
+		},
+		{
+			"id": 36,
+			"name": "Josele Espinosa Garcia",
+			"foto": "UID_36_pexels-arthouse-studio-4330308.jpg",
+			"genero": "H"
+		},
+		{
+			"id": 37,
+			"name": "Luis Fernando Jonathan Vargas Osornio",
+			"foto": null,
+			"genero": "H"
+		},
+		{
+			"id": 38,
+			"name": "Uriel Santiago Reyes Paredes",
+			"foto": "UID_38_pexels-arthouse-studio-4330308.jpg",
+			"genero": "H"
+		},
+		{
+			"id": 39,
+			"name": "Karen Maraí Rodriguez Gálvez",
+			"foto": null,
+			"genero": "M"
+		},
+		{
+			"id": 40,
+			"name": "Benito López Mejia",
+			"foto": null,
+			"genero": "H"
+		},
+		{
+			"id": 41,
+			"name": "Omar Alejandro Perez Garcia",
+			"foto": null,
+			"genero": "H"
+		},
+		{
+			"id": 42,
+			"name": "Nina VillarrealTe",
+			"foto": null,
+			"genero": "X"
+		}
+	],
+	"roles": [
+		{
+			"id": "tmp_1",
+			"name": "Project Manager"
+		},
+		{
+			"id": "tmp_2",
+			"name": "Worker"
+		},
+		{
+			"id": "tmp_3",
+			"name": "Stakeholder"
+		},
+		{
+			"id": "tmp_4",
+			"name": "Customer"
+		}
+	],
+	"canAdd": true,
+	"canWrite": true,
+	"canWriteOnParent": true,
+	"zoom": "1M"
+}
