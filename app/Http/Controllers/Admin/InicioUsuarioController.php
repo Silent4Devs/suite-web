@@ -25,8 +25,13 @@ class inicioUsuarioController extends Controller
 
         $path_gantt = end($version_gantt);
 
-        $file_gantt = file_get_contents($path_gantt);
+        $file_gantt = json_decode(file_get_contents($path_gantt));
 
+        $actividades = collect($file_gantt->tasks)->filter(function($actividad){
+            return count($actividad->assigs) == 0;
+        });
+
+        dd($actividades);
 
 
         $plan_base = PlanBaseActividade::get();
