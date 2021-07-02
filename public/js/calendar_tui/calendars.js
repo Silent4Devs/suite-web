@@ -75,16 +75,6 @@ function hexToRGBA(hex) {
     calendar.borderColor = '#ff5583';
     addCalendar(calendar);
 
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = 'Plan de trabajo base';
-    calendar.color = '#ffffff';
-    calendar.bgColor = '#28bd24';
-    calendar.dragBgColor = '#28bd24';
-    calendar.borderColor = '#28bd24';
-    addCalendar(calendar);
-
     
 
     
