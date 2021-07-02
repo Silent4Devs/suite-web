@@ -194,6 +194,17 @@
       0 => 'Reliese\\Coders\\CodersServiceProvider',
     ),
   ),
+  'spatie/geocoder' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\Geocoder\\GeocoderServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Geocoder' => 'Spatie\\Geocoder\\Facades\\Geocoder',
+    ),
+  ),
   'spatie/laravel-medialibrary' => 
   array (
     'providers' => 

@@ -182,6 +182,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         // Jenssegers\Date\DAteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Spatie\Geocoder\GeocoderServiceProvider::class
+
     ],
 
     /*
@@ -237,6 +239,8 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Geocoder' => Spatie\Geocoder\Facades\Geocoder::class,
+
     ],
 
 
