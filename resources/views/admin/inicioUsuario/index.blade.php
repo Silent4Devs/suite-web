@@ -103,6 +103,11 @@
             text-align: center;
             vertical-align: middle;
         }
+
+
+        .dataTables_filter{
+            overflow: hidden;
+        }
     </style>
 
 
