@@ -224,6 +224,9 @@
      <script src="https://uicdn.toast.com/tui.date-picker/v4.0.3/tui-date-picker.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-business-days/1.2.0/index.min.js"
+          integrity="sha512-O4XvevLAh+LDhB7I+GjsQeHft1q7oJWMyNbvYYMeNUYoW5VWmj3nmiMrPFGnde6qZ8UlPpz8ySWQMTUNDM0HUA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
      <script src="{{ asset('../js/calendar_tui/tui-calendar.js') }}"></script>
      <script src="{{ asset('../js/calendar_tui/calendar_gantt.js') }}"></script>
      <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
@@ -233,18 +236,19 @@
          });
 
          function initCalendar() {
-            let url = '{{ asset('storage/gantt/')}}/{{$name_file_gantt}}';
-			$.ajax({
-				type: "get",
-				url: url,
-				success: function (response) {			
-					renderCalendar(response);
-				}
-		    });
+             let url = '{{ asset('storage/gantt/') }}/{{ $name_file_gantt }}';
+             $.ajax({
+                 type: "get",
+                 url: url,
+                 success: function(response) {
+                     renderCalendar(response);
+                 }
+             });
          }
 
          function renderCalendar(response) {
-              let data = response.tasks.map(task => {
+             let data = response.tasks.map(task => {
+
                  let foto = 'man.png';
                  let images = "";
                  let assigs = task.assigs.map(asignado => {
@@ -253,7 +257,8 @@
                  let filteredAssigs = assigs.filter(function(a) {
                      return a != null;
                  });
-
+                 let bgColor = "#00b1e1";
+                 let estatus = "Sin iniciar";
                  if (filteredAssigs.length > 0) {
                      filteredAssigs.forEach(assig => {
                          if (assig.foto == null) {
@@ -265,16 +270,44 @@
                          } else {
                              foto = assig.foto;
                          }
+
                          images +=
                              `<img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}" title="${assig.name}"/>`;
                      });
                  }
+                 switch (task.status) {
+                     case "STATUS_ACTIVE":
+                         bgColor = "#ecde00";
+                         estatus = "En progreso"
+                         break;
+                     case "STATUS_DONE":
+                         bgColor = "#17d300";
+                         estatus = "Completado"
+                         break;
+                     case "STATUS_FAILED":
+                         bgColor = "#e10000";
+                         estatus = "Con retraso"
+                         break;
+                     case "STATUS_SUSPENDED":
+                         bgColor = "#e7e7e7";
+                         estatus = "Suspendida"
+                         break;
+                     case "STATUS_UNDEFINED":
+                         bgColor = "#00b1e1";
+                         estatus = "Sin iniciar"
+                         break;
+                     default:
+                         bgColor = "#00b1e1";
+                         estatus = "Sin iniciar"
+                         break;
+                 }
                  return {
                      id: `r_${task.id}`,
                      calendarId: `${task.level == 0 ? '1': '2'}`,
+                    //  bgColor: bgColor,
                      title: `${task.level == 0 ? 'Fase: ': 'Actividad: '}${task.name}`,
                      category: 'allday',
-                     body: `${filteredAssigs.length > 0 ? "<h5>Responsables</h5>":""} ${images}`,
+                     body: `${filteredAssigs.length > 0 ? "<h5>Responsables</h5>":""} ${images} <p>Estatus: <span class="badge ${task.status}">${estatus}</span></p>`,
                      dueDateClass: '',
                      start: `${moment.unix((task.start)/1000).format("YYYY-MM-DD")} 04:59:59`,
                      end: `${moment.unix((task.end)/1000).format("YYYY-MM-DD")} 05:00:00`,

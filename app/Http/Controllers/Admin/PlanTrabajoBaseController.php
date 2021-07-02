@@ -15,8 +15,9 @@ class PlanTrabajoBaseController extends Controller
     public function index()
     {
         $gantt_path = 'storage/gantt/';
+
         $path = public_path($gantt_path);
-        $files = glob($path . "gantt_inicial*.json");
+        $files = glob("storage/gantt/versiones/gantt_inicial*.json");
         $archivos_gantt = [];
 
         sort($files, SORT_NATURAL | SORT_FLAG_CASE);
@@ -24,17 +25,16 @@ class PlanTrabajoBaseController extends Controller
             array_push($archivos_gantt, $valor);
         }
 
-        // PlanBaseActividade::with('fase')->get()
-        $path_asset = asset($gantt_path);
+        $path_asset = asset('storage/gantt/versiones/');
         $gant_readed = end($archivos_gantt);
-        //dd($planbase, $responsable, $responsablenom);
 
         $file_gant = json_decode(file_get_contents($gant_readed), true);
 
         $empleados = Empleado::select("name")->get();
 
 
-        $name_file_gantt = basename($gant_readed);
+        // $name_file_gantt = basename($gant_readed);
+        $name_file_gantt = 'gantt_inicial.json';
 
 
         return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
@@ -43,7 +43,7 @@ class PlanTrabajoBaseController extends Controller
     public function saveImplementationProyect(Request $request)
     {
 
-        $gantt_path = 'storage/gantt/';
+        $gantt_path = 'storage/gantt/versiones/';
 
         $path = public_path($gantt_path);
 
@@ -59,14 +59,8 @@ class PlanTrabajoBaseController extends Controller
 
             $proyecto = $request->get('txt_prj');
 
-            // dd($proyecto);
-
-            // $json = json_encode($proyecto);
-
-
-            // $file = file_put_contents(storage_path('app/public/gantt/gantt_inicial.json'), $json);
-
-            $file = Storage::disk('public')->put('gantt/gantt_inicial_v' . $ultima_version . '.json', $proyecto);
+            $file = Storage::disk('public')->put('gantt/versiones/gantt_inicial_v' . $ultima_version . '.json', $proyecto);
+            $file = Storage::disk('public')->put('gantt/gantt_inicial.json', $proyecto);
 
             if ($file) {
                 return response()->json(['success' => true], 200);
@@ -94,8 +88,9 @@ class PlanTrabajoBaseController extends Controller
         }
 
 
-        $path = end($version_gantt);
-        $json_code =  json_decode(file_get_contents($path), true);
+        // $path = end($version_gantt);
+        $path_g = $path . 'gantt_inicial.json';
+        $json_code =  json_decode(file_get_contents($path_g), true);
 
         return $json_code;
     }
@@ -132,11 +127,42 @@ class PlanTrabajoBaseController extends Controller
         if ($request->ajax()) {
 
             $status_path = 'storage/gantt/status.json';
-            
+
             $path = public_path($status_path);
             file_put_contents($path, $request->estatuses);
 
             return response('guardado con exito', 200);
+        }
+    }
+
+    public function checkChanges(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $proyecto = $request->txt_prj;
+
+            Storage::disk('public')->put('gantt/tmp/ganttTemporal.json', $proyecto);
+
+            $gantt_path = 'storage/gantt/';
+            $path = public_path($gantt_path);
+            $files = glob($path . "gantt_inicial*.json");
+            $archivos_gantt = [];
+
+            sort($files, SORT_NATURAL | SORT_FLAG_CASE);
+            foreach ($files as $valor) {
+                array_push($archivos_gantt, $valor);
+            }
+
+            $current_gantt = $path . "gantt_inicial.json";
+            $tmp_gantt = json_decode(file_get_contents($path . 'tmp/ganttTemporal.json'));
+            $old_gant = json_decode(file_get_contents($current_gantt));
+            $notExistsChanges = $tmp_gantt == $old_gant;
+
+            if (!$notExistsChanges) {
+                return response()->json(['existsChanges' => true]);
+            } else {
+                return response()->json(['notExistsChanges' => true]);
+            }
         }
     }
 }

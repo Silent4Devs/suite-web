@@ -1029,7 +1029,7 @@ $.fn.dragExtedSVG = function (svg, opt) {
       ).bind("mousemove.deSVG",
         function (e) {
           var el = $(this);
-          var x1 = el.find("[class*=taskLayout]").offset().left;
+          var x1 = el.find("[class*=taskLayout]") ? el.find("[class*=taskLayout]").offset().left : null;
           var x2 = x1 + parseFloat(el.attr("width"));
           var posx = e.pageX;
 

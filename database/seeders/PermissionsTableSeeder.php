@@ -1294,6 +1294,27 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 321,
                 'title' => 'entendimiento_organizacion_delete',
             ],
+            [
+                'id'    => 322,
+                'title' => 'grupoarea_create',
+            ],
+            [
+                'id'    => 323,
+                'title' => 'grupoarea_edit',
+            ],
+            [
+                'id'    => 324,
+                'title' => 'grupoarea_show',
+            ],
+            [
+                'id'    => 325,
+                'title' => 'grupoarea_delete',
+            ],
+            [
+                'id'    => 326,
+                'title' => 'grupoarea_access',
+            ],
+
         ];
 
         Permission::insert($permissions);

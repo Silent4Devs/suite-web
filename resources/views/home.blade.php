@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
 
-
     <style>
         html {
             scroll-behavior: smooth;
@@ -144,7 +143,7 @@
             border-bottom-left-radius: 6px;
         }
 
-       
+
 
         .menu_a a {
             width: 200px;
@@ -193,11 +192,6 @@
 
     </style>
 
-
-    
-
-
-    
     <div class="content">
 
         <div class="menu_a">
@@ -214,8 +208,11 @@
     </div>
     <!--col-->
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> main
 @endsection
