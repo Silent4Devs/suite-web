@@ -60,6 +60,10 @@ class SedeController extends Controller
             $table->editColumn('direccion', function ($row) {
                 return $row->direccion ? $row->direccion : "";
             });
+            $table->editColumn('ubicacion', function ($row) {
+                //return "'lat' => ".$row->latitude. ",'long' => ".$row->longitud ? "'lat' => ".$row->latitude. ",'long' =>".$row->longitud : "";
+                return $row->id ? $row->id : "";
+            });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
             });
@@ -214,5 +218,10 @@ class SedeController extends Controller
         $numero_sedes = Sede::count();
 
         return view('admin.sedes.sedes-organizacion', compact('sede', 'organizacions', 'teams', 'numero_sedes'));
+    }
+
+    public function ubicacion($request){
+        $sede = Sede::find($request);
+        return view('admin.sedes.ubicacion', compact('sede'));
     }
 }

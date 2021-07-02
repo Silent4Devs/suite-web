@@ -96,8 +96,3 @@
 
 @endsection
 
-@section('scripts')
-    @parent
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClLxFn2IozRdoHezIeJRK-0AtYicB4jAE&libraries=places&callback=initialize" async defer></script>
-    <script src="{{ asset('js/mapInput.js') }}"></script>
-@stop

@@ -37,6 +37,7 @@
         "spatie/geocoder": "^3.10",
         "spatie/laravel-medialibrary": "^8.7",
         "yajra/laravel-datatables-oracle": "^9.11"
+
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
