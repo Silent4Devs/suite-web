@@ -311,11 +311,6 @@
 
         ];
     </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            let gant = @json($file_gant);
-            console.log (gant.tasks);
-        });
 
     </script>
     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
