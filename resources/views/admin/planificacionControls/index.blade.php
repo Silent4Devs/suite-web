@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+    
+    {{ Breadcrumbs::render('admin.planificacion-controls.index') }}
+    
     @can('planificacion_control_create')
 
         <div class="mt-5 card">

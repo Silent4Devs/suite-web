@@ -37,7 +37,7 @@
                 </div> --}}
                 <div class="form-group">
                     <label for="fecha_creacion">{{ trans('cruds.controlDocumento.fields.fecha_creacion') }}</label>
-                    <input class="form-control date {{ $errors->has('fecha_creacion') ? 'is-invalid' : '' }}" type="text"
+                    <input class="form-control date {{ $errors->has('fecha_creacion') ? 'is-invalid' : '' }}" type="date"
                         name="fecha_creacion" id="fecha_creacion"
                         value="{{ old('fecha_creacion', $controlDocumento->fecha_creacion) }}">
                     @if ($errors->has('fecha_creacion'))

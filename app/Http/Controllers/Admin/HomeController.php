@@ -12,6 +12,8 @@ use App\Models\IncidentesDeSeguridad;
 use App\Models\ControlDocumento;
 use App\Models\PlanBaseActividade;
 use App\Models\AuditoriaAnual;
+use App\Models\CategoriaCapacitacion;
+use App\Models\Recurso;
 
 class HomeController
 {
@@ -48,20 +50,20 @@ class HomeController
 
         $chart2 = new LaravelChart($settings2);
 
-        $settings3 = [
-            'chart_title'        => 'Progreso general del plan',
-            'chart_type'         => 'pie',
-            'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\PlanBaseActividade',
-            'group_by_field'     => 'estado',
-            'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
-            'column_class'       => 'col-md-12',
-            'entries_number'     => '5',
-            'relationship_name'  => 'estatus',
-        ];
+        // $settings3 = [
+        //     'chart_title'        => 'Progreso general del plan',
+        //     'chart_type'         => 'pie',
+        //     'report_type'        => 'group_by_relationship',
+        //     'model'              => 'App\Models\PlanBaseActividade',
+        //     'group_by_field'     => 'estado',
+        //     'aggregate_function' => 'count',
+        //     'filter_field'       => 'created_at',
+        //     'column_class'       => 'col-md-12',
+        //     'entries_number'     => '5',
+        //     'relationship_name'  => 'estatus',
+        // ];
 
-        $chart3 = new LaravelChart($settings3);
+        // $chart3 = new LaravelChart($settings3);
 
         $settings4 = [
             'chart_title'        => 'Documentación',
@@ -258,12 +260,59 @@ class HomeController
         $actividadenproc =  PlanBaseActividade::select('id')->where('estatus_id', '=', '2')->count('id');
         $actividadcompl = PlanBaseActividade::select('id')->where('estatus_id', '=', '3')->count('id');
         $actividadretr = PlanBaseActividade::select('id')->where('estatus_id', '=', '4')->count('id');
-      
+
         $auditexterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Interna')->count('id');
         $auditinterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Externa')->count('id');
 
         $exist_doc = ControlDocumento::select('deleted_at')->where('deleted_at', '=', null)->count();
-        
+        $capacitaciones = Recurso::get();
+        $categorias_arr = [];
+        $recursos_categoria_arr = [];
+        $categorias = CategoriaCapacitacion::with('recursos')->get();
+        foreach ($categorias as $categoria) {
+            array_push($categorias_arr, $categoria->nombre);
+            array_push($recursos_categoria_arr, count($categoria->recursos));
+        }
+        $tipos_total_arr = [];
+        $diplomado = 0;
+        $certificado = 0;
+        $curso = 0;
+        $tipos = Recurso::get();
+
+        foreach ($tipos as $tipo) {
+            if ($tipo->tipo == 'diplomado') {
+                $diplomado++;
+            } elseif ($tipo->tipo == 'certificacion') {
+                $certificado++;
+            } elseif ($tipo->tipo == 'curso') {
+                $curso++;
+            }
+        }
+        array_push($tipos_total_arr, $diplomado);
+        array_push($tipos_total_arr, $certificado);
+        array_push($tipos_total_arr, $curso);
+
+        $capacitaciones_year_actual = Recurso::whereYear('fecha_curso', date('Y'))->count();
+        $capacitaciones_year_actual_uno_antes = Recurso::whereYear('fecha_curso', date('Y') - 1)->count();
+
+        $arr_fechas_cursos = [];
+        $arr_participantes = [];
+        $recursos = Recurso::whereYear('fecha_curso', date('Y'))->orderBy('fecha_curso', 'asc')->get();
+        // dd(Carbon::parse($recursos[0]->fecha_curso)->diff());
+        foreach ($recursos as $recurso) {
+            array_push($arr_fechas_cursos, Carbon::parse($recurso->fecha_curso)->format('M d Y'));
+            array_push($arr_participantes, count($recurso->empleados));
+        }
+
+        // Gantt
+        $gantt_path = 'storage/gantt/';
+
+
+
+        $version_gantt = glob($gantt_path . "gantt_inicial*.json");
+
+        $path_gantt = end($version_gantt);
+
 
         return view('home', compact(
             'auditexterna',
@@ -276,7 +325,6 @@ class HomeController
             'settings5',
             'chart1',
             'chart2',
-            'chart3',
             'chart4',
             'chart7',
             'chart8',
@@ -294,7 +342,17 @@ class HomeController
             'documentorev',
             'documentoElab',
             'docunoelab',
-            'exist_doc'
+            'exist_doc',
+            'capacitaciones',
+            'categorias',
+            'categorias_arr',
+            'recursos_categoria_arr',
+            'tipos_total_arr',
+            'capacitaciones_year_actual',
+            'capacitaciones_year_actual_uno_antes',
+            'arr_fechas_cursos',
+            'arr_participantes',
+            'path_gantt'
         ));
     }
 }

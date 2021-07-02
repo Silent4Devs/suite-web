@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
+    
     @can('matriz_requisito_legale_create')
 
         <div class="mt-5 card">

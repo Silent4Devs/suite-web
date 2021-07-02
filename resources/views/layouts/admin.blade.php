@@ -14,11 +14,12 @@
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet"/>-->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet"/>-->
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css"
           rel="tylesheet"/>-->
-    <link rel="stylesheet" href="{{ asset('bs-stepper/dist/css/bs-stepper.min.css') }}">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/Silent4Business-Logo-Color.png') }}">
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"/>-->
@@ -34,12 +35,13 @@
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css" integrity="sha512-4E8WH1J08+TC3LLRtjJdA8OlggQvj5LN+TciGGwJWaQtFXj0BoZPKT9gIHol283GiUfpKPVk54LJfur5jfiRxA==" crossorigin="anonymous" />
 
 
-          
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
         integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
         crossorigin="anonymous" />
     <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style type="text/css">
     /* DATATABLE */
         .datatable-fix table.dataTable thead .sorting:after {
@@ -63,8 +65,8 @@
         table.dataTable{
             border-collapse: collapse !important;
         }
-       
-        body::before {
+
+        /*body::before {
             content: "";
             position: fixed;
             background: url({{ asset('img/auth-bg2.jpg') }});
@@ -79,7 +81,7 @@
             z-index: -1;
             filter: grayscale(100%) brightness(230%);
             opacity: 0.2;
-        }
+        }*/
         .btn-read{
                 display: inline-block;
                 cursor: pointer;
@@ -94,7 +96,7 @@
         }
         .iconos-crear {
             font-size: 15pt;
-            color: #9FA2A5;
+            color: #00a57e;
             margin-right: 10px;
         }
 
@@ -107,18 +109,18 @@
         }
 
         .iconos_cabecera {
-            color: #fff;
+            color: #00abb2;
             font-size: 1.2rem;
-        }
-
-        body.c-dark-theme .iconos_cabecera {
-            color: #000;
         }
 
 
         body,
         .iconos_cabecera {
             transition: 0s;
+        }
+
+        body{
+            background-color: #F2F4F6;
         }
 
         #btnDark {
@@ -136,7 +138,8 @@
         }
 
         header {
-            box-shadow: 6px 0px 6px 1px rgba(0, 0, 0, 0.6);
+            box-shadow: 6px 0px 6px 1px rgba(0, 0, 0, 0.5);
+            z-index: 6;
         }
 
 
@@ -155,6 +158,80 @@
             font-style: normal;
         }
 
+
+        .card.vrd-agua{
+            border-radius: 100px !important;
+            overflow: hidden;
+        }
+
+
+        .card{
+            border: none !important;
+            box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-body.align-self-center{
+            margin-top: -65px !important;
+
+            background-color: rgba(0, 0, 0, 0) !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+
+        }
+        .card-body.align-self-center h3, .card-body.align-self-center h3 i{
+            color: #008186 !important;
+        }
+
+
+
+
+        .btn.btn-success{
+            width: 150px;
+            height: 35px;
+            background-color: #00abb2 !important;
+            color: #fff !important;
+            border-radius: 100px;
+            border: none !important;
+        }
+        .btn:hover.btn-success{
+            color: #00abb2 !important;
+            background-color: rgba(0, 0, 0, 0) !important;
+            box-shadow: 0 0 0 1px #00abb2 ;
+        }
+        .btn:hover.btn-success font{
+            color: #00abb2 !important;
+            background-color: rgba(0, 0, 0, 0) !important;
+        }
+
+
+
+
+
+
+
+        ol.breadcrumb{
+            background-color: rgba(0, 0, 0, 0);
+            top: 50px;
+            margin-left: -20px;
+            margin-top: -40px;
+            margin-bottom: 60px;
+            border: none;
+            opacity: 0.6;
+        }
+        ol.breadcrumb:hover{
+            opacity: 1;
+        }
+
+        .c-header.c-header-fixed{
+            z-index: 10 !important;
+        }
+
+
+
+        .c-sidebar-backdrop{
+            z-index: 9 !important;
+        }
+
     </style>
     @yield('styles')
     @livewireStyles
@@ -164,16 +241,16 @@
     @include('partials.menu')
     <div class="c-wrapper">
         <header class="px-3 c-header c-header-fixed"
-            style="background: linear-gradient(60deg, rgb(35,57,91) 40%, rgb(62,142,207) 70%, rgb(13,164,160) 100%) !important; border: none;">
+            style="border: none;">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
-                <i class="fas fa-fw fa-bars"></i>
+                <i class="fas fa-fw fa-bars iconos_cabecera"></i>
             </button>
 
 
-            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar"
+            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="body"
                 data-class="c-sidebar-lg-show" responsive="true">
-                <i id="btnMenu" class="fas fa-fw fa-bars" style="color:white"></i>
+                <i id="btnMenu" class="fas fa-fw fa-bars" style=""></i>
             </button>
 
 
@@ -275,7 +352,7 @@
             <main class="c-main">
 
 
-                <div class="container-fluid">
+                <div class="container-fluid" id="app">
                     @if (session('message'))
                         <div class="mb-2 row">
                             <div class="col-lg-12">
@@ -306,12 +383,12 @@
         @include('partials.footer')
     </div>
 
-
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-    
+    <script src="{{ asset('push/bin/push.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
     </script>
     {{-- <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script> --}}
@@ -327,6 +404,7 @@
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js" defer></script>
+    <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
     {{-- <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>-->
@@ -335,16 +413,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-    <script src="{{ asset('bs-stepper/dist/js/bs-stepper.min.js') }}"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
+
     <script>
         window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
             'user' => auth()->check() ? auth()->user()->id : null,
         ]) !!};
+
+
+
     </script>
-    
+
     <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+
     <!-- x editable -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js">
     </script>
@@ -364,6 +446,7 @@
 
     </script>
     @livewireScripts
+    <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
     <!-- x-editable -->
     <script>
         $.fn.editable.defaults.mode = 'inline';
@@ -462,7 +545,7 @@
                 //dom: 'lBfrtip<"actions">',
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
-                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",  
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
                 buttons: [{
                         extend: 'selectAll',
                         className: 'btn-primary',
@@ -629,7 +712,7 @@
     </script>
 
     @yield('scripts')
-    
+
 
 </body>
 

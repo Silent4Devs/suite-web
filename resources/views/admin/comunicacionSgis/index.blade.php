@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+    
+    {{ Breadcrumbs::render('admin.comunicacion-sgis.index') }}
+    
     @can('comunicacion_sgi_create')
 
         <div class="mt-5 card">

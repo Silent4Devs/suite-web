@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+    
+    {{ Breadcrumbs::render('admin.tratamiento-riesgos.index') }}
+    
     @can('tratamiento_riesgo_create')
 
         <div class="mt-5 card">

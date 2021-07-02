@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+    
+    {{ Breadcrumbs::render('admin.riesgosoportunidades.index') }}
+    
     @can('riesgosoportunidade_create')
 
         <div class="mt-5 card">

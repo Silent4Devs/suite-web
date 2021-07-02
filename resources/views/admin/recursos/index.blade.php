@@ -1,16 +1,20 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.recursos.index') }}
+    
     @can('recurso_create')
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Cursos y Capacitaciones</strong></h3>
+                <h3 class="mb-2 text-center text-white"><strong>Capacitaciones</strong></h3>
             </div>
         @endcan
         <div class="card-body datatable-fix">
             <table class="table table-bordered datatable-Recurso w-100">
                 <thead class="thead-dark">
                     <tr>
+                        <th></th>
                         <th>
                             {{ trans('cruds.recurso.fields.id') }}
                         </th>
@@ -25,9 +29,6 @@
                         </th>
                         <th>
                             {{ trans('cruds.recurso.fields.instructor') }}
-                        </th>
-                        <th>
-                            Certificado&nbsp;(PDF&nbsp;/PNG)
                         </th>
                         <th>
                             Opciones
@@ -188,8 +189,12 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.recursos.index') }}",
                 columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                    }, {
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        visible: false
                     },
                     {
                         data: 'cursoscapacitaciones',
@@ -207,23 +212,7 @@
                         data: 'instructor',
                         name: 'instructor'
                     },
-                    {
-                        data: 'certificado',
-                        name: 'certificado',
-                        // render: function(data, type, row) {
-                        //     let imagenes = "";
-                        //     if (row.media.length > 0) {
-                        //         row.media.map(element => {
-                        //             return imagenes +=
-                        //                 `<img src="{{ asset('images/') }}/${element.file_name}" />`;
-                        //         });
-                        //     }
-                        //     console.log(imagenes);
-                        //     return row;
-                        // },
-                        sortable: false,
-                        searchable: false
-                    },
+
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'

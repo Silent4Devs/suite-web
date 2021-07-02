@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.material-iso-veinticientes.index') }}
+    
     @can('material_iso_veinticiente_create')
 
         <div class="mt-5 card">

@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    {{ Breadcrumbs::render('admin.revision-direccions.index') }}
+    
     @can('revision_direccion_create')
 
     @endcan

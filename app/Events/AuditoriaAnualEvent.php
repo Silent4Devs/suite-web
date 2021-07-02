@@ -35,6 +35,7 @@ class AuditoriaAnualEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
+        \Log::debug("retorno notificacion");
         return new Channel('notificaciones-campana');
     }
 }

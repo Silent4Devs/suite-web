@@ -2,6 +2,7 @@
 
 //Route::view('/', 'welcome');
 
+use App\Http\Controllers\Admin\CategoriaCapacitacionController;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Livewire\NotificacionesComponent;
 
@@ -10,6 +11,26 @@ Route::get('/', 'Auth\LoginController@showLoginForm');
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
+
+    Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
+
+
+    Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
+
+    Route::post('plantTrabajoBase/bloqueo/mostrar', 'LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');
+    Route::post('plantTrabajoBase/bloqueo/quitar', 'LockedPlanTrabajoController@removeLockedToPlanTrabajo')->name('lockedPlan.removeLockedToPlanTrabajo');
+    Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
+    Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
+
+    Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
+    Route::post('planTrabajoBase/save/current', 'PlanTrabajoBaseController@saveCurrentProyect')->name('planTrabajoBase.saveCurrentProyect');
+    Route::post('planTrabajoBase/save/status', 'PlanTrabajoBaseController@saveStatus')->name('planTrabajoBase.saveStatus');
+    Route::post('planTrabajoBase/check/changes', 'PlanTrabajoBaseController@checkChanges')->name('planTrabajoBase.checkChanges');
+    Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
+    Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
+
+
+
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -34,9 +55,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
 
+    //procesos
+    Route::resource('procesos', 'ProcesoController');
+
+    //macroprocesos
+    Route::resource('macroprocesos', 'MacroprocesoController');
+
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    //Route::post('users/get', 'UsersController@getUsers')->name('users.get');
     Route::resource('users', 'UsersController');
+
+    // Empleados
+    Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
+    Route::resource('empleados', 'EmpleadoController');
 
     // Organizacions
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
@@ -44,12 +76,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('organizacions/ckmedia', 'OrganizacionController@storeCKEditorImages')->name('organizacions.storeCKEditorImages');
     Route::resource('organizacions', 'OrganizacionController');
 
+    Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
+    Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
+
     // Dashboards
     Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Implementacions
-    Route::post('implementacions/guardar-proyecto', 'ImplementacionController@saveImplementationProyect')->name('implementacions.saveProyect');
-    Route::post('implementacions/cargar-proyecto', 'ImplementacionController@loadProyect')->name('implementacions.loadProyect');
+
     Route::resource('implementacions', 'ImplementacionController');
 
 
@@ -114,10 +148,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('objetivosseguridads/destroy', 'ObjetivosseguridadController@massDestroy')->name('objetivosseguridads.massDestroy');
     Route::resource('objetivosseguridads', 'ObjetivosseguridadController');
 
+    Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
+
     // Recursos
     Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
     Route::post('recursos/media', 'RecursosController@storeMedia')->name('recursos.storeMedia');
     Route::post('recursos/ckmedia', 'RecursosController@storeCKEditorImages')->name('recursos.storeCKEditorImages');
+    Route::post('recursos/suscribir/', 'RecursosController@suscribir')->name('recursos.suscribir');
+    Route::post('recursos/cancelar/', 'RecursosController@eliminarParticipante')->name('recursos.cancelar');
+    Route::post('recursos/calificar/', 'RecursosController@calificarParticipante')->name('recursos.calificar');
+    Route::get('recursos/{recurso}/participantes/', 'RecursosController@participantes')->name('recursos.participantes');
+    Route::get('recursos/{recurso}/participantes/get', 'RecursosController@getParticipantes')->name('recursos.getParticipantes');
     Route::resource('recursos', 'RecursosController');
 
     // Competencia
@@ -228,9 +269,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Sedes
     Route::delete('sedes/destroy', 'SedeController@massDestroy')->name('sedes.massDestroy');
+    Route::get('sedes/organizacion', 'SedeController@obtenerListaSedes')->name('sedes.obtenerListaSedes');
     Route::post('sedes/parse-csv-import', 'SedeController@parseCsvImport')->name('sedes.parseCsvImport');
     Route::post('sedes/process-csv-import', 'SedeController@processCsvImport')->name('sedes.processCsvImport');
     Route::resource('sedes', 'SedeController');
+
+    //Grupo Areas
+    Route::delete('grupoarea/destroy', 'GrupoAreaController@massDestroy')->name('grupoarea.massDestroy');
+    Route::post('grupoarea/parse-csv-import', 'GrupoAreaController@parseCsvImport')->name('grupoarea.parseCsvImport');
+    Route::post('grupoarea/process-csv-import', 'GrupoAreaController@processCsvImport')->name('grupoarea.processCsvImport');
+    Route::resource('grupoarea', 'GrupoAreaController');
+
 
     // Indicadores Sgsis
     Route::delete('indicadores-sgsis/destroy', 'IndicadoresSgsiController@massDestroy')->name('indicadores-sgsis.massDestroy');
@@ -468,7 +517,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::resource('comunicacion-sgis', 'ComunicacionSgiController');
 
     // Politica Del Sgsi Soportes
-    Route::resource('politica-del-sgsi-soportes', 'PoliticaDelSgsiSoporteController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    //Route::resource('politica-del-sgsi-soportes', 'PoliticaDelSgsiSoporteController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Control Accesos
     Route::delete('control-accesos/destroy', 'ControlAccesoController@massDestroy')->name('control-accesos.massDestroy');
@@ -503,11 +552,15 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::resource('controles', 'ControlesController');
 
     // Audit Logs
-    Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+    //Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
 
     // Areas
     Route::delete('areas/destroy', 'AreasController@massDestroy')->name('areas.massDestroy');
     Route::resource('areas', 'AreasController');
+
+    // Grupo Areas
+    Route::delete('grupoarea/destroy', 'GrupoAreaController@massDestroy')->name('grupoarea.massDestroy');
+    Route::resource('grupoarea', 'GrupoAreaController');
 
     // Organizaciones
     Route::delete('organizaciones/destroy', 'OrganizacionesController@massDestroy')->name('organizaciones.massDestroy');
@@ -530,7 +583,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::resource('indicadores-sgsis', 'IndicadoresSgsiController');
 
     // Indicadorincidentessis
-    Route::resource('indicadorincidentessis', 'IndicadorincidentessiController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    //Route::resource('indicadorincidentessis', 'IndicadorincidentessiController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Auditoria Anuals
     Route::delete('auditoria-anuals/destroy', 'AuditoriaAnualController@massDestroy')->name('auditoria-anuals.massDestroy');
@@ -597,8 +650,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::resource('faq-categories', 'FaqCategoryController');
 
     // Matriz Riesgos
-    Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
-    Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+    //Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
+    //Route::resource('matriz-riesgos', 'MatrizRiesgosController');
     // Gap Unos
     Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
     Route::resource('gap-unos', 'GapUnoController');
