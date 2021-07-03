@@ -19212,8 +19212,8 @@ window.html2canvas = __webpack_require__(/*! html2canvas */ "./node_modules/html
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "",
-  cluster: "mt1",
+  key: "ba7bf6ff4052dd0920ed",
+  cluster: "us2",
   forceTLS: true
 });
 
