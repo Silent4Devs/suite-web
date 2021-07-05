@@ -248,6 +248,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Areas
     Route::delete('areas/destroy', 'AreasController@massDestroy')->name('areas.massDestroy');
+    Route::get('areas/grupo', 'AreasController@obtenerAreasPorGrupo')->name('areas.obtenerAreasPorGrupo');
     Route::post('areas/parse-csv-import', 'AreasController@parseCsvImport')->name('areas.parseCsvImport');
     Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
     Route::resource('areas', 'AreasController');
