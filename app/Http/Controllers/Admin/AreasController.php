@@ -115,7 +115,7 @@ class AreasController extends Controller
 
         $area = Area::create($request->all());
 
-        return redirect()->route('admin.areas.index');
+        return redirect()->route('admin.areas.index')->with("success",'Guardado con éxito');
     }
 
     public function edit(Area $area)
@@ -133,7 +133,7 @@ class AreasController extends Controller
     {
         $area->update($request->all());
 
-        return redirect()->route('admin.areas.index');
+        return redirect()->route('admin.areas.index')->with("success",'Editado con éxito');
     }
 
     public function show(Area $area)

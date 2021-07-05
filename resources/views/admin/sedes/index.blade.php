@@ -50,6 +50,7 @@
             </div>
         </div>
     </div>
+    @include('partials.flashMessages')
     <div class="card-body datatable-fix">
         <table class="table table-bordered w-100 datatable datatable-Sede">
             <thead class="thead-dark">
