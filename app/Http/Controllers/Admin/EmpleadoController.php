@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-    use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 use Symfony\Component\HttpFoundation\Response;
@@ -122,8 +122,7 @@ class EmpleadoController extends Controller
             });
 
             $table->editColumn('sede', function ($row) {
-                return $row->sede ? $row->sede->sede:'';
-                
+                return $row->sede ? $row->sede->sede : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -148,8 +147,7 @@ class EmpleadoController extends Controller
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
         $sedes = Sede::get();
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas','sedes'));
-
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes'));
     }
 
     /**
@@ -196,40 +194,62 @@ class EmpleadoController extends Controller
             "sede_id" =>  $request->sede_id
         ]);
         $image = null;
-        if ($request->file('foto') != null or !empty($request->file('foto'))) {
-            $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
-            $new_name_image = 'UID_' . $empleado->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
-            $image = $new_name_image;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('foto'));
-            $img_intervention->resize(256, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($route);
+        if ($request->snap_foto && $request->file('foto')) {
+            if ($request->snap_foto) {
+                if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
+                    $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
+                    $value = base64_decode($value);
+
+                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
+                    $image = $new_name_image;
+                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                    $img_intervention = Image::make($request->snap_foto);
+                    $img_intervention->resize(480, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($route);
+                }
+            }
+        } else if ($request->snap_foto && !$request->file('foto')) {
+            if ($request->snap_foto) {
+                if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
+                    $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
+                    $value = base64_decode($value);
+
+                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
+                    $image = $new_name_image;
+                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                    $img_intervention = Image::make($request->snap_foto);
+                    $img_intervention->resize(480, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($route);
+                }
+            }
+        } else {
+            if ($request->file('foto') != null or !empty($request->file('foto'))) {
+                $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
+                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+                $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.' . $extension;
+                $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                $image = $new_name_image;
+                //Usamos image_intervention para disminuir el peso de la imagen
+                $img_intervention = Image::make($request->file('foto'));
+                $img_intervention->resize(480, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($route);
+            }
         }
 
         $empleado->update([
             'foto' => $image
         ]);
 
-        $gantt_path = 'storage/gantt/';
+        $gantt_path = 'storage/gantt/gantt_inicial.json';
         $path = public_path($gantt_path);
 
+        
 
 
-        $files = glob($path . "gantt_inicial*.json");
-
-
-        $version_gantt = [];
-
-        sort($files, SORT_NATURAL | SORT_FLAG_CASE);
-        foreach ($files as $clave => $valor) {
-            array_push($version_gantt, $valor);
-        }
-
-
-        $path = end($version_gantt);
+        
         $json_code = json_decode(file_get_contents($path), true);
         $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
         $write_empleados = $json_code;
@@ -267,8 +287,7 @@ class EmpleadoController extends Controller
         $area = Area::findOrfail($empleado->area_id);
         $sedes = Sede::get();
         $sede = Sede::findOrfail($empleado->sede_id);
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area','sede','sedes'));
-
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes'));
     }
 
     /**
@@ -312,26 +331,54 @@ class EmpleadoController extends Controller
 
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
-        if ($request->file('foto') != null or !empty($request->file('foto'))) {
+        $image = null;
+        if ($request->snap_foto && $request->file('foto')) {
+            if ($request->snap_foto) {
+                if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
+                    $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
+                    $value = base64_decode($value);
 
-            //Si existe la imagen entonces se elimina al editarla
-
-            $isExists = Storage::disk('public')->exists('empleados/imagenes/' . $empleado->foto);
-            if ($isExists) {
-                if ($empleado->foto != null) {
-                    unlink(storage_path('/app/public/empleados/imagenes/' . $empleado->foto));
+                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
+                    $image = $new_name_image;
+                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                    $img_intervention = Image::make($request->snap_foto);
+                    $img_intervention->resize(480, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($route);
                 }
             }
-            $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
-            $new_name_image = 'UID_' . $empleado->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
-            $image = $new_name_image;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('foto'));
-            $img_intervention->resize(256, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($route);
+        } else if (
+            $request->snap_foto && !$request->file('foto')
+        ) {
+            if ($request->snap_foto) {
+                if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
+                    $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
+                    $value = base64_decode($value);
+
+                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
+                    $image = $new_name_image;
+                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                    $img_intervention = Image::make($request->snap_foto);
+                    $img_intervention->resize(480, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($route);
+                }
+            }
+        } else {
+            if (
+                $request->file('foto') != null or !empty($request->file('foto'))
+            ) {
+                $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
+                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+                $new_name_image = 'UID_' . $empleado->id . '_' . $request->name . '.' . $extension;
+                $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                $image = $new_name_image;
+                //Usamos image_intervention para disminuir el peso de la imagen
+                $img_intervention = Image::make($request->file('foto'));
+                $img_intervention->resize(480, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($route);
+            }
         }
 
         $empleado->update([
@@ -348,24 +395,16 @@ class EmpleadoController extends Controller
             "n_empleado" =>  $request->n_empleado,
             "n_registro" =>  $request->n_empleado,
             'foto' => $image,
-            "sede_id"=>$request->sede_id
+            "sede_id" => $request->sede_id
         ]);
 
-        $gantt_path = 'storage/gantt/';
+        $gantt_path = 'storage/gantt/gantt_inicial.json';
         $path = public_path($gantt_path);
 
-        $files = glob($path . "gantt_inicial*.json");
+        
 
 
-        $version_gantt = [];
-
-        sort($files, SORT_NATURAL | SORT_FLAG_CASE);
-        foreach ($files as $clave => $valor) {
-            array_push($version_gantt, $valor);
-        }
-
-
-        $path = end($version_gantt);
+        
         $json_code = json_decode(file_get_contents($path), true);
         $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
         $write_empleados = $json_code;

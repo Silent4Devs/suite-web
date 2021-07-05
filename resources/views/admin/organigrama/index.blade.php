@@ -346,7 +346,7 @@
 @endsection
 
 @section('content')
-   <div class="text-center">
+    <div class="text-center">
         <h1 class="mb-4 text-2xl font-black leading-tight md:text-2xl lg:text-3xl">
             Organigrama de {{ $organizacion }}
         </h1>
@@ -467,7 +467,6 @@
         import OrgChart from "{{ asset('orgchart/orgchart.js') }}"; // Se importan funcionalidades de OrgChart
 
         document.addEventListener('DOMContentLoaded', function() {
-            let isBlocked = JSON.parse(Cookies.get('bloqueo'));
             let orientaciones = ['t2b', 'l2r', 'r2l', 'b2t'];
             let imagenOrientaciones = ['top.png', 'left.png', 'right.png', 'bottom.png']
             let orientacion = orientaciones[0];
@@ -680,6 +679,5 @@
                 renderOrganigrama(OrgChart, orientacion);
             });
         });
-
     </script>
 @endsection

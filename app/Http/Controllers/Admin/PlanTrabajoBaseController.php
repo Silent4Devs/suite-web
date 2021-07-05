@@ -14,9 +14,18 @@ class PlanTrabajoBaseController extends Controller
 {
     public function index()
     {
+
         $gantt_path = 'storage/gantt/';
 
         $path = public_path($gantt_path);
+
+
+        $json_code = json_decode(file_get_contents($path.'/gantt_inicial.json'), true);
+        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        $write_empleados = $json_code;
+        file_put_contents($path.'/gantt_inicial.json', json_encode($write_empleados));
+
+
         $files = glob("storage/gantt/versiones/gantt_inicial*.json");
         $archivos_gantt = [];
 
@@ -28,7 +37,11 @@ class PlanTrabajoBaseController extends Controller
         $path_asset = asset('storage/gantt/versiones/');
         $gant_readed = end($archivos_gantt);
 
+        
+
         $file_gant = json_decode(file_get_contents($gant_readed), true);
+
+
 
         $empleados = Empleado::select("name")->get();
 
@@ -101,20 +114,10 @@ class PlanTrabajoBaseController extends Controller
     {
         if ($request->ajax()) {
 
-            $gantt_path = 'storage/gantt/';
+            $gantt_path = 'storage/gantt/gantt_inicial.json';
 
             $path = public_path($gantt_path);
 
-            $files = glob($path . "gantt_inicial*.json");
-            $version_gantt = [];
-
-            sort($files, SORT_NATURAL | SORT_FLAG_CASE);
-            foreach ($files as $clave => $valor) {
-                array_push($version_gantt, $valor);
-            }
-
-
-            $path = end($version_gantt);
 
             $store = file_put_contents($path, $request->gantt);
 
