@@ -9,7 +9,11 @@
             </div>
 
 
-            <!-- component -->
+         <!-- component -->
+
+
+
+
 
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -24,8 +28,10 @@
             </div>
 
 
-        @endcan
+    @endcan
 
+
+@if($numero_sedes>0)
 
         @if ($numero_sedes > 0)
 
@@ -46,36 +52,42 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body datatable-fix">
-                <table class="table table-bordered w-100 datatable datatable-Sede">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>
-                                {{ trans('cruds.sede.fields.id') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.sede.fields.sede') }}
-                            </th>
-                            <th>
-                                Fotografía de la Sede
-                            </th>
-                            <th>
-                                Dirección
-                            </th>
-                            <th>
-                                Ubicación
-                            </th>
-                            <th>
-                                {{ trans('cruds.sede.fields.descripcion') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.sede.fields.organizacion') }}
-                            </th>
-                            <th>
-                                Opciones
-                            </th>
-                        </tr>
-                        {{-- <tr>
+            <div class="col-11">
+                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre cada una de las sedes
+                    con las que cuenta su organización</p>
+
+            </div>
+        </div>
+    </div>
+    @include('partials.flashMessages')
+    <div class="card-body datatable-fix">
+        <table class="table table-bordered w-100 datatable datatable-Sede">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        {{ trans('cruds.sede.fields.id') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.sede.fields.sede') }}
+                    </th>
+                    <th>
+                        Fotografía de la Sede
+                    </th>
+                    <th>
+                        Dirección
+                    </th>
+                    <th>
+                        {{ trans('cruds.sede.fields.descripcion') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.sede.fields.organizacion') }}
+                    </th>
+                    <th>
+                        Opciones
+                    </th>
+                </tr>
+                {{-- <tr>
                     <td>
                     </td>
                     <td>
@@ -101,11 +113,13 @@
                     <td>
                     </td>
                 </tr> --}}
-                    </thead>
-                </table>
-            </div>
+            </thead>
+        </table>
+    </div>
 
 
+
+@else
 
         @else
 
@@ -128,11 +142,17 @@
 
             </div>
 
-            <div class="d-flex justify-content-center">
+            
+        </div>
+
+    </div>
+    
+    <div class="d-flex justify-content-center">
                 <img src="{{ asset('img/sedes.png') }}" alt="No se pudo cargar el organigrama" class="mt-3"
                     style="height: 300px;">
             </div>
-        @endif
+
+            @endif
 
     </div>
 
@@ -282,7 +302,7 @@
                         data: 'foto_sedes',
                         name: 'foto_sedes',
                         render: function(data, type, row, meta) {
-                            return `<div id="modal" class="text-center w-100"><img style="width:${data!=""?"50px":"35px"}" src="{{ asset('storage/sedes/imagenes/') }}/${data !=""?data:"office.png"}"></div>`;
+                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"80px"}" src="{{ asset('storage/sedes/imagenes/') }}/${data !=""?data:"organizacion.png"}"></div>`;
                         }
                     },
                     {

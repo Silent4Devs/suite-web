@@ -59,7 +59,7 @@ class AreasController extends Controller
             $table->editColumn(
                 'reporta',
                 function ($row) {
-                    return $row->areas ? $row->areas : "";
+                    return $row->areas->get(0) ? $row->areas->get(0)['area'] : "";
                 }
             );
 
@@ -76,9 +76,10 @@ class AreasController extends Controller
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $teams = Team::get();
         $grupoarea= Grupo::get();
+        $numero_areas=Area::count();
 
 
-        return view('admin.areas.index', compact('teams','direccion_exists'));
+        return view('admin.areas.index', compact('teams','direccion_exists','numero_areas'));
     }
 
     public function create()
@@ -114,7 +115,7 @@ class AreasController extends Controller
 
         $area = Area::create($request->all());
 
-        return redirect()->route('admin.areas.index');
+        return redirect()->route('admin.areas.index')->with("success",'Guardado con éxito');
     }
 
     public function edit(Area $area)
@@ -132,7 +133,7 @@ class AreasController extends Controller
     {
         $area->update($request->all());
 
-        return redirect()->route('admin.areas.index');
+        return redirect()->route('admin.areas.index')->with("success",'Editado con éxito');
     }
 
     public function show(Area $area)
@@ -158,5 +159,18 @@ class AreasController extends Controller
         Area::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function obtenerAreasPorGrupo (Area $area){
+
+
+        $grupoarea = Grupo::get();
+        $area->load('team','grupo');
+        $numero_areas=Area::count();
+
+
+
+        return view('admin.areas.areas-grupo', compact('grupoarea','area','numero_areas'));
+
     }
 }
