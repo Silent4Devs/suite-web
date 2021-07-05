@@ -213,6 +213,7 @@ class SedeController extends Controller
         $organizacions = Organizacion::all();
         $teams = Team::get();
         $numero_sedes=Sede::count();
+        //dd($sede);
 
         return view('admin.sedes.sedes-organizacion', compact('sede','organizacions', 'teams', 'numero_sedes'));
     }

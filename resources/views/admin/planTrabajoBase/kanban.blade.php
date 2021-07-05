@@ -298,46 +298,50 @@
                             if (filteredAssigs.length > 0) {
                                 if (filteredAssigs.length <= 4) {
                                     for (var i = 0; i < filteredAssigs.length; i++) {
-                                        if (assigs[i].foto == null) {
-                                            if (assigs[i].genero == 'M') {
-                                                foto = 'woman.png';
+                                        if (assigs[i] != undefined) {
+                                            if (assigs[i].foto == null) {
+                                                if (assigs[i].genero == 'M') {
+                                                    foto = 'woman.png';
+                                                } else {
+                                                    foto = 'usuario_no_cargado.png';
+                                                }
                                             } else {
-                                                foto = 'usuario_no_cargado.png';
+                                                foto = assigs[i].foto;
                                             }
-                                        } else {
-                                            foto = assigs[i].foto;
+                                            imagenes += `<div class="caja-imagen-asignado">
+                                                    <img class="rounded-circle" title="${assigs[i].name}"
+                                                        src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
+                                                </div>`;
                                         }
-                                        imagenes += `<div class="caja-imagen-asignado">
-                                                <img class="rounded-circle" title="${assigs[i].name}"
-                                                    src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
-                                            </div>`;
                                     }
                                 } else {
                                     while (contador <= 4) {
-                                        if (assigs[contador].foto == null) {
-                                            if (assigs[contador].genero == 'M') {
-                                                foto = 'woman.png';
+                                        if (assigs[contador] != undefined) {
+                                            if (assigs[contador].foto == null) {
+                                                if (assigs[contador].genero == 'M') {
+                                                    foto = 'woman.png';
+                                                } else {
+                                                    foto = 'usuario_no_cargado.png';
+                                                }
                                             } else {
-                                                foto = 'usuario_no_cargado.png';
+                                                foto = assigs[contador].foto;
                                             }
-                                        } else {
-                                            foto = assigs[contador].foto;
-                                        }
 
-                                        if (contador == 4) {
-                                            imagenes +=
-                                                `<div class="caja-imagen-asignado">
-                                                <img class="rounded-circle" title="${assigs[contador].name}"
-                                                    src="{{ asset('storage/empleados/imagenes') }}/${foto}" />                                                    
-                                        </div>
-                                        <span class="btn_empleados" onmouseover="renderCard(this, '${encodeURIComponent(JSON.stringify(assigs))}')">+${assigs.length - 4}</span>
-                                        `;
-                                        } else {
-                                            imagenes +=
-                                                `<div class="caja-imagen-asignado">
-                                                <img class="rounded-circle" title="${assigs[contador].name}"
-                                                    src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
-                                            </div>`;
+                                            if (contador == 4) {
+                                                imagenes +=
+                                                    `<div class="caja-imagen-asignado">
+                                                    <img class="rounded-circle" title="${assigs[contador].name}"
+                                                        src="{{ asset('storage/empleados/imagenes') }}/${foto}" />                                                    
+                                            </div>
+                                            <span class="btn_empleados" onmouseover="renderCard(this, '${encodeURIComponent(JSON.stringify(assigs))}')">+${assigs.length - 4}</span>
+                                            `;
+                                            } else {
+                                                imagenes +=
+                                                    `<div class="caja-imagen-asignado">
+                                                    <img class="rounded-circle" title="${assigs[contador].name}"
+                                                        src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
+                                                </div>`;
+                                            }
                                         }
                                         contador++;
                                     }

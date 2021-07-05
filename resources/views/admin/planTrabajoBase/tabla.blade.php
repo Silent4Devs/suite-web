@@ -415,35 +415,40 @@
 								let assigs = task.assigs.map(asignado => {
 									return(resources.find(r => r.id === Number(asignado.resourceId)));
 								});
-
+								assigs = assigs.filter(r => r);
 								let imagenes = '';
 								if (assigs.length > 0) {
 									if (assigs.length < 3) {
 										for (var i = 0; i < assigs.length; i++) {
 											let foto = 'man.png';
-											if(assigs[i].foto == null){ 
-												if (assigs[i].genero == 'M') {
+											if (assigs[i] != undefined) {
+												if(assigs[i].foto == null){ 
+													if (assigs[i].genero == 'M') {
+														foto = 'woman.png'; 
+													}else{
+														foto = 'usuario_no_cargado.png'; 
+													}
+												}else{
+													foto = assigs[i].foto;
+												}
+												imagenes += `<img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}"></img>`;
+											}
+										}		
+									}else{
+
+										let foto = 'man.png';
+										if (assigs[0] != undefined) {
+											if(assigs[0].foto == null){ 
+												if (assigs[0].genero == 'M') {
 													foto = 'woman.png'; 
 												}else{
 													foto = 'usuario_no_cargado.png'; 
 												}
 											}else{
-												foto = assigs[i].foto;
+												foto = assigs[0].foto;
 											}
-											imagenes += `<img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}"></img>`;
-										}		
-									}else{
-
-										let foto = 'man.png';
-										if(assigs[0].foto == null){ 
-											if (assigs[0].genero == 'M') {
-												foto = 'woman.png'; 
-											}else{
-												foto = 'usuario_no_cargado.png'; 
-											}
-										}else{
-											foto = assigs[0].foto;
 										}
+										
 
 										imagenes += `<img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}"></img><span class="btn_empleados" onmouseover="renderCard(this, '${encodeURIComponent(JSON.stringify(assigs))}')">+${assigs.length - 1}</span>`;
 									}
@@ -816,13 +821,13 @@
 
 		}
 		function renderResources(response,tarea_correspondiente, nombre = null){
-			console.log(nombre);
 			let recursos = null;
 			if (nombre == null || nombre == '') {
 				recursos = response.resources;
 			}else{
 				recursos = response.resources.filter(r => r.name.toLowerCase().includes(nombre.toLowerCase()));
 			}
+			console.log(recursos);
 			let res = recursos.map(resource => {
 				let foto = 'man.png';
 				if(resource.foto == null){ 

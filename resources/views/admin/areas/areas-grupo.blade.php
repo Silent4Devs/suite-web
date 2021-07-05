@@ -5,49 +5,35 @@
     <div class="mt-5 card">
 
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Sedes</strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Áreas</strong></h3>
         </div>
 
 
 
-
-        @if ($numero_sedes > 0)
+        @if ($numero_areas > 0)
 
             <div class="row justify-content-center">
-                @foreach ($sede as $sedes)
+                @foreach ($area as $areas)
                     <div class="col-4 justify-content-center">
                         <div class="card justify-content-center">
                             <div class="card-header">
-                                @if (is_null($sedes->foto_sedes))
-                                    <img class="card justify-content-center" style="height: 165px; margin:auto;"
-                                        src="{{asset ('storage/sedes/imagenes/organizacion.png')}}"
-                                        alt="" class="img-fluid">
-                                @else
-                                    <img class="card justify-content-center" style="height: 180px; margin:auto;"
-                                        src="{{ asset('storage/sedes/imagenes/' . $sedes->foto_sedes) }}" alt=""
-                                        class="img-fluid">
-
-                                @endif
 
                             </div>
 
                             <div class="card-body">
 
-                                <p><strong>Sede:</strong> {{ $sedes->sede }}</p>
-
-                                <p><strong>Dirección:</strong> {{ $sedes->direccion }}</p>
+                                {{-- <p><strong>Sede:</strong> {{  }}</p> --}}
 
                             </div>
 
                         </div>
                     </div>
 
-                @endforeach
 
                 <div class=" col-12 d-flex justify-content-center">
-                    {!! $sede->links() !!}
-                </div>
 
+                </div>
+                @endforeach
             </div>
 
 
@@ -63,7 +49,7 @@
                     </div>
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado Sedes a la
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado áreas a la
                             organización
                             <a href="{{ route('admin.sedes.create') }}"><i class="fas fa-share"></i></a>
                         </p>
@@ -73,11 +59,15 @@
             </div>
 
             <div class="d-flex justify-content-center">
-                <img src="{{ asset('img/sedes.png') }}" alt="No se pudo cargar el organigrama" class="mt-3"
-                    style="height: 300px;">
+                <img src="{{ asset('img/areas.jpg') }}" class="mt-3"
+                    style="height: 400px;">
             </div>
         @endif
 
     </div>
+
+
+
+
 
 @endsection

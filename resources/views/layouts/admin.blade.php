@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
 
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet"/>-->
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css"
@@ -30,20 +31,20 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
     <!-- x-editable -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
-
-          rel="stylesheet"/>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css" integrity="sha512-4E8WH1J08+TC3LLRtjJdA8OlggQvj5LN+TciGGwJWaQtFXj0BoZPKT9gIHol283GiUfpKPVk54LJfur5jfiRxA==" crossorigin="anonymous" />
-
-
-
+        rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/jquery-ui-datepicker/css/redmond/jquery-ui-1.10.3.custom.min.css"
+        integrity="sha512-4E8WH1J08+TC3LLRtjJdA8OlggQvj5LN+TciGGwJWaQtFXj0BoZPKT9gIHol283GiUfpKPVk54LJfur5jfiRxA=="
+        crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
         integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
         crossorigin="anonymous" />
     <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style type="text/css">
-    /* DATATABLE */
+        /* DATATABLE */
         .datatable-fix table.dataTable thead .sorting:after {
             opacity: 0.5;
             content: "\f0dc";
@@ -62,7 +63,7 @@
             font-family: "Font Awesome 5 Free";
         }
 
-        table.dataTable{
+        table.dataTable {
             border-collapse: collapse !important;
         }
 
@@ -82,18 +83,20 @@
             filter: grayscale(100%) brightness(230%);
             opacity: 0.2;
         }*/
-        .btn-read{
-                display: inline-block;
-                cursor: pointer;
-                transition: .2s ease-out;
-                padding: 1px 4px;
-                border-radius: 5px;
+        .btn-read {
+            display: inline-block;
+            cursor: pointer;
+            transition: .2s ease-out;
+            padding: 1px 4px;
+            border-radius: 5px;
         }
-        .btn-read:hover{
+
+        .btn-read:hover {
             color: rgb(47, 231, 1);
             transform: scale(1.2);
             transition: .2s ease-in;
         }
+
         .iconos-crear {
             font-size: 15pt;
             color: #00a57e;
@@ -119,7 +122,7 @@
             transition: 0s;
         }
 
-        body{
+        body {
             background-color: #F2F4F6;
         }
 
@@ -159,18 +162,18 @@
         }
 
 
-        .card.vrd-agua{
+        .card.vrd-agua {
             border-radius: 100px !important;
             overflow: hidden;
         }
 
 
-        .card{
+        .card {
             border: none !important;
             box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.12);
         }
 
-        .card-body.align-self-center{
+        .card-body.align-self-center {
             margin-top: -65px !important;
 
             background-color: rgba(0, 0, 0, 0) !important;
@@ -178,14 +181,16 @@
             border-radius: 0 !important;
 
         }
-        .card-body.align-self-center h3, .card-body.align-self-center h3 i{
+
+        .card-body.align-self-center h3,
+        .card-body.align-self-center h3 i {
             color: #008186 !important;
         }
 
 
 
 
-        .btn.btn-success{
+        .btn.btn-success {
             width: 150px;
             height: 35px;
             background-color: #00abb2 !important;
@@ -193,12 +198,14 @@
             border-radius: 100px;
             border: none !important;
         }
-        .btn:hover.btn-success{
+
+        .btn:hover.btn-success {
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
-            box-shadow: 0 0 0 1px #00abb2 ;
+            box-shadow: 0 0 0 1px #00abb2;
         }
-        .btn:hover.btn-success font{
+
+        .btn:hover.btn-success font {
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
         }
@@ -209,7 +216,7 @@
 
 
 
-        ol.breadcrumb{
+        ol.breadcrumb {
             background-color: rgba(0, 0, 0, 0);
             top: 50px;
             margin-left: -20px;
@@ -218,17 +225,18 @@
             border: none;
             opacity: 0.6;
         }
-        ol.breadcrumb:hover{
+
+        ol.breadcrumb:hover {
             opacity: 1;
         }
 
-        .c-header.c-header-fixed{
+        .c-header.c-header-fixed {
             z-index: 10 !important;
         }
 
 
 
-        .c-sidebar-backdrop{
+        .c-sidebar-backdrop {
             z-index: 9 !important;
         }
 
@@ -240,8 +248,7 @@
 <body class="">
     @include('partials.menu')
     <div class="c-wrapper">
-        <header class="px-3 c-header c-header-fixed"
-            style="border: none;">
+        <header class="px-3 c-header c-header-fixed" style="border: none;">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
                 <i class="fas fa-fw fa-bars iconos_cabecera"></i>
@@ -307,7 +314,6 @@
                     } else {
                         document.body.classList.remove('c-dark-theme');
                     }
-
                 </script>
 
 
@@ -380,17 +386,22 @@
             </form>
         </div>
         <!-- incluir de footer -->
-        @include('partials.footer')
+        {{-- @include('partials.footer') --}}
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-    <script src="{{ asset('push/bin/push.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
+    </script>
+    <script src="{{ asset('push/bin/push.min.js') }}"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
+    </script> --}}
     {{-- <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script> --}}
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
@@ -403,11 +414,14 @@
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js" defer></script>
+    <script
+        src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.4.0/r-2.2.2/rg-1.0.3/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"
+        defer></script>
     <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
     {{-- <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>-->
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js">
+    </script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
@@ -417,13 +431,10 @@
 
     <script>
         window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-            'user' => auth()->check() ? auth()->user()->id : null,
-        ]) !!};
-
-
-
+    'user' => auth()->check() ? auth()->user()->id : null,
+]) !!};
     </script>
+
 
     <script src="{{ asset('js/main.js') }}"></script>
 
@@ -443,7 +454,6 @@
 
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-
     </script>
     @livewireScripts
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
@@ -455,7 +465,6 @@
         };
 
         @yield('x-editable')
-
     </script>
     <!-- x-editable -->
 
@@ -502,7 +511,7 @@
                 // language: {
                 //     url: languages['{{ app()->getLocale() }}']
                 // },
-                  language: {
+                language: {
                     decimal: "",
                     emptyTable: "No hay registros",
                     info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
@@ -539,8 +548,8 @@
                 scrollX: true,
                 pageLength: 5,
                 lengthMenu: [
-                    [5, 10, 20,50,100, -1],
-                    [5, 10, 20,50,100, "Todos"]
+                    [5, 10, 20, 50, 100, -1],
+                    [5, 10, 20, 50, 100, "Todos"]
                 ],
                 //dom: 'lBfrtip<"actions">',
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
@@ -622,7 +631,6 @@
 
             $.fn.dataTable.ext.classes.sPageButton = '';
         });
-
     </script>
     <script>
         $(document).ready(function() {
@@ -633,7 +641,6 @@
                 }
             });
         });
-
     </script>
     <script>
         $(document).ready(function() {
@@ -708,7 +715,6 @@
                 window.location = url;
             });
         });
-
     </script>
 
     @yield('scripts')
