@@ -55,7 +55,7 @@ class SedeController extends Controller
             });
             $table->editColumn('foto_sedes', function ($row) {
                 return $row->foto_sedes ? $row->foto_sedes:'';
-                
+
             });
             $table->editColumn('direccion', function ($row) {
                 return $row->direccion ? $row->direccion : "";
@@ -105,7 +105,7 @@ class SedeController extends Controller
             "descripcion" =>  $request->descripcion,
 
         ]);
-        
+
         $image = null;
         if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
             $extension = pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -148,7 +148,7 @@ class SedeController extends Controller
         if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
 
             //Si existe la imagen entonces se elimina al editarla
-        
+
             $isExists = Storage::disk('public')->exists('sedes/imagenes/' . $sede->foto_sedes);
             if ($isExists) {
                 if ($sede->foto_sedes != null) {
@@ -167,7 +167,7 @@ class SedeController extends Controller
             })->save($route);
         }
 
-        
+
        $sede->update([
 
         "sede" =>  $request->sede,
@@ -207,15 +207,16 @@ class SedeController extends Controller
     }
 
     public function obtenerListaSedes(Sede $sedes){
-        
+
         //$sede = Sede::get();
         $sede = Sede::paginate(3);
         $organizacions = Organizacion::all();
         $teams = Team::get();
         $numero_sedes=Sede::count();
+        //dd($sede);
 
         return view('admin.sedes.sedes-organizacion', compact('sede','organizacions', 'teams', 'numero_sedes'));
     }
 
-    
+
 }
