@@ -398,7 +398,8 @@
         .orgchart.l2r .node .symbol {
             margin-right: -68px;
             -webkit-transform: rotate(0deg);
-            transform: rotate(0deg)
+            transform: rotate(0deg);
+            background-color: #717171;
         }
 
         .orgchart.l2r .node:first-child {
@@ -505,7 +506,7 @@
                                 <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                     <div class="modal-content">
                                         <div class="modal-header"
-                                            style="font-weight: bold; background: #2C3E50; color:white;">
+                                            style="font-weight: bold; background: {{ $grupo->color }};">
                                             <h5 class="text-center modal-title" id="Grupo{{ $grupo->id }}Label">
                                                 {{ $grupo->nombre }}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
