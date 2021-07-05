@@ -31,28 +31,36 @@ class Grupo extends Model
 	use SoftDeletes;
 	protected $table = 'grupos';
 
-    protected $dates = ['deleted_at'];
+	protected $dates = ['deleted_at'];
 
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+	const CREATED_AT = 'created_at';
+	const UPDATED_AT = 'updated_at';
 
 	protected $fillable = [
 		'nombre',
-		'descripcion'
+		'descripcion',
+		'color'
 	];
+
+	// protected $appends = ['color_group'];
 
 	public function areas()
 	{
 		return $this->hasMany(Area::class, 'id_grupo');
 	}
 
+	// public function getColorGroupAttribute()
+	// {
+	// 	return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+	// }
+
 	public function macroprocesos()
 	{
 		return $this->hasMany(Macroproceso::class, 'id_grupo');
 	}
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
+	public function team()
+	{
+		return $this->belongsTo(Team::class, 'team_id');
+	}
 }

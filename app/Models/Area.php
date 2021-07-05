@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 /**
  * Class Area
  *
@@ -42,11 +43,11 @@ class Area extends Model
 	use SoftDeletes, MultiTenantModelTrait, HasFactory;
 	protected $table = 'areas';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+	protected $dates = [
+		'created_at',
+		'updated_at',
+		'deleted_at',
+	];
 
 	protected $casts = [
 		'id_grupo' => 'int',
@@ -62,14 +63,21 @@ class Area extends Model
 		'team_id'
 	];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
+	protected $appends = ['grupo_name'];
+
+	protected function serializeDate(DateTimeInterface $date)
+	{
+		return $date->format('Y-m-d H:i:s');
+	}
 
 	public function grupo()
 	{
 		return $this->belongsTo(Grupo::class, 'id_grupo');
+	}
+
+	public function getGrupoNameAttribute()
+	{
+		return $this->grupo()->first('nombre')->nombre;
 	}
 
 	public function area()
@@ -82,9 +90,19 @@ class Area extends Model
 		return $this->belongsTo(Team::class);
 	}
 
+	public function supervisor()
+	{
+		return $this->belongsTo(Area::class, 'id_reporta', 'id');
+	}
+
 	public function areas()
 	{
 		return $this->hasMany(Area::class, 'id_reporta');
+	}
+
+	public function children()
+	{
+		return $this->hasMany(Area::class, 'id_reporta', 'id')->with('children', 'supervisor', 'grupo'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
 	}
 
 	public function concientizacion_sgis()
@@ -112,4 +130,3 @@ class Area extends Model
 		return $this->hasMany(User::class);
 	}
 }
-
