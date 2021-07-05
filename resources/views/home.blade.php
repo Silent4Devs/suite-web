@@ -201,7 +201,6 @@
 
         <section id="iso27001">
             @include('home_dash_iso27001')
-        </section> {{-- seccion --}}
 
         <section id="capacitaciones" class="mt-5">
             @include('home_dash_capacitaciones')
@@ -209,4 +208,11 @@
     </div>
     <!--col-->
 
+<<<<<<< HEAD
+
+
+
+
+=======
+>>>>>>> main
 @endsection

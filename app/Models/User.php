@@ -37,6 +37,7 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
+        'n_empleado',
         'email',
         'email_verified_at',
         'two_factor',
@@ -169,5 +170,8 @@ class User extends Authenticatable
     public function setTwoFactorExpiresAtAttribute($value)
     {
         $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+    public function empleado(){
+        return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado');
     }
 }

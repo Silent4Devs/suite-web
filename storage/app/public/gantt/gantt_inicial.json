@@ -9,7 +9,6 @@
 			"type": "",
 			"typeId": "",
 			"description": "",
-			"code": "",
 			"level": 0,
 			"status": "STATUS_DONE",
 			"depends": "",
@@ -18,7 +17,7 @@
 			"end": 1622177999999,
 			"startIsMilestone": false,
 			"endIsMilestone": false,
-			"collapsed": false,
+			"collapsed": true,
 			"canWrite": true,
 			"canAdd": true,
 			"canDelete": true,
@@ -26,7 +25,7 @@
 			"assigs": [
 				{
 					"id": "tmp_1624058224391_1",
-					"resourceId": "tmp_1",
+					"resourceId": 1,
 					"roleId": "tmp_1",
 					"effort": 0
 				}
@@ -43,7 +42,6 @@
 			"type": "",
 			"typeId": "",
 			"description": "",
-			"code": "",
 			"level": 1,
 			"status": "STATUS_FAILED",
 			"depends": "3",
@@ -87,6 +85,12 @@
 					"resourceId": 9,
 					"roleId": "tmp_1",
 					"effort": 0
+				},
+				{
+					"id": "tmp_1624391205261_1",
+					"resourceId": 1,
+					"roleId": "tmp_1",
+					"effort": 0
 				}
 			],
 			"id_fase": 3,
@@ -101,34 +105,20 @@
 			"type": "",
 			"typeId": "",
 			"description": "",
-			"code": "REL",
 			"level": 1,
-			"status": "STATUS_FAILED",
+			"status": "STATUS_SUSPENDED",
 			"depends": "",
 			"start": 1622523600000,
 			"duration": 11,
 			"end": 1623819599999,
 			"startIsMilestone": false,
 			"endIsMilestone": false,
-			"collapsed": false,
+			"collapsed": true,
 			"canWrite": true,
 			"canAdd": true,
 			"canDelete": true,
 			"canAddIssue": true,
-			"assigs": [
-				{
-					"id": "tmp_1624391205268_8",
-					"resourceId": 8,
-					"roleId": "tmp_1",
-					"effort": 0
-				},
-				{
-					"id": "tmp_16243912052611_11",
-					"resourceId": 11,
-					"roleId": "tmp_1",
-					"effort": 0
-				}
-			],
+			"assigs": [],
 			"id_fase": 2,
 			"url": ""
 		},
@@ -142,7 +132,7 @@
 			"typeId": "",
 			"description": "",
 			"level": 1,
-			"status": "STATUS_FAILED",
+			"status": "STATUS_SUSPENDED",
 			"depends": "3",
 			"start": 1623819600000,
 			"duration": 1,
@@ -156,50 +146,8 @@
 			"canAddIssue": true,
 			"assigs": [
 				{
-					"id": "tmp_1624391205269_9",
-					"resourceId": 9,
-					"roleId": "tmp_1",
-					"effort": 0
-				},
-				{
-					"id": "tmp_16243912052611_11",
-					"resourceId": 11,
-					"roleId": "tmp_1",
-					"effort": 0
-				},
-				{
-					"id": "tmp_16243912052628_28",
-					"resourceId": 28,
-					"roleId": "tmp_1",
-					"effort": 0
-				},
-				{
-					"id": "tmp_16243912052612_12",
-					"resourceId": 12,
-					"roleId": "tmp_1",
-					"effort": 0
-				},
-				{
-					"id": "tmp_16243912052637_37",
-					"resourceId": 37,
-					"roleId": "tmp_1",
-					"effort": 0
-				},
-				{
 					"id": "tmp_16243912052630_30",
-					"resourceId": 30,
-					"roleId": "tmp_1",
-					"effort": 0
-				},
-				{
-					"id": "tmp_1624391205268_8",
-					"resourceId": 8,
-					"roleId": "tmp_1",
-					"effort": 0
-				},
-				{
-					"id": "tmp_16243912052610_10",
-					"resourceId": 10,
+					"resourceId": 1,
 					"roleId": "tmp_1",
 					"effort": 0
 				}
@@ -244,7 +192,7 @@
 			"typeId": "",
 			"description": "",
 			"level": 1,
-			"status": "STATUS_ACTIVE",
+			"status": "STATUS_SUSPENDED",
 			"depends": "",
 			"start": 1622178000000,
 			"duration": 1,
@@ -316,7 +264,7 @@
 			"typeId": "",
 			"description": "",
 			"level": 3,
-			"status": "STATUS_ACTIVE",
+			"status": "STATUS_SUSPENDED",
 			"depends": "",
 			"start": 1622178000000,
 			"duration": 1,
@@ -413,7 +361,14 @@
 			"canAdd": true,
 			"canDelete": true,
 			"canAddIssue": true,
-			"assigs": [],
+			"assigs": [
+				{
+					"id": "tmp_1625255579971_1",
+					"resourceId": "1",
+					"roleId": "tmp_1",
+					"effort": 0
+				}
+			],
 			"id_fase": 11,
 			"url": ""
 		},
@@ -1725,218 +1680,14 @@
 			"url": ""
 		}
 	],
-	"selectedRow": 0,
+	"selectedRow": 10,
 	"deletedTaskIds": [],
 	"resources": [
 		{
-			"id": 8,
-			"name": "Layla Esperanza Delgadillo Aguilar",
-			"foto": "UID_8_LAYLA DELGADILLO.jpg",
-			"genero": "M"
-		},
-		{
-			"id": 9,
-			"name": "Ángel Jesús Beltran Acosta",
-			"foto": "UID_9_man.png",
-			"genero": null
-		},
-		{
-			"id": 10,
-			"name": "Daniela Castro Rivas",
-			"foto": "UID_10_woman.png",
-			"genero": null
-		},
-		{
-			"id": 11,
-			"name": "Eligio Rangel Castillo",
-			"foto": "UID_11_man.png",
-			"genero": null
-		},
-		{
-			"id": 12,
-			"name": "Gerardo Garibay Aymes",
-			"foto": "UID_12_Gerardo Garibay Aymes.jpg",
-			"genero": null
-		},
-		{
-			"id": 13,
-			"name": "Hector Reyes Rivera",
-			"foto": null,
-			"genero": "H"
-		},
-		{
-			"id": 14,
-			"name": "Juan Francisco Curiel Morales",
-			"foto": "UID_14_man.png",
-			"genero": null
-		},
-		{
-			"id": 15,
-			"name": "Lourdes Del Pilar Abadía Velasco",
-			"foto": "UID_15_woman.png",
-			"genero": null
-		},
-		{
-			"id": 16,
-			"name": "Marco Antonio Luna Robles",
-			"foto": "UID_16_man.png",
-			"genero": null
-		},
-		{
-			"id": 17,
-			"name": "Monica Adriana Soto Barrios",
-			"foto": "UID_17_woman.png",
-			"genero": null
-		},
-		{
-			"id": 18,
-			"name": "Oscar Francisco Castro Careaga",
-			"foto": "UID_18_man.png",
-			"genero": null
-		},
-		{
-			"id": 19,
-			"name": "Ma. Del Rosario Palomero Rivero",
-			"foto": "UID_19_ROSARIO PALOMERO.jpg",
-			"genero": null
-		},
-		{
-			"id": 20,
-			"name": "Arely Santillán Martínez",
-			"foto": "UID_20_woman.png",
-			"genero": null
-		},
-		{
-			"id": 21,
-			"name": "Gilberto Miranda Maltos",
-			"foto": "UID_21_man.png",
-			"genero": null
-		},
-		{
-			"id": 22,
-			"name": "Jenny Kalid Flores Montaño",
-			"foto": "UID_22_woman.png",
-			"genero": null
-		},
-		{
-			"id": 23,
-			"name": "Leticia Landeros Huerta",
-			"foto": "UID_23_woman.png",
-			"genero": null
-		},
-		{
-			"id": 24,
-			"name": "Eugenia Elizabeth Gomez Lima",
-			"foto": "UID_24_woman.png",
-			"genero": null
-		},
-		{
-			"id": 25,
-			"name": "Juana Judith Balderas León",
-			"foto": "UID_25_woman.png",
-			"genero": null
-		},
-		{
-			"id": 26,
-			"name": "Nancy Ivette Delgadillo Alburquerque",
-			"foto": "UID_26_woman.png",
-			"genero": null
-		},
-		{
-			"id": 27,
-			"name": "Melissa Bustos Cervantes",
+			"id": 1,
+			"name": "Beni",
 			"foto": null,
 			"genero": null
-		},
-		{
-			"id": 28,
-			"name": "Alejandra Ivonne Vela Saldaña",
-			"foto": "UID_28_woman.png",
-			"genero": null
-		},
-		{
-			"id": 29,
-			"name": "Jenifer Ashanti Vazquez Fuentes",
-			"foto": "UID_29_woman.png",
-			"genero": null
-		},
-		{
-			"id": 30,
-			"name": "Miguel Angel Gaspar Galicia",
-			"foto": "UID_30_man.png",
-			"genero": null
-		},
-		{
-			"id": 31,
-			"name": "Cesar Gabriel Borre Gonzalez",
-			"foto": "UID_31_man.png",
-			"genero": null
-		},
-		{
-			"id": 32,
-			"name": "Tania Michelle Garcia Aguillón",
-			"foto": "UID_32_woman.png",
-			"genero": null
-		},
-		{
-			"id": 33,
-			"name": "Alfredo Ramírez Olivera",
-			"foto": "UID_33_man.png",
-			"genero": "H"
-		},
-		{
-			"id": 34,
-			"name": "Arlen Raymundo Rodriguez",
-			"foto": null,
-			"genero": null
-		},
-		{
-			"id": 35,
-			"name": "Alan Rivera Lopez",
-			"foto": null,
-			"genero": null
-		},
-		{
-			"id": 36,
-			"name": "Josele Espinosa Garcia",
-			"foto": "UID_36_pexels-arthouse-studio-4330308.jpg",
-			"genero": "H"
-		},
-		{
-			"id": 37,
-			"name": "Luis Fernando Jonathan Vargas Osornio",
-			"foto": null,
-			"genero": "H"
-		},
-		{
-			"id": 38,
-			"name": "Uriel Santiago Reyes Paredes",
-			"foto": "UID_38_pexels-arthouse-studio-4330308.jpg",
-			"genero": "H"
-		},
-		{
-			"id": 39,
-			"name": "Karen Maraí Rodriguez Gálvez",
-			"foto": null,
-			"genero": "M"
-		},
-		{
-			"id": 40,
-			"name": "Benito López Mejia",
-			"foto": null,
-			"genero": "H"
-		},
-		{
-			"id": 41,
-			"name": "Omar Alejandro Perez Garcia",
-			"foto": null,
-			"genero": "H"
-		},
-		{
-			"id": 42,
-			"name": "Nina VillarrealTe",
-			"foto": null,
-			"genero": "X"
 		}
 	],
 	"roles": [
