@@ -393,7 +393,7 @@ export default class OrgChart {
 
     // Close button
     let a_close = document.createElement('a');
-    a_close.href = 'javascript:void(0)';
+    a_close.href = 'javascript:void(0)'; 
     a_close.classList.add('closebtn'); 
     a_close.onclick = function(){
       chartContainer.innerHTML = '';
@@ -401,7 +401,7 @@ export default class OrgChart {
       chartContainer.classList.remove('side');
       chartContainer.classList.remove('nav-shadow');
     };
-    a_close.innerHTML = '&times;';
+    a_close.innerHTML = '&times;';  
     //Title information
     let title_info = document.createElement('h3');
     title_info.classList.add('side');
@@ -411,7 +411,9 @@ export default class OrgChart {
     
     //photo
     let div_img = document.createElement('div');
+    div_img.style.borderBottom = `5px solid ${dataSourceJSON.grupo.color}`;  
     div_img.classList.add('container-img-nav');
+      
     let photo = "";
     let photo_info = document.createElement('img');
     if (dataSourceJSON.foto == null) {
@@ -429,7 +431,7 @@ export default class OrgChart {
     console.log(dataSourceJSON);
     photo_info.classList.add('side');
     photo_info.classList.add('img-nav');
-    photo_info.src = "https://image.flaticon.com/icons/png/512/1684/1684121.png";
+    photo_info.src = "https://image.flaticon.com/icons/png/512/994/994382.png";
     div_img.appendChild(photo_info);
 
     //title
@@ -462,7 +464,7 @@ export default class OrgChart {
         content_more += `
               <div class="supervisor">
               <h4 class="supervisor-title">Supervisado Por:</h4>
-              <img src="https://image.flaticon.com/icons/png/512/1684/1684121.png" alt="Admin" class="rounded mb-2" style="height: 80px;width: 80px;margin: auto;">
+              <img src="https://image.flaticon.com/icons/png/512/994/994382.png" alt="Admin" class="rounded mb-2" style="height: 80px;width: 80px;margin: auto;">
               <p class="supervisor-name"><i class="fas fa-user"></i><span>${dataSourceJSON.supervisor.area}</span></p>
               <p class="supervisor-puesto"><i class="fas fa-info-circle"></i><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
             </div>

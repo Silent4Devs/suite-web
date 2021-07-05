@@ -73,6 +73,27 @@
 
     </style>
     <style>
+        /* width */
+        .sidenav::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        /* Track */
+        .sidenav::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0);
+        }
+
+        /* Handle */
+        .sidenav::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50px;
+        }
+
+        /* Handle on hover */
+        .sidenav::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
         .sidenav {
             height: 100%;
             width: 0px;

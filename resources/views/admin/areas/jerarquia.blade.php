@@ -73,6 +73,27 @@
 
     </style>
     <style>
+        /* width */
+        .sidenav::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        /* Track */
+        .sidenav::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0);
+        }
+
+        /* Handle */
+        .sidenav::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50px;
+        }
+
+        /* Handle on hover */
+        .sidenav::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
         .sidenav {
             height: 100%;
             width: 0px;
@@ -107,7 +128,7 @@
             margin-left: 50px;
             text-align: end;
             width: 100%;
-            background: #00abb2;
+            background: #2c3e50;
             z-index: -1;
             color: white;
         }
@@ -115,16 +136,13 @@
         .sidenav .container-img-nav {
             width: 100%;
             margin-bottom: 10px;
-            border-bottom: 3px solid#00abb2;
             padding: 0 0 10px 0;
-            background: #00abb2;
+            background: #2c3e50;
         }
 
         .sidenav .side.img-nav {
             width: 5rem;
             margin: auto;
-            clip-path: circle(50% at 50% 50%);
-            background: white;
         }
 
         .side.nav-shadow {
@@ -400,8 +418,8 @@
             margin-top: 115px;
             border: 1px solid;
             border-radius: 10px;
-            margin-left: -100px;
-            margin-right: -100px;
+            margin-left: -110px;
+            margin-right: -110px;
         }
 
         .cuadrado {
@@ -454,7 +472,7 @@
             </div>
         @else
             <div class="row">
-                <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="m-0 range-slider h-100">
                         <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
                             <i class="mr-1 fas fa-search-plus"></i>
@@ -476,11 +494,59 @@
                 <div class="row justify-content-end" style="position: absolute;top: 10px;right: 35px;">
                     <ul style="background: white;">
                         @foreach ($grupos as $grupo)
-                            <li class="mb-2 d-flex align-items-center">
+                            <li class="mb-2 d-flex align-items-center" data-toggle="modal"
+                                data-target="#Grupo{{ $grupo->id }}" style="cursor: pointer;">
                                 <div class="mr-2 cuadrado" style="border: 2px solid {{ $grupo->color }}">&nbsp;
                                 </div>
                                 <div>{{ $grupo->nombre }}</div>
                             </li>
+                            <div class="modal fade" id="Grupo{{ $grupo->id }}" tabindex="-1"
+                                aria-labelledby="Grupo{{ $grupo->id }}Label" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header"
+                                            style="font-weight: bold; background: #2C3E50; color:white;">
+                                            <h5 class="text-center modal-title" id="Grupo{{ $grupo->id }}Label">
+                                                {{ $grupo->nombre }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                @foreach ($grupo->areas as $area)
+                                                    <div class="col-sm-6 col-lg-6">
+                                                        <div class="card"
+                                                            style="border-top: 3px solid {{ $grupo->color }} !important;">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title"
+                                                                    style="font-weight:bold; font-size:13pt; position: relative;">
+                                                                    <i class="mr-1 fas fa-building"></i>
+                                                                    {{ $area->area }}
+                                                                    <div
+                                                                        style="width: 10px; height: 10px; border-radius:100%; position: absolute; top:-15px; right:-15px;background: {{ $grupo->color }};">
+                                                                        &nbsp;
+                                                                    </div>
+                                                                </h5>
+                                                                <blockquote class="mb-0 blockquote">
+                                                                    <p style="font-size: 13px">Descripción</p>
+                                                                    <footer class="blockquote-footer">
+                                                                        {{ $area->descripcion }}
+                                                                    </footer>
+                                                                </blockquote>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </ul>
                 </div>
