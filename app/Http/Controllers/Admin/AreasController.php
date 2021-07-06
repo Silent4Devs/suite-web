@@ -161,16 +161,15 @@ class AreasController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function obtenerAreasPorGrupo (Area $area){
+    public function obtenerAreasPorGrupo (){
 
 
-        $grupoarea = Grupo::get();
-        $area->load('team','grupo');
-        $numero_areas=Area::count();
+        $grupos = Grupo::with('areas')->get();
+        $numero_grupos=Grupo::count();
 
 
 
-        return view('admin.areas.areas-grupo', compact('grupoarea','area','numero_areas'));
+        return view('admin.areas.areas-grupo', compact('grupos','numero_grupos'));
 
     }
 }

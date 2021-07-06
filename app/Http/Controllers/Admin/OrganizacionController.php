@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+use Flash;
+use App\Models\Team;
+use App\Models\Organizacion;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyOrganizacionRequest;
+use Intervention\Image\Facades\Image;
+use Yajra\DataTables\Facades\DataTables;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\StoreOrganizacionRequest;
 use App\Http\Requests\UpdateOrganizacionRequest;
-use App\Models\Organizacion;
-use App\Models\Team;
-use Gate;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Requests\MassDestroyOrganizacionRequest;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
-use Flash;
 
 class OrganizacionController extends Controller
 {
@@ -128,34 +129,43 @@ class OrganizacionController extends Controller
 
     public function store(StoreOrganizacionRequest $request)
     {
-      
-        
-        $file = $request->file('logotipo');
-        $nombre=null;
-        if ($file != null) {
-            
-            //$dataImg = $file->get();
-            $nombre = $file->getClientOriginalName();
-            //\Storage::disk('local')->put($nombre,  \File::get($file));
-            $file->move(base_path('public/images'), $file->getClientOriginalName());
-            //\Storage::delete($organizacions->logotipo);
 
+        $organizacions = Organizacion::create([
+            "empresa" => $request->empresa,
+            "direccion" => $request->direccion,
+            "telefono" => $request->telefono,
+            "correo" =>$request->correo,
+            "pagina_web" => $request->pagina_web,
+            "servicios" => $request->servicios,
+            "giro" => $request->giro,
+            "mision" => $request->mision,
+            "vision" => $request->vision,
+            "valores" => $request->valores,
+            "antecedentes" => $request->antecedentes
+           ]);
+
+
+
+            $image = 'silent4business.png';
+            if ($request->file('logotipo') != null or !empty($request->file('logotipo'))) {
+                $extension = pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_EXTENSION);
+                $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+                $new_name_image = 'UID_' . $organizacions->id . '_' . $name_image . '.' . $extension;
+                $route = storage_path() . 'public/images' . $new_name_image;
+                $image = $new_name_image;
+                //Usamos image_intervention para disminuir el peso de la imagen
+                $img_intervention = Image::make($request->file('logotipo'));
+                $img_intervention->resize(256, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($route);
             }
-            
-       $organizacions = Organizacion::create([                                   
-        "empresa" => $request->empresa,
-        "direccion" => $request->direccion,
-        "telefono" => $request->telefono,
-        "correo" =>$request->correo,
-        "pagina_web" => $request->pagina_web,
-        "servicios" => $request->servicios,
-        "giro" => $request->giro,
-        "mision" => $request->mision,
-        "vision" => $request->vision,
-        "valores" => $request->valores,
-        "antecedentes" => $request->antecedentes,
-        "logotipo" => $nombre
-       ]);
+
+
+            $organizacions->update([
+                'logotipo' => $image
+            ]);
+
+
 
     // dd($organizacions);
     //    $organizacion = Organizacion::create($request->all());

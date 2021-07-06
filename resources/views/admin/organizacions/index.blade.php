@@ -103,14 +103,14 @@ margin-left:100px;
                     </div>
                  </div>
 
-            
+
                  <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">
                         <span class="mb-1 text-center text-white">DATOS GENERALES</span>
                     </div>
                 </div>
 
-           
+
                 <div class="form-group col-sm-12 col-md-6">
                     <label class="required" for="empresa"><i
                             class="far fa-building iconos-crear"></i> Nombre de la Empresa
@@ -184,7 +184,7 @@ margin-left:100px;
                     </div>
                 </div>
 
-                
+
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="giro"> <i
                             class="fas fa-briefcase iconos-crear"></i> {{ trans('cruds.organizacion.fields.giro') }}
@@ -271,7 +271,7 @@ margin-left:100px;
                       <br>
                       <br>
                       <a class="btn btn-success"  href="{{ route('admin.organizacions.create') }}">
-                          Agregar 
+                          Agregar
                       </a>
                   @endif
               </div>

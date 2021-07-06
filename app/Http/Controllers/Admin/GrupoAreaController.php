@@ -88,7 +88,7 @@ class GrupoAreaController extends Controller
 
         $grupoarea = Grupo::create($request->all());
         Flash::success('<h5 class="text-center">Grupo agregado satisfactoriamente</h5>');
-        return redirect()->route('admin.grupoarea.index');
+        return redirect()->route('admin.grupoarea.index')->with("success",'Guardado con éxito');;
     }
 
     public function show(Grupo $grupoarea)
@@ -119,7 +119,7 @@ class GrupoAreaController extends Controller
         );
         $grupoarea->update($request->all());
         Flash::success('<h5 class="text-center">Grupo actualizado satisfactoriamente</h5>');
-        return redirect()->route('admin.grupoarea.index');
+        return redirect()->route('admin.grupoarea.index')->with("success",'Editado con éxito');
     }
 
 
