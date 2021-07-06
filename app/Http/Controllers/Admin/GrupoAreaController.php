@@ -83,11 +83,14 @@ class GrupoAreaController extends Controller
             [
                 'nombre' => 'required|string',
                 'descripcion' => 'required|string',
-                'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
             ],
         );
 
-        $grupoarea = Grupo::create($request->all());
+        $grupoarea = Grupo::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
+        ]);
         Flash::success('<h5 class="text-center">Grupo agregado satisfactoriamente</h5>');
         return redirect()->route('admin.grupoarea.index');
     }
