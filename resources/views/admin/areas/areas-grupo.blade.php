@@ -1,6 +1,38 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+.menulogin{
+	width: 40%;
+	height: 300px;
+	position: fixed;
+	z-index: 30;
+	top: 160px;
+	left:35%;
+	background-color:#ffff;
+	background-color:rgba(255,255,255,0.9);
+	border-radius: 20px;    /* redondear bordes (esquinas)*/
+	box-shadow: 3px 3px 3px #707070; /*sombra del elemento-desplazamiento x-desplazamiento y-desenfoque-color*/
+
+}
+
+.btnCerrar{
+	width: 25px;
+	height:25px;
+	color:#ffffff;
+	font-size:13pt;
+	background-color:#707070;1;
+	text-align: center;
+	line-height: 1.5;
+	float:right;
+	margin-right: 30px;
+	margin-top:10px;
+	cursor: pointer;
+
+}
+
+</style>
+
 
     <div class="mt-5 card">
 
@@ -10,29 +42,48 @@
 
 
 
-        @if ($numero_areas > 0)
+
+
+
+
+
+        @if ($numero_grupos > 0)
 
             <div class="row justify-content-center">
-                @foreach ($area as $areas)
-                    <div class="col-4 justify-content-center">
-                        <div class="card justify-content-center">
-                            <div class="card-header">
-
+                @foreach ($grupos as $grupo)
+                     <div class="col-10">
+                        <div class="mt-3 card justify-content-center" style="box-shadow: 0px 0px 0px 2px rgb(163, 163, 163);">
+                            <div class="row justify-content-center">
+                                <div class="col-3 card justify-content-center" style="margin-top:-18px; background-color:{{$grupo->color}}!important">
+                                    <p class="text-center text-dark">{{$grupo->nombre}}</p>
+                                </div>
                             </div>
 
-                            <div class="card-body">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    @foreach($grupo->areas as $area)
+                                    <div class="mb-3 ml-2 mr-2 bg-white rounded shadow-sm col-3 sesioninicio" style="height:40px;" onclick="renderModal(this,'{{$area->area}}', '{{$area->descripcion}}', '{{$grupo->color}}')">
+                                   <p class="text-center" style="cursor:pointer"> {{$area->area}} </p>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
 
-                                {{-- <p><strong>Sede:</strong> {{  }}</p> --}}
+                         </div>
+
+                         <div class="menulogin d-none">
+                            <div class="btnCerrar">X</div>
+                            <div class="row justify-content-center">
+                                <div class="ml-5 col-10 card justify-content-center" style="margin-top:60px; background-color:{{$grupo->color}}!important">
+                                    <p class="text-center text-dark"> {{$area->area}} </p>
+                                </div>
 
                             </div>
+                            <p class="text-center" style="margin-top:20px;">{{$area->descripcion}}</p>
 
                         </div>
+
                     </div>
-
-
-                <div class=" col-12 d-flex justify-content-center">
-
-                </div>
                 @endforeach
             </div>
 
@@ -64,6 +115,9 @@
             </div>
         @endif
 
+
+
+
     </div>
 
 
@@ -71,3 +125,51 @@
 
 
 @endsection
+
+
+@section('scripts')
+
+<script>
+
+
+    //  $(".sesioninicio").click(function(){
+	// 		$(".menulogin").toggleClass("d-none d-block");
+
+	// 	});
+
+    //     $(".btnCerrar").click(function(){
+	// 		$(".menulogin").toggleClass( "d-none d-block");
+
+	// 	});
+
+        function renderModal(element,nombre,descripcion,color){
+            element.style.border=`2px solid ${color!=null?color:"black"}`;
+
+            let contenedor=document.querySelector(".menulogin");
+            contenedor.classList.remove("d-none")
+            contenedor.classList.add("d-block")
+            contenedor.innerHTML=`
+            <div class="btnCerrar">X</div>
+                            <div class="row justify-content-center">
+                                <div class="ml-5 col-10 card justify-content-center" style="margin-top:60px; background-color:{{$grupo->color}}!important">
+                                    <p class="text-center text-dark"> ${nombre} </p>
+                                </div>
+
+                            </div>
+                            <p class="text-center" style="margin-top:20px;">${descripcion}</p>
+                            `;
+            let btnCerrar=document.querySelector(".btnCerrar");
+            btnCerrar.addEventListener("click",function(e){
+                e.preventDefault();
+                element.style.border="none";
+                contenedor.classList.remove("d-block")
+                contenedor.classList.add("d-none")
+            });
+
+        }
+
+
+</script>
+
+@endsection
+
