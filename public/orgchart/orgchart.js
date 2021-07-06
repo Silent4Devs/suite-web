@@ -1068,8 +1068,12 @@ export default class OrgChart {
         }
         if (!node.querySelector('.symbol')) {
           let symbol = document.createElement('i');
-
-          symbol.setAttribute('class', 'fa ' + opts.parentNodeSymbol + ' symbol');
+          if (this.options.typeOrgChart == 'employees') {
+            symbol.setAttribute('class', 'fa fa-users symbol');
+          }else if(this.options.typeOrgChart == 'area'){
+            symbol.setAttribute('class', 'fa fa-sitemap symbol');
+          }
+          // symbol.setAttribute('class', 'fa ' + opts.parentNodeSymbol + ' symbol');
           // node.querySelector(':scope > .title').appendChild(symbol);
           node.appendChild(symbol);
         }
@@ -1694,7 +1698,12 @@ export default class OrgChart {
 
           bottomEdge.setAttribute('class', 'edge verticalEdge bottomEdge fa');
           nodeDiv.appendChild(bottomEdge);
-          symbol.setAttribute('class', 'fa ' + opts.parentNodeSymbol + ' symbol');
+          if (opts.typeOrgChart == 'employees') {
+            symbol.setAttribute('class', 'fa fa-users symbol');
+          }else if(opts.typeOrgChart == 'area'){
+            symbol.setAttribute('class', 'fa fa-sitemap symbol');
+          }
+          //symbol.setAttribute('class', 'fa ' + opts.parentNodeSymbol + ' symbol');
           nodeDiv.appendChild(symbol);
           // title.insertBefore(symbol, title.children[0]);
         }
