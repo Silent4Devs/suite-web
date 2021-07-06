@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }*/
 
 
         #workSpace {
@@ -245,28 +245,29 @@
             <h3 class="mb-2 text-center text-white"><strong>Plan de Trabajo </strong></h3>
         </div>
         <div id="bloqueado"></div>
-        <div id="plan_trabajo_workspace">
-            <div class="botones_vistas_gantt">
-                <div class="row">
-                    <div class="col-4">
-                        <h2 id="titlo-tab" class="text-capitalize">Gantt</h2>
-                    </div>
-                    <div class="text-right col-8">
-                        <a href="#original_gantt"
-                            onclick="loadGanttFromServer();cambiarTitulo('Gantt');checkChangesGantt('Gantt')"
-                            class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
-                        <a href="#tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');checkChangesGantt('Tabla')"
-                            class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
-                        <a href="#calendario_gantt"
-                            onclick="initCalendar();cambiarTitulo('Calendario');checkChangesGantt('Calendario')"
-                            class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
-                        <a href="#kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');checkChangesGantt('Kanban')"
-                            class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
-                    </div>
+
+        <div class="botones_vistas_gantt">
+            <div class="row">
+                <div class="col-4">
+                    <h2 id="titlo-tab" class="text-capitalize">Gantt</h2>
                 </div>
-
-
+                <div class="text-right col-8">
+                    <a href="#original_gantt"
+                        onclick="loadGanttFromServer();cambiarTitulo('Gantt');checkChangesGantt('Gantt')"
+                        class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
+                    <a href="#tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');checkChangesGantt('Tabla')"
+                        class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
+                    <a href="#calendario_gantt"
+                        onclick="initCalendar();cambiarTitulo('Calendario');checkChangesGantt('Calendario')"
+                        class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
+                    <a href="#kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');checkChangesGantt('Kanban')"
+                        class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
+                </div>
             </div>
+
+
+        </div>
+        <div id="plan_trabajo_workspace">
             <div class="caja_tabs_general">
                 <div class="caja_tabs">
                     <section id="original_gantt">
@@ -364,7 +365,7 @@
                     </div>
                     `;
                         let workspace = document.getElementById('plan_trabajo_workspace');
-                        workspace.style.opacity = "0.5";
+                        workspace.style.opacity = "0.7";
                         workspace.style.pointerEvents = "none";
                     }
                 }

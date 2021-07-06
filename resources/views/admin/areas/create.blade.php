@@ -28,6 +28,7 @@
                                 <option value="{{ $grupo->id }}">
                                     {{ $grupo->nombre }}
                                 </option>
+
                             @endforeach
                     </select>
                     @if($errors->has('grupo'))

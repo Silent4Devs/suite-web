@@ -39,6 +39,7 @@
         </div>
     </div>
 
+         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Area">
                 <thead class="thead-dark">
