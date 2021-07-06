@@ -473,7 +473,7 @@
             </div>
         @else
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-10 col-md-12 col-sm-12">
                     <div class="m-0 range-slider h-100">
                         <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
                             <i class="mr-1 fas fa-search-plus"></i>
@@ -485,6 +485,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-2 col-sm-12" style="position: relative;">
+                    <div class="pl-0 col-3" style="position: absolute;top: 20px;left: 0;">
+                        <button class="btn btn-lg" id="reloadOrg" title="Recargar organigrama"
+                            style="font-size: 13pt;outline: none"><i class="fas fa-redo-alt"></i></button>
+                    </div>
+                </div>
             </div>
 
             {{-- <div id="exportData"></div> --}}
@@ -492,7 +498,7 @@
                 <div id="chart-container" class="m-0" style="position: relative">
                     {{-- <div id="chart-side" class="sidenav" style="width: 0px"></div> --}}
                 </div>
-                <div class="row justify-content-end" style="position: absolute;top: 10px;right: 35px;">
+                <div class="row justify-content-end" style="position: absolute;top: 20px;right: 35px;">
                     <ul style="background: white;">
                         @foreach ($grupos as $grupo)
                             <li class="mb-2 d-flex align-items-center" data-toggle="modal"
@@ -567,6 +573,14 @@
                 }
             });
             renderOrganigrama(OrgChart, 'l2r');
+
+            $("#reloadOrg").click(function(e) {
+                e.preventDefault();
+
+                document.querySelector("#zoomer").value = 70;
+                document.querySelector("#output").innerHTML = 70;
+                renderOrganigrama(OrgChart, 'l2r');
+            });
 
             function renderOrganigrama(OrgChart, orientacion, id = null, area_filter = false, area_id = null) {
                 let areasTree = @json($areasTree);
