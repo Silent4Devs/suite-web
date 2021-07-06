@@ -79,6 +79,12 @@
                         <font class="letra_blanca"> Organigrama </font>
                     </a>
                 </li>
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("admin.procesos.mapa") }}" class="c-sidebar-nav-link {{ request()->is("admin/procesos/mapa_procesos") || request()->is("admin/procesos/mapa-procesos") ? "c-active" : "" }}">
+                        <i class="fas fa-th iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca"> Mapa de procesos </font>
+                    </a>
+                </li>
                 </ul>
             </li>
         @endcan

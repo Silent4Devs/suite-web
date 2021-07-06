@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Laracasts\Flash\Flash;
 use App\Models\Proceso;
+use App\Models\Area;
+use App\Models\Macroproceso;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -155,5 +157,14 @@ class ProcesoController extends Controller
         Flash::success('<h5 class="text-center">Proceso eliminado satisfactoriamente</h5>');
         return redirect()->route('admin.procesos.index');
 
+    }
+
+    public function mapaProcesos(){
+
+        $areas_mapa = Area::get();
+        $macros_mapa = Macroproceso::get();
+        $procesos_mapa = Proceso::get();
+
+        return view('admin.procesos.mapa_procesos', compact('areas_mapa', 'macros_mapa', 'procesos_mapa'));
     }
 }
