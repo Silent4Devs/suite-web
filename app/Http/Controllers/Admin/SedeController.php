@@ -222,6 +222,7 @@ class SedeController extends Controller
 
     public function ubicacion($request){
         $sede = Sede::find($request);
+        //dd($sede);
         return view('admin.sedes.ubicacion', compact('sede'));
     }
 }
