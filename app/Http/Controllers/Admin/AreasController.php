@@ -11,8 +11,10 @@ use App\Http\Requests\UpdateAreaRequest;
 use App\Models\Area;
 use App\Models\Team;
 use App\Models\Grupo;
+use App\Models\Organizacion;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -88,12 +90,12 @@ class AreasController extends Controller
 
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-        $areas=Area::with('areas')->get();
-       // dd($direccion_exists);
+        $areas = Area::with('areas')->get();
+        // dd($direccion_exists);
 
 
 
-        return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas' ));
+        return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas'));
     }
 
     public function store(StoreAreaRequest $request)
@@ -124,7 +126,7 @@ class AreasController extends Controller
 
         $grupoarea = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-        $area->load('team','grupo');
+        $area->load('team', 'grupo');
 
         return view('admin.areas.edit', compact('area'))->with('grupoareas', $grupoarea, 'direcciones_exists', $direccion_exists);
     }
@@ -161,16 +163,31 @@ class AreasController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function obtenerAreasPorGrupo (Area $area){
+    public function obtenerAreasPorGrupo (){
 
 
-        $grupoarea = Grupo::get();
-        $area->load('team','grupo');
-        $numero_areas=Area::count();
+        $grupos = Grupo::with('areas')->get();
+        $numero_grupos=Grupo::count();
 
 
 
-        return view('admin.areas.areas-grupo', compact('grupoarea','area','numero_areas'));
+        return view('admin.areas.areas-grupo', compact('grupos','numero_grupos'));
 
+    }
+
+    public function renderJerarquia(Request $request)
+    {
+        $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+        if ($request->ajax()) {
+            // La construccion del arbol necesita un primer nodo (NULL)
+            $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+            return $areasTree->toJson();
+        }
+        $rutaImagenes = asset('storage/empleados/imagenes/');
+        $grupos = Grupo::get();
+        $organizacionDB = Organizacion::first();
+        $organizacion = !is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
+        $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+        return view('admin.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos'));
     }
 }

@@ -17,6 +17,7 @@ export default class OrgChart {
         'toggleSiblingsResp': false,
         'depth': 999,
         'chartClass': '',
+        'typeOrgChart': 'employees',
         'exportButton': false,
         'exportFilename': 'OrgChart',
         'parentNodeSymbol': 'fa-users',
@@ -85,8 +86,8 @@ export default class OrgChart {
       downloadBtn.setAttribute('class', 'oc-download-btn' + (opts.chartClass !== '' ? ' ' + opts.chartClass : ''));
       downloadBtn.setAttribute('download', opts.exportFilename + '.png');
       chartContainer.appendChild(downloadBtn);
-      document.querySelector('#export_csv').appendChild(exportCSV);
-      document.querySelector('#shot_screen').appendChild(exportBtn);
+      document.querySelector('#export_csv')?.appendChild(exportCSV);
+      document.querySelector('#shot_screen')?.appendChild(exportBtn);
     }
 
     if (opts.pan) {
@@ -375,7 +376,119 @@ export default class OrgChart {
       focusedNode.classList.remove('focused');
     }
     clickedNode.classList.add('focused');
+    if (this.options.typeOrgChart == 'employees') {
+      this._renderEmployeeInformation();
+    }else if(this.options.typeOrgChart == 'area'){
+      this._renderAreaInformation();
+    }
+    
+  }
+
+  _renderAreaInformation(){
     let dataSource = event.currentTarget.getAttribute('data-source');
+    let dataSourceJSON = JSON.parse(dataSource);
+    let chartContainer = document.querySelector('#chart-side');
+    chartContainer.classList.add('side');
+    chartContainer.classList.add('nav-shadow');
+
+    // Close button
+    let a_close = document.createElement('a');
+    a_close.href = 'javascript:void(0)'; 
+    a_close.classList.add('closebtn'); 
+    a_close.onclick = function(){
+      chartContainer.innerHTML = '';
+      chartContainer.style.width = "0px";
+      chartContainer.classList.remove('side');
+      chartContainer.classList.remove('nav-shadow');
+    };
+    a_close.innerHTML = '&times;';  
+    //Title information
+    let title_info = document.createElement('h3');
+    title_info.classList.add('side');
+    title_info.classList.add('title-info-nav');
+    title_info.innerText = `${dataSourceJSON.area}`;
+    
+    
+    //photo
+    let div_img = document.createElement('div');
+    div_img.style.borderBottom = `5px solid ${dataSourceJSON.grupo.color}`;  
+    div_img.classList.add('container-img-nav');
+      
+    let photo = "";
+    let photo_info = document.createElement('img');
+    if (dataSourceJSON.foto == null) {
+     if (dataSourceJSON.genero == 'H') {
+        photo = `${this.options.nodeRepositoryImages}/man.png`;
+      } else if(dataSourceJSON.genero == 'M') {
+        photo = `${this.options.nodeRepositoryImages}/woman.png`;
+      }else{
+        photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
+      } 
+    }
+    else {
+      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;  
+    }
+    console.log(dataSourceJSON);
+    photo_info.classList.add('side');
+    photo_info.classList.add('img-nav');
+    photo_info.src = "https://image.flaticon.com/icons/png/512/994/994382.png";
+    div_img.appendChild(photo_info);
+
+    //title
+    let title_info_text = document.createElement('p');
+    title_info_text.classList.add('side');
+    title_info_text.classList.add('title-nav');
+    title_info_text.innerText = `${dataSourceJSON.grupo_name}`;
+
+    let c_more = document.createElement('div');
+    title_info_text.classList.add('side');
+    c_more.classList.add('c_more');
+    let content_more = `
+      <h4>Descripción</h4>
+      <p>${dataSourceJSON.descripcion}</p>
+      `;
+        if (dataSourceJSON.supervisor != null) {
+          let photo_s;
+          if (dataSourceJSON.supervisor.foto == null) {
+            if (dataSourceJSON.supervisor.genero == 'H') {
+                photo_s = `${this.options.nodeRepositoryImages}/man.png`;
+              } else if(dataSourceJSON.supervisor.genero == 'M') {
+                photo_s = `${this.options.nodeRepositoryImages}/woman.png`;
+              }else{
+                photo_s = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
+              } 
+          }
+        else {
+          photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;  
+        }
+        content_more += `
+              <div class="supervisor">
+              <h4 class="supervisor-title">Supervisado Por:</h4>
+              <img src="https://image.flaticon.com/icons/png/512/994/994382.png" alt="Admin" class="rounded mb-2" style="height: 80px;width: 80px;margin: auto;">
+              <p class="supervisor-name"><i class="fas fa-user"></i><span>${dataSourceJSON.supervisor.area}</span></p>
+              <p class="supervisor-puesto"><i class="fas fa-info-circle"></i><span>${dataSourceJSON.supervisor.grupo_name}</span></p>
+            </div>
+          `;
+      }
+      c_more.innerHTML = content_more;
+    chartContainer.appendChild(a_close);
+    chartContainer.appendChild(div_img);
+    chartContainer.appendChild(title_info);
+    chartContainer.appendChild(title_info_text);
+    chartContainer.appendChild(c_more);
+    
+    if (chartContainer.clientWidth == 0) {
+      chartContainer.style.width = "250px";
+    }else{
+      chartContainer.innerHTML = '';
+      chartContainer.style.width = "0px";
+      chartContainer.classList.remove('side');
+      chartContainer.classList.remove('nav-shadow');
+    }
+  }
+
+   _renderEmployeeInformation(){
+     let dataSource = event.currentTarget.getAttribute('data-source');
     let dataSourceJSON = JSON.parse(dataSource);
     let chartContainer = document.querySelector('#chart-side');
     chartContainer.classList.add('side');
@@ -505,6 +618,7 @@ export default class OrgChart {
       // }, 500); 
     }
   }
+
   // build the parent node of specific node
   _buildParentNode(currentRoot, nodeData, callback) {
     let that = this,
@@ -1491,6 +1605,10 @@ export default class OrgChart {
 
       // construct the content of node
       let nodeDiv = document.createElement('div');
+      if (nodeData.grupo) {
+        nodeDiv.style.border = `3px solid ${nodeData.grupo.color}`;  
+        // nodeDiv.style.background = `${nodeData.grupo.color}`;  
+      }
 
       delete nodeData.children;
       nodeDiv.dataset.source = JSON.stringify(nodeData);
@@ -1514,17 +1632,20 @@ export default class OrgChart {
       }
 
       let photo = "";
-      if (nodeData[opts.nodePhoto] == null) {
-      if (nodeData.genero == 'H') {
-          photo = `${opts.nodeRepositoryImages}/man.png`;
-        } else if(nodeData.genero == 'M') {
-          photo = `${opts.nodeRepositoryImages}/woman.png`;
-        }else{
-          photo = `${opts.nodeRepositoryImages}/${opts.nodeNotPhoto}`;
-        } 
-      }
-      else {
-        photo = `${opts.nodeRepositoryImages}/${nodeData.foto}`;
+
+      if (opts.withImage) {
+        if (nodeData[opts.nodePhoto] == null) {
+        if (nodeData.genero == 'H') {
+            photo = `${opts.nodeRepositoryImages}/man.png`;
+          } else if(nodeData.genero == 'M') {
+            photo = `${opts.nodeRepositoryImages}/woman.png`;
+          }else{
+            photo = `${opts.nodeRepositoryImages}/${opts.nodeNotPhoto}`;
+          } 
+        }
+        else {
+          photo = `${opts.nodeRepositoryImages}/${nodeData.foto}`;
+        }   
       }
       // if (nodeData[opts.nodePhoto] != null) {
       //   photo = `${opts.nodeRepositoryImages}/${nodeData[opts.nodePhoto]}`;
@@ -1534,7 +1655,7 @@ export default class OrgChart {
       
       nodeDiv.innerHTML = `
         <div class="mb-2" style="text-align:center">
-        <img class="avatar object-cover w-20 h-20 rounded-full m-auto" src="${photo}" style="position:relative">
+        ${opts.withImage ? `<img class="avatar object-cover w-20 h-20 rounded-full m-auto" src="${photo}" style="position:relative">`:''}
         </div>
         <div class="title">${nodeData[opts.nodeTitle]}</div>
         ${opts.nodeContent ? `<div class="content">${nodeData[opts.nodeContent]}</div>` : ''}
