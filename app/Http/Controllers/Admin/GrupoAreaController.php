@@ -19,10 +19,10 @@ use App\Http\Requests\MassDestroyGrupoAreaRequest;
 
 class GrupoAreaController extends Controller
 {
-     use CsvImportTrait;
+    use CsvImportTrait;
 
-     public function index(Request $request)
-     {
+    public function index(Request $request)
+    {
 
         abort_if(Gate::denies('grupoarea_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -65,8 +65,8 @@ class GrupoAreaController extends Controller
 
         $teams = Team::get();
 
-         return view ('admin.grupoarea.index', compact('teams'));
-     }
+        return view('admin.grupoarea.index', compact('teams'));
+    }
 
     public function create()
     {
@@ -82,11 +82,15 @@ class GrupoAreaController extends Controller
         $request->validate(
             [
                 'nombre' => 'required|string',
-                'descripcion' => 'required|string'
+                'descripcion' => 'required|string',
             ],
         );
 
-        $grupoarea = Grupo::create($request->all());
+        $grupoarea = Grupo::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
+        ]);
         Flash::success('<h5 class="text-center">Grupo agregado satisfactoriamente</h5>');
         return redirect()->route('admin.grupoarea.index')->with("success",'Guardado con éxito');;
     }

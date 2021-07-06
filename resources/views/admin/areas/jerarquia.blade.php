@@ -136,7 +136,6 @@
         .sidenav .container-img-nav {
             width: 100%;
             margin-bottom: 10px;
-            border-bottom: 3px solid#2c3e50;
             padding: 0 0 10px 0;
             background: #2c3e50;
         }
@@ -144,8 +143,6 @@
         .sidenav .side.img-nav {
             width: 5rem;
             margin: auto;
-            clip-path: circle(50% at 50% 50%);
-            background: white;
         }
 
         .side.nav-shadow {
@@ -166,7 +163,7 @@
         }
 
         .side.title-nav {
-            background-color: #00abb2;
+            background-color: #374151;
             color: white;
             font-size: 13px;
             border-radius: 5px;
@@ -364,23 +361,97 @@
         }
 
     </style>
+    <style>
+        .orgchart.l2r {
+            margin-left: -200px;
+        }
+
+        .orgchart.l2r .node .title {
+            -ms-transform: none !important;
+            -moz-transform: none !important;
+            -webkit-transform: none !important;
+            transform: none !important;
+            -ms-transform-origin: unset !important;
+            -moz-transform-origin: unset !important;
+            -webkit-transform-origin: unset !important;
+            transform-origin: unset !important;
+            width: 100% !important;
+            color: #3a3a3a;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .orgchart.l2r .node .content {
+            -ms-transform: none !important;
+            -moz-transform: none !important;
+            -webkit-transform: none !important;
+            transform: none !important;
+            -ms-transform-origin: unset !important;
+            -moz-transform-origin: unset !important;
+            -webkit-transform-origin: unset !important;
+            transform-origin: unset !important;
+            width: 100% !important;
+            mix-blend-mode: difference;
+            font-size: 14px;
+        }
+
+        .orgchart.l2r .node .symbol {
+            margin-right: -68px;
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+            background-color: #717171;
+        }
+
+        .orgchart.l2r .node:first-child {
+            width: 300px;
+            height: 70px;
+            transform: rotate(-90deg) rotateY(180deg);
+            transform-origin: center;
+            margin-bottom: 115px;
+            border: 1px solid;
+            border-radius: 10px;
+        }
+
+        .orgchart.l2r .node {
+            width: 300px;
+            transform: rotate(-90deg) rotateY(180deg);
+            transform-origin: center;
+            margin-top: 115px;
+            border: 1px solid;
+            border-radius: 10px;
+            margin-left: -110px;
+            margin-right: -110px;
+        }
+
+        .cuadrado {
+            width: 15px;
+            height: 15px;
+            border: 2px solid;
+            border-radius: 5px;
+        }
+
+        .contenedor-areas {
+            position: relative;
+        }
+
+    </style>
 @endsection
 
 @section('content')
     <div class="text-center">
         <h1 class="mb-4 text-2xl font-black leading-tight md:text-2xl lg:text-3xl">
-            Organigrama de {{ $organizacion }}
+            Áreas por jerarquía
         </h1>
     </div>
 
 
     <!-- component -->
     <div class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
-        <div class="flex justify-center -mt-16 md:justify-end">
+        {{-- <div class="flex justify-center -mt-16 md:justify-end">
             <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #00abb2;"
                 src="{{ $org_foto }}">
-        </div>
-        @if (is_null($organizacionTree))
+        </div> --}}
+        @if (is_null($areasTree))
             <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
                 <div class="flex">
                     <div class="py-1"><svg class="w-6 h-6 mr-4 text-blue-500 fill-current"
@@ -402,67 +473,7 @@
             </div>
         @else
             <div class="row">
-                <div class="m-0 mt-3 col-lg-8 col-md-12 col-sm-12" style="margin: 0px !important">
-                    <div class="form-group col-sm-12 col-md-12 col-lg-12 w-100" style="margin: 0px !important">
-                        <div class="row">
-                            <div class="col-sm-12 col-lg-4">
-                                <input type="hidden" id="id_empleado">
-                                <label for="participantes_search"> <span
-                                        class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
-                                        <i class="mr-1 fas fa-user-circle"></i>
-                                        Búsqueda por empleado
-                                    </span></label>
-                                <input class="form-control" type="text" id="participantes_search"
-                                    placeholder="Nombre del empleado" style="position: relative" autocomplete="off" />
-                                <i id="cargando_participantes" class="fas fa-cog fa-spin text-primary"
-                                    style="position: absolute; top: 42px; right: 18px;"></i>
-                                <div id="participantes_sugeridos" style="position: absolute;width: 90%;z-index: 1;"></div>
-                                @if ($errors->has('participantes'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('participantes') }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="col-sm-12 col-lg-4">
-                                <label for="areas"> <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
-                                        <i class="mr-1 fas fa-building"></i>
-                                        Búsqueda por área
-                                    </span></label>
-                                <select name="areas" id="areas" class="form-control areas">
-                                    <option value="" selected disabled>-- Selecciona área --</option>
-                                    @foreach ($areas as $area)
-                                        <option value="{{ $area->id }}">
-                                            <span><i class="mr-1 fas fa-building"></i></span> {{ $area->area }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-sm-12 col-lg-4" id="tools_box">
-                                <p class="m-0">
-                                    <i class="mr-1 fas fa-box-open"></i>
-                                    Caja de Herramientas
-                                </p>
-                                <div class="row h-100 align-items-center" style="margin-top: -12px;">
-                                    <div class="pl-0 col-3">
-                                        <button class="btn btn-lg" id="reloadOrg" title="Recargar organigrama"
-                                            style="margin-top: 0.4rem; font-size: 13pt;"><i
-                                                class="fas fa-redo-alt"></i></button>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="mt-2 d-flex justify-content-center">
-                                            <img src="{{ asset('orgchart/orientation_assests/top.png') }}"
-                                                alt="Orientacion" id="orientacion" style="cursor:pointer; width:20px;"
-                                                title="Cambiar orientación del diagrama">
-                                        </div>
-                                    </div>
-                                    <div class="pl-0 col-3" id="export_csv"></div>
-                                    <div class="pl-0 col-3" id="shot_screen"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="col-lg-10 col-md-12 col-sm-12">
                     <div class="m-0 range-slider h-100">
                         <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
                             <i class="mr-1 fas fa-search-plus"></i>
@@ -474,10 +485,78 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-2 col-sm-12" style="position: relative;">
+                    <div class="pl-0 col-3" style="position: absolute;top: 20px;left: 0;">
+                        <button class="btn btn-lg" id="reloadOrg" title="Recargar organigrama"
+                            style="font-size: 13pt;outline: none"><i class="fas fa-redo-alt"></i></button>
+                    </div>
+                </div>
             </div>
+
             {{-- <div id="exportData"></div> --}}
-            <div id="chart-container" class="m-0" style="position: relative">
-                {{-- <div id="chart-side" class="sidenav" style="width: 0px"></div> --}}
+            <div class="contenedor-areas">
+                <div id="chart-container" class="m-0" style="position: relative">
+                    {{-- <div id="chart-side" class="sidenav" style="width: 0px"></div> --}}
+                </div>
+                <div class="row justify-content-end" style="position: absolute;top: 20px;right: 35px;">
+                    <ul style="background: white;">
+                        @foreach ($grupos as $grupo)
+                            <li class="mb-2 d-flex align-items-center" data-toggle="modal"
+                                data-target="#Grupo{{ $grupo->id }}" style="cursor: pointer;">
+                                <div class="mr-2 cuadrado" style="border: 2px solid {{ $grupo->color }}">&nbsp;
+                                </div>
+                                <div>{{ $grupo->nombre }}</div>
+                            </li>
+                            <div class="modal fade" id="Grupo{{ $grupo->id }}" tabindex="-1"
+                                aria-labelledby="Grupo{{ $grupo->id }}Label" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header"
+                                            style="font-weight: bold; background: {{ $grupo->color }};">
+                                            <h5 class="text-center modal-title" id="Grupo{{ $grupo->id }}Label">
+                                                {{ $grupo->nombre }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                @foreach ($grupo->areas as $area)
+                                                    <div class="col-sm-6 col-lg-6">
+                                                        <div class="card"
+                                                            style="border-top: 3px solid {{ $grupo->color }} !important;">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title"
+                                                                    style="font-weight:bold; font-size:13pt; position: relative;">
+                                                                    <i class="mr-1 fas fa-building"></i>
+                                                                    {{ $area->area }}
+                                                                    <div
+                                                                        style="width: 10px; height: 10px; border-radius:100%; position: absolute; top:-15px; right:-15px;background: {{ $grupo->color }};">
+                                                                        &nbsp;
+                                                                    </div>
+                                                                </h5>
+                                                                <blockquote class="mb-0 blockquote">
+                                                                    <p style="font-size: 13px">Descripción</p>
+                                                                    <footer class="blockquote-footer">
+                                                                        {{ $area->descripcion }}
+                                                                    </footer>
+                                                                </blockquote>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         @endif
     </div>
@@ -488,82 +567,24 @@
         import OrgChart from "{{ asset('orgchart/orgchart.js') }}"; // Se importan funcionalidades de OrgChart
 
         document.addEventListener('DOMContentLoaded', function() {
-            let orientaciones = ['t2b', 'l2r', 'r2l', 'b2t'];
-            let imagenOrientaciones = ['top.png', 'left.png', 'right.png', 'bottom.png']
-            let orientacion = orientaciones[0];
-            let img = document.getElementById('orientacion');
-            img.src = `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[0]}`;
-            let contador = 0;
-            if (localStorage.getItem('orientationOrgChart') != null) {
-                orientacion = localStorage.getItem('orientationOrgChart');
-                let imgOrientacion = 'top.png';
-                switch (orientacion) {
-                    case 't2b':
-                        imgOrientacion = 'top.png';
-                        break;
-                    case 'l2r':
-                        imgOrientacion = 'left.png';
-                        break;
-                    case 'r2l':
-                        imgOrientacion = 'right.png';
-                        break;
-                    case 'b2t':
-                        imgOrientacion = 'bottom.png';
-                        break;
-                    default:
-                        imgOrientacion = 'top.png';
-                        break;
-                }
-                img.src = `{{ asset('orgchart/orientation_assests/') }}/${imgOrientacion}`;
-                const posicionIdx = (element) => element == orientacion;
-                contador = orientaciones.findIndex(posicionIdx);
-            }
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            renderOrganigrama(OrgChart, orientacion);
+            renderOrganigrama(OrgChart, 'l2r');
 
-            $("#cargando_participantes").hide();
-            let url_empleados = "{{ route('admin.empleados.get') }}";
-            $("#participantes_search").keyup(function() {
-                $.ajax({
-                    type: "POST",
-                    url: url_empleados,
-                    data: 'nombre=' + $(this).val(),
-                    beforeSend: function() {
-                        $("#cargando_participantes").show();
-                    },
-                    success: function(data) {
-                        $("#cargando_participantes").hide();
-                        $("#participantes_sugeridos").show();
-                        let sugeridos = document.querySelector(
-                            "#participantes_sugeridos");
-                        sugeridos.innerHTML = data;
-                        $("#participantes_search").css("background", "#FFF");
-                    }
-                });
-                if ($(this).val() == '') {
-                    orientacion = localStorage.getItem('orientationOrgChart');
-                    renderOrganigrama(OrgChart, orientacion, null);
-                }
-            });
+            $("#reloadOrg").click(function(e) {
+                e.preventDefault();
 
-            window.seleccionarUsuario = function(user) {
-                $('.areas').val(null).trigger('change');
                 document.querySelector("#zoomer").value = 70;
                 document.querySelector("#output").innerHTML = 70;
-                orientacion = localStorage.getItem('orientationOrgChart');
-                renderOrganigrama(OrgChart, orientacion, user.id);
-                $("#participantes_search").val(user.name);
-                $("#id_empleado").val(user.id);
-                $("#email").val(user.email);
-                $("#participantes_sugeridos").hide();
-            }
+                renderOrganigrama(OrgChart, 'l2r');
+            });
 
             function renderOrganigrama(OrgChart, orientacion, id = null, area_filter = false, area_id = null) {
-                let organizacionTree = @json($organizacionTree);
+                let areasTree = @json($areasTree);
+                console.log(areasTree);
                 let repositorioImagenes = @json($rutaImagenes);
                 let organizacion = @json($organizacion);
                 let chartContainer = document.querySelector('#chart-container');
@@ -572,32 +593,11 @@
                 div.id = 'chart-side';
                 div.classList.add('sidenav');
                 chartContainer.appendChild(div);
-                // let buttonExport = document.querySelector("#exportData");
-                // let buttonE = document.createElement('button');
-                // buttonE.classList.add('btn');
-                // buttonE.classList.add('btn-sm');
-                // buttonE.classList.add('btn-outline-primary');
-                // buttonE.innerHTML = "<i class='fas fa-file-code'></i>";
-                // buttonE.onclick = function(e) {
-                //     console.log("Exportando");
-                // }
-                // buttonExport.appendChild(buttonE);
-                let url_organigrama = "{{ route('admin.organigrama.index') }}";
-                let data = {
-                    "area_filter": false,
-                    id
-                };
-                if (area_filter) {
-                    data = {
-                        "area_filter": true,
-                        area_id
-                    }
-                }
-                document.querySelector('#export_csv').innerHTML = "";
-                document.querySelector('#shot_screen').innerHTML = "";
+
+                let url_organigrama = "{{ route('admin.areas.renderJerarquia') }}";
+
                 $.ajax({
                     type: "GET",
-                    data,
                     url: url_organigrama,
                     beforeSend: function() {
                         let container = document.querySelector('#chart-container');
@@ -617,6 +617,7 @@
                         container.appendChild(img);
                     },
                     success: function(response) {
+                        console.log(JSON.parse(response));
                         let container = document.querySelector('.imagen-search');
                         container.src = "";
                         document.querySelector('.texto-search').innerHTML = "";
@@ -625,11 +626,13 @@
                             'zoomSlider': '#zoomer',
                             'data': JSON.parse(response),
                             'depth': 4,
-                            'nodeContent': 'puesto',
-                            'withImage': true,
-                            'nodePhoto': 'foto',
-                            'nodeRepositoryImages': repositorioImagenes,
-                            'nodeNotPhoto': 'usuario_no_cargado.png',
+                            'nodeTitle': 'area',
+                            'nodeContent': 'grupo_name',
+                            'withImage': false,
+                            // 'nodePhoto': 'foto',
+                            // 'nodeRepositoryImages': repositorioImagenes,
+                            // 'nodeNotPhoto': 'usuario_no_cargado.png',
+                            'typeOrgChart': 'area',
                             'nodeID': 'id',
                             'pan': true,
                             'exportButton': true,
@@ -640,66 +643,6 @@
                     }
                 });
             }
-
-            let areas = document.querySelector("#areas");
-            areas.addEventListener('change', function(event) {
-                let area_id = event.target.value;
-                orientacion = localStorage.getItem('orientationOrgChart');
-                renderOrganigrama(OrgChart, orientacion, null, true, area_id);
-            });
-            $('.areas').select2({
-                theme: 'bootstrap4',
-            });
-            $('.areas').on('select2:select', function(e) {
-                let area_id = e.params.data.id;
-                if (document.querySelector("#participantes_search").value != "") {
-                    document.querySelector("#participantes_search").value = "";
-                }
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
-                renderOrganigrama(OrgChart, orientacion, null, true, area_id);
-            });
-
-            $("#reloadOrg").click(function(e) {
-                e.preventDefault();
-                $('.areas').val(null).trigger('change');
-                document.querySelector("#participantes_search").value = "";
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
-                contador = 0;
-                orientacion = orientaciones[contador];
-                localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                img.src =
-                    `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                renderOrganigrama(OrgChart, orientacion);
-            });
-
-            $("#orientacion").click(function(e) {
-                e.preventDefault();
-                document.querySelector("#zoomer").value = 70;
-                document.querySelector("#output").innerHTML = 70;
-                let orientacion;
-                if (contador < 3) {
-                    ++contador;
-                    orientacion = orientaciones[contador];
-                    localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                    img.src =
-                        `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                } else if (contador == 3) {
-                    contador = 0;
-                    orientacion = orientaciones[contador];
-                    localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                    img.src =
-                        `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                } else {
-                    contador = 0;
-                    orientacion = orientaciones[contador];
-                    localStorage.setItem('orientationOrgChart', orientaciones[contador]);
-                    img.src =
-                        `{{ asset('orgchart/orientation_assests/') }}/${imagenOrientaciones[contador]}`;
-                }
-                renderOrganigrama(OrgChart, orientacion);
-            });
         });
     </script>
 @endsection
