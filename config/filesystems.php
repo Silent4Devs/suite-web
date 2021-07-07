@@ -47,36 +47,54 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
         'images' => [
             'driver' => 'local',
             'root' => storage_path('app/public/images'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
-
         'Documentacion' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'private',
-
         ],
-
+        'Documentos publicados' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/Documentos publicados'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'private',
+        ],
+        'Documentos en aprobación' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/Documentos en aprobacion'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'private',
+        ],
         'Iso27001' => [
             'driver' => 'local',
             'root' => storage_path('app/public/Normas/ISO27001'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'private',
         ],
-
+        'Normas' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/Normas/'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'private',
+        ],
+        'Administrador' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'private',
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
-
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
