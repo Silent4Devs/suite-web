@@ -126,7 +126,7 @@ class SedeController extends Controller
             'foto_sedes' => $image
         ]);
 
-        return redirect()->route('admin.sedes.index')->with("success",'Guardado con éxito');;
+        return redirect()->route('admin.sedes.index')->with("success", 'Guardado con éxito');;
     }
 
     public function edit(Sede $sede)
@@ -220,9 +220,11 @@ class SedeController extends Controller
         return view('admin.sedes.sedes-organizacion', compact('sede', 'organizacions', 'teams', 'numero_sedes'));
     }
 
-    public function ubicacion($request){
+    public function ubicacion($request)
+    {
         $sede = Sede::find($request);
         //dd($sede);
         return view('admin.sedes.ubicacion', compact('sede'));
     }
+
 }
