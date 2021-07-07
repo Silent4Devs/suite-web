@@ -62,7 +62,7 @@
                 @endcan
                 @can('area_access')
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route("admin.areas.obtenerAreasPorGrupo") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
+                    <a href="{{ route("admin.areas.renderJerarquia") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
                         {{--<i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
                         </i>--}}
