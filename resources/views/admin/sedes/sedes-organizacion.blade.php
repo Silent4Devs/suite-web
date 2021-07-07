@@ -65,7 +65,8 @@
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado Sedes a la
                             organización
-                            <a href="{{ route('admin.sedes.create') }}"><i class="fas fa-share"></i></a>
+                            <a href="{{ route('admin.sedes.create') }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
+
                         </p>
                     </div>
                 </div>
@@ -73,8 +74,8 @@
             </div>
 
             <div class="d-flex justify-content-center">
-                <img src="{{ asset('img/sedes.png') }}" alt="No se pudo cargar el organigrama" class="mt-3"
-                    style="height: 300px;">
+                <img src="{{ asset('img/ubicacion.jpg') }}" alt="No se pudo cargar el organigrama" class="mt-3"
+                    style="height: 390px;">
             </div>
         @endif
 

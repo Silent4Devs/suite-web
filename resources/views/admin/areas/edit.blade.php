@@ -47,6 +47,35 @@
                 @endif
                 <span class="help-block"></span>
             </div>
+
+            <div class="form-group col-sm-6">
+                <label class="required" for="id_reporta"><i class="fas fa-user iconos-crear"></i>Reporta a</label>
+                <div class="mb-3 input-group">
+                    <select class="custom-select supervisor" id="inputGroupSelect01" name="supervisor_id">
+                        <option selected disabled value="null">-- Selecciona area --</option>
+                        @if (!$direccion_exists)
+                            <option value="">Dirección General</option>
+                        @endif
+                        @forelse ( $areas as $area)
+                            @if ($area->id != $area->id)
+                                <option value="{{ $area->id }}"
+                                    {{ old('id_reporta', $area->id) == $area->id_reporta ? 'selected' : '' }}>
+                                    {{ $empleado_r->name }}</option>
+                            @endif
+                        @empty
+                            <option value="" disabled>Sin Datos</option>
+                        @endforelse
+                    </select>
+                </div>
+                @if ($errors->has('id_reporta'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('id_reporta') }}
+                    </div>
+                @endif
+            </div>
+
+
+
         </div>
 
         <div class="row">

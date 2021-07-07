@@ -133,7 +133,15 @@ class AreasController extends Controller
 
     public function update(UpdateAreaRequest $request, Area $area)
     {
+
+        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+        $validateReporta = 'nullable|exists:areas,id';
+        if ($direccion_exists) {
+            $validateReporta = 'required|exists:areas,id';
+        }
+
         $area->update($request->all());
+
 
         return redirect()->route('admin.areas.index')->with("success",'Editado con éxito');
     }
@@ -177,6 +185,7 @@ class AreasController extends Controller
 
     public function renderJerarquia(Request $request)
     {
+        $numero_grupos=Grupo::count();
         $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
         if ($request->ajax()) {
             // La construccion del arbol necesita un primer nodo (NULL)
@@ -184,10 +193,10 @@ class AreasController extends Controller
             return $areasTree->toJson();
         }
         $rutaImagenes = asset('storage/empleados/imagenes/');
-        $grupos = Grupo::get();
+        $grupos = Grupo::with('areas')->get();
         $organizacionDB = Organizacion::first();
         $organizacion = !is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
         $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
-        return view('admin.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos'));
+        return view('admin.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos', 'numero_grupos'));
     }
 }
