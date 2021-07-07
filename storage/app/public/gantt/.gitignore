@@ -1,4 +1,6 @@
 *
 !tmp
+!versiones
 !.gitignore
 !gantt_inicial.json
+!status.json

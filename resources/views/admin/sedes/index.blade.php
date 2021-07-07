@@ -3,16 +3,16 @@
     @can('sede_create')
 
         <div class="mt-5 card">
-            
+
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Sedes</strong></h3>
             </div>
 
-            
-         <!-- component -->
-       
 
-        
+         <!-- component -->
+
+
+
 
 
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
@@ -29,7 +29,7 @@
 
 
     @endcan
-        
+
 
 @if($numero_sedes>0)
 
@@ -44,12 +44,13 @@
             </div>
             <div class="col-11">
                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre cada una de las sedes 
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre cada una de las sedes
                     con las que cuenta su organización</p>
 
             </div>
         </div>
     </div>
+    @include('partials.flashMessages')
     <div class="card-body datatable-fix">
         <table class="table table-bordered w-100 datatable datatable-Sede">
             <thead class="thead-dark">
@@ -105,7 +106,7 @@
             </thead>
         </table>
     </div>
-    
+
 
 
 @else
@@ -126,7 +127,7 @@
                 </p>
             </div>
         </div>
-                
+
     </div>
 
     <div class="d-flex justify-content-center">
@@ -177,7 +178,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -244,13 +245,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -283,7 +284,7 @@
                         data: 'foto_sedes',
                         name: 'foto_sedes',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"35px"}" src="{{ asset('storage/sedes/imagenes/') }}/${data !=""?data:"office.png"}"></div>`;
+                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"80px"}" src="{{ asset('storage/sedes/imagenes/') }}/${data !=""?data:"organizacion.png"}"></div>`;
                         }
                     },
                     {

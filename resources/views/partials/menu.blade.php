@@ -17,15 +17,16 @@
                 ->first();
 
                 if (isset($users)) { ?>
-                <img src="{{ url('images/' . $users->logotipo) }}" class="img_logo w-100">
+                <img src="{{ asset('images/' . $users->logotipo )}}" class="img_logo w-100">
                 <?php } elseif (!isset($users)) { ?>
-                <img src="{{ url('img/Silent4Business-Logo-Color.png') }}" class="img_logo w-100">
+                <img  src="{{ asset('img/silent4business.png') }}" class="img_logo w-100">
                 <?php } else { ?>
-                <img src="{{ url('img/Silent4Business-Logo-Color.png') }}" class="img_logo w-100">
+                <img src="{{ asset('img/silent4business.png') }}" class="img_logo w-100">
                 <?php }
                 ?>
 
-        </div>
+
+            </div>
 
     </div>
 
@@ -61,7 +62,7 @@
                 @endcan
                 @can('area_access')
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route("admin.areas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
+                    <a href="{{ route("admin.areas.renderJerarquia") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
                         {{--<i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
                         </i>--}}

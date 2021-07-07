@@ -74,7 +74,7 @@ margin-left:100px;
         @include('flash::message')
 
         @if($empty == TRUE)
-        <div class="col-lg-12">
+        <div class="text-right col-lg-12" style="position:relative; z-index:1;">
             @if(!empty($count == 1))
             @else
                 <a class="btn btn-success" href="{{ route('admin.organizacions.create') }}">
@@ -82,7 +82,7 @@ margin-left:100px;
                 </a>
             @endif
             <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}"
-               class='float-right btn btn-info'>
+               class=' btn btn-info'>
                 Editar Organización
             </a>
         </div>
@@ -90,10 +90,10 @@ margin-left:100px;
         <div class="card-body">
             <div class="row">
 
-                <div class="ml-4 row justify-content-center" style="margin-top:-85px;">
+                <div class="row col-12 justify-content-center d-flex" style="margin-top:-85px;">
                     <div class="p-5 col-sm-6">
                         <label for="logotipo"></label>
-                            <img class="p-3 bg-light card card-accent-info"  src="{{ url('images/'.$logotipo->logotipo) }}" alt="Card image" style=" width:100%;">
+                            <img class="bg-light"  src="{{ url('images/'.$logotipo->logotipo) }}" alt="Card image" style="width:100%;">
                                 @if($errors->has('logotipo'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('logotipo') }}
@@ -103,14 +103,14 @@ margin-left:100px;
                     </div>
                  </div>
 
-            
+
                  <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">
                         <span class="mb-1 text-center text-white">DATOS GENERALES</span>
                     </div>
                 </div>
 
-           
+
                 <div class="form-group col-sm-12 col-md-6">
                     <label class="required" for="empresa"><i
                             class="far fa-building iconos-crear"></i> Nombre de la Empresa
@@ -184,7 +184,7 @@ margin-left:100px;
                     </div>
                 </div>
 
-                
+
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="giro"> <i
                             class="fas fa-briefcase iconos-crear"></i> {{ trans('cruds.organizacion.fields.giro') }}
@@ -271,7 +271,7 @@ margin-left:100px;
                       <br>
                       <br>
                       <a class="btn btn-success"  href="{{ route('admin.organizacions.create') }}">
-                          Agregar 
+                          Agregar
                       </a>
                   @endif
               </div>
