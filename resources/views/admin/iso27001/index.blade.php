@@ -81,7 +81,7 @@
 			background-color: #fff;
 		}
 		a:hover{
-			text-decoration: none !important; 
+			text-decoration: none !important;
 		}
 
 
@@ -100,7 +100,7 @@
 
 	{{ Breadcrumbs::render('admin.iso27001.index') }}
 
-	<div class="card mt-5">
+	<div class="mt-5 card">
 		<div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>ISO 27001</strong></h3>
         </div>
@@ -124,19 +124,19 @@
 								<li><a href="{{ route("admin.declaracion-aplicabilidad.index") }}">
 									<div>
 										<i class="far fa-file"></i>
-										Declaracion de aplicabilidad 
+										Declaracion de aplicabilidad
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.partes-interesadas.index") }}">
 									<div>
 										<i class="far fa-handshake"></i>
-										Partes interesadas 
+										Partes interesadas
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.matriz-requisito-legales.index") }}">
 									<div>
 										<i class="fas fa-balance-scale"></i>
-										Matriz de requisitos legales 
+										Matriz de requisitos legales
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.entendimiento-organizacions.index") }}">
@@ -148,7 +148,7 @@
 								<li><a href="{{ route("admin.alcance-sgsis.index") }}">
 									<div>
 										<i class="fas fa-bullseye"></i>
-										Determinación de alcance 
+										Determinación de alcance
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.reportes-contexto.index") }}">
@@ -169,31 +169,31 @@
 								<li><a href="{{ route("admin.comiteseguridads.index") }}">
 									<div>
 										<i class="fas fa-shield-alt"></i>
-										Conformación del comité de seguridad 
+										Conformación del comité de seguridad
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.minutasaltadireccions.index") }}">
 									<div>
 										<i class="fas fa-columns"></i>
-										Minutas de sesiones con Ata dirección 
+										Minutas de sesiones con Ata dirección
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.evidencias-sgsis.index") }}">
 									<div>
 										<i class="far fa-window-restore"></i>
-										Evidencias de asignación de recursos al SGSI 
+										Evidencias de asignación de recursos al SGSI
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.politica-sgsis.index") }}">
 									<div>
 										<i class="fas fa-landmark"></i>
-										Política SGSI 
+										Política SGSI
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.roles-responsabilidades.index") }}">
 									<div>
 										<i class="fas fa-user-tag"></i>
-										Roles y responsabilidades 
+										Roles y responsabilidades
 									</div>
 								</a></li>
 							</ul>
@@ -208,7 +208,7 @@
 								<li><a href="{{ route("admin.riesgosoportunidades.index") }}">
 									<div>
 										<i class="fas fa-asterisk"></i>
-										Riesgos y oportunidades 
+										Riesgos y oportunidades
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.objetivosseguridads.index") }}">
@@ -229,7 +229,7 @@
 								<li><a href="{{ route("admin.recursos.index") }}">
 									<div>
 										<i class="fas fa-chalkboard-teacher"></i>
-										Capacitaciones	
+										Capacitaciones
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.competencia.index") }}">
@@ -271,7 +271,7 @@
 								<li><a href="{{ route("admin.control-accesos.index") }}">
 									<div>
 										<i class="fas fa-vote-yea"></i>
-										Control de Accesos 
+										Control de Accesos
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.informacion-documetadas.index") }}">
@@ -318,31 +318,31 @@
 								<li><a href="{{ route("admin.incidentes-de-seguridads.index") }}">
 									<div>
 										<i class="fas fa-lock"></i>
-										Incidentes de Seguridad 
+										Incidentes de Seguridad
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.indicadorincidentessis.index") }}">
 									<div>
 										<i class="fas fa-file-contract"></i>
-										Indicador Incidentes 
+										Indicador Incidentes
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.auditoria-anuals.index") }}">
 									<div>
 										<i class="far fa-calendar-alt"></i>
-										Programa Anual de Auditoria 
+										Programa Anual de Auditoria
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.plan-auditoria.index") }}">
 									<div>
 										<i class="fas fa-clipboard-list"></i>
-										Plan de Auditoria 
+										Plan de Auditoria
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.auditoria-internas.index") }}">
 									<div>
 										<i class="fas fa-network-wired"></i>
-										Auditoria Interna 
+										Auditoria Interna
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.revision-direccions.index") }}">
@@ -363,13 +363,13 @@
 								<li><a href="{{ route("admin.accion-correctivas.index") }}">
 									<div>
 										<i class="far fa-thumbs-down"></i>
-										Acción Correctiva 
+										Acción Correctiva
 									</div>
 								</a></li>
 								<li><a href="{{ route("admin.registromejoras.index") }}">
 									<div>
 										<i class="far fa-thumbs-up"></i>
-										Registro Mejora 
+										Registro Mejora
 									</div>
 								</a></li>
 							</ul>
@@ -403,5 +403,5 @@
 			$(".caja_btn_a a:hover").addClass("btn_a_seleccionado");
 			$(".c-wrapper").scrollTop(0);
 		});
-	</script>	
+	</script>
 @endsection
