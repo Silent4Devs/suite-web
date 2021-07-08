@@ -59,10 +59,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('roles', 'RolesController');
 
     //procesos
+
+    Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
+
     Route::resource('procesos', 'ProcesoController');
+
+    
+
+
 
     //macroprocesos
     Route::resource('macroprocesos', 'MacroprocesoController');
+
+
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
