@@ -10,7 +10,7 @@
     'locale' => 'es',
     'fallback_locale' => 'es',
     'faker_locale' => 'es_ES',
-    'key' => 'base64:p3Kt5Rchzzy096RtFWCZPA2ZeXcxJzLZV1WG+gJ4ztA=',
+    'key' => 'base64:Kk8icFF2U42btMFo3yheodL5MjA19vd+jmoMQxuXVe0=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -833,7 +833,7 @@
     array (
       'font_dir' => 'C:\\laragon\\www\\tabantaj\\storage\\fonts/',
       'font_cache' => 'C:\\laragon\\www\\tabantaj\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\52552\\AppData\\Local\\Temp',
+      'temp_dir' => 'C:\\Users\\PEDRO~1.GAR\\AppData\\Local\\Temp',
       'chroot' => 'C:\\laragon\\www\\tabantaj',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
