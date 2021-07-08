@@ -4,13 +4,12 @@
 <style>
 .menulogin{
 	width: 40%;
-	height: 300px;
+	height: auto;
 	position: fixed;
 	z-index: 30;
-	top: 160px;
+	top: 200px;
 	left:35%;
-	background-color:#ffff;
-	background-color:rgba(255,255,255,0.9);
+	background-color:rgba(255,255,255,10);
 	border-radius: 20px;    /* redondear bordes (esquinas)*/
 	box-shadow: 3px 3px 3px #707070; /*sombra del elemento-desplazamiento x-desplazamiento y-desenfoque-color*/
 
@@ -21,7 +20,6 @@
 	height:25px;
 	color:#ffffff;
 	font-size:13pt;
-	background-color:#707070;1;
 	text-align: center;
 	line-height: 1.5;
 	float:right;
@@ -71,15 +69,9 @@
 
                          </div>
 
-                         <div class="menulogin d-none">
-                            <div class="btnCerrar">X</div>
-                            <div class="row justify-content-center">
-                                <div class="ml-5 col-10 card justify-content-center" style="margin-top:60px; background-color:{{$grupo->color}}!important">
-                                    <p class="text-center text-dark"> {{$area->area}} </p>
-                                </div>
+                         <div class="menulogin d-none" style="border-top:solid 3px rgb(163, 163, 163);">
 
-                            </div>
-                            <p class="text-center" style="margin-top:20px;">{{$area->descripcion}}</p>
+
 
                         </div>
 
@@ -102,7 +94,9 @@
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado áreas a la
                             organización
-                            <a href="{{ route('admin.sedes.create') }}"><i class="fas fa-share"></i></a>
+                            <a href="{{ route('admin.grupoarea.index') }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
+
+
                         </p>
                     </div>
                 </div>
@@ -149,13 +143,16 @@
             contenedor.classList.remove("d-none")
             contenedor.classList.add("d-block")
             contenedor.innerHTML=`
-            <div class="btnCerrar">X</div>
+
+
+            <div class="btnCerrar" style="color:${color}">X</div>
                             <div class="row justify-content-center">
-                                <div class="ml-5 col-10 card justify-content-center" style="margin-top:60px; background-color:{{$grupo->color}}!important">
+                                <div class="ml-5 bg-white rounded shadow-sm col--12 justify-content-center" style="margin-top:60px; background-color:${color}!important">
                                     <p class="text-center text-dark"> ${nombre} </p>
                                 </div>
 
                             </div>
+
                             <p class="text-center" style="margin-top:20px;">${descripcion}</p>
                             `;
             let btnCerrar=document.querySelector(".btnCerrar");

@@ -33,7 +33,7 @@
                     @if ($grupoareas)
                         @foreach ($grupoareas as $grupo)
                             <option value="{{ $grupo->id }}"
-                                {{ $grupo->id == $area->grupo->id ? 'selected' : '' }}>
+                                {{ $area->grupo ? $grupo->id == $area->grupo->id ? 'selected' : '':'' }}>
                                 {{ $grupo->nombre }}</option>
                         @endforeach
                     @else
@@ -47,20 +47,51 @@
                 @endif
                 <span class="help-block"></span>
             </div>
+
+
+
         </div>
 
         <div class="row">
 
             <div class="form-group col-sm-6">
-                <label for="area"><i class="fas fa-pencil-alt iconos-crear"></i>Descripción</label>
-                <textarea class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" type="text" name="area" id="area">{{ old('area', $area->area) }}</textarea>
-                @if($errors->has('area'))
+                <label class="required" for="id_reporta"><i class="fas fa-user iconos-crear"></i>Reporta a</label>
+                <div class="mb-3 input-group">
+                    <select class="custom-select supervisor" id="inputGroupSelect01" name="id_reporta">
+                        <option selected disabled value="null">-- Selecciona area --</option>
+                        @if (!$direccion_exists)
+                            <option value="">Dirección General</option>
+                        @endif
+                        @forelse ( $areas as $area_actual)
+                            @if ($area_actual->id != $area->id)
+                                <option value="{{ $area_actual->id }}"
+                                    {{ old('id_reporta', $area->id_reporta) == $area_actual->id ? 'selected' : '' }}>
+                                    {{ $area_actual->area}}</option>
+                            @endif
+                        @empty
+                            <option value="" disabled>Sin Datos</option>
+                        @endforelse
+                    </select>
+                </div>
+                @if ($errors->has('id_reporta'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('area') }}
+                        {{ $errors->first('id_reporta') }}
+                    </div>
+                @endif
+            </div>
+
+            <div class="form-group col-sm-6">
+                <label for="descripcion"><i class="fas fa-pencil-alt iconos-crear"></i>Descripción</label>
+                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion" id="descripcion">{{ old('descripcion', $area->descripcion) }}</textarea>
+                @if($errors->has('descripcion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('descripcion') }}
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.area.fields.area_helper') }}</span>
             </div>
+
+
 
         </div>
 

@@ -77,7 +77,8 @@ class Area extends Model
 
 	public function getGrupoNameAttribute()
 	{
-		return $this->grupo()->first('nombre')->nombre;
+
+		return $this->grupo !=null?$this->grupo->nombre : 'Sin grupo seleccionado';
 	}
 
 	public function area()

@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\CsvImportTrait;
-use App\Http\Requests\MassDestroySedeRequest;
-use App\Http\Requests\StoreSedeRequest;
-use App\Http\Requests\UpdateSedeRequest;
-use App\Models\Organizacion;
+use Gate;
 use App\Models\Sede;
 use App\Models\Team;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
-use Gate;
+use App\Models\Organizacion;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Geocoder;
+use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
+use App\Http\Requests\StoreSedeRequest;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UpdateSedeRequest;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\MassDestroySedeRequest;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Traits\CsvImportTrait;
 
 class SedeController extends Controller
 {
@@ -54,11 +55,14 @@ class SedeController extends Controller
                 return $row->sede ? $row->sede : "";
             });
             $table->editColumn('foto_sedes', function ($row) {
-                return $row->foto_sedes ? $row->foto_sedes:'';
-
+                return $row->foto_sedes ? $row->foto_sedes : '';
             });
             $table->editColumn('direccion', function ($row) {
                 return $row->direccion ? $row->direccion : "";
+            });
+            $table->editColumn('ubicacion', function ($row) {
+                //return "'lat' => ".$row->latitude. ",'long' => ".$row->longitud ? "'lat' => ".$row->latitude. ",'long' =>".$row->longitud : "";
+                return $row->id ? $row->id : "";
             });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
@@ -76,10 +80,10 @@ class SedeController extends Controller
         //$org = $organizacions->organizacion;
         //dd($organizacions->organizacion, $organizacions);
         $teams = Team::get();
-        $numero_sedes=Sede::count();
+        $numero_sedes = Sede::count();
 
 
-       //$sede_inicio = !is_null($sedes) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+        //$sede_inicio = !is_null($sedes) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
 
 
         return view('admin.sedes.index', compact('organizacions', 'teams', 'numero_sedes'));
@@ -96,15 +100,13 @@ class SedeController extends Controller
 
     public function store(StoreSedeRequest $request)
     {
-
-        $sede = Sede::create([
-            "organizacion_id"=>$request->organizacion_id,
-            "sede" =>  $request->sede,
-            "foto_sedes" =>  $request->foto_sede,
-            "direccion" =>  $request->direccion,
-            "descripcion" =>  $request->descripcion,
-
-        ]);
+        $client = new \GuzzleHttp\Client();
+        $geocoder = new \Spatie\Geocoder\Geocoder($client);
+        $geocoder->setApiKey(config('geocoder.key'));
+        $result = $geocoder->getCoordinatesForAddress($request->direccion);
+        $request['latitude'] = $result['lat'];
+        $request['longitud'] = $result['lng'];
+        $sede = Sede::create($request->all());
 
         $image = null;
         if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
@@ -124,9 +126,7 @@ class SedeController extends Controller
             'foto_sedes' => $image
         ]);
 
-
-
-        return redirect()->route('admin.sedes.index')->with("success",'Guardado con éxito');
+        return redirect()->route('admin.sedes.index')->with("success", 'Guardado con éxito');;
     }
 
     public function edit(Sede $sede)
@@ -142,7 +142,7 @@ class SedeController extends Controller
 
     public function update(Request $request, $id)
     {
-       // $sede->update($request->all());
+        // $sede->update($request->all());
 
 
         $sede = Sede::find($id);
@@ -170,14 +170,14 @@ class SedeController extends Controller
         }
 
 
-       $sede->update([
+        $sede->update([
 
-        "sede" =>  $request->sede,
-        "foto_sedes" =>  $request->foto_sede,
-        "direccion" =>  $request->direccion,
-        "descripcion" =>  $request->descripcion,
-        "foto_sedes"=>$image
-    ]);
+            "sede" =>  $request->sede,
+            "foto_sedes" =>  $request->foto_sede,
+            "direccion" =>  $request->direccion,
+            "descripcion" =>  $request->descripcion,
+            "foto_sedes" => $image
+        ]);
 
 
         return redirect()->route('admin.sedes.index');
@@ -208,17 +208,23 @@ class SedeController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function obtenerListaSedes(Sede $sedes){
+    public function obtenerListaSedes(Sede $sedes)
+    {
 
         //$sede = Sede::get();
         $sede = Sede::paginate(3);
         $organizacions = Organizacion::all();
         $teams = Team::get();
-        $numero_sedes=Sede::count();
-        //dd($sede);
+        $numero_sedes = Sede::count();
 
-        return view('admin.sedes.sedes-organizacion', compact('sede','organizacions', 'teams', 'numero_sedes'));
+        return view('admin.sedes.sedes-organizacion', compact('sede', 'organizacions', 'teams', 'numero_sedes'));
     }
 
+    public function ubicacion($request)
+    {
+        $sede = Sede::find($request);
+        //dd($sede);
+        return view('admin.sedes.ubicacion', compact('sede'));
+    }
 
 }

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Sede
- * 
+ *
  * @property int $id
  * @property string $sede
  * @property string|null $foto_sedes
@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $organizacion_id
  * @property int|null $team_id
  * @property string|null $direccion
- * 
+ *
  * @property Organizacion|null $organizacion
  * @property Team|null $team
  * @property Collection|Activo[] $activos
@@ -48,7 +48,9 @@ class Sede extends Model
 		'descripcion',
 		'organizacion_id',
 		'team_id',
-		'direccion'
+		'direccion',
+        'latitude',
+        'longitud',
 	];
 
 	public function organizacion()
