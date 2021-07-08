@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Laracasts\Flash\Flash;
 use App\Models\Proceso;
-use App\Models\Area;
+use App\Models\Grupo;
 use App\Models\Macroproceso;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -161,10 +161,14 @@ class ProcesoController extends Controller
 
     public function mapaProcesos(){
 
-        $areas_mapa = Area::get();
+        $grupos_mapa = Grupo::with(['macroprocesos'=>function($q){
+            $q->with('procesos');
+        }])->get();
         $macros_mapa = Macroproceso::get();
         $procesos_mapa = Proceso::get();
 
-        return view('admin.procesos.mapa_procesos', compact('areas_mapa', 'macros_mapa', 'procesos_mapa'));
+        
+
+        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa'));
     }
 }
