@@ -747,9 +747,21 @@
                       </a>
                   </li>
                 @endcan
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("admin.grupoarea.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/grupoarea") || request()->is("admin/grupoarea/*") ? "active" : "" }}">
+                        {{--<i class="fas fa-puzzle-piece iconos_menu letra_blanca">
+
+                        </i>--}}
+                        <i class="fas fa-cubes iconos_menu letra_blanca">
+
+                        </i>
+
+                        <font class="letra_blanca"> Grupo Áreas </font>
+                    </a>
+                </li>
                 @can('area_access')
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route("admin.grupoarea.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
+                    <a href="{{ route("admin.areas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
                         {{--<i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
                         </i>--}}

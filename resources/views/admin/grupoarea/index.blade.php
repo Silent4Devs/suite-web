@@ -2,6 +2,9 @@
 @section('content')
     @can('grupoarea_create')
 
+
+
+
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong> Grupos de Áreas</strong></h3>
@@ -26,7 +29,7 @@
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 1</p>
                     <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas, al finalizar dé
                         clic en siguiente                    </span>
-                        <a href="{{ route("admin.areas.index") }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Siguiente</a>
+                      <a href="{{ route("admin.areas.index") }}"  class="item-right col-2 btn text-light " style="background-color:rgb(85, 217, 226); float:right">Siguiente</a>
                 </div>
             </div>
         </div>
@@ -45,6 +48,9 @@
                         </th>
                         <th>
                             Descripción
+                        </th>
+                        <th>
+                            Color
                         </th>
                         <th>
                             Opciones
@@ -211,6 +217,15 @@
                         name: 'descripcion'
                     },
                     {
+                        data: 'color',
+                        name: 'color',
+                        render: function(color) {
+                            return `<div class="d-flex justify-content-center"> <div class="text-center align-items-center d-flex justify-content-center" style="width:20px; height:20px; background-color:${color}!important"></div> </div>`;
+                            element.style.border=`2px solid ${color!=null?color:"black"}`;
+
+                        }
+                    },
+                    {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
                     }
@@ -234,6 +249,8 @@
             //         .draw()
             // });
         });
+
+
     </script>
 @endsection
 
