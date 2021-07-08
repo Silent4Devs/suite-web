@@ -13,7 +13,7 @@
             @csrf
 
             <div class="row">
-                <div class="form-group col-6">
+                <div class="form-group col-8">
                     <label for="nombre"><i class="fas fa-users iconos-crear"></i>Nombre del grupo</label>
                     <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre" id="nombre" value="{{ old('nombre', $grupoarea->nombre) }}">
                     @if($errors->has('nombre'))
@@ -24,9 +24,9 @@
                     <span class="help-block">{{ trans('cruds.area.fields.area_helper') }}</span>
                 </div>
 
-                <div class="form-group col-6">
-                    <label for="color"><i class="fas fa-users iconos-crear"></i>Color del grupo</label>
-                    <input class="form-control {{ $errors->has('color') ? 'is-invalid' : '' }}" type="color" name="color" id="color" value="{{ old('color', $grupoarea->color) }}">
+                <div class="form-group col-4">
+                    <label for="color"><i class="fas fa-palette iconos-crear"></i>Seleccionar color del grupo</label>
+                    <input class="col-2 form-control {{ $errors->has('color') ? 'is-invalid' : '' }}" type="color" name="color" id="color" value="{{ old('color', $grupoarea->color) }}">
                     @if($errors->has('color'))
                         <div class="invalid-feedback">
                             {{ $errors->first('color') }}

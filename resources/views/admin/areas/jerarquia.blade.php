@@ -484,6 +484,7 @@
     .caja_btn_a a:hover, .btn_a_seleccionado{
         border-bottom: 2px solid #00abb2;
         margin-bottom: -2px;
+        margin-right:10px;
     }
 
     </style>
@@ -504,12 +505,12 @@
     <div class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
 
         <div class="mb-5 row justify-content-center d-flex caja_btn_a ">
-            <a href="#contenido1" class="btn_a_seleccionado"><div class="col-12 btn-jerarquia cambiocolor">
-            <i class="fas fa-sitemap"style="font-size:30px;"></i> Áreas por Jerarquia
+            <a href="#contenido1" class="btn_a_seleccionado" style="text-decoration:none;"><div class="col-12 btn-jerarquia cambiocolor">
+            <i class="mr-2 fas fa-sitemap" style="font-size:30px;" style="text-decoration:none;"></i> Áreas por Jerarquia
             </div></a>
 
-            <a href="#contenido2"><div class="col-12 btn-grupo cambiocolor2">
-                <i class="fas fa-cubes" style="font-size:30px;"></i> Áreas por Grupo
+            <a href="#contenido2"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
+                <i class="mr-2 fas fa-cubes" style="font-size:30px;"></i> Áreas por Grupo
             </div></a>
         </div>
 
