@@ -36,7 +36,7 @@ export default class OrgChart {
     this.chart = chart;
     this.chartContainer = chartContainer;
     this.zoomSlider = zoomSlider;
-    
+
     chart.dataset.options = JSON.stringify(opts);
     chart.setAttribute('class', 'orgchart' + (opts.chartClass !== '' ? ' ' + opts.chartClass : '') +
       (opts.direction !== 't2b' ? ' ' + opts.direction : ''));
@@ -69,7 +69,7 @@ export default class OrgChart {
       let exportBtn = document.createElement('button'),
         exportCSV = document.createElement('button'),
         downloadBtn = document.createElement('a');
-      
+
       exportBtn.setAttribute('class', 'oc-export-btn btn btn-lg' + (opts.chartClass !== '' ? ' ' + opts.chartClass : ''));
       exportBtn.style.marginTop = "0.32rem";
       exportBtn.style.fontSize = "15pt";
@@ -381,7 +381,7 @@ export default class OrgChart {
     }else if(this.options.typeOrgChart == 'area'){
       this._renderAreaInformation();
     }
-    
+
   }
 
   _renderAreaInformation(){
@@ -393,27 +393,27 @@ export default class OrgChart {
 
     // Close button
     let a_close = document.createElement('a');
-    a_close.href = 'javascript:void(0)'; 
-    a_close.classList.add('closebtn'); 
+    a_close.href = 'javascript:void(0)';
+    a_close.classList.add('closebtn');
     a_close.onclick = function(){
       chartContainer.innerHTML = '';
       chartContainer.style.width = "0px";
       chartContainer.classList.remove('side');
       chartContainer.classList.remove('nav-shadow');
     };
-    a_close.innerHTML = '&times;';  
+    a_close.innerHTML = '&times;';
     //Title information
     let title_info = document.createElement('h3');
     title_info.classList.add('side');
     title_info.classList.add('title-info-nav');
     title_info.innerText = `${dataSourceJSON.area}`;
-    
-    
+
+
     //photo
     let div_img = document.createElement('div');
-    div_img.style.borderBottom = `5px solid ${dataSourceJSON.grupo.color}`;  
+    div_img.style.borderBottom = `5px solid ${dataSourceJSON.grupo.color}`;
     div_img.classList.add('container-img-nav');
-      
+
     let photo = "";
     let photo_info = document.createElement('img');
     if (dataSourceJSON.foto == null) {
@@ -423,10 +423,10 @@ export default class OrgChart {
         photo = `${this.options.nodeRepositoryImages}/woman.png`;
       }else{
         photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
-      } 
+      }
     }
     else {
-      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;  
+      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
     }
     console.log(dataSourceJSON);
     photo_info.classList.add('side');
@@ -456,10 +456,10 @@ export default class OrgChart {
                 photo_s = `${this.options.nodeRepositoryImages}/woman.png`;
               }else{
                 photo_s = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
-              } 
+              }
           }
         else {
-          photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;  
+          photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
         }
         content_more += `
               <div class="supervisor">
@@ -476,7 +476,7 @@ export default class OrgChart {
     chartContainer.appendChild(title_info);
     chartContainer.appendChild(title_info_text);
     chartContainer.appendChild(c_more);
-    
+
     if (chartContainer.clientWidth == 0) {
       chartContainer.style.width = "250px";
     }else{
@@ -497,7 +497,7 @@ export default class OrgChart {
     // Close button
     let a_close = document.createElement('a');
     a_close.href = 'javascript:void(0)';
-    a_close.classList.add('closebtn'); 
+    a_close.classList.add('closebtn');
     a_close.onclick = function(){
       chartContainer.innerHTML = '';
       chartContainer.style.width = "0px";
@@ -510,8 +510,8 @@ export default class OrgChart {
     title_info.classList.add('side');
     title_info.classList.add('title-info-nav');
     title_info.innerText = `${dataSourceJSON.name}`;
-    
-    
+
+
     //photo
     let div_img = document.createElement('div');
     div_img.classList.add('container-img-nav');
@@ -524,12 +524,12 @@ export default class OrgChart {
         photo = `${this.options.nodeRepositoryImages}/woman.png`;
       }else{
         photo = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
-      } 
+      }
     }
     else {
-      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;  
+      photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
     }
-    
+
     photo_info.classList.add('side');
     photo_info.classList.add('img-nav');
     photo_info.src = photo;
@@ -582,10 +582,10 @@ export default class OrgChart {
                 photo_s = `${this.options.nodeRepositoryImages}/woman.png`;
               }else{
                 photo_s = `${this.options.nodeRepositoryImages}/${this.options.nodeNotPhoto}`;
-              } 
+              }
           }
         else {
-          photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;  
+          photo_s = `${this.options.nodeRepositoryImages}/${dataSourceJSON.supervisor.foto}`;
         }
         content_more += `
               <div class="supervisor">
@@ -604,7 +604,7 @@ export default class OrgChart {
     chartContainer.appendChild(title_info_text);
     chartContainer.appendChild(area_info);
     chartContainer.appendChild(c_more);
-    
+
     if (chartContainer.clientWidth == 0) {
       chartContainer.style.width = "250px";
     }else{
@@ -615,7 +615,7 @@ export default class OrgChart {
       // setTimeout(() => {
       // chartContainer.style.width = "250px";
       // this._clickNode(event);
-      // }, 500); 
+      // }, 500);
     }
   }
 
@@ -1389,7 +1389,7 @@ export default class OrgChart {
     } else {
       this._clickNode(event);
     }
-    
+
   }
   _onDragStart(event) {
     let nodeDiv = event.target,
@@ -1610,8 +1610,8 @@ export default class OrgChart {
       // construct the content of node
       let nodeDiv = document.createElement('div');
       if (nodeData.grupo) {
-        nodeDiv.style.border = `3px solid ${nodeData.grupo.color}`;  
-        // nodeDiv.style.background = `${nodeData.grupo.color}`;  
+        nodeDiv.style.border = `3px solid ${nodeData.grupo.color}`;
+        // nodeDiv.style.background = `${nodeData.grupo.color}`;
       }
 
       delete nodeData.children;
@@ -1645,18 +1645,18 @@ export default class OrgChart {
             photo = `${opts.nodeRepositoryImages}/woman.png`;
           }else{
             photo = `${opts.nodeRepositoryImages}/${opts.nodeNotPhoto}`;
-          } 
+          }
         }
         else {
           photo = `${opts.nodeRepositoryImages}/${nodeData.foto}`;
-        }   
+        }
       }
       // if (nodeData[opts.nodePhoto] != null) {
       //   photo = `${opts.nodeRepositoryImages}/${nodeData[opts.nodePhoto]}`;
       // }else{
       //   photo = `${opts.nodeRepositoryImages}/${opts.nodeNotPhoto}`
       // }
-      
+
       nodeDiv.innerHTML = `
         <div class="mb-2" style="text-align:center">
         ${opts.withImage ? `<img class="avatar object-cover w-20 h-20 rounded-full m-auto" src="${photo}" style="position:relative">`:''}
@@ -1839,7 +1839,7 @@ export default class OrgChart {
     }
   }
   _clickChart(event) {
-    
+
     let closestNode = this._closest(event.target, function (el) {
       return el.classList && el.classList.contains('node');
     });
@@ -1910,7 +1910,7 @@ export default class OrgChart {
         // let canvasContainer = cloneDoc.querySelector('.canvasContainer');
         // canvasContainer.style.overflow = 'visible';
         // canvasContainer.querySelector('.orgchart:not(.hidden)').transform = '';
-        
+
         // if (flag) {
         //   let contenedorL2R = cloneDoc.querySelector('.orgchart').classList.contains('l2r');
         //   let contenedorR2L = cloneDoc.querySelector('.orgchart').classList.contains('r2l');
@@ -2088,19 +2088,19 @@ export default class OrgChart {
         chart.style.transform = 'scale(' + newScale + ')  rotate(90deg)';
       } else {
       chart.style.transform = 'scale(' + newScale + ')  rotate(90deg)';
-      }       
+      }
     }else if (chart.classList.contains('l2r')) {
       if (lastTf === 'none') {
         chart.style.transform = 'scale(' + newScale + ')  rotate(-90deg)  rotateY(180deg)';
       } else {
       chart.style.transform = 'scale(' + newScale + ')  rotate(-90deg)  rotateY(180deg)';
-      }       
+      }
     }else if (chart.classList.contains('b2t')) {
       if (lastTf === 'none') {
         chart.style.transform = 'scale(' + newScale + ')  rotate(180deg)';
       } else {
       chart.style.transform = 'scale(' + newScale + ')  rotate(180deg)';
-      }       
+      }
     }else{
       if (lastTf === 'none') {
         chart.style.transform = 'scale(' + newScale + ')';
@@ -2127,9 +2127,9 @@ export default class OrgChart {
 
   _onWheeling(event) {
     event.preventDefault();
-    
+
     let newScale = event.deltaY > 0 ? 0.8 : 1.2;
-    
+
     this._setChartScale(this.chart, newScale);
   }
   _getPinchDist(event) {

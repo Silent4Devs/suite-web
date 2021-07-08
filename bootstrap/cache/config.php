@@ -351,7 +351,10 @@
     'routePrefix' => 'file-manager',
     'diskList' => 
     array (
-      0 => 'Documentacion',
+      0 => 'Documentos publicados',
+      1 => 'Documentos en aprobación',
+      2 => 'Administrador',
+      3 => 'Normas',
     ),
     'leftDisk' => NULL,
     'rightDisk' => NULL,
@@ -407,10 +410,38 @@
         'url' => 'http://localhost/storage',
         'visibility' => 'private',
       ),
+      'Documentos publicados' => 
+      array (
+        'driver' => 'local',
+        'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public/Documentos publicados',
+        'url' => 'http://localhost/storage',
+        'visibility' => 'private',
+      ),
+      'Documentos en aprobación' => 
+      array (
+        'driver' => 'local',
+        'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public/Documentos en aprobacion',
+        'url' => 'http://localhost/storage',
+        'visibility' => 'private',
+      ),
       'Iso27001' => 
       array (
         'driver' => 'local',
         'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public/Normas/ISO27001',
+        'url' => 'http://localhost/storage',
+        'visibility' => 'private',
+      ),
+      'Normas' => 
+      array (
+        'driver' => 'local',
+        'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public/Normas/',
+        'url' => 'http://localhost/storage',
+        'visibility' => 'private',
+      ),
+      'Administrador' => 
+      array (
+        'driver' => 'local',
+        'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'private',
       ),
