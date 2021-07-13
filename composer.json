@@ -34,8 +34,10 @@
         "nuovo/spreadsheet-reader": "^0.5.11",
         "phpoffice/phpword": "^0.18.1",
         "pusher/pusher-php-server": "^4.1",
+        "spatie/geocoder": "^3.10",
         "spatie/laravel-medialibrary": "^8.7",
         "yajra/laravel-datatables-oracle": "^9.11"
+
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

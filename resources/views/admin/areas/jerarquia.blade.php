@@ -6,6 +6,12 @@
         integrity="sha512-0mXZvQboEKApqdohlHGMJ/OZ09yeQa6UgZRkgG+b3t3JlcyIqvDnUMgpUm5CvlHT9HNtRm9xbRAJPlKaFCXzdQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+
+        section:not(section:target){
+            display:none;
+        }
+
+
         #chart-container {
             position: relative;
             display: inline-block;
@@ -435,43 +441,112 @@
         }
 
     </style>
+
+    <style>
+    .menulogin{
+        width: 40%;
+        height: auto;
+        position: fixed;
+        z-index: 30;
+        top: 200px;
+        left:35%;
+        background-color:rgba(255,255,255,10);
+        border-radius: 20px;    /* redondear bordes (esquinas)*/
+        box-shadow: 3px 3px 3px #707070; /*sombra del elemento-desplazamiento x-desplazamiento y-desenfoque-color*/
+
+    }
+
+    .btnCerrar{
+        width: 25px;
+        height:25px;
+        color:#ffffff;
+        font-size:13pt;
+        text-align: center;
+        line-height: 1.5;
+        float:right;
+        margin-right: 30px;
+        margin-top:10px;
+        cursor: pointer;
+
+    }
+
+    .caja_btn_a{
+			width: 100%;
+			height: auto;
+			text-align: center;
+		}
+    .caja_btn_a a{
+        padding: 15px;
+        margin-top: 10px;
+        color: #008186;
+        display: inline-block;
+    }
+    .caja_btn_a a:hover, .btn_a_seleccionado{
+        border-bottom: 2px solid #00abb2;
+        margin-bottom: -2px;
+        margin-right:10px;
+    }
+
+    </style>
 @endsection
 
+
+
 @section('content')
-    <div class="text-center">
-        <h1 class="mb-4 text-2xl font-black leading-tight md:text-2xl lg:text-3xl">
-            Áreas por jerarquía
-        </h1>
+
+
+
+    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+        <h3 class="mb-2 text-center text-white"><strong>Áreas</strong></h3>
     </div>
 
 
     <!-- component -->
     <div class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
+
+        <div class="mb-5 row justify-content-center d-flex caja_btn_a ">
+            <a href="#contenido1" class="btn_a_seleccionado" style="text-decoration:none;"><div class="col-12 btn-jerarquia cambiocolor">
+            <i class="mr-2 fas fa-sitemap" style="font-size:30px;" style="text-decoration:none;"></i> Áreas por Jerarquia
+            </div></a>
+
+            <a href="#contenido2"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
+                <i class="mr-2 fas fa-cubes" style="font-size:30px;"></i> Áreas por Grupo
+            </div></a>
+        </div>
+
+
         {{-- <div class="flex justify-center -mt-16 md:justify-end">
             <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #00abb2;"
                 src="{{ $org_foto }}">
         </div> --}}
         @if (is_null($areasTree))
+
+
             <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
-                <div class="flex">
-                    <div class="py-1"><svg class="w-6 h-6 mr-4 text-blue-500 fill-current"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path
-                                d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
-                        </svg></div>
-                    <div>
-                        <p class="font-bold">Atención</p>
-                        <p class="text-sm">El organigrama no se pudo generar ya que no existe un nodo raíz (CEO), defina uno
-                            en el apartado de empleados <a href="{{ route('admin.empleados.index') }}"><i
-                                    class="fas fa-share"></i></a></p>
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado áreas a la
+                            organización
+                            <a href="{{ route('admin.grupoarea.index') }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
+
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="{{ asset('img/OrganigramaFinal.jpg') }}" alt="No se pudo cargar el organigrama" class="mt-3"
-                    style="width: 640px;height: 357px;">
+                <img src="{{ asset('img/areas.jpg') }}" class="mt-3"
+                    style="height: 400px;">
             </div>
         @else
+
+        <section id="contenido1" class="d-block">
+
             <div class="row">
                 <div class="col-lg-10 col-md-12 col-sm-12">
                     <div class="m-0 range-slider h-100">
@@ -503,7 +578,7 @@
                         @foreach ($grupos as $grupo)
                             <li class="mb-2 d-flex align-items-center" data-toggle="modal"
                                 data-target="#Grupo{{ $grupo->id }}" style="cursor: pointer;">
-                                <div class="mr-2 cuadrado" style="border: 2px solid {{ $grupo->color }}">&nbsp;
+                                <div class="mr-2 cuadrado" style="border: 3px solid {{ $grupo->color }}">&nbsp;
                                 </div>
                                 <div>{{ $grupo->nombre }}</div>
                             </li>
@@ -559,7 +634,90 @@
                 </div>
             </div>
         @endif
-    </div>
+
+
+</section>
+
+
+<section id="contenido2">
+
+
+
+        @if ($numero_grupos > 0)
+
+        <div class="row justify-content-center">
+            @foreach ($grupos as $grupo)
+                <div class="col-10">
+                    <div class="mt-3 card justify-content-center" style="box-shadow: 0px 0px 0px 2px {{$grupo->color}}!important;">
+                        <div class="row justify-content-center">
+                            <div class="col-3 card justify-content-center" style="margin-top:-18px; background-color:{{$grupo->color}}!important;">
+                                <p class="text-center text-white">{{$grupo->nombre}}</p>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                @foreach($grupo->areas as $area)
+                                <div class="mb-3 ml-2 mr-2 bg-white rounded shadow-sm col-3 sesioninicio" style="height:40px;" onclick="renderModal(this,'{{$area->area}}', '{{$area->descripcion}}', '{{$grupo->color}}')">
+                            <p class="text-center" style="cursor:pointer"> {{$area->area}} </p>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="menulogin d-none" style="border-top:solid 3px rgb(163, 163, 163);">
+
+
+
+                    </div>
+
+                </div>
+            @endforeach
+        </div>
+
+
+    @else
+
+        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado áreas a la
+                        organización
+                        <a href="{{ route('admin.grupoarea.index') }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
+
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <img src="{{ asset('img/areas.jpg') }}" class="mt-3"
+                style="height: 400px;">
+        </div>
+    @endif
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+</section>
 
 @endsection
 @section('scripts')
@@ -625,7 +783,7 @@
                             'chartContainer': '#chart-container',
                             'zoomSlider': '#zoomer',
                             'data': JSON.parse(response),
-                            'depth': 4,
+                            'depth': 999,
                             'nodeTitle': 'area',
                             'nodeContent': 'grupo_name',
                             'withImage': false,
@@ -645,4 +803,56 @@
             }
         });
     </script>
+
+
+    <script>
+
+            function renderModal(element,nombre,descripcion,color){
+                element.style.border=`2px solid ${color!=null?color:"black"}`;
+
+                let contenedor=document.querySelector(".menulogin");
+                contenedor.classList.remove("d-none")
+                contenedor.classList.add("d-block")
+                contenedor.innerHTML=`
+
+
+                <div class="btnCerrar" style="color:${color}">X</div>
+                                <div class="row justify-content-center">
+                                    <div class="ml-5 bg-white rounded shadow-sm col-12 justify-content-center" style="margin-top:50px; background-color:${color}!important">
+                                        <p class="text-center text-white"> ${nombre} </p>
+                                    </div>
+
+                                </div>
+
+                                <p class="mb-5 text-center" style="margin-top:20px;" >${descripcion}</p>
+                                `;
+                let btnCerrar=document.querySelector(".btnCerrar");
+                btnCerrar.addEventListener("click",function(e){
+                    e.preventDefault();
+                    element.style.border="none";
+                    contenedor.classList.remove("d-block")
+                    contenedor.classList.add("d-none")
+                });
+
+
+            }
+
+
+    </script>
+
+
+    <script type="text/javascript">
+
+        $(".caja_btn_a a").click(function(){
+            $(".caja_btn_a a").removeClass("btn_a_seleccionado");
+            $(".caja_btn_a a:hover").addClass("btn_a_seleccionado");
+            $("#contenido1").removeClass("d-block");
+
+        });
+    </script>
+
+
+
+
+
 @endsection

@@ -134,7 +134,7 @@
     -moz-transform:scale(0.7) rotate(90deg);
     -webkit-transform:scale(0.7) rotate(90deg);
     transform:scale(0.7) rotate(90deg);
-    
+
     /* -ms-transform-origin: left top;
     -moz-transform-origin: left top;
     -webkit-transform-origin: left top;
@@ -163,23 +163,23 @@
 }
 
 .orgchart tr.lines .topLine {
-    border-top: 2px solid #CBD5E0;
+    border-top: 2px solid #858484;
 }
 
 .orgchart tr.lines .rightLine {
-    border-right: 1px solid #CBD5E0;
+    border-right: 1px solid #858484;
     float: none;
     border-radius: 0;
 }
 
 .orgchart tr.lines .leftLine {
-    border-left: 1px solid #CBD5E0;
+    border-left: 1px solid #858484;
     float: none;
     border-radius: 0;
 }
 
 .orgchart tr.lines .downLine {
-    background-color: #CBD5E0;
+    background-color: #858484;
     margin: 0 auto;
     height: 20px;
     width: 2px;
@@ -513,7 +513,7 @@
     -ms-user-select: none;
     user-select: none;
     color: #2c3e50;
-    background-color: #5cb85c; 
+    background-color: #5cb85c;
     border: 1px solid transparent;
     border-color: #2c3e50;
     border-radius: 4px;
@@ -541,7 +541,7 @@
     -ms-user-select: none;
     user-select: none;
     color: #2c3e50;
-    background-color: #5cb85c; 
+    background-color: #5cb85c;
     border: 1px solid transparent;
     border-color: #2c3e50;
     border-radius: 4px;
@@ -551,14 +551,14 @@
 /* .oc-export-btn:hover,
 .oc-export-btn:focus,
 .oc-export-btn:active {
-        
+
     border-color: #73a2d0;
 }
 
 .oc-export-csv-btn:hover,
 .oc-export-csv-btn:focus,
 .oc-export-csv-btn:active {
-        
+
     border-color: #73a2d0;
 } */
 

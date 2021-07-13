@@ -10,7 +10,11 @@
     'locale' => 'es',
     'fallback_locale' => 'es',
     'faker_locale' => 'es_ES',
+<<<<<<< HEAD
+    'key' => 'base64:Jd07Te5+C3neVeu5bZeG8kFAyDsOFi2ANo7lU1FMwTI=',
+=======
     'key' => 'base64:Kk8icFF2U42btMFo3yheodL5MjA19vd+jmoMQxuXVe0=',
+>>>>>>> main
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -46,6 +50,7 @@
       29 => 'Barryvdh\\DomPDF\\ServiceProvider',
       30 => 'Intervention\\Image\\ImageServiceProvider',
       31 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+      32 => 'Spatie\\Geocoder\\GeocoderServiceProvider',
     ),
     'aliases' => 
     array (
@@ -89,6 +94,7 @@
       'PDF' => 'Barryvdh\\DomPDF\\Facade',
       'Image' => 'Intervention\\Image\\Facades\\Image',
       'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
+      'Geocoder' => 'Spatie\\Geocoder\\Facades\\Geocoder',
     ),
   ),
   'auth' => 
@@ -349,7 +355,10 @@
     'routePrefix' => 'file-manager',
     'diskList' => 
     array (
-      0 => 'Documentacion',
+      0 => 'Documentos publicados',
+      1 => 'Documentos en aprobación',
+      2 => 'Administrador',
+      3 => 'Normas',
     ),
     'leftDisk' => NULL,
     'rightDisk' => NULL,
@@ -405,10 +414,38 @@
         'url' => 'http://localhost/storage',
         'visibility' => 'private',
       ),
+      'Documentos publicados' => 
+      array (
+        'driver' => 'local',
+        'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public/Documentos publicados',
+        'url' => 'http://localhost/storage',
+        'visibility' => 'private',
+      ),
+      'Documentos en aprobación' => 
+      array (
+        'driver' => 'local',
+        'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public/Documentos en aprobacion',
+        'url' => 'http://localhost/storage',
+        'visibility' => 'private',
+      ),
       'Iso27001' => 
       array (
         'driver' => 'local',
         'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public/Normas/ISO27001',
+        'url' => 'http://localhost/storage',
+        'visibility' => 'private',
+      ),
+      'Normas' => 
+      array (
+        'driver' => 'local',
+        'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public/Normas/',
+        'url' => 'http://localhost/storage',
+        'visibility' => 'private',
+      ),
+      'Administrador' => 
+      array (
+        'driver' => 'local',
+        'root' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'private',
       ),
@@ -434,6 +471,14 @@
     array (
       'C:\\laragon\\www\\tabantaj\\public\\storage' => 'C:\\laragon\\www\\tabantaj\\storage\\app/public',
     ),
+  ),
+  'geocoder' => 
+  array (
+    'key' => '',
+    'language' => '',
+    'region' => '',
+    'bounds' => '',
+    'country' => '',
   ),
   'hashing' => 
   array (
@@ -792,7 +837,11 @@
     array (
       'font_dir' => 'C:\\laragon\\www\\tabantaj\\storage\\fonts/',
       'font_cache' => 'C:\\laragon\\www\\tabantaj\\storage\\fonts/',
+<<<<<<< HEAD
+      'temp_dir' => 'C:\\Users\\KAREN~1.ROD\\AppData\\Local\\Temp',
+=======
       'temp_dir' => 'C:\\Users\\PEDRO~1.GAR\\AppData\\Local\\Temp',
+>>>>>>> main
       'chroot' => 'C:\\laragon\\www\\tabantaj',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',

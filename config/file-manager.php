@@ -32,7 +32,7 @@ return [
      * (from config/filesystems)
      */
     //'diskList' => ['public'],
-    'diskList'  => ['Documentacion'],
+    'diskList'  => ['Documentos publicados', 'Documentos en aprobación', 'Administrador', 'Normas'],
 
     /**
      * Default disk for left manager
