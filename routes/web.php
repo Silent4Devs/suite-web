@@ -22,7 +22,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
     Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 
+
+
     Route::get('inicioUsuario', 'inicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('inicioUsuario/reportes/quejas', 'inicioUsuarioController@quejas')->name('reportes-quejas');
+    Route::get('inicioUsuario/reportes/denuncias', 'inicioUsuarioController@denuncias')->name('reportes-denuncias');
+    Route::get('inicioUsuario/reportes/mejoras', 'inicioUsuarioController@mejoras')->name('reportes-mejoras');
+    Route::get('inicioUsuario/reportes/sugerencias', 'inicioUsuarioController@sugerencias')->name('reportes-sugerencias');
+    Route::get('inicioUsuario/reportes/seguridad', 'inicioUsuarioController@seguridad')->name('reportes-seguridad');
+    Route::get('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@riesgos')->name('reportes-riesgos');
+
+
+
+
+    Route::view('desk', 'admin.desk.index')->name('desk.index');
+
 
 
     Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');

@@ -199,15 +199,31 @@
             border: none !important;
         }
 
-        .btn:hover.btn-success {
+        .btn.btn-success:hover {
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
             box-shadow: 0 0 0 1px #00abb2;
         }
 
-        .btn:hover.btn-success font {
+        .btn.btn-success:hover font {
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
+        }
+
+        .btn_cancelar {
+            width: 150px;
+            height: 35px;
+            background-color: #aaa !important;
+            color: #fff !important;
+            border-radius: 100px;
+            border: none !important;
+            transition: 0.2s;
+        }
+
+        .btn_cancelar:hover {
+            color: #888 !important;
+            background-color: rgba(0, 0, 0, 0) !important;
+            box-shadow: 0 0 0 1px #888;
         }
 
 
@@ -238,6 +254,13 @@
 
         .c-sidebar-backdrop {
             z-index: 9 !important;
+        }
+
+
+        img.rounded-circle {
+            border-radius: 0 !important;
+            clip-path: circle(18px at 50% 50%);
+            height: 37px;
         }
 
     </style>

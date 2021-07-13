@@ -16,8 +16,7 @@ class inicioUsuarioController extends Controller
     public function index()
     {
         $usuario = auth()->user();
-
-
+        $empleado_id = $usuario->empleado->id;
 
         $gantt_path = 'storage/gantt/';
 
@@ -25,13 +24,24 @@ class inicioUsuarioController extends Controller
 
         $path_gantt = end($version_gantt);
 
-        $file_gantt = json_decode(file_get_contents($path_gantt));
+        $file_gantt = json_decode(file_get_contents($path_gantt), true);
 
         // $actividades = collect($file_gantt->tasks)->filter(function($actividad){
         //     return count($actividad->assigs) == 0;
         // });
 
-        // dd($actividades);
+
+
+        $actividades = array_filter($file_gantt['tasks'], function($tarea)use($empleado_id){
+             $assigs = $tarea['assigs'];
+            foreach($assigs as $assig){
+                if ($assig['resourceId'] == $empleado_id) {
+                    return $tarea;
+                }
+            } 
+        }); 
+
+        
 
 
         $plan_base = PlanBaseActividade::get();
@@ -45,7 +55,7 @@ class inicioUsuarioController extends Controller
         
         
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'file_gantt', 'plan_base', 'auditorias_anual', 'recursos'));
+        return view('admin.inicioUsuario.index', compact('usuario', 'file_gantt', 'plan_base', 'auditorias_anual', 'recursos', 'actividades'));
     }
 
     public function create()
@@ -76,5 +86,41 @@ class inicioUsuarioController extends Controller
     public function destroy()
     {
 
+    }
+
+
+
+    public function optenerTareas($tarea){
+        $assigs = $tarea['assigs'];
+        foreach($assigs as $assig){
+            if ($assig == auth()->user()) {
+                return $tarea;
+            }
+        } 
+    }
+
+
+    public function quejas(){
+        return view('admin.inicioUsuario.formularios.quejas');
+    }
+
+    public function denuncias(){
+        return view('admin.inicioUsuario.formularios.denuncias');
+    }
+
+    public function mejoras(){
+        return view('admin.inicioUsuario.formularios.mejoras');
+    }
+
+    public function sugerencias(){
+        return view('admin.inicioUsuario.formularios.sugerencias');
+    }
+
+    public function seguridad(){
+        return view('admin.inicioUsuario.formularios.seguridad');
+    }
+
+    public function riesgos(){
+        return view('admin.inicioUsuario.formularios.riesgos');
     }
 }

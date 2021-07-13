@@ -186,6 +186,13 @@
                 <font class="letra_blanca"> Agenda </font>
             </a>
         </li>
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route("admin.desk.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/desk") || request()->is("admin/desk/*") ? "active" : "" }}">
+                <i class="iconos_menu letra_blanca fas fa-headset"></i>
+                <font class="letra_blanca"> Centro de atención
+ </font>
+            </a>
+        </li>
         @can('glosario_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.glosarios.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/glosarios") || request()->is("admin/glosarios/*") ? "active" : "" }}">
