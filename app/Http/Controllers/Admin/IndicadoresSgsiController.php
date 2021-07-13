@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyIndicadoresSgsiRequest;
-use App\Http\Requests\StoreIndicadoresSgsiRequest;
-use App\Http\Requests\UpdateIndicadoresSgsiRequest;
-use App\Models\IndicadoresSgsi;
+use Gate;
 use App\Models\Team;
 use App\Models\User;
-use Gate;
+use App\Models\Proceso;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Models\IndicadoresSgsi;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\StoreIndicadoresSgsiRequest;
+use App\Http\Requests\UpdateIndicadoresSgsiRequest;
+use App\Http\Requests\MassDestroyIndicadoresSgsiRequest;
 
 class IndicadoresSgsiController extends Controller
 {
@@ -21,7 +23,7 @@ class IndicadoresSgsiController extends Controller
         abort_if(Gate::denies('indicadores_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = IndicadoresSgsi::with(['responsable', 'team'])->select(sprintf('%s.*', (new IndicadoresSgsi)->table));
+            $query = IndicadoresSgsi::get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -45,69 +47,45 @@ class IndicadoresSgsiController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
-            $table->editColumn('control', function ($row) {
-                return $row->control ? $row->control : "";
+
+            $table->editColumn('nombre', function ($row) {
+                return $row->nombre ? $row->nombre : "";
             });
-            $table->editColumn('titulo', function ($row) {
-                return $row->titulo ? $row->titulo : "";
+
+            $table->editColumn('proceso', function ($row) {
+                return $row->proceso->nombre ? $row->proceso->nombre : "";
             });
-            $table->addColumn('responsable_name', function ($row) {
-                return $row->responsable ? $row->responsable->name : '';
+
+            $table->editColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : "";
             });
 
             $table->editColumn('formula', function ($row) {
                 return $row->formula ? $row->formula : "";
             });
-            $table->editColumn('frecuencia', function ($row) {
-                return $row->frecuencia ? IndicadoresSgsi::FRECUENCIA_SELECT[$row->frecuencia] : '';
-            });
+
             $table->editColumn('unidadmedida', function ($row) {
-                return $row->unidadmedida ? IndicadoresSgsi::UNIDADMEDIDA_SELECT[$row->unidadmedida] : '';
+                return $row->unidadmedida ? $row->unidadmedida : "";
             });
+
+            $table->editColumn('frecuencia', function ($row) {
+                return $row->formula ? $row->formula : "";
+            });
+
             $table->editColumn('meta', function ($row) {
                 return $row->meta ? $row->meta : "";
             });
-            $table->editColumn('semaforo', function ($row) {
-                return $row->semaforo ? IndicadoresSgsi::SEMAFORO_SELECT[$row->semaforo] : '';
+
+            $table->editColumn('revisiones', function ($row) {
+                return $row->no_revisiones ? $row->no_revisiones : "";
             });
-            $table->editColumn('enero', function ($row) {
-                return $row->enero ? $row->enero : "";
+
+            $table->editColumn('resultado', function ($row) {
+                return $row->resultado ? $row->resultado : "";
             });
-            $table->editColumn('febrero', function ($row) {
-                return $row->febrero ? $row->febrero : "";
-            });
-            $table->editColumn('marzo', function ($row) {
-                return $row->marzo ? $row->marzo : "";
-            });
-            $table->editColumn('abril', function ($row) {
-                return $row->abril ? $row->abril : "";
-            });
-            $table->editColumn('mayo', function ($row) {
-                return $row->mayo ? $row->mayo : "";
-            });
-            $table->editColumn('junio', function ($row) {
-                return $row->junio ? $row->junio : "";
-            });
-            $table->editColumn('julio', function ($row) {
-                return $row->julio ? $row->julio : "";
-            });
-            $table->editColumn('agosto', function ($row) {
-                return $row->agosto ? $row->agosto : "";
-            });
-            $table->editColumn('septiembre', function ($row) {
-                return $row->septiembre ? $row->septiembre : "";
-            });
-            $table->editColumn('octubre', function ($row) {
-                return $row->octubre ? $row->octubre : "";
-            });
-            $table->editColumn('noviembre', function ($row) {
-                return $row->noviembre ? $row->noviembre : "";
-            });
-            $table->editColumn('diciembre', function ($row) {
-                return $row->diciembre ? $row->diciembre : "";
-            });
-            $table->editColumn('anio', function ($row) {
-                return $row->anio ? $row->anio : "";
+
+            $table->editColumn('responsable', function ($row) {
+                return $row->id_empleado ? $row->id_empleado : "";
             });
 
             $table->rawColumns(['actions', 'placeholder', 'responsable']);
@@ -125,16 +103,18 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = Empleado::get();
+        $procesos = Proceso::get();
 
-        return view('admin.indicadoresSgsis.create', compact('responsables'));
+        return view('admin.indicadoresSgsis.create', compact('responsables', 'procesos'));
     }
 
-    public function store(StoreIndicadoresSgsiRequest $request)
+    public function store(Request $request)
     {
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
 
-        return redirect()->route('admin.indicadores-sgsis.index');
+        //return redirect()->route('admin.indicadores-sgsis.index');
+        return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id]);
     }
 
     public function edit(IndicadoresSgsi $indicadoresSgsi)
@@ -159,7 +139,7 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $indicadoresSgsi->load('responsable', 'team');
+
 
         return view('admin.indicadoresSgsis.show', compact('indicadoresSgsi'));
     }
@@ -178,5 +158,14 @@ class IndicadoresSgsiController extends Controller
         IndicadoresSgsi::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function IndicadorInsert(Request $request)
+    {
+        $id = $request->all();
+        $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
+
+        return view('admin.indicadoresSgsis.evaluacion')
+            ->with('indicadoresSgsis', $indicadoresSgsis);
     }
 }

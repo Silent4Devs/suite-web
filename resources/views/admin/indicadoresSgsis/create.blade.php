@@ -1,254 +1,252 @@
 @extends('layouts.admin')
 @section('content')
 
+    <style>
+        .dotverde {
+            height: 15px;
+            width: 15px;
+            background-color: green;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dotyellow {
+            height: 15px;
+            width: 15px;
+            background-color: yellow;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dotred {
+            height: 15px;
+            width: 15px;
+            background-color: red;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+    </style>
+
     {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong>Indicadores SGSI</h3>
-    </div>
+    <div class="card mt-4">
+        <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong>Indicadores SGSI</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label class="required" for="nombre"><i class="fas fa-building iconos-crear"></i>Nombre del
+                        indicador</label>
+                    <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
+                        id="nombre" value="{{ old('nombre', '') }}" required>
+                    @if ($errors->has('nombre'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('nombre') }}
+                        </div>
+                    @endif
+                    <span class="help-block"></span>
+                </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.indicadores-sgsis.store") }}" enctype="multipart/form-data" class="row">
-            @csrf
-            <div class="form-group col-md-6">
-                <label class="required" for="control"><i class="fas fa-sitemap iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.control') }}</label>
-                <input class="form-control {{ $errors->has('control') ? 'is-invalid' : '' }}" type="text" name="control" id="control" value="{{ old('control', '') }}" required>
-                @if($errors->has('control'))
+                <div class="form-group col-sm-6">
+                    <div class="form-group">
+                        <label for="id_proceso"><i class="fas fa-building iconos-crear"></i>Proceso</label>
+                        <select class="form-control select2 {{ $errors->has('id_proceso') ? 'is-invalid' : '' }}"
+                            name="id_proceso" id="id_proceso">
+                            <option value="">Seleccione un proceso</option>
+                            @foreach ($procesos as $proceso)
+                                <option value="{{ $proceso->id }}">
+                                    {{ $proceso->codigo }}/{{ $proceso->nombre }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('organizacion'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('organizacion') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descripcion"><i
+                        class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.sede.fields.descripcion') }}</label>
+                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
+                    id="descripcion">{{ old('descripcion') }}</textarea>
+                @if ($errors->has('descripcion'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('control') }}
+                        {{ $errors->first('descripcion') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.control_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.sede.fields.descripcion_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
-                <label for="titulo"><i class="fas fa-file-alt iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.titulo') }}</label>
-                <input class="form-control {{ $errors->has('titulo') ? 'is-invalid' : '' }}" type="text" name="titulo" id="titulo" value="{{ old('titulo', '') }}">
-                @if($errors->has('titulo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('titulo') }}
+            <p class="gray-text">Rangos</p>
+            <hr>
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <div class="form-group">
+                        <label class="required" for="rojo"><span class="dotred"></span> De 0 a <span
+                                id="textorojo"></span></label>
+                        <input class="form-control {{ $errors->has('rojo') ? 'is-invalid' : '' }}" type="number"
+                            name="rojo" id="rojo" value="{{ old('rojo', '') }}" min="0" required>
+                        @if ($errors->has('rojo'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('rojo') }}
+                            </div>
+                        @endif
+                        <span class="help-block"></span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.titulo_helper') }}</span>
-            </div>
-            <div class="form-group col-12">
-                <label for="responsable_id"><i class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.responsable') }}</label>
-                <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}" name="responsable_id" id="responsable_id">
-                    @foreach($responsables as $id => $responsable)
-                        <option value="{{ $id }}" {{ old('responsable_id') == $id ? 'selected' : '' }}>{{ $responsable }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('responsable'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('responsable') }}
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <div class="form-group">
+                        <label class="required" for="amarillo"><span class="dotyellow"></span> De <span
+                                id="textorojo2"></span> a <span id="textoamarillo"></span>:</label>
+                        <input class="form-control {{ $errors->has('amarillo') ? 'is-invalid' : '' }}" type="number"
+                            name="amarillo" id="amarillo" value="{{ old('amarillo', '') }}" min="" required>
+                        @if ($errors->has('amarillo'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('amarillo') }}
+                            </div>
+                        @endif
+                        <span class="help-block"></span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.responsable_helper') }}</span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label class="required" for="verde">
+                        <span class="dotverde"></span>
+                        De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
+                    <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
+                        name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min="" required>
+                    @if ($errors->has('verde'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('verde') }}
+                        </div>
+                    @endif
+                    <span class="help-block"></span>
+                </div>
             </div>
-            <div class="form-group col-12">
-                <label for="formula"><i class="fas fa-square-root-alt iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.formula') }}</label>
-                <textarea class="form-control {{ $errors->has('formula') ? 'is-invalid' : '' }}" name="formula" id="formula">{{ old('formula') }}</textarea>
-                @if($errors->has('formula'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('formula') }}
+
+            <div class="row">
+                <div class="form-group col-sm-3">
+                    <label class="required" for="unidad"><i class="fas fa-building iconos-crear"></i>Unidad</label>
+                    <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" type="text"
+                        name="unidadmedida" id="unidadmedida" value="{{ old('unidadmedida', '') }}" required>
+                    @if ($errors->has('unidadmedida'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('unidadmedida') }}
+                        </div>
+                    @endif
+                    <span class="help-block"></span>
+                </div>
+
+                <div class="form-group col-sm-3">
+                    <div class="form-group">
+                        <label class="required" for="meta"><i class="fas fa-building iconos-crear"></i>Meta</label>
+                        <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" type="text"
+                            name="meta" id="meta" value="{{ old('meta', '') }}" required>
+                        @if ($errors->has('meta'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('meta') }}
+                            </div>
+                        @endif
+                        <span class="help-block"></span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.formula_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label><i class="far fa-calendar-minus iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.frecuencia') }}</label>
-                <select class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}" name="frecuencia" id="frecuencia">
-                    <option value disabled {{ old('frecuencia', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\IndicadoresSgsi::FRECUENCIA_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('frecuencia', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('frecuencia'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('frecuencia') }}
+                </div>
+
+                <div class="form-group col-sm-3">
+                    <div class="form-group">
+                        <label class="required" for="frecuencia"><i
+                                class="fas fa-building iconos-crear"></i>Frecuencia</label>
+                        <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}" type="text"
+                            name="frecuencia" id="frecuencia" value="{{ old('frecuencia', '') }}" required>
+                        @if ($errors->has('frecuencia'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('frecuencia') }}
+                            </div>
+                        @endif
+                        <span class="help-block"></span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.frecuencia_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label><i class="fas fa-ruler-combined iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.unidadmedida') }}</label>
-                <select class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" name="unidadmedida" id="unidadmedida">
-                    <option value disabled {{ old('unidadmedida', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\IndicadoresSgsi::UNIDADMEDIDA_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('unidadmedida', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('unidadmedida'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('unidadmedida') }}
+                </div>
+
+                <div class="form-group col-sm-3">
+                    <div class="form-group">
+                        <label class="required" for="no_revisiones"><i
+                                class="fas fa-building iconos-crear"></i>Revisiones</label>
+                        <input class="form-control {{ $errors->has('no_revisiones') ? 'is-invalid' : '' }}" type="number"
+                            name="no_revisiones" id="no_revisiones" min="0" value="{{ old('no_revisiones', '') }}"
+                            required>
+                        @if ($errors->has('no_revisiones'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('no_revisiones') }}
+                            </div>
+                        @endif
+                        <span class="help-block"></span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.unidadmedida_helper') }}</span>
+                    <h5 id=""></h5>
+                </div>
+
             </div>
-            <div class="form-group col-12">
-                <label for="meta"><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.meta') }}</label>
-                <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" type="text" name="meta" id="meta" value="{{ old('meta', '') }}">
-                @if($errors->has('meta'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('meta') }}
+
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <div class="form-group">
+                        <label for='id_empleado'><i class="fas fa-building iconos-crear"></i>Responsable</label>
+                        <select class="form-control select2 {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
+                            name='id_empleado' id='id_empleado'>
+                            <option value="">Seleccione un responsable</option>
+                            @foreach ($responsables as $responsable)
+                                <option value="{{ $responsable->id }}">
+                                    {{ $responsable->name }} </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('id_empleado'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('id_empleado') }}
+                            </div>
+                        @endif
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.meta_helper') }}</span>
+                </div>
             </div>
-            <div class="form-group col-12">
-                <label><i class="fas fa-traffic-light iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.semaforo') }}</label>
-                <select class="form-control {{ $errors->has('semaforo') ? 'is-invalid' : '' }}" name="semaforo" id="semaforo">
-                    <option value disabled {{ old('semaforo', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\IndicadoresSgsi::SEMAFORO_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('semaforo', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('semaforo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('semaforo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.semaforo_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="enero"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.enero') }}</label>
-                <input class="form-control {{ $errors->has('enero') ? 'is-invalid' : '' }}" type="number" name="enero" id="enero" value="{{ old('enero', '') }}" step="0.01" max="100">
-                @if($errors->has('enero'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('enero') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.enero_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="febrero"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.febrero') }}</label>
-                <input class="form-control {{ $errors->has('febrero') ? 'is-invalid' : '' }}" type="number" name="febrero" id="febrero" value="{{ old('febrero', '') }}" step="0.01" max="100">
-                @if($errors->has('febrero'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('febrero') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.febrero_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="marzo"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.marzo') }}</label>
-                <input class="form-control {{ $errors->has('marzo') ? 'is-invalid' : '' }}" type="number" name="marzo" id="marzo" value="{{ old('marzo', '') }}" step="0.01" max="100">
-                @if($errors->has('marzo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('marzo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.marzo_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="abril"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.abril') }}</label>
-                <input class="form-control {{ $errors->has('abril') ? 'is-invalid' : '' }}" type="number" name="abril" id="abril" value="{{ old('abril', '') }}" step="0.01" max="100">
-                @if($errors->has('abril'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('abril') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.abril_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="mayo"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.mayo') }}</label>
-                <input class="form-control {{ $errors->has('mayo') ? 'is-invalid' : '' }}" type="number" name="mayo" id="mayo" value="{{ old('mayo', '') }}" step="0.01" max="100">
-                @if($errors->has('mayo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('mayo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.mayo_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="junio"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.junio') }}</label>
-                <input class="form-control {{ $errors->has('junio') ? 'is-invalid' : '' }}" type="number" name="junio" id="junio" value="{{ old('junio', '') }}" step="0.01" max="100">
-                @if($errors->has('junio'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('junio') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.junio_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="julio"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.julio') }}</label>
-                <input class="form-control {{ $errors->has('julio') ? 'is-invalid' : '' }}" type="number" name="julio" id="julio" value="{{ old('julio', '') }}" step="0.01" max="100">
-                @if($errors->has('julio'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('julio') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.julio_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="agosto"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.agosto') }}</label>
-                <input class="form-control {{ $errors->has('agosto') ? 'is-invalid' : '' }}" type="number" name="agosto" id="agosto" value="{{ old('agosto', '') }}" step="0.01" max="100">
-                @if($errors->has('agosto'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('agosto') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.agosto_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="septiembre"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.septiembre') }}</label>
-                <input class="form-control {{ $errors->has('septiembre') ? 'is-invalid' : '' }}" type="number" name="septiembre" id="septiembre" value="{{ old('septiembre', '') }}" step="0.01" max="100">
-                @if($errors->has('septiembre'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('septiembre') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.septiembre_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="octubre"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.octubre') }}</label>
-                <input class="form-control {{ $errors->has('octubre') ? 'is-invalid' : '' }}" type="number" name="octubre" id="octubre" value="{{ old('octubre', '') }}" step="0.01" max="100">
-                @if($errors->has('octubre'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('octubre') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.octubre_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="noviembre"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.noviembre') }}</label>
-                <input class="form-control {{ $errors->has('noviembre') ? 'is-invalid' : '' }}" type="number" name="noviembre" id="noviembre" value="{{ old('noviembre', '') }}" step="0.01" max="100">
-                @if($errors->has('noviembre'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('noviembre') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.noviembre_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="diciembre"><i class="fas fa-calendar-week iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.diciembre') }}</label>
-                <input class="form-control {{ $errors->has('diciembre') ? 'is-invalid' : '' }}" type="number" name="diciembre" id="diciembre" value="{{ old('diciembre', '') }}" step="0.01" max="100">
-                @if($errors->has('diciembre'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('diciembre') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.diciembre_helper') }}</span>
-            </div>
-            <div class="form-group col-12">
-                <label for="anio"><i class="fas fa-calendar iconos-crear"></i>{{ trans('cruds.indicadoresSgsi.fields.anio') }}</label>
-                <input class="form-control {{ $errors->has('anio') ? 'is-invalid' : '' }}" type="text" name="anio" id="anio" value="{{ old('anio', '') }}">
-                @if($errors->has('anio'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('anio') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.indicadoresSgsi.fields.anio_helper') }}</span>
-            </div>
-            <div class="form-group col-12 text-right">
-                <button class="btn btn-danger" type="submit">
+
+
+        </div>
+
+        <div class="form-group">
+            <div class="text-center form-group col-12" style="margin-left:15px;">
+                <button class="btn btn-info" type="submit">
                     {{ trans('global.save') }}
                 </button>
             </div>
+        </div>
         </form>
     </div>
-</div>
 
+    <script>
+        var n = document.getElementById("rojo");
+        var m = document.getElementById("amarillo");
+        var o = document.getElementById("verde");
 
+        n.addEventListener("keyup", function(e) {
+            rojo = document.getElementById("rojo").value;
+            document.getElementById("textorojo").innerHTML = rojo
+            document.getElementById("textorojo2").innerHTML = parseInt(rojo) + 1
+            document.getElementById("amarillo").min = parseInt(rojo) + 1;
+        });
+
+        m.addEventListener("keyup", function(e) {
+            amarillo = document.getElementById("amarillo").value;
+            document.getElementById("textoamarillo").innerHTML = amarillo
+            document.getElementById("textoamarillo2").innerHTML = parseInt(amarillo) + 1
+        });
+
+        o.addEventListener("keyup", function(e) {
+            verde = document.getElementById("verde").value;
+            document.getElementById("textoverde").innerHTML = verde
+            document.getElementById("verde").min = parseInt(amarillo) + 1;
+        });
+    </script>
 
 @endsection
