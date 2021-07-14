@@ -59,16 +59,13 @@ class Empleado extends Model
         return $this->belongsTo(Sede::class, 'sede_id', 'id');
     }
 
-    // public static function getAllEmpleados($empleado, $empleados = null)
-    // {
-    //     if ($empleados == null) {
-    //         $empleados = collect();
-    //     }
-    //     $empleados = $empleados->merge($empleado->supervisor);
-    //     foreach ($empleado->children as $child) {
-    //         $empleados = self::getAllEmpleados($child, $empleados);
-    //     }
+    public function documentos()
+    {
+        return $this->hasMany(Documento::class);
+    }
 
-    //     return $empleados;
-    // }
+    public function archivos()
+    {
+        return $this->hasMany(Documento::class);
+    }
 }
