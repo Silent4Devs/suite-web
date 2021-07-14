@@ -147,17 +147,19 @@ class OrganizacionController extends Controller
 
 
             $image = 'silent4business.png';
+
             if ($request->file('logotipo') != null or !empty($request->file('logotipo'))) {
                 $extension = pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_EXTENSION);
                 $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
                 $new_name_image = 'UID_' . $organizacions->id . '_' . $name_image . '.' . $extension;
-                $route = storage_path() . 'public/images' . $new_name_image;
+                $route = public_path() . '/images/' . $new_name_image;
                 $image = $new_name_image;
                 //Usamos image_intervention para disminuir el peso de la imagen
                 $img_intervention = Image::make($request->file('logotipo'));
                 $img_intervention->resize(256, null, function ($constraint) {
                     $constraint->aspectRatio();
                 })->save($route);
+
             }
 
 
@@ -199,7 +201,7 @@ class OrganizacionController extends Controller
             //$dataImg = $file->get();
             $nombre = $file->getClientOriginalName();
             //\Storage::disk('local')->put($nombre,  \File::get($file));
-            $file->move(base_path('public/images'), $file->getClientOriginalName());
+            $file->move(base_path('/public/images/'), $file->getClientOriginalName());
             $organizacions = Organizacion::find(request()->org_id);
             //\Storage::delete($organizacions->logotipo);
             $organizacions->logotipo = $nombre;

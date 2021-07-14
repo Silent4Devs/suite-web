@@ -58,12 +58,14 @@ class AreasController extends Controller
                 return $row->grupo ? $row->grupo->nombre : "";
             });
 
-            $table->editColumn(
-                'reporta',
-                function ($row) {
-                    return $row->areas->get(0) ? $row->areas->get(0)['area'] : "";
-                }
-            );
+                $table->editColumn(
+                    'reporta',
+                    function ($row) {
+                        return $row->supervisor ? $row->supervisor->area : "";
+                    }
+
+
+                );
 
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
@@ -124,24 +126,50 @@ class AreasController extends Controller
     {
         abort_if(Gate::denies('area_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $grupoarea = Grupo::get();
+        $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-        $area->load('team', 'grupo');
+        $areas = Area::with('areas')->get();
 
-        return view('admin.areas.edit', compact('area'))->with('grupoareas', $grupoarea, 'direcciones_exists', $direccion_exists);
+
+        return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area'));
     }
 
     public function update(UpdateAreaRequest $request, Area $area)
     {
+        $primer_nodo = Area::select('id','id_reporta')->whereNull('id_reporta')->first();
 
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $validateReporta = 'nullable|exists:areas,id';
+
+
         if ($direccion_exists) {
-            $validateReporta = 'required|exists:areas,id';
+            if ($primer_nodo->id == intval($area->id)) {
+                $validateReporta = 'nullable|exists:areas,id';
+            } else {
+                $validateReporta = 'required|exists:areas,id';
+            }
         }
 
-        $area->update($request->all());
+        $request->validate([
+            'area' => 'required|string',
+            'id_grupo' => 'required|exists:grupos,id',
+            'id_reporta' => $validateReporta,
+            'descripcion' => 'required|string',
 
+        ]);
+
+        $area->update([
+
+            'area' => $request->area,
+            "id_grupo" =>  $request->id_grupo,
+            "id_reporta" =>  $request->id_reporta,
+            "descripcion" =>  $request->descripcion,
+
+        ]);
+
+
+
+        // $area->update($request->all());
 
         return redirect()->route('admin.areas.index')->with("success",'Editado con éxito');
     }
@@ -185,8 +213,10 @@ class AreasController extends Controller
 
     public function renderJerarquia(Request $request)
     {
+
         $numero_grupos=Grupo::count();
         $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+        // dd($areasTree);
         if ($request->ajax()) {
             // La construccion del arbol necesita un primer nodo (NULL)
             $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading

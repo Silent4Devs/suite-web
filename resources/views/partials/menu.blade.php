@@ -80,6 +80,12 @@
                         <font class="letra_blanca"> Organigrama </font>
                     </a>
                 </li>
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("admin.procesos.mapa") }}" class="c-sidebar-nav-link {{ request()->is("admin/procesos/mapa_procesos") || request()->is("admin/procesos/mapa-procesos") ? "c-active" : "" }}">
+                        <i class="fas fa-th iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca"> Mapa de procesos </font>
+                    </a>
+                </li>
                 </ul>
             </li>
         @endcan
@@ -772,19 +778,53 @@
                       </a>
                   </li>
                 @endcan
-                @can('area_access')
-                <li class="c-sidebar-nav-item">
-                    <a href="{{ route("admin.grupoarea.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
-                        {{--<i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
-                        </i>--}}
-                        <i class="fab fa-adn iconos_menu letra_blanca">
+                <li class="c-sidebar-nav-dropdown">
+
+                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                        <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
                         </i>
-                        <font class="letra_blanca"> {{ trans('cruds.area.title') }} </font>
+
+                        <font class="letra_blanca "> Áreas </font>
                     </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+
+                        @can('area_access')
+
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.areas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/areas") || request()->is("admin/areas/*") ? "active" : "" }}">
+                                {{--<i class="fas fa-puzzle-piece iconos_menu letra_blanca">
+
+                                </i>--}}
+                                &nbsp;&nbsp;&nbsp;
+
+                                <i class="fab fa-adn iconos_menu letra_blanca">
+
+                                </i>
+                                <font class="letra_blanca"> Crear Áreas </font>
+                            </a>
+                        </li>
+                        @endcan
+
+                        <li class="c-sidebar-nav-item">
+
+                            <a href="{{ route("admin.grupoarea.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/grupoarea") || request()->is("admin/grupoarea/*") ? "active" : "" }}">
+                                {{--<i class="fas fa-puzzle-piece iconos_menu letra_blanca">
+
+                                </i>--}}
+                                &nbsp;&nbsp;&nbsp;
+                                <i class="fas fa-cubes iconos_menu letra_blanca">
+
+                                </i>
+
+                                <font class="letra_blanca"> Grupo Áreas </font>
+                            </a>
+                        </li>
+
+
+                    </ul>
                 </li>
-                 @endcan
                   @can('user_access')
                   <li class="c-sidebar-nav-item">
                       <a href="{{ route("admin.empleados.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/empleados") || request()->is("admin/empleados/*") ? "active" : "" }}">

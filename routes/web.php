@@ -62,10 +62,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('roles', 'RolesController');
 
     //procesos
+
+    Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
+
     Route::resource('procesos', 'ProcesoController');
+
+    Route::get('vistas', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
+
+
+
+
+
 
     //macroprocesos
     Route::resource('macroprocesos', 'MacroprocesoController');
+
+
+
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
@@ -108,7 +121,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
 
     // Entendimiento Organizacions
-    Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController', ['except' => ['show', 'destroy']]);
+    Route::delete('entendimiento-organizacions/destroy', 'EntendimientoOrganizacionController@massDestroy')->name('entendimiento-organizacions.massDestroy');
+    Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController');
+    Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
+    Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
 
     // Partes Interesadas
     Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
