@@ -167,8 +167,24 @@ class ProcesoController extends Controller
         $macros_mapa = Macroproceso::get();
         $procesos_mapa = Proceso::get();
 
-        
+
 
         return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa'));
     }
+
+    public function obtenerDocumentoProcesos (){
+
+        $grupos_mapa = Grupo::with(['macroprocesos'=>function($q){
+            $q->with('procesos');
+        }])->get();
+        $macros_mapa = Macroproceso::get();
+        $procesos_mapa = Proceso::get();
+
+
+
+        return view('admin.procesos.vistas', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa'));
+
+    }
+
+
 }

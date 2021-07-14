@@ -64,12 +64,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('procesos', 'ProcesoController');
 
+    Route::get('vistas', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
+
+
 
 
 
 
     //macroprocesos
     Route::resource('macroprocesos', 'MacroprocesoController');
+
 
 
 

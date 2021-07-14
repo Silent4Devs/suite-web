@@ -156,4 +156,6 @@ class MacroprocesoController extends Controller
         Flash::success('<h5 class="text-center">Macroproceso eliminado satisfactoriamente</h5>');
         return redirect()->route('admin.macroprocesos.index');
     }
+
+
 }
