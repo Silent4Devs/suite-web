@@ -1314,6 +1314,10 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 326,
                 'title' => 'grupoarea_access',
             ],
+            [
+                'id'    => 327,
+                'title' => 'entendimiento_organizacion_show',
+            ],
 
         ];
 

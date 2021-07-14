@@ -64,7 +64,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('procesos', 'ProcesoController');
 
-    
+
 
 
 
@@ -114,7 +114,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
 
     // Entendimiento Organizacions
-    Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController', ['except' => ['show', 'destroy']]);
+    Route::delete('entendimiento-organizacions/destroy', 'EntendimientoOrganizacionController@massDestroy')->name('entendimiento-organizacions.massDestroy');
+    Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController');
+    Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
+    Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
 
     // Partes Interesadas
     Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');

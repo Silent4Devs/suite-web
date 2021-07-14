@@ -25,8 +25,8 @@
                 </div>
 
                 <div class="form-group col-4">
-                    <label for="color"><i class="fas fa-palette iconos-crear"></i>Seleccionar color del grupo</label>
-                    <input class="col-2 form-control {{ $errors->has('color') ? 'is-invalid' : '' }}" type="color" name="color" id="color" value="{{ old('color', $grupoarea->color) }}">
+                    <label for="color"><i class="fas fa-palette iconos-crear"></i>Color</label>
+                    <input class="col-3 form-control {{ $errors->has('color') ? 'is-invalid' : '' }}" type="color" name="color" id="color" value="{{ old('color', $grupoarea->color) }}">
                     @if($errors->has('color'))
                         <div class="invalid-feedback">
                             {{ $errors->first('color') }}
