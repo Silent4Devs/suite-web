@@ -13,6 +13,19 @@ class EntendimientoOrganizacion extends Model
 
     protected $table = "entendimiento_organizacions";
     protected $fillable = [
-        'fortalezas', 'oportunidades', 'debilidades', 'amenazas'
+        'fortalezas',
+        'oportunidades',
+        'debilidades',
+        'amenazas',
+        'analisis',
+        'fecha',
+        'id_elabora',
+
     ];
+
+    public function empleado()
+	{
+        return $this->belongsTo(Empleado::class, 'id_elabora', 'id');
+
+	}
 }

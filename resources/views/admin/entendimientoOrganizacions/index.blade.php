@@ -1,204 +1,218 @@
 @extends('layouts.admin')
 @section('content')
-    
-    {{ Breadcrumbs::render('admin.entendimiento-organizacions.index') }}
-    
-    <div class="mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Entendimiento de Organización (FODA)</strong></h3>
-        </div>
-        <div class="card-body">
-            @if (session('success'))
-                <div class="mb-3 row">
-                    <div class="col-12">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Bien hecho!</strong> {{ session('success') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            @endif
-            <div class="row">
-                <div class="p-0 col-sm-1 col-md-1 d-flex align-items-center" style="transform: rotate(-90deg)">
-                    <strong>INTERNAS</strong>
-                </div>
-                <div class="p-0 text-center col-md-5 col-12 col-sm-5"
-                    style="border-right: dashed 1px gray; border-bottom: dashed 1px gray; min-height: 150px">
-                    <h5><i class="mr-2 fas fa-thumbs-up" style="color: #3f5cc7; text-shadow: 1px 1px 1px black;"></i>
-                        <strong>FORTALEZAS</strong>
-                        <button class="mr-2 btn btn-xs" type="button" data-toggle="modal" data-target="#fortalezas_modal"
-                            style="float: right;">
-                            <i class="fas fa-question-circle" style="font-size: 13px"></i>
-                        </button>
-                    </h5>
-                    <div style="text-align: left" class="px-3">
-                        @if ($obtener_FODA)
-                            {!! $obtener_FODA->fortalezas !!}
-                        @else
-                            Sin analizar
-                        @endif
-                    </div>
-                </div>
-                <div class="p-0 text-center col-md-5 col-12 col-sm-5"
-                    style=" border-bottom: dashed 1px gray;min-height: 150px">
-                    <h5><i class="mr-2 fas fa-thumbs-down" style="color: #e3ff73; text-shadow: 1px 1px 1px black;"></i>
-                        <strong>
-                            DEBILIDADES
-                        </strong>
-                        <button class="mr-2 btn btn-xs" type="button" data-toggle="modal" data-target="#debilidades_modal"
-                            style="float: right;">
-                            <i class="fas fa-question-circle" style="font-size: 13px"></i>
-                        </button>
-                    </h5>
-                    <div style="text-align: left" class="px-3">
-                        @if ($obtener_FODA)
-                            {!! $obtener_FODA->debilidades !!}
-                        @else
-                            Sin analizar
-                        @endif
-                    </div>
-                </div>
+    @can('entendimiento_organizacion_create')
+        <div class="mt-5 card">
+            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+                <h3 class="mb-2 text-center text-white"><strong>Entendimiento de la organización</strong></h3>
             </div>
-            <div class="row">
-                <div class="p-0 col-sm-1 col-md-1 d-flex align-items-center" style="transform: rotate(-90deg)">
-                    <strong>EXTERNAS</strong>
-                </div>
-                <div class="p-0 text-center col-md-5 col-12 col-sm-5"
-                    style="border-right: dashed 1px gray; min-height: 150px">
-                    <h5 class="mt-3"><i class="mr-2 fas fa-lightbulb"
-                            style="color: #41c541; text-shadow: 1px 1px 1px black;"></i>
-                        <strong>OPORTUNIDADES</strong>
-                        <button class="mr-2 btn btn-xs" type="button" data-toggle="modal" data-target="#oportunidades_modal"
-                            style="float: right;">
-                            <i class="fas fa-question-circle" style="font-size: 13px"></i>
-                        </button>
-                    </h5>
-                    <div style="text-align: left" class="px-3">
-                        @if ($obtener_FODA)
-                            {!! $obtener_FODA->oportunidades !!}
-                        @else
-                            Sin analizar
-                        @endif
-                    </div>
-                </div>
-                <div class="p-0 text-center col-md-5 col-12 col-sm-5" style="min-height: 150px">
-                    <h5 class="mt-3"> <i class="mr-2 fas fa-bomb"
-                            style="color: #dd2e2e; text-shadow: 1px 1px 1px black;"></i>
-                        <strong>AMENAZAS</strong>
-                        <button class="mr-2 btn btn-xs" type="button" data-toggle="modal" data-target="#amenazas_modal"
-                            style="float: right;">
-                            <i class="fas fa-question-circle" style="font-size: 13px"></i>
-                        </button>
-                    </h5>
-                    <div style="text-align: left" class="px-3">
-                        @if ($obtener_FODA)
-                            {!! $obtener_FODA->amenazas !!}
-                        @else
-                            Sin analizar
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-end">
-                @if ($obtener_FODA)
-                    <a href="{{ route('admin.entendimiento-organizacions.edit', $obtener_FODA->id) }}"
-                        class="mr-5 btn btn-primary"><i class="fas fa-pen"></i> Editar Análisis FODA</a>
-                @else
+        @endcan
+        <div class="card-body datatable-fix">
+            <table class="table table-bordered w-100 datatable-EntendimientoOrganizacion">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                           ID
+                         </th>
+                        <th>
+                           Nombre del análisis
+                        </th>
+                        <th>
+                           Fecha Creación
+                        </th>
+                        <th>
+                            Elaboró
+                        </th>
 
-                    <a href="{{ route('admin.entendimiento-organizacions.create') }}" class="mr-5 btn btn-success"><i
-                            class="fas fa-pen"></i> Realizar Análisis FODA</a>
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+                    {{-- <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                    </tr> --}}
+                </thead>
+            </table>
+        </div>
+    </div>
+@endsection
+@section('scripts')
+    @parent
+    <script>
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Entendimiento a la Organizacion ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Entendimiento a la Organizacion ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Entendimiento a la Organizacion ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'portrait',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [5, 20, 5, 20];
+                        // doc.styles.tableHeader.fontSize = 6.5;
+                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Entendimiento a la Organizacion ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
 
-                @endif
-            </div>
-        </div>
-    </div>
+            ];
+            @can('entendimiento_organizacion_create')
+                let btnAgregar = {
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                titleAttr: 'Agregar enlace a ejecutar',
+                url: "{{ route('admin.entendimiento-organizacions.create') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config){
+                let {url} = config;
+                window.location.href = url;
+                }
+                };
+                dtButtons.push(btnAgregar);
 
+            @endcan
+            @can('entendimiento_organizacion_delete')
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+                let deleteButton = {
+                text: deleteButtonTrans,
+                url: "{{ route('admin.entendimiento-organizacions.massDestroy') }}",
+                className: 'btn-danger',
+                action: function (e, dt, node, config) {
+                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+                return entry.id
+                });
 
-    <!-- Modal -->
-    <div class="modal fade" id="fortalezas_modal" tabindex="-1" aria-labelledby="fortalezas_modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="fortalezas_modalLabel">
-                        <i class="mr-3 fas fa-thumbs-up" style="color: #3f5cc7; text-shadow: 1px 1px 1px black;"></i>
-                        <strong>FORTALEZAS</strong>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Debemos añadir los atributos o puntos positivos que nos pueden servir para alcanzar nuestros objetivos.
-                    Están relacionados tanto a los recursos materiales y su condición de uso como a los recursos humanos y
-                    su nivel de capacitación para generar los mejores resultados.
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="oportunidades_modal" tabindex="-1" aria-labelledby="oportunidades_modalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="oportunidades_modalLabel">
-                        <i class="mr-3 fas fa-lightbulb" style="color: #41c541; text-shadow: 1px 1px 1px black;"></i>
-                        <strong>OPORTUNIDADES</strong>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    En este cuadrante debemos de añadir lo que es perjudicial o los factores que pueden ser desfavorables
-                    para nuestro objetivo. Son factores internos, por lo que la opinión del personal juega un papel
-                    fundamental, y como es algo que se refleja al exterior, también cuenta la opinión de los clientes.
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="debilidades_modal" tabindex="-1" aria-labelledby="debilidades_modalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="debilidades_modalLabel">
-                        <i class="mr-3 fas fa-thumbs-down" style="color: #e3ff73; text-shadow: 1px 1px 1px black;"></i>
-                        <strong>
-                            DEBILIDADES
-                        </strong>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Aquí debemos tener en cuenta las condiciones externas, revisando la industria y otros factores como las
-                    regulaciones que pueden afectar de forma positiva a nuestro objetivo. Son aspectos que, aunque no
-                    podemos controlar, sí podemos aprovechar para mejorar o hacer crecer nuestra empresa.
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="amenazas_modal" tabindex="-1" aria-labelledby="amenazas_modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="amenazas_modalLabel">
-                        <i class="mr-3 fas fa-bomb" style="color: #dd2e2e; text-shadow: 1px 1px 1px black;"></i>
-                        <strong>AMENAZAS</strong>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Añadiremos lo perjudicial, todo lo que puede amenazar nuestra supervivencia y la potencial ganancia de
-                    resultados de forma externa. Estos aspectos no lo podemos controlar, pero sí podemos contraatacar para
-                    enfrentarlos.
-                </div>
-            </div>
-        </div>
-    </div>
+                if (ids.length === 0) {
+                alert('{{ trans('global.datatables.zero_selected') }}')
+
+                return
+                }
+
+                if (confirm('{{ trans('global.areYouSure') }}')) {
+                $.ajax({
+                headers: {'x-csrf-token': _token},
+                method: 'POST',
+                url: config.url,
+                data: { ids: ids, _method: 'DELETE' }})
+                .done(function () { location.reload() })
+                }
+                }
+                }
+                //dtButtons.push(deleteButton)
+            @endcan
+
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                ajax: "{{ route('admin.entendimiento-organizacions.index') }}",
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'analisis',
+                        name: 'analisis'
+                    },
+                    {
+                        data: 'fecha',
+                        name: 'fecha'
+                    },
+                    {
+                        data: 'elabora',
+                        name: 'elabora'
+                    },
+                    {
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}'
+                    }
+                ],
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ],
+            };
+
+            let table = $('.datatable-EntendimientoOrganizacion').DataTable(dtOverrideGlobals);
+            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+            //     $($.fn.dataTable.tables(true)).DataTable()
+            //         .columns.adjust();
+            // });
+            // $('.datatable thead').on('input', '.search', function() {
+            //     let strict = $(this).attr('strict') || false
+            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
+            //     table
+            //         .column($(this).parent().index())
+            //         .search(value, strict)
+            //         .draw()
+            // });
+        });
+
+    </script>
 @endsection
