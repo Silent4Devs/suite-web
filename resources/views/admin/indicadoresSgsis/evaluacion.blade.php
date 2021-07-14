@@ -35,7 +35,8 @@
             <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong>Evaluaciones Indicadores SGSI</h3>
         </div>
         <div class="card-body">
-            @livewire('indicadores-sgsi-component')
+
+            @livewire('indicadores-sgsi-component', ['indicadoresSgsis' => $indicadoresSgsis])
         </div>
     </div>
 

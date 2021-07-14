@@ -165,6 +165,7 @@ class IndicadoresSgsiController extends Controller
         $id = $request->all();
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
+
         return view('admin.indicadoresSgsis.evaluacion')
             ->with('indicadoresSgsis', $indicadoresSgsis);
     }
