@@ -8,6 +8,9 @@ use App\Http\Livewire\NotificacionesComponent;
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
+Route::post('/revisiones/approve', 'RevisionDocumentoController@approve')->name('revisiones.approve');
+Route::post('/revisiones/reject', 'RevisionDocumentoController@reject')->name('revisiones.reject');
+Route::get('/revisiones/{revisionDocumento}', 'RevisionDocumentoController@edit')->name('revisiones.revisar');
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
@@ -411,6 +414,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Gap Tres
     Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
     Route::resource('gap-tres', 'GapTresController');
+
+    //Documentos
+    Route::patch('documentos/{documento}/update-when-publish', 'DocumentosController@updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
+    Route::post('documentos/store-when-publish', 'DocumentosController@storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
+    Route::post('documentos/publish', 'DocumentosController@publish')->name('documentos.publish');
+    Route::post('documentos/check-code', 'DocumentosController@checkCode')->name('documentos.checkCode');
+    Route::get('documentos/{documento}/history-reviews', 'DocumentosController@renderHistoryReview')->name('documentos.renderHistoryReview');
+    Route::resource('documentos', 'DocumentosController');
 
     // Control Documentos
     Route::delete('control-documentos/destroy', 'ControlDocumentosController@massDestroy')->name('control-documentos.massDestroy');
