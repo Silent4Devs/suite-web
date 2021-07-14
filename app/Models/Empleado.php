@@ -117,6 +117,10 @@ class Empleado extends Model
     {
         return $this->hasMany(Empleado::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
+    public function fodas()
+    {
+		return $this->hasMany(EntendimientoOrganizacion::class,'id_elabora','id');
+    }
 
      // public static function getAllEmpleados($empleado, $empleados = null)
     // {

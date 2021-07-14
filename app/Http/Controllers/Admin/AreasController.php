@@ -58,14 +58,14 @@ class AreasController extends Controller
                 return $row->grupo ? $row->grupo->nombre : "";
             });
 
-            $table->editColumn(
-                'reporta',
-                function ($row) {
-                    return $row->supervisor ? $row->supervisor->area : "";
-                }
+                $table->editColumn(
+                    'reporta',
+                    function ($row) {
+                        return $row->supervisor ? $row->supervisor->area : "";
+                    }
 
 
-            );
+                );
 
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";

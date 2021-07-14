@@ -9,26 +9,20 @@
         </div>
 
         <div class="card-body">
-            <form method="POST"
-                action="{{ route('admin.entendimiento-organizacions.update', $entendimientoOrganizacion) }}" class="row">
+            <form method="POST" action="{{ route('admin.entendimiento-organizacions.store') }}" class="row">
                 @csrf
-                @method('PATCH')
                 @include('admin.entendimientoOrganizacions._form', [
-                'btnText' => 'Actualizar',
+                'btnText' => 'Guardar',
                 ])
             </form>
         </div>
     </div>
 
     <script src="{{ asset('js/dark_mode.js') }}"></script>
-
-
 @endsection
 @section('scripts')
     <script>
         $(document).ready(function() {
-
-
             CKEDITOR.replace('fortalezas', {
                 toolbar: [{
                     name: 'paragraph',
