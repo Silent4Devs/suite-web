@@ -17,8 +17,6 @@ class inicioUsuarioController extends Controller
     {
         $usuario = auth()->user();
 
-
-
         $gantt_path = 'storage/gantt/';
 
         $version_gantt = glob($gantt_path . "gantt_inicial*.json");
@@ -42,8 +40,8 @@ class inicioUsuarioController extends Controller
             $query->where('empleados.id',$usuario->id);
         })->get();
 
-        
-        
+
+
 
         return view('admin.inicioUsuario.index', compact('usuario', 'file_gantt', 'plan_base', 'auditorias_anual', 'recursos'));
     }

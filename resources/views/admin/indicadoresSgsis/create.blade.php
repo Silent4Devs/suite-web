@@ -287,9 +287,11 @@
                     </div>
                 </div>
                 <h4 class="text-primary">Generación de formúla</h4>
+                <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada"><br>
+                <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp;
                 <hr>
 
-                <div class="row">
+                <div class="row" id="calculadora_generador" style="display: none;">
                     <div class="col-sm-6 align-items-center">
                         <div class="container">
                             <div class="calc">
@@ -321,10 +323,6 @@
 
                     <div class="form-group col-sm-6">
 
-                        <input id="formula" name="formula" class="form-control" type="text"
-                            placeholder="Formula generada"><br>
-                            <input type="text" name="variable_arreglos" value="">
-
                         <div class="form-inline">
                             <div class="form-group mb-2">
                                 <input type="text" readonly class="form-control-plaintext" id="staticEmail2"
@@ -338,10 +336,10 @@
 
                         <table id="mytable" class="table table-bordered table-hover ">
                             <tr>
+                                <th>ID</th>
                                 <th>Variable</th>
                                 <th>Utilizar</th>
                                 <th>Eliminar</th>
-
                             </tr>
                         </table>
 
@@ -393,6 +391,7 @@
         //variables para tabla y formula
         $(document).ready(function() {
             //obtenemos el valor de los input
+            var i = 1; //contador para asignar id al boton que borrara la fila
 
             $('#añadir').click(function() {
                 var variable = document.getElementById("variable").value;
@@ -403,9 +402,8 @@
                     return false;
                 }
 
-                var i = 1; //contador para asignar id al boton que borrara la fila
                 var fila = '<tr id="row' + i + '">' +
-                    //'<td>' + i + '</td>' +
+                    '<td>' + i + '</td>' +
                     '<td>' + variable + '</td>' +
                     '<td><button type="button" name="usar" id="' + i +
                     '" class="btn btn-info btnAñadir" value="' + variable + '">Usar</button></td>' +
@@ -414,15 +412,9 @@
                     '</tr>'; //esto seria lo que contendria la fila
 
                 $('#mytable tr:first').after(fila);
-                /*$("#adicionados").text(
-                    ""); //esta instruccion limpia el div adicioandos para que no se vayan acumulando
-                var nFilas = $("#mytable tr").length;
-                $("#adicionados").append(nFilas - 1);*/
-                //le resto 1 para no contar la fila del header
+                i++;
                 document.getElementById("variable").value = "";
-                //document.getElementById("nombre").focus();
-                var variable_arreglos = JSON.parse(document.getElementById("variable").value);
-                console.log(variable_arreglos);
+
             });
 
             $(document).on('click', '.btn_remove', function() {
@@ -438,8 +430,7 @@
             $(document).on('click', '.btnAñadir', function() {
                 var value = $(this).attr("value");
                 var elInput = document.getElementById("calculadora");
-                elInput.value += value;
-                //var variable_arreglos = JSON.parse(document.getElementById("variable_arreglos").value);
+                elInput.value += "$" + value + "$";
 
             });
         });
@@ -492,6 +483,15 @@
 
                 document.getElementById("formula").value = calculadora;
 
+            });
+        });
+    </script>
+
+    <script>
+        $("#abrir_generador").click(function() {
+            $("#calculadora_generador").show("slow", function() {
+                window.scrollTo(0, document.body.scrollHeight);
+                $("#abrir_generador").hide();
             });
         });
     </script>
