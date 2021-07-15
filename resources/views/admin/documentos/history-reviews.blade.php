@@ -341,6 +341,9 @@
                                 @case(3)
                                     <span class="badge badge-danger">RECHAZADO</span>
                                 @break
+                                @case(4)
+                                    <span class="badge badge-danger">RECHAZADO EN EL NIVEL ANTERIOR</span>
+                                @break
                                 @default
                                     <span class="badge badge-primary">SIN RESPUESTA</span>
                             @endswitch
