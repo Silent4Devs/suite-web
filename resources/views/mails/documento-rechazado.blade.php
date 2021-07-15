@@ -62,8 +62,8 @@
                                             Información del documento:
                                         <ul>
                                             <li>Tipo: <strong>{{ $documento->tipo }}</strong></li>
-                                            <li>Nombre: <strong>{{ $documento->nombre }}</strong></li>
                                             <li>Código: <strong>{{ $documento->codigo }}</strong></li>
+                                            <li>Nombre: <strong>{{ $documento->nombre }}</strong></li>
                                             <li>Estado: <div
                                                     style="width: 10px; height: 10px; background-color: red; border-radius: 100%; display: inline-block; margin-right: 5px;">
                                                 </div><strong>No Aprobado</strong></li>
@@ -73,16 +73,7 @@
                                         </div>
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p>Descripción:</p>
-                                            @php
-                                                $saludo = '';
-                                                if (\Carbon\Carbon::now()->hour > 12) {
-                                                    $saludo = 'Buenas Días';
-                                                } elseif ($carbon->hour > 19) {
-                                                    $saludo = 'Buenas Tardes';
-                                                }
-                                                $saludo = 'Buenas Noches';
-                                            @endphp
-                                            <p>{{ $saludo }}, {{ $documento->elaborador->name }}.</p>
+                                            <p>Buen día {{ $documento->elaborador->name }}, </p>
                                             <p>Le informamos que {{ $revision->empleado->name }} <strong
                                                     style="color: red; text-transform: uppercase;">no aprobó</strong> el
                                                 documento enviado a revisión:</p>
@@ -93,7 +84,9 @@
                                                         d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
                                                     <path
                                                         d="M4.5 12.5A.5.5 0 0 1 5 12h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 10h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm1.639-3.708 1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047l1.888.974V8.5a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V8s1.54-1.274 1.639-1.208zM6.25 6a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5z" />
-                                                </svg>{{ $documento->tipo }} - {{ $documento->codigo }}
+                                                </svg> <span
+                                                    style="text-transform: capitalize">{{ $documento->tipo }}</span> -
+                                                ({{ $documento->codigo }})
                                                 {{ $documento->nombre }}</p>
                                             <a href="{{ route('admin.documentos.index') }}"
                                                 style="outline: none; text-decoration: none; font-size: small; font-family: Arial, Helvetica, sans-serif; background-color: #0b89bb; padding: 10px; border-radius: 10px; color: white;">
