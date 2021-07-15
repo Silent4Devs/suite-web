@@ -122,6 +122,10 @@ class Empleado extends Model
 		return $this->hasMany(EntendimientoOrganizacion::class,'id_elabora','id');
     }
 
+    public function documentos()
+    {
+        return $this->hasMany(Documento::class);
+    }
      // public static function getAllEmpleados($empleado, $empleados = null)
     // {
     //     if ($empleados == null) {
@@ -132,7 +136,9 @@ class Empleado extends Model
     //         $empleados = self::getAllEmpleados($child, $empleados);
     //     }
 
-    //     return $empleados;
-    // }
+    public function archivos()
+    {
+        return $this->hasMany(Documento::class);
+    }
 }
 
