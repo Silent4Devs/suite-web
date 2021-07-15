@@ -131,6 +131,7 @@
                                                             {{ $empleado->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                <span class="text-danger" id="revisores1_error"></span>
                                             </div>
                                             <div class="mb-3 d-flex select-revisores">
                                                 <div class="circulo"><span class="texto-circulo">2</span></div>
@@ -144,6 +145,7 @@
                                                             {{ $empleado->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                <span class="text-danger" id="revisores2_error"></span>
                                             </div>
                                             <div class="mb-3 d-flex select-revisores">
                                                 <div class="circulo"><span class="texto-circulo">3</span></div>
@@ -157,28 +159,28 @@
                                                             {{ $empleado->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                <span class="text-danger" id="revisores3_error"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-12 col-lg-6">
                                         <div class="form-group">
                                             <div class="form-group select-revisores">
-                                                <label for="exampleFormControlTextarea1"
-                                                    class="labels-publicacion">Descripción
+                                                <label for="descripcion" class="labels-publicacion">Descripción
                                                     del cambio:</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                    name="descripcion" rows="1"></textarea>
+                                                <textarea class="form-control" id="descripcion" name="descripcion"
+                                                    rows="1"></textarea>
+                                                <span class="text-danger" id="descripcion_error"></span>
                                             </div>
                                             <div class="form-group select-revisores">
-                                                <label for="exampleFormControlTextarea1"
-                                                    class="labels-publicacion">Comentarios
+                                                <label for="comentarios" class="labels-publicacion">Comentarios
                                                     adicionales:</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                    name="comentarios" rows="1"></textarea>
+                                                <textarea class="form-control" id="comentarios" name="comentarios"
+                                                    rows="1"></textarea>
+                                                <span class="text-danger" id="comentarios_error"></span </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -279,63 +281,93 @@
             let finalizarPublicacionBtn = document.getElementById('finalizarPublicacion');
             finalizarPublicacionBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                Swal.fire({
-                    title: 'Estás seguro de enviar el documento a aprobación?',
-                    text: "No prodrás revertir esto!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, enviar a revisión!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        let form = document.getElementById('formEditarDocumento');
-                        let formReviewers = document.getElementById('formPublish');
-                        let datosDocumento = new FormData(form);
-                        let datosRevisores = $(formReviewers).serialize();
-                        console.log(datosRevisores);
-                        $.ajax({
-                            type: "POST",
-                            url: "{{ route('admin.documentos.updateDocumentWhenPublish', $documentoActual) }}",
-                            data: guardarDocumento,
-                            processData: false,
-                            contentType: false,
-                            dataType: "JSON",
-                            success: function(response) {
-                                console.log(response);
-                                documentoCreado = response.documento_id;
-                                $.ajax({
-                                    type: "POST",
-                                    headers: {
-                                        'X-CSRF-TOKEN': $(
-                                            'meta[name="csrf-token"]').attr(
-                                            'content')
-                                    },
-                                    url: "{{ route('admin.documentos.publish') }}",
-                                    data: {
-                                        datosRevisores,
-                                        documentoCreado
-                                    },
-                                    dataType: "JSON",
-                                    success: function(response) {
-                                        console.log(response);
-                                        // $('#modalPublicar').modal('hide');
-                                    }
-                                });
-                            }
-                        });
 
-                        Swal.fire(
-                            'Enviado a revisión!',
-                            'Tu documento ha sido enviado a revisión, mantente al tanto de las actualizaciones',
-                            'success'
-                        );
-                        setTimeout(() => {
-                            window.location.href =
-                                "{{ route('admin.documentos.index') }}";
-                        }, 1500);
-                    }
-                })
+                let revisores1 = document.getElementById('revisores1');
+                let descripcion = document.getElementById('descripcion');
+                let comentarios = document.getElementById('comentarios');
+
+                if (!revisores1.value) {
+                    document.getElementById('revisores1_error').innerText =
+                        "No has seleccionado nigún revisor en este nivel";
+                }
+
+                if (!descripcion.value) {
+                    document.getElementById('descripcion_error').innerText =
+                        "No has descrito los cambios realizados";
+                }
+
+                if (descripcion.value.length > 1000) {
+                    document.getElementById('descripcion_error').innerText =
+                        "La descripción del cambio tiene un máximo de 1000 carácteres";
+                }
+
+                if (comentarios.value.length > 1000) {
+                    document.getElementById('comentarios_error').innerText =
+                        "Los comentarios del cambio tiene un máximo de 1000 carácteres";
+                }
+
+
+                if (revisores1.value && descripcion.value && descripcion.value.length <= 1000 && comentarios
+                    .value.length <= 1000) {
+                    Swal.fire({
+                        title: 'Estás seguro de enviar el documento a aprobación?',
+                        text: "No prodrás revertir esto!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, enviar a revisión!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            let form = document.getElementById('formEditarDocumento');
+                            let formReviewers = document.getElementById('formPublish');
+                            let datosDocumento = new FormData(form);
+                            let datosRevisores = $(formReviewers).serialize();
+                            console.log(datosRevisores);
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('admin.documentos.updateDocumentWhenPublish', $documentoActual) }}",
+                                data: guardarDocumento,
+                                processData: false,
+                                contentType: false,
+                                dataType: "JSON",
+                                success: function(response) {
+                                    console.log(response);
+                                    documentoCreado = response.documento_id;
+                                    $.ajax({
+                                        type: "POST",
+                                        headers: {
+                                            'X-CSRF-TOKEN': $(
+                                                    'meta[name="csrf-token"]')
+                                                .attr(
+                                                    'content')
+                                        },
+                                        url: "{{ route('admin.documentos.publish') }}",
+                                        data: {
+                                            datosRevisores,
+                                            documentoCreado
+                                        },
+                                        dataType: "JSON",
+                                        success: function(response) {
+                                            console.log(response);
+                                            // $('#modalPublicar').modal('hide');
+                                        }
+                                    });
+                                }
+                            });
+
+                            Swal.fire(
+                                'Enviado a revisión!',
+                                'Tu documento ha sido enviado a revisión, mantente al tanto de las actualizaciones',
+                                'success'
+                            );
+                            setTimeout(() => {
+                                window.location.href =
+                                    "{{ route('admin.documentos.index') }}";
+                            }, 1500);
+                        }
+                    })
+                }
             });
         });
 

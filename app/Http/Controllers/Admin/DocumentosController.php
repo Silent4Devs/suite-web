@@ -21,6 +21,7 @@ class DocumentosController extends Controller
 {
     public function index()
     {
+
         $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones')->get();
 
         return view('admin.documentos.index', compact('documentos'));
@@ -218,7 +219,7 @@ class DocumentosController extends Controller
         $nombre_compuesto = $documento->archivo;
         $version = $documento->version;
         if ($estatus != Documento::EN_ELABORACION) {
-            $version = $documento->version + 1;
+            $version = $documento->version;
         }
         if ($request->file('archivo')) {
             $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);

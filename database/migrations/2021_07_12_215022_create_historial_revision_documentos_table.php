@@ -17,8 +17,8 @@ class CreateHistorialRevisionDocumentosTable extends Migration
         Schema::create('historial_revision_documentos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('documento_id');
-            $table->string('descripcion');
-            $table->string('comentarios');
+            $table->longText('descripcion');
+            $table->longText('comentarios');
             $table->dateTime('fecha')->nullable();
             $table->enum('estatus', [Documento::EN_ELABORACION, Documento::EN_REVISION, Documento::PUBLICADO, Documento::DOCUMENTO_RECHAZADO])->default(Documento::EN_ELABORACION);
             $table->timestamps();
