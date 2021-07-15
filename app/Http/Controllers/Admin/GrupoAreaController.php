@@ -57,6 +57,9 @@ class GrupoAreaController extends Controller
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
             });
+            $table->editColumn('color', function ($row) {
+                return $row->color ? $row->color : "";
+            });
 
             $table->rawColumns(['actions', 'placeholder']);
 
@@ -89,7 +92,8 @@ class GrupoAreaController extends Controller
         $grupoarea = Grupo::create([
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
-            'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
+            'color' => $request->color,
+           // 'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
         ]);
         Flash::success('<h5 class="text-center">Grupo agregado satisfactoriamente</h5>');
         return redirect()->route('admin.grupoarea.index')->with("success",'Guardado con éxito');;
@@ -128,7 +132,7 @@ class GrupoAreaController extends Controller
 
 
 
-    public function destroy(GrupoArea $grupoarea)
+    public function destroy(Grupo $grupoarea)
     {
         abort_if(Gate::denies('grupoarea_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

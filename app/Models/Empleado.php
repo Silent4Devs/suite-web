@@ -58,6 +58,10 @@ class Empleado extends Model
     {
         return $this->belongsTo(Sede::class, 'sede_id', 'id');
     }
+    public function fodas()
+    {
+		return $this->hasMany(EntendimientoOrganizacion::class,'id_elabora','id');
+    }
 
     public function documentos()
     {

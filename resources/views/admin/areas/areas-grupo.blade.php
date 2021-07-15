@@ -96,6 +96,7 @@
                             organización
                             <a href="{{ route('admin.grupoarea.index') }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
 
+
                         </p>
                     </div>
                 </div>
