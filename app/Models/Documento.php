@@ -77,4 +77,10 @@ class Documento extends Model
     {
         return $this->belongsTo(Empleado::class, 'responsable_id', 'id');
     }
+
+    public function procesos()
+    {
+        return $this->hasMany(Proceso::class);
+    }
+
 }

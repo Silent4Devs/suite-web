@@ -96,11 +96,12 @@
             <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
 
                 <div class="row">
+                @foreach ($documento as $documentos)
                     <div class="form-group col-sm-3">
                         <label>
                             Código:</label>
                         <div class="pt-2 pl-2 card" style="height:35px; box-shadow: 0px 0px 0px 1px rgba(77, 72, 77, 0.133)">
-                        Test
+                        {{$documentos->codigo}}
                         </div>
 
                     </div>
@@ -109,7 +110,7 @@
                         <label>
                             Nombre del Documento:</label>
                             <div class="pt-2 pl-2 card" style="height:35px; box-shadow: 0px 0px 0px 1px rgba(77, 72, 77, 0.133)">
-                                Test
+                                {{$documentos->nombre}}
                             </div>
 
                     </div>
@@ -123,35 +124,38 @@
                             </div>
 
                     </div>
+                    @endforeach
                 </div>
 
                 <div class="row">
-
+                    @foreach ($documento as $documentos)
                     <div class="form-group col-sm-3">
                         <label class="required" for="codigo">
                             Estatus:</label>
 
                             <div class="pt-2 pl-2 text-center card" style="height:35px; box-shadow: 0px 0px 0px 1px rgba(77, 72, 77, 0.133)">
-                                Test
+                                {{$documentos->estatus}}
                             </div>
-
+                    @endforeach
                     </div>
 
 
                     <div class="form-group col-sm-4">
+                        @foreach ($macros_mapa as $macros_mapas)
                         <label>
                             Macroproceso:</label>
                             <div class="pt-2 pl-2 card" style="height:35px; box-shadow: 0px 0px 0px 1px rgba(77, 72, 77, 0.133)">
-                                Test
+                                {{$macros_mapas->nombre}}
                             </div>
-
+                        @endforeach
                     </div>
 
                     <div class="form-group col-sm-2">
+                    @foreach ($documento as $documentos)
                         <label>
                             Versión:</label>
                             <div class="pt-2 pl-2 card" style="height:35px; box-shadow: 0px 0px 0px 1px rgba(77, 72, 77, 0.133)">
-                                Test
+                                {{$documentos->version}}
                             </div>
 
                     </div>
@@ -164,7 +168,7 @@
                                 <div class="card" style="height:35px; box-shadow: 0px 0px 0px 1px rgba(77, 72, 77, 0.133)">
                                     <div class="row">
                                         <div class="pt-2 pl-4 col-sm-8">
-                                            Test
+                                            {{\Carbon\Carbon::parse($documentos->fecha)->format("d-m-Y")}}
                                         </div>
                                         <div class="ml-1 col-sm-3" style="width:30px; height:35px; background:#00abb2" >
                                             <i class="pt-2 pl-2 fas fa-calendar-alt" style="font-size:18px; color:#fff;"></i>
@@ -179,9 +183,12 @@
 
                     </div>
 
+                    @endforeach
+
                 </div>
 
                 <div class="row">
+
                     <div class="form-group col sm-3">
                        <label>Elaboró</label>
                     </div>
@@ -200,57 +207,21 @@
                 <div class="row">
 
                     <div class="col-lg-3 info-personal">
-                        <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
+                        {{-- <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
                             <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
                             <div class="caja_img_perfil">
-                                <img src="">
+                                <img src="{{  asset('storage/empleados/imagenes') }}/{{ $documento->elaborador ? $documento->elaborador->foto : 'user.png'}}">
                             </div>
-                            <h5></h5>
-                            <p></p>
+                            <h5><strong style="color:#00abb2;"  >{{$documento->elaborador->name}}</strong></h5>
+                            <p>{{$documento->elaborador->puesto}}</p>
 
-                        </div>
+                        </div> --}}
 
                     </div>
 
 
-                    <div class="col-lg-3 info-personal">
-                        <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
-                            <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
-                            <div class="caja_img_perfil">
-                                <img src="">
-                            </div>
-                            <h5></h5>
-                            <p></p>
 
-                        </div>
 
-                    </div>
-
-                    <div class="col-lg-3 info-personal">
-                        <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
-                            <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
-                            <div class="caja_img_perfil">
-                                <img src="">
-                            </div>
-                            <h5></h5>
-                            <p></p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-3 info-personal">
-                        <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
-                            <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
-                            <div class="caja_img_perfil">
-                                <img src="">
-                            </div>
-                            <h5></h5>
-                            <p></p>
-
-                        </div>
-
-                    </div>
                 </div>
 
 
