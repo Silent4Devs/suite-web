@@ -55,4 +55,18 @@ class Proceso extends Model
 	{
 		return $this->hasMany(IndicadoresSgsi::class, 'id_proceso');
 	}
+
+    public function documento()
+	{
+		return $this->belongsToMany(Documento::class);
+	}
+
+    public function vistaDocumento()
+	{
+		return $this->belongsToMany(Documento::class);
+	}
+
+
+
+
 }

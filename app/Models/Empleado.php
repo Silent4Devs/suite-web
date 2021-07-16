@@ -140,5 +140,12 @@ class Empleado extends Model
     {
         return $this->hasMany(Documento::class);
     }
+
+    public function procesos()
+    {
+        return $this->hasMany(Proceso::class);
+    }
+
+
 }
 

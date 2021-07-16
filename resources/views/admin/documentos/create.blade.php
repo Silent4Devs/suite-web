@@ -343,6 +343,7 @@
                 e.preventDefault();
                 let revisores1 = document.getElementById('revisores1');
                 let descripcion = document.getElementById('descripcion');
+                let comentarios = document.getElementById('comentarios');
 
                 if (!revisores1.value) {
                     document.getElementById('revisores1_error').innerText =
@@ -354,7 +355,18 @@
                         "No has descrito los cambios realizados";
                 }
 
-                if (revisores1.value && descripcion.value) {
+                if (descripcion.value.length > 1000) {
+                    document.getElementById('descripcion_error').innerText =
+                        "La descripción del cambio tiene un máximo de 1000 carácteres";
+                }
+
+                if (comentarios.value.length > 1000) {
+                    document.getElementById('comentarios_error').innerText =
+                        "Los comentarios del cambio tiene un máximo de 1000 carácteres";
+                }
+
+                if (revisores1.value && descripcion.value && descripcion.value.length <= 1000 && comentarios
+                    .value.length <= 1000) {
                     Swal.fire({
                         title: 'Estás seguro de enviar el documento a aprobación?',
                         text: "No prodrás revertir esto!",

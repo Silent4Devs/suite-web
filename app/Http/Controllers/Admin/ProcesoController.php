@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Laracasts\Flash\Flash;
-use App\Models\Proceso;
 use App\Models\Grupo;
+use App\Models\Proceso;
+use App\Models\Empleado;
+use App\Models\Documento;
+use Laracasts\Flash\Flash;
 use App\Models\Macroproceso;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProcesoController extends Controller
 {
@@ -179,10 +181,14 @@ class ProcesoController extends Controller
         }])->get();
         $macros_mapa = Macroproceso::get();
         $procesos_mapa = Proceso::get();
+        $documento=Documento::with('elaborador','revisor','aprobador','responsable')->get();
+        $empleados = Empleado::get();
+        $proceso=Proceso::get();
 
 
 
-        return view('admin.procesos.vistas', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa'));
+
+        return view('admin.procesos.vistas', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa','documento','empleados','proceso'));
 
     }
 

@@ -13,6 +13,7 @@ class Documento extends Model
     const SOLICITUD_REVISION = 1;
     const APROBADO = 2;
     const RECHAZADO = 3;
+    const RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR = 4;
 
     // DOCUMENTOS ESTATUS
     const EN_ELABORACION = 1;
@@ -77,4 +78,10 @@ class Documento extends Model
     {
         return $this->belongsTo(Empleado::class, 'responsable_id', 'id');
     }
+
+    public function procesos()
+    {
+        return $this->hasMany(Proceso::class);
+    }
+
 }
