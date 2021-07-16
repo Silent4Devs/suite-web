@@ -51,4 +51,18 @@ class Proceso extends Model
 	{
 		return $this->belongsTo(Macroproceso::class, 'id_macroproceso');
 	}
+
+    public function documento()
+	{
+		return $this->belongsToMany(Documento::class);
+	}
+
+    public function vistaDocumento()
+	{
+		return $this->belongsToMany(Documento::class);
+	}
+
+
+
+
 }
