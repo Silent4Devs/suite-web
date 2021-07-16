@@ -15,8 +15,8 @@ class AddColumns3ToEntendimientoOrganizacionsTable extends Migration
     {
         Schema::table('entendimiento_organizacions', function (Blueprint $table) {
             //$table->foreign('elaboro_id')->references('id')->on('empleados');
-            //$table->string('analisis')->before('amenazas')->nullable();
-            //$table->date('fecha')->before('analisis')->nullable();
+            $table->string('analisis')->before('amenazas')->nullable();
+            $table->date('fecha')->before('analisis')->nullable();
         });
     }
 
@@ -28,7 +28,8 @@ class AddColumns3ToEntendimientoOrganizacionsTable extends Migration
     public function down()
     {
         Schema::table('entendimiento_organizacions', function (Blueprint $table) {
-            //
+            $table->dropColumn('analisis');
+            $table->dropColumn('fecha');
         });
     }
 }

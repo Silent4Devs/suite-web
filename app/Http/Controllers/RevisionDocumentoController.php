@@ -412,8 +412,9 @@ class RevisionDocumentoController extends Controller
         $documento->update([
             'archivo' => $nombre_documento
         ]);
-        Storage::move($path_documento_aprobacion, $ruta_publicacion);
-
+        if (Storage::exists($path_documento_aprobacion)) {
+            Storage::move($path_documento_aprobacion, $ruta_publicacion);
+        }
         $ruta_publicacion_documento_anterior = $path_documentos_publicados . '/' . $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '-publicado.' . $extension;
 
         // dd($ruta_publicacion);
@@ -461,7 +462,8 @@ class RevisionDocumentoController extends Controller
 
         $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '.' . $extension;
         $ruta_publicacion = $path_documentos_versiones_anteriores . '/' . $nombre_documento;
-
-        Storage::move($path_documento_version_anterior, $ruta_publicacion);
+        if (Storage::exists($path_documento_version_anterior)) {
+            Storage::move($path_documento_version_anterior, $ruta_publicacion);
+        }
     }
 }

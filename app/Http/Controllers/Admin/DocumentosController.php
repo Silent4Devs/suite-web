@@ -12,6 +12,7 @@ use App\Models\Macroproceso;
 use App\Models\RevisionDocumento;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -253,7 +254,33 @@ class DocumentosController extends Controller
 
     public function destroy(Documento $documento)
     {
-        //
+        try {
+            if ($documento->tipo == 'proceso') {
+                // logica para eliminar el proceso vinculado al documento
+            }
+            $path_documento = $this->getPublicPathDocumento($documento);
+            $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
+            $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-obsoleto' . '.' . $extension;
+
+            $ruta_documento = $path_documento . '/' . $documento->archivo;
+            $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento) . '/' . $nombre_documento;
+
+            if (Storage::exists($ruta_documento)) {
+                Storage::move($ruta_documento, $ruta_obsoleto);
+            }
+            $eliminar = $documento->delete();
+            if ($eliminar) {
+                return response()->json(['success' => true]);
+            }
+        } catch (QueryException $e) {
+            if ($e->errorInfo[0] == "23000") {
+                return response()->json(['error' => "Este registro contiene relación con diversas tablas, eliminarlo trearía problemas de estabilidad en el sistema."]);
+            }
+        }
+    }
+
+    public function doDocumentObsolete(Documento $documento)
+    {
     }
 
     public function checkCode(Request $request)
@@ -341,9 +368,51 @@ class DocumentosController extends Controller
 
     public function renderViewDocument(Documento $documento)
     {
-        $path_documento = 'storage/Documentos en aprobacion';
+        $path_documento = $this->getPublicPathDocumento($documento);
+        return view('admin.documentos.view-document-file', compact('documento', 'path_documento'));
+    }
+
+    public function getPublicPathObsoleteDocument(Documento $documento)
+    {
+        $path_documento = 'public/Documentos obsoletos';
+        switch ($documento->tipo) {
+            case 'politica':
+                $path_documento .= '/politicas';
+                break;
+            case 'procedimiento':
+                $path_documento .= '/procedimientos';
+                break;
+            case 'manual':
+                $path_documento .= '/manuales';
+                break;
+            case 'plan':
+                $path_documento .= '/planes';
+                break;
+            case 'instructivo':
+                $path_documento .= '/instructivos';
+                break;
+            case 'reglamento':
+                $path_documento .= '/reglamentos';
+                break;
+            case 'externo':
+                $path_documento .= '/externos';
+                break;
+            case 'proceso':
+                $path_documento .= '/procesos';
+                break;
+            default:
+                $path_documento .= '/procesos';
+                break;
+        }
+
+        return $path_documento;
+    }
+
+    public function getPublicPathDocumento(Documento $documento)
+    {
+        $path_documento = 'public/Documentos en aprobacion';
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
-            $path_documento = 'storage/Documentos publicados';
+            $path_documento = 'public/Documentos publicados';
         }
 
         switch ($documento->tipo) {
@@ -375,6 +444,7 @@ class DocumentosController extends Controller
                 $path_documento .= '/procesos';
                 break;
         }
-        return view('admin.documentos.view-document-file', compact('documento', 'path_documento'));
+
+        return $path_documento;
     }
 }

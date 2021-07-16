@@ -422,6 +422,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('documentos/check-code', 'DocumentosController@checkCode')->name('documentos.checkCode');
     Route::get('documentos/{documento}/view-document', 'DocumentosController@renderViewDocument')->name('documentos.renderViewDocument');
     Route::get('documentos/{documento}/history-reviews', 'DocumentosController@renderHistoryReview')->name('documentos.renderHistoryReview');
+    Route::delete('documentos/{documento}/', 'DocumentosController@destroy')->name('documentos.destroy');
     Route::resource('documentos', 'DocumentosController');
 
     // Control Documentos
