@@ -9,6 +9,7 @@ use App\Models\Documento;
 use Laracasts\Flash\Flash;
 use App\Models\Macroproceso;
 use Illuminate\Http\Request;
+use App\Models\RevisionDocumento;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
@@ -59,7 +60,7 @@ class ProcesoController extends Controller
                 return $row->descripcion ? $row->descripcion : "";
             });
 
-            $table->rawColumns(['actions']);
+            // $table->rawColumns(['actions']);
 
             return $table->make(true);
         }
@@ -164,31 +165,59 @@ class ProcesoController extends Controller
     public function mapaProcesos(){
 
         $grupos_mapa = Grupo::with(['macroprocesos'=>function($q){
-            $q->with('procesos');
+            $q->with('procesosWithDocumento');
         }])->get();
+        // dd($grupos_mapa);
         $macros_mapa = Macroproceso::get();
         $procesos_mapa = Proceso::get();
+        $exist_no_publicado=Proceso::select('estatus')->where('estatus',Proceso::NO_ACTIVO)->exists();
 
 
 
-        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa'));
+        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa','exist_no_publicado'));
     }
 
-    public function obtenerDocumentoProcesos (){
-
-        $grupos_mapa = Grupo::with(['macroprocesos'=>function($q){
-            $q->with('procesos');
-        }])->get();
-        $macros_mapa = Macroproceso::get();
-        $procesos_mapa = Proceso::get();
-        $documento=Documento::with('elaborador','revisor','aprobador','responsable')->get();
-        $empleados = Empleado::get();
-        $proceso=Proceso::get();
+    public function obtenerDocumentoProcesos ($documento){
 
 
+        $documento=Documento::with('elaborador','revisor','aprobador','responsable','macroproceso')->find($documento);
+        // dd($documento->elaborador->avatar);
+
+        $path_documentos_publicados = 'storage/Documentos publicados';
+        switch ($documento->tipo) {
+            case 'politica':
+                $path_documentos_publicados .= '/politicas';
+                break;
+            case 'procedimiento':
+                $path_documentos_publicados .= '/procedimientos';
+                break;
+            case 'manual':
+                $path_documentos_publicados .= '/manuales';
+                break;
+            case 'plan':
+                $path_documentos_publicados .= '/planes';
+                break;
+            case 'instructivo':
+                $path_documentos_publicados .= '/instructivos';
+                break;
+            case 'reglamento':
+                $path_documentos_publicados .= '/reglamentos';
+                break;
+            case 'externo':
+                $path_documentos_publicados .= '/externos';
+                break;
+            case 'proceso':
+                $path_documentos_publicados .= '/procesos';
+                break;
+            default:
+                $path_documentos_publicados .= '/procesos';
+                break;
+        }
+
+        $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento)->get();
 
 
-        return view('admin.procesos.vistas', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa','documento','empleados','proceso'));
+        return view('admin.procesos.vistas', compact('documento', 'path_documentos_publicados','revisiones'));
 
     }
 

@@ -470,7 +470,7 @@
   ),
   'geocoder' => 
   array (
-    'key' => '',
+    'key' => 'AIzaSyDByWqsyGQopJ8tnvFk8yp4PjcfG7zoXuo',
     'language' => '',
     'region' => '',
     'bounds' => '',
@@ -611,9 +611,9 @@
         'transport' => 'smtp',
         'host' => 'smtp.mailtrap.io',
         'port' => '2525',
-        'encryption' => NULL,
-        'username' => NULL,
-        'password' => NULL,
+        'encryption' => 'tls',
+        'username' => '6fc7f665a0edad',
+        'password' => '14baa5c6e39410',
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
@@ -646,7 +646,7 @@
     ),
     'from' => 
     array (
-      'address' => NULL,
+      'address' => 'karen.rodriguez@silent4business.com',
       'name' => 'Laravel',
     ),
     'markdown' => 
