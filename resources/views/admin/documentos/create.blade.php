@@ -86,7 +86,7 @@
     <div class="card">
         <div class="card-body">
             <div class="mb-4 text-center" style="background: #098f94; border-radius: 5px;">
-                <h5 class="p-2 text-white">Resumen</h5>
+                <h5 class="p-2 text-white">Crear Documento</h5>
             </div>
             <form id="formCrearDocumento" method="POST" action="{{ route('admin.documentos.store') }}"
                 enctype="multipart/form-data">

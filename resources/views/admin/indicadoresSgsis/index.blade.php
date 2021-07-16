@@ -2,7 +2,7 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.indicadores-sgsis.index') }}
-    
+
     @can('indicadores_sgsi_create')
 
     @endcan
@@ -15,70 +15,37 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.id') }}
+                            ID
                         </th>
                         <th>
-                            Proceso&nbsp;o&nbsp;control
+                            Nombre del indicador
                         </th>
                         <th>
-                            Titulo&nbsp;del&nbsp;indicador
+                            Proceso
                         </th>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.responsable') }}
+                            Descripción
                         </th>
                         <th>
-                            Formula&nbsp;de&nbsp;cálculo
+                            Formula de Cálculo
                         </th>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.frecuencia') }}
+                            Unidad
                         </th>
                         <th>
-                            Unidad&nbsp;de&nbsp;medida
+                            Frecuencia
                         </th>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.meta') }}
+                            Meta
                         </th>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.semaforo') }}
+                            No. revisiones
                         </th>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.enero') }}
+                            Resultado
                         </th>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.febrero') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.marzo') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.abril') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.mayo') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.junio') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.julio') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.agosto') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.septiembre') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.octubre') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.noviembre') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.diciembre') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.anio') }}
+                            Responsable
                         </th>
                         <th>
                             Opciones
@@ -221,7 +188,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [5, 20, 5, 20];
                         doc.styles.tableHeader.fontSize = 7.1;
-                        doc.defaultStyle.fontSize = 7.1; //<-- set fontsize to 16 instead of 10 
+                        doc.defaultStyle.fontSize = 7.1; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -279,13 +246,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -311,16 +278,16 @@
                         name: 'id'
                     },
                     {
-                        data: 'control',
-                        name: 'control'
+                        data: 'nombre',
+                        name: 'nombre'
                     },
                     {
-                        data: 'titulo',
-                        name: 'titulo'
+                        data: 'proceso',
+                        name: 'proceso'
                     },
                     {
-                        data: 'responsable_name',
-                        name: 'responsable.name'
+                        data: 'descripcion',
+                        name: 'descripcion'
                     },
                     {
                         data: 'formula',
@@ -339,60 +306,16 @@
                         name: 'meta'
                     },
                     {
-                        data: 'semaforo',
-                        name: 'semaforo'
+                        data: 'revisiones',
+                        name: 'revisiones'
                     },
                     {
-                        data: 'enero',
-                        name: 'enero'
+                        data: 'resultado',
+                        name: 'resultado'
                     },
                     {
-                        data: 'febrero',
-                        name: 'febrero'
-                    },
-                    {
-                        data: 'marzo',
-                        name: 'marzo'
-                    },
-                    {
-                        data: 'abril',
-                        name: 'abril'
-                    },
-                    {
-                        data: 'mayo',
-                        name: 'mayo'
-                    },
-                    {
-                        data: 'junio',
-                        name: 'junio'
-                    },
-                    {
-                        data: 'julio',
-                        name: 'julio'
-                    },
-                    {
-                        data: 'agosto',
-                        name: 'agosto'
-                    },
-                    {
-                        data: 'septiembre',
-                        name: 'septiembre'
-                    },
-                    {
-                        data: 'octubre',
-                        name: 'octubre'
-                    },
-                    {
-                        data: 'noviembre',
-                        name: 'noviembre'
-                    },
-                    {
-                        data: 'diciembre',
-                        name: 'diciembre'
-                    },
-                    {
-                        data: 'anio',
-                        name: 'anio'
+                        data: 'responsable',
+                        name: 'responsable'
                     },
                     {
                         data: 'actions',
@@ -418,6 +341,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

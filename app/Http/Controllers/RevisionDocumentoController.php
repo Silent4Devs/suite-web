@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Proceso;
+use App\Models\Empleado;
+use App\Models\Documento;
+use Illuminate\Http\Request;
+use App\Models\RevisionDocumento;
 use App\Mail\DocumentoAprobadoMail;
-use App\Mail\DocumentoNoPublicadoMail;
 use App\Mail\DocumentoPublicadoMail;
 use App\Mail\DocumentoRechazadoMail;
-use App\Mail\SolicitudAprobacionMail;
-use App\Models\Documento;
-use App\Models\Empleado;
-use App\Models\HistorialRevisionDocumento;
-use App\Models\RevisionDocumento;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\SolicitudAprobacionMail;
+use App\Mail\DocumentoNoPublicadoMail;
 use Illuminate\Support\Facades\Storage;
+use App\Models\HistorialRevisionDocumento;
 
 class RevisionDocumentoController extends Controller
 {
@@ -129,6 +130,10 @@ class RevisionDocumentoController extends Controller
                         $this->publishDocumentInFolder($path_documentos_aprobacion . '/' . $documentoOriginal->archivo, $documentoOriginal);
                         $documentoAct = Documento::with('elaborador')->find($documentoOriginal->id);
                         $this->sendMailPublish($documentoAct->elaborador->email, $documentoAct);
+                        $proceso=Proceso::where('documento_id',$documentoAct->id)->first();
+                        $proceso->update([
+                            'estatus'=>Proceso::ACTIVO,
+                        ]);
                     }
                 }
             };
@@ -215,6 +220,10 @@ class RevisionDocumentoController extends Controller
 
                         $documentoAct = Documento::with('elaborador')->find($documentoOriginal->id);
                         $this->sendMailPublish($documentoAct->elaborador->email, $documentoAct);
+                        $proceso=Proceso::where('documento_id',$documentoAct->id)->first();
+                        $proceso->update([
+                            'estatus'=>Proceso::ACTIVO,
+                        ]);
                     }
                 }
             };
@@ -374,8 +383,13 @@ class RevisionDocumentoController extends Controller
         }
 
         $extension = pathinfo($path_documentos_publicados . '/' . $documento->archivo, PATHINFO_EXTENSION);
-        $ruta_publicacion = $path_documentos_publicados . '/' . $documento->nombre . '-APROBADO.' . $extension;
+        $nombreDocumento=$documento->nombre . '-APROBADO.' . $extension;
+        $ruta_publicacion = $path_documentos_publicados . '/' . $nombreDocumento;
+
 
         Storage::copy($path_documento_aprobacion, $ruta_publicacion);
+        $documento->update([
+            "archivo"=> $nombreDocumento
+        ]);
     }
 }

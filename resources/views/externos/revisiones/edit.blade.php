@@ -104,10 +104,11 @@
                             </a>
                         </div>
                         <iframe
-                            src='https://view.officeapps.live.com/op/embed.aspx?src={{ asset($path_documentos_aprobacion . '/TestWordDoc.doc') }}'
+                            src='https://view.officeapps.live.com/op/embed.aspx?src={{ asset($path_documentos_aprobacion."/".$documento->archivo) }}'
                             width='100%' height='100%' frameborder='0'>This is an embedded <a target='_blank'
                                 href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank'
                                 href='http://office.com/webapps'>Office Online</a>.</iframe>
+
                         {{-- <iframe
                     src="https://docs.google.com/gview?url=http%3A%2F%2Ftabantaj.test%2Fstorage%2FDocumentos+en+aprobacion%2Fprocedimientos%2FTestWordDoc.doc&embedded=true"></iframe> --}}
 
