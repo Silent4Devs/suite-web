@@ -287,11 +287,11 @@
                     </div>
                 </div>
                 <h4 class="text-primary">Generación de formúla</h4>
-                <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada"><br>
+                <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada" required><br>
                 <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp;
                 <hr>
 
-                <div class="row" id="calculadora_generador" style="display: none;">
+                <div class="row" id="calculadora_generador">
                     <div class="col-sm-6 align-items-center">
                         <div class="container">
                             <div class="calc">
@@ -430,7 +430,7 @@
             $(document).on('click', '.btnAñadir', function() {
                 var value = $(this).attr("value");
                 var elInput = document.getElementById("calculadora");
-                elInput.value += "$" + value + "$";
+                elInput.value += "!$" + value + "!";
 
             });
         });

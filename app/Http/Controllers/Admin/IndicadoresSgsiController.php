@@ -9,6 +9,7 @@ use App\Models\Proceso;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use App\Models\IndicadoresSgsi;
+use App\Models\VariablesIndicador;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Symfony\Component\HttpFoundation\Response;
@@ -112,7 +113,6 @@ class IndicadoresSgsiController extends Controller
     public function store(Request $request)
     {
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
-
         //return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id]);
     }
@@ -165,6 +165,39 @@ class IndicadoresSgsiController extends Controller
         $id = $request->all();
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
+        $formula_array = explode("!", $indicadoresSgsis->formula);
+
+        $finish_array = array();
+
+        foreach ($formula_array as $result) {
+            if (strstr($result, '$')) {
+                array_push($finish_array, $result);
+            }
+        }
+
+        $remplazo_formula = str_replace("!", "", $indicadoresSgsis->formula);
+
+        if ($remplazo_formula) {
+            $up = $indicadoresSgsis
+                ->update(['formula' => $remplazo_formula]);
+        }
+
+        foreach ($finish_array as $key => $value) {
+
+            VariablesIndicador::create(['id_indicador' => $indicadoresSgsis->id, 'variable' => $value]);
+        }
+
+        //dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);
+
+        return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesInsert', ['id' => $indicadoresSgsis->id]);
+
+    }
+
+    public function evaluacionesInsert(Request $request)
+    {
+        $id = $request->all();
+
+        $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
         return view('admin.indicadoresSgsis.evaluacion')
             ->with('indicadoresSgsis', $indicadoresSgsis);
