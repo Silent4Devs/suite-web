@@ -15,7 +15,8 @@ class RevisionDocumento extends Model
         'comentarios',
         'estatus',
         'nivel',
-        'no_revision'
+        'no_revision',
+        'version'
     ];
 
     public function documento()

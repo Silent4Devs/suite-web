@@ -10,6 +10,7 @@ use App\Mail\SolicitudAprobacionMail;
 use App\Models\Documento;
 use App\Models\Empleado;
 use App\Models\HistorialRevisionDocumento;
+use App\Models\HistorialVersionesDocumento;
 use App\Models\RevisionDocumento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -87,14 +88,6 @@ class RevisionDocumentoController extends Controller
                         ]);
                     } else {
 
-                        $documentoOriginal->update([
-                            'estatus' => strval(Documento::PUBLICADO),
-                            'version' => ($documentoOriginal->version + 1)
-                        ]);
-
-                        $historialDocumento->update([
-                            'estatus' => strval(Documento::PUBLICADO),
-                        ]);
                         $path_documentos_aprobacion = 'public/Documentos en aprobacion';
                         switch ($documentoOriginal->tipo) {
                             case 'politica':
@@ -126,7 +119,33 @@ class RevisionDocumentoController extends Controller
                                 break;
                         }
 
+                        $documentoOriginal->update([
+                            'estatus' => strval(Documento::PUBLICADO),
+                            'version' => ($documentoOriginal->version + 1)
+                        ]);
+
+                        $historialDocumento->update([
+                            'estatus' => strval(Documento::PUBLICADO),
+                        ]);
+
                         $this->publishDocumentInFolder($path_documentos_aprobacion . '/' . $documentoOriginal->archivo, $documentoOriginal);
+
+                        HistorialVersionesDocumento::create([
+                            'documento_id' => $documentoOriginal->id,
+                            'codigo' => $documentoOriginal->codigo,
+                            'nombre' => $documentoOriginal->nombre,
+                            'tipo' => $documentoOriginal->tipo,
+                            'estatus' => $documentoOriginal->estatus,
+                            'macroproceso_id' => $documentoOriginal->macroproceso_id,
+                            'version' => $documentoOriginal->version,
+                            'fecha' => $documentoOriginal->fecha,
+                            'archivo' => $documentoOriginal->archivo,
+                            'elaboro_id' => $documentoOriginal->elaboro_id,
+                            'aprobo_id' => $documentoOriginal->aprobo_id,
+                            'reviso_id' => $documentoOriginal->reviso_id,
+                            'responsable_id' => $documentoOriginal->responsable_id
+                        ]);
+
                         $documentoAct = Documento::with('elaborador')->find($documentoOriginal->id);
                         $this->sendMailPublish($documentoAct->elaborador->email, $documentoAct);
                     }
@@ -169,17 +188,6 @@ class RevisionDocumentoController extends Controller
                         // $documentoActual = Documento::with('elaborador')->find($documento->documento_id);
                         // $this->sendMailNotPublish($documentoActual->elaborador->email, $documentoActual);
                     } else {
-
-                        $documentoOriginal->update([
-                            'estatus' => strval(Documento::PUBLICADO),
-                            'version' => ($documentoOriginal->version + 1)
-                        ]);
-
-                        $historialDocumento->update([
-                            'estatus' => strval(Documento::PUBLICADO),
-                        ]);
-
-
                         $path_documentos_aprobacion = 'public/Documentos en aprobacion';
                         switch ($documentoOriginal->tipo) {
                             case 'politica':
@@ -211,7 +219,32 @@ class RevisionDocumentoController extends Controller
                                 break;
                         }
 
+                        $documentoOriginal->update([
+                            'estatus' => strval(Documento::PUBLICADO),
+                            'version' => ($documentoOriginal->version + 1)
+                        ]);
+
+                        $historialDocumento->update([
+                            'estatus' => strval(Documento::PUBLICADO),
+                        ]);
+
                         $this->publishDocumentInFolder($path_documentos_aprobacion . '/' . $documentoOriginal->archivo, $documentoOriginal);
+
+                        HistorialVersionesDocumento::create([
+                            'documento_id' => $documentoOriginal->id,
+                            'codigo' => $documentoOriginal->codigo,
+                            'nombre' => $documentoOriginal->nombre,
+                            'tipo' => $documentoOriginal->tipo,
+                            'estatus' => $documentoOriginal->estatus,
+                            'macroproceso_id' => $documentoOriginal->macroproceso_id,
+                            'version' => $documentoOriginal->version,
+                            'fecha' => $documentoOriginal->fecha,
+                            'archivo' => $documentoOriginal->archivo,
+                            'elaboro_id' => $documentoOriginal->elaboro_id,
+                            'aprobo_id' => $documentoOriginal->aprobo_id,
+                            'reviso_id' => $documentoOriginal->reviso_id,
+                            'responsable_id' => $documentoOriginal->responsable_id
+                        ]);
 
                         $documentoAct = Documento::with('elaborador')->find($documentoOriginal->id);
                         $this->sendMailPublish($documentoAct->elaborador->email, $documentoAct);
@@ -374,8 +407,61 @@ class RevisionDocumentoController extends Controller
         }
 
         $extension = pathinfo($path_documentos_publicados . '/' . $documento->archivo, PATHINFO_EXTENSION);
-        $ruta_publicacion = $path_documentos_publicados . '/' . $documento->nombre . '-APROBADO.' . $extension;
+        $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-v' . $documento->version . '-publicado.' . $extension;
+        $ruta_publicacion = $path_documentos_publicados . '/' . $nombre_documento;
+        $documento->update([
+            'archivo' => $nombre_documento
+        ]);
+        Storage::move($path_documento_aprobacion, $ruta_publicacion);
 
-        Storage::copy($path_documento_aprobacion, $ruta_publicacion);
+        $ruta_publicacion_documento_anterior = $path_documentos_publicados . '/' . $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '-publicado.' . $extension;
+
+        // dd($ruta_publicacion);
+        if ($documento->estatus == strval(Documento::PUBLICADO)) {
+            if (Storage::exists($ruta_publicacion_documento_anterior)) {
+                $this->moveBeforeVersionOfDirectory($ruta_publicacion_documento_anterior, $documento);
+            }
+        }
+    }
+
+    public function moveBeforeVersionOfDirectory($path_documento_version_anterior, Documento $documento)
+    {
+        $path_documentos_versiones_anteriores = 'public/Documento versiones anteriores';
+        switch ($documento->tipo) {
+            case 'politica':
+                $path_documentos_versiones_anteriores .= '/politicas';
+                break;
+            case 'procedimiento':
+                $path_documentos_versiones_anteriores .= '/procedimientos';
+                break;
+            case 'manual':
+                $path_documentos_versiones_anteriores .= '/manuales';
+                break;
+            case 'plan':
+                $path_documentos_versiones_anteriores .= '/planes';
+                break;
+            case 'instructivo':
+                $path_documentos_versiones_anteriores .= '/instructivos';
+                break;
+            case 'reglamento':
+                $path_documentos_versiones_anteriores .= '/reglamentos';
+                break;
+            case 'externo':
+                $path_documentos_versiones_anteriores .= '/externos';
+                break;
+            case 'proceso':
+                $path_documentos_versiones_anteriores .= '/procesos';
+                break;
+            default:
+                $path_documentos_versiones_anteriores .= '/procesos';
+                break;
+        }
+
+        $extension = pathinfo($path_documentos_versiones_anteriores . '/' . $documento->archivo, PATHINFO_EXTENSION);
+
+        $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '.' . $extension;
+        $ruta_publicacion = $path_documentos_versiones_anteriores . '/' . $nombre_documento;
+
+        Storage::move($path_documento_version_anterior, $ruta_publicacion);
     }
 }

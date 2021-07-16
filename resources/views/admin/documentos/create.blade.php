@@ -92,6 +92,7 @@
                 enctype="multipart/form-data">
                 @csrf
                 @include('admin.documentos._form')
+                <a href="{{ route('admin.documentos.index') }}" class="text-white btn btn-danger">Cancelar</a>
                 <input type="submit" class="btn btn-primary" value="Guardar">
                 <button id="publicar" class="btn btn-primary">Publicar</button>
             </form>
@@ -100,15 +101,18 @@
                 aria-labelledby="modalPublicarLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        {{-- <div class="modal-header">
                             <h5 class="modal-title" id="modalPublicarLabel">Configuración de revisores (antes de solicitud
                                 de aprobación)</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>
+                        </div> --}}
                         <div class="modal-body">
-                            <h5 class="titulo-modal">Publicar</h5>
+                            <h5 class="titulo-modal">Publicar <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button></h5>
                             <form action="{{ route('admin.documentos.publish') }}" id="formPublish"
                                 enctype="multipart/form-data">
                                 <div class="row">
@@ -426,6 +430,7 @@
                     })
                 }
             })
+
         });
 
         function formatStateMulti(opt) {

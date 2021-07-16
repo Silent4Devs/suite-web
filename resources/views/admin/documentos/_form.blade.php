@@ -42,7 +42,8 @@
         <div class="form-group">
             <label for="nombre">Nombre del documento:</label>
             <input type="text" class="form-control {{ $errors->has('nombre') ? 'error-border' : '' }}" id="nombre"
-                aria-describedby="nombre" name="nombre" value="{{ old('nombre', $documentoActual->nombre) }}">
+                aria-describedby="nombre" name="nombre" value="{{ old('nombre', $documentoActual->nombre) }}"
+                {{ $documentoActual->nombre ? 'readonly' : '' }}>
             @if ($errors->has('nombre'))
                 <span class="text-danger">
                     {{ $errors->first('nombre') }}
@@ -159,7 +160,7 @@
             style="cursor: pointer"><span>{{ $documentoActual->archivo != null ? 'Reemplazar' : 'Archivo' }}</span></label>
         <div class="mb-3 custom-file">
             <input type="file" class="custom-file-input" id="archivo"
-                {{ $documentoActual->archivo == null ? 'required' : '' }} name="archivo">
+                {{ $documentoActual->archivo == null ? 'required' : '' }} name="archivo" accept="application/pdf">
             <label class="custom-file-label"
                 for="archivo">{{ $documentoActual->archivo == null ? 'Selecciona un archivo' : $documentoActual->archivo }}</label>
             @if ($errors->has('archivo'))

@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDocumentosTable extends Migration
+class CreateHistorialVersionesDocumentosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,10 @@ class CreateDocumentosTable extends Migration
      */
     public function up()
     {
-        Schema::create('documentos', function (Blueprint $table) {
+        Schema::create('historial_versiones_documentos', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo')->unique();
+            $table->unsignedBigInteger('documento_id');
+            $table->string('codigo');
             $table->string('nombre');
             $table->string('tipo');
             $table->unsignedInteger('macroproceso_id')->nullable();
@@ -32,8 +33,9 @@ class CreateDocumentosTable extends Migration
             $table->softDeletes();
         });
 
-        Schema::table('documentos', function (Blueprint $table) {
+        Schema::table('historial_versiones_documentos', function (Blueprint $table) {
             // Relaciones 
+            $table->foreign('documento_id')->references('id')->on('documentos');
             $table->foreign('macroproceso_id')->references('id')->on('macroprocesos');
             $table->foreign('elaboro_id')->references('id')->on('empleados')->onDelete('SET NULL');
             $table->foreign('reviso_id')->references('id')->on('empleados')->onDelete('SET NULL');
@@ -49,6 +51,6 @@ class CreateDocumentosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documentos');
+        Schema::dropIfExists('historial_versiones_documentos');
     }
 }

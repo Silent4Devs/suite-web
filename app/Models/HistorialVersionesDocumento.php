@@ -6,26 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Documento extends Model
+class HistorialVersionesDocumento extends Model
 {
     use HasFactory, SoftDeletes;
-
-    //REVISION DE DOCUMENTOS ESTATUS
-    const SOLICITUD_REVISION = 1;
-    const APROBADO = 2;
-    const RECHAZADO = 3;
-    const RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR = 4;
-
-    // DOCUMENTOS ESTATUS
-    const EN_ELABORACION = 1;
-    const EN_REVISION = 2;
-    const PUBLICADO = 3;
-    const DOCUMENTO_RECHAZADO = 4;
-    const DOCUMENTO_OBSOLETO = 5;
 
     protected $dates = ['fecha'];
 
     protected $fillable = [
+        'documento_id',
         'codigo',
         'nombre',
         'tipo',
@@ -40,21 +28,9 @@ class Documento extends Model
         'responsable_id'
     ];
 
-    //Relacion uno a muchos inversa
-    public function empleado()
+    public function documento()
     {
-        return $this->belongsTo(Empleado::class);
-    }
-
-    public function revisores()
-    {
-        return $this->belongsToMany(Empleado::class);
-    }
-
-
-    public function revisiones()
-    {
-        return $this->hasMany(RevisionDocumento::class, 'documento_id', 'id');
+        return $this->belongsTo(Empleado::class, 'documento_id', 'id');
     }
 
     public function revisor()
@@ -76,6 +52,7 @@ class Documento extends Model
     {
         return $this->belongsTo(Empleado::class, 'aprobo_id', 'id');
     }
+
     public function responsable()
     {
         return $this->belongsTo(Empleado::class, 'responsable_id', 'id');

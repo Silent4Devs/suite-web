@@ -16,7 +16,8 @@ class HistorialRevisionDocumento extends Model
         'comentarios',
         'descripcion',
         'fecha',
-        'estatus'
+        'estatus',
+        'version',
     ];
 
     protected $dates = [

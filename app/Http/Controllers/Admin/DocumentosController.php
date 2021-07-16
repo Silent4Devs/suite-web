@@ -64,13 +64,14 @@ class DocumentosController extends Controller
             'macroproceso' => 'required|exists:macroprocesos,id',
             //'version' => 'required|string',
             'fecha' => 'required|date',
-            'archivo' => 'required|file',
+            'archivo' => 'required|mimetypes:application/pdf|max:10000',
             'elaboro_id' => 'required|exists:empleados,id',
             'aprobo_id' => 'required|exists:empleados,id',
             'reviso_id' => 'required|exists:empleados,id',
             'responsable_id' => 'required|exists:empleados,id'
         ], [
-            'codigo.unique' => 'El código de documento ya ha sido tomado'
+            'codigo.unique' => 'El código de documento ya ha sido tomado',
+            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF'
         ]);
     }
 
@@ -108,7 +109,7 @@ class DocumentosController extends Controller
                 break;
         }
         $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);
-        $nombre_original = $request->nombre . 'V1';
+        $nombre_original = $request->codigo . '-' . $request->nombre . '-v0';
         $nombre_compuesto = basename($nombre_original) . '.' . $extension;
         $request->file('archivo')->storeAs($path_documentos_aprobacion, $nombre_compuesto); // Almacenar Archivo
 
@@ -118,7 +119,7 @@ class DocumentosController extends Controller
             'tipo' => $request->tipo,
             'estatus' => $estatus,
             'macroproceso_id' => $request->macroproceso,
-            'version' => 1,
+            'version' => 0,
             'fecha' => $request->fecha,
             'archivo' => $nombre_compuesto,
             'elaboro_id' => $request->elaboro_id,
@@ -173,13 +174,14 @@ class DocumentosController extends Controller
             'macroproceso' => 'required|exists:macroprocesos,id',
             //'version' => 'required|string',
             'fecha' => 'required|date',
-            'archivo' => 'required|file',
+            'archivo' => 'required|mimetypes:application/pdf|max:10000',
             'elaboro_id' => 'required_if:elaboro_id,null|exists:empleados,id',
             'aprobo_id' => 'required_if:aprobo_id,null|exists:empleados,id',
             'reviso_id' => 'required_if:reviso_id,null|exists:empleados,id',
             'responsable_id' => 'required_if:responsable_id,null|exists:empleados,id'
         ], [
-            'codigo.unique' => 'El código de documento ya ha sido tomado'
+            'codigo.unique' => 'El código de documento ya ha sido tomado',
+            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF'
         ]);
     }
 
@@ -223,7 +225,7 @@ class DocumentosController extends Controller
         }
         if ($request->file('archivo')) {
             $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_original = $request->nombre . 'V' . $version;
+            $nombre_original = $documento->codigo . '-' . $request->nombre . '-v' . $version;
             $nombre_compuesto = basename($nombre_original) . '.' . $extension;
             $request->file('archivo')->storeAs($path_documentos_aprobacion, $nombre_compuesto); // Almacenar Archivo
         }
@@ -283,6 +285,7 @@ class DocumentosController extends Controller
                 'documento_id' => $documento_id,
                 'descripcion' =>  $datos['descripcion'],
                 'comentarios' =>  $datos['comentarios'],
+                'version' => $documento->version,
                 'fecha' => Carbon::now()
             ]);
 
@@ -293,7 +296,8 @@ class DocumentosController extends Controller
                         'empleado_id' => $revisor_id,
                         'nivel' => 1,
                         'no_revision' => strval($numero_revision),
-                        'documento_id' => $documento_id
+                        'documento_id' => $documento_id,
+                        'version' => $documento->version
                     ]);
                     Mail::to($revisor->empleado->email)->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
                 }
@@ -306,7 +310,8 @@ class DocumentosController extends Controller
                         'empleado_id' => $revisor_id,
                         'nivel' => 2,
                         'no_revision' => strval($numero_revision),
-                        'documento_id' => $documento_id
+                        'documento_id' => $documento_id,
+                        'version' => $documento->version
                     ]);
                 }
             }
@@ -317,7 +322,8 @@ class DocumentosController extends Controller
                         'empleado_id' => $revisor_id,
                         'nivel' => 3,
                         'no_revision' => strval($numero_revision),
-                        'documento_id' => $documento_id
+                        'documento_id' => $documento_id,
+                        'version' => $documento->version
                     ]);
                 }
             }
@@ -331,5 +337,44 @@ class DocumentosController extends Controller
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento->id)->get();
 
         return view('admin.documentos.history-reviews', compact('documento', 'revisiones'));
+    }
+
+    public function renderViewDocument(Documento $documento)
+    {
+        $path_documento = 'storage/Documentos en aprobacion';
+        if ($documento->estatus == strval(Documento::PUBLICADO)) {
+            $path_documento = 'storage/Documentos publicados';
+        }
+
+        switch ($documento->tipo) {
+            case 'politica':
+                $path_documento .= '/politicas';
+                break;
+            case 'procedimiento':
+                $path_documento .= '/procedimientos';
+                break;
+            case 'manual':
+                $path_documento .= '/manuales';
+                break;
+            case 'plan':
+                $path_documento .= '/planes';
+                break;
+            case 'instructivo':
+                $path_documento .= '/instructivos';
+                break;
+            case 'reglamento':
+                $path_documento .= '/reglamentos';
+                break;
+            case 'externo':
+                $path_documento .= '/externos';
+                break;
+            case 'proceso':
+                $path_documento .= '/procesos';
+                break;
+            default:
+                $path_documento .= '/procesos';
+                break;
+        }
+        return view('admin.documentos.view-document-file', compact('documento', 'path_documento'));
     }
 }

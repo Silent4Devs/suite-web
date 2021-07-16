@@ -420,6 +420,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('documentos/store-when-publish', 'DocumentosController@storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
     Route::post('documentos/publish', 'DocumentosController@publish')->name('documentos.publish');
     Route::post('documentos/check-code', 'DocumentosController@checkCode')->name('documentos.checkCode');
+    Route::get('documentos/{documento}/view-document', 'DocumentosController@renderViewDocument')->name('documentos.renderViewDocument');
     Route::get('documentos/{documento}/history-reviews', 'DocumentosController@renderHistoryReview')->name('documentos.renderHistoryReview');
     Route::resource('documentos', 'DocumentosController');
 
