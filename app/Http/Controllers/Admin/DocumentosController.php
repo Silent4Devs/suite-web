@@ -9,6 +9,7 @@ use App\Models\Documento;
 use App\Models\Empleado;
 use App\Models\HistorialRevisionDocumento;
 use App\Models\Macroproceso;
+use App\Models\Proceso;
 use App\Models\RevisionDocumento;
 use App\Models\User;
 use Carbon\Carbon;
@@ -126,6 +127,16 @@ class DocumentosController extends Controller
             'reviso_id' => $request->reviso_id,
             'responsable_id' => $request->responsable_id
         ]);
+
+        if ($request->tipo=='proceso') {
+            Proceso::create([
+                'nombre'=>$request->nombre,
+                'codigo'=>$request->codigo,
+                'estatus'=>Proceso::NO_ACTIVO,
+                'id_macroproceso'=>$request->macroproceso,
+                'documento_id'=>$documento->id
+            ]);
+         }
 
         return $documento;
     }

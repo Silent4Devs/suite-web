@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-	
+
 
     <style type="text/css">
 
@@ -13,6 +13,11 @@
 
         body{
             background-color: #fff;
+        }
+
+        .not-active {
+            pointer-events: none;
+            cursor: default;
         }
         .c-main{
             overflow-y: scroll !important;
@@ -67,14 +72,15 @@
         .caja_central h3{
             width: 300px;
             margin: auto;
-            margin-bottom: -13px;
+            margin-bottom: -10px;
             border-radius: 100px;
             color: #fff;
             text-align: center;
             position: relative;
             z-index: 2;
+            font-size:12pt;
         }
-        
+
 
 
 
@@ -112,14 +118,18 @@
         .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_grupos p.activo{background-color: var(--color3);}
 
         .caja_central p{
-            width: 150px;
-            padding: 10px 0;
+            width:200px;
+            height:80px;
+            padding: 10px;
             display: inline-block;
             border: 1px solid #ccc;
             margin: 0;
-            margin-top: 10px;
+            margin-bottom: 10px;
             border-radius: 10px;
             cursor: pointer;
+            text-decoration: none;
+            overflow-y:auto;
+            margin-right:10px;
         }
         .caja_central span{
             width: auto;
@@ -144,11 +154,11 @@
             background-color: rgba(0, 0, 0, 0);
         }
         .caja_central::-webkit-scrollbar-thumb{
-            background-color: rgba(0, 0, 0, 0.2);   
+            background-color: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
         }
         .caja_central::-webkit-scrollbar-thumb:hover{
-            background-color: rgba(0, 0, 0, 0.3);   
+            background-color: rgba(0, 0, 0, 0.3);
         }
 
 
@@ -188,17 +198,18 @@
         }
 
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) a{color: var(--color1) !important;}
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) a{color: var(--color2) !important;}
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) a{color: var(--color3) !important;}
+        .caja_central .contenido_h3_and_grupos:nth-child(n) .macro_a a{color: var(--color1) !important;}
+        .caja_central .contenido_h3_and_grupos:nth-child(2n) .macro_a a{color: var(--color2) !important;}
+        .caja_central .contenido_h3_and_grupos:nth-child(3n) .macro_a a{color: var(--color3) !important;}
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_procesos_dinamica a:not(.registre):hover{border:1px solid var(--color1);}
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_procesos_dinamica a:not(.registre):hover{border:1px solid var(--color2);}
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_procesos_dinamica a:not(.registre):hover{border:1px solid var(--color3);}
+        .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_procesos_dinamica .macro_a:hover{border:1px solid var(--color1);}
+        .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_procesos_dinamica .macro_a:hover{border:1px solid var(--color2);}
+        .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_procesos_dinamica .macro_a:hover{border:1px solid var(--color3);}
 
-        .caja_procesos_dinamica a:not(.registre){
-            width: 150px;
-            padding: 10px 0;
+        .caja_procesos_dinamica .macro_a{
+            width:200px;
+            height:80px;
+            padding: 10px;
             display: inline-block;
             border: 1px solid #ccc;
             margin: 0;
@@ -206,19 +217,59 @@
             border-radius: 10px;
             cursor: pointer;
             text-decoration: none;
+            overflow-y:auto;
+            margin-right:10px;
+        }
+
+        .caja_procesos_dinamica a{
+
+            text-decoration:none;
+        }
+
+
+        .macro_a::-webkit-scrollbar, .caja_central p::-webkit-scrollbar {
+        width: 7px;
         }
 
 
 
+        /* Track */
+        .macro_a::-webkit-scrollbar-track, .caja_central p::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0);
+        }
 
 
- 
+
+        /* Handle */
+        .macro_a::-webkit-scrollbar-thumb, .caja_central p::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 50px;
+        }
+
+
+
+        /* Handle on hover */
+        .macro_a::-webkit-scrollbar-thumb:hover, .caja_central p::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.5);
+        }
+
+        .pendiente{
+
+            display:inline-block;
+            width:100%;
+            text-align:right;
+
+        }
 
     </style>
 
+    @if($exist_no_publicado)
+    <div class="pendiente">
+        <i class="fas fa-circle" style="color:yellow"></i>  Pendiente de aprobación
+    </div>
+    @endif
 
-
-	<div id="caja_mapa_procesos">
+	<div id="caja_mapa_procesos" style="margin-top:30px;">
 
         <div class="caja2">
             <p>Nececidades del cliente</p>
@@ -241,14 +292,16 @@
                         </a>
                     @endforelse
                     </div>
-                
+
 
                     @foreach($grupo_map->macroprocesos as $macro_map)
                         <div id="div_caja_macro{{$macro_map->id}}" class="caja_procesos_dinamica">
                             @forelse($macro_map->procesos as $proceso_map)
-                                <a href="#">
-                                    {{$proceso_map->nombre}}
-                                </a>
+                                <div class="macro_a" style="{{$proceso_map->estatus=='2'?'border:2px solid yellow; color:black !important':''}}">
+                                    <a class="{{$proceso_map->estatus=='2'?'not-active':''}}" href="{{route("admin.procesos.obtenerDocumentoProcesos",$proceso_map->documento_id)}}">
+                                        {{$proceso_map->nombre}}
+                                    </a>
+                                </div>
                             @empty
                                 <a href="{{ asset('admin/procesos') }}" class="registre">
                                     Registrar procesos
@@ -266,7 +319,7 @@
 
         <div class="caja2" style="right: 30px;">
             <p>Satisfaccion del cliente</p>
-        </div>              
+        </div>
 
 
         {{-- <div class="d-flex justify-content-center">
@@ -274,6 +327,8 @@
         </div> --}}
 
     </div>
+
+
 
 @endsection
 
@@ -287,9 +342,9 @@
         });
     </script>
 
-    
+
     <script type="text/javascript">
         @foreach($grupos_mapa as $grupo_map) @foreach($grupo_map->macroprocesos as $macro_map) $("#span_caja_macro{{$macro_map->id}}").click(function(){ $(".caja_revelada").removeClass("caja_revelada"); $("#div_caja_macro{{$macro_map->id}}").addClass("caja_revelada"); }); @endforeach @endforeach
     </script>
-        
+
 @endsection

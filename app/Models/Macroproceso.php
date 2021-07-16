@@ -58,4 +58,9 @@ class Macroproceso extends Model
 	{
 		return $this->hasMany(Proceso::class, 'id_macroproceso');
 	}
+
+    public function procesosWithDocumento()
+	{
+		return $this->hasMany(Proceso::class, 'id_macroproceso')->with('documento');
+	}
 }

@@ -55,6 +55,7 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
+    protected $appends = ['avatar'];
     protected $fillable = [
         'name',
         'n_registro',
@@ -70,6 +71,24 @@ class Empleado extends Model
         'area_id',
         'sede_id'
     ];
+    public function getAvatarAttribute()
+    {
+        if ($this->foto==null) {
+            if($this->genero=='H'){
+                return "man.png";
+            }
+            elseif ($this->genero=='M') {
+               return "woman.png";
+            }
+            else{
+                return "usuario_no_cargado";
+            }
+        }
+        return $this->foto;
+    }
+
+
+    
 
     public function area()
     {

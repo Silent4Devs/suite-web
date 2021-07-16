@@ -37,13 +37,18 @@ class Proceso extends Model
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
+    const ACTIVO = '1';
+    const NO_ACTIVO = '2';
 
 
 	protected $fillable = [
 		'codigo',
 		'nombre',
 		'id_macroproceso',
-		'descripcion'
+		'descripcion',
+        'estatus',
+        'documento_id'
+
 	];
 
 	public function macroproceso()
@@ -58,7 +63,7 @@ class Proceso extends Model
 
     public function documento()
 	{
-		return $this->belongsToMany(Documento::class);
+		return $this->belongsTo(Documento::class,'documento_id','id');
 	}
 
     public function vistaDocumento()
