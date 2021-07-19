@@ -352,6 +352,7 @@
                                 $nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
                             @endphp
                             <span class="badge badge-primary">{{ $nf->format($revision->no_revision) }} REVISIÓN</span>
+                            <span class="badge badge-dark">{{ $nf->format($revision->version) }} VERSIÓN</span>
                             <p class="description">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-chat-dots" viewBox="0 0 16 16">

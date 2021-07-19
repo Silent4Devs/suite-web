@@ -65,9 +65,21 @@ return [
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'private',
         ],
-        'Documentos en aprobación' => [
+        'Documentos en aprobacion' => [
             'driver' => 'local',
             'root' => storage_path('app/public/Documentos en aprobacion'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'private',
+        ],
+        'Documentos obsoletos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/Documentos obsoletos'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'private',
+        ],
+        'Documentos versiones anteriores' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/Documento versiones anteriores'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'private',
         ],

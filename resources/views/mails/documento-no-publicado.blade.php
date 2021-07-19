@@ -91,7 +91,7 @@
                                                     style="text-transform: capitalize">{{ $documento->tipo }}</span> -
                                                 ({{ $documento->codigo }})
                                                 {{ $documento->nombre }}</p>
-                                            <a href="{{ route('admin.documentos.index') }}"
+                                            <a href="{{ route('admin.documentos.renderViewDocument', $documento) }}"
                                                 style="outline: none; text-decoration: none; font-size: small; font-family: Arial, Helvetica, sans-serif; background-color: #0b89bb; padding: 10px; border-radius: 10px; color: white;">
                                                 <span>Ver Documento</span>
                                             </a>

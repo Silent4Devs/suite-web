@@ -42,7 +42,8 @@
         <div class="form-group">
             <label for="nombre">Nombre del documento:</label>
             <input type="text" class="form-control {{ $errors->has('nombre') ? 'error-border' : '' }}" id="nombre"
-                aria-describedby="nombre" name="nombre" value="{{ old('nombre', $documentoActual->nombre) }}">
+                aria-describedby="nombre" name="nombre" value="{{ old('nombre', $documentoActual->nombre) }}"
+                {{ $documentoActual->nombre ? 'readonly' : '' }}>
             @if ($errors->has('nombre'))
                 <span class="text-danger">
                     {{ $errors->first('nombre') }}
@@ -112,7 +113,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-12 col-lg-3">
+    <div class="col-sm-12 col-lg-3" id="macroprocesos">
         <div class="form-group">
             <label for="macroproceso">Macroproceso:</label>
             <select class="form-control {{ $errors->has('macroproceso') ? 'error-border' : '' }}" id="macroproceso"
@@ -130,6 +131,30 @@
                 </span>
             @endif
             <span class="text-danger macroproceso_error error-ajax"></span>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-3 d-none" id="procesos">
+        <div class="form-group">
+            @if (count($procesos) == 0)
+                <span class="badge badge-warning">Debes registrar un documento de tipo PROCESO</span>
+            @else
+                <label for="proceso">Proceso:</label>
+            @endif
+            <select class="form-control {{ $errors->has('proceso') ? 'error-border' : '' }}" id="proceso"
+                name="proceso">
+                <option value="" selected disabled>--Seleccionar--</option>
+                @foreach ($procesos as $proceso)
+                    <option value="{{ $proceso->id }}"
+                        {{ old('proceso', $documentoActual->proceso_id) == $proceso->id ? 'selected' : '' }}>
+                        {{ $proceso->nombre }}</option>
+                @endforeach
+            </select>
+            @if ($errors->has('proceso'))
+                <span class="text-danger">
+                    {{ $errors->first('proceso') }}
+                </span>
+            @endif
+            <span class="text-danger proceso_error error-ajax"></span>
         </div>
     </div>
     <div class="col-sm-12 col-lg-2">
@@ -159,7 +184,7 @@
             style="cursor: pointer"><span>{{ $documentoActual->archivo != null ? 'Reemplazar' : 'Archivo' }}</span></label>
         <div class="mb-3 custom-file">
             <input type="file" class="custom-file-input" id="archivo"
-                {{ $documentoActual->archivo == null ? 'required' : '' }} name="archivo">
+                {{ $documentoActual->archivo == null ? 'required' : '' }} name="archivo" accept="application/pdf">
             <label class="custom-file-label"
                 for="archivo">{{ $documentoActual->archivo == null ? 'Selecciona un archivo' : $documentoActual->archivo }}</label>
             @if ($errors->has('archivo'))

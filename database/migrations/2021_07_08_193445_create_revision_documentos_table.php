@@ -22,6 +22,7 @@ class CreateRevisionDocumentosTable extends Migration
             $table->string('nivel')->nullable();
             $table->enum('estatus', [Documento::APROBADO, Documento::RECHAZADO, Documento::SOLICITUD_REVISION, Documento::RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR])->default(Documento::SOLICITUD_REVISION);
             $table->string('no_revision')->default('1');
+            $table->string('version')->default('0');
             $table->timestamps();
             $table->softDeletes();
 

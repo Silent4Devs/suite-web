@@ -20,7 +20,8 @@ class CreateHistorialRevisionDocumentosTable extends Migration
             $table->longText('descripcion');
             $table->longText('comentarios');
             $table->dateTime('fecha')->nullable();
-            $table->enum('estatus', [Documento::EN_ELABORACION, Documento::EN_REVISION, Documento::PUBLICADO, Documento::DOCUMENTO_RECHAZADO])->default(Documento::EN_ELABORACION);
+            $table->enum('estatus', [Documento::EN_ELABORACION, Documento::EN_REVISION, Documento::PUBLICADO, Documento::DOCUMENTO_RECHAZADO, Documento::DOCUMENTO_OBSOLETO])->default(Documento::EN_ELABORACION);
+            $table->string('version');
             $table->timestamps();
             $table->softDeletes();
 

@@ -18,9 +18,6 @@ class AddColumns3ToEntendimientoOrganizacionsTable extends Migration
             $table->string('analisis')->before('amenazas')->nullable();
             $table->date('fecha')->before('analisis')->nullable();
         });
-
-
-
     }
 
     /**
@@ -31,7 +28,8 @@ class AddColumns3ToEntendimientoOrganizacionsTable extends Migration
     public function down()
     {
         Schema::table('entendimiento_organizacions', function (Blueprint $table) {
-            //
+            $table->dropColumn('analisis');
+            $table->dropColumn('fecha');
         });
     }
 }
