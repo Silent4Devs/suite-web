@@ -17,21 +17,23 @@
                         <th>
 
                         </th>
-                        <th>
-                            Código
+                        <th class="estilotd contratos-table">Codigo&nbsp;<?php for($i = 0; $i < 20; $i++): ?>&nbsp;<?php endfor; ?>
                         </th>
+
                         <th>
                             Nombre del proceso
                         </th>
-                        <th>
-                            Macroproceso
+
+                        <th class="estilotd contratos-table">Macroproceso&nbsp;<?php for($i = 0; $i < 60; $i++): ?>&nbsp;<?php endfor; ?>
                         </th>
-                        <th>
+
+
+                        {{-- <th>
                             Descripción
-                        </th>
-                        <th>
+                        </th> --}}
+                        {{-- <th>
                             Opciones
-                        </th>
+                        </th> --}}
                     </tr>
 
                 </thead>
@@ -115,7 +117,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar proceso',
-                url: "{{ route('admin.procesos.create') }}",
+                url: "{{ route('admin.documentos.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -142,25 +144,25 @@
                         visible: false
                     },
                     {
-                        data: 'nombre',
-                        name: 'nombre'
-                    },
-                    {
                         data: 'codigo',
                         name: 'codigo'
+                    },
+                    {
+                        data: 'nombre',
+                        name: 'nombre'
                     },
                     {
                         data: 'macroproceso',
                         name: 'macroproceso'
                     },
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion'
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
+                    // {
+                    //     data: 'descripcion',
+                    //     name: 'descripcion'
+                    // },
+                    // {
+                    //     data: 'actions',
+                    //     name: '{{ trans('global.actions') }}'
+                    // }
                 ],
                 orderCellsTop: true,
                 order: [

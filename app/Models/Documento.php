@@ -25,6 +25,8 @@ class Documento extends Model
 
     protected $dates = ['fecha'];
 
+    protected $appends = ['estatus_formateado'];
+
     protected $fillable = [
         'codigo',
         'nombre',
@@ -39,7 +41,26 @@ class Documento extends Model
         'aprobo_id',
         'responsable_id'
     ];
-
+    public function getEstatusFormateadoAttribute()
+    {
+        switch ($this->estatus) {
+            case strval($this::EN_ELABORACION):
+                return 'En Elaboración';
+                break;
+            case strval($this::EN_REVISION):
+                return 'En Revisión';
+                break;
+            case strval($this::PUBLICADO):
+                return 'Publicado';
+                break;
+            case strval($this::DOCUMENTO_RECHAZADO):
+                return 'Documento Rechazado';
+                break;
+            default:
+                return 'En Elaboración';
+                break;
+        }
+    }
     //Relacion uno a muchos inversa
     public function empleado()
     {
@@ -79,5 +100,10 @@ class Documento extends Model
     public function responsable()
     {
         return $this->belongsTo(Empleado::class, 'responsable_id', 'id');
+    }
+
+    public function procesos()
+    {
+        return $this->hasMany(Proceso::class);
     }
 }
