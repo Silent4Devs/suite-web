@@ -173,7 +173,7 @@ class IndicadoresSgsiController extends Controller
             if (strstr($result, '$')) {
                 array_push($finish_array, $result);
             }
-        }
+        };
 
         $remplazo_formula = str_replace("!", "", $indicadoresSgsis->formula);
 
@@ -184,7 +184,7 @@ class IndicadoresSgsiController extends Controller
 
         foreach ($finish_array as $key => $value) {
 
-            VariablesIndicador::create(['id_indicador' => $indicadoresSgsis->id, 'variable' => $value]);
+            VariablesIndicador::create(['id_indicador' => $indicadoresSgsis->id, 'variable' => str_replace(".", "", $value)]);
         }
 
         //dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);

@@ -456,6 +456,11 @@
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>
     @livewireScripts
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    </script>
+
+    <x-livewire-alert::scripts />
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
     <!-- x-editable -->
     <script>

@@ -287,7 +287,8 @@
                     </div>
                 </div>
                 <h4 class="text-primary">Generación de formúla</h4>
-                <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada" required><br>
+                <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada"
+                    required><br>
                 <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp;
                 <hr>
 
