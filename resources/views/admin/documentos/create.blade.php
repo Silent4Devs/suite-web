@@ -218,6 +218,25 @@
                 templateSelection: formatStateMulti
             });
 
+            let tipoSelect = document.querySelector('#tipo');
+            console.log(tipoSelect);
+            $("#tipo").change(function(e) {
+                e.preventDefault();
+                let valor = e.target.value;
+                console.log(valor);
+                if (valor == 'proceso') {
+                    $("#procesos select#proceso").attr('disabled', true);
+                    $("#procesos").addClass('d-none');
+                    $("#macroprocesos select#macroproceso").attr('disabled', false);
+                    $("#macroprocesos").removeClass('d-none');
+                } else {
+                    $("#macroprocesos select#macroproceso").attr('disabled', true);
+                    $("#macroprocesos").addClass('d-none');
+                    $("#procesos select#proceso").attr('disabled', false);
+                    $("#procesos").removeClass('d-none');
+                }
+            });
+
             document.querySelector('.custom-file-input').addEventListener('change', function(e) {
                 var fileName = document.getElementById("archivo").files[0].name;
                 var nextSibling = e.target.nextElementSibling

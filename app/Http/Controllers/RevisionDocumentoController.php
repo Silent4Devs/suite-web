@@ -375,6 +375,7 @@ class RevisionDocumentoController extends Controller
 
     public function publishDocumentInFolder($path_documento_aprobacion, Documento $documento)
     {
+        $this->createDocumentosPublicadosIfNotExists();
         $path_documentos_publicados = 'public/Documentos publicados';
         switch ($documento->tipo) {
             case 'politica':
@@ -427,6 +428,7 @@ class RevisionDocumentoController extends Controller
 
     public function moveBeforeVersionOfDirectory($path_documento_version_anterior, Documento $documento)
     {
+        $this->createDocumentoVersionesAnterioresIfNotExists();
         $path_documentos_versiones_anteriores = 'public/Documento versiones anteriores';
         switch ($documento->tipo) {
             case 'politica':
@@ -464,6 +466,69 @@ class RevisionDocumentoController extends Controller
         $ruta_publicacion = $path_documentos_versiones_anteriores . '/' . $nombre_documento;
         if (Storage::exists($path_documento_version_anterior)) {
             Storage::move($path_documento_version_anterior, $ruta_publicacion);
+        }
+    }
+
+    public function createDocumentosPublicadosIfNotExists()
+    {
+        if (!Storage::exists('/public/Documentos publicados')) {
+            Storage::makeDirectory('/public/Documentos publicados', 0775, true);
+        }
+        if (!Storage::exists('/public/Documentos publicados/politicas')) {
+            Storage::makeDirectory('/public/Documentos publicados/politicas', 0775, true);
+        }
+        if (!Storage::exists('/public/Documentos publicados/procedimientos')) {
+            Storage::makeDirectory('/public/Documentos publicados/procedimientos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documentos publicados/manuales')) {
+            Storage::makeDirectory('/public/Documentos publicados/manuales', 0775, true);
+        }
+        if (!Storage::exists('/public/Documentos publicados/planes')) {
+            Storage::makeDirectory('/public/Documentos publicados/planes', 0775, true);
+        }
+        if (!Storage::exists('/public/Documentos publicados/instructivos')) {
+            Storage::makeDirectory('/public/Documentos publicados/instructivos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documentos publicados/reglamentos')) {
+            Storage::makeDirectory('/public/Documentos publicados/reglamentos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documentos publicados/externos')) {
+            Storage::makeDirectory('/public/Documentos publicados/externos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documentos publicados/procesos')) {
+            Storage::makeDirectory('/public/Documentos publicados/procesos', 0775, true);
+        }
+    }
+
+
+    public function createDocumentoVersionesAnterioresIfNotExists()
+    {
+        if (!Storage::exists('/public/Documento versiones anteriores')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores', 0775, true);
+        }
+        if (!Storage::exists('/public/Documento versiones anteriores/politicas')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores/politicas', 0775, true);
+        }
+        if (!Storage::exists('/public/Documento versiones anteriores/procedimientos')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores/procedimientos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documento versiones anteriores/manuales')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores/manuales', 0775, true);
+        }
+        if (!Storage::exists('/public/Documento versiones anteriores/planes')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores/planes', 0775, true);
+        }
+        if (!Storage::exists('/public/Documento versiones anteriores/instructivos')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores/instructivos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documento versiones anteriores/reglamentos')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores/reglamentos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documento versiones anteriores/externos')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores/externos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documento versiones anteriores/procesos')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores/procesos', 0775, true);
         }
     }
 }

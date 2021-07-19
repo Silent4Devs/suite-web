@@ -20,6 +20,7 @@ class CreateDocumentosTable extends Migration
             $table->string('nombre');
             $table->string('tipo');
             $table->unsignedInteger('macroproceso_id')->nullable();
+            $table->unsignedInteger('proceso_id')->nullable();
             $table->enum('estatus', [Documento::EN_ELABORACION, Documento::EN_REVISION, Documento::PUBLICADO, Documento::DOCUMENTO_RECHAZADO, Documento::DOCUMENTO_OBSOLETO])->default(Documento::EN_ELABORACION);
             $table->string('version');
             $table->dateTime('fecha');
@@ -35,6 +36,7 @@ class CreateDocumentosTable extends Migration
         Schema::table('documentos', function (Blueprint $table) {
             // Relaciones 
             $table->foreign('macroproceso_id')->references('id')->on('macroprocesos');
+            $table->foreign('proceso_id')->references('id')->on('procesos');
             $table->foreign('elaboro_id')->references('id')->on('empleados')->onDelete('SET NULL');
             $table->foreign('reviso_id')->references('id')->on('empleados')->onDelete('SET NULL');
             $table->foreign('aprobo_id')->references('id')->on('empleados')->onDelete('SET NULL');
