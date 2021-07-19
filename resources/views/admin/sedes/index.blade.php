@@ -34,7 +34,7 @@
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor registre cada una de las sedes
                             con las que cuenta su organización</p>
 
-@if($numero_sedes>0)
+{{-- @if($numero_sedes>0) --}}
 
 
 

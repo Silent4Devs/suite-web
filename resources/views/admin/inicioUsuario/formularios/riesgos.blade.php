@@ -24,7 +24,7 @@
 					<input type="date" name="" class="form-control">
 				</div>
 				<div class="form-group mt-4 col-6">
-					<label class="form-label">Hora</label>
+					<label class="form-label">Proceso al que afecta</label>
 					<input type="time" name="" class="form-control">
 				</div>
 

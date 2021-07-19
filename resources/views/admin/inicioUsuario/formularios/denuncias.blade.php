@@ -34,6 +34,11 @@
 				</div>
 
 				<div class="form-group mt-4">
+					<label class="form-label">Area al pertenece colaborador denunciado</label>
+					<input type="" name="" class="form-control">
+				</div>
+
+				<div class="form-group mt-4">
 					<label class="form-label">Indique el tipo de denuncia de que se trata</label>
 					<input type="" name="" class="form-control">
 				</div>
