@@ -8,12 +8,14 @@ use App\Http\Livewire\NotificacionesComponent;
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
+Route::post('/revisiones/approve', 'RevisionDocumentoController@approve')->name('revisiones.approve');
+Route::post('/revisiones/reject', 'RevisionDocumentoController@reject')->name('revisiones.reject');
+Route::get('/revisiones/{revisionDocumento}', 'RevisionDocumentoController@edit')->name('revisiones.revisar');
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
 
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
-
 
     Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
 
@@ -50,15 +52,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 
 
-
     Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
     Route::post('planTrabajoBase/save/current', 'PlanTrabajoBaseController@saveCurrentProyect')->name('planTrabajoBase.saveCurrentProyect');
     Route::post('planTrabajoBase/save/status', 'PlanTrabajoBaseController@saveStatus')->name('planTrabajoBase.saveStatus');
     Route::post('planTrabajoBase/check/changes', 'PlanTrabajoBaseController@checkChanges')->name('planTrabajoBase.checkChanges');
     Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
     Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
-
-
 
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
@@ -69,7 +68,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Route::resource('analisis-brechas', 'AnalisisBController');
     Route::get('analisis-brechas', 'AnalisisBController@index');
     Route::post('analisis-brechas/update', 'AnalisisBController@update');
-
 
     // Declaracion de Aplicabilidad
     Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
@@ -87,15 +85,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //procesos
 
     Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
-
+    Route::get('procesos/{documento}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
     Route::resource('procesos', 'ProcesoController');
-
-    
-
 
 
     //macroprocesos
     Route::resource('macroprocesos', 'MacroprocesoController');
+
 
 
 
@@ -140,7 +136,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
 
     // Entendimiento Organizacions
-    Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController', ['except' => ['show', 'destroy']]);
+    Route::delete('entendimiento-organizacions/destroy', 'EntendimientoOrganizacionController@massDestroy')->name('entendimiento-organizacions.massDestroy');
+    Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController');
+    Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
+    Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
 
     // Partes Interesadas
     Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
@@ -323,8 +322,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 
     // Indicadores Sgsis
+    Route::get('evaluaciones-sgsisInsertar', 'IndicadoresSgsiController@evaluacionesInsert')->name('evaluacionesInsert');
     Route::delete('indicadores-sgsis/destroy', 'IndicadoresSgsiController@massDestroy')->name('indicadores-sgsis.massDestroy');
     Route::resource('indicadores-sgsis', 'IndicadoresSgsiController');
+    Route::get('indicadores-sgsisInsertar', 'IndicadoresSgsiController@IndicadorInsert')->name('indicadores-sgsisInsertar');
 
     // Indicadorincidentessis
     Route::resource('indicadorincidentessis', 'IndicadorincidentessiController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
@@ -430,6 +431,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Gap Tres
     Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
     Route::resource('gap-tres', 'GapTresController');
+
+    //Documentos
+    Route::patch('documentos/{documento}/update-when-publish', 'DocumentosController@updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
+    Route::post('documentos/store-when-publish', 'DocumentosController@storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
+    Route::post('documentos/publish', 'DocumentosController@publish')->name('documentos.publish');
+    Route::post('documentos/check-code', 'DocumentosController@checkCode')->name('documentos.checkCode');
+    Route::get('documentos/{documento}/view-document', 'DocumentosController@renderViewDocument')->name('documentos.renderViewDocument');
+    Route::get('documentos/{documento}/history-reviews', 'DocumentosController@renderHistoryReview')->name('documentos.renderHistoryReview');
+    Route::delete('documentos/{documento}/', 'DocumentosController@destroy')->name('documentos.destroy');
+    Route::resource('documentos', 'DocumentosController');
 
     // Control Documentos
     Route::delete('control-documentos/destroy', 'ControlDocumentosController@massDestroy')->name('control-documentos.massDestroy');

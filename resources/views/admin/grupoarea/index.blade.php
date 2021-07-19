@@ -29,7 +29,7 @@
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 1</p>
                     <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas, al finalizar dé
                         clic en siguiente                    </span>
-                      <a href="{{ route("admin.areas.index") }}"  class="item-right col-2 btn text-light " style="background-color:rgb(85, 217, 226); float:right">Siguiente</a>
+                      <a href="{{ route("admin.areas.index") }}"  class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Siguiente</a>
                 </div>
             </div>
         </div>

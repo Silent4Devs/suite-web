@@ -17,10 +17,6 @@ class StoreIndicadoresSgsiRequest extends FormRequest
     public function rules()
     {
         return [
-            'control'    => [
-                'string',
-                'required',
-            ],
             'titulo'     => [
                 'string',
                 'nullable',

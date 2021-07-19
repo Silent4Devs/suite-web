@@ -19,6 +19,7 @@ class inicioUsuarioController extends Controller
     public function index()
     {
         $usuario = auth()->user();
+
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
 
         $gantt_path = 'storage/gantt/';
@@ -55,8 +56,8 @@ class inicioUsuarioController extends Controller
             $query->where('empleados.id',$usuario->id);
         })->get();
 
-        
-        
+
+
 
         return view('admin.inicioUsuario.index', compact('usuario', 'file_gantt', 'plan_base', 'auditorias_anual', 'recursos', 'actividades'));
     }

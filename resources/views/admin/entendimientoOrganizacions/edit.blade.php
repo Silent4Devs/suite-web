@@ -27,6 +27,8 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+
+
             CKEDITOR.replace('fortalezas', {
                 toolbar: [{
                     name: 'paragraph',

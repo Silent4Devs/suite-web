@@ -1,12 +1,9 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  *
  * @property Macroproceso|null $macroproceso
+ * @property Collection|IndicadoresSgsi[] $indicadores_sgsis
  *
  * @package App\Models
  */
@@ -39,16 +37,41 @@ class Proceso extends Model
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
+    const ACTIVO = '1';
+    const NO_ACTIVO = '2';
+
 
 	protected $fillable = [
 		'codigo',
 		'nombre',
 		'id_macroproceso',
-		'descripcion'
+		'descripcion',
+        'estatus',
+        'documento_id'
+
 	];
 
 	public function macroproceso()
 	{
 		return $this->belongsTo(Macroproceso::class, 'id_macroproceso');
 	}
+
+	public function indicadores_sgsis()
+	{
+		return $this->hasMany(IndicadoresSgsi::class, 'id_proceso');
+	}
+
+    public function documento()
+	{
+		return $this->belongsTo(Documento::class,'documento_id','id');
+	}
+
+    public function vistaDocumento()
+	{
+		return $this->belongsToMany(Documento::class);
+	}
+
+
+
+
 }
