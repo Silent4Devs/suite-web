@@ -53,6 +53,10 @@ class IndicadoresSgsiController extends Controller
                 return $row->nombre ? $row->nombre : "";
             });
 
+            $table->editColumn('año', function ($row) {
+                return $row->ano ? $row->ano : "";
+            });
+
             /*$table->editColumn('proceso', function ($row) {
                 return $row->proceso->nombre ? $row->proceso->nombre : "";
             });*/

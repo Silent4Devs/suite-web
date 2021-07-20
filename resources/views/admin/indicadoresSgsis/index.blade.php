@@ -24,6 +24,9 @@
                             Proceso
                         </th>--}}
                         <th>
+                            Año
+                        </th>
+                        <th>
                             Descripción
                         </th>
                         <th>
@@ -280,6 +283,10 @@
                     {
                         data: 'nombre',
                         name: 'nombre'
+                    },
+                    {
+                        data: 'año',
+                        name: 'año',
                     },
                     /*{
                         data: 'proceso',
