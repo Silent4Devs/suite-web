@@ -107,7 +107,9 @@
 
     {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
 
-    <form method="POST" action="{{ route('admin.indicadores-sgsis.update', [$indicadoresSgsi->id]) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.indicadores-sgsis.update', [$indicadoresSgsi->id]) }}"
+        enctype="multipart/form-data">
+        @method('PUT')
         @csrf
         <div class="card mt-4">
             <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -116,7 +118,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="form-group col-sm-4">
-                        <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i></i>Nombre del
+                        <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i></i>Nombre
+                            del
                             indicador</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre', $indicadoresSgsi->nombre) }}" required>
@@ -135,7 +138,8 @@
                                 name="id_proceso" id="id_proceso">
                                 <option value="">Seleccione un proceso</option>
                                 @foreach ($procesos as $proceso)
-                                    <option value="{{ $proceso->id }}">
+                                    <option value="{{ $proceso->id }}"
+                                        {{ old('id_proceso', $indicadoresSgsi->id_proceso) === (string) $key ? 'selected' : '' }}>
                                         {{ $proceso->codigo }}/{{ $proceso->nombre }}</option>
                                 @endforeach
                             </select>
@@ -155,7 +159,8 @@
                                 name='id_empleado' id='id_empleado'>
                                 <option value="">Seleccione un responsable</option>
                                 @foreach ($responsables as $responsable)
-                                    <option value="{{ $responsable->id }}">
+                                    <option value="{{ $responsable->id }}"
+                                        {{ old('id_empleado', $indicadoresSgsi->id_empleado) === (string) $key ? 'selected' : '' }}>
                                         {{ $responsable->name }} </option>
                                 @endforeach
                             </select>
@@ -172,7 +177,8 @@
                     <label for="descripcion"><i
                             class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.sede.fields.descripcion') }}</label>
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                        name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+                        name="descripcion"
+                        id="descripcion">{{ old('descripcion', $indicadoresSgsi->descripcion) }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -188,7 +194,7 @@
                             <label class="required" for="rojo"><span class="dotred"></span> De 0 a <span
                                     id="textorojo"></span></label>
                             <input class="form-control {{ $errors->has('rojo') ? 'is-invalid' : '' }}" type="number"
-                                name="rojo" id="rojo" value="{{ old('rojo', '') }}" min="0" required>
+                                name="rojo" id="rojo" value="{{ old('rojo', $indicadoresSgsi->rojo) }}" min="0" required>
                             @if ($errors->has('rojo'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('rojo') }}
@@ -203,7 +209,8 @@
                             <label class="required" for="amarillo"><span class="dotyellow"></span> De <span
                                     id="textorojo2"></span> a <span id="textoamarillo"></span>:</label>
                             <input class="form-control {{ $errors->has('amarillo') ? 'is-invalid' : '' }}" type="number"
-                                name="amarillo" id="amarillo" value="{{ old('amarillo', '') }}" min="" required>
+                                name="amarillo" id="amarillo" value="{{ old('amarillo', $indicadoresSgsi->amarillo) }}"
+                                min="" required>
                             @if ($errors->has('amarillo'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('amarillo') }}
@@ -218,7 +225,8 @@
                             <span class="dotverde"></span>
                             De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
                         <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
-                            name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min="" required>
+                            name="verde" id="verde" value="{{ old('verde', $indicadoresSgsi->verde) }}" placeholder=""
+                            min="" required>
                         @if ($errors->has('verde'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('verde') }}
@@ -232,7 +240,8 @@
                     <div class="form-group col-sm-2">
                         <label class="required" for="unidad"><i class="fas fa-calculator iconos-crear"></i>Unidad</label>
                         <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" type="text"
-                            name="unidadmedida" id="unidadmedida" value="{{ old('unidadmedida', '') }}" required>
+                            name="unidadmedida" id="unidadmedida"
+                            value="{{ old('unidadmedida', $indicadoresSgsi->unidadmedida) }}" required>
                         @if ($errors->has('unidadmedida'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('unidadmedida') }}
@@ -243,9 +252,10 @@
 
                     <div class="form-group col-sm-2">
                         <div class="form-group">
-                            <label class="required" for="meta"><i class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
+                            <label class="required" for="meta"><i
+                                    class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
                             <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" type="text"
-                                name="meta" id="meta" value="{{ old('meta', '') }}" required>
+                                name="meta" id="meta" value="{{ old('meta', $indicadoresSgsi->meta) }}" required>
                             @if ($errors->has('meta'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('meta') }}
@@ -257,9 +267,11 @@
 
                     <div class="form-group col-sm-2">
                         <div class="form-group">
-                            <label class="required" for="frecuencia"><i class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
+                            <label class="required" for="frecuencia"><i
+                                    class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
                             <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}" type="text"
-                                name="frecuencia" id="frecuencia" value="{{ old('frecuencia', '') }}" required>
+                                name="frecuencia" id="frecuencia"
+                                value="{{ old('frecuencia', $indicadoresSgsi->frecuencia) }}" required>
                             @if ($errors->has('frecuencia'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('frecuencia') }}
@@ -271,10 +283,11 @@
 
                     <div class="form-group col-sm-2">
                         <div class="form-group">
-                            <label class="required" for="no_revisiones"><i class="fas fa-clipboard-check iconos-crear"></i>Revisiones</label>
+                            <label class="required" for="no_revisiones"><i
+                                    class="fas fa-clipboard-check iconos-crear"></i>Revisiones</label>
                             <input class="form-control {{ $errors->has('no_revisiones') ? 'is-invalid' : '' }}"
                                 type="number" name="no_revisiones" id="no_revisiones" min="0"
-                                value="{{ old('no_revisiones', '') }}" required>
+                                value="{{ old('no_revisiones', $indicadoresSgsi->no_revisiones) }}" required>
                             @if ($errors->has('no_revisiones'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('no_revisiones') }}
@@ -287,7 +300,7 @@
                     <div class="form-group col-sm-2">
                         <label class="required" for="ano"><i class="fas fa-calendar-alt iconos-crear"></i>Año</label>
                         <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}" type="text"
-                            name="ano" id="ano" value="{{ old('ano', '') }}" required>
+                            name="ano" id="ano" value="{{ old('ano', $indicadoresSgsi->ano) }}">
                         @if ($errors->has('ano'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('ano') }}
@@ -298,7 +311,7 @@
                 </div>
                 <h4 class="text-primary">Generación de formúla</h4>
                 <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada"
-                    required><br>
+                    value="{{ old('formula', $indicadoresSgsi->formula) }}" required><br>
                 {{-- <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp; --}}
                 <hr>
 
@@ -496,7 +509,9 @@
 
             });
 
-            $(".yearpicker").yearpicker()
+            $(".yearpicker").yearpicker(
+                year: {!! $indicadoresSgsi->ano !!},
+            )
 
         });
     </script>

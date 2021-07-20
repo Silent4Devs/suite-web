@@ -28,7 +28,7 @@
             <span class="help-block">{{ trans('cruds.planBaseActividade.fields.fecha_inicio_helper') }}</span>
         </div>
         @foreach ($customFields as $key => $customField)
-            <div class="form-group col-sm-2">
+            <div class="form-group col-sm-4">
                 <div class="form-group">
                     <label for="formSlugs.{{ $key }}.{{ $customField->variable }}"><i
                             class="fab fa-diaspora iconos-crear"></i>{{ ucfirst(substr($customField->variable, 1)) }}</label>
