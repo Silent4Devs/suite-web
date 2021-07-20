@@ -799,8 +799,8 @@ GanttMaster.prototype.markUnChangedTasksAndAssignments=function(newProject){
 GanttMaster.prototype.loadCollapsedTasks = function () {
   var collTasks=[];
   if (localStorage ) {
-    if (localStorage.getObject("TWPGanttCollTasks"))
-      collTasks = localStorage.getObject("TWPGanttCollTasks");
+    if (localStorage.getItem("TWPGanttCollTasks"))
+      collTasks = localStorage.getItem("TWPGanttCollTasks");
     return collTasks;
   }
 };
@@ -809,10 +809,10 @@ GanttMaster.prototype.storeCollapsedTasks = function () {
   //console.debug("storeCollapsedTasks");
   if (localStorage) {
     var collTasks;
-    if (!localStorage.getObject("TWPGanttCollTasks"))
+    if (!localStorage.getItem("TWPGanttCollTasks"))
       collTasks = [];
     else
-      collTasks = localStorage.getObject("TWPGanttCollTasks");
+      collTasks = localStorage.getItem("TWPGanttCollTasks");
 
 
     for (var i = 0; i < this.tasks.length; i++) {
@@ -827,7 +827,7 @@ GanttMaster.prototype.storeCollapsedTasks = function () {
           collTasks.splice(pos,1);
       }
     }
-    localStorage.setObject("TWPGanttCollTasks", collTasks);
+    localStorage.setItem("TWPGanttCollTasks", collTasks);
   }
 };
 

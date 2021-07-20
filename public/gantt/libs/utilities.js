@@ -398,11 +398,11 @@ function evalInContext(stringToEval,context){
 }
 
 
-Storage.prototype.setObject = function(key, value) {
+Storage.prototype.setItem = function(key, value) {
   this.setItem(key, JSON.stringify(value));
 };
 
-Storage.prototype.getObject = function(key) {
+Storage.prototype.getItem = function(key) {
   return this.getItem(key) && JSON.parse(this.getItem(key));
 };
 
