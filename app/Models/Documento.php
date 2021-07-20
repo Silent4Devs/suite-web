@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Documento extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     //REVISION DE DOCUMENTOS ESTATUS
     const SOLICITUD_REVISION = 1;
@@ -20,6 +21,7 @@ class Documento extends Model
     const EN_REVISION = 2;
     const PUBLICADO = 3;
     const DOCUMENTO_RECHAZADO = 4;
+    const DOCUMENTO_OBSOLETO = 5;
 
     protected $dates = ['fecha'];
 

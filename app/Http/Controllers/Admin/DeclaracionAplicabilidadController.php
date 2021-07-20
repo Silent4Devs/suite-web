@@ -58,11 +58,46 @@ class DeclaracionAplicabilidadController extends Controller
         $gapa181 = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A18.1');
         $gapa182 = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A18.2');
 
+        $conteoAplica= DeclaracionAplicabilidad::get()->where('aplica', '=', '1')->count();
+        $conteoNoaplica= DeclaracionAplicabilidad::get()->where('aplica', '=', '2')->count();
+        $gap182total =  $gapa182->count();
+        $A5 = $gapa5->where('aplica', '=', 1)->count();
+        $A5No = $gapa5->where('aplica', '=', 2)->count();
+        $A6= $gapa6->where('aplica', '=', 1)->count() + $gapa62->where('aplica', '=', 1)->count();
+        $A6No= $gapa6->where('aplica', '=', 2)->count() + $gapa62->where('aplica', '=', 2)->count();
+        $A7= $gapa71->where('aplica', '=', 1)->count() + $gapa72->where('aplica', '=', 1)->count() + $gapa73->count();
+        $A7No= $gapa71->where('aplica', '=', 2)->count() + $gapa72->where('aplica', '=', 2)->count() + $gapa73->count();
+        $A8= $gapa81->where('aplica', '=', 1)->count() +  $gapa82->where('aplica', '=', 1)->count() + $gapa83->count();
+        $A8No= $gapa81->where('aplica', '=', 2)->count() +  $gapa82->where('aplica', '=', 2)->count() + $gapa83->count();
+        $A9= $gapa91->where('aplica', '=', 1)->count() + $gapa92->where('aplica', '=', 1)->count() +  $gapa93->where('aplica', '=', 1)->count() + $gapa94->where('aplica', '=', 1)->count();
+        $A9No= $gapa91->where('aplica', '=', 2)->count() + $gapa92->where('aplica', '=', 2)->count() +  $gapa93->where('aplica', '=', 2)->count() + $gapa94->where('aplica', '=', 2)->count();
+        $A10= $gapa101->where('aplica', '=', 1)->count();
+        $A10No= $gapa101->where('aplica', '=', 2)->count();
+        $A11= $gapa111->where('aplica', '=', 1)->count() + $gapa112->where('aplica', '=', 1)->count();
+        $A11No= $gapa111->where('aplica', '=', 2)->count() + $gapa112->where('aplica', '=', 2)->count();
+        $A12= $gapa121->where('aplica', '=', 1)->count() +$gapa122->where('aplica', '=', 1)->count() +  $gapa123->where('aplica', '=', 1)->count() + $gapa124->where('aplica', '=', 1)->count() +  $gapa125->where('aplica', '=', 1)->count() +  $gapa126->where('aplica', '=', 1)->count() +  $gapa127->where('aplica', '=', 1)->count();
+        $A12No= $gapa121->where('aplica', '=', 1)->count() +$gapa122->where('aplica', '=', 2)->count() +  $gapa123->where('aplica', '=', 2)->count() + $gapa124->where('aplica', '=', 2)->count() +  $gapa125->where('aplica', '=', 2)->count() +  $gapa126->where('aplica', '=', 2)->count() +  $gapa127->where('aplica', '=', 2)->count();
+        $A13=  $gapa131->where('aplica', '=', 1)->count() +  $gapa132->where('aplica', '=', 1)->count();
+        $A13No=  $gapa131->where('aplica', '=', 2)->count() +  $gapa132->where('aplica', '=', 2)->count();
+        $A14=  $gapa141->where('aplica', '=', 1)->count() + $gapa142->where('aplica', '=', 1)->count() +  $gapa143->where('aplica', '=', 1)->count();
+        $A14No=  $gapa141->where('aplica', '=', 2)->count() + $gapa142->where('aplica', '=', 2)->count() +  $gapa143->where('aplica', '=', 2)->count();
+        $A15= $gapa151->where('aplica', '=', 1)->count() +  $gapa152->where('aplica', '=', 1)->count();
+        $A15No= $gapa151->where('aplica', '=', 2)->count() +  $gapa152->where('aplica', '=', 2)->count();
+        $A16= $gapa161->where('aplica', '=', 1)->count();
+        $A16No= $gapa161->where('aplica', '=', 2)->count();
+        $A17= $gapa171->where('aplica', '=', 1)->count() +  $gapa172->where('aplica', '=', 1)->count();
+        $A17No= $gapa171->where('aplica', '=', 2)->count() +  $gapa172->where('aplica', '=', 2)->count();
+        $A18= $gapa181->where('aplica', '=', 1)->count() +  $gapa182->where('aplica', '=', 1)->count();
+        $A18No= $gapa181->where('aplica', '=', 2)->count() +  $gapa182->where('aplica', '=', 2)->count();
+
+        // dd("test".$A6No);
+
+        // dd($gap5total);
         $ISO27001_SoA_PATH = 'storage/Normas/ISO27001/Analísis Inicial/';
         $path = public_path($ISO27001_SoA_PATH);
         $lista_archivos_declaracion = glob($path . "Analisis Inicial*.pdf");
 
-        return view('admin.declaracionaplicabilidad.index')
+        return view('admin.declaracionaplicabilidad.index', compact('conteoAplica', 'conteoNoaplica'))
             ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)
             ->with('gapda62s', $gapa62)->with('gapda71s', $gapa71)->with('gapda72s', $gapa72)
             ->with('gapda73s', $gapa73)->with('gapda81s', $gapa81)->with('gapda82s', $gapa82)->with('gapda83s', $gapa83)
@@ -294,4 +329,6 @@ class DeclaracionAplicabilidadController extends Controller
             'logotipo'
         ));*/
     }
+
+
 }

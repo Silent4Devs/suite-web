@@ -106,7 +106,7 @@
         </div>
         <div class="card-body">
 			<div class="caja_btn_a">
-				<a href="#s1"><i class="fa-fw fas fa-archive"></i> Contexto </a>
+				<a href="#s1" class="btn_a_seleccionado" ><i class="fa-fw fas fa-archive"></i> Contexto </a>
 				<a href="#s2"><i class="fa-fw fas fa-gavel"></i> Liderazgo </a>
 				<a href="#s3"><i class="fa-fw fas fa-tasks"></i> Planificación </a>
 				<a href="#s4"><i class="fa-fw fas fa-headset"></i> Soporte</a>

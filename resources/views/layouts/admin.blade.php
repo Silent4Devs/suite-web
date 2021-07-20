@@ -250,10 +250,10 @@
             </button>
 
 
-            <form class="form-inline">
+            <form class="form-inline col-sm-3">
 
-                <select class="form-control mr-sm-2 searchable-field ">
-
+                <select class="form-control mr-sm-4 searchable-field ">
+                    {{-- <option href="{{ route('admin.sedes.create') }}">Organización </option> --}}
                 </select>
             </form>
 
@@ -690,7 +690,7 @@
                 var markup = "<div class='searchable-link' href='" + item.url + "'>";
                 markup += "<div class='searchable-title'>" + item.model + "</div>";
                 $.each(item.fields, function(key, field) {
-                    markup += "<div class='searchable-fields'>" + item.fields_formated[field] + " : " +
+                    markup += "<div class='searchable-field'>" + item.fields_formated[field] + " : " +
                         item[field] + "</div>";
                 });
                 markup += "</div>";

@@ -28,7 +28,8 @@ class AddForeignKeyToEntendimientoOrganizacionsTble extends Migration
     public function down()
     {
         Schema::table('entendimiento_organizacions', function (Blueprint $table) {
-            //
+            $table->dropForeign('entendimiento_organizacions_id_elabora_foreign');
+            $table->dropColumn('id_elabora');
         });
     }
 }
