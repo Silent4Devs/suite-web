@@ -4,25 +4,41 @@
             <th scope="col">Evaluación</th>
             <th scope="col">Fecha</th>
             <th scope="col">Resultado</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($evaluaciones as $evaluacion)
             <tr>
                 <td>{{ $evaluacion->evaluacion }}</td>
-                <td>{{ $evaluacion->fecha }}</td>
+                <td>
+                    {{ \Carbon\Carbon::parse($evaluacion->fecha)->format('d-m-Y') }}
+                </td>
                 <td>
                     @if ($evaluacion->resultado >= $indicadoresSgsis->verde)
-                        <span class="dotverde"></span> {{ $evaluacion->resultado . $indicadoresSgsis->unidadmedida }}
+                        <span class="dotverde"></span>&nbsp;&nbsp;&nbsp;{{ $evaluacion->resultado . $indicadoresSgsis->unidadmedida }}
                     @elseif ($evaluacion->resultado >= $indicadoresSgsis->amarillo && $evaluacion->resultado <
                             $indicadoresSgsis->verde)
-                            <span class="dotyellow"></span>
+                            <span class="dotyellow"></span>&nbsp;&nbsp;&nbsp;
                             {{ $evaluacion->resultado . $indicadoresSgsis->unidadmedida }}
                         @else
-                            <span class="dotred"></span>{{ $evaluacion->resultado . $indicadoresSgsis->unidadmedida }}
+                            <span class="dotred"></span>&nbsp;&nbsp;&nbsp;{{ $evaluacion->resultado . $indicadoresSgsis->unidadmedida }}
                     @endif
 
                 </td>
+                <td>
+                    <button wire:click="edit({{ $evaluacion->id }})" class="btn btn-info">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+
+                </td>
+                <td>
+                    <button wire:click="delete({{ $evaluacion->id }})" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+
             </tr>
         @endforeach
     </tbody>

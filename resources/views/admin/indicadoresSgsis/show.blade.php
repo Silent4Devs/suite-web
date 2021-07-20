@@ -27,31 +27,23 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.control') }}
+                            Nombre
                         </th>
                         <td>
-                            {{ $indicadoresSgsi->control }}
+                            {{ $indicadoresSgsi->nombre }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.titulo') }}
+                            Descripción
                         </th>
                         <td>
-                            {{ $indicadoresSgsi->titulo }}
+                            {{ $indicadoresSgsi->descripcion }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.responsable') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->responsable->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.formula') }}
+                            Formula
                         </th>
                         <td>
                             {{ $indicadoresSgsi->formula }}
@@ -59,23 +51,23 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.frecuencia') }}
+                            Frecuencia
                         </th>
                         <td>
-                            {{ App\Models\IndicadoresSgsi::FRECUENCIA_SELECT[$indicadoresSgsi->frecuencia] ?? '' }}
+                            {{ $indicadoresSgsi->frecuencia }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.unidadmedida') }}
+                            Unidad de medida
                         </th>
                         <td>
-                            {{ App\Models\IndicadoresSgsi::UNIDADMEDIDA_SELECT[$indicadoresSgsi->unidadmedida] ?? '' }}
+                            {{ $indicadoresSgsi->unidadmedida }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.meta') }}
+                            Meta
                         </th>
                         <td>
                             {{ $indicadoresSgsi->meta }}
@@ -83,114 +75,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.semaforo') }}
+                            Número de revisiones
                         </th>
                         <td>
-                            {{ App\Models\IndicadoresSgsi::SEMAFORO_SELECT[$indicadoresSgsi->semaforo] ?? '' }}
+                            {{ $indicadoresSgsi->no_revisiones }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.enero') }}
+                            Proceso
                         </th>
                         <td>
-                            {{ $indicadoresSgsi->enero }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.febrero') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->febrero }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.marzo') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->marzo }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.abril') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->abril }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.mayo') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->mayo }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.junio') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->junio }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.julio') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->julio }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.agosto') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->agosto }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.septiembre') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->septiembre }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.octubre') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->octubre }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.noviembre') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->noviembre }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.diciembre') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->diciembre }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.indicadoresSgsi.fields.anio') }}
-                        </th>
-                        <td>
-                            {{ $indicadoresSgsi->anio }}
+                            {{ $indicadoresSgsi->proceso }}
                         </td>
                     </tr>
                 </tbody>

@@ -1,8 +1,8 @@
-<form wire:submit.prevent="store" enctype="multipart/form-data">
+{{-- <form wire:submit.prevent="store" enctype="multipart/form-data"> --}}
     <div class="row">
         <div class="form-group col-sm-2">
             <div class="form-group">
-                <label for="evaluacion"><i class="fas fa-building iconos-crear"></i>Evaluación</label>
+                <label for="evaluacion"><i class="fas fa-file-signature iconos-crear"></i>Evaluación</label>
                 <input class="form-control {{ $errors->has('evaluacion') ? 'is-invalid' : '' }}" type="text"
                     name="evaluacion" wire:model="evaluacion" id="evaluacion">
                 @if ($errors->has('evaluacion'))
@@ -15,8 +15,8 @@
         </div>
         <div class="form-group col-md-2 col-sm-2">
             <label for="fecha"><i class="far fa-calendar-alt iconos-crear"></i>Fecha</label>
-            <input class="form-control date {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
-                name="fecha" id="fecha" value="{{ old('fecha') }}" wire:model="fecha">
+            <input class="form-control date {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="date" name="fecha"
+                id="fecha" value="{{ old('fecha') }}" wire:model="fecha">
             <div class="input-group-addon">
                 <span class="glyphicon glyphicon-th"></span>
             </div>
@@ -32,14 +32,13 @@
                 <div class="form-group">
                     <label for="formSlugs.{{ $key }}.{{ $customField->variable }}"><i
                             class="fab fa-diaspora iconos-crear"></i>{{ ucfirst(substr($customField->variable, 1)) }}</label>
-                    <input class="form-control slugs-inputs {{ $errors->has('') ? 'is-invalid' : '' }}"
-                        type="number" wire:model="formSlugs.{{ $key }}.{{ $customField->variable }}"
+                    <input class="form-control slugs-inputs {{ $errors->has('') ? 'is-invalid' : '' }}" type="number"
+                        wire:model="formSlugs.{{ $key }}.{{ $customField->variable }}"
                         id="formSlugs.{{ $key }}.{{ $customField->variable }}" value="" required>
                 </div>
             </div>
         @endforeach
-        <div class="form-group col-sm-4 py-4">
-            <button type="button" wire:click.prevent="store()" class="btn btn-success btn-sm">Enviar</button>
-        </div>
+        {{-- <button type="button" wire:click.prevent="store()" class="btn btn-success btn-sm">Enviar</button> --}}
+
     </div>
-</form>
+{{-- </form> --}}

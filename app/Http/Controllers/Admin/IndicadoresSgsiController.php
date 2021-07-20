@@ -53,9 +53,9 @@ class IndicadoresSgsiController extends Controller
                 return $row->nombre ? $row->nombre : "";
             });
 
-            $table->editColumn('proceso', function ($row) {
+            /*$table->editColumn('proceso', function ($row) {
                 return $row->proceso->nombre ? $row->proceso->nombre : "";
-            });
+            });*/
 
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
@@ -70,34 +70,28 @@ class IndicadoresSgsiController extends Controller
             });
 
             $table->editColumn('frecuencia', function ($row) {
-                return $row->formula ? $row->formula : "";
+                return $row->frecuencia ? $row->frecuencia : "";
             });
 
-            $table->editColumn('meta', function ($row) {
+            /*$table->editColumn('meta', function ($row) {
                 return $row->meta ? $row->meta : "";
             });
 
-            $table->editColumn('revisiones', function ($row) {
-                return $row->no_revisiones ? $row->no_revisiones : "";
-            });
-
-            $table->editColumn('resultado', function ($row) {
-                return $row->resultado ? $row->resultado : "";
-            });
+            we
 
             $table->editColumn('responsable', function ($row) {
                 return $row->id_empleado ? $row->id_empleado : "";
-            });
+            });*/
 
             $table->rawColumns(['actions', 'placeholder', 'responsable']);
 
             return $table->make(true);
         }
 
-        $users = User::get();
-        $teams = Team::get();
+        /*$users = User::get();
+        $teams = Team::get();*/
 
-        return view('admin.indicadoresSgsis.index', compact('users', 'teams'));
+        return view('admin.indicadoresSgsis.index');
     }
 
     public function create()
@@ -119,13 +113,10 @@ class IndicadoresSgsiController extends Controller
 
     public function edit(IndicadoresSgsi $indicadoresSgsi)
     {
-        abort_if(Gate::denies('indicadores_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $procesos = Proceso::get();
+        $responsables = Empleado::get();
 
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $indicadoresSgsi->load('responsable', 'team');
-
-        return view('admin.indicadoresSgsis.edit', compact('responsables', 'indicadoresSgsi'));
+        return view('admin.indicadoresSgsis.edit', compact('procesos', 'indicadoresSgsi', 'responsables'));
     }
 
     public function update(UpdateIndicadoresSgsiRequest $request, IndicadoresSgsi $indicadoresSgsi)
@@ -137,9 +128,6 @@ class IndicadoresSgsiController extends Controller
 
     public function show(IndicadoresSgsi $indicadoresSgsi)
     {
-        abort_if(Gate::denies('indicadores_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-
 
         return view('admin.indicadoresSgsis.show', compact('indicadoresSgsi'));
     }
