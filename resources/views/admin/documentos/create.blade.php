@@ -268,6 +268,7 @@
                             `<i class="fas fa-info-circle"></i> Buscando...`;
                     },
                     success: function(response) {
+                        console.log(response);
                         if (codigo == "") {
                             e.target.classList.remove('exists');
                             e.target.classList.remove('not-exists');

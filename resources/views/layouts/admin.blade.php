@@ -29,6 +29,7 @@
     <!--<link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet"/>-->
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
     <!-- x-editable -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
         rel="stylesheet" />
@@ -145,8 +146,6 @@
             z-index: 6;
         }
 
-
-
         .glyphicon-ok::before {
             content: "\f00c";
         }
@@ -167,7 +166,6 @@
             overflow: hidden;
         }
 
-
         .card {
             border: none !important;
             box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.12);
@@ -186,9 +184,6 @@
         .card-body.align-self-center h3 i {
             color: #008186 !important;
         }
-
-
-
 
         .btn.btn-success {
             width: 150px;
@@ -209,12 +204,6 @@
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
         }
-
-
-
-
-
-
 
         ol.breadcrumb {
             background-color: rgba(0, 0, 0, 0);
@@ -261,10 +250,10 @@
             </button>
 
 
-            <form class="form-inline">
+            <form class="form-inline col-sm-3">
 
-                <select class="form-control mr-sm-2 searchable-field ">
-
+                <select class="form-control mr-sm-4 searchable-field ">
+                    {{-- <option href="{{ route('admin.sedes.create') }}">Organización </option> --}}
                 </select>
             </form>
 
@@ -426,6 +415,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
+    <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
 
@@ -456,6 +446,11 @@
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>
     @livewireScripts
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    </script>
+
+    <x-livewire-alert::scripts />
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
     <!-- x-editable -->
     <script>
@@ -695,7 +690,7 @@
                 var markup = "<div class='searchable-link' href='" + item.url + "'>";
                 markup += "<div class='searchable-title'>" + item.model + "</div>";
                 $.each(item.fields, function(key, field) {
-                    markup += "<div class='searchable-fields'>" + item.fields_formated[field] + " : " +
+                    markup += "<div class='searchable-field'>" + item.fields_formated[field] + " : " +
                         item[field] + "</div>";
                 });
                 markup += "</div>";
