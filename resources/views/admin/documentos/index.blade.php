@@ -12,13 +12,17 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="vertical-align: top">
-                            Código
+                            Código&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </th>
                         <th style="vertical-align: top">
                             Nombre
                         </th>
                         <th style="vertical-align: top">
                             Tipo
+                        </th>
+
+                        <th style="vertical-align: top">
+                            Vinculado&nbsp;a
                         </th>
                         <th style="vertical-align: top">
                             Estatus
@@ -27,7 +31,7 @@
                             Versión
                         </th>
                         <th style="vertical-align: top">
-                            Fecha
+                            Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </th>
                         <th style="vertical-align: top">
                             Elaboró
@@ -58,6 +62,15 @@
                             <td style="text-transform: capitalize">
                                 {{ $documento->tipo ?? '' }}
                             </td>
+                            @if ($documento->proceso_id == null)
+                                <th style="vertical-align: top">
+                                    {{ $documento->macroproceso ? $documento->macroproceso->nombre : 'Sin vincular' }}
+                                </th>
+                            @else
+                                <th style="vertical-align: top">
+                                    {{ $documento->proceso ? $documento->proceso->nombre : 'Sin vincular' }}
+                                </th>
+                            @endif
                             <td>
                                 @if ($documento->estatus)
                                     @switch($documento->estatus)
@@ -80,32 +93,50 @@
                                 @endif
                             </td>
                             <td>
-                                {{ $documento->version ?? '' }}
+                                {{ $documento->version == 0 ? 'Sin versión actualmente' : $documento->version }}
                             </td>
                             <td>
-                                {{ $documento->fecha ?? '' }}
+                                {{ $documento->fecha_dmy ?? '' }}
                             </td>
                             <td>
-                                {{ $documento->elaborador->name ?? '' }}
+                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->elaborador->avatar }}"
+                                    class="rounded-circle" alt="{{ $documento->elaborador->name }}"
+                                    title="{{ $documento->elaborador->name }}" width="40">
                             </td>
                             <td>
-                                {{ $documento->revisor->name ?? '' }}
+                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->revisor->avatar }}"
+                                    class="rounded-circle" alt="{{ $documento->revisor->name }}"
+                                    title="{{ $documento->revisor->name }}" width="40">
                             </td>
                             <td>
-                                {{ $documento->aprobador->name ?? '' }}
+                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->aprobador->avatar }}"
+                                    class="rounded-circle" alt="{{ $documento->aprobador->name }}"
+                                    title="{{ $documento->aprobador->name }}" width="40">
                             </td>
                             <td>
-                                {{ $documento->responsable->name ?? '' }}
+                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->responsable->avatar }}"
+                                    class="rounded-circle" alt="{{ $documento->responsable->name }}"
+                                    title="{{ $documento->responsable->name }}" width="40">
                             </td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     @if ($documento->estatus != '2')
-                                        <a class="btn btn-sm "
+                                        <a class="btn btn-sm " title="Editar"
                                             href="{{ route('admin.documentos.edit', $documento->id) }}">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     @endif
-                                    <a class="btn btn-sm "
+                                    <a class="btn btn-sm" title="Visualizar Documento"
+                                        href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
+                                            <path
+                                                d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                                            <path
+                                                d="M4.603 14.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645 19.697 19.697 0 0 0 1.062-2.227 7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a10.954 10.954 0 0 0 .98 1.686 5.753 5.753 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.856.856 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.712 5.712 0 0 1-.911-.95 11.651 11.651 0 0 0-1.997.406 11.307 11.307 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.793.793 0 0 1-.58.029zm1.379-1.901c-.166.076-.32.156-.459.238-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361.01.022.02.036.026.044a.266.266 0 0 0 .035-.012c.137-.056.355-.235.635-.572a8.18 8.18 0 0 0 .45-.606zm1.64-1.33a12.71 12.71 0 0 1 1.01-.193 11.744 11.744 0 0 1-.51-.858 20.801 20.801 0 0 1-.5 1.05zm2.446.45c.15.163.296.3.435.41.24.19.407.253.498.256a.107.107 0 0 0 .07-.015.307.307 0 0 0 .094-.125.436.436 0 0 0 .059-.2.095.095 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a3.876 3.876 0 0 0-.612-.053zM8.078 7.8a6.7 6.7 0 0 0 .2-.828c.031-.188.043-.343.038-.465a.613.613 0 0 0-.032-.198.517.517 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822.024.111.054.227.09.346z" />
+                                        </svg>
+                                    </a>
+                                    <a class="btn btn-sm " title="Visualizar revisiones"
                                         href="{{ route('admin.documentos.renderHistoryReview', $documento->id) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                             class="bi bi-clock-history" viewBox="0 0 16 16">
@@ -116,18 +147,18 @@
                                                 d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
                                         </svg>
                                     </a>
-                                    <a class="btn btn-sm "
-                                        href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                            class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
-                                            <path
-                                                d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-                                            <path
-                                                d="M4.603 14.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645 19.697 19.697 0 0 0 1.062-2.227 7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a10.954 10.954 0 0 0 .98 1.686 5.753 5.753 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.856.856 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.712 5.712 0 0 1-.911-.95 11.651 11.651 0 0 0-1.997.406 11.307 11.307 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.793.793 0 0 1-.58.029zm1.379-1.901c-.166.076-.32.156-.459.238-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361.01.022.02.036.026.044a.266.266 0 0 0 .035-.012c.137-.056.355-.235.635-.572a8.18 8.18 0 0 0 .45-.606zm1.64-1.33a12.71 12.71 0 0 1 1.01-.193 11.744 11.744 0 0 1-.51-.858 20.801 20.801 0 0 1-.5 1.05zm2.446.45c.15.163.296.3.435.41.24.19.407.253.498.256a.107.107 0 0 0 .07-.015.307.307 0 0 0 .094-.125.436.436 0 0 0 .059-.2.095.095 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a3.876 3.876 0 0 0-.612-.053zM8.078 7.8a6.7 6.7 0 0 0 .2-.828c.031-.188.043-.343.038-.465a.613.613 0 0 0-.032-.198.517.517 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822.024.111.054.227.09.346z" />
-                                        </svg>
-                                    </a>
-                                    <button data-tipo="{{ $documento->tipo }}"
-                                        onclick="hacerObsoleto(this,'{{ route('admin.documentos.destroy', $documento) }}');return false;"
+                                    @if ($documento->version >= 1)
+                                        <a class="btn btn-sm " title="Visualizar versionamiento"
+                                            href="{{ route('admin.documentos.renderHistoryVersions', $documento->id) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-back" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z" />
+                                            </svg>
+                                        </a>
+                                    @endif
+                                    <button data-tipo="{{ $documento->tipo }}" title="Hacer obsoleto"
+                                        onclick="hacerObsoleto(this,'{{ route('admin.documentos.destroy', $documento) }}','{{ $documento->id }}');return false;"
                                         class="btn btn-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                             class="bi bi-trash" viewBox="0 0 16 16">
@@ -239,15 +270,36 @@
             buttons: dtButtons,
         });
     });
-    const hacerObsoleto = function(boton, url) {
+
+    async function obtenerDependencias(documento_id) {
+        let api = await fetch("{{ route('admin.documentos.getDocumentDependencies') }}", {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            body: JSON.stringify({
+                documento_id
+            }) // body data type must match "Content-Type" header
+        });
+        let data = await api.json();
+        return data;
+    }
+
+    const hacerObsoleto = async function(boton, url, documento_id) {
         let isTipoProceso = boton.getAttribute('data-tipo') == 'proceso';
-        console.log(url);
+        let dependencias = await obtenerDependencias(
+            documento_id); // se obtienen las dependencias del proceso
+        console.log(dependencias);
         Swal.fire({
-            title: 'Estás seguro de marcar como obsoleto este documento?',
+            title: '¿Está seguro de marcar como obsoleto este documento?',
             html: `<div style="text-align: left;">El documento será <strong style="color:red">eliminado</strong> de los siguientes apartados:</div>
                     <ul style="text-align:left;">
                         ${isTipoProceso ? '<li>Procesos</li>':''}
-                        <li>Gestor de documental</li>
+                        <li>Gestor documental</li>
                         <li>Tabla documentos</li>
                     </ul>
                 `,
@@ -255,38 +307,126 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, enviar a revisión!',
+            confirmButtonText: 'Hacer obsoleto',
             cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
-                $.ajax({
-                    type: "DELETE",
-                    url: url,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr("content"),
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if (response.success) {
+                if (dependencias.dependencias == null || dependencias.dependencias.length == 0) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: url,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                "content"),
+                        },
+                        data: {
+                            delete_documents: false
+                        },
+                        dataType: "JSON",
+                        success: function(response) {
+                            console.log(response);
+                            if (response.success) {
+                                Swal.fire('Documentos obsoleto',
+                                    'El documento se ha hecho obsoleto',
+                                    'info')
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1500);
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
                             Swal.fire(
-                                'Éxito!',
-                                'El documento se ha hecho obsoleto',
-                                'success'
+                                'Error!',
+                                `${err.responseText}`,
+                                'error'
                             );
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 1500);
                         }
-                    },
-                    error: function(err) {
-                        console.log(err);
-                        Swal.fire(
-                            'Error!',
-                            `${err.responseText}`,
-                            'error'
-                        );
-                    }
-                });
+                    });
+                } else {
+                    Swal.fire({
+                        title: '¿Desea eliminar los documentos dependientes al proceso?',
+                        html: `<div style="overflow: auto;max-height: 200px;">
+                        <ul>
+                        ${dependencias.dependencias.map(dependencia => {
+                            return `<li><i class="fas fa-file-pdf"></i> ${dependencia.codigo}-${dependencia.nombre}-<span style="text-transform:capitalize">[${dependencia.tipo}]</span></li>`;
+                        })}
+                        </ul>
+                    </div>`,
+                        icon: 'question',
+                        showDenyButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: `Eliminar`,
+                        denyButtonText: `Conservarlos`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "DELETE",
+                                url: url,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        "content"),
+                                },
+                                data: {
+                                    delete_documents: true
+                                },
+                                dataType: "JSON",
+                                success: function(response) {
+                                    console.log(response);
+                                    if (response.success) {
+                                        Swal.fire('Obsoleto!',
+                                            'El proceso y todas sus dependencias fueron eliminadas',
+                                            'success')
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 1500);
+                                    }
+                                },
+                                error: function(err) {
+                                    console.log(err);
+                                    Swal.fire(
+                                        'Error!',
+                                        `${err.responseText}`,
+                                        'error'
+                                    );
+                                }
+                            });
+                        } else if (result.isDenied) {
+                            $.ajax({
+                                type: "DELETE",
+                                url: url,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        "content"),
+                                },
+                                data: {
+                                    delete_documents: false
+                                },
+                                dataType: "JSON",
+                                success: function(response) {
+                                    console.log(response);
+                                    if (response.success) {
+                                        Swal.fire('Documentos conservados',
+                                            'Las dependecias fueron conservadas, pero no están asignadas a ningun proceso',
+                                            'info')
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 1500);
+                                    }
+                                },
+                                error: function(err) {
+                                    console.log(err);
+                                    Swal.fire(
+                                        'Error!',
+                                        `${err.responseText}`,
+                                        'error'
+                                    );
+                                }
+                            });
+                        }
+                    });
+                }
             }
         })
     }

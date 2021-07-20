@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,13 +26,14 @@ class Documento extends Model
 
     protected $dates = ['fecha'];
 
-    protected $appends = ['estatus_formateado'];
+    protected $appends = ['estatus_formateado', 'fecha_dmy'];
 
     protected $fillable = [
         'codigo',
         'nombre',
         'tipo',
         'macroproceso_id',
+        'proceso_id',
         'estatus',
         'version',
         'fecha',
@@ -41,6 +43,12 @@ class Documento extends Model
         'aprobo_id',
         'responsable_id'
     ];
+
+    public function getFechaDMYAttribute()
+    {
+        return Carbon::parse($this->fecha)->format('d-m-Y');
+    }
+
     public function getEstatusFormateadoAttribute()
     {
         switch ($this->estatus) {
@@ -100,6 +108,11 @@ class Documento extends Model
     public function responsable()
     {
         return $this->belongsTo(Empleado::class, 'responsable_id', 'id');
+    }
+
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'proceso_id', 'id');
     }
 
     public function procesos()
