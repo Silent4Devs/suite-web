@@ -57,25 +57,30 @@
             <label for="tipo">Tipo:</label>
             <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="tipo" name="tipo">
                 <option value="null" disabled selected>--Seleccionar--</option>
-                <option value="politica" {{ old('tipo', $documentoActual->tipo) == 'politica' ? 'selected' : '' }}>
-                    Políticas</option>
-                <option value="procedimiento"
-                    {{ old('tipo', $documentoActual->tipo) == 'procedimiento' ? 'selected' : '' }}>
-                    Procedimientos</option>
-                <option value="manual" {{ old('tipo', $documentoActual->tipo) == 'manual' ? 'selected' : '' }}>
-                    Manuales</option>
-                <option value="plan" {{ old('tipo', $documentoActual->tipo) == 'plan' ? 'selected' : '' }}>
-                    Planes</option>
-                <option value="instructivo"
-                    {{ old('tipo', $documentoActual->tipo) == 'instructivo' ? 'selected' : '' }}>
-                    Instructivos</option>
-                <option value="reglamento"
-                    {{ old('tipo', $documentoActual->tipo) == 'reglamento' ? 'selected' : '' }}>
-                    Reglamentos</option>
-                <option value="externo" {{ old('tipo', $documentoActual->tipo) == 'externo' ? 'selected' : '' }}>
-                    Externos</option>
-                <option value="proceso" {{ old('tipo', $documentoActual->tipo) == 'proceso' ? 'selected' : '' }}>
-                    Procesos</option>
+                @if ($documentoActual->tipo == 'proceso' || $documentoActual->tipo == null)
+                    <option value="proceso" {{ old('tipo', $documentoActual->tipo) == 'proceso' ? 'selected' : '' }}>
+                        Proceso</option>
+                @endif
+                @if ($documentoActual->tipo != 'proceso' || $documentoActual->tipo == null)
+                    <option value="politica"
+                        {{ old('tipo', $documentoActual->tipo) == 'politica' ? 'selected' : '' }}>
+                        Política</option>
+                    <option value="procedimiento"
+                        {{ old('tipo', $documentoActual->tipo) == 'procedimiento' ? 'selected' : '' }}>
+                        Procedimiento</option>
+                    <option value="manual" {{ old('tipo', $documentoActual->tipo) == 'manual' ? 'selected' : '' }}>
+                        Manual</option>
+                    <option value="plan" {{ old('tipo', $documentoActual->tipo) == 'plan' ? 'selected' : '' }}>
+                        Plan</option>
+                    <option value="instructivo"
+                        {{ old('tipo', $documentoActual->tipo) == 'instructivo' ? 'selected' : '' }}>
+                        Instructivo</option>
+                    <option value="reglamento"
+                        {{ old('tipo', $documentoActual->tipo) == 'reglamento' ? 'selected' : '' }}>
+                        Reglamento</option>
+                    <option value="externo" {{ old('tipo', $documentoActual->tipo) == 'externo' ? 'selected' : '' }}>
+                        Documento Externo</option>
+                @endif
             </select>
             @if ($errors->has('tipo'))
                 <span class="text-danger">
@@ -113,9 +118,9 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-12 col-lg-3" id="macroprocesos">
+    <div class="col-sm-12 col-lg-3 {{ $documentoActual->tipo != 'proceso' ? 'd-none' : '' }}" id="macroprocesos">
         <div class="form-group">
-            <label for="macroproceso">Macroproceso:</label>
+            <label for="macroproceso">Pertenece al Macroproceso:</label>
             <select class="form-control {{ $errors->has('macroproceso') ? 'error-border' : '' }}" id="macroproceso"
                 name="macroproceso">
                 <option value="" selected disabled>--Seleccionar--</option>
@@ -133,20 +138,21 @@
             <span class="text-danger macroproceso_error error-ajax"></span>
         </div>
     </div>
-    <div class="col-sm-12 col-lg-3 d-none" id="procesos">
+    <div class="col-sm-12 col-lg-3 {{ $documentoActual->tipo != 'proceso' ? '' : 'd-none' }}" id="procesos">
         <div class="form-group">
             @if (count($procesos) == 0)
                 <span class="badge badge-warning">Debes registrar un documento de tipo PROCESO</span>
             @else
-                <label for="proceso">Proceso:</label>
+                <label for="proceso">Pertenece al Proceso:</label>
             @endif
             <select class="form-control {{ $errors->has('proceso') ? 'error-border' : '' }}" id="proceso"
                 name="proceso">
                 <option value="" selected disabled>--Seleccionar--</option>
                 @foreach ($procesos as $proceso)
-                    <option value="{{ $proceso->id }}"
+                    <option value="{{ $proceso->id }}" {{ $proceso->estatus == '2' ? 'disabled' : '' }}
                         {{ old('proceso', $documentoActual->proceso_id) == $proceso->id ? 'selected' : '' }}>
-                        {{ $proceso->nombre }}</option>
+                        {{ $proceso->nombre }} {{ $proceso->estatus == '2' ? '- [Aprobación pendiente]' : '' }}
+                    </option>
                 @endforeach
             </select>
             @if ($errors->has('proceso'))

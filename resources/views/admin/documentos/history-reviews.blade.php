@@ -299,32 +299,14 @@
             <div class="main-timeline">
 
                 @foreach ($revisiones as $revision)
-                    @php
-                        $foto = 'man.png';
-                        if ($revision->empleado->foto) {
-                            $foto = $revision->empleado->foto;
-                        } else {
-                            if ($revision->empleado->genero == 'M') {
-                                $foto = 'woman.png';
-                            } elseif ($revision->empleado->genero == 'H') {
-                                $foto = 'man.png';
-                            } else {
-                                $foto = 'user.png';
-                            }
-                        }
-                    @endphp
                     <!-- start experience section-->
                     <div class="timeline">
                         <div class="icon"></div>
                         <div class="date-content">
                             <div class="date-outer"
-                                style="background-image: url('{{ asset('storage/empleados/imagenes') . '/' . $foto }}');clip-path: circle(50% at 50% 50%);background-position:center;background-size: cover;">
-
+                                style="background-image: url('{{ asset('storage/empleados/imagenes') . '/' . $revision->empleado->avatar }}');clip-path: circle(50% at 50% 50%);background-position:center;background-size: cover;">
                                 <span class="date" style="position: relative">
                                     {{ $revision->foto }}
-
-                                    {{-- <span class="month">2 Years</span>
-                                    <span class="year">2013</span> --}}
                                 </span>
                             </div>
                         </div>
@@ -352,7 +334,9 @@
                                 $nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
                             @endphp
                             <span class="badge badge-primary">{{ $nf->format($revision->no_revision) }} REVISIÓN</span>
-                            <span class="badge badge-dark">{{ $nf->format($revision->version) }} VERSIÓN</span>
+                            <span
+                                class="badge badge-dark">{{ $revision->version == 0 ? 'Sin' : $nf->format($revision->version) }}
+                                versión</span>
                             <p class="description">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-chat-dots" viewBox="0 0 16 16">
