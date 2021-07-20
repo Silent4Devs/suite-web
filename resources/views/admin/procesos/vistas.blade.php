@@ -402,7 +402,7 @@
                 Indicadores
             </div></a>
 
-            <a href="#documentos"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
+            <a href="#documentos_relacionados"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
                 Documentos Relacionados
             </div></a>
 
@@ -436,6 +436,13 @@
 
             <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
                 @include('admin.procesos.vistas.versiones')
+            </div>
+        </section>
+
+        <section id="documentos_relacionados">
+
+            <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                @include('admin.procesos.vistas.documentos_relacionados')
             </div>
         </section>
 

@@ -1,10 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <style>
-        body {
-            margin-top: 20px;
-            background: #eee;
-        }
+
 
         .timeline {
             list-style-type: none;

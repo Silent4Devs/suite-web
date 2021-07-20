@@ -121,7 +121,7 @@
 					<section id="s1">
 						<div class="card card-body">
 							<ul>
-								<li><a href="{{ route("admin.declaracion-aplicabilidad.index") }}">
+								<li><a href="{{ route("admin.declaracion-aplicabilidad.index").'#declaracion' }}">
 									<div>
 										<i class="far fa-file"></i>
 										Declaracion de aplicabilidad

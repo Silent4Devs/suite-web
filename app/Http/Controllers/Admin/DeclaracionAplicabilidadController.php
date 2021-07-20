@@ -65,10 +65,10 @@ class DeclaracionAplicabilidadController extends Controller
         $A5No = $gapa5->where('aplica', '=', 2)->count();
         $A6= $gapa6->where('aplica', '=', 1)->count() + $gapa62->where('aplica', '=', 1)->count();
         $A6No= $gapa6->where('aplica', '=', 2)->count() + $gapa62->where('aplica', '=', 2)->count();
-        $A7= $gapa71->where('aplica', '=', 1)->count() + $gapa72->where('aplica', '=', 1)->count() + $gapa73->count();
-        $A7No= $gapa71->where('aplica', '=', 2)->count() + $gapa72->where('aplica', '=', 2)->count() + $gapa73->count();
-        $A8= $gapa81->where('aplica', '=', 1)->count() +  $gapa82->where('aplica', '=', 1)->count() + $gapa83->count();
-        $A8No= $gapa81->where('aplica', '=', 2)->count() +  $gapa82->where('aplica', '=', 2)->count() + $gapa83->count();
+        $A7= $gapa71->where('aplica', '=', 1)->count() + $gapa72->where('aplica', '=', 1)->count() + $gapa73->where('aplica', '=', 1)->count();
+        $A7No= $gapa71->where('aplica', '=', 2)->count() + $gapa72->where('aplica', '=', 2)->count() + $gapa73->where('aplica', '=', 2)->count();
+        $A8= $gapa81->where('aplica', '=', 1)->count() +  $gapa82->where('aplica', '=', 1)->count() + $gapa83->where('aplica', '=', 1)->count();
+        $A8No= $gapa81->where('aplica', '=', 2)->count() +  $gapa82->where('aplica', '=', 2)->count() + $gapa83->where('aplica', '=', 2)->count();
         $A9= $gapa91->where('aplica', '=', 1)->count() + $gapa92->where('aplica', '=', 1)->count() +  $gapa93->where('aplica', '=', 1)->count() + $gapa94->where('aplica', '=', 1)->count();
         $A9No= $gapa91->where('aplica', '=', 2)->count() + $gapa92->where('aplica', '=', 2)->count() +  $gapa93->where('aplica', '=', 2)->count() + $gapa94->where('aplica', '=', 2)->count();
         $A10= $gapa101->where('aplica', '=', 1)->count();
@@ -97,7 +97,7 @@ class DeclaracionAplicabilidadController extends Controller
         $path = public_path($ISO27001_SoA_PATH);
         $lista_archivos_declaracion = glob($path . "Analisis Inicial*.pdf");
 
-        return view('admin.declaracionaplicabilidad.index', compact('conteoAplica', 'conteoNoaplica'))
+        return view('admin.declaracionaplicabilidad.index', compact('conteoAplica', 'conteoNoaplica', 'A5','A5No','A6','A6No','A7', 'A7No','A8','A8No','A9','A9No','A10','A10No','A11','A11No','A12','A12No','A13','A13No','A14','A14No','A15','A15No','A16','A16No','A17','A17No','A18','A18No'))
             ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)
             ->with('gapda62s', $gapa62)->with('gapda71s', $gapa71)->with('gapda72s', $gapa72)
             ->with('gapda73s', $gapa73)->with('gapda81s', $gapa81)->with('gapda82s', $gapa82)->with('gapda83s', $gapa83)
