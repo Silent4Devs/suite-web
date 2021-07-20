@@ -1,6 +1,6 @@
       <div class="row">
           <div class="col-12 col-md-12 col-sm-12">
-              <div class="card-header font-weight-bold  text-white" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
+              <div class="text-white card-header font-weight-bold" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
               PORCENTAJE DE IMPLEMENTACIÓN GENERAL ISO 27001
               </div>
 
