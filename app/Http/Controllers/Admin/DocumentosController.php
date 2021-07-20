@@ -8,6 +8,7 @@ use App\Mail\SolicitudAprobacionMail;
 use App\Models\Documento;
 use App\Models\Empleado;
 use App\Models\HistorialRevisionDocumento;
+use App\Models\HistorialVersionesDocumento;
 use App\Models\Macroproceso;
 use App\Models\Proceso;
 use App\Models\RevisionDocumento;
@@ -24,7 +25,7 @@ class DocumentosController extends Controller
     public function index()
     {
 
-        $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones')->get();
+        $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones', 'proceso', 'macroproceso')->get();
 
         return view('admin.documentos.index', compact('documentos'));
     }
@@ -63,10 +64,8 @@ class DocumentosController extends Controller
             'codigo' => 'required|string|unique:documentos',
             'nombre' => 'required|string',
             'tipo' => 'required|string',
-            // 'estatus' => 'required|string',
             'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
             'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
-            //'version' => 'required|string',
             'fecha' => 'required|date',
             'archivo' => 'required|mimetypes:application/pdf|max:10000',
             'elaboro_id' => 'required|exists:empleados,id',
@@ -144,15 +143,15 @@ class DocumentosController extends Controller
             'responsable_id' => $request->responsable_id
         ]);
 
-        if ($request->tipo=='proceso') {
+        if ($request->tipo == 'proceso') {
             Proceso::create([
-                'nombre'=>$request->nombre,
-                'codigo'=>$request->codigo,
-                'estatus'=>Proceso::NO_ACTIVO,
-                'id_macroproceso'=>$request->macroproceso,
-                'documento_id'=>$documento->id
+                'nombre' => $request->nombre,
+                'codigo' => $request->codigo,
+                'estatus' => Proceso::NO_ACTIVO,
+                'id_macroproceso' => $request->macroproceso,
+                'documento_id' => $documento->id
             ]);
-         }
+        }
 
         return $documento;
     }
@@ -178,7 +177,7 @@ class DocumentosController extends Controller
             $this->validateRequestUpdate($request, $documento);
             return response()->json(['success' => true]);
         } else {
-            $this->updateDocument($request, $documento, Documento::EN_ELABORACION);
+            $this->updateDocument($request, $documento, $documento->estatus);
             return redirect()->route('admin.documentos.index')->with('success', 'Documento editado con éxito');
         }
     }
@@ -197,9 +196,8 @@ class DocumentosController extends Controller
             'codigo' => 'required_if:codigo,null|string|unique:documentos,codigo,' . $documento->id,
             'nombre' => 'required|string',
             'tipo' => 'required|string',
-            //'estatus' => 'required|string',
-            'macroproceso' => 'required|exists:macroprocesos,id',
-            //'version' => 'required|string',
+            'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
+            'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
             'fecha' => 'required|date',
             'archivo' => 'required|mimetypes:application/pdf|max:10000',
             'elaboro_id' => 'required_if:elaboro_id,null|exists:empleados,id',
@@ -216,8 +214,57 @@ class DocumentosController extends Controller
     {
         $this->validateRequestUpdate($request, $documento);
         $this->createDocumentosEnAprobacionIfNotExists();
+        $path_documentos_aprobacion = $this->pathDocumentsWhenUpdate($request->tipo);
+        $nombre_compuesto = $documento->archivo;
+        $version = $documento->version;
+        if ($estatus != Documento::EN_ELABORACION) {
+            $version = $documento->version;
+        }
+        if ($request->file('archivo')) {
+            $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $nombre_original = $documento->codigo . '-' . $request->nombre . '-v' . $version;
+            $nombre_compuesto = basename($nombre_original) . '.' . $extension;
+            //Se elimina el archivo anterior
+            if (Storage::exists($this->pathDocumentsWhenUpdate($documento->tipo) . '/' . $documento->archivo)) {
+                Storage::delete([$this->pathDocumentsWhenUpdate($documento->tipo) . '/' . $documento->archivo]);
+            }
+            //Se guarda el nuevo documento
+            $request->file('archivo')->storeAs($path_documentos_aprobacion, $nombre_compuesto); // Almacenar Archivo
+        }
+
+        $macroproceso = null;
+        if (isset($request->macroproceso)) {
+            $macroproceso = $request->macroproceso;
+        }
+
+        $proceso = null;
+        if (isset($request->proceso)) {
+            $proceso = $request->proceso;
+        }
+
+        $documento->update([
+            // 'codigo' => $request->codigo,
+            'nombre' => $request->nombre,
+            'tipo' => $request->tipo,
+            'estatus' => $estatus,
+            'macroproceso_id' => $macroproceso,
+            'proceso_id' => $proceso,
+            'version' => $version,
+            'fecha' => $request->fecha,
+            'archivo' => $nombre_compuesto,
+            'elaboro_id' => $documento->elaboro_id,
+            'aprobo_id' => $documento->aprobo_id,
+            'reviso_id' => $documento->reviso_id,
+            'responsable_id' => $documento->responsable_id
+        ]);
+
+        return $documento;
+    }
+
+    public function pathDocumentsWhenUpdate($tipo)
+    {
         $path_documentos_aprobacion = 'public/Documentos en aprobacion';
-        switch ($request->tipo) {
+        switch ($tipo) {
             case 'politica':
                 $path_documentos_aprobacion .= '/politicas';
                 break;
@@ -246,46 +293,28 @@ class DocumentosController extends Controller
                 $path_documentos_aprobacion .= '/procesos';
                 break;
         }
-        $nombre_compuesto = $documento->archivo;
-        $version = $documento->version;
-        if ($estatus != Documento::EN_ELABORACION) {
-            $version = $documento->version;
-        }
-        if ($request->file('archivo')) {
-            $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_original = $documento->codigo . '-' . $request->nombre . '-v' . $version;
-            $nombre_compuesto = basename($nombre_original) . '.' . $extension;
-            $request->file('archivo')->storeAs($path_documentos_aprobacion, $nombre_compuesto); // Almacenar Archivo
-        }
-        // $estatus = $documento->estatus;
-
-
-        $documento->update([
-            // 'codigo' => $request->codigo,
-            'nombre' => $request->nombre,
-            'tipo' => $request->tipo,
-            'estatus' => $documento->estatus,
-            'macroproceso_id' => $request->macroproceso,
-            'version' => $version,
-            'fecha' => $request->fecha,
-            'archivo' => $nombre_compuesto,
-            'elaboro_id' => $documento->elaboro_id,
-            'aprobo_id' => $documento->aprobo_id,
-            'reviso_id' => $documento->reviso_id,
-            'responsable_id' => $documento->responsable_id
-        ]);
-
-        return $documento;
+        return $path_documentos_aprobacion;
     }
 
-
-    public function destroy(Documento $documento)
+    public function destroy(Request $request, Documento $documento)
     {
         try {
             if ($documento->tipo == 'proceso') {
                 // logica para eliminar el proceso vinculado al documento
-                // $proceso = Proceso::where('documento_id', $documento->id)->first();
-                // $proceso->delete();
+                $proceso = Proceso::where('documento_id', intval($documento->id))->first();
+                if ($request->delete_documents == 'true') {
+                    if ($proceso) {
+                        $dependencias = Documento::where('proceso_id', '=', $proceso->id)->get();
+                        if ($dependencias) {
+                            foreach ($dependencias as $dependencia) {
+                                $dependencia->delete();
+                            }
+                        }
+                    }
+                }
+                if ($proceso) {
+                    $proceso->delete();
+                }
             }
             $path_documento = $this->getPathDocumento($documento, 'public');
             $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
@@ -298,6 +327,7 @@ class DocumentosController extends Controller
                 Storage::move($ruta_documento, $ruta_obsoleto);
             }
             $eliminar = $documento->delete();
+
             if ($eliminar) {
                 return response()->json(['success' => true]);
             }
@@ -540,5 +570,23 @@ class DocumentosController extends Controller
         if (!Storage::exists('/public/Documentos obsoletos/procesos')) {
             Storage::makeDirectory('/public/Documentos obsoletos/procesos', 0775, true);
         }
+    }
+
+    public function getDocumentDependencies(Request $request)
+    {
+        $proceso = Proceso::where('documento_id', intval($request->documento_id))->first();
+        if ($proceso) {
+            $dependencias = Documento::where('proceso_id', '=', $proceso->id)->get();
+            return response()->json(['dependencias' => $dependencias]);
+        } else {
+            return response()->json(['dependencias' => null]);
+        }
+    }
+
+    public function renderHistoryVersions(Documento $documento)
+    {
+        $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
+
+        return view('admin.documentos.versions-document', compact('documento', 'versiones'));
     }
 }
