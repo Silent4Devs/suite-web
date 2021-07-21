@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Documento extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, SoftDeletes;
 
     //REVISION DE DOCUMENTOS ESTATUS
     const SOLICITUD_REVISION = 1;
