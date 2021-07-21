@@ -245,6 +245,18 @@
             z-index: 9 !important;
         }
 
+        .buscador-global {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .buscador-global:focus {
+            border: 2px solid rgb(0 171 178);
+            box-shadow: none;
+        }
+
 
         img.rounded-circle {
             border-radius: 0 !important;
@@ -353,11 +365,14 @@
             </button>
 
 
-            <form class="form-inline col-sm-3">
+            <form class="form-inline col-sm-3" style="position: relative;">
 
-                <select class="form-control mr-sm-4 searchable-field ">
-                    {{-- <option href="{{ route('admin.sedes.create') }}">Organización </option> --}}
-                </select>
+                {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
+                <input class="form-control buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
+                    autocomplete="off" />
+                <div id="resultados_sugeridos"
+                    style="background-color: #fff; width:150%; position: absolute;top:50px;left:0">
+                </div>
             </form>
 
             <ul class="ml-auto c-header-nav">
@@ -742,6 +757,51 @@
     </script>
     <script>
         $(document).ready(function() {
+            let url = "{{ route('admin.globalStructureSearch') }}";
+            $("#buscador_global").keyup(function() {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        term: $(this).val().toLowerCase()
+                    },
+                    beforeSend: function() {
+                        // $("#cargando_participantes").show();
+                    },
+                    success: function(data) {
+                        if (data.length == undefined) {
+                            let filtro = "<ul class='list-group'>";
+                            for (const [key, value] of Object.entries(data)) {
+                                console.log(value);
+                                filtro += `
+                                <a class="list-group-item list-group-item-action" href="${value}">
+                                    <i class="mr-2 fas fa-search-location"></i>${key}
+                                </a>    
+                            `;
+                            }
+                            filtro += "</ul>";
+                            // $("#cargando_participantes").hide();
+                            // $("#resultados_sugeridos").show();
+                            let sugeridos = document.querySelector(
+                                "#resultados_sugeridos");
+                            sugeridos.innerHTML = filtro;
+                        } else {
+                            let sugeridos = document.querySelector(
+                                "#resultados_sugeridos");
+                            sugeridos.innerHTML =
+                                `<ul class='list-group'><li class="list-group-item">
+                                    <i class="mr-2 fas fa-times-circle"></i>Sin resultados encontrados...
+                                    </li>
+                                </ul>`;
+                        }
+
+                        // $("#participantes_search").css("background", "#FFF");
+                    }
+                });
+            });
             $('.searchable-field').select2({
                 minimumInputLength: 3,
                 ajax: {
@@ -793,7 +853,8 @@
                 var markup = "<div class='searchable-link' href='" + item.url + "'>";
                 markup += "<div class='searchable-title'>" + item.model + "</div>";
                 $.each(item.fields, function(key, field) {
-                    markup += "<div class='searchable-field'>" + item.fields_formated[field] + " : " +
+                    markup += "<div class='searchable-field'>" + item.fields_formated[field] +
+                        " : " +
                         item[field] + "</div>";
                 });
                 markup += "</div>";
