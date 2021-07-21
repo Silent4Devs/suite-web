@@ -1,5 +1,11 @@
+@inject('Empleado', 'App\Models\Empleado')
+
 <style type="text/css">
-    
+    .td_div_recursos{
+        width: 100px;
+        display: flex;
+        overflow-x: auto;
+    }
 </style>
 <div class="card-body datatable-fix">
     <table id="tabla_usuario_actividades" class="table">
@@ -10,23 +16,51 @@
                 {{-- <th>Urgencia</th> --}}
                 <th>Fecha inicio</th>
                 <th>Fecha fin</th>
-                {{-- <th>Compartida con</th> --}}
+                <th>Compartida con</th>
                 {{-- <th>Asignada por</th> --}}
                 <th>Estatus</th>
                 <th>Opciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach(json_decode($file_gantt)->tasks as $task)
+            @foreach($actividades as $task)
             <tr>
-                <td>{{ $task->name }}</td>
+                <td>{{ $task['name'] }}</td>
                 {{-- <td>Categoria</td> --}}
                 {{-- <td>Urgencia</td> --}}
-                <td>{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTimeString()}}</td>
-                <td>{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTimeString()}}</td>
-                {{-- <td>{{ $task-> }}</td> --}}
+                <td>{{ \Carbon\Carbon::createFromTimestamp($task['start'] / 1000)->toDateTimeString()}}</td>
+                <td>{{ \Carbon\Carbon::createFromTimestamp($task['end'] / 1000)->toDateTimeString()}}</td>
+                <td>
+                    <div class="td_div_recursos">
+                        @foreach($task['assigs'] as $assig)
+                            @php
+                                $foto = 'user.png';
+                                $empleado = $Empleado->where('id', intval($assig['resourceId']))->first();
+                                if ($empleado) {
+
+                                    if ($empleado->foto != null) {
+                                        $foto = $empleado->foto;
+                                    }
+                                    else{
+                                        $genero = $empleado->genero;
+                                        if ($genero == 'M') {
+                                            $foto = 'woman.png';
+                                        }
+                                        if ($genero == 'H'){
+                                            $foto = 'man.png';
+                                        }    
+                                    } 
+                                }
+                            @endphp
+                            @if($empleado)
+                                <img src="{{asset('storage/empleados/imagenes/'.$foto)}}" class="rounded-circle {{$empleado->id == auth()->user()->empleado->id ? 'd-none':''}}" title="{{ $empleado->name }}">
+                                {{$empleado->id == auth()->user()->empleado->id ? '':''}}
+                            @endif
+                        @endforeach
+                    </div>
+                </td>
                 {{-- <td>Asignada por</td> --}}
-                <td>{{ $task->status }}</td>
+                <td>{{ $task['status'] }}</td>
                 <td class="opciones_iconos">
                     <i class="fas fa-trash-alt"></i>
                     <i class="fas fa-file-alt"></i>

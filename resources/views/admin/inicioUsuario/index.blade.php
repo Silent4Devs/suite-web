@@ -95,7 +95,7 @@
         cursor: pointer;
         margin: 3px;
         color: #00abb2;
-    }
+        }
         table td i:hover{
             opacity: 0.8;
         }

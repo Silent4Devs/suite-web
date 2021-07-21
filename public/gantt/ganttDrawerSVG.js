@@ -76,8 +76,8 @@ Ganttalendar.prototype.zoomGantt = function (isPlus) {
 
 
 Ganttalendar.prototype.getStoredZoomLevel = function () {
-  if (localStorage  && localStorage.getObject("TWPGanttSavedZooms")) {
-    var savedZooms = localStorage.getObject("TWPGanttSavedZooms");
+  if (localStorage  && localStorage.getItem("TWPGanttSavedZooms")) {
+    var savedZooms = localStorage.getItem("TWPGanttSavedZooms");
     return savedZooms[this.master.tasks[0].id];
   }
   return false;
@@ -87,14 +87,14 @@ Ganttalendar.prototype.storeZoomLevel = function () {
   //console.debug("storeZoomLevel: "+this.zoom);
   if (localStorage) {
     var savedZooms;
-    if (!localStorage.getObject("TWPGanttSavedZooms"))
+    if (!localStorage.getItem("TWPGanttSavedZooms"))
       savedZooms = {};
     else
-      savedZooms = localStorage.getObject("TWPGanttSavedZooms");
+      savedZooms = localStorage.getItem("TWPGanttSavedZooms");
 
     savedZooms[this.master.tasks[0].id]=this.zoom;
 
-    localStorage.setObject("TWPGanttSavedZooms", savedZooms);
+    localStorage.setItem("TWPGanttSavedZooms", savedZooms);
   }
 };
 

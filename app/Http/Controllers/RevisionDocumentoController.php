@@ -260,9 +260,11 @@ class RevisionDocumentoController extends Controller
                         $documentoAct = Documento::with('elaborador')->find($documentoOriginal->id);
                         $this->sendMailPublish($documentoAct->elaborador->email, $documentoAct);
                         $proceso = Proceso::where('documento_id', $documentoAct->id)->first();
-                        $proceso->update([
-                            'estatus' => Proceso::ACTIVO,
-                        ]);
+                        if ($proceso) {
+                            $proceso->update([
+                                'estatus' => Proceso::ACTIVO,
+                            ]);
+                        }
                     }
                 }
             };
