@@ -2,27 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
+
 use App\Models\Proceso;
 use App\Models\Empleado;
 use App\Models\Documento;
-use Illuminate\Http\Request;
 use App\Models\RevisionDocumento;
+use App\Models\HistorialVersionesDocumento;
+use App\Models\HistorialRevisionDocumento;
 use App\Mail\DocumentoAprobadoMail;
 use App\Mail\DocumentoPublicadoMail;
 use App\Mail\DocumentoRechazadoMail;
 use App\Mail\SolicitudAprobacionMail;
-use App\Models\Documento;
-use App\Models\Empleado;
-use App\Models\HistorialRevisionDocumento;
-use App\Models\HistorialVersionesDocumento;
-use App\Models\RevisionDocumento;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\SolicitudAprobacionMail;
 use App\Mail\DocumentoNoPublicadoMail;
-use Illuminate\Support\Facades\Storage;
-use App\Models\HistorialRevisionDocumento;
 
 class RevisionDocumentoController extends Controller
 {
@@ -30,6 +25,9 @@ class RevisionDocumentoController extends Controller
     public function edit(RevisionDocumento $revisionDocumento)
     {
         $documento = Documento::find(intval($revisionDocumento->documento_id));
+        if (!$documento) {
+            abort_if(!$documento, 404);
+        }
         $path_documentos_aprobacion = 'storage/Documentos en aprobacion';
         switch ($documento->tipo) {
             case 'politica':
@@ -155,10 +153,12 @@ class RevisionDocumentoController extends Controller
 
                         $documentoAct = Documento::with('elaborador')->find($documentoOriginal->id);
                         $this->sendMailPublish($documentoAct->elaborador->email, $documentoAct);
-                        $proceso=Proceso::where('documento_id',$documentoAct->id)->first();
-                        $proceso->update([
-                            'estatus'=>Proceso::ACTIVO,
-                        ]);
+                        $proceso = Proceso::where('documento_id', $documentoAct->id)->first();
+                        if ($proceso) {
+                            $proceso->update([
+                                'estatus' => Proceso::ACTIVO,
+                            ]);
+                        }
                     }
                 }
             };
@@ -259,10 +259,12 @@ class RevisionDocumentoController extends Controller
 
                         $documentoAct = Documento::with('elaborador')->find($documentoOriginal->id);
                         $this->sendMailPublish($documentoAct->elaborador->email, $documentoAct);
-                        $proceso=Proceso::where('documento_id',$documentoAct->id)->first();
-                        $proceso->update([
-                            'estatus'=>Proceso::ACTIVO,
-                        ]);
+                        $proceso = Proceso::where('documento_id', $documentoAct->id)->first();
+                        if ($proceso) {
+                            $proceso->update([
+                                'estatus' => Proceso::ACTIVO,
+                            ]);
+                        }
                     }
                 }
             };

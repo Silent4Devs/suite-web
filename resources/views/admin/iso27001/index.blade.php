@@ -155,7 +155,7 @@
 					<section id="s1" class="caja_tab_reveldada">
 						<div class="mt-5">
 							<ul>
-								<li><a href="{{ route("admin.declaracion-aplicabilidad.index") }}">
+								<li><a href="{{ route("admin.declaracion-aplicabilidad.index").'#declaracion' }}">
 									<div>
 										<i class="far fa-file"></i>
 										Declaracion de aplicabilidad

@@ -275,7 +275,7 @@
                                 {{--<i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
                                 </i>--}}
-                                &nbsp;&nbsp;&nbsp;
+                                Búsqueda...
 
                                 <i class="fab fa-adn iconos_menu letra_blanca">
 
