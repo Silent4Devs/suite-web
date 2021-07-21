@@ -36,7 +36,7 @@
             background-color: #f1f1f1;
         }
 
-        /*#desk .caja_caja_secciones{
+        #desk .caja_caja_secciones{
             width: 100%;
         }
         #desk .caja_secciones{
@@ -67,7 +67,7 @@
         	overflow: hidden;
         	transition-delay: 0.5s;
         	width: 100%;
-        }*/
+        }
 
 
 
