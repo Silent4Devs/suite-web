@@ -88,7 +88,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
     Route::get('procesos/{documento}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
     Route::resource('procesos', 'ProcesoController');
-
+    Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
 
     //macroprocesos
     Route::resource('macroprocesos', 'MacroprocesoController');
@@ -415,6 +415,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
+    Route::post('global-structure-search', 'GlobalStructureSearchController@globalSearch')->name('globalStructureSearch');
     Route::get('user-alerts/read', 'UserAlertsController@read');
     Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
     Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');

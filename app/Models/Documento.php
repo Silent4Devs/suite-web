@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Documento extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     //REVISION DE DOCUMENTOS ESTATUS
     const SOLICITUD_REVISION = 1;
@@ -24,9 +25,13 @@ class Documento extends Model
     const DOCUMENTO_RECHAZADO = 4;
     const DOCUMENTO_OBSOLETO = 5;
 
+    public static $searchable = [
+        'nombre', 'codigo'
+    ];
+
     protected $dates = ['fecha'];
 
-    protected $appends = ['estatus_formateado', 'fecha_dmy','archivo_actual'];
+    protected $appends = ['estatus_formateado', 'fecha_dmy', 'archivo_actual'];
 
     protected $fillable = [
         'codigo',
@@ -43,6 +48,11 @@ class Documento extends Model
         'aprobo_id',
         'responsable_id'
     ];
+
+    public function searchableAs()
+    {
+        return 'posts_index';
+    }
 
     public function getFechaDMYAttribute()
     {
@@ -75,7 +85,7 @@ class Documento extends Model
 
 
         $path_documento = '/storage/Documentos publicados';
-        if ($this->estatus==$this::EN_REVISION){
+        if ($this->estatus == $this::EN_REVISION) {
             $path_documento = '/storage/Documentos en aprobacion';
         }
 
