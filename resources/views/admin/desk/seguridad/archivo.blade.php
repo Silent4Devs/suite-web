@@ -1,79 +1,64 @@
-@inject('Empleado', 'App\Models\Empleado')
+@extends('layouts.admin')
+@section('content')
+	<div class="mt-5 card pl-4 pr-4">
+        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            <h3 class="mb-2 text-center text-white"><strong>Archivo Incidentes de Seguridad</strong></h3>
+        </div>
 
-<style type="text/css">
-    .td_div_recursos{
-        width: 100px;
-        display: flex;
-        overflow-x: auto;
-    }
-</style>
-<div class="card-body datatable-fix">
-    <table id="tabla_usuario_actividades" class="table">
-        <thead>
-            <tr>
-                <th>Actividad</th>
-                {{-- <th>Categoria</th> --}}
-                {{-- <th>Urgencia</th> --}}
-                <th>Fecha inicio</th>
-                <th>Fecha fin</th>
-                <th>Compartida con</th>
-                {{-- <th>Asignada por</th> --}}
-                <th>Estatus</th>
-                <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($actividades as $task)
-            <tr>
-                <td>{{ $task['name'] }}</td>
-                {{-- <td>Categoria</td> --}}
-                {{-- <td>Urgencia</td> --}}
-                <td>{{ \Carbon\Carbon::createFromTimestamp($task['start'] / 1000)->toDateTimeString()}}</td>
-                <td>{{ \Carbon\Carbon::createFromTimestamp($task['end'] / 1000)->toDateTimeString()}}</td>
-                <td>
-                    <div class="td_div_recursos">
-                        @foreach($task['assigs'] as $assig)
-                            @php
-                                $foto = 'user.png';
-                                $empleado = $Empleado->where('id', intval($assig['resourceId']))->first();
-                                if ($empleado) {
+	<div class="datatable-fix" style="width: 100%;">
+		
+	  	<table class="table tabla_incidentes_seguridad">
+	   		<thead>
+	   			<tr>
+	       			<th>ID</th>
+	       			<th>Folio</th>
+	       			<th>Titulo</th>
+	       			<th>Descripción</th>
+	       			<th>Activos, Afectados</th>
+	       			<th>Fecha</th>
+	       			<th>Quién reporto</th>
+	       			<th>Correo</th>
+	       			<th>Teléfono</th>
+	       			<th>Categoría</th>
+	       			<th>Calificación</th>
+	       			<th>Prioridad</th>
+	       			<th>Estatus</th>
+	       			<th>Asigando a</th>
+	       			<th>Comentarios</th>
+	       			<th>Opciones</th>
+	   			</tr>
+	   		</thead>
+	   		<tbody>
+	   			@foreach($incidentes_seguridad_archivados as $incidentes)
+		   			<tr>
+		       			<td>{{ $incidentes->id }}</td>
+		       			<td>{{ $incidentes->folio }}</td>
+		       			<td>{{ $incidentes->titulo }}</td>
+		       			<td>{{ $incidentes->descripción }}</td>
+		       			<td>{{ $incidentes->activos_afectados }}</td>
+		       			<td>{{ $incidentes->fecha }}</td>
+		       			<td>{{ $incidentes->reporto->name }}</td>
+		       			<td>{{ $incidentes->reporto->email }}</td> {{-- correo --}}
+		       			<td>{{ $incidentes->reporto->telefono }}</td> {{-- telefono --}}
+		       			<td>{{ $incidentes->categoria }}</td>
+		       			<td>{{ $incidentes->clacificacion }}</td>
+		       			<td>{{ $incidentes->prioridad }}</td>
+		       			<td>{{ $incidentes->estatus }}</td>
+		       			<td>{{ $incidentes->asignado ? $incidentes->asignado->name:'sin asignar'}}</td>
+		       			<td>{{ $incidentes->comentarios }}</td>
+		       			<td>
+		       				<a href="{{ route('admin.desk.seguridad-edit', $incidentes->id) }}"><i class="fas fa-edit"></i></a>
+		       			</td>
+		   			</tr>
+	   			@endforeach
+	   		</tbody>
+	   </table>
+	</div>
 
-                                    if ($empleado->foto != null) {
-                                        $foto = $empleado->foto;
-                                    }
-                                    else{
-                                        $genero = $empleado->genero;
-                                        if ($genero == 'M') {
-                                            $foto = 'woman.png';
-                                        }
-                                        if ($genero == 'H'){
-                                            $foto = 'man.png';
-                                        }    
-                                    } 
-                                }
-                            @endphp
-                            @if($empleado)
-                                <img src="{{asset('storage/empleados/imagenes/'.$foto)}}" class="rounded-circle {{$empleado->id == auth()->user()->empleado->id ? 'd-none':''}}" title="{{ $empleado->name }}">
-                                {{$empleado->id == auth()->user()->empleado->id ? '':''}}
-                            @endif
-                        @endforeach
-                    </div>
-                </td>
-                {{-- <td>Asignada por</td> --}}
-                <td>{{ $task['status'] }}</td>
-                <td class="opciones_iconos">
-                    <i class="fas fa-trash-alt"></i>
-                    <i class="fas fa-file-alt"></i>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-
-
+@endsection
 @section('scripts')
-    @parent
+@parent
+
     <script type="text/javascript">
         $(document).ready(function(){
             let dtButtons = [{
@@ -143,14 +128,9 @@
                     }
 
                 ];
-            $("#tabla_usuario_actividades").DataTable({
+            $(".tabla_incidentes_seguridad").DataTable({
                 buttons: dtButtons,
             });
         });
-
-
-
-
-
     </script>
 @endsection
