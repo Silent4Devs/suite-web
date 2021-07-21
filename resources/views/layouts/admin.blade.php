@@ -293,6 +293,7 @@
                 {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
                 <input class="form-control buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
                     autocomplete="off" />
+                <i class="fas fa-spinner fa-pulse d-none" id="buscando" style="margin-left:-45px"></i>
                 <div id="resultados_sugeridos"
                     style="background-color: #fff; width:150%; position: absolute;top:50px;left:0">
                 </div>
@@ -681,6 +682,15 @@
     <script>
         $(document).ready(function() {
             let url = "{{ route('admin.globalStructureSearch') }}";
+            $("#buscador_global").click(function(e) {
+                e.preventDefault();
+                let sugeridos = document.querySelector(
+                    "#resultados_sugeridos");
+                sugeridos.innerHTML = "";
+                this.value = "";
+                $("#buscando").removeClass('d-block');
+                $("#buscando").addClass('d-none');
+            });
             $("#buscador_global").keyup(function() {
                 $.ajax({
                     type: "POST",
@@ -692,13 +702,13 @@
                         term: $(this).val().toLowerCase()
                     },
                     beforeSend: function() {
-                        // $("#cargando_participantes").show();
+                        $("#buscando").removeClass('d-none');
+                        $("#buscando").addClass('d-block');
                     },
                     success: function(data) {
                         if (data.length == undefined) {
                             let filtro = "<ul class='list-group'>";
                             for (const [key, value] of Object.entries(data)) {
-                                console.log(value);
                                 filtro += `
                                 <a class="list-group-item list-group-item-action" href="${value}">
                                     <i class="mr-2 fas fa-search-location"></i>${key}
@@ -706,12 +716,15 @@
                             `;
                             }
                             filtro += "</ul>";
-                            // $("#cargando_participantes").hide();
+                            $("#buscando").removeClass('d-block');
+                            $("#buscando").addClass('d-none');
                             // $("#resultados_sugeridos").show();
                             let sugeridos = document.querySelector(
                                 "#resultados_sugeridos");
                             sugeridos.innerHTML = filtro;
-                        } else {
+                        } else if (data.length == 0) {
+                            $("#buscando").removeClass('d-block');
+                            $("#buscando").addClass('d-none');
                             let sugeridos = document.querySelector(
                                 "#resultados_sugeridos");
                             sugeridos.innerHTML =
@@ -719,6 +732,12 @@
                                     <i class="mr-2 fas fa-times-circle"></i>Sin resultados encontrados...
                                     </li>
                                 </ul>`;
+                        } else {
+                            $("#buscando").removeClass('d-block');
+                            $("#buscando").addClass('d-none');
+                            let sugeridos = document.querySelector(
+                                "#resultados_sugeridos");
+                            sugeridos.innerHTML = "";
                         }
 
                         // $("#participantes_search").css("background", "#FFF");
@@ -801,7 +820,7 @@
 
 
 
-    
+
 
     @yield('scripts')
 
