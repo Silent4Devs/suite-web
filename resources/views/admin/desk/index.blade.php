@@ -21,7 +21,7 @@
             align-items: center;
         }
         #desk .caja_botones a:first-child{
-            border-left: 1px solid #ccc;
+            border-left: none;
         }
         #desk .caja_botones a:not(#desk .caja_botones a.btn_activo){
             border-bottom: 1px solid #ccc;
@@ -125,127 +125,18 @@
                     	@include('admin.desk.seguridad.seguridad')
                     </section>
                     <section id="actividades">
-                    	<h2>Riesgos</h2>
-	                   <div class="datatable-fix" style="width: 100%;">
-	                      <table class="table">
-	                       		<thead>
-	                       			<tr>
-		                       			<th>Nombre</th>
-		                       			<th>Correo electrónico</th>
-		                       			<th>Fecha</th>
-		                       			<th>Hora</th>
-		                       			<th>Descripción</th>
-	                       			</tr>
-	                       		</thead>
-	                       		<tbody>
-	                       			<tr>
-	                       				<td>Nombre</td>
-		                       			<td>Correo electrónico</td>
-		                       			<td>Fecha</td>
-		                       			<td>Hora</td>
-		                       			<td>Descripción de riesgo</td>
-	                       			</tr>
-	                       		</tbody>
-	                       </table>
-	                   	</div>
                     </section>
                     <section id="aprobaciones">
-                    	<h2>Quejas</h2>
-	                     <div class="datatable-fix" style="width: 100%;">
-	                        <table class="table">
-	                       		<thead>
-	                       			<tr>
-		                       			<th>Anonima</th>
-		                       			<th>Nombre</th>
-		                       			<th>Correo electrónico</th>
-		                       			<th>Queja contra</th>
-		                       			<th>Descripción</th>
-	                       			</tr>
-	                       		</thead>
-	                       		<tbody>
-	                       			<tr>
-		                       			<td>Anonima</td>
-		                       			<td>Nombre</td>
-		                       			<td>Correo electrónico</td>
-		                       			<td>Queja contro</td>
-		                       			<td>Descripción</td>
-	                       			</tr>
-	                       		</tbody>
-	                       </table>
-	                   	</div>
+
                     </section>
                     <section id="capacitaciones">
-                    	<h2>Denuncias</h2>
-	                     <div class="datatable-fix" style="width: 100%;">
-	                        <table class="table">
-	                       		<thead>
-	                       			<tr>
-		                       			<th>Anonima</th>
-		                       			<th>Nombre</th>
-		                       			<th>Correo electrónico</th>
-		                       			<th>Colaborador denunciado</th>
-		                       			<th>Tipo de denuncia</th>
-		                       			<th>Descripción</th>
-	                       			</tr>
-	                       		</thead>
-	                       		<tbody>
-	                       			<tr>
-		                       			<td>Anonima</td>
-		                       			<td>Nombre</td>
-		                       			<td>Correo electrónico</td>
-		                       			<td>Colaborador denunciado</td>
-		                       			<td>Tipo de denuncia</td>
-		                       			<td>Descripción</td>
-	                       			</tr>
-	                       		</tbody>
-	                       </table>
-	                   	</div>
+
                     </section>
                     <section id="reportes"> 
-                    	<h2>Mejoras</h2>
-	                     <div class="datatable-fix" style="width: 100%;">
-	                        <table class="table">
-	                       		<thead>
-	                       			<tr>
-		                       			<th>Nombre</th>
-		                       			<th>Correo electrónico</th>
-		                       			<th>Nombre de mejora</th>
-		                       			<th>Descripción</th>
-	                       			</tr>
-	                       		</thead>
-	                       		<tbody>
-	                       			<tr>
-		                       			<td>Nombre</td>
-		                       			<td>Correo electrónico</td>
-		                       			<td>Nombre de mejora</td>
-		                       			<td>Descripción</td>
-	                       			</tr>
-	                       		</tbody>
-	                       </table>
-	                   	</div>
+
                     </section>
                     <section id="sugerencias"> 
-                    	<h2>Sugerencias</h2>
-	                     <div class="datatable-fix" style="width: 100%;">
-	                        <table class="table">
-	                       		<thead>
-	                       			<tr>
-		                       			<th>Nombre</th>
-		                       			<th>Correo electrónico</th>
-		                       			<th>Sugerencia dirigida a</th>
-		                       			<th>Descripción</th>
-	                       			</tr>
-	                       		</thead>
-	                       		<tbody>
-	                       			<tr>
-		                       			<td>Nombre</td>
-		                       			<td>Correo electrónico</td>
-		                       			<td>Sugerencia dirigida a</td>
-		                       			<td>Descripción</td>
-	                       			</tr>
-	                       		</tbody>
-	                       </table>
-	                   	</div>
+
                     </section>
 
                 </div>

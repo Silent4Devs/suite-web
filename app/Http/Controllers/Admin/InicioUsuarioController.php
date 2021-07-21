@@ -10,6 +10,7 @@ use App\Models\PlanBaseActividade;
 use App\Models\AuditoriaAnual;
 use App\Models\Recurso;
 use App\Models\IncidentesSeguridad;
+use App\Models\RiesgoIdentificado;
 use App\Models\Activo;
 use Illuminate\Support\Facades\Storage;
 
@@ -120,6 +121,8 @@ class inicioUsuarioController extends Controller
         return view('admin.inicioUsuario.formularios.sugerencias');
     }
 
+
+
     public function seguridad(){
 
         $activos = Activo::get();
@@ -166,7 +169,23 @@ class inicioUsuarioController extends Controller
 
     }
 
+
+
     public function riesgos(){
+
         return view('admin.inicioUsuario.formularios.riesgos');
+    }
+    public function storeRiesgos(Request $request){
+
+        RiesgoIdentificado::create([
+            'fecha'=>$request->fecha,
+            'titulo'=>$request->titulo,
+            'descripcion'=>$request->descripcion,
+            'activos_afectados'=>$request->activos_afectados,
+            'proceso'=>$request->proceso,
+            'empleado_reporto_id'=>auth()->user()->empleado->id,        
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
     }
 }

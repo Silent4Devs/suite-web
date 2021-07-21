@@ -31,8 +31,6 @@ class IncidentesSeguridad extends Model implements HasMedia
 
     protected $appends = ['folio', 'archivo'];
 
-    protected $fillable = ['evidencia'];
-
     public function getFolioAttribute(){
         return  sprintf('INC-%04d', $this->id);
     }
@@ -50,6 +48,6 @@ class IncidentesSeguridad extends Model implements HasMedia
 
     public function getArchivoAttribute()
     {
-        return $this->getMedia('archivo')->get();
+        return $this->getMedia('archivo')->first();
     }
 }

@@ -14,12 +14,15 @@ class CreateRiesgosIdentificadosTable extends Migration
     public function up()
     {
         Schema::create('riesgos_identificados', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre');
-            $table->string('correo');
+            $table->id();
             $table->date('fecha')->nullable();
-            $table->time('proceso')->nullable();
+            $table->string('proceso')->nullable();
             $table->string('descripcion')->nullable();
+
+            $table->unsignedBigInteger('empleado_reporto_id')->nullable();
+
+            $table->foreign('empleado_reporto_id')->references('id')->on('empleados');
+
             $table->timestamps();
             $table->softDeletes();
         });
