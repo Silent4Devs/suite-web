@@ -64,15 +64,7 @@
 
 @section('scripts')
 
-<script>
 
-    $(".caja_btn_a a").click(function(){
-        $(".caja_btn_a a").removeClass("btn_a_seleccionado");
-        $(".caja_btn_a a:hover").addClass("btn_a_seleccionado");
-        $("#declaracion").removeClass("d-block");
-
-    });
-</script>
 
 
 
