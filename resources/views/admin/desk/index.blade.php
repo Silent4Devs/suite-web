@@ -97,19 +97,19 @@
         <div class="caja_botones_secciones">
         
             <div class="caja_botones">
-                <a href="#calendario" class="btn_activo">
+                <a href="#incidentes" class="btn_activo">
                 	<i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
                 </a>
-                <a href="#actividades">
+                <a href="#riesgos">
                 	<i class="fas fa-shield-virus"></i> Riesgos
                 </a>
-                <a href="#aprobaciones">
+                <a href="#quejas">
                 	<i class="fas fa-frown"></i> Quejas
                 </a>
-                <a href="#capacitaciones">
+                <a href="#denuncias">
                 	<i class="fas fa-hand-paper"></i> Denuncias
                 </a>
-                <a href="#reportes">
+                <a href="#mejoras">
                 	<i class="fas fa-rocket"></i> Mejoras
                 </a>
                 <a href="#sugerencias">
@@ -121,18 +121,18 @@
             <div class="caja_caja_secciones">
             
                 <div class="caja_secciones">
-                    <section id="calendario">
+                    <section id="incidentes">
                     	@include('admin.desk.seguridad.seguridad')
                     </section>
-                    <section id="actividades">
+                    <section id="riesgos">
                     </section>
-                    <section id="aprobaciones">
+                    <section id="quejas">
 
                     </section>
-                    <section id="capacitaciones">
+                    <section id="denuncias">
 
                     </section>
-                    <section id="reportes"> 
+                    <section id="mejoras"> 
 
                     </section>
                     <section id="sugerencias"> 

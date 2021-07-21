@@ -446,7 +446,12 @@
                 </div>
             </div>
 
+        <section id="documentos_relacionados">
 
+            <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                @include('admin.procesos.vistas.documentos_relacionados')
+            </div>
+        </section>
 
             {{-- <div class="mb-3 ml-5 row caja_btn_a ">
                 <a href="#vista-previa" class="btn_a_seleccionado" style="text-decoration:none;">
