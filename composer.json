@@ -20,6 +20,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",
+        "jantinnerezo/livewire-alert": "^2.1",
         "jenssegers/date": "^4.0",
         "laracasts/flash": "^3.0",
         "laravel/dusk": "^6.6",
@@ -37,7 +38,6 @@
         "spatie/geocoder": "^3.10",
         "spatie/laravel-medialibrary": "^8.7",
         "yajra/laravel-datatables-oracle": "^9.11"
-
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

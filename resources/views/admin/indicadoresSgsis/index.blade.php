@@ -20,8 +20,11 @@
                         <th>
                             Nombre del indicador
                         </th>
-                        <th>
+                        {{--<th>
                             Proceso
+                        </th>--}}
+                        <th>
+                            Año
                         </th>
                         <th>
                             Descripción
@@ -35,7 +38,7 @@
                         <th>
                             Frecuencia
                         </th>
-                        <th>
+                        {{--<th>
                             Meta
                         </th>
                         <th>
@@ -46,7 +49,7 @@
                         </th>
                         <th>
                             Responsable
-                        </th>
+                        </th>--}}
                         <th>
                             Opciones
                         </th>
@@ -282,9 +285,13 @@
                         name: 'nombre'
                     },
                     {
+                        data: 'año',
+                        name: 'año',
+                    },
+                    /*{
                         data: 'proceso',
                         name: 'proceso'
-                    },
+                    },*/
                     {
                         data: 'descripcion',
                         name: 'descripcion'
@@ -294,14 +301,14 @@
                         name: 'formula'
                     },
                     {
-                        data: 'frecuencia',
-                        name: 'frecuencia'
-                    },
-                    {
                         data: 'unidadmedida',
                         name: 'unidadmedida'
                     },
                     {
+                        data: 'frecuencia',
+                        name: 'frecuencia'
+                    },
+                    /*{
                         data: 'meta',
                         name: 'meta'
                     },
@@ -310,13 +317,9 @@
                         name: 'revisiones'
                     },
                     {
-                        data: 'resultado',
-                        name: 'resultado'
-                    },
-                    {
                         data: 'responsable',
                         name: 'responsable'
-                    },
+                    },*/
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'

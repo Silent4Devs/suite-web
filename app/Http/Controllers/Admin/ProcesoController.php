@@ -13,6 +13,7 @@ use App\Models\RevisionDocumento;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\HistorialVersionesDocumento;
 
 class ProcesoController extends Controller
 {
@@ -182,42 +183,13 @@ class ProcesoController extends Controller
 
         $documento=Documento::with('elaborador','revisor','aprobador','responsable','macroproceso')->find($documento);
         // dd($documento->elaborador->avatar);
-
-        $path_documentos_publicados = 'storage/Documentos publicados';
-        switch ($documento->tipo) {
-            case 'politica':
-                $path_documentos_publicados .= '/politicas';
-                break;
-            case 'procedimiento':
-                $path_documentos_publicados .= '/procedimientos';
-                break;
-            case 'manual':
-                $path_documentos_publicados .= '/manuales';
-                break;
-            case 'plan':
-                $path_documentos_publicados .= '/planes';
-                break;
-            case 'instructivo':
-                $path_documentos_publicados .= '/instructivos';
-                break;
-            case 'reglamento':
-                $path_documentos_publicados .= '/reglamentos';
-                break;
-            case 'externo':
-                $path_documentos_publicados .= '/externos';
-                break;
-            case 'proceso':
-                $path_documentos_publicados .= '/procesos';
-                break;
-            default:
-                $path_documentos_publicados .= '/procesos';
-                break;
-        }
-
+        $proceso=Proceso::where('documento_id',$documento->id)->first();
+        $documentos_relacionados=Documento::with('elaborador','revisor','aprobador','responsable','macroproceso')->where('proceso_id',$proceso->id)->get();
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento)->get();
+        $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
 
 
-        return view('admin.procesos.vistas', compact('documento', 'path_documentos_publicados','revisiones'));
+        return view('admin.procesos.vistas', compact('documento','revisiones','documentos_relacionados','versiones'));
 
     }
 

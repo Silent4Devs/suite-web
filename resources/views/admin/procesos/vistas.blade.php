@@ -386,25 +386,25 @@
 
         <div class="mb-3 ml-5 row caja_btn_a ">
             <a href="#vista-previa" class="btn_a_seleccionado" style="text-decoration:none;"><div class="col-12 btn-jerarquia cambiocolor">
-             Vista Previa
+            Vista Previa
             </div></a>
 
             <a href="#resumen"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
                 Resumen
             </div></a>
 
-            {{-- <a href="#resumen"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
+            <a href="#riesgos"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
                 Riesgos
-            </div></a> --}}
+            </div></a>
 
 
             <a href="#indicadores"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
                 Indicadores
             </div></a>
 
-            {{-- <a href="#resumen"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
+            <a href="#documentos_relacionados"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
                 Documentos Relacionados
-            </div></a> --}}
+            </div></a>
 
             <a href="#versiones"  style="text-decoration:none;"><div class="col-12 btn-grupo cambiocolor2">
                 Versiones
@@ -436,6 +436,13 @@
 
             <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
                 @include('admin.procesos.vistas.versiones')
+            </div>
+        </section>
+
+        <section id="documentos_relacionados">
+
+            <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                @include('admin.procesos.vistas.documentos_relacionados')
             </div>
         </section>
 

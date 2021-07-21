@@ -69,6 +69,7 @@ class IndicadoresSgsi extends Model
 		'verde',
 		'amarillo',
 		'rojo',
+        'ano',
 	];
 
 	public function empleado()

@@ -191,7 +191,7 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("admin.desk.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/desk") || request()->is("admin/desk/*") ? "active" : "" }}">
+            <a href="{{ route("admin.desk.index") }}#incidentes" class="c-sidebar-nav-link {{ request()->is("admin/desk") || request()->is("admin/desk/*") ? "active" : "" }}">
                 <i class="iconos_menu letra_blanca fas fa-headset"></i>
                 <font class="letra_blanca"> Centro de atención
  </font>
@@ -275,7 +275,7 @@
                                 {{--<i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
                                 </i>--}}
-                                &nbsp;&nbsp;&nbsp;
+                                Búsqueda...
 
                                 <i class="fab fa-adn iconos_menu letra_blanca">
 
