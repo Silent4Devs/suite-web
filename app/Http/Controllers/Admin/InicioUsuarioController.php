@@ -43,10 +43,10 @@ class inicioUsuarioController extends Controller
                 if ($assig['resourceId'] == $empleado_id) {
                     return $tarea;
                 }
-            } 
-        }); 
+            }
+        });
 
-        
+
 
 
         $plan_base = PlanBaseActividade::get();
@@ -101,7 +101,7 @@ class inicioUsuarioController extends Controller
             if ($assig == auth()->user()) {
                 return $tarea;
             }
-        } 
+        }
     }
 
 
@@ -144,7 +144,7 @@ class inicioUsuarioController extends Controller
             'titulo'=>$request->titulo,
             'descripcion'=>$request->descripcion,
             'activos_afectados'=>$request->activos_afectados,
-            'empleado_reporto_id'=>auth()->user()->empleado->id,        
+            'empleado_reporto_id'=>auth()->user()->empleado->id,
         ]);
 
         $archivos = explode(',', $request->input('archivo'));
@@ -159,7 +159,7 @@ class inicioUsuarioController extends Controller
             }
         }
 
-        
+
 
         return redirect()->route('admin.inicio-Usuario.index');
 
@@ -183,7 +183,7 @@ class inicioUsuarioController extends Controller
             'descripcion'=>$request->descripcion,
             'activos_afectados'=>$request->activos_afectados,
             'proceso'=>$request->proceso,
-            'empleado_reporto_id'=>auth()->user()->empleado->id,        
+            'empleado_reporto_id'=>auth()->user()->empleado->id,
         ]);
 
         return redirect()->route('admin.inicio-Usuario.index');
