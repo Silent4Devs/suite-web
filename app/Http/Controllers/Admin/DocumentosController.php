@@ -186,6 +186,12 @@ class DocumentosController extends Controller
     {
         if ($request->ajax()) {
             $documento = $this->updateDocument($request, $documento, Documento::EN_REVISION);
+            $proceso = Proceso::where('documento_id', $documento->id)->first();
+            if ($proceso) {
+                $proceso->update([
+                    'estatus' => Proceso::NO_ACTIVO,
+                ]);
+            }
             return response()->json(['success' => true, 'documento_id' => $documento->id]);
         }
     }
