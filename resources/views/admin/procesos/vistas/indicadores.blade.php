@@ -31,7 +31,7 @@
     <div class="col-sm-7">
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered tbl-categorias w-100">
+            <table class="table table-hover table-bordered tbl-categorias w-100">
 
                 <thead class="thead-dark">
                     <tr>
@@ -47,16 +47,18 @@
 
                     @foreach ($indicadores as $indicador)
                         <tr>
-                            <td ><a class="btnId" name="" id="" class="btn btn-primary" role="button"></a>{{ $indicador->id }}</td>
-                            <td>{{ $indicador->nombre }}</td>
-                            <td>{{ $indicador->descripcion }}</td>
-                            <td>{{ $indicador->formula }}</td>
                             @php
                                 $i = 0;
                                 foreach ($indicador->evaluacion_indicadors as $value) {
                                     $i += $value->resultado;
                                 }
                             @endphp
+                            <td
+                                onclick='tdclick(event, {{ $indicador->id }}, {{ $indicador->rojo }}, {{ $indicador->amarillo }}, {{ $indicador->verde }}, {{ $i }})'>
+                                {{ $indicador->id }}</td>
+                            <td>{{ $indicador->nombre }}</td>
+                            <td>{{ $indicador->descripcion }}</td>
+                            <td>{{ $indicador->formula }}</td>
                             <td>
                                 @if ($i >= $indicador->verde)
                                     <span class="dotverde"></span>
@@ -78,47 +80,77 @@
     </div>
     <div class="col-sm-5">
 
-        <div id="gaugeArea" width="800" height="650"></div>
+        <div class="d-flex justify-content-center">
+            <div style="" id="resultado"></div>
+        </div>
 
     </div>
 
 </div>
 
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
-<script>
-
-
-    document.querySelectorAll("td.btnId").forEach(function(elem) {
-
-        elem.addEventListener('click', generarGrafica, false);
-
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
+</script>
+<script>
+    function tdclick(e, indicador_id, rojo, amarillo, verde, resultado) {
+        if (!e) var e = window.event; // Get the window event
+        e.cancelBubble = true; // IE Stop propagation
+        if (e.stopPropagation) e.stopPropagation(); // Other Broswers
+        console.log(indicador_id, rojo, amarillo, verde, resultado);
+        $.ajax({
+            data: {
+                id: indicador_id,
+                rojo: rojo,
+                amarillo: amarillo,
+                verde: verde,
+                resultado: resultado,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '{{ route('admin.selectIndicador') }}',
+            type: 'POST',
+            beforeSend: function() {
+                $("#resultado").html(
+                    '<div class="spinner-border text-success" role="status"><span class="sr-only">Loading...</span></div>'
+                );
+            },
+            success: function(data) {
+                $("#resultado").html(data);
+                console.log(data);
+                //speedometer
+                // Element inside which you want to see the chart
+                let element = document.querySelector('#resultado')
 
-    function generaGrafica() {
-        var btnId=this.value;
-        alert(btnId);
-    }
-    // Drawing and updating the chart
+                // Properties of the gauge
+                let gaugeOptions = {
+                    hasNeedle: true,
+                    needleColor: 'black',
+                    needleStartValue: 0,
+                    needleUpdateSpeed: 1000,
+                    arcColors: ["rgb(255,84,84)", "rgb(239,214,19)", "rgb(61,204,91)"],
+                    arcDelimiters: [data.datos.amarillo, data.datos.verde],
+                    rangeLabel: ['0', data.datos.verde],
+                    centralLabel: data.datos.resultado + data.unidad.unidadmedida,
+                }
 
+                // Drawing and updating the chart
+                GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(data.datos.resultado)
 
-    //speedometer
-    // Element inside which you want to see the chart
-    let element = document.querySelector('#gaugeArea')
+            },
+            error: function(data) {
+                //console.log(data);
+                $("#resultado").html("<div class=\"alert alert-danger\" role=\"alert\">\n" +
+                    " ¡Intente de nuevo!\n" + "</div>");
+            }
+        });
 
-    // Properties of the gauge
-    let gaugeOptions = {
-        hasNeedle: 1,
-        needleColor: 'black',
-        needleStartValue: 0,
-        needleUpdateSpeed: 1000,
-        arcColors: ["rgb(255,84,84)", "rgb(239,214,19)", "rgb(61,204,91)"],
-        arcDelimiters: [{{ $indicador->yellow }}, 66.66],
-        rangeLabel: ['0', '100'],
-        centralLabel: 1,
-    }
-
-    // Drawing and updating the chart
-    GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(100)
+    };
 
     //radarchart
     //Empieza radar chart

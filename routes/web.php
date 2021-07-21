@@ -61,7 +61,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
     Route::get('procesos/{documento}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
     Route::resource('procesos', 'ProcesoController');
-
+    Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
 
     //macroprocesos
     Route::resource('macroprocesos', 'MacroprocesoController');

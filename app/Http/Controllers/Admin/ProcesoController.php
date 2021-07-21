@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\IndicadoresSgsi;
 use App\Models\RevisionDocumento;
 use Illuminate\Support\Facades\DB;
+use App\Models\EvaluacionIndicador;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\HistorialVersionesDocumento;
@@ -193,6 +194,16 @@ class ProcesoController extends Controller
 
         return view('admin.procesos.vistas', compact('documento','revisiones','documentos_relacionados','versiones','indicadores'));
 
+    }
+
+    public function AjaxRequestIndicador(Request $request){
+        $input = $request->all();
+
+        $unidad = IndicadoresSgsi::select('unidadmedida')->where('id', $input['id'])->first();
+
+        $res = '<div id="resultado" width="900" height="750"></div>';
+
+        return response()->json(["gauge" => $res, 'datos' => $input, 'unidad' => $unidad], 200);
     }
 
 
