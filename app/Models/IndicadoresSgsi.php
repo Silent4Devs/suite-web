@@ -72,6 +72,11 @@ class IndicadoresSgsi extends Model
         'ano',
 	];
 
+    public function getResultado(){
+
+        return $this->evaluacion_indicadors()->sum('resultado');
+    }
+
 	public function empleado()
 	{
 		return $this->belongsTo(Empleado::class, 'id_empleado');

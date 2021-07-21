@@ -10,7 +10,7 @@
 
                 <div class="card-body">
 
-                    <a href="{{ route('admin.documentos.renderViewDocument', $documento_relacionado) }}">
+                    <a href="{{ route('admin.documentos.renderViewDocument', $documento_relacionado) }}" target="_blank">
                         <p><strong class="text-center" style="font-size:13pt;"> {{ $documento_relacionado->codigo }} -
                                 {{ $documento_relacionado->nombre }} </strong></p>
                     </a>
@@ -75,10 +75,13 @@
 
                         </div> --}}
 
-        <div class="d-flex justify-content-center">
-            <img src="{{ asset('img/add-document.png') }}" alt="No se pudo cargar el documentos relacionados"
-                class="mt-3" style="height: 390px;">
-        </div>
+            <div style="width:100%; display:flex; justify-content:center !important; align-item:center">
+
+                    <img src="{{ asset('img/add-document.png') }}" alt="No se pudo cargar el documentos relacionados"
+                     class="mt-3" style="height: 390px;">
+
+            </div>
+
 
 
 
