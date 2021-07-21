@@ -46,16 +46,15 @@
                 <tbody>
 
                     @foreach ($indicadores as $indicador)
-                        <tr>
-                            @php
-                                $i = 0;
-                                foreach ($indicador->evaluacion_indicadors as $value) {
-                                    $i += $value->resultado;
-                                }
-                            @endphp
-                            <td
-                                onclick='tdclick(event, {{ $indicador->id }}, {{ $indicador->rojo }}, {{ $indicador->amarillo }}, {{ $indicador->verde }}, {{ $i }})'>
-                                {{ $indicador->id }}</td>
+                        @php
+                            $i = 0;
+                            foreach ($indicador->evaluacion_indicadors as $value) {
+                                $i += $value->resultado;
+                            }
+                        @endphp
+                        <tr
+                            onclick='graficasclick(event, {{ $indicador->id }}, {{ $indicador->rojo }}, {{ $indicador->amarillo }}, {{ $indicador->verde }}, {{ $i }})'>
+                            <td>{{ $indicador->id }}</td>
                             <td>{{ $indicador->nombre }}</td>
                             <td>{{ $indicador->descripcion }}</td>
                             <td>{{ $indicador->formula }}</td>
@@ -81,7 +80,9 @@
     <div class="col-sm-5">
 
         <div class="d-flex justify-content-center">
-            <div style="" id="resultado"></div>
+            <div style="" id="resultado">
+                <h5>De click sobre una fila para desplegar información</h5>
+            </div>
         </div>
 
     </div>
@@ -97,7 +98,7 @@
     });
 </script>
 <script>
-    function tdclick(e, indicador_id, rojo, amarillo, verde, resultado) {
+    function graficasclick(e, indicador_id, rojo, amarillo, verde, resultado) {
         if (!e) var e = window.event; // Get the window event
         e.cancelBubble = true; // IE Stop propagation
         if (e.stopPropagation) e.stopPropagation(); // Other Broswers
@@ -145,8 +146,7 @@
             },
             error: function(data) {
                 //console.log(data);
-                $("#resultado").html("<div class=\"alert alert-danger\" role=\"alert\">\n" +
-                    " ¡Intente de nuevo!\n" + "</div>");
+                $("#resultado").html('<div class="spinner-border text-danger" role="status"><span class="sr-only">Intente de nuevo...</span></div>');
             }
         });
 
