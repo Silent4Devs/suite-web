@@ -388,6 +388,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
+    Route::post('global-structure-search', 'GlobalStructureSearchController@globalSearch')->name('globalStructureSearch');
     Route::get('user-alerts/read', 'UserAlertsController@read');
     Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
     Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');

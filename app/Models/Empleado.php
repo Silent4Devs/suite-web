@@ -49,6 +49,10 @@ class Empleado extends Model
         'sede_id' => 'int'
     ];
 
+    public static $searchable = [
+        'name'
+    ];
+
     protected $dates = [
         'antiguedad'
     ];
@@ -73,14 +77,12 @@ class Empleado extends Model
     ];
     public function getAvatarAttribute()
     {
-        if ($this->foto==null) {
-            if($this->genero=='H'){
+        if ($this->foto == null) {
+            if ($this->genero == 'H') {
                 return "man.png";
-            }
-            elseif ($this->genero=='M') {
-               return "woman.png";
-            }
-            else{
+            } elseif ($this->genero == 'M') {
+                return "woman.png";
+            } else {
                 return "usuario_no_cargado";
             }
         }
@@ -88,7 +90,7 @@ class Empleado extends Model
     }
 
 
-    
+
 
     public function area()
     {
@@ -138,14 +140,14 @@ class Empleado extends Model
     }
     public function fodas()
     {
-		return $this->hasMany(EntendimientoOrganizacion::class,'id_elabora','id');
+        return $this->hasMany(EntendimientoOrganizacion::class, 'id_elabora', 'id');
     }
 
     public function documentos()
     {
         return $this->hasMany(Documento::class);
     }
-     // public static function getAllEmpleados($empleado, $empleados = null)
+    // public static function getAllEmpleados($empleado, $empleados = null)
     // {
     //     if ($empleados == null) {
     //         $empleados = collect();
@@ -164,7 +166,4 @@ class Empleado extends Model
     {
         return $this->hasMany(Proceso::class);
     }
-
-
 }
-
