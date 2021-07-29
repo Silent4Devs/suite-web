@@ -2,7 +2,7 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.partes-interesadas.index') }}
-    
+
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Partes Interesadas</strong></h3>
@@ -32,6 +32,7 @@
             </div>
         @endcan --}}
 
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table datatable-PartesInteresada " style="width: 100%">
                 <thead class="thead-dark dt-personalizada">
@@ -237,13 +238,13 @@
                 var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},

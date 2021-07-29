@@ -99,7 +99,7 @@ class MaterialSgsiController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $materialSgsi->id]);
         }
 
-        return redirect()->route('admin.material-sgsis.index');
+        return redirect()->route('admin.material-sgsis.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(MaterialSgsi $materialSgsi)
@@ -129,7 +129,7 @@ class MaterialSgsiController extends Controller
             $materialSgsi->archivo->delete();
         }
 
-        return redirect()->route('admin.material-sgsis.index');
+        return redirect()->route('admin.material-sgsis.index')->with("success", 'Editado con éxito');
     }
 
     public function show(MaterialSgsi $materialSgsi)
@@ -147,7 +147,7 @@ class MaterialSgsiController extends Controller
 
         $materialSgsi->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyMaterialSgsiRequest $request)
