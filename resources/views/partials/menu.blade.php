@@ -136,17 +136,17 @@
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('matriz_riesgo_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.documentos.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
-                                <i class="fas fa-folder-plus iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> Crear Documentos </font>
+                            <a href="{{ route('admin.documentos.publicados') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/publicados') || request()->is('admin/publicados*') ? 'active' : '' }}">
+                                <i class="fas fa-copy iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca"> Lista de Documentos </font>
                             </a>
                         </li>
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.carpeta.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
                                 <i class="fas fa-folder-open iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> Gestor Documental </font>
+                                <font class="letra_blanca"> Documentos Publicados </font>
                             </a>
                         </li>
                     @endcan
@@ -254,6 +254,34 @@
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca">Administración</font>
         </li>
+        @can('documentacion_access')
+            <li
+                class="c-sidebar-nav-dropdown {{ request()->is('admin/carpeta*') ? 'c-show' : '' }} {{ request()->is('admin/crear-documentos*') ? 'c-show' : '' }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fas fa-folder iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> Documentos </font>
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('matriz_riesgo_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.documentos.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
+                                <i class="fas fa-folder-plus iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca"> Crear Documentos </font>
+                            </a>
+                        </li>
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.carpeta.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
+                                <i class="fas fa-folder-open iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca"> Gestor Documental </font>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+
+        @endcan
         @can('faq_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
