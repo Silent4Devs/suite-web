@@ -1,36 +1,58 @@
-@if ( session('success'))
-<div class="px-1 py-2 mx-3 rounded shadow" style="background-color:#B3FEEE; border-top:solid 3px #15da98">
-    <div class="row w-100">
-        <div class="text-center col-1 align-items-center d-flex justify-content-center">
-            <div class="w-100">
-                <i class="fas fa-exclamation-triangle" style="color: #15da98; font-size: 22px"></i>
+@if (session('success'))
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <div class="col-8">
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert"
+                    style="background:#8eedcd!important; border-top:solid 3px #38daa4; color:#0d996a">
+                    <strong style="color:#0f875f"><i class="mr-1 far fa-thumbs-up"></i> Buen Trabajo,</strong> {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
             </div>
-        </div>
-        <div class="col-11">
-            <p class="m-0" style="font-size: 16px; font-weight: bold; color: #18A98B">Atención</p>
-            <p class="m-0" style="font-size: 14px; color: #18A98B">{{session ('success')}}</p>
+
 
         </div>
+
+
     </div>
-</div>
+
+
 
 @endif
 
 
-@if ( session('error'))
-<div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
-    <div class="row w-100">
-        <div class="text-center col-1 align-items-center d-flex justify-content-center">
-            <div class="w-100">
-                <i class="fas fa-exclamation-triangle" style="color: #ffb055; font-size: 22px"></i>
-            </div>
-        </div>
-        <div class="col-11">
-            <p class="m-0" style="font-size: 16px; font-weight: bold; color: #ff3c00">Instrucciones</p>
-            <p class="m-0" style="font-size: 14px; color:#ff3c00 ">{{session ('error')}}</p>
+@if (session('error'))
 
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background:#ffad54!important; border-top:solid 3px #ff8400!important; color:#d87000">
+                <strong style="color:#e98213"><i class="mr-1 far fa-thumbs-down"></i> Opps...</strong> {{ session('error') }} <button type="button"
+            class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+             </div>
         </div>
     </div>
 </div>
+
+
+@endif
+
+
+@if (session('deleted'))
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class=" alert alert-danger alert-dismissible fade show" role="alert" style="background:#fcc488!important; border-top:solid 3px #ff8400!important; color:#b55f04">
+                 <strong style="color:#964f04"><i class="mr-1 far fa-thumbs-up"></i> Bien hecho,</strong> {{ session('deleted') }} <button type="button"
+            class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+             </div>
+        </div>
+    </div>
+</div>
+
 
 @endif

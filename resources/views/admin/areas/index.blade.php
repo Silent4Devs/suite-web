@@ -30,7 +30,7 @@
             </div>
             <div class="col-11">
                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 2</p>
-                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización y dé
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización comenzando por la de más alta jerarquía y dé
                     clic en finalizar
                     <a href="{{ route("admin.areas.renderJerarquia") }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Finalizar</a>
                 </p>

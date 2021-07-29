@@ -75,7 +75,7 @@ class TipoactivoController extends Controller
     {
         $tipoactivo = Tipoactivo::create($request->all());
 
-        return redirect()->route('admin.tipoactivos.index');
+        return redirect()->route('admin.tipoactivos.index')->with("success",'Guardado con éxito');
     }
 
     public function edit(Tipoactivo $tipoactivo)
@@ -91,7 +91,7 @@ class TipoactivoController extends Controller
     {
         $tipoactivo->update($request->all());
 
-        return redirect()->route('admin.tipoactivos.index');
+        return redirect()->route('admin.tipoactivos.index')->with("success",'Editado con éxito');
     }
 
     public function show(Tipoactivo $tipoactivo)
@@ -109,7 +109,7 @@ class TipoactivoController extends Controller
 
         $tipoactivo->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyTipoactivoRequest $request)

@@ -35,7 +35,7 @@ class inicioUsuarioController extends Controller
                 }
             });
         }
-        $auditorias_anual = AuditoriaAnual::all();
+        $auditorias_anual=AuditoriaAnual::get();
         $recursos = Recurso::whereHas('empleados', function ($query) use ($usuario) {
             $query->where('empleados.id', $usuario->id);
         })->get();

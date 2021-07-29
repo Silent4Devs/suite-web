@@ -189,7 +189,7 @@ class AreasController extends Controller
 
         $area->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyAreaRequest $request)
