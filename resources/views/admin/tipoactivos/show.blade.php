@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.tipoactivo.title') }}
+        {{ trans('global.show') }} Categoría de los Activos
     </div>
 
     <div class="card-body">
@@ -25,7 +25,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.tipoactivo.fields.tipo') }}
+                            Categoría
                         </th>
                         <td>
                             {{ $tipoactivo->tipo }}
@@ -33,7 +33,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.tipoactivo.fields.subtipo') }}
+                           Subcategoría
                         </th>
                         <td>
                             {{ $tipoactivo->subtipo }}

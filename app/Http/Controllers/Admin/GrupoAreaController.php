@@ -96,7 +96,7 @@ class GrupoAreaController extends Controller
            // 'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
         ]);
         Flash::success('<h5 class="text-center">Grupo agregado satisfactoriamente</h5>');
-        return redirect()->route('admin.grupoarea.index')->with("success",'Guardado con éxito');;
+        return redirect()->route('admin.grupoarea.index')->with("success",'Guardado con éxito');
     }
 
     public function show(Grupo $grupoarea)
@@ -138,7 +138,7 @@ class GrupoAreaController extends Controller
 
         $grupoarea->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyGrupoAreaRequest $request)

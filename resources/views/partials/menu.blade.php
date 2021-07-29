@@ -66,7 +66,7 @@
                     @can('sede_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.sedes.obtenerListaSedes') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*') ? 'active' : '' }}">
+                                class="c-sidebar-nav-link {{ request()->is('admin/obtenerListaSedes') || request()->is('admin/obtenerListaSedes/*') ? 'active' : '' }}">
                                 <i class="fas fa-map-marked-alt iconos_menu letra_blanca">
 
                                 </i>
@@ -77,7 +77,7 @@
                     @can('area_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.areas.renderJerarquia') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/areas') || request()->is('admin/areas/*') ? 'active' : '' }}">
+                                class="c-sidebar-nav-link {{ request()->is('admin/areas/areas-jerarquia') || request()->is('admin/areas/areas-jerarquia') ? 'active' : '' }}">
                                 {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
                         </i> --}}
@@ -99,7 +99,7 @@
                     <li class="c-sidebar-nav-item">
                         <a href="{{ route('admin.procesos.mapa') }}"
                             class="c-sidebar-nav-link {{ request()->is('admin/procesos/mapa_procesos') || request()->is('admin/procesos/mapa-procesos') ? 'c-active' : '' }}">
-                            <i class="fas fa-th iconos_menu letra_blanca"></i>
+                            <i class="fas fa-dice-d20 iconos_menu letra_blanca"></i>
                             <font class="letra_blanca"> Mapa de procesos </font>
                         </a>
                     </li>
@@ -276,7 +276,7 @@
                     @can('sede_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.sedes.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*') ? 'active' : '' }}">
+                                class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*/edit') || request()->is('admin/sedes/create') ? 'active' : '' }}">
                                 <i class="fas fa-map-marked-alt iconos_menu letra_blanca">
 
                                 </i>
@@ -304,7 +304,7 @@
                                         {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
                                 </i> --}}
-                                        <i class="fas fa-cubes iconos_menu letra_blanca">
+                                        <i class="ml-1 fas fa-cubes iconos_menu letra_blanca">
 
                                         </i>
 
@@ -313,9 +313,9 @@
                                 </li>
                                 <li class="c-sidebar-nav-item">
                                     <a href="{{ route('admin.areas.index') }}"
-                                        class="c-sidebar-nav-link {{ request()->is('admin/areas') || request()->is('admin/areas/*') ? 'active' : '' }}">
+                                        class="c-sidebar-nav-link {{ request()->is('admin/areas') || request()->is('admin/areas/*/edit') || request()->is('admin/areas/create') ? 'active' : '' }}">
 
-                                        <i class="fab fa-adn iconos_menu letra_blanca">
+                                        <i class="ml-1 fab fa-adn iconos_menu letra_blanca">
 
                                         </i>
                                         <font class="letra_blanca"> Crear Áreas </font>
@@ -347,12 +347,11 @@
                         </a>
                         <ul class="c-sidebar-nav-dropdown-items">
 
-                            @can('area_access')
                                 @can('tipoactivo_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route('admin.tipoactivos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
-                                            <i class="fas fa-th-list iconos_menu letra_blanca"></i>
+                                            <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:13pt;"></i>
                                             <font class="letra_blanca"> Categorias</font>
                                         </a>
                                     </li>
@@ -361,12 +360,12 @@
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route('admin.activos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/activos') || request()->is('admin/activos/*') ? 'active' : '' }}">
-                                            <i class="fas fa-th-list iconos_menu letra_blanca"></i>
+                                            <i class="ml-2 fas fa-th-list iconos_menu letra_blanca" style="font-size:12pt;"></i>
                                             <font class="letra_blanca"> Inventario</font>
                                         </a>
                                     </li>
                                 @endcan
-                            @endcan
+
 
                         </ul>
                     </li>
@@ -382,8 +381,7 @@
                     <li class="c-sidebar-nav-dropdown">
 
                         <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                            <i class="fas fa-project-diagram  iconos_menu letra_blanca"></i>
-
+                            <i class="fas fa-dice-d20 iconos_menu letra_blanca"></i>
                             <font class="letra_blanca "> Procesos </font>
                         </a>
                         <ul class="c-sidebar-nav-dropdown-items">
@@ -394,7 +392,7 @@
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route('admin.macroprocesos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
-                                            <i class="fas fa-th-list iconos_menu letra_blanca"></i>
+                                            <i class="ml-2 fas fa-th iconos_menu letra_blanca"  style="font-size:12pt;"></i>
                                             <font class="letra_blanca"> Macroprocesos</font>
                                         </a>
                                     </li>
@@ -403,8 +401,8 @@
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route('admin.procesos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/procesos') || request()->is('admin/procesos/*') ? 'active' : '' }}">
-                                            <i class="fas fa-th-list iconos_menu letra_blanca"></i>
-                                            <font class="letra_blanca"> Procesos</font>
+                                            <i class="ml-2 fas fa-project-diagram iconos_menu letra_blanca"  style="font-size:12pt;"></i>
+                                            <font class="letra_blanca"> Crear Procesos</font>
                                         </a>
                                     </li>
                                 @endcan

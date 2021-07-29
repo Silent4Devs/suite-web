@@ -8,7 +8,7 @@
     .caja{
         width: 100%;
         height:600px;
-        padding: 0; 
+        padding: 0;
         position: relative;
     }
     #lnb{
@@ -104,7 +104,7 @@
 
 <div class="caja">
     <div id="lnb">
-        
+
         <div id="lnb-calendars" class="lnb-calendars">
             <div>
                 <div class="lnb-calendars-item">
@@ -118,7 +118,7 @@
             </div>
             <div id="calendarList" class="lnb-calendars-d1">
             </div>
-        </div>  
+        </div>
     </div>
     <div id="right">
         <div id="menu">
@@ -211,7 +211,7 @@
 
     <script>
         ScheduleList = [
-            @foreach($plan_base as $it_plan_base)
+            @foreach($actividades as $it_plan_base)
                 {
                     id: 'planinicio{{$it_plan_base->id}}',
                     calendarId: '1',
@@ -220,7 +220,7 @@
                     dueDateClass: '',
                     start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_inicio)->format("Y-m-d") }}',
                     end: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_fin)->format("Y-m-d") }}',
-                    isReadOnly : true, 
+                    isReadOnly : true,
                 },
             @endforeach
 
@@ -233,7 +233,7 @@
                     dueDateClass: '',
                     start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_auditorias_anual->fechainicio)->format("Y-m-d") }}',
                     end: '',
-                    isReadOnly : true, 
+                    isReadOnly : true,
                 },
             @endforeach
 
@@ -253,10 +253,10 @@
 
             @endforeach
 
-            
 
 
-            
+
+
 
         ];
     </script>
