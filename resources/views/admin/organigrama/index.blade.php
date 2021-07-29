@@ -624,7 +624,7 @@
                             'chartContainer': '#chart-container',
                             'zoomSlider': '#zoomer',
                             'data': JSON.parse(response),
-                            'depth': 4,
+                            'depth': 999,
                             'nodeContent': 'puesto',
                             'withImage': true,
                             'nodePhoto': 'foto',
@@ -637,6 +637,27 @@
                             'direction': orientacion,
                             'urlExportCSV': "{{ route('admin.organigrama.exportar') }}"
                         });
+                    },
+                    error: function(error) {
+                        let imagen = document.querySelector('.imagen-search');
+                        imagen.src = "";
+                        document.querySelector('.texto-search').innerHTML = "";
+                        let container = document.querySelector('#chart-container');
+                        let img = document.createElement('img');
+                        img.classList.add('imagen-search');
+                        img.src = "{{ asset('img/empleados_no_encontrados.svg') }}";
+                        img.width = 350;
+                        img.style.margin = 'auto';
+                        let texto = document.createElement('h3');
+                        texto.classList.add('texto-search');
+                        texto.innerText =
+                            "No se encontraron empleados de acuerdo a los criterios de búsqueda";
+
+                        texto.style.marginBottom = '20px';
+                        texto.style.fontSize = '12pt';
+                        texto.style.fontWeight = '600';
+                        container.appendChild(texto);
+                        container.appendChild(img);
                     }
                 });
             }

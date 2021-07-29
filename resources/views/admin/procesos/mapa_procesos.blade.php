@@ -56,20 +56,20 @@
         }
 
 
-        .contenido_h3_and_grupos{
+        .contenido_h5_and_grupos{
             margin-top: 35px;
         }
-        .contenido_h3_and_grupos:first-child{
+        .contenido_h5_and_grupos:first-child{
             margin-top: -15px;
         }
 
 
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) h3{background-color: var(--color1);}
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) h3{background-color: var(--color2);}
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) h3{background-color: var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(n) h5{background-color: var(--color1);}
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) h5{background-color: var(--color2);}
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) h5{background-color: var(--color3);}
 
-        .caja_central h3{
+        .caja_central h5{
             width: 300px;
             margin: auto;
             margin-bottom: -10px;
@@ -85,9 +85,9 @@
 
 
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_grupos{border: 1px solid var(--color1);}
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_grupos{border: 1px solid var(--color2);}
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_grupos{border: 1px solid var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos{border: 1px solid var(--color1);}
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos{border: 1px solid var(--color2);}
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos{border: 1px solid var(--color3);}
 
 
         .caja_central .caja_grupos{
@@ -105,17 +105,17 @@
         }
 
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_grupos p{color: var(--color1);}
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_grupos p{color: var(--color2);}
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_grupos p{color: var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p{color: var(--color1);}
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p{color: var(--color2);}
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p{color: var(--color3);}
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_grupos p:hover{border: 1px solid var(--color1);}
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_grupos p:hover{border: 1px solid var(--color2);}
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_grupos p:hover{border: 1px solid var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p:hover{border: 1px solid var(--color1);}
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p:hover{border: 1px solid var(--color2);}
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p:hover{border: 1px solid var(--color3);}
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_grupos p.activo{background-color: var(--color1);}
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_grupos p.activo{background-color: var(--color2);}
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_grupos p.activo{background-color: var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p.activo{background-color: var(--color1);}
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p.activo{background-color: var(--color2);}
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p.activo{background-color: var(--color3);}
 
         .caja_central p{
             width:200px;
@@ -136,6 +136,7 @@
             height: auto;
             display: inline-block;
             margin: 0;
+            padding: 0;
         }
         .caja_central p:hover{
             border: 1px solid #1255DB;
@@ -163,9 +164,9 @@
 
 
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_procesos_dinamica{border:1px solid var(--color1);}
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_procesos_dinamica{border:1px solid var(--color2);}
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_procesos_dinamica{border:1px solid var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_procesos_dinamica{border:1px solid var(--color1);}
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_procesos_dinamica{border:1px solid var(--color2);}
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_procesos_dinamica{border:1px solid var(--color3);}
 
         .caja_procesos_dinamica{
             width: 90%;
@@ -198,6 +199,7 @@
         }
 
 
+
         .caja_central .contenido_h3_and_grupos:nth-child(n) .macro_a a{color: var(--color1) !important;}
         .caja_central .contenido_h3_and_grupos:nth-child(2n) .macro_a a{color: var(--color2) !important;}
         .caja_central .contenido_h3_and_grupos:nth-child(3n) .macro_a a{color: var(--color3) !important;}
@@ -205,6 +207,7 @@
         .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_procesos_dinamica .macro_a:hover{border:1px solid var(--color1);}
         .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_procesos_dinamica .macro_a:hover{border:1px solid var(--color2);}
         .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_procesos_dinamica .macro_a:hover{border:1px solid var(--color3);}
+
 
         .caja_procesos_dinamica .macro_a{
             width:200px;
@@ -225,6 +228,7 @@
 
             text-decoration:none;
         }
+
 
 
         .macro_a::-webkit-scrollbar, .caja_central p::-webkit-scrollbar {
@@ -272,15 +276,17 @@
 	<div id="caja_mapa_procesos" style="margin-top:30px;">
 
         <div class="caja2">
-            <p>Nececidades del cliente</p>
+            <p>Necesidades del cliente</p>
         </div>
 
 
 
+        <i class="fas fa-compress-arrows-alt icono_contraer"></i>
+
         <div class="caja_central">
             @foreach($grupos_mapa as $grupo_map)
-                <div class="contenido_h3_and_grupos">
-                    <h3>{{$grupo_map->nombre }}</h3>
+                <div class="contenido_h5_and_grupos">
+                    <h5>{{$grupo_map->nombre }}</h5>
                     <div class="caja_grupos">
                     @forelse($grupo_map->macroprocesos as $macro_map)
                         <span id="span_caja_macro{{$macro_map->id}}">
@@ -344,7 +350,17 @@
 
 
     <script type="text/javascript">
-        @foreach($grupos_mapa as $grupo_map) @foreach($grupo_map->macroprocesos as $macro_map) $("#span_caja_macro{{$macro_map->id}}").click(function(){ $(".caja_revelada").removeClass("caja_revelada"); $("#div_caja_macro{{$macro_map->id}}").addClass("caja_revelada"); }); @endforeach @endforeach
+        @foreach($grupos_mapa as $grupo_map) @foreach($grupo_map->macroprocesos as $macro_map) 
+            $("#span_caja_macro{{$macro_map->id}}").click(function(){ 
+                $(".caja_revelada").removeClass("caja_revelada"); 
+                $("#div_caja_macro{{$macro_map->id}}").addClass("caja_revelada"); 
+            });
+        @endforeach @endforeach
+
+        $(".icono_contraer").click(function(){ 
+            $(".caja_revelada").removeClass("caja_revelada"); 
+            $("span p").removeClass("activo");
+        }); 
     </script>
 
 @endsection

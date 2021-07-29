@@ -162,15 +162,15 @@ $.gridify = function (table, opt) {
 
       gridState.colSizes = colSizes;
 
-      localStorage.setObject("TWPGanttGridState", gridState);
+      localStorage.setItem("TWPGanttGridState", gridState);
     }
   }
 
   function loadGridState() {
     //console.debug("loadGridState")
     if (localStorage) {
-      if (localStorage.getObject("TWPGanttGridState")) {
-        var gridState = localStorage.getObject("TWPGanttGridState");
+      if (localStorage.getItem("TWPGanttGridState")) {
+        var gridState = localStorage.getItem("TWPGanttGridState");
         if (gridState.colSizes) {
           box.find(".gdfTable .gdfColHeader").each(function (i) {
             $(this).width(gridState.colSizes[i]);

@@ -194,15 +194,31 @@
             border: none !important;
         }
 
-        .btn:hover.btn-success {
+        .btn.btn-success:hover {
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
             box-shadow: 0 0 0 1px #00abb2;
         }
 
-        .btn:hover.btn-success font {
+        .btn.btn-success:hover font {
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
+        }
+
+        .btn_cancelar {
+            width: 150px;
+            height: 35px;
+            background-color: #aaa !important;
+            color: #fff !important;
+            border-radius: 100px;
+            border: none !important;
+            transition: 0.2s;
+        }
+
+        .btn_cancelar:hover {
+            color: #888 !important;
+            background-color: rgba(0, 0, 0, 0) !important;
+            box-shadow: 0 0 0 1px #888;
         }
 
         ol.breadcrumb {
@@ -229,7 +245,29 @@
             z-index: 9 !important;
         }
 
+        .buscador-global {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .buscador-global:focus {
+            border: 2px solid rgb(0 171 178);
+            box-shadow: none;
+        }
+
+
+        img.rounded-circle {
+            border-radius: 0 !important;
+            clip-path: circle(18px at 50% 50%);
+            height: 37px;
+        }
+
     </style>
+
+
+
     @yield('styles')
     @livewireStyles
 </head>
@@ -250,11 +288,15 @@
             </button>
 
 
-            <form class="form-inline col-sm-3">
+            <form class="form-inline col-sm-3" style="position: relative;">
 
-                <select class="form-control mr-sm-4 searchable-field ">
-                    {{-- <option href="{{ route('admin.sedes.create') }}">Organización </option> --}}
-                </select>
+                {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
+                <input class="form-control buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
+                    autocomplete="off" />
+                <i class="fas fa-spinner fa-pulse d-none" id="buscando" style="margin-left:-45px"></i>
+                <div id="resultados_sugeridos"
+                    style="background-color: #fff; width:150%; position: absolute;top:50px;left:0">
+                </div>
             </form>
 
             <ul class="ml-auto c-header-nav">
@@ -639,6 +681,69 @@
     </script>
     <script>
         $(document).ready(function() {
+            let url = "{{ route('admin.globalStructureSearch') }}";
+            $("#buscador_global").click(function(e) {
+                e.preventDefault();
+                let sugeridos = document.querySelector(
+                    "#resultados_sugeridos");
+                sugeridos.innerHTML = "";
+                this.value = "";
+                $("#buscando").removeClass('d-block');
+                $("#buscando").addClass('d-none');
+            });
+            $("#buscador_global").keyup(function() {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        term: $(this).val().toLowerCase()
+                    },
+                    beforeSend: function() {
+                        $("#buscando").removeClass('d-none');
+                        $("#buscando").addClass('d-block');
+                    },
+                    success: function(data) {
+                        if (data.length == undefined) {
+                            let filtro = "<ul class='list-group'>";
+                            for (const [key, value] of Object.entries(data)) {
+                                filtro += `
+                                <a class="list-group-item list-group-item-action" href="${value}">
+                                    <i class="mr-2 fas fa-search-location"></i>${key}
+                                </a>    
+                            `;
+                            }
+                            filtro += "</ul>";
+                            $("#buscando").removeClass('d-block');
+                            $("#buscando").addClass('d-none');
+                            // $("#resultados_sugeridos").show();
+                            let sugeridos = document.querySelector(
+                                "#resultados_sugeridos");
+                            sugeridos.innerHTML = filtro;
+                        } else if (data.length == 0) {
+                            $("#buscando").removeClass('d-block');
+                            $("#buscando").addClass('d-none');
+                            let sugeridos = document.querySelector(
+                                "#resultados_sugeridos");
+                            sugeridos.innerHTML =
+                                `<ul class='list-group'><li class="list-group-item">
+                                    <i class="mr-2 fas fa-times-circle"></i>Sin resultados encontrados...
+                                    </li>
+                                </ul>`;
+                        } else {
+                            $("#buscando").removeClass('d-block');
+                            $("#buscando").addClass('d-none');
+                            let sugeridos = document.querySelector(
+                                "#resultados_sugeridos");
+                            sugeridos.innerHTML = "";
+                        }
+
+                        // $("#participantes_search").css("background", "#FFF");
+                    }
+                });
+            });
             $('.searchable-field').select2({
                 minimumInputLength: 3,
                 ajax: {
@@ -690,7 +795,8 @@
                 var markup = "<div class='searchable-link' href='" + item.url + "'>";
                 markup += "<div class='searchable-title'>" + item.model + "</div>";
                 $.each(item.fields, function(key, field) {
-                    markup += "<div class='searchable-field'>" + item.fields_formated[field] + " : " +
+                    markup += "<div class='searchable-field'>" + item.fields_formated[field] +
+                        " : " +
                         item[field] + "</div>";
                 });
                 markup += "</div>";
@@ -711,6 +817,10 @@
             });
         });
     </script>
+
+
+
+
 
     @yield('scripts')
 

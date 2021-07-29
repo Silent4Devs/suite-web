@@ -55,6 +55,10 @@ class Empleado extends Model
         'sede_id' => 'int'
     ];
 
+    public static $searchable = [
+        'name'
+    ];
+
     protected $dates = [
         'antiguedad'
     ];
@@ -174,6 +178,10 @@ class Empleado extends Model
         return $this->hasMany(EntendimientoOrganizacion::class, 'id_elabora', 'id');
     }
 
+    public function documentos()
+    {
+        return $this->hasMany(Documento::class);
+    }
     // public static function getAllEmpleados($empleado, $empleados = null)
     // {
     //     if ($empleados == null) {

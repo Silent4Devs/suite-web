@@ -9,8 +9,10 @@ use App\Models\Documento;
 use Laracasts\Flash\Flash;
 use App\Models\Macroproceso;
 use Illuminate\Http\Request;
+use App\Models\IndicadoresSgsi;
 use App\Models\RevisionDocumento;
 use Illuminate\Support\Facades\DB;
+use App\Models\EvaluacionIndicador;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\HistorialVersionesDocumento;
@@ -187,10 +189,21 @@ class ProcesoController extends Controller
         $documentos_relacionados=Documento::with('elaborador','revisor','aprobador','responsable','macroproceso')->where('proceso_id',$proceso->id)->get();
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento)->get();
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
+        $indicadores=IndicadoresSgsi::get();
+        // dd($indicadores::getResultado());
 
+        return view('admin.procesos.vistas', compact('documento','revisiones','documentos_relacionados','versiones','indicadores'));
 
-        return view('admin.procesos.vistas', compact('documento','revisiones','documentos_relacionados','versiones'));
+    }
 
+    public function AjaxRequestIndicador(Request $request){
+        $input = $request->all();
+
+        $unidad = IndicadoresSgsi::select('unidadmedida')->where('id', $input['id'])->first();
+
+        $res = '<div id="resultado" width="900" height="750"></div>';
+
+        return response()->json(["gauge" => $res, 'datos' => $input, 'unidad' => $unidad], 200);
     }
 
 
