@@ -99,24 +99,40 @@
                                 {{ $documento->fecha_dmy ?? '' }}
                             </td>
                             <td>
-                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->elaborador->avatar }}"
-                                    class="rounded-circle" alt="{{ $documento->elaborador->name }}"
-                                    title="{{ $documento->elaborador->name }}" width="40">
+                                @if ($documento->elaborador)
+                                    <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->elaborador->avatar }}"
+                                        class="rounded-circle" alt="{{ $documento->elaborador->name }}"
+                                        title="{{ $documento->elaborador->name }}" width="40">
+                                @else
+                                    <span class="badge badge-info">Sin Asignar</span>
+                                @endif
                             </td>
                             <td>
-                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->revisor->avatar }}"
-                                    class="rounded-circle" alt="{{ $documento->revisor->name }}"
-                                    title="{{ $documento->revisor->name }}" width="40">
+                                @if ($documento->revisor)
+                                    <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->revisor->avatar }}"
+                                        class="rounded-circle" alt="{{ $documento->revisor->name }}"
+                                        title="{{ $documento->revisor->name }}" width="40">
+                                @else
+                                    <span class="badge badge-info">Sin Asignar</span>
+                                @endif
                             </td>
                             <td>
-                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->aprobador->avatar }}"
-                                    class="rounded-circle" alt="{{ $documento->aprobador->name }}"
-                                    title="{{ $documento->aprobador->name }}" width="40">
+                                @if ($documento->aprobador)
+                                    <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->aprobador->avatar }}"
+                                        class="rounded-circle" alt="{{ $documento->aprobador->name }}"
+                                        title="{{ $documento->aprobador->name }}" width="40">
+                                @else
+                                    <span class="badge badge-info">Sin Asignar</span>
+                                @endif
                             </td>
                             <td>
-                                <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->responsable->avatar }}"
-                                    class="rounded-circle" alt="{{ $documento->responsable->name }}"
-                                    title="{{ $documento->responsable->name }}" width="40">
+                                @if ($documento->responsable)
+                                    <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->responsable->avatar }}"
+                                        class="rounded-circle" alt="{{ $documento->responsable->name }}"
+                                        title="{{ $documento->responsable->name }}" width="40">
+                                @else
+                                    <span class="badge badge-info">Sin Asignar</span>
+                                @endif
                             </td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">

@@ -246,16 +246,16 @@ class EmpleadoController extends Controller
         $gantt_path = 'storage/gantt/gantt_inicial.json';
         $path = public_path($gantt_path);
 
-        
 
 
-        
+
+
         $json_code = json_decode(file_get_contents($path), true);
         $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
         $write_empleados = $json_code;
         file_put_contents($path, json_encode($write_empleados));
 
-        return redirect()->route('admin.empleados.index');
+        return redirect()->route('admin.empleados.index')->with("success",'Guardado con éxito');
     }
 
     /**
@@ -401,10 +401,10 @@ class EmpleadoController extends Controller
         $gantt_path = 'storage/gantt/gantt_inicial.json';
         $path = public_path($gantt_path);
 
-        
 
 
-        
+
+
         $json_code = json_decode(file_get_contents($path), true);
         $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
         $write_empleados = $json_code;
@@ -414,7 +414,7 @@ class EmpleadoController extends Controller
 
 
 
-        return redirect()->route('admin.empleados.index');
+        return redirect()->route('admin.empleados.index')->with("success",'Editado con éxito');
     }
 
     /**
@@ -429,7 +429,7 @@ class EmpleadoController extends Controller
 
         $empleado->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function getEmpleados(Request $request)

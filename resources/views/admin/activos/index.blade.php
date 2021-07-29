@@ -8,6 +8,8 @@
             </div>
         @endcan
 
+
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Activo">
                 <thead class="thead-dark">
@@ -19,10 +21,10 @@
                             Nombre&nbsp;del&nbsp;activo
                         </th>
                         <th>
-                            Tipo&nbsp;de&nbsp;activo
+                            Categoría
                         </th>
                         <th>
-                            {{ trans('cruds.activo.fields.subtipo') }}
+                            Subcategoría
                         </th>
                         <th>
                             {{ trans('cruds.activo.fields.descripcion') }}
@@ -126,7 +128,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [5, 20, 5, 20];
                         doc.styles.tableHeader.fontSize = 10;
-                        doc.defaultStyle.fontSize = 10; //<-- set fontsize to 16 instead of 10 
+                        doc.defaultStyle.fontSize = 10; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -183,13 +185,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},

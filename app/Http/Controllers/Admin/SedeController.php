@@ -180,7 +180,7 @@ class SedeController extends Controller
         ]);
 
 
-        return redirect()->route('admin.sedes.index');
+        return redirect()->route('admin.sedes.index')->with("success",'Editado con éxito');
     }
 
     public function show(Sede $sede)
@@ -198,7 +198,7 @@ class SedeController extends Controller
 
         $sede->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroySedeRequest $request)

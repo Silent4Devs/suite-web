@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\GapDo;
-use App\Models\GapTre;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,6 +23,13 @@ class DatabaseSeeder extends Seeder
             EstadoincidentesTableSeeder::class,
             EstusplatrabajoTableSeeder::class,
             ActividadFaseSeeder::class,
+            OrganizacionSeeder::class,
+            SedeSeeder::class,
+            GrupoSeeder::class,
+            AreaSeeder::class,
+            EmpleadosSeeder::class,
+            MacroprocesoSeeder::class,
+            DocumentoSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }

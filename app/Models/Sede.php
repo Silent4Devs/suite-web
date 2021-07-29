@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Sede extends Model
 {
 	use SoftDeletes;
+	use HasFactory;
 	protected $table = 'sedes';
 
 	protected $casts = [
@@ -49,13 +51,13 @@ class Sede extends Model
 		'organizacion_id',
 		'team_id',
 		'direccion',
-        'latitude',
-        'longitud',
+		'latitude',
+		'longitud',
 	];
 
 	public function organizacion()
 	{
-		return $this->belongsTo(Organizacion::class,'organizacion_id','id');
+		return $this->belongsTo(Organizacion::class, 'organizacion_id', 'id');
 	}
 
 	public function team()

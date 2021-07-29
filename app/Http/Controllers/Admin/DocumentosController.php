@@ -248,6 +248,26 @@ class DocumentosController extends Controller
             $proceso = $request->proceso;
         }
 
+        $elaborador = $documento->elaboro_id;
+        if (!$documento->elaborador) {
+            $elaborador = $request->elaboro_id;
+        }
+
+        $aprobador = $documento->aprobo_id;
+        if (!$documento->aprobador) {
+            $aprobador = $request->aprobo_id;
+        }
+
+        $revisor = $documento->revisor_id;
+        if (!$documento->revisor) {
+            $revisor = $request->revisor_id;
+        }
+
+        $responsable = $documento->responsable_id;
+        if (!$documento->responsable) {
+            $responsable = $request->responsable_id;
+        }
+
         $documento->update([
             // 'codigo' => $request->codigo,
             'nombre' => $request->nombre,
@@ -258,10 +278,10 @@ class DocumentosController extends Controller
             'version' => $version,
             'fecha' => $request->fecha,
             'archivo' => $nombre_compuesto,
-            'elaboro_id' => $documento->elaboro_id,
-            'aprobo_id' => $documento->aprobo_id,
-            'reviso_id' => $documento->reviso_id,
-            'responsable_id' => $documento->responsable_id
+            'elaboro_id' => $elaborador,
+            'aprobo_id' => $aprobador,
+            'reviso_id' => $revisor,
+            'responsable_id' => $responsable
         ]);
 
         return $documento;
@@ -594,5 +614,11 @@ class DocumentosController extends Controller
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
 
         return view('admin.documentos.versions-document', compact('documento', 'versiones'));
+    }
+
+    public function publicados()
+    {
+        $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
+        return view('admin.documentos.list-published', compact('documentos'));
     }
 }
