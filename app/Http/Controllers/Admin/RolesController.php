@@ -51,7 +51,7 @@ class RolesController extends Controller
                 $labels = [];
 
                 foreach ($row->permissions as $permission) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $permission->title);
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $permission->name . ',');
                 }
 
                 return implode(' ', $labels);
@@ -71,7 +71,7 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $permissions = Permission::all()->pluck('title', 'id');
+        $permissions = Permission::all();
 
         return view('admin.roles.create', compact('permissions'));
     }
@@ -88,7 +88,7 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $permissions = Permission::all()->pluck('title', 'id');
+        $permissions = Permission::all();
 
         $role->load('permissions');
 
