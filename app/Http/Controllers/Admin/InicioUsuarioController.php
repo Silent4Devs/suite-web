@@ -35,13 +35,13 @@ class inicioUsuarioController extends Controller
                 }
             });
         }
-        $auditorias_anual=AuditoriaAnual::all();
+        $auditorias_anual=AuditoriaAnual::get();
         $recursos = Recurso::whereHas('empleados', function ($query) use ($usuario) {
             $query->where('empleados.id', $usuario->id);
         })->get();
 
         $documentos_publicados = Documento::where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados','auditorias_anual'));
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual'));
     }
 
     public function create()

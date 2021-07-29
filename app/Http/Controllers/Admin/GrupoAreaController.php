@@ -14,8 +14,7 @@ use App\Http\Requests\StoreGrupoRequest;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyGrupoAreaRequest;
-
-
+use App\Models\Area;
 
 class GrupoAreaController extends Controller
 {
@@ -25,50 +24,12 @@ class GrupoAreaController extends Controller
     {
 
         abort_if(Gate::denies('grupoarea_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         if ($request->ajax()) {
-            $query = Grupo::get();
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'grupoarea_show';
-                $editGate      = 'grupoarea_edit';
-                $deleteGate    = 'grupoarea_delete';
-                $crudRoutePart = 'grupoarea';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-            $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : "";
-            });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
-            });
-            $table->editColumn('color', function ($row) {
-                return $row->color ? $row->color : "";
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
+            $grupos = Grupo::get();
+            return datatables()->of($grupos)->toJson();
         }
 
-        $teams = Team::get();
-
-        return view('admin.grupoarea.index', compact('teams'));
+        return view('admin.grupoarea.index');
     }
 
     public function create()
@@ -80,8 +41,6 @@ class GrupoAreaController extends Controller
 
     public function store(Request $request)
     {
-
-
         $request->validate(
             [
                 'nombre' => 'required|string',
@@ -93,10 +52,10 @@ class GrupoAreaController extends Controller
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
             'color' => $request->color,
-           // 'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
+            // 'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
         ]);
         Flash::success('<h5 class="text-center">Grupo agregado satisfactoriamente</h5>');
-        return redirect()->route('admin.grupoarea.index')->with("success",'Guardado con éxito');
+        return redirect()->route('admin.grupoarea.index')->with("success", 'Guardado con éxito');;
     }
 
     public function show(Grupo $grupoarea)
@@ -127,18 +86,19 @@ class GrupoAreaController extends Controller
         );
         $grupoarea->update($request->all());
         Flash::success('<h5 class="text-center">Grupo actualizado satisfactoriamente</h5>');
-        return redirect()->route('admin.grupoarea.index')->with("success",'Editado con éxito');
+        return redirect()->route('admin.grupoarea.index')->with("success", 'Editado con éxito');
     }
-
-
 
     public function destroy(Grupo $grupoarea)
     {
         abort_if(Gate::denies('grupoarea_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $grupoarea->delete();
-
-        return back()->with('deleted','Registro eliminado con éxito');
+        $deleted = $grupoarea->delete();
+        if ($deleted) {
+            return response()->json(['deleted' => true]);
+        } else {
+            return response()->json(['deleted' => false]);
+        }
     }
 
     public function massDestroy(MassDestroyGrupoAreaRequest $request)
@@ -146,5 +106,12 @@ class GrupoAreaController extends Controller
         Grupo::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function getRelationatedAreas(Request $request)
+    {
+        $grupo = Grupo::select('id')->where('id', intval($request->grupo_id))->first();
+        $areas = Area::select('area')->where('id_grupo', $grupo->id)->get();
+        return $areas;
     }
 }

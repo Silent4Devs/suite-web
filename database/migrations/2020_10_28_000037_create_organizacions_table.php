@@ -12,7 +12,7 @@ class CreateOrganizacionsTable extends Migration
             $table->increments('id');
             $table->string('empresa');
             $table->longText('direccion');
-            $table->integer('telefono')->nullable();
+            $table->string('telefono')->nullable();
             $table->string('correo')->nullable();
             $table->string('pagina_web')->nullable();
             $table->string('giro')->nullable();

@@ -14,7 +14,7 @@ class AddRelationshipToAreasTable extends Migration
     public function up()
     {
         Schema::table('areas', function (Blueprint $table) {
-            $table->foreign('id_grupo')->references('id')->on('grupos');
+            $table->foreign('id_grupo')->references('id')->on('grupos')->onDelete('SET NULL');
             $table->foreign('id_reporta')->references('id')->on('areas');
         });
     }
@@ -29,5 +29,4 @@ class AddRelationshipToAreasTable extends Migration
         Schema::table('areas', function (Blueprint $table) {
         });
     }*/
-
 }
