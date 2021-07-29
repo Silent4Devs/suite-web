@@ -152,6 +152,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-12">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                                     {{-- <button class="mt-4 btnNext btn btn-primary" style="float: right">
                                         Siguiente
                                         <i class="ml-1 fas fa-arrow-right"></i>

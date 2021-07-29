@@ -246,6 +246,8 @@
 
                             <div class="mt-3 form-group col-12">
                                 <div class="btn-group" role="group" aria-label="Terminar capacitacion" style="float: right">
+                                    
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                                     <button class="btnPrevious btn btn-danger">
                                         <i class="ml-1 fas fa-arrow-left"></i>
                                         Anterior

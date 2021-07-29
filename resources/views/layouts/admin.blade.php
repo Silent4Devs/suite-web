@@ -185,7 +185,7 @@
             color: #008186 !important;
         }
 
-        .btn.btn-success {
+        .btn.btn-success, .btn.btn-danger {
             width: 150px;
             height: 35px;
             background-color: #00abb2 !important;
@@ -194,7 +194,7 @@
             border: none !important;
         }
 
-        .btn.btn-success:hover {
+        .btn.btn-success:hover, .btn.btn-danger:hover {
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
             box-shadow: 0 0 0 1px #00abb2;
@@ -213,12 +213,16 @@
             border-radius: 100px;
             border: none !important;
             transition: 0.2s;
+            display: inline-block;
+            text-align: center;
+            padding-top: 5px;
         }
 
         .btn_cancelar:hover {
             color: #888 !important;
             background-color: rgba(0, 0, 0, 0) !important;
             box-shadow: 0 0 0 1px #888;
+            text-decoration: none;
         }
 
         ol.breadcrumb {

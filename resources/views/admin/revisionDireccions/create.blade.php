@@ -82,6 +82,7 @@
                 <span class="help-block">{{ trans('cruds.revisionDireccion.fields.acuerdoscambios_helper') }}</span>
             </div>
             <div class="form-group col-12 text-right">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
