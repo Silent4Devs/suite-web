@@ -59,7 +59,7 @@
     </div>
 
     <div class="d-flex flex-row-reverse">
-        <a href="{{ route('admin.sedes.index') }}" class="btn btn-success shadow align">Salir</a>
+        <a href="javascript:window.open('','_self').close();" class="btn btn-success shadow align">Salir</a>
     </div>
     <br><br>
 

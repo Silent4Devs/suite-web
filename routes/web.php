@@ -316,6 +316,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('sedes/process-csv-import', 'SedeController@processCsvImport')->name('sedes.processCsvImport');
     Route::resource('sedes', 'SedeController');
     Route::get('sede-ubicacion/{data}', 'SedeController@ubicacion');
+    Route::get('sedes/sede-ubicacionorganizacion/{id}', 'SedeController@ubicacionorg');
 
     //Grupo Areas
     Route::post('grupoarea/areas-relacionadas', [GrupoAreaController::class, 'getRelationatedAreas'])->name('grupoarea.getRelationatedAreas');
