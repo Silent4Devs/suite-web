@@ -43,9 +43,13 @@
             <table class="table datatable-MatrizRiesgo">
                 <thead class="thead-dark">
                     <tr class="negras">
-                        <th class="text-center" style="background-color:#3490DC;" colspan="9">Descripción General </th>
-                        <th class="text-center" style="background-color:#1168af;" colspan="3">Impacto en la triada CID</th>
-                        <th class="text-center" style="background-color:#217bc5;" colspan="9">Evaluación de Riesgo Inicial
+                        <th class="text-center" style="background-color:#3490DC;" colspan="10">Descripción General </th>
+                        <th class="text-center" style="background-color:#1168af;" colspan="4">CID</th>
+                        <th class="text-center" style="background-color:#217bc5;" colspan="4">Riesgo Inicial
+                        <th class="text-center" style="background-color:#1168af;" colspan="2">Acciones</th>
+                        <th class="text-center" style="background-color:#1168af;" colspan="4">CID</th>
+                        <th class="text-center" style="background-color:#1168af;" colspan="4">Riesgo Residual</th>
+                        <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </th>
                     </tr>
                     <tr>
@@ -55,13 +59,16 @@
                             {{ trans('cruds.matrizRiesgo.fields.id') }}
                         </th>
                         <th>
+                            Sede
+                        </th>
+                        <th>
                             Proceso
                         </th>
                         <th>
-                            Activo
+                            Responsable
                         </th>
                         <th>
-                            Responsable&nbsp;del&nbsp;proceso&nbsp;
+                            Activo
                         </th>
                         <th>
                             Amenaza
@@ -70,43 +77,64 @@
                             Vulnerabilidad
                         </th>
                         <th>
-                            Descripción&nbsp;del&nbsp;Riesgo
+                            Descripción del Riesgo
                         </th>
                         <th>
-                            Tipo&nbsp;del&nbsp;Riesgo
+                            Tipo de riesgo
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}
+                            Confidencialidad
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.integridad') }}
+                            Integridad
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}
+                            Disponibilidad
                         </th>
                         <th>
-                            Ponderación&nbsp;por&nbsp;Factores
+                            Resultado ponderación por factores
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.probabilidad') }}
+                            Probabilidad
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.impacto') }}
+                            Impacto
                         </th>
                         <th>
-                            Nivel&nbsp;de&nbsp;Riesgo
+                            Nivel de riesgo
                         </th>
                         <th>
-                            Riesgo&nbsp;Total
+                            Riesgo Total
                         </th>
                         <th>
-                            Riesgo&nbsp;Residual
+                            Control
                         </th>
                         <th>
-                            Controles&nbsp;Anexo&nbsp;A
+                            Plan de acción
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.justificacion') }}
+                            Confiabilidad
+                        </th>
+                        <th>
+                            Integridad
+                        </th>
+                        <th>
+                            Disponibilidad
+                        </th>
+                        <th>
+                            Resultado ponderación por factores
+                        </th>
+                        <th>
+                            Probabilidad
+                        </th>
+                        <th>
+                            Impacto
+                        </th>
+                        <th>
+                            Nivel de riesgo
+                        </th>
+                        <th>
+                            Riesgo Total
                         </th>
                         <th>
                             Opciones
@@ -359,16 +387,20 @@
                         name: 'id'
                     },
                     {
+                        data: 'sede',
+                        name: 'sede'
+                    },
+                    {
                         data: 'proceso',
                         name: 'proceso'
                     },
                     {
-                        data: 'activo_id',
-                        name: 'activo_id'
+                        data: 'responsable',
+                        name: 'responsable'
                     },
                     {
-                        data: 'responsableproceso',
-                        name: 'responsableproceso'
+                        data: 'activo',
+                        name: 'activo'
                     },
                     {
                         data: 'amenaza',
@@ -419,16 +451,44 @@
                         name: 'riesgototal'
                     },
                     {
-                        data: 'riesgoresidual',
-                        name: 'riesgoresidual'
+                        data: 'control',
+                        name: 'control'
                     },
                     {
-                        data: 'controles_numero',
-                        name: 'controles.numero'
+                        data: 'plan_accion',
+                        name: 'plan_accion'
                     },
                     {
-                        data: 'justificacion',
-                        name: 'justificacion'
+                        data: 'confidencialidad_cid',
+                        name: 'confidencialidad_cid'
+                    },
+                    {
+                        data: 'integridad',
+                        name: 'integridad'
+                    },
+                    {
+                        data: 'disponibilidad_cid',
+                        name: 'disponibilidad_cid'
+                    },
+                    {
+                        data: 'resultado_ponderacion_cid',
+                        name: 'resultado_ponderacion_cid'
+                    },
+                    {
+                        data: 'riesgo_residual_probabilidad',
+                        name: 'riesgo_residual_probabilidad'
+                    },
+                    {
+                        data: 'riesgo_residual_impacto',
+                        name: 'riesgo_residual_impacto'
+                    },
+                    {
+                        data: 'riesgo_residual_nivel',
+                        name: 'riesgo_residual_nivel'
+                    },
+                    {
+                        data: 'riesgo_residual_total',
+                        name: 'riesgo_residual_total'
                     },
                     {
                         data: 'actions',
@@ -454,6 +514,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection
