@@ -7,6 +7,27 @@
         </div>
 
         <div class="card-body">
+            @if (!$direccion_exists)
+                <div class="px-1 py-2 mx-3 mb-3 rounded shadow"
+                    style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                    <div class="row w-100">
+                        <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                            <div class="w-100">
+                                <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
+                                No se ha definido el área de <strong>Dirección General</strong>
+                            </p>
+                            <p class="m-0">
+                                Cree el listado de áreas, comenzando por los de más alta jerarquía
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            @endif
             <form method="POST" action="{{ route('admin.areas.store') }}" enctype="multipart/form-data">
                 @csrf
 

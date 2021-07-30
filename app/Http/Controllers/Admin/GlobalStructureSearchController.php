@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
+use Spatie\Url\Url;
 
 class GlobalStructureSearchController extends Controller
 {
@@ -119,14 +124,67 @@ class GlobalStructureSearchController extends Controller
         'Empleados' => '/admin/empleados',
         'Crear Empleados' => '/admin/empleados/create',
 
-    ];
+    ]; // Quedó deprecado
 
     public function globalSearch(Request $request)
     {
         $term = $request->term;
 
+        $routes = collect(\Route::getRoutes())->map(function ($route) {
+            return $route->uri();
+        });
+
+        $rutas_admin = collect($routes)->filter(function ($route) {
+            return Str::contains($route, 'admin');
+        });
+
+        $rutas_filtradas = collect($rutas_admin)->filter(function ($route) {
+            if (
+                !Str::contains($route, '{') && !Str::contains($route, 'destroy') && !Str::contains($route, 'global')
+                && !Str::contains($route, 'quitar') && !Str::contains($route, 'locked')
+                && !Str::contains($route, 'media') && !Str::contains($route, 'save')
+                && !Str::contains($route, 'update')
+                && !Str::contains($route, 'load')
+                && !Str::contains($route, 'export')
+                && !Str::contains($route, 'import')
+                && !Str::contains($route, 'cancel')
+                && !Str::contains($route, 'suscribir')
+                && !Str::contains($route, 'calificar')
+                && !Str::contains($route, 'registrar')
+                && !Str::contains($route, 'check')
+                && !Str::contains($route, 'descargar')
+                && !Str::contains($route, 'get')
+                && !Str::contains($route, 'relacionada')
+                && !Str::contains($route, 'store')
+                && !Str::contains($route, 'edit')
+                && !Str::contains($route, 'delete')
+                && !Str::contains($route, 'eliminar')
+                && !Str::contains($route, 'publish')
+                && !Str::contains($route, 'dependencies')
+            ) {
+                return $route;
+            }
+        });
+
+
+        $rutas = collect($rutas_filtradas)->map(function ($route) {
+            return '/' . $route;
+        })->unique();
+
+        $rutas_arr = []; // Se guarda el array asociativo para filtrar por búsquedas
+        foreach ($rutas as $ruta) {
+            $ruta_admin = str_replace('/admin', '', $ruta);
+            if ($ruta == '/admin') {
+                $ruta_admin = $ruta;
+            }
+
+            $url = Url::fromString('https:/' . $ruta_admin);
+            $title = str_replace('-', ' ', $url->getHost()) . str_replace('create', 'Crear', str_replace('-', '', str_replace('/', ' ', $url->getPath())));
+            $rutas_arr[Str::title($title)] = $ruta;
+        }
+
         if ($term != null) {
-            $filtered = array_filter($this->globalSearch, function ($value) use ($term) {
+            $filtered = array_filter($rutas_arr, function ($value) use ($term) {
                 return str_contains($value, $term);
             });
 
