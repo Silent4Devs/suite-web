@@ -425,7 +425,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
 
     // analisis Riesgos
-    Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
+    Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
     Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
 
     // Matriz Riesgos

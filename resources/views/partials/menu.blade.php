@@ -201,8 +201,8 @@
         </li> --}}
         @can('analisis_riesgo_access')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.matriz-riesgos.index') }}"
-                    class="c-sidebar-nav-link {{ request()->is('admin/matriz-riesgos') || request()->is('admin/matriz-riesgos/*') ? 'active' : '' }}">
+                <a href="{{ route('admin.analisis-riesgos.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/analisis-riesgos') || request()->is('admin/analisis-riesgos/*') ? 'active' : '' }}">
                     <i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Análisis de riesgos </font>
                 </a>

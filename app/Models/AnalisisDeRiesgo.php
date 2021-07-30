@@ -28,34 +28,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class AnalisisDeRiesgo extends Model
 {
-	use SoftDeletes;
-	protected $table = 'analisis_de_riesgo';
+    use SoftDeletes;
+    protected $table = 'analisis_de_riesgo';
 
-	protected $casts = [
-		'id_elaboro' => 'int',
-		'estatus' => 'int'
-	];
+    protected $casts = [
+        'id_elaboro' => 'int',
+        'estatus' => 'int'
+    ];
 
-	protected $dates = [
-		'fecha'
-	];
+    protected $dates = [
+        'fecha'
+    ];
 
-	protected $fillable = [
-		'nombre',
-		'tipo',
-		'fecha',
-		'porcentaje_implementacion',
-		'id_elaboro',
-		'estatus'
-	];
+    protected $fillable = [
+        'nombre',
+        'tipo',
+        'fecha',
+        'porcentaje_implementacion',
+        'id_elaboro',
+        'estatus'
+    ];
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'id_elaboro');
-	}
+    const TipoSelect = [
+        'Seguridad de la información' => 'Seguridad de la información',
+        'AMEF'     => 'AMEF',
+    ];
 
-	public function matriz_riesgos()
-	{
-		return $this->hasMany(MatrizRiesgo::class, 'id_analisis');
-	}
+    const EstatusSelect = [
+        '1' => 'Vigente',
+        '2' => 'Obsoleto',
+    ];
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_elaboro');
+    }
+
+    public function matriz_riesgos()
+    {
+        return $this->hasMany(MatrizRiesgo::class, 'id_analisis');
+    }
 }

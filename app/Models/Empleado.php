@@ -119,10 +119,10 @@ class Empleado extends Model
         return $this->hasMany(AnalisisDeRiesgo::class, 'id_elaboro');
     }
 
-    public function documentos()
+    /*public function documentos()
     {
         return $this->hasMany(Documento::class, 'reviso_id');
-    }
+    }*/
 
     public function recursos()
     {

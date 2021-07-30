@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
+use App\Models\AnalisisDeRiesgo;
+use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\MassDestroyAnalisisRiesgosRequest;
 
 class AnalisisdeRiesgosController extends Controller
 {
@@ -18,17 +21,17 @@ class AnalisisdeRiesgosController extends Controller
     {
         if ($request->ajax()) {
             //Esta es el error , activo_id no lo encuentra, hay que modificar la relacion en el modelo de matrizriesgo
-            $query = MatrizRiesgo::with([/*'activo_id',*/'controles', 'team'])->select(sprintf('%s.*', (new MatrizRiesgo)->table));
+            $query = AnalisisDeRiesgo::get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'matriz_riesgo_show';
-                $editGate = 'matriz_riesgo_edit';
-                $deleteGate = 'matriz_riesgo_delete';
-                $crudRoutePart = 'matriz-riesgos';
+                $viewGate = 'analisis-riesgos_show';
+                $editGate = 'analisis-riesgos_edit';
+                $deleteGate = 'analisis-riesgos_delete';
+                $crudRoutePart = 'analisis-riesgos';
 
                 return view('partials.datatablesActions', compact(
                     'viewGate',
@@ -42,61 +45,28 @@ class AnalisisdeRiesgosController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
-            $table->editColumn('proceso', function ($row) {
-                return $row->proceso ? $row->proceso : "";
-            });
-            /*$table->addColumn('activo_id', function ($row) {
-                return $row->tipoactivo ? $row->tipoactivo->tipo : '';
-            });*/
-
-            $table->editColumn('responsableproceso', function ($row) {
-                return $row->responsableproceso ? $row->responsableproceso : "";
-            });
-            $table->editColumn('amenaza', function ($row) {
-                return $row->amenaza ? $row->amenaza : "";
-            });
-            $table->editColumn('vulnerabilidad', function ($row) {
-                return $row->vulnerabilidad ? $row->vulnerabilidad : "";
-            });
-            $table->editColumn('descripcionriesgo', function ($row) {
-                return $row->descripcionriesgo ? $row->descripcionriesgo : "";
-            });
-            $table->editColumn('tipo_riesgo', function ($row) {
-                return $row->tipo_riesgo ? MatrizRiesgo::TIPO_RIESGO_SELECT[$row->tipo_riesgo] : '';
-            });
-            $table->editColumn('confidencialidad', function ($row) {
-                return $row->confidencialidad ? $row->confidencialidad : "";
-            });
-            $table->editColumn('integridad', function ($row) {
-                return $row->integridad ? $row->integridad : "";
-            });
-            $table->editColumn('disponibilidad', function ($row) {
-                return $row->disponibilidad ? $row->disponibilidad : "";
-            });
-            $table->editColumn('probabilidad', function ($row) {
-                return $row->probabilidad ? MatrizRiesgo::PROBABILIDAD_SELECT[$row->probabilidad] : '';
-            });
-            $table->editColumn('impacto', function ($row) {
-                return $row->impacto ? MatrizRiesgo::IMPACTO_SELECT[$row->impacto] : '';
-            });
-            $table->editColumn('nivelriesgo', function ($row) {
-                return $row->nivelriesgo ? $row->nivelriesgo : "";
-            });
-            $table->editColumn('riesgototal', function ($row) {
-                return $row->riesgototal ? $row->riesgototal : "";
-            });
-            $table->editColumn('resultadoponderacion', function ($row) {
-                return $row->resultadoponderacion ? $row->resultadoponderacion : "";
-            });
-            $table->editColumn('riesgoresidual', function ($row) {
-                return $row->riesgoresidual ? $row->riesgoresidual : "";
-            });
-            $table->addColumn('controles_numero', function ($row) {
-                return $row->controles ? $row->controles->numero : '';
+            $table->editColumn('nombre', function ($row) {
+                return $row->nombre ? $row->nombre : "";
             });
 
-            $table->editColumn('justificacion', function ($row) {
-                return $row->justificacion ? $row->justificacion : "";
+            $table->editColumn('tipo', function ($row) {
+                return $row->tipo ? $row->tipo : "";
+            });
+
+            $table->editColumn('fecha', function ($row) {
+                return $row->fecha ? $row->fecha : "";
+            });
+
+            $table->editColumn('porcentaje_implementacion', function ($row) {
+                return $row->porcentaje_implementacion ? $row->porcentaje_implementacion : "";
+            });
+
+            $table->editColumn('elaboro', function ($row) {
+                return $row->id_elaboro ? $row->id_elaboro : "";
+            });
+
+            $table->editColumn('estatus', function ($row) {
+                return $row->estatus ? $row->estatus : "";
             });
 
             $table->rawColumns(['actions', 'placeholder', 'activo_id', 'controles']);
@@ -104,18 +74,8 @@ class AnalisisdeRiesgosController extends Controller
             return $table->make(true);
         }
 
-        $tipoactivos = Tipoactivo::get();
-        $controles = Controle::get();
-        $teams = Team::get();
 
-
-        /*$datos = MatrizRiesgo::select('*')
-        ->join('activos', 'matriz_riesgos.activo_id', '=', 'activos.id')
-        //->join('tipoactivos', 'activos.tipoactivo_id', '=', 'tipoactivos.id')
-        ->get();
-        dd($datos);*/
-
-        return view('admin.matrizRiesgos.index', compact('tipoactivos', 'tipoactivos', 'controles', 'teams'));
+        return view('admin.analisis-riesgos.index');
     }
 
     /**
@@ -125,7 +85,11 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function create()
     {
-        //
+        $empleados = Empleado::get();
+
+        //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.analisis-riesgos.create', compact('empleados'));
     }
 
     /**
@@ -183,4 +147,5 @@ class AnalisisdeRiesgosController extends Controller
     {
         //
     }
+
 }
