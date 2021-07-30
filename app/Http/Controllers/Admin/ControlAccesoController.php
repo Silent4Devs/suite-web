@@ -84,7 +84,7 @@ class ControlAccesoController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $controlAcceso->id]);
         }
 
-        return redirect()->route('admin.control-accesos.index');
+        return redirect()->route('admin.control-accesos.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(ControlAcceso $controlAcceso)
@@ -112,7 +112,7 @@ class ControlAccesoController extends Controller
             $controlAcceso->archivo->delete();
         }
 
-        return redirect()->route('admin.control-accesos.index');
+        return redirect()->route('admin.control-accesos.index')->with("success", 'Editado con éxito');
     }
 
     public function show(ControlAcceso $controlAcceso)
@@ -130,7 +130,7 @@ class ControlAccesoController extends Controller
 
         $controlAcceso->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyControlAccesoRequest $request)

@@ -19,6 +19,7 @@ class MacroprocesoController extends Controller
      */
     public function index(Request $request)
     {
+        // dd($query = Macroproceso::get());
         if ($request->ajax()) {
             $query = Macroproceso::get();
             $table = DataTables::of($query);

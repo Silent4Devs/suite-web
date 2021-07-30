@@ -16,8 +16,8 @@
                 @method('PUT')
                 @csrf
                 <input type="hidden" name="org_id" value="{{$organizacion->id}}">
-            
-                
+
+
                 <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">
                         <p class="mb-1 text-center text-white">DATOS GENERALES</p>
@@ -63,8 +63,8 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.organizacion.fields.telefono_helper') }}</span>
                     </div>
-                
-                
+
+
                     <div class="form-group col-sm-6">
                         <label for="correo"> <i class="far fa-envelope iconos-crear"></i>{{ trans('cruds.organizacion.fields.correo') }}</label>
                         <input class="form-control {{ $errors->has('correo') ? 'is-invalid' : '' }}" type="email"
@@ -77,8 +77,8 @@
                         <span class="help-block">{{ trans('cruds.organizacion.fields.correo_helper') }}</span>
                     </div>
                 </div>
-                
-                
+
+
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="pagina_web"><i class="fas fa-pager iconos-crear"></i>Página Web</label>
@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="form-group col-sm-6">
-                     {{--@dump($organizacion['logotipo'])--}} 
+                     {{--@dump($organizacion['logotipo'])--}}
                         <label for="logotipo">Logotipo <strong>(Selecciona tu imagen en formato .png)</strong></label>
                         <div class="mb-3 input-group">
                             <div class="custom-file">
@@ -207,10 +207,10 @@
       var nextSibling = e.target.nextElementSibling
       nextSibling.innerText = fileName
     })
-    
+
     </script>
 
-    
+
     <script>
         Dropzone.options.logotipoDropzone = {
             url: '{{ route('admin.organizacions.storeMedia') }}',

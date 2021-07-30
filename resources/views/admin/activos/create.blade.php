@@ -10,8 +10,8 @@
         <form method="POST" action="{{ route("admin.activos.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-md-12">
-                <label for="nombreactivo_id"><i class="fas fa-chart-line iconos-crear"></i>Nombre del Activo</label>
-                <input class="form-control select2 {{ $errors->has('nombre_activo') ? 'is-invalid' : '' }}" name="nombre_activo" id="nombre_activo">
+                <label class="required " for="nombreactivo_id"><i class="fas fa-chart-line iconos-crear"></i>Nombre del Activo</label>
+                <input class="form-control select2 {{ $errors->has('nombre_activo') ? 'is-invalid' : '' }}" name="nombre_activo" id="nombre_activo" required>
                 @if($errors->has('nombre_activo'))
                     <div class="invalid-feedback">
                         {{ $errors->first('nombre_activo') }}
@@ -23,8 +23,8 @@
 
 
             <div class="form-group col-md-6">
-                <label for="tipoactivo_id"><i class="fas fa-layer-group iconos-crear"></i>Categoría</label>
-                <select class="form-control select2 {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}" name="tipoactivo_id" id="tipoactivo_id">
+                <label class="required" for="tipoactivo_id"><i class="fas fa-layer-group iconos-crear"></i>Categoría</label>
+                <select class="form-control select2 {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}" name="tipoactivo_id" id="tipoactivo_id" required>
                     @foreach($tipoactivos as $id => $tipoactivo)
                         <option value="{{ $id }}" {{ old('tipoactivo_id') == $id ? 'selected' : '' }}>{{ $tipoactivo }}</option>
                     @endforeach
@@ -37,8 +37,8 @@
                 <span class="help-block">{{ trans('cruds.activo.fields.tipoactivo_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label for="subtipo_id"><i class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
-                <select class="form-control select2 {{ $errors->has('subtipo') ? 'is-invalid' : '' }}" name="subtipo_id" id="subtipo_id">
+                <label for="subtipo_id" class="required "><i class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
+                <select class="form-control select2 {{ $errors->has('subtipo') ? 'is-invalid' : '' }}" name="subtipo_id" id="subtipo_id" required>
                     @foreach($subtipos as $id => $subtipo)
                         <option value="{{ $id }}" {{ old('subtipo_id') == $id ? 'selected' : '' }}>{{ $subtipo }}</option>
                     @endforeach

@@ -665,7 +665,7 @@
 
 </div>
 
-<script>
+<script async>
     var a = document.getElementsByClassName("active");
     for (var i = 0; i < a.length; i++)
         a[i].className += " c-active";
