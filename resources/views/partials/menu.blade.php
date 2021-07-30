@@ -10,22 +10,15 @@
         <!-- <div class="text-center dark_mode1" style="padding-top: 20px;">-->
         {{-- <a href="{{url('/')}}" class="pl-0"><img src="{{ asset('img/Silent4Business-Logo-Color.png') }}" style="width: 40%;" class="img_logo"></a> --}}
         <div class="caja_img_logo">
-            <?php
-                use Illuminate\Support\Facades\DB;
-                $users = DB::table('organizacions')
-                ->select('logotipo')
-                ->first();
-
-                if (isset($users)) { ?>
-            <img src="{{ asset('images/' . $users->logotipo) }}" class="img_logo w-100">
-            <?php } elseif (!isset($users)) { ?>
-            <img src="{{ asset('img/silent4business.png') }}" class="img_logo w-100">
-            <?php } else { ?>
-            <img src="{{ asset('img/silent4business.png') }}" class="img_logo w-100">
-            <?php }
-                ?>
-
-
+            @php
+                use App\Models\Organizacion;
+                $organizacion = Organizacion::first();
+                $logotipo = 'img/logotipo-tabantaj.png';
+                if ($organizacion->logotipo) {
+                    $logotipo = 'images/' . $organizacion->logotipo;
+                }
+            @endphp
+            <img src="{{ asset($logotipo) }}" class="img_logo w-100">
         </div>
 
     </div>
@@ -375,24 +368,24 @@
                         </a>
                         <ul class="c-sidebar-nav-dropdown-items">
 
-                                @can('tipoactivo_access')
-                                    <li class="c-sidebar-nav-item">
-                                        <a href="{{ route('admin.tipoactivos.index') }}"
-                                            class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
-                                            <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:13pt;"></i>
-                                            <font class="letra_blanca"> Categorias</font>
-                                        </a>
-                                    </li>
-                                @endcan
-                                @can('activo_access')
-                                    <li class="c-sidebar-nav-item">
-                                        <a href="{{ route('admin.activos.index') }}"
-                                            class="c-sidebar-nav-link {{ request()->is('admin/activos') || request()->is('admin/activos/*') ? 'active' : '' }}">
-                                            <i class="ml-2 fas fa-th-list iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                            <font class="letra_blanca"> Inventario</font>
-                                        </a>
-                                    </li>
-                                @endcan
+                            @can('tipoactivo_access')
+                                <li class="c-sidebar-nav-item">
+                                    <a href="{{ route('admin.tipoactivos.index') }}"
+                                        class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
+                                        <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:13pt;"></i>
+                                        <font class="letra_blanca"> Categorias</font>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('activo_access')
+                                <li class="c-sidebar-nav-item">
+                                    <a href="{{ route('admin.activos.index') }}"
+                                        class="c-sidebar-nav-link {{ request()->is('admin/activos') || request()->is('admin/activos/*') ? 'active' : '' }}">
+                                        <i class="ml-2 fas fa-th-list iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                        <font class="letra_blanca"> Inventario</font>
+                                    </a>
+                                </li>
+                            @endcan
 
 
                         </ul>
@@ -420,7 +413,7 @@
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route('admin.macroprocesos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
-                                            <i class="ml-2 fas fa-th iconos_menu letra_blanca"  style="font-size:12pt;"></i>
+                                            <i class="ml-2 fas fa-th iconos_menu letra_blanca" style="font-size:12pt;"></i>
                                             <font class="letra_blanca"> Macroprocesos</font>
                                         </a>
                                     </li>
@@ -429,7 +422,8 @@
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route('admin.procesos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/procesos') || request()->is('admin/procesos/*') ? 'active' : '' }}">
-                                            <i class="ml-2 fas fa-project-diagram iconos_menu letra_blanca"  style="font-size:12pt;"></i>
+                                            <i class="ml-2 fas fa-project-diagram iconos_menu letra_blanca"
+                                                style="font-size:12pt;"></i>
                                             <font class="letra_blanca"> Crear Procesos</font>
                                         </a>
                                     </li>

@@ -1318,6 +1318,14 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Visualizar Entendimiento de la Organización',
                 'title' => 'entendimiento_organizacion_show',
             ],
+            [
+                'name' => 'Visualizar Ajustes',
+                'title' => 'ajustes_access'
+            ],
+            [
+                'name' => 'Visualizar Consulta de Datos',
+                'title' => 'consulta_access'
+            ]
 
         ];
 
