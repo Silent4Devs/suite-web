@@ -79,7 +79,7 @@ class PartesInteresadasController extends Controller
         //  $generar = new GeneratePdf();
         //$generar->Generate($request['pdf-value'], $request);
         //  $generar->Generate($request['pdf-value'], $partesInteresada);
-        return redirect()->route('admin.partes-interesadas.index');
+        return redirect()->route('admin.partes-interesadas.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(PartesInteresada $partesInteresada)
@@ -95,7 +95,7 @@ class PartesInteresadasController extends Controller
     {
         $partesInteresada->update($request->all());
 
-        return redirect()->route('admin.partes-interesadas.index');
+        return redirect()->route('admin.partes-interesadas.index')->with("success", 'Editado con éxito');
     }
 
     public function show(PartesInteresada $partesInteresada)
@@ -113,7 +113,7 @@ class PartesInteresadasController extends Controller
 
         $partesInteresada->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyPartesInteresadaRequest $request)

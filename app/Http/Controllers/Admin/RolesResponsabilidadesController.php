@@ -84,7 +84,7 @@ class RolesResponsabilidadesController extends Controller
     {
         $rolesResponsabilidade = RolesResponsabilidade::create($request->all());
 
-        return redirect()->route('admin.roles-responsabilidades.index');
+        return redirect()->route('admin.roles-responsabilidades.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(RolesResponsabilidade $rolesResponsabilidade)
@@ -100,7 +100,7 @@ class RolesResponsabilidadesController extends Controller
     {
         $rolesResponsabilidade->update($request->all());
 
-        return redirect()->route('admin.roles-responsabilidades.index');
+        return redirect()->route('admin.roles-responsabilidades.index')->with("success", 'Editado con éxito');
     }
 
     public function show(RolesResponsabilidade $rolesResponsabilidade)
@@ -118,7 +118,7 @@ class RolesResponsabilidadesController extends Controller
 
         $rolesResponsabilidade->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyRolesResponsabilidadeRequest $request)

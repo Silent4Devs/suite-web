@@ -179,7 +179,7 @@ class OrganizacionController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $organizacion->id]);
         }
 
-        return redirect()->route('admin.organizacions.index');
+        return redirect()->route('admin.organizacions.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Organizacion $organizacion)
@@ -221,8 +221,8 @@ class OrganizacionController extends Controller
             $organizacion->logotipo->delete();
         }*/
 
-        Flash::success("<h5 align='center'>Editado con éxito</h5>");
-        return redirect()->route('admin.organizacions.index');
+        // Flash::success("<h5 align='center'>Editado con éxito</h5>");
+        return redirect()->route('admin.organizacions.index')->with("success", 'Editado con éxito');
     }
 
     public function show(Organizacion $organizacion)
@@ -240,7 +240,7 @@ class OrganizacionController extends Controller
 
         $organizacion->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyOrganizacionRequest $request)

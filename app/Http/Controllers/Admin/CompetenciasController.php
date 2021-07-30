@@ -102,7 +102,7 @@ class CompetenciasController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $competencium->id]);
         }
 
-        return redirect()->route('admin.competencia.index');
+        return redirect()->route('admin.competencia.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Competencium $competencium)
@@ -136,7 +136,7 @@ class CompetenciasController extends Controller
             }
         }
 
-        return redirect()->route('admin.competencia.index');
+        return redirect()->route('admin.competencia.index')->with("success", 'Editado con éxito');
     }
 
     public function show(Competencium $competencium)
@@ -154,7 +154,7 @@ class CompetenciasController extends Controller
 
         $competencium->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyCompetenciumRequest $request)

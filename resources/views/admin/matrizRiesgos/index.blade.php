@@ -38,7 +38,7 @@
               </div> --}}
         @endcan
 
-
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table datatable-MatrizRiesgo">
                 <thead class="thead-dark">

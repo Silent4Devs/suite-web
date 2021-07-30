@@ -80,7 +80,7 @@ class ComiteseguridadController extends Controller
     {
         $comiteseguridad = Comiteseguridad::create($request->all());
 
-        return redirect()->route('admin.comiteseguridads.index');
+        return redirect()->route('admin.comiteseguridads.index')->with("success", 'Guardado con éxito');;
     }
 
     public function edit(Comiteseguridad $comiteseguridad)
@@ -98,7 +98,7 @@ class ComiteseguridadController extends Controller
     {
         $comiteseguridad->update($request->all());
 
-        return redirect()->route('admin.comiteseguridads.index');
+        return redirect()->route('admin.comiteseguridads.index')->with("success", 'Editado con éxito');
     }
 
     public function show(Comiteseguridad $comiteseguridad)
@@ -116,7 +116,7 @@ class ComiteseguridadController extends Controller
 
         $comiteseguridad->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyComiteseguridadRequest $request)

@@ -99,7 +99,7 @@ class ConcientizacionSgiController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $concientizacionSgi->id]);
         }
 
-        return redirect()->route('admin.concientizacion-sgis.index');
+        return redirect()->route('admin.concientizacion-sgis.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(ConcientizacionSgi $concientizacionSgi)
@@ -129,7 +129,7 @@ class ConcientizacionSgiController extends Controller
             $concientizacionSgi->archivo->delete();
         }
 
-        return redirect()->route('admin.concientizacion-sgis.index');
+        return redirect()->route('admin.concientizacion-sgis.index')->with("success", 'Editado con éxito');
     }
 
     public function show(ConcientizacionSgi $concientizacionSgi)
@@ -147,7 +147,7 @@ class ConcientizacionSgiController extends Controller
 
         $concientizacionSgi->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyConcientizacionSgiRequest $request)
