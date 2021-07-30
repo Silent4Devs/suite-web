@@ -6,6 +6,8 @@
                 <h3 class="mb-2 text-center text-white"><strong>Entendimiento de la organización</strong></h3>
             </div>
         @endcan
+
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-EntendimientoOrganizacion">
                 <thead class="thead-dark">

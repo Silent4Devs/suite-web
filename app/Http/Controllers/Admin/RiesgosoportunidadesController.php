@@ -80,7 +80,7 @@ class RiesgosoportunidadesController extends Controller
     {
         $riesgosoportunidade = Riesgosoportunidade::create($request->all());
 
-        return redirect()->route('admin.riesgosoportunidades.index');
+        return redirect()->route('admin.riesgosoportunidades.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Riesgosoportunidade $riesgosoportunidade)
@@ -98,7 +98,7 @@ class RiesgosoportunidadesController extends Controller
     {
         $riesgosoportunidade->update($request->all());
 
-        return redirect()->route('admin.riesgosoportunidades.index');
+        return redirect()->route('admin.riesgosoportunidades.index')->with("success", 'Editado con éxito');
     }
 
     public function show(Riesgosoportunidade $riesgosoportunidade)
@@ -116,7 +116,7 @@ class RiesgosoportunidadesController extends Controller
 
         $riesgosoportunidade->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyRiesgosoportunidadeRequest $request)
