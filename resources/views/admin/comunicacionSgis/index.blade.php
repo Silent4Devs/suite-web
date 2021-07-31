@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-    
+
     {{ Breadcrumbs::render('admin.comunicacion-sgis.index') }}
-    
+
     @can('comunicacion_sgi_create')
 
         <div class="mt-5 card">
@@ -10,6 +10,8 @@
                 <h3 class="mb-2 text-center text-white"><strong>Comunicación SGSI</strong></h3>
             </div>
         @endcan
+
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-ComunicacionSgi">
                 <thead class="thead-dark">
@@ -83,7 +85,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -141,13 +143,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},

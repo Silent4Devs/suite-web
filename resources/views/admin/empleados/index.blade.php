@@ -16,7 +16,7 @@
                     </div>
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Cree el listado de los empleados, comenzando por los de más alta jerarquía</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Cree el listado de los empleados, comenzando por el de más alta jerarquía</p>
                     </div>
                 </div>
             </div>

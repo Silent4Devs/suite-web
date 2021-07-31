@@ -34,8 +34,10 @@ class EvaluacionIndicador extends Model
 	];
 
 	protected $dates = [
-		'fecha'
+		'fecha'=>'date:d F Y'
 	];
+
+    protected $dateFormat='d F Y';
 
 	protected $fillable = [
 		'no',
@@ -45,8 +47,20 @@ class EvaluacionIndicador extends Model
 		'id_indicador'
 	];
 
+    // protected $appends=['fecha_formateada'];
+
 	public function indicadores_sgsi()
 	{
 		return $this->belongsTo(IndicadoresSgsi::class, 'id_indicador');
 	}
+
+    // public function setFechaAttribute(){
+
+    // }
+
+    // public function getFechaformateada(){
+
+    //     $fecha=Carbon::parse($this->fecha)->format('d-m-Y');
+    //     return $fecha;
+    // }
 }
