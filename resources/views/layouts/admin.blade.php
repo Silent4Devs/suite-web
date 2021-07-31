@@ -260,8 +260,8 @@
 
         img.rounded-circle {
             border-radius: 0 !important;
-            clip-path: circle(18px at 50% 50%);
-            height: 37px;
+            clip-path: circle(12px at 50% 50%);
+            /* height: 37px; */
         }
 
     </style>

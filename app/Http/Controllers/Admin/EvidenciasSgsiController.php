@@ -96,7 +96,7 @@ class EvidenciasSgsiController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $evidenciasSgsi->id]);
         }
 
-        return redirect()->route('admin.evidencias-sgsis.index');
+        return redirect()->route('admin.evidencias-sgsis.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(EvidenciasSgsi $evidenciasSgsi)
@@ -126,7 +126,7 @@ class EvidenciasSgsiController extends Controller
             $evidenciasSgsi->archivopdf->delete();
         }
 
-        return redirect()->route('admin.evidencias-sgsis.index');
+        return redirect()->route('admin.evidencias-sgsis.index')->with("success", 'Editado con éxito');
     }
 
     public function show(EvidenciasSgsi $evidenciasSgsi)
@@ -144,7 +144,7 @@ class EvidenciasSgsiController extends Controller
 
         $evidenciasSgsi->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyEvidenciasSgsiRequest $request)

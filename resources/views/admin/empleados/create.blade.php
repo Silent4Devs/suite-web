@@ -177,8 +177,12 @@
                     </div>
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">No se ha definido el nodo raíz (CEO) de la
-                            organización, es recomendable que se defina al inicio de la carga de empleados</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
+                            No se ha definido el CEO de la organización
+                        </p>
+                        <p class="m-0">
+                            Cree el listado de los empleados, comenzando por los de más alta jerarquía
+                        </p>
                     </div>
                 </div>
             </div>

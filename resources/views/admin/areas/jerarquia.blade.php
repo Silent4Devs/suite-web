@@ -709,8 +709,8 @@
                         </h3>
                         <ul class="mt-3 list-group">
                             @foreach ($areas_sin_grupo as $area)
-                                <a href="{{ route('admin.areas.edit', $area) }}" style="background: #00abb2;"
-                                    class="mb-1 text-white list-group-item list-group-item-action" title="Asignar Grupo"><i
+                                <a href="{{ route('admin.areas.edit', $area) }}"
+                                    class="mb-1 list-group-item list-group-item-action" title="Asignar Grupo"><i
                                         class="fab fa-adn "></i> {{ $area->area }}</a>
                             @endforeach
                         </ul>
