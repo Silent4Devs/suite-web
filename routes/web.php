@@ -26,8 +26,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
     Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 
-
-
     Route::get('inicioUsuario', 'inicioUsuarioController@index')->name('inicio-Usuario.index');
     Route::get('inicioUsuario/reportes/quejas', 'inicioUsuarioController@quejas')->name('reportes-quejas');
     Route::get('inicioUsuario/reportes/denuncias', 'inicioUsuarioController@denuncias')->name('reportes-denuncias');
@@ -38,11 +36,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('inicioUsuario/reportes/seguridad/media', 'inicioUsuarioController@storeMedia')->name('reportes-seguridad.storeMedia');
     Route::post('inicioUsuario/reportes/seguridad', 'inicioUsuarioController@storeSeguridad')->name('reportes-seguridad-store');
 
-
     Route::get('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@riesgos')->name('reportes-riesgos');
     Route::post('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@storeRiesgos')->name('reportes-riesgos-store');
-
-
 
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
@@ -51,9 +46,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('desk/{incidente}/archivar', 'DeskController@archivadoSeguridad')->name('desk.seguridad-archivar');
     Route::get('desk/seguridad-archivo', 'DeskController@archivoSeguridad')->name('desk.seguridad-archivo');
     Route::get('desk/seguridad', 'DeskController@indexSeguridad')->name('desk.seguridad-index');
-
-
-
 
     Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
     Route::post('planTrabajoBase/save/current', 'PlanTrabajoBaseController@saveCurrentProyect')->name('planTrabajoBase.saveCurrentProyect');
@@ -94,9 +86,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //macroprocesos
     Route::resource('macroprocesos', 'MacroprocesoController');
-
-
-
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
@@ -439,6 +428,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Gap Tres
     Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
     Route::resource('gap-tres', 'GapTresController');
+
+    //Revisiones Documentos
+    Route::get('/revisiones/archivo', 'RevisionDocumentoController@archivo')->name('revisiones.archivo');
+    Route::post('/revisiones/archivar', 'RevisionDocumentoController@archivar')->name('revisiones.archivar');
+    Route::post('/revisiones/desarchivar', 'RevisionDocumentoController@desarchivar')->name('revisiones.desarchivar');
 
     //Documentos
     Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');;
