@@ -206,7 +206,7 @@
     <div class="col-sm-12 col-lg-6">
         <div class="form-group" style="position: relative">
             <label for="elaboro_id">Elaboró:</label>
-            <select {{ $documentoActual->aprobo_id ? 'disabled="disabled"' : '' }}
+            <select {{ $documentoActual->elaborador ? 'disabled="disabled"' : '' }}
                 class="form-control empleado {{ $errors->has('elaboro_id') ? 'error-border' : '' }}" id="elaboro_id"
                 name="elaboro_id">
                 <option value="" selected disabled>--Seleccionar--</option>
@@ -228,7 +228,7 @@
     <div class="col-sm-12 col-lg-6">
         <div class="form-group" style="position: relative">
             <label for="reviso_id">Revisó:</label>
-            <select {{ $documentoActual->reviso_id ? 'disabled="disabled"' : '' }}
+            <select {{ $documentoActual->revisor ? 'disabled="disabled"' : '' }}
                 class="form-control empleado {{ $errors->has('reviso_id') ? 'error-border' : '' }}" id="reviso_id"
                 name="reviso_id">
                 <option value="" selected disabled>--Seleccionar--</option>
@@ -252,7 +252,7 @@
     <div class="col-sm-12 col-lg-6">
         <div class="form-group" style="position: relative">
             <label for="aprobo_id">Aprobó:</label>
-            <select {{ $documentoActual->aprobo_id ? 'disabled="disabled"' : '' }}
+            <select {{ $documentoActual->aprobador ? 'disabled="disabled"' : '' }}
                 class="form-control empleado {{ $errors->has('aprobo_id') ? 'error-border' : '' }}" id="aprobo_id"
                 name="aprobo_id">
                 <option value="" selected disabled>--Seleccionar--</option>
@@ -274,7 +274,7 @@
     <div class="col-sm-12 col-lg-6">
         <div class="form-group" style="position: relative">
             <label for="responsable_id">Responsable:</label>
-            <select {{ $documentoActual->responsable_id ? 'disabled="disabled"' : '' }}
+            <select {{ $documentoActual->responsable ? 'disabled="disabled"' : '' }}
                 class="form-control empleado {{ $errors->has('responsable_id') ? 'error-border' : '' }}"
                 id="responsable_id" name="responsable_id">
                 <option value="" selected disabled>--Seleccionar--</option>

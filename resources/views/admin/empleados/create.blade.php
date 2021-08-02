@@ -177,8 +177,12 @@
                     </div>
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">No se ha definido el nodo raíz (CEO) de la
-                            organización, es recomendable que se defina al inicio de la carga de empleados</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
+                            No se ha definido el CEO de la organización
+                        </p>
+                        <p class="m-0">
+                            Cree el listado de los empleados, comenzando por los de más alta jerarquía
+                        </p>
                     </div>
                 </div>
             </div>
@@ -210,7 +214,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-{{ $ceo_exists ? '6' : '12' }}">
                         <label class="required" for="area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                         <select class="custom-select areas" id="inputGroupSelect01" name="area_id">
                             <option selected value="" disabled>-- Selecciona un área --</option>
@@ -221,29 +225,28 @@
                             @endforelse
                         </select>
                     </div>
-                    <div class="form-group col-sm-6">
-                        <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Jefe Inmediato</label>
-                        <div class="mb-3 input-group">
-                            <select class="custom-select supervisor" id="inputGroupSelect01" name="supervisor_id">
-                                <option selected value="" disabled>-- Selecciona supervisor --</option>
-                                @if (!$ceo_exists)
-                                    <option value="">CEO</option>
-                                @endif
-                                @forelse ($empleados as $empleado)
-                                    <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
-                                @empty
-                                    <option value="" disabled>Sin Datos</option>
-                                @endforelse
-                            </select>
-                        </div>
-                        {{-- <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
-                            name="jefe" id="jefe" value="{{ old('jefe', '') }}" required> --}}
-                        @if ($errors->has('supervisor_id'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('supervisor_id') }}
+                    @if ($ceo_exists)
+                        <div class="form-group col-sm-6">
+                            <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Jefe
+                                Inmediato</label>
+                            <div class="mb-3 input-group">
+
+                                <select class="custom-select supervisor" id="inputGroupSelect01" name="supervisor_id">
+                                    <option selected value="" disabled>-- Selecciona supervisor --</option>
+                                    @forelse ($empleados as $empleado)
+                                        <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                                    @empty
+                                        <option value="" disabled>Sin Datos</option>
+                                    @endforelse
+                                </select>
                             </div>
-                        @endif
-                    </div>
+                            @if ($errors->has('supervisor_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('supervisor_id') }}
+                                </div>
+                            @endif
+                        </div>
+                    @endif
                 </div>
                 <div class="row">
                     <div class="form-group col-sm-6">

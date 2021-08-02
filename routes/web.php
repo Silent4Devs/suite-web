@@ -3,6 +3,8 @@
 //Route::view('/', 'welcome');
 
 use App\Http\Controllers\Admin\CategoriaCapacitacionController;
+use App\Http\Controllers\Admin\DocumentosController;
+use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Livewire\NotificacionesComponent;
 
@@ -13,7 +15,7 @@ Route::post('/revisiones/reject', 'RevisionDocumentoController@reject')->name('r
 Route::get('/revisiones/{revisionDocumento}', 'RevisionDocumentoController@edit')->name('revisiones.revisar');
 Auth::routes();
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa']], function () {
 
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
 
@@ -314,8 +316,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('sedes/process-csv-import', 'SedeController@processCsvImport')->name('sedes.processCsvImport');
     Route::resource('sedes', 'SedeController');
     Route::get('sede-ubicacion/{data}', 'SedeController@ubicacion');
+    Route::get('sedes/sede-ubicacionorganizacion/{id}', 'SedeController@ubicacionorg');
 
     //Grupo Areas
+    Route::post('grupoarea/areas-relacionadas', [GrupoAreaController::class, 'getRelationatedAreas'])->name('grupoarea.getRelationatedAreas');
     Route::delete('grupoarea/destroy', 'GrupoAreaController@massDestroy')->name('grupoarea.massDestroy');
     Route::post('grupoarea/parse-csv-import', 'GrupoAreaController@parseCsvImport')->name('grupoarea.parseCsvImport');
     Route::post('grupoarea/process-csv-import', 'GrupoAreaController@processCsvImport')->name('grupoarea.processCsvImport');
@@ -437,6 +441,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('gap-tres', 'GapTresController');
 
     //Documentos
+    Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');;
     Route::patch('documentos/{documento}/update-when-publish', 'DocumentosController@updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
     Route::post('documentos/store-when-publish', 'DocumentosController@storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
     Route::post('documentos/publish', 'DocumentosController@publish')->name('documentos.publish');

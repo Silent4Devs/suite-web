@@ -11,1313 +11,1321 @@ class PermissionsTableSeeder extends Seeder
     {
         $permissions = [
             [
-                'id'    => 1,
+                'name' => 'Acceso de gestión de usuarios',
                 'title' => 'user_management_access',
             ],
             [
-                'id'    => 2,
+                'name' => 'Crear Permisos',
                 'title' => 'permission_create',
             ],
             [
-                'id'    => 3,
+                'name' => 'Editar Permisos',
                 'title' => 'permission_edit',
             ],
             [
-                'id'    => 4,
+                'name' => 'Visualizar Permisos',
                 'title' => 'permission_show',
             ],
             [
-                'id'    => 5,
+                'name' => 'Eliminar Permisos',
                 'title' => 'permission_delete',
             ],
             [
-                'id'    => 6,
+                'name' => 'Acceder a Permisos',
                 'title' => 'permission_access',
             ],
             [
-                'id'    => 7,
+                'name' => 'Crear Roles',
                 'title' => 'role_create',
             ],
             [
-                'id'    => 8,
+                'name' => 'Editar Roles',
                 'title' => 'role_edit',
             ],
             [
-                'id'    => 9,
+                'name' => 'Visualizar Roles',
                 'title' => 'role_show',
             ],
             [
-                'id'    => 10,
+                'name' => 'Eliminar Roles',
                 'title' => 'role_delete',
             ],
             [
-                'id'    => 11,
+                'name' => 'Acceder a Roles',
                 'title' => 'role_access',
             ],
             [
-                'id'    => 12,
+                'name' => 'Crear Usuarios',
                 'title' => 'user_create',
             ],
             [
-                'id'    => 13,
+                'name' => 'Editar Usuarios',
                 'title' => 'user_edit',
             ],
             [
-                'id'    => 14,
+                'name' => 'Visualizar Usuarios',
                 'title' => 'user_show',
             ],
             [
-                'id'    => 15,
+                'name' => 'Eliminar Usuarios',
                 'title' => 'user_delete',
             ],
             [
-                'id'    => 16,
+                'name' => 'Acceder a Usuarios',
                 'title' => 'user_access',
             ],
             [
-                'id'    => 17,
+                'name' => 'Crear Organización',
                 'title' => 'organizacion_create',
             ],
             [
-                'id'    => 18,
+                'name' => 'Ediar Organización',
                 'title' => 'organizacion_edit',
             ],
             [
-                'id'    => 19,
+                'name' => 'Visualizar Organización',
                 'title' => 'organizacion_show',
             ],
             [
-                'id'    => 20,
+                'name' => 'Eliminar Organización',
                 'title' => 'organizacion_delete',
             ],
             [
-                'id'    => 21,
+                'name' => 'Acceder a Organización',
                 'title' => 'organizacion_access',
             ],
             [
-                'id'    => 22,
+                'name' => 'Acceder a Dashboard',
                 'title' => 'dashboard_access',
             ],
             [
-                'id'    => 23,
+                'name' => 'Acceder a Implementación',
                 'title' => 'implementacion_access',
             ],
             [
-                'id'    => 24,
+                'name' => 'Crear Glosario',
                 'title' => 'glosario_create',
             ],
             [
-                'id'    => 25,
+                'name' => 'Editar Glosario',
                 'title' => 'glosario_edit',
             ],
             [
-                'id'    => 26,
+                'name' => 'Visualizar Glosario',
                 'title' => 'glosario_show',
             ],
             [
-                'id'    => 27,
+                'name' => 'Eliminar Glosario',
                 'title' => 'glosario_delete',
             ],
             [
-                'id'    => 28,
+                'name' => 'Acceder a Glosario',
                 'title' => 'glosario_access',
             ],
             [
-                'id'    => 29,
+                'name' => 'Acceder a ISO 22301',
                 'title' => 'isoveintidostresuno_access',
             ],
             [
-                'id'    => 30,
+                'name' => 'Acceder a ISO 31000',
                 'title' => 'isotreintaunmil_access',
             ],
             [
-                'id'    => 31,
+                'name' => 'Crear Plan de Actividades Base',
                 'title' => 'plan_base_actividade_create',
             ],
             [
-                'id'    => 32,
+                'name' => 'Editar Plan de Actividades Base',
                 'title' => 'plan_base_actividade_edit',
             ],
             [
-                'id'    => 33,
+                'name' => 'Visualizar Plan de Actividades Base',
                 'title' => 'plan_base_actividade_show',
             ],
             [
-                'id'    => 34,
+                'name' => 'Eliminar Plan de Actividades Base',
                 'title' => 'plan_base_actividade_delete',
             ],
             [
-                'id'    => 35,
+                'name' => 'Acceder Plan de Actividades Base',
                 'title' => 'plan_base_actividade_access',
             ],
             [
-                'id'    => 36,
+                'name' => 'Crear Alertas de Usuario',
                 'title' => 'user_alert_create',
             ],
             [
-                'id'    => 37,
+                'name' => 'Visualizar Alertas de Usuario',
                 'title' => 'user_alert_show',
             ],
             [
-                'id'    => 38,
+                'name' => 'Eliminar Alertas de Usuario',
                 'title' => 'user_alert_delete',
             ],
             [
-                'id'    => 39,
+                'name' => 'Acceder Alertas de Usuario',
                 'title' => 'user_alert_access',
             ],
             [
-                'id'    => 40,
+                'name' => 'Acceder ISO 27001',
                 'title' => 'isoveinticieteuno_access',
             ],
             [
-                'id'    => 41,
+                'name' => 'Acceder a Contexto',
                 'title' => 'contexto_access',
             ],
             [
-                'id'    => 42,
+                'name' => 'Acceder a Entendimiento de la Organización',
                 'title' => 'entendimiento_organizacion_access',
             ],
             [
-                'id'    => 43,
+                'name' => 'Crear Partes Interesadas',
                 'title' => 'partes_interesada_create',
             ],
             [
-                'id'    => 44,
+                'name' => 'Editar Partes Interesadas',
                 'title' => 'partes_interesada_edit',
             ],
             [
-                'id'    => 45,
+                'name' => 'Visualizar Partes Interesadas',
                 'title' => 'partes_interesada_show',
             ],
             [
-                'id'    => 46,
+                'name' => 'Eliminar Partes Interesadas',
                 'title' => 'partes_interesada_delete',
             ],
             [
-                'id'    => 47,
+                'name' => 'Acceder Partes Interesadas',
                 'title' => 'partes_interesada_access',
             ],
             [
-                'id'    => 48,
+                'name' => 'Crear Matríz de Requisitos Legales',
                 'title' => 'matriz_requisito_legale_create',
             ],
             [
-                'id'    => 49,
+                'name' => 'Editar Matríz de Requisitos Legales',
                 'title' => 'matriz_requisito_legale_edit',
             ],
             [
-                'id'    => 50,
+                'name' => 'Visualizar Matríz de Requisitos Legales',
                 'title' => 'matriz_requisito_legale_show',
             ],
             [
-                'id'    => 51,
+                'name' => 'Eliminar Matríz de Requisitos Legales',
                 'title' => 'matriz_requisito_legale_delete',
             ],
             [
-                'id'    => 52,
+                'name' => 'Acceder Matríz de Requisitos Legales',
                 'title' => 'matriz_requisito_legale_access',
             ],
             [
-                'id'    => 53,
+                'name' => 'Crear Alcance SGSI',
                 'title' => 'alcance_sgsi_create',
             ],
             [
-                'id'    => 54,
+                'name' => 'Ediar Alcance SGSI',
                 'title' => 'alcance_sgsi_edit',
             ],
             [
-                'id'    => 55,
+                'name' => 'Visualizar Alcance SGSI',
                 'title' => 'alcance_sgsi_show',
             ],
             [
-                'id'    => 56,
+                'name' => 'Eliminar Alcance SGSI',
                 'title' => 'alcance_sgsi_delete',
             ],
             [
-                'id'    => 57,
+                'name' => 'Acceder al Alcance SGSI',
                 'title' => 'alcance_sgsi_access',
             ],
             [
-                'id'    => 58,
+                'name' => 'Acceder a Liderazgo',
                 'title' => 'liderazgo_access',
             ],
             [
-                'id'    => 59,
+                'name' => 'Crear Comite de Seguridad',
                 'title' => 'comiteseguridad_create',
             ],
             [
-                'id'    => 60,
+                'name' => 'Editar Comite de Seguridad',
                 'title' => 'comiteseguridad_edit',
             ],
             [
-                'id'    => 61,
+                'name' => 'Visualizar Comite de Seguridad',
                 'title' => 'comiteseguridad_show',
             ],
             [
-                'id'    => 62,
+                'name' => 'Eliminar Comite de Seguridad',
                 'title' => 'comiteseguridad_delete',
             ],
             [
-                'id'    => 63,
+                'name' => 'Acceder Comite de Seguridad',
                 'title' => 'comiteseguridad_access',
             ],
             [
-                'id'    => 64,
+                'name' => 'Crear Minutas Alta Dirección',
                 'title' => 'minutasaltadireccion_create',
             ],
             [
-                'id'    => 65,
+                'name' => 'Editar Minutas Alta Dirección',
                 'title' => 'minutasaltadireccion_edit',
             ],
             [
-                'id'    => 66,
+                'name' => 'Visualizar Minutas Alta Dirección',
                 'title' => 'minutasaltadireccion_show',
             ],
             [
-                'id'    => 67,
+                'name' => 'Eliminar Minutas Alta Dirección',
                 'title' => 'minutasaltadireccion_delete',
             ],
             [
-                'id'    => 68,
+                'name' => 'Acceder Minutas Alta Dirección',
                 'title' => 'minutasaltadireccion_access',
             ],
             [
-                'id'    => 69,
+                'name' => 'Crear Evidencias SGSI',
                 'title' => 'evidencias_sgsi_create',
             ],
             [
-                'id'    => 70,
+                'name' => 'Editar Evidencias SGSI',
                 'title' => 'evidencias_sgsi_edit',
             ],
             [
-                'id'    => 71,
+                'name' => 'Visualizar Evidencias SGSI',
                 'title' => 'evidencias_sgsi_show',
             ],
             [
-                'id'    => 72,
+                'name' => 'Eliminar Evidencias SGSI',
                 'title' => 'evidencias_sgsi_delete',
             ],
             [
-                'id'    => 73,
+                'name' => 'Acceder Evidencias SGSI',
                 'title' => 'evidencias_sgsi_access',
             ],
             [
-                'id'    => 74,
+                'name' => 'Crear Políticas SGSI',
                 'title' => 'politica_sgsi_create',
             ],
             [
-                'id'    => 75,
+                'name' => 'Editar Políticas SGSI',
                 'title' => 'politica_sgsi_edit',
             ],
             [
-                'id'    => 76,
+                'name' => 'Visualizar Políticas SGSI',
                 'title' => 'politica_sgsi_show',
             ],
             [
-                'id'    => 77,
+                'name' => 'Eliminar Políticas SGSI',
                 'title' => 'politica_sgsi_delete',
             ],
             [
-                'id'    => 78,
+                'name' => 'Acceder Políticas SGSI',
                 'title' => 'politica_sgsi_access',
             ],
             [
-                'id'    => 79,
+                'name' => 'Crear Roles de Responsabilidades',
                 'title' => 'roles_responsabilidade_create',
             ],
             [
-                'id'    => 80,
+                'name' => 'Editar Roles de Responsabilidades',
                 'title' => 'roles_responsabilidade_edit',
             ],
             [
-                'id'    => 81,
+                'name' => 'Visualizar Roles de Responsabilidades',
                 'title' => 'roles_responsabilidade_show',
             ],
             [
-                'id'    => 82,
+                'name' => 'Eliminar Roles de Responsabilidades',
                 'title' => 'roles_responsabilidade_delete',
             ],
             [
-                'id'    => 83,
+                'name' => 'Acceder Roles de Responsabilidades',
                 'title' => 'roles_responsabilidade_access',
             ],
             [
-                'id'    => 84,
+                'name' => 'Crear Planificación',
                 'title' => 'planificacion_access',
             ],
             [
-                'id'    => 85,
+                'name' => 'Crear Riesgos y Oportunidades',
                 'title' => 'riesgosoportunidade_create',
             ],
             [
-                'id'    => 86,
+                'name' => 'Editar Riesgos y Oportunidades',
                 'title' => 'riesgosoportunidade_edit',
             ],
             [
-                'id'    => 87,
+                'name' => 'Visualizar Riesgos y Oportunidades',
                 'title' => 'riesgosoportunidade_show',
             ],
             [
-                'id'    => 88,
+                'name' => 'Eliminar Riesgos y Oportunidades',
                 'title' => 'riesgosoportunidade_delete',
             ],
             [
-                'id'    => 89,
+                'name' => 'Acceder Riesgos y Oportunidades',
                 'title' => 'riesgosoportunidade_access',
             ],
             [
-                'id'    => 90,
+                'name' => 'Crear Objetivos de Seguridad',
                 'title' => 'objetivosseguridad_create',
             ],
             [
-                'id'    => 91,
+                'name' => 'Editar Objetivos de Seguridad',
                 'title' => 'objetivosseguridad_edit',
             ],
             [
-                'id'    => 92,
+                'name' => 'Visualizar Objetivos de Seguridad',
                 'title' => 'objetivosseguridad_show',
             ],
             [
-                'id'    => 93,
+                'name' => 'Eliminar Objetivos de Seguridad',
                 'title' => 'objetivosseguridad_delete',
             ],
             [
-                'id'    => 94,
+                'name' => 'Acceder Objetivos de Seguridad',
                 'title' => 'objetivosseguridad_access',
             ],
             [
-                'id'    => 95,
+                'name' => 'Acceder a Soporte',
                 'title' => 'soporte_access',
             ],
             [
-                'id'    => 96,
+                'name' => 'Crear Recurso',
                 'title' => 'recurso_create',
             ],
             [
-                'id'    => 97,
+                'name' => 'Editar Recurso',
                 'title' => 'recurso_edit',
             ],
             [
-                'id'    => 98,
+                'name' => 'Visualizar Recurso',
                 'title' => 'recurso_show',
             ],
             [
-                'id'    => 99,
+                'name' => 'Eliminar Recurso',
                 'title' => 'recurso_delete',
             ],
             [
-                'id'    => 100,
+                'name' => 'Acceder Recurso',
                 'title' => 'recurso_access',
             ],
             [
-                'id'    => 101,
+                'name' => 'Crear Competencia',
                 'title' => 'competencium_create',
             ],
             [
-                'id'    => 102,
+                'name' => 'Editar Competencia',
                 'title' => 'competencium_edit',
             ],
             [
-                'id'    => 103,
+                'name' => 'Visualizar Competencia',
                 'title' => 'competencium_show',
             ],
             [
-                'id'    => 104,
+                'name' => 'Eliminar Competencia',
                 'title' => 'competencium_delete',
             ],
             [
-                'id'    => 105,
+                'name' => 'Acceder Competencia',
                 'title' => 'competencium_access',
             ],
             [
-                'id'    => 106,
+                'name' => 'Adquirir ISO 22301',
                 'title' => 'adquirirveintidostrecientosuno_access',
             ],
             [
-                'id'    => 107,
+                'name' => 'Adquirir ISO 22301',
                 'title' => 'adquirirtreintaunmil_access',
             ],
             [
-                'id'    => 108,
+                'name' => 'Crear Concientización SGSI',
                 'title' => 'concientizacion_sgi_create',
             ],
             [
-                'id'    => 109,
+                'name' => 'Editar Concientización SGSI',
                 'title' => 'concientizacion_sgi_edit',
             ],
             [
-                'id'    => 110,
+                'name' => 'Visualizar Concientización SGSI',
                 'title' => 'concientizacion_sgi_show',
             ],
             [
-                'id'    => 111,
+                'name' => 'Eliminar Concientización SGSI',
                 'title' => 'concientizacion_sgi_delete',
             ],
             [
-                'id'    => 112,
+                'name' => 'Acceder Concientización SGSI',
                 'title' => 'concientizacion_sgi_access',
             ],
             [
-                'id'    => 113,
+                'name' => 'Crear Material SGSI',
                 'title' => 'material_sgsi_create',
             ],
             [
-                'id'    => 114,
+                'name' => 'Editar Material SGSI',
                 'title' => 'material_sgsi_edit',
             ],
             [
-                'id'    => 115,
+                'name' => 'Visualizar Material SGSI',
                 'title' => 'material_sgsi_show',
             ],
             [
-                'id'    => 116,
+                'name' => 'Eliminar Material SGSI',
                 'title' => 'material_sgsi_delete',
             ],
             [
-                'id'    => 117,
+                'name' => 'Acceder Material SGSI',
                 'title' => 'material_sgsi_access',
             ],
             [
-                'id'    => 118,
+                'name' => 'Crear Material ISO 27001',
                 'title' => 'material_iso_veinticiente_create',
             ],
             [
-                'id'    => 119,
+                'name' => 'Editar Material ISO 27001',
                 'title' => 'material_iso_veinticiente_edit',
             ],
             [
-                'id'    => 120,
+                'name' => 'Visualizar Material ISO 27001',
                 'title' => 'material_iso_veinticiente_show',
             ],
             [
-                'id'    => 121,
+                'name' => 'Eliminar Material ISO 27001',
                 'title' => 'material_iso_veinticiente_delete',
             ],
             [
-                'id'    => 122,
+                'name' => 'Acceder Material ISO 27001',
                 'title' => 'material_iso_veinticiente_access',
             ],
             [
-                'id'    => 123,
+                'name' => 'Crear Comunicación SGSI',
                 'title' => 'comunicacion_sgi_create',
             ],
             [
-                'id'    => 124,
+                'name' => 'Editar Comunicación SGSI',
                 'title' => 'comunicacion_sgi_edit',
             ],
             [
-                'id'    => 125,
+                'name' => 'Visualizar Comunicación SGSI',
                 'title' => 'comunicacion_sgi_show',
             ],
             [
-                'id'    => 126,
+                'name' => 'Eliminar Comunicación SGSI',
                 'title' => 'comunicacion_sgi_delete',
             ],
             [
-                'id'    => 127,
+                'name' => 'Acceder Comunicación SGSI',
                 'title' => 'comunicacion_sgi_access',
             ],
             [
-                'id'    => 128,
+                'name' => 'Acceder Política del SGSI Soporte',
                 'title' => 'politica_del_sgsi_soporte_access',
             ],
             [
-                'id'    => 129,
+                'name' => 'Crear Control de Acceso',
                 'title' => 'control_acceso_create',
             ],
             [
-                'id'    => 130,
+                'name' => 'Editar Control de Acceso',
                 'title' => 'control_acceso_edit',
             ],
             [
-                'id'    => 131,
+                'name' => 'Visualizar Control de Acceso',
                 'title' => 'control_acceso_show',
             ],
             [
-                'id'    => 132,
+                'name' => 'Eliminar Control de Acceso',
                 'title' => 'control_acceso_delete',
             ],
             [
-                'id'    => 133,
+                'name' => 'Acceder a Control de Acceso',
                 'title' => 'control_acceso_access',
             ],
             [
-                'id'    => 134,
+                'name' => 'Crear Información Documentada',
                 'title' => 'informacion_documetada_create',
             ],
             [
-                'id'    => 135,
+                'name' => 'Editar Información Documentada',
                 'title' => 'informacion_documetada_edit',
             ],
             [
-                'id'    => 136,
+                'name' => 'Visualizar Información Documentada',
                 'title' => 'informacion_documetada_show',
             ],
             [
-                'id'    => 137,
+                'name' => 'Eliminar Información Documentada',
                 'title' => 'informacion_documetada_delete',
             ],
             [
-                'id'    => 138,
+                'name' => 'Acceder Información Documentada',
                 'title' => 'informacion_documetada_access',
             ],
             [
-                'id'    => 139,
+                'name' => 'Acceder a operación',
                 'title' => 'operacion_access',
             ],
             [
-                'id'    => 140,
+                'name' => 'Crear Planificación de Control',
                 'title' => 'planificacion_control_create',
             ],
             [
-                'id'    => 141,
+                'name' => 'Editar Planificación de Control',
                 'title' => 'planificacion_control_edit',
             ],
             [
-                'id'    => 142,
+                'name' => 'Visualizar Planificación de Control',
                 'title' => 'planificacion_control_show',
             ],
             [
-                'id'    => 143,
+                'name' => 'Eliminar Planificación de Control',
                 'title' => 'planificacion_control_delete',
             ],
             [
-                'id'    => 144,
+                'name' => 'Acceder a Planificación de Control',
                 'title' => 'planificacion_control_access',
             ],
             [
-                'id'    => 145,
+                'name' => 'Crear Activo',
                 'title' => 'activo_create',
             ],
             [
-                'id'    => 146,
+                'name' => 'Editar Activo',
                 'title' => 'activo_edit',
             ],
             [
-                'id'    => 147,
+                'name' => 'Visualizar Activo',
                 'title' => 'activo_show',
             ],
             [
-                'id'    => 148,
+                'name' => 'Eliminar Activo',
                 'title' => 'activo_delete',
             ],
             [
-                'id'    => 149,
+                'name' => 'Acceder Activo',
                 'title' => 'activo_access',
             ],
             [
-                'id'    => 150,
+                'name' => 'Crear Tratamiento de Riesgos',
                 'title' => 'tratamiento_riesgo_create',
             ],
             [
-                'id'    => 151,
+                'name' => 'Editar Tratamiento de Riesgos',
                 'title' => 'tratamiento_riesgo_edit',
             ],
             [
-                'id'    => 152,
+                'name' => 'Visualizar Tratamiento de Riesgos',
                 'title' => 'tratamiento_riesgo_show',
             ],
             [
-                'id'    => 153,
+                'name' => 'Eliminar Tratamiento de Riesgos',
                 'title' => 'tratamiento_riesgo_delete',
             ],
             [
-                'id'    => 154,
+                'name' => 'Acceder Tratamiento de Riesgos',
                 'title' => 'tratamiento_riesgo_access',
             ],
             [
-                'id'    => 155,
+                'name' => 'Acceder a Evaluación',
                 'title' => 'evaluacion_access',
             ],
             [
-                'id'    => 156,
+                'name' => 'Acceder a Mejora',
                 'title' => 'mejora_access',
             ],
             [
-                'id'    => 157,
+                'name' => 'Crear Auditoria Interna',
                 'title' => 'auditoria_interna_create',
             ],
             [
-                'id'    => 158,
+                'name' => 'Editar Auditoria Interna',
                 'title' => 'auditoria_interna_edit',
             ],
             [
-                'id'    => 159,
+                'name' => 'Visualizar Auditoria Interna',
                 'title' => 'auditoria_interna_show',
             ],
             [
-                'id'    => 160,
+                'name' => 'Eliminar Auditoria Interna',
                 'title' => 'auditoria_interna_delete',
             ],
             [
-                'id'    => 161,
+                'name' => 'Acceder Auditoria Interna',
                 'title' => 'auditoria_interna_access',
             ],
             [
-                'id'    => 162,
+                'name' => 'Crear Revisión de Dirección',
                 'title' => 'revision_direccion_create',
             ],
             [
-                'id'    => 163,
+                'name' => 'Editar Revisión de Dirección',
                 'title' => 'revision_direccion_edit',
             ],
             [
-                'id'    => 164,
+                'name' => 'Visualizar Revisión de Dirección',
                 'title' => 'revision_direccion_show',
             ],
             [
-                'id'    => 165,
+                'name' => 'Eliminar Revisión de Dirección',
                 'title' => 'revision_direccion_delete',
             ],
             [
-                'id'    => 166,
+                'name' => 'Acceder a Revisión de Dirección',
                 'title' => 'revision_direccion_access',
             ],
             [
-                'id'    => 167,
+                'name' => 'Crear Controles',
                 'title' => 'controle_create',
             ],
             [
-                'id'    => 168,
+                'name' => 'Editar Controles',
                 'title' => 'controle_edit',
             ],
             [
-                'id'    => 169,
+                'name' => 'Visualizar Controles',
                 'title' => 'controle_show',
             ],
             [
-                'id'    => 170,
+                'name' => 'Eliminar Controles',
                 'title' => 'controle_delete',
             ],
             [
-                'id'    => 171,
+                'name' => 'Acceder Controles',
                 'title' => 'controle_access',
             ],
             [
-                'id'    => 172,
+                'name' => 'Visualizar Log del Sistema',
                 'title' => 'audit_log_show',
             ],
             [
-                'id'    => 173,
+                'name' => 'Acceder a Log del Sistema',
                 'title' => 'audit_log_access',
             ],
             [
-                'id'    => 174,
+                'name' => 'Crear Area',
                 'title' => 'area_create',
             ],
             [
-                'id'    => 175,
+                'name' => 'Editar Area',
                 'title' => 'area_edit',
             ],
             [
-                'id'    => 176,
+                'name' => 'Visualizar Area',
                 'title' => 'area_show',
             ],
             [
-                'id'    => 177,
+                'name' => 'Eliminar Area',
                 'title' => 'area_delete',
             ],
             [
-                'id'    => 178,
+                'name' => 'Acceder a las Areas',
                 'title' => 'area_access',
             ],
             [
-                'id'    => 179,
+                'name' => 'Crear Organizaciones',
                 'title' => 'organizacione_create',
             ],
             [
-                'id'    => 180,
+                'name' => 'Editar Organizaciones',
                 'title' => 'organizacione_edit',
             ],
             [
-                'id'    => 181,
+                'name' => 'Visualizar Organizaciones',
                 'title' => 'organizacione_show',
             ],
             [
-                'id'    => 182,
+                'name' => 'Eliminar Organizaciones',
                 'title' => 'organizacione_delete',
             ],
             [
-                'id'    => 183,
+                'name' => 'Acceder a Organizaciones',
                 'title' => 'organizacione_access',
             ],
             [
-                'id'    => 184,
+                'name' => 'Crear Tipo de Activo',
                 'title' => 'tipoactivo_create',
             ],
             [
-                'id'    => 185,
+                'name' => 'Editar Tipo de Activo',
                 'title' => 'tipoactivo_edit',
             ],
             [
-                'id'    => 186,
+                'name' => 'Visualizar Tipo de Activo',
                 'title' => 'tipoactivo_show',
             ],
             [
-                'id'    => 187,
+                'name' => 'Eliminar Tipo de Activo',
                 'title' => 'tipoactivo_delete',
             ],
             [
-                'id'    => 188,
+                'name' => 'Acceder Tipo de Activo',
                 'title' => 'tipoactivo_access',
             ],
             [
-                'id'    => 189,
+                'name' => 'Crear Puesto',
                 'title' => 'puesto_create',
             ],
             [
-                'id'    => 190,
+                'name' => 'Editar Puesto',
                 'title' => 'puesto_edit',
             ],
             [
-                'id'    => 191,
+                'name' => 'Visualizar Puesto',
                 'title' => 'puesto_show',
             ],
             [
-                'id'    => 192,
+                'name' => 'Eliminar Puesto',
                 'title' => 'puesto_delete',
             ],
             [
-                'id'    => 193,
+                'name' => 'Acceder a Puestos',
                 'title' => 'puesto_access',
             ],
             [
-                'id'    => 194,
+                'name' => 'Crear Sede',
                 'title' => 'sede_create',
             ],
             [
-                'id'    => 195,
+                'name' => 'Editar Sede',
                 'title' => 'sede_edit',
             ],
             [
-                'id'    => 196,
+                'name' => 'Visualizar Sede',
                 'title' => 'sede_show',
             ],
             [
-                'id'    => 197,
+                'name' => 'Editar Sede',
                 'title' => 'sede_delete',
             ],
             [
-                'id'    => 198,
+                'name' => 'Acceder Sede',
                 'title' => 'sede_access',
             ],
             [
-                'id'    => 199,
+                'name' => 'Crear Indicadores SGSI',
                 'title' => 'indicadores_sgsi_create',
             ],
             [
-                'id'    => 200,
+                'name' => 'Editar Indicadores SGSI',
                 'title' => 'indicadores_sgsi_edit',
             ],
             [
-                'id'    => 201,
+                'name' => 'Visualizar Indicadores SGSI',
                 'title' => 'indicadores_sgsi_show',
             ],
             [
-                'id'    => 202,
+                'name' => 'Eliminar Indicadores SGSI',
                 'title' => 'indicadores_sgsi_delete',
             ],
             [
-                'id'    => 203,
+                'name' => 'Acceder a Indicadores SGSI',
                 'title' => 'indicadores_sgsi_access',
             ],
             [
-                'id'    => 204,
+                'name' => 'Acceder a Indicador de Incidentes SGSI',
                 'title' => 'indicadorincidentessi_access',
             ],
             [
-                'id'    => 205,
+                'name' => 'Crear Auditoria Anual',
                 'title' => 'auditoria_anual_create',
             ],
             [
-                'id'    => 206,
+                'name' => 'Editar Auditoria Anual',
                 'title' => 'auditoria_anual_edit',
             ],
             [
-                'id'    => 207,
+                'name' => 'Visualizar Auditoria Anual',
                 'title' => 'auditoria_anual_show',
             ],
             [
-                'id'    => 208,
+                'name' => 'Eliminar Auditoria Anual',
                 'title' => 'auditoria_anual_delete',
             ],
             [
-                'id'    => 209,
+                'name' => 'Acceder a Auditoria Anual',
                 'title' => 'auditoria_anual_access',
             ],
             [
-                'id'    => 210,
+                'name' => 'Crear Plan de Auditoria',
                 'title' => 'plan_auditorium_create',
             ],
             [
-                'id'    => 211,
+                'name' => 'Editar Plan de Auditoria',
                 'title' => 'plan_auditorium_edit',
             ],
             [
-                'id'    => 212,
+                'name' => 'Visualizar Plan de Auditoria',
                 'title' => 'plan_auditorium_show',
             ],
             [
-                'id'    => 213,
+                'name' => 'Eliminar Plan de Auditoria',
                 'title' => 'plan_auditorium_delete',
             ],
             [
-                'id'    => 214,
+                'name' => 'Acceder a Plan de Auditoria',
                 'title' => 'plan_auditorium_access',
             ],
             [
-                'id'    => 215,
+                'name' => 'Crear Acción Correctiva',
                 'title' => 'accion_correctiva_create',
             ],
             [
-                'id'    => 216,
+                'name' => 'Editar Acción Correctiva',
                 'title' => 'accion_correctiva_edit',
             ],
             [
-                'id'    => 217,
+                'name' => 'Visualizar Acción Correctiva',
                 'title' => 'accion_correctiva_show',
             ],
             [
-                'id'    => 218,
+                'name' => 'Eliminar Acción Correctiva',
                 'title' => 'accion_correctiva_delete',
             ],
             [
-                'id'    => 219,
+                'name' => 'Acceder a Acción Correctiva',
                 'title' => 'accion_correctiva_access',
             ],
             [
-                'id'    => 220,
+                'name' => 'Crear Plan de Acción Correctiva',
                 'title' => 'planaccion_correctiva_create',
             ],
             [
-                'id'    => 221,
+                'name' => 'Editar Plan de Acción Correctiva',
                 'title' => 'planaccion_correctiva_edit',
             ],
             [
-                'id'    => 222,
+                'name' => 'Visualizar Plan de Acción Correctiva',
                 'title' => 'planaccion_correctiva_show',
             ],
             [
-                'id'    => 223,
+                'name' => 'Eliminar Plan de Acción Correctiva',
                 'title' => 'planaccion_correctiva_delete',
             ],
             [
-                'id'    => 224,
+                'name' => 'Acceder a Plan de Acción Correctiva',
                 'title' => 'planaccion_correctiva_access',
             ],
             [
-                'id'    => 225,
+                'name' => 'Crear Registro de Mejora',
                 'title' => 'registromejora_create',
             ],
             [
-                'id'    => 226,
+                'name' => 'Editar Registro de Mejora',
                 'title' => 'registromejora_edit',
             ],
             [
-                'id'    => 227,
+                'name' => 'Visualizar Registro de Mejora',
                 'title' => 'registromejora_show',
             ],
             [
-                'id'    => 228,
+                'name' => 'Eliminar Registro de Mejora',
                 'title' => 'registromejora_delete',
             ],
             [
-                'id'    => 229,
+                'name' => 'Acceder a Registro de Mejora',
                 'title' => 'registromejora_access',
             ],
             [
-                'id'    => 230,
+                'name' => 'Crear DMAIC',
                 'title' => 'dmaic_create',
             ],
             [
-                'id'    => 231,
+                'name' => 'Editar DMAIC',
                 'title' => 'dmaic_edit',
             ],
             [
-                'id'    => 232,
+                'name' => 'Visualizar DMAIC',
                 'title' => 'dmaic_show',
             ],
             [
-                'id'    => 233,
+                'name' => 'Eliminar DMAIC',
                 'title' => 'dmaic_delete',
             ],
             [
-                'id'    => 234,
+                'name' => 'Acceder a DMAIC',
                 'title' => 'dmaic_access',
             ],
             [
-                'id'    => 235,
+                'name' => 'Crear Plan de Mejora',
                 'title' => 'plan_mejora_create',
             ],
             [
-                'id'    => 236,
+                'name' => 'Editar Plan de Mejora',
                 'title' => 'plan_mejora_edit',
             ],
             [
-                'id'    => 237,
+                'name' => 'Visualizar Plan de Mejora',
                 'title' => 'plan_mejora_show',
             ],
             [
-                'id'    => 238,
+                'name' => 'Eliminar Plan de Mejora',
                 'title' => 'plan_mejora_delete',
             ],
             [
-                'id'    => 239,
+                'name' => 'Acceder a Plan de Mejora',
                 'title' => 'plan_mejora_access',
             ],
             [
-                'id'    => 240,
+                'name' => 'Crear Enlaces de Ejecución',
                 'title' => 'enlaces_ejecutar_create',
             ],
             [
-                'id'    => 241,
+                'name' => 'Editar Enlaces de Ejecución',
                 'title' => 'enlaces_ejecutar_edit',
             ],
             [
-                'id'    => 242,
+                'name' => 'Visualizar Enlaces de Ejecución',
                 'title' => 'enlaces_ejecutar_show',
             ],
             [
-                'id'    => 243,
+                'name' => 'Eliminar Enlaces de Ejecución',
                 'title' => 'enlaces_ejecutar_delete',
             ],
             [
-                'id'    => 244,
+                'name' => 'Acceder a Enlaces de Ejecución',
                 'title' => 'enlaces_ejecutar_access',
             ],
             [
-                'id'    => 245,
+                'name' => 'Crear Team',
                 'title' => 'team_create',
             ],
             [
-                'id'    => 246,
+                'name' => 'Editar Team',
                 'title' => 'team_edit',
             ],
             [
-                'id'    => 247,
+                'name' => 'Visualizar Team',
                 'title' => 'team_show',
             ],
             [
-                'id'    => 248,
+                'name' => 'Eliminar Team',
                 'title' => 'team_delete',
             ],
             [
-                'id'    => 249,
+                'name' => 'Acceder al Team',
                 'title' => 'team_access',
             ],
             [
-                'id'    => 250,
+                'name' => 'Crear Incidente de Seguridad',
                 'title' => 'incidentes_de_seguridad_create',
             ],
             [
-                'id'    => 251,
+                'name' => 'Editar Incidente de Seguridad',
                 'title' => 'incidentes_de_seguridad_edit',
             ],
             [
-                'id'    => 252,
+                'name' => 'Visualizar Incidente de Seguridad',
                 'title' => 'incidentes_de_seguridad_show',
             ],
             [
-                'id'    => 253,
+                'name' => 'Eliminar Incidente de Seguridad',
                 'title' => 'incidentes_de_seguridad_delete',
             ],
             [
-                'id'    => 254,
+                'name' => 'Acceder Incidente de Seguridad',
                 'title' => 'incidentes_de_seguridad_access',
             ],
             [
-                'id'    => 255,
+                'name' => 'Crear Estado de Incidente',
                 'title' => 'estado_incidente_create',
             ],
             [
-                'id'    => 256,
+                'name' => 'Editar Estado de Incidente',
                 'title' => 'estado_incidente_edit',
             ],
             [
-                'id'    => 257,
+                'name' => 'Visualizar Estado de Incidente',
                 'title' => 'estado_incidente_show',
             ],
             [
-                'id'    => 258,
+                'name' => 'Eliminar Estado de Incidente',
                 'title' => 'estado_incidente_delete',
             ],
             [
-                'id'    => 259,
+                'name' => 'Acceder a Estado de Incidente',
                 'title' => 'estado_incidente_access',
             ],
             [
-                'id'    => 260,
+                'name' => 'Crear Estatus Plan de Trabajo',
                 'title' => 'estatus_plan_trabajo_create',
             ],
             [
-                'id'    => 261,
+                'name' => 'Editar Estatus Plan de Trabajo',
                 'title' => 'estatus_plan_trabajo_edit',
             ],
             [
-                'id'    => 262,
+                'name' => 'Visualizar Estatus Plan de Trabajo',
                 'title' => 'estatus_plan_trabajo_show',
             ],
             [
-                'id'    => 263,
+                'name' => 'Eliminar Estatus Plan de Trabajo',
                 'title' => 'estatus_plan_trabajo_delete',
             ],
             [
-                'id'    => 264,
+                'name' => 'Acceder a Estatus Plan de Trabajo',
                 'title' => 'estatus_plan_trabajo_access',
             ],
             [
-                'id'    => 265,
+                'name' => 'Acceder a Documentación',
                 'title' => 'documentacion_access',
             ],
             [
-                'id'    => 266,
+                'name' => 'Crear Gestor Documental',
                 'title' => 'carpetum_create',
             ],
             [
-                'id'    => 267,
+                'name' => 'Editar Gestor Documental',
                 'title' => 'carpetum_edit',
             ],
             [
-                'id'    => 268,
+                'name' => 'Visualizar Gestor Documental',
                 'title' => 'carpetum_show',
             ],
             [
-                'id'    => 269,
+                'name' => 'Eliminar Gestor Documental',
                 'title' => 'carpetum_delete',
             ],
             [
-                'id'    => 270,
+                'name' => 'Acceder a Gestor Documental',
                 'title' => 'carpetum_access',
             ],
             [
-                'id'    => 271,
+                'name' => 'Crear Archivo',
                 'title' => 'archivo_create',
             ],
             [
-                'id'    => 272,
+                'name' => 'Editar Archivo',
                 'title' => 'archivo_edit',
             ],
             [
-                'id'    => 273,
+                'name' => 'Visualizar Archivo',
                 'title' => 'archivo_show',
             ],
             [
-                'id'    => 274,
+                'name' => 'Eliminar Archivo',
                 'title' => 'archivo_delete',
             ],
             [
-                'id'    => 275,
+                'name' => 'Acceder a Archivo',
                 'title' => 'archivo_access',
             ],
             [
-                'id'    => 276,
+                'name' => 'Crear Estado de Documento',
                 'title' => 'estado_documento_create',
             ],
             [
-                'id'    => 277,
+                'name' => 'Editar Estado de Documento',
                 'title' => 'estado_documento_edit',
             ],
             [
-                'id'    => 278,
+                'name' => 'Visualizar Estado de Documento',
                 'title' => 'estado_documento_show',
             ],
             [
-                'id'    => 279,
+                'name' => 'Eliminar Estado de Documento',
                 'title' => 'estado_documento_delete',
             ],
             [
-                'id'    => 280,
+                'name' => 'Acceder a Estado de Documento',
                 'title' => 'estado_documento_access',
             ],
             [
-                'id'    => 281,
+                'name' => 'Acceder al Administrador FAQ',
                 'title' => 'faq_management_access',
             ],
             [
-                'id'    => 282,
+                'name' => 'Crear Categoría FAQ',
                 'title' => 'faq_category_create',
             ],
             [
-                'id'    => 283,
+                'name' => 'Editar Categoría FAQ',
                 'title' => 'faq_category_edit',
             ],
             [
-                'id'    => 284,
+                'name' => 'Visualizar Categoría FAQ',
                 'title' => 'faq_category_show',
             ],
             [
-                'id'    => 285,
+                'name' => 'Eliminar Categoría FAQ',
                 'title' => 'faq_category_delete',
             ],
             [
-                'id'    => 286,
+                'name' => 'Acceder a Categoría FAQ',
                 'title' => 'faq_category_access',
             ],
             [
-                'id'    => 287,
+                'name' => 'Crear Pregunta FAQ',
                 'title' => 'faq_question_create',
             ],
             [
-                'id'    => 288,
+                'name' => 'Editar Pregunta FAQ',
                 'title' => 'faq_question_edit',
             ],
             [
-                'id'    => 289,
+                'name' => 'Visualizar Pregunta FAQ',
                 'title' => 'faq_question_show',
             ],
             [
-                'id'    => 290,
+                'name' => 'Eliminar Pregunta FAQ',
                 'title' => 'faq_question_delete',
             ],
             [
-                'id'    => 291,
+                'name' => 'Acceder a Pregunta FAQ',
                 'title' => 'faq_question_access',
             ],
             [
-                'id'    => 292,
+                'name' => 'Acceder a Análisis de Riesgo',
                 'title' => 'analisis_riesgo_access',
             ],
             [
-                'id'    => 293,
+                'name' => 'Crear Matríz de Riesgo',
                 'title' => 'matriz_riesgo_create',
             ],
             [
-                'id'    => 294,
+                'name' => 'Editar Matríz de Riesgo',
                 'title' => 'matriz_riesgo_edit',
             ],
             [
-                'id'    => 295,
+                'name' => 'Visualizar Matríz de Riesgo',
                 'title' => 'matriz_riesgo_show',
             ],
             [
-                'id'    => 296,
+                'name' => 'Eliminar Matríz de Riesgo',
                 'title' => 'matriz_riesgo_delete',
             ],
             [
-                'id'    => 297,
+                'name' => 'Acceder a Matríz de Riesgo',
                 'title' => 'matriz_riesgo_access',
             ],
             [
-                'id'    => 298,
+                'name' => 'Crear GAP Uno',
                 'title' => 'gap_uno_create',
             ],
             [
-                'id'    => 299,
+                'name' => 'Editar GAP Uno',
                 'title' => 'gap_uno_edit',
             ],
             [
-                'id'    => 300,
+                'name' => 'Visualizar GAP Uno',
                 'title' => 'gap_uno_show',
             ],
             [
-                'id'    => 301,
+                'name' => 'Eliminar GAP Uno',
                 'title' => 'gap_uno_delete',
             ],
             [
-                'id'    => 302,
+                'name' => 'Acceder a GAP Uno',
                 'title' => 'gap_uno_access',
             ],
             [
-                'id'    => 303,
+                'name' => 'Crear GAP Dos',
                 'title' => 'gap_do_create',
             ],
             [
-                'id'    => 304,
+                'name' => 'Editar GAP Dos',
                 'title' => 'gap_do_edit',
             ],
             [
-                'id'    => 305,
+                'name' => 'Visualizar GAP Dos',
                 'title' => 'gap_do_show',
             ],
             [
-                'id'    => 306,
+                'name' => 'Eliminar GAP Dos',
                 'title' => 'gap_do_delete',
             ],
             [
-                'id'    => 307,
+                'name' => 'Acceder a GAP Dos',
                 'title' => 'gap_do_access',
             ],
             [
-                'id'    => 308,
+                'name' => 'Crear GAP Tres',
                 'title' => 'gap_tre_create',
             ],
             [
-                'id'    => 309,
+                'name' => 'Editar GAP Tres',
                 'title' => 'gap_tre_edit',
             ],
             [
-                'id'    => 310,
+                'name' => 'Visualizar GAP Tres',
                 'title' => 'gap_tre_show',
             ],
             [
-                'id'    => 311,
+                'name' => 'Eliminar GAP Tres',
                 'title' => 'gap_tre_delete',
             ],
             [
-                'id'    => 312,
+                'name' => 'Acceder a GAP Tres',
                 'title' => 'gap_tre_access',
             ],
             [
-                'id'    => 313,
+                'name' => 'Acceder a Lista de Verificación',
                 'title' => 'lista_de_verificacion_access',
             ],
             [
-                'id'    => 314,
+                'name' => 'Crear Control de Documento',
                 'title' => 'control_documento_create',
             ],
             [
-                'id'    => 315,
+                'name' => 'Editar Control de Documento',
                 'title' => 'control_documento_edit',
             ],
             [
-                'id'    => 316,
+                'name' => 'Eliminar Control de Documento',
                 'title' => 'control_documento_delete',
             ],
             [
-                'id'    => 317,
+                'name' => 'Acceder a Control de Documento',
                 'title' => 'control_documento_access',
             ],
             [
-                'id'    => 318,
+                'name' => 'Editar Contraseña de Perfil',
                 'title' => 'profile_password_edit',
             ],
             [
-                'id'    => 319,
+                'name' => 'Crear Entendimiento de Organización',
                 'title' => 'entendimiento_organizacion_create',
             ],
             [
-                'id'    => 320,
+                'name' => 'Editar Entendimiento de Organización',
                 'title' => 'entendimiento_organizacion_edit',
             ],
             [
-                'id'    => 321,
+                'name' => 'Eliminar Entendimiento de Organización',
                 'title' => 'entendimiento_organizacion_delete',
             ],
             [
-                'id'    => 322,
+                'name' => 'Crear Grupo de Area',
                 'title' => 'grupoarea_create',
             ],
             [
-                'id'    => 323,
+                'name' => 'Editar Grupo de Area',
                 'title' => 'grupoarea_edit',
             ],
             [
-                'id'    => 324,
+                'name' => 'Visualizar Grupo de Area',
                 'title' => 'grupoarea_show',
             ],
             [
-                'id'    => 325,
+                'name' => 'Eliminar Grupo de Area',
                 'title' => 'grupoarea_delete',
             ],
             [
-                'id'    => 326,
+                'name' => 'Acceder al Grupo de Area',
                 'title' => 'grupoarea_access',
             ],
             [
-                'id'    => 327,
+                'name' => 'Visualizar Entendimiento de la Organización',
                 'title' => 'entendimiento_organizacion_show',
             ],
+            [
+                'name' => 'Visualizar Ajustes',
+                'title' => 'ajustes_access'
+            ],
+            [
+                'name' => 'Visualizar Consulta de Datos',
+                'title' => 'consulta_access'
+            ]
 
         ];
 

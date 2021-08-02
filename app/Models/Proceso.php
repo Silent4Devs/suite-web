@@ -51,6 +51,8 @@ class Proceso extends Model
 
 	];
 
+
+
 	public function macroproceso()
 	{
 		return $this->belongsTo(Macroproceso::class, 'id_macroproceso');
@@ -70,6 +72,8 @@ class Proceso extends Model
 	{
 		return $this->belongsToMany(Documento::class);
 	}
+
+
 
 
 

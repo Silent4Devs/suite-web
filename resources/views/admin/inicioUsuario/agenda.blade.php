@@ -5,64 +5,76 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/default.css') }}">
 
 <style type="text/css">
-    .caja{
+    .caja {
         width: 100%;
-        height:600px;
-        padding: 0; 
+        height: 600px;
+        padding: 0;
         position: relative;
     }
-    #lnb{
-        background: rgba(0,0,0,0) !important;
+
+    #lnb {
+        background: rgba(0, 0, 0, 0) !important;
         border: none !important;
     }
-    #lnb div{
+
+    #lnb div {
         border: none !important;
     }
-    #calendarList{
+
+    #calendarList {
         border: none !important;
     }
-    #calendar{
+
+    #calendar {
         width: 100%;
         overflow: hidden;
         overflow-y: scroll;
         border: none !important;
     }
-    #calendarList span{
+
+    #calendarList span {
         margin-left: 0px;
         font-size: 8pt;
         float: left;
         width: 100px;
     }
-     #calendarList span:nth-child(even){
+
+    #calendarList span:nth-child(even) {
         width: 20px;
-     }
-    span strong{
+    }
+
+    span strong {
         font-size: 15pt !important;
     }
-    span:not(.lever)::before{
+
+    span:not(.lever)::before {
         left: -30px !important;
         top: -5px !important;
         transform: scale(0.7);
         display: none;
     }
-    .tui-full-calendar-month-dayname{
+
+    .tui-full-calendar-month-dayname {
         border: none !important;
     }
-    .tui-full-calendar-popup-section div{
+
+    .tui-full-calendar-popup-section div {
         border: none !important;
         margin-top: 20px !important;
     }
-    .tui-full-calendar-popup-section input{
+
+    .tui-full-calendar-popup-section input {
         border-bottom: 1px solid #eee !important;
     }
 
 
-    .btn.btn-default.btn-sm.move-day{
+    .btn.btn-default.btn-sm.move-day {
         width: 30px;
         height: 30px;
         position: relative;
     }
-    .calendar-icon.ic-arrow-line-right::before{
+
+    .calendar-icon.ic-arrow-line-right::before {
         content: ">";
         position: absolute;
         transform: scale(1.3);
@@ -75,7 +87,8 @@
         justify-content: center;
         align-items: center;
     }
-    .calendar-icon.ic-arrow-line-left::before{
+
+    .calendar-icon.ic-arrow-line-left::before {
         content: "<";
         position: absolute;
         transform: scale(1.3);
@@ -88,43 +101,46 @@
         justify-content: center;
         align-items: center;
     }
-    a:hover{
+
+    a:hover {
         text-decoration: none !important;
     }
 
-    .tui-full-calendar-popup .tui-full-calendar-popup-container{
+    .tui-full-calendar-popup .tui-full-calendar-popup-container {
         display: none;
     }
 
-    .tui-full-calendar-popup.tui-full-calendar-popup-detail .tui-full-calendar-popup-container{
+    .tui-full-calendar-popup.tui-full-calendar-popup-detail .tui-full-calendar-popup-container {
         display: block;
     }
+
 </style>
 
 
 <div class="caja">
     <div id="lnb">
-        
+
         <div id="lnb-calendars" class="lnb-calendars">
             <div>
                 <div class="lnb-calendars-item">
                     <label>
                         <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
                         <span style="">
-                            <span style="margin-left: 20px; width: 100px !important; position: absolute;">Ver Todos</span>
+                            <span style="margin-left: 20px; width: 100px !important; position: absolute;">Ver
+                                Todos</span>
                         </span>
                     </label>
                 </div>
             </div>
             <div id="calendarList" class="lnb-calendars-d1">
             </div>
-        </div>  
+        </div>
     </div>
     <div id="right">
         <div id="menu">
             <span class="dropdown">
-                <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="true">
+                <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <i id="calendarTypeIcon" class="calendar-icon ic_view_month" style="margin-right: 4px;"></i>
                     <span id="calendarTypeName"></span>&nbsp;
                     <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
@@ -158,7 +174,8 @@
                     <li role="presentation" class="dropdown-divider"></li>
                     <li role="presentation">
                         <a role="menuitem" data-action="toggle-workweek">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
+                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek"
+                                checked>
                             <span class="checkbox-title"></span>Fines de semana
                         </a>
                     </li>
@@ -170,7 +187,8 @@
                     </li>
                     <li role="presentation">
                         <a role="menuitem" data-action="toggle-narrow-weekend">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
+                            <input type="checkbox" class="tui-full-calendar-checkbox-square"
+                                value="toggle-narrow-weekend">
                             <span class="checkbox-title"></span>Reducir dias no laborales
                         </a>
                     </li>
@@ -211,52 +229,52 @@
 
     <script>
         ScheduleList = [
-            @foreach($plan_base as $it_plan_base)
+            @foreach ($actividades as $it_plan_base)
                 {
-                    id: 'planinicio{{$it_plan_base->id}}',
-                    calendarId: '1',
-                    title: 'Actividad: {{$it_plan_base->actividad}}',
-                    category: 'allday',
-                    dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_inicio)->format("Y-m-d") }}',
-                    end: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_fin)->format("Y-m-d") }}',
-                    isReadOnly : true, 
+                id: 'planinicio{{ $it_plan_base->id }}',
+                calendarId: '1',
+                title: 'Actividad: {{ $it_plan_base->actividad }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{ \Carbon\Carbon::createFromFormat('d-m-Y', $it_plan_base->fecha_inicio)->format('Y-m-d') }}',
+                end: '{{ \Carbon\Carbon::createFromFormat('d-m-Y', $it_plan_base->fecha_fin)->format('Y-m-d') }}',
+                isReadOnly : true,
                 },
             @endforeach
 
-            @foreach($auditorias_anual as $it_auditorias_anual)
+            @foreach ($auditorias_anual as $it_auditorias_anual)
                 {
-                    id: 'auditoria{{$it_auditorias_anual->id}}',
-                    calendarId: '2',
-                    title: 'Tipo: {{$it_auditorias_anual->tipo}}',
-                    category: 'allday',
-                    dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_auditorias_anual->fechainicio)->format("Y-m-d") }}',
-                    end: '',
-                    isReadOnly : true, 
+                id: 'auditoria{{ $it_auditorias_anual->id }}',
+                calendarId: '2',
+                title: 'Tipo: {{ $it_auditorias_anual->tipo }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{ \Carbon\Carbon::createFromFormat('d-m-Y', $it_auditorias_anual->fechainicio)->format('Y-m-d') }}',
+                end: '',
+                isReadOnly : true,
                 },
             @endforeach
 
 
-            @foreach($recursos as $it_recursos)
+            @foreach ($recursos as $it_recursos)
                 {
-
-                    id: 'recursos{{$it_recursos->id}}',
-                    calendarId: '3',
-                    title: 'Tipo: {{$it_recursos->cursoscapacitaciones}}',
-                    category: 'allday',
-                    dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::createFromFormat("d/m/Y", $it_recursos->fecha_curso)->format("Y-m-d") }}',
-                    end: '',
-                    isReadOnly : true,
-                },
-
-            @endforeach
-
             
-
-
+                id: 'recursos{{ $it_recursos->id }}',
+                calendarId: '3',
+                title: 'Tipo: {{ $it_recursos->cursoscapacitaciones }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{ \Carbon\Carbon::createFromFormat('d/m/Y', $it_recursos->fecha_curso)->format('Y-m-d') }}',
+                end: '',
+                isReadOnly : true,
+                },
             
+            @endforeach
+
+
+
+
+
 
         ];
     </script>

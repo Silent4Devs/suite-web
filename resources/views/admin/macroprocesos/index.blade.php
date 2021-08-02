@@ -9,6 +9,7 @@
             </div>
 
         @endcan
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered tbl-categorias w-100">
                 <thead class="thead-dark">
@@ -20,7 +21,7 @@
                         <th>
                             Código
                         </th>
-                        <th>
+                         <th>
                             Nombre
                         </th>
                         <th>

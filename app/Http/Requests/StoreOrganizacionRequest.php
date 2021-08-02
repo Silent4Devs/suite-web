@@ -26,9 +26,9 @@ class StoreOrganizacionRequest extends FormRequest
             ],
             'telefono'   => [
                 'nullable',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'string',
+                'min:10',
+                'max:10'
             ],
             'pagina_web' => [
                 'string',

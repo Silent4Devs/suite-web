@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -31,12 +32,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Macroproceso extends Model
 {
 	use SoftDeletes;
+	use HasFactory;
 	protected $table = 'macroprocesos';
 
-    protected $dates = ['deleted_at'];
+	protected $dates = ['deleted_at'];
 
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+	const CREATED_AT = 'created_at';
+	const UPDATED_AT = 'updated_at';
 
 	protected $casts = [
 		'id_grupo' => 'int'
@@ -59,7 +61,7 @@ class Macroproceso extends Model
 		return $this->hasMany(Proceso::class, 'id_macroproceso');
 	}
 
-    public function procesosWithDocumento()
+	public function procesosWithDocumento()
 	{
 		return $this->hasMany(Proceso::class, 'id_macroproceso')->with('documento');
 	}

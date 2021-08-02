@@ -102,9 +102,18 @@ class ActivosController extends Controller
 
     public function store(StoreActivoRequest $request)
     {
+        $request->validate(
+            [
+                'nombre_activo' => 'required|string',
+                'tipoactivo' => 'required|string',
+                'subtipo' => 'required|integer',
+
+            ],
+        );
+
         $activo = Activo::create($request->all());
 
-        return redirect()->route('admin.activos.index');
+        return redirect()->route('admin.activos.index')->with("success",'Guardado con éxito');
     }
 
     public function edit(Activo $activo)
@@ -126,9 +135,19 @@ class ActivosController extends Controller
 
     public function update(UpdateActivoRequest $request, Activo $activo)
     {
+
+        $request->validate(
+            [
+                'nombre_activo' => 'required|string',
+                'tipoactivo' => 'required|string',
+                'subtipo' => 'required|integer',
+
+            ],
+        );
+
         $activo->update($request->all());
 
-        return redirect()->route('admin.activos.index');
+        return redirect()->route('admin.activos.index')->with("success",'Editado con éxito');
     }
 
     public function show(Activo $activo)
@@ -146,7 +165,7 @@ class ActivosController extends Controller
 
         $activo->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyActivoRequest $request)

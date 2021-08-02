@@ -69,7 +69,7 @@ class AlcanceSgsiController extends Controller
     {
         $alcanceSgsi = AlcanceSgsi::create($request->all());
 
-        return redirect()->route('admin.alcance-sgsis.index');
+        return redirect()->route('admin.alcance-sgsis.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(AlcanceSgsi $alcanceSgsi)
@@ -85,7 +85,7 @@ class AlcanceSgsiController extends Controller
     {
         $alcanceSgsi->update($request->all());
 
-        return redirect()->route('admin.alcance-sgsis.index');
+        return redirect()->route('admin.alcance-sgsis.index')->with("success", 'Editado con éxito');
     }
 
     public function show(AlcanceSgsi $alcanceSgsi)
@@ -103,7 +103,7 @@ class AlcanceSgsiController extends Controller
 
         $alcanceSgsi->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyAlcanceSgsiRequest $request)

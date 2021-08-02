@@ -8,9 +8,6 @@
             <h3 class="mb-2 text-center text-white"><strong>Sedes</strong></h3>
         </div>
 
-
-
-
         @if ($numero_sedes > 0)
 
             <div class="row justify-content-center">
@@ -20,8 +17,8 @@
                             <div class="card-header">
                                 @if (is_null($sedes->foto_sedes))
                                     <img class="card justify-content-center" style="height: 165px; margin:auto;"
-                                        src="{{asset ('storage/sedes/imagenes/organizacion.png')}}"
-                                        alt="" class="img-fluid">
+                                        src="{{ asset('storage/sedes/imagenes/organizacion.png') }}" alt=""
+                                        class="img-fluid">
                                 @else
                                     <img class="card justify-content-center" style="height: 180px; margin:auto;"
                                         src="{{ asset('storage/sedes/imagenes/' . $sedes->foto_sedes) }}" alt=""
@@ -33,9 +30,17 @@
 
                             <div class="card-body">
 
-                                <p><strong>Sede:</strong> {{ $sedes->sede }}</p>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <p><strong>Sede:</strong> {{ $sedes->sede }}</p>
 
-                                <p><strong>Dirección:</strong> {{ $sedes->direccion }}</p>
+                                        <p><strong>Dirección:</strong> {{ $sedes->direccion }}</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <p><a href="sede-ubicacionorganizacion/{{ $sedes->id }}" target="_blank"><i
+                                                    class="fas fa-map-marked-alt fa-2x text-info"></i></a></p>
+                                    </div>
+                                </div>
 
                             </div>
 
@@ -65,7 +70,8 @@
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado Sedes a la
                             organización
-                            <a href="{{ route('admin.sedes.create') }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
+                            <a href="{{ route('admin.sedes.create') }}" class="item-right col-2 btn text-light"
+                                style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
 
                         </p>
                     </div>

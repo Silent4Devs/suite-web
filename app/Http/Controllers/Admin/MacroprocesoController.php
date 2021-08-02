@@ -19,6 +19,7 @@ class MacroprocesoController extends Controller
      */
     public function index(Request $request)
     {
+        // dd($query = Macroproceso::get());
         if ($request->ajax()) {
             $query = Macroproceso::get();
             $table = DataTables::of($query);
@@ -95,7 +96,7 @@ class MacroprocesoController extends Controller
         );
         $macroprocesos = Macroproceso::create($request->all());
         Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
-        return redirect()->route('admin.macroprocesos.index');
+        return redirect()->route('admin.macroprocesos.index')->with("success",'Guardado con éxito');
     }
 
     /**
@@ -140,8 +141,8 @@ class MacroprocesoController extends Controller
             ],
         );
         $macroproceso->update($request->all());
-        Flash::success('<h5 class="text-center">Macroproceso actualizado satisfactoriamente</h5>');
-        return redirect()->route('admin.macroprocesos.index');
+        // Flash::success('<h5 class="text-center">Macroproceso actualizado satisfactoriamente</h5>');
+        return redirect()->route('admin.macroprocesos.index')->with("success",'Editado con éxito');
     }
 
     /**
@@ -153,8 +154,8 @@ class MacroprocesoController extends Controller
     public function destroy(Macroproceso $macroproceso)
     {
         $macroproceso->delete();
-        Flash::success('<h5 class="text-center">Macroproceso eliminado satisfactoriamente</h5>');
-        return redirect()->route('admin.macroprocesos.index');
+        // Flash::success('<h5 class="text-center">Macroproceso eliminado satisfactoriamente</h5>');
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
 

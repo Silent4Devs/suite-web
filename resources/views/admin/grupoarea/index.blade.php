@@ -1,15 +1,10 @@
 @extends('layouts.admin')
 @section('content')
     @can('grupoarea_create')
-
-
-
-
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong> Grupos de Áreas</strong></h3>
             </div>
-
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
 
@@ -17,7 +12,6 @@
                 </div>
             </div>
         @endcan
-
         <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -27,21 +21,22 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 1</p>
-                    <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas, al finalizar dé
-                        clic en siguiente                    </span>
-                      <a href="{{ route("admin.areas.index") }}"  class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Siguiente</a>
+                    <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas, al finalizar
+                        dé
+                        clic en siguiente </span>
+                    <a href="{{ route('admin.areas.index') }}" class="item-right col-2 btn text-light"
+                        style="background-color:rgb(85, 217, 226); float:right">Siguiente</a>
                 </div>
             </div>
         </div>
 
-
-         @include('partials.flashMessages')
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-GrupoArea">
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            ID
+                            No.
                         </th>
                         <th>
                             Nombre del grupo
@@ -56,19 +51,8 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                </tr> --}}
                 </thead>
+
             </table>
         </div>
     </div>
@@ -177,13 +161,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -221,36 +205,134 @@
                         name: 'color',
                         render: function(color) {
                             return `<div class="d-flex justify-content-center"> <div class="text-center align-items-center d-flex justify-content-center" style="width:20px; height:20px; background-color:${color}!important"></div> </div>`;
-                            element.style.border=`2px solid ${color!=null?color:"black"}`;
+                            element.style.border = `2px solid ${color!=null?color:"black"}`;
 
                         }
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        name: 'Opciones',
+                        render: function(data, type, row, meta) {
+                            const opciones = `
+                                <a href="/admin/grupoarea/${data}/edit" class="btn btn-sm"><i class="fas fa-edit" title="Editar"></i></a>
+                                <a href="/admin/grupoarea/${data}/show" class="btn btn-sm"><i class="fas fa-eye" title="Visualizar"></i></a>
+                                <button onclick="Eliminar('/admin/grupoarea/${data}','${data}')" class="btn btn-sm text-danger"><i class="fas fa-trash" title="Eliminar"></i></button>
+                            `;
+                            return opciones;
+                        }
                     }
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [1, 'asc']
                 ]
             };
             let table = $('.datatable-GrupoArea').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+
+            async function obtenerAreasRelacionadas(grupo_id) {
+                let api = await fetch("{{ route('admin.grupoarea.getRelationatedAreas') }}", {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    body: JSON.stringify({
+                        grupo_id
+                    }) // body data type must match "Content-Type" header
+                });
+                let data = await api.json();
+                return data;
+            }
+
+            window.Eliminar = async function(url, grupo_id) {
+                const areasRelacionadas = await obtenerAreasRelacionadas(grupo_id);
+                Swal.fire({
+                    title: '¿Desea eliminar este grupo?',
+                    html: `<div>
+                            ${areasRelacionadas.length > 0 ? `<p>El grupo que desea eliminar está vinculado con las siguientes áreas</p>
+                                                        <ul class="list-group list-group-horizontal justify-content-center">
+                                                            ${areasRelacionadas.map(area=>{
+                                                                return `<li class="list-group-item">${area.area}</li>`;
+                                                            })}
+                                                        </ul>`:`<p>No hay relación con ningún área</p>`}
+                        </div>`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: url,
+                            data: {
+                                _token: "{{ csrf_token() }}"
+                            },
+                            beforeSend: function() {
+                                let timerInterval
+                                Swal.fire({
+                                    title: 'Eliminando!',
+                                    html: 'Estamos eliminando el registro, espere un momento.',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        timerInterval = setInterval(() => {
+                                            const content = Swal
+                                                .getHtmlContainer()
+                                            if (content) {
+                                                const b = content
+                                                    .querySelector(
+                                                        'b')
+                                                if (b) {
+                                                    b.textContent =
+                                                        Swal
+                                                        .getTimerLeft()
+                                                }
+                                            }
+                                        }, 100)
+                                    },
+                                    willClose: () => {
+                                        clearInterval(timerInterval)
+                                    }
+                                })
+
+                            },
+                            success: function(response) {
+                                if (response.deleted) {
+                                    Swal.fire(
+                                        '¡Grupo Eliminado!',
+                                        'Las áreas relacionadas quedarán sin grupo asignado',
+                                        'success'
+                                    )
+                                    table.ajax.reload();
+                                } else {
+                                    Swal.fire(
+                                        '¡No se eliminó el grupo!',
+                                        'Ocurrió un error',
+                                        'error'
+                                    )
+                                }
+
+                            },
+                            error: function(err) {
+                                Swal.fire(
+                                    'Ocurrió un error',
+                                    `${err.message}`,
+                                    'error'
+                                )
+                            }
+                        });
+
+                    }
+                });
+            }
         });
-
-
     </script>
 @endsection
 

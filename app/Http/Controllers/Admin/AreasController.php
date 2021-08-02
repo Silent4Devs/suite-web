@@ -58,14 +58,14 @@ class AreasController extends Controller
                 return $row->grupo ? $row->grupo->nombre : "";
             });
 
-                $table->editColumn(
-                    'reporta',
-                    function ($row) {
-                        return $row->supervisor ? $row->supervisor->area : "";
-                    }
+            $table->editColumn(
+                'reporta',
+                function ($row) {
+                    return $row->supervisor ? $row->supervisor->area : "";
+                }
 
 
-                );
+            );
 
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
@@ -79,11 +79,11 @@ class AreasController extends Controller
 
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $teams = Team::get();
-        $grupoarea= Grupo::get();
-        $numero_areas=Area::count();
+        $grupoarea = Grupo::get();
+        $numero_areas = Area::count();
 
 
-        return view('admin.areas.index', compact('teams','direccion_exists','numero_areas'));
+        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas'));
     }
 
     public function create()
@@ -119,7 +119,7 @@ class AreasController extends Controller
 
         $area = Area::create($request->all());
 
-        return redirect()->route('admin.areas.index')->with("success",'Guardado con éxito');
+        return redirect()->route('admin.areas.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Area $area)
@@ -136,7 +136,7 @@ class AreasController extends Controller
 
     public function update(UpdateAreaRequest $request, Area $area)
     {
-        $primer_nodo = Area::select('id','id_reporta')->whereNull('id_reporta')->first();
+        $primer_nodo = Area::select('id', 'id_reporta')->whereNull('id_reporta')->first();
 
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $validateReporta = 'nullable|exists:areas,id';
@@ -171,7 +171,7 @@ class AreasController extends Controller
 
         // $area->update($request->all());
 
-        return redirect()->route('admin.areas.index')->with("success",'Editado con éxito');
+        return redirect()->route('admin.areas.index')->with("success", 'Editado con éxito');
     }
 
     public function show(Area $area)
@@ -189,7 +189,7 @@ class AreasController extends Controller
 
         $area->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyAreaRequest $request)
@@ -199,22 +199,22 @@ class AreasController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function obtenerAreasPorGrupo (){
+    public function obtenerAreasPorGrupo()
+    {
 
 
         $grupos = Grupo::with('areas')->get();
-        $numero_grupos=Grupo::count();
+        $numero_grupos = Grupo::count();
 
 
 
-        return view('admin.areas.areas-grupo', compact('grupos','numero_grupos'));
-
+        return view('admin.areas.areas-grupo', compact('grupos', 'numero_grupos'));
     }
 
     public function renderJerarquia(Request $request)
     {
 
-        $numero_grupos=Grupo::count();
+        $numero_grupos = Grupo::count();
         $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
         // dd($areasTree);
         if ($request->ajax()) {
@@ -227,6 +227,8 @@ class AreasController extends Controller
         $organizacionDB = Organizacion::first();
         $organizacion = !is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
         $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
-        return view('admin.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos', 'numero_grupos'));
+        $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
+
+        return view('admin.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos', 'numero_grupos', 'areas_sin_grupo'));
     }
 }

@@ -104,7 +104,7 @@ class PlanificacionControlController extends Controller
     {
         $planificacionControl = PlanificacionControl::create($request->all());
 
-        return redirect()->route('admin.planificacion-controls.index');
+        return redirect()->route('admin.planificacion-controls.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(PlanificacionControl $planificacionControl)
@@ -122,7 +122,7 @@ class PlanificacionControlController extends Controller
     {
         $planificacionControl->update($request->all());
 
-        return redirect()->route('admin.planificacion-controls.index');
+        return redirect()->route('admin.planificacion-controls.index')->with("success", 'Editado con éxito');
     }
 
     public function show(PlanificacionControl $planificacionControl)
@@ -140,7 +140,7 @@ class PlanificacionControlController extends Controller
 
         $planificacionControl->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyPlanificacionControlRequest $request)
