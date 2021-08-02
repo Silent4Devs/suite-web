@@ -26,10 +26,17 @@
 </style>
 
 
+<div id="contenedor_resultado" class="row d-none">
+    <div class="col-sm-12">
+        <canvas id="resultadobarra" style="width:100%; height:400px;"></canvas>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-sm-7">
         <div class="card-body datatable-fix">
+
+
 
             <table class="table table-hover table-bordered tbl-categorias w-100">
 
@@ -83,13 +90,18 @@
             <div style="" id="resultado">
                 <h5>De click sobre una fila para desplegar información</h5>
             </div>
+
         </div>
 
     </div>
 
+
+
+
 </div>
 
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {
@@ -117,13 +129,28 @@
             url: '{{ route('admin.selectIndicador') }}',
             type: 'POST',
             beforeSend: function() {
+                document.getElementById('contenedor_resultado').classList.add("d-none");
                 $("#resultado").html(
                     '<div class="spinner-border text-success" role="status"><span class="sr-only">Loading...</span></div>'
                 );
             },
             success: function(data) {
+                document.getElementById('contenedor_resultado').classList.remove("d-none");
                 $("#resultado").html(data);
+                $("#resultadobarra").html(data);
                 console.log(data);
+                // document. getElementById("resultadobarra"). style. display = ""; //show.
+                let {datosbarra}=data;
+
+                let datosGrafica=datosbarra.map(dato => {
+                    return dato.resultado
+                });
+
+                let datosFecha=datosbarra.map(dato => {
+                    return dato.fecha
+                });
+
+
                 //speedometer
                 // Element inside which you want to see the chart
                 let element = document.querySelector('#resultado')
@@ -143,10 +170,89 @@
                 // Drawing and updating the chart
                 GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(data.datos.resultado)
 
+                var ctx = document.getElementById("resultadobarra");
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: datosFecha,
+                        datasets: [{
+                            label: '# Indicadores',
+                            data: datosGrafica,
+
+                            backgroundColor: [
+
+                                'rgba(32, 165, 147, 0.9)',
+                                'rgba(35, 244, 105, 0.9)',
+                                'rgba(238, 125, 226, 0.9)',
+                                'rgba(15, 143, 73, 0.9)',
+                                'rgba(240, 237, 0, 0.9)',
+                                'rgba(255, 159, 64, 0.9)',
+                                'rgba(255, 99, 132, 0.9)',
+                                'rgba(54, 162, 235, 0.9)',
+                                'rgba(255, 206, 86, 0.9)',
+                                'rgba(75, 192, 192, 0.9)',
+                                'rgba(153, 102, 255, 0.9)',
+                                'rgba(18, 108, 255, 0.9)',
+
+                            ],
+                            borderColor: [
+                                'rgba(32, 165, 147,1)',
+                                'rgba(35, 244, 105,1)',
+                                'rgba(238, 125, 226,1)',
+                                'rgba(15, 143, 73,1)',
+                                'rgba(240, 237, 0,1)',
+                                'rgba(255, 159, 64,1)',
+                                'rgba(255, 99, 132,1)',
+                                'rgba(54, 162, 235,1)',
+                                'rgba(255, 206, 86,1)',
+                                'rgba(75, 192, 192,1)',
+                                'rgba(153, 102, 255,1)',
+                                'rgba(18, 108, 255,1)',
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        legend: {
+                            display:false
+                        },
+                        scales: {
+                            xAxes: [{
+                                    ticks: {
+                                        maxRotation: 90,
+                                        minRotation: 80
+                                    },
+                                    gridLines: {
+                                        offsetGridLines: true // à rajouter
+                                    }
+                                },
+                                // {
+                                //     position: "top",
+                                //     ticks: {
+                                //         maxRotation: 90,
+                                //         minRotation: 80
+                                //     },
+                                //     gridLines: {
+                                //         offsetGridLines: true // et matcher pareil ici
+                                //     }
+                                // }
+                            ],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
             },
+
             error: function(data) {
                 //console.log(data);
-                $("#resultado").html('<div class="spinner-border text-danger" role="status"><span class="sr-only">Intente de nuevo...</span></div>');
+                $("#resultado").html(
+                    '<div class="spinner-border text-danger" role="status"><span class="sr-only">Intente de nuevo...</span></div>'
+                    );
             }
         });
 
@@ -193,4 +299,17 @@
             }
         ]
     };
+</script>
+
+
+<script>
+    function mostrar() {
+        div = document.getElementById('resultadobarra');
+        div.style.display = '';
+    }
+
+    function cerrar() {
+        div = document.getElementById('resultadobarra');
+        div.style.display = 'none';
+    }
 </script>

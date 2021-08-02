@@ -103,7 +103,7 @@ class TratamientoRiesgosController extends Controller
     {
         $tratamientoRiesgo = TratamientoRiesgo::create($request->all());
 
-        return redirect()->route('admin.tratamiento-riesgos.index');
+        return redirect()->route('admin.tratamiento-riesgos.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(TratamientoRiesgo $tratamientoRiesgo)
@@ -123,7 +123,7 @@ class TratamientoRiesgosController extends Controller
     {
         $tratamientoRiesgo->update($request->all());
 
-        return redirect()->route('admin.tratamiento-riesgos.index');
+        return redirect()->route('admin.tratamiento-riesgos.index')->with("success", 'Editado con éxito');
     }
 
     public function show(TratamientoRiesgo $tratamientoRiesgo)
@@ -141,7 +141,7 @@ class TratamientoRiesgosController extends Controller
 
         $tratamientoRiesgo->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyTratamientoRiesgoRequest $request)

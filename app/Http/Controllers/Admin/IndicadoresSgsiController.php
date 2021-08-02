@@ -112,7 +112,7 @@ class IndicadoresSgsiController extends Controller
     {
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
         //return redirect()->route('admin.indicadores-sgsis.index');
-        return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id]);
+        return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with("success", 'Guardado con éxito');
     }
 
     public function edit(IndicadoresSgsi $indicadoresSgsi)
@@ -128,7 +128,7 @@ class IndicadoresSgsiController extends Controller
         $indicadoresSgsi->update($request->all());
 
         //return redirect()->route('admin.indicadores-sgsis.index');
-        return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id]);
+        return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with("success", 'Editado con éxito');
     }
 
     public function show(IndicadoresSgsi $indicadoresSgsi)
@@ -143,7 +143,7 @@ class IndicadoresSgsiController extends Controller
 
         $indicadoresSgsi->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyIndicadoresSgsiRequest $request)

@@ -21,7 +21,7 @@
                         <th>
                             Código
                         </th>
-                        <th>
+                         <th>
                             Nombre
                         </th>
                         <th>
