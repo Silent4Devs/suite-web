@@ -30,7 +30,7 @@ class Documento extends Model
 
     protected $dates = ['fecha'];
 
-    protected $appends = ['estatus_formateado', 'fecha_dmy', 'archivo_actual'];
+    protected $appends = ['estatus_formateado', 'fecha_dmy', 'archivo_actual', 'color_estatus'];
 
     protected $fillable = [
         'codigo',
@@ -58,6 +58,7 @@ class Documento extends Model
         return Carbon::parse($this->fecha)->format('d-m-Y');
     }
 
+
     public function getEstatusFormateadoAttribute()
     {
         switch ($this->estatus) {
@@ -75,6 +76,27 @@ class Documento extends Model
                 break;
             default:
                 return 'En Elaboración';
+                break;
+        }
+    }
+
+    public function getColorEstatusAttribute()
+    {
+        switch ($this->estatus) {
+            case strval($this::EN_ELABORACION):
+                return '#10A5C6';
+                break;
+            case strval($this::EN_REVISION):
+                return '#1068C6';
+                break;
+            case strval($this::PUBLICADO):
+                return '#10C639';
+                break;
+            case strval($this::DOCUMENTO_RECHAZADO):
+                return '#E10D0D';
+                break;
+            default:
+                return '#10A5C6';
                 break;
         }
     }
