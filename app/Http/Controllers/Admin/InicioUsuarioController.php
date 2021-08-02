@@ -13,6 +13,7 @@ use App\Models\IncidentesSeguridad;
 use App\Models\RiesgoIdentificado;
 use App\Models\Activo;
 use App\Models\Documento;
+use App\Models\RevisionDocumento;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -35,40 +36,16 @@ class inicioUsuarioController extends Controller
                 }
             });
         }
-        $auditorias_anual=AuditoriaAnual::get();
+        $auditorias_anual = AuditoriaAnual::get();
         $recursos = Recurso::whereHas('empleados', function ($query) use ($usuario) {
             $query->where('empleados.id', $usuario->id);
         })->get();
 
         $documentos_publicados = Documento::where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual'));
+        $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
+        $mis_documentos = Documento::where('elaboro_id', $usuario->empleado->id)->get();
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos'));
     }
-
-    public function create()
-    {
-    }
-
-    public function store()
-    {
-    }
-
-    public function edit()
-    {
-    }
-
-    public function update()
-    {
-    }
-
-    public function show()
-    {
-    }
-
-    public function destroy()
-    {
-    }
-
-
 
     public function optenerTareas($tarea)
     {
@@ -79,7 +56,6 @@ class inicioUsuarioController extends Controller
             }
         }
     }
-
 
     public function quejas()
     {
@@ -100,8 +76,6 @@ class inicioUsuarioController extends Controller
     {
         return view('admin.inicioUsuario.formularios.sugerencias');
     }
-
-
 
     public function seguridad()
     {
