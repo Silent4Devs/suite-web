@@ -82,8 +82,8 @@
                             <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($empleados as $key => $label)
-                                <option value="{{ $key }}"
-                                    {{ old('id_elaboro', '') === (string) $key ? 'selected' : '' }}>{{ $label->name }}
+                                <option value="{{ $label->id }}"
+                                    >{{ $label->name }}
                                 </option>
                             @endforeach
                         </select>

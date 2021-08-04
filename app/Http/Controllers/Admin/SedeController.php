@@ -126,7 +126,7 @@ class SedeController extends Controller
             'foto_sedes' => $image
         ]);
 
-        return redirect()->route('admin.sedes.index')->with("success", 'Guardado con éxito');;
+        return redirect()->route('admin.sedes.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Sede $sede)

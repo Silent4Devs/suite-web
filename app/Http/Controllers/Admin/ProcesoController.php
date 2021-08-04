@@ -78,7 +78,7 @@ class ProcesoController extends Controller
      */
     public function create()
     {
-        $macroproceso = DB::table('macroprocesos')->select('id', 'codigo' ,'nombre')->get();
+        $macroproceso = DB::table('macroprocesos')->select('id', 'codigo', 'nombre')->get();
         //dd("teasdas". $organizaciones);
 
         return view('admin.procesos.create')->with('macroprocesos', $macroproceso);
@@ -124,7 +124,7 @@ class ProcesoController extends Controller
      */
     public function edit(Proceso $proceso)
     {
-        $macroproceso = DB::table('macroprocesos')->select('id', 'codigo' ,'nombre')->get();
+        $macroproceso = DB::table('macroprocesos')->select('id', 'codigo', 'nombre')->get();
 
         return view('admin.procesos.edit', compact('proceso'))->with('macroprocesos', $macroproceso);
     }
@@ -162,41 +162,40 @@ class ProcesoController extends Controller
         $proceso->delete();
         Flash::success('<h5 class="text-center">Proceso eliminado satisfactoriamente</h5>');
         return redirect()->route('admin.procesos.index');
-
     }
 
-    public function mapaProcesos(){
+    public function mapaProcesos()
+    {
 
-        $grupos_mapa = Grupo::with(['macroprocesos'=>function($q){
+        $grupos_mapa = Grupo::with(['macroprocesos' => function ($q) {
             $q->with('procesosWithDocumento');
         }])->get();
         // dd($grupos_mapa);
         $macros_mapa = Macroproceso::get();
         $procesos_mapa = Proceso::get();
-        $exist_no_publicado=Proceso::select('estatus')->where('estatus',Proceso::NO_ACTIVO)->exists();
+        $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();
 
 
 
-        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa','exist_no_publicado'));
+        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado'));
     }
 
-    public function obtenerDocumentoProcesos ($documento){
-
-
-        $documento=Documento::with('elaborador','revisor','aprobador','responsable','macroproceso')->find($documento);
+    public function obtenerDocumentoProcesos($documento)
+    {
+        $documento = Documento::with('elaborador', 'revisor', 'aprobador', 'responsable', 'macroproceso')->find($documento);
         // dd($documento->elaborador->avatar);
-        $proceso=Proceso::where('documento_id',$documento->id)->first();
-        $documentos_relacionados=Documento::with('elaborador','revisor','aprobador','responsable','macroproceso')->where('proceso_id',$proceso->id)->get();
+        $proceso = Proceso::where('documento_id', $documento->id)->first();
+        $documentos_relacionados = Documento::with('elaborador', 'revisor', 'aprobador', 'responsable', 'macroproceso')->where('proceso_id', $proceso->id)->get();
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento)->get();
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
-        $indicadores=IndicadoresSgsi::get();
+        $indicadores = IndicadoresSgsi::get();
         // dd($indicadores::getResultado());
 
-        return view('admin.procesos.vistas', compact('documento','revisiones','documentos_relacionados','versiones','indicadores'));
-
+        return view('admin.procesos.vistas', compact('documento', 'revisiones', 'documentos_relacionados', 'versiones', 'indicadores'));
     }
 
-    public function AjaxRequestIndicador(Request $request){
+    public function AjaxRequestIndicador(Request $request)
+    {
         $input = $request->all();
 
         $unidad = IndicadoresSgsi::select('unidadmedida')->where('id', $input['id'])->first();
@@ -205,6 +204,4 @@ class ProcesoController extends Controller
 
         return response()->json(["gauge" => $res, 'datos' => $input, 'unidad' => $unidad], 200);
     }
-
-
 }

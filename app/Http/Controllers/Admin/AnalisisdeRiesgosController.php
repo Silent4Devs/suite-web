@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Empleado;
+use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
 use App\Models\AnalisisDeRiesgo;
 use App\Http\Controllers\Controller;
@@ -100,7 +101,16 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $analisis = AnalisisDeRiesgo::create($request->all());
+        switch ($request->tipo) {
+            case 'Seguridad de la información':
+                Flash::success('<h5 class="text-center">Análisis de riesgo agregado</h5>');
+                return redirect()->route('admin.matriz-seguridad', ['id' => $analisis->id]);
+                break;
+            default:
+                Flash::error('<h5 class="text-center">Ocurrio un error intente de nuevo</h5>');
+                return redirect()->route('admin.analisis-riesgos.index');
+        }
     }
 
     /**
@@ -147,5 +157,4 @@ class AnalisisdeRiesgosController extends Controller
     {
         //
     }
-
 }

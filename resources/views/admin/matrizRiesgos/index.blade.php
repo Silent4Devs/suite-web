@@ -23,6 +23,9 @@
 
         </style>
 
+
+        @include('partials.flashMessages')
+
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong><i class="fas fa-table letra_blanca"
@@ -38,11 +41,13 @@
               </div> --}}
         @endcan
 
-
         <div class="card-body datatable-fix">
+            <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $idAnalisis]) }}" type="submit"
+                name="action">Agregar nuevo</a></a>
             <table class="table datatable-MatrizRiesgo">
                 <thead class="thead-dark">
-                    <tr class="negras">
+                    {{--<tr class="negras">
                         <th class="text-center" style="background-color:#3490DC;" colspan="10">Descripción General </th>
                         <th class="text-center" style="background-color:#1168af;" colspan="4">CID</th>
                         <th class="text-center" style="background-color:#217bc5;" colspan="4">Riesgo Inicial
@@ -51,23 +56,23 @@
                         <th class="text-center" style="background-color:#1168af;" colspan="4">Riesgo Residual</th>
                         <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </th>
-                    </tr>
+                    </tr>--}}
                     <tr>
                         <th>
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.id') }}
+                            ID
                         </th>
-                        <th>
+                        {{-- <th>
                             Sede
                         </th>
                         <th>
                             Proceso
-                        </th>
-                        <th>
+                        </th> --}}
+                        {{-- <th>
                             Responsable
                         </th>
-                        <th>
+                         <th>
                             Activo
                         </th>
                         <th>
@@ -135,7 +140,7 @@
                         </th>
                         <th>
                             Riesgo Total
-                        </th>
+                        </th> --}}
                         <th>
                             Opciones
                         </th>
@@ -355,7 +360,7 @@
             @endcan
 
             @can('matriz_riesgo_create')
-                let btnAgregar = {
+                /*let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva matríz de riesgos',
                 url: "{{ route('admin.matriz-riesgos.create') }}",
@@ -365,14 +370,14 @@
                 window.location.href = url;
                 }
                 };
-                dtButtons.push(btnAgregar);
+                dtButtons.push(btnAgregar);*/
             @endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
-                retrieve: true,
+                serverSide: false,
+                retrieve: false,
                 aaSorting: [],
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
@@ -386,21 +391,21 @@
                         data: 'id',
                         name: 'id'
                     },
-                    {
-                        data: 'sede',
-                        name: 'sede'
+                    /*{
+                        data: 'id_sede',
+                        name: 'id_sede'
                     },
                     {
-                        data: 'proceso',
-                        name: 'proceso'
+                        data: 'id_proceso',
+                        name: 'id_proceso'
                     },
                     {
-                        data: 'responsable',
-                        name: 'responsable'
+                        data: 'id_responsable',
+                        name: 'id_responsable'
                     },
                     {
-                        data: 'activo',
-                        name: 'activo'
+                        data: 'activo_id',
+                        name: 'activo_id'
                     },
                     {
                         data: 'amenaza',
@@ -431,10 +436,6 @@
                         name: 'disponibilidad'
                     },
                     {
-                        data: 'resultadoponderacion',
-                        name: 'resultadoponderacion'
-                    },
-                    {
                         data: 'probabilidad',
                         name: 'probabilidad'
                     },
@@ -451,45 +452,17 @@
                         name: 'riesgototal'
                     },
                     {
-                        data: 'control',
-                        name: 'control'
+                        data: 'resultadoponderacion',
+                        name: 'resultadoponderacion'
                     },
                     {
-                        data: 'plan_accion',
-                        name: 'plan_accion'
+                        data: 'riesgoresidual',
+                        name: 'riesgoresidual'
                     },
                     {
-                        data: 'confidencialidad_cid',
-                        name: 'confidencialidad_cid'
-                    },
-                    {
-                        data: 'integridad',
-                        name: 'integridad'
-                    },
-                    {
-                        data: 'disponibilidad_cid',
-                        name: 'disponibilidad_cid'
-                    },
-                    {
-                        data: 'resultado_ponderacion_cid',
-                        name: 'resultado_ponderacion_cid'
-                    },
-                    {
-                        data: 'riesgo_residual_probabilidad',
-                        name: 'riesgo_residual_probabilidad'
-                    },
-                    {
-                        data: 'riesgo_residual_impacto',
-                        name: 'riesgo_residual_impacto'
-                    },
-                    {
-                        data: 'riesgo_residual_nivel',
-                        name: 'riesgo_residual_nivel'
-                    },
-                    {
-                        data: 'riesgo_residual_total',
-                        name: 'riesgo_residual_total'
-                    },
+                        data: 'justificacion',
+                        name: 'justificacion'
+                    },*/
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
