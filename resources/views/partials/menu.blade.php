@@ -13,19 +13,19 @@
             @php
                 use App\Models\Organizacion;
                 $organizacion = Organizacion::first();
-                $logotipo = 'img/logotipo-tabantaj.png';
-                if ($organizacion->logotipo) {
+                $logotipo = 'img/logo_policromatico_2.png';
+                if ($organizacion) {
                     $logotipo = 'images/' . $organizacion->logotipo;
                 }
             @endphp
-            <img src="{{ asset($logotipo) }}" class="img_logo w-100">
+            <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
         </div>
 
     </div>
 
 
 
-    <ul class="c-sidebar-nav dark_mode1">
+    <ul class="c-sidebar-nav dark_mode1" style="margin-top: -10px;">
 
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca">Menu</font>

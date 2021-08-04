@@ -28,10 +28,13 @@ class inicioUsuarioController extends Controller
         if (file_exists($gantt_path)) {
             $file_gantt = json_decode(file_get_contents($gantt_path), true);
             $actividades = array_filter($file_gantt['tasks'], function ($tarea) use ($empleado_id) {
-                $assigs = $tarea['assigs'];
-                foreach ($assigs as $assig) {
-                    if ($assig['resourceId'] == $empleado_id) {
-                        return $tarea;
+                
+                if (intval($tarea['level']) != 0) {
+                    $assigs = $tarea['assigs']; 
+                    foreach ($assigs as $assig) {
+                        if ($assig['resourceId'] == $empleado_id) {
+                            return $tarea;
+                        }
                     }
                 }
             });

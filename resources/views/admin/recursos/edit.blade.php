@@ -100,6 +100,21 @@
                                 </div>
                                 <div class="pl-3 row w-100">
                                     <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                        <label for=""> <i class="fas fa-laptop iconos-crear"></i>Modalidad</label>
+                                        <select name="modalidad" class="form-control" id="select_modalidad">
+                                            <option {{ old('presencial', $recurso->modalidad) == 'presencial' ? 'selected' : '' }} value="presencial">Presencial</option>
+                                            <option {{ old('presencial', $recurso->modalidad) == 'linea' ? 'selected' : '' }} value="linea">En linea</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                        <label for="">
+                                          <i class="fas fa-map-marker-alt iconos-crear"></i>
+                                         <font id="font_modalidad_seleccionada"> {{ $recurso->modalidad == 'presencial' ? 'Ubicación' : 'Link' }} </font></label> 
+                                         <input type="" name="ubicacion" class="form-control" value="{{  old('ubicacion', $recurso->ubicacion)  }}">
+                                    </div>
+                                </div>
+                                <div class="pl-3 row w-100">
+                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
                                         <label for="fecha_curso"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
                                             Inicio</label>
                                         <input class="form-control" type="datetime-local" id="fecha_curso"
@@ -630,5 +645,23 @@
             $("#participantes_sugeridos").hide();
         }
 
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            let select_activos = document.querySelector('#select_modalidad');
+            select_activos.addEventListener('change', function(e) {
+                e.preventDefault();
+                let texto_activos = document.querySelector('#font_modalidad_seleccionada');
+                if(this.value == 'presencial'){
+                    texto_activos.innerHTML = ` Ubicación `;
+                }else{
+                    texto_activos.innerHTML = ` Link `;
+                }
+                
+
+            });
+        });
     </script>
 @endsection
