@@ -101,18 +101,21 @@ class OrganizacionController extends Controller
         $teams = Team::get();*/
 
         $organizacions = Organizacion::first();
-        $logotipo = DB::table('organizacions')->get('logotipo');
+        $logotipo_organizacion = $organizacions->logotipo;
+        $logotipo = 'img/logotipo-tabantaj.png';
+        if ($logotipo_organizacion) {
+            $logotipo = 'images/' . $logotipo_organizacion;
+        }
 
-        if (empty($organizacions)){
+        if (empty($organizacions)) {
             $count = Organizacion::get()->count();
             $empty = FALSE;
             return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty);
-        }else{
+        } else {
             $empty = TRUE;
             $count = Organizacion::get()->count();
-            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo[0]);
+            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo);
         }
-
     }
 
     public function create()
@@ -134,7 +137,7 @@ class OrganizacionController extends Controller
             "empresa" => $request->empresa,
             "direccion" => $request->direccion,
             "telefono" => $request->telefono,
-            "correo" =>$request->correo,
+            "correo" => $request->correo,
             "pagina_web" => $request->pagina_web,
             "servicios" => $request->servicios,
             "giro" => $request->giro,
@@ -142,49 +145,48 @@ class OrganizacionController extends Controller
             "vision" => $request->vision,
             "valores" => $request->valores,
             "antecedentes" => $request->antecedentes
-           ]);
+        ]);
 
 
 
-            $image = 'silent4business.png';
+        $image = 'silent4business.png';
 
-            if ($request->file('logotipo') != null or !empty($request->file('logotipo'))) {
-                $extension = pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
-                $new_name_image = 'UID_' . $organizacions->id . '_' . $name_image . '.' . $extension;
-                $route = public_path() . '/images/' . $new_name_image;
-                $image = $new_name_image;
-                //Usamos image_intervention para disminuir el peso de la imagen
-                $img_intervention = Image::make($request->file('logotipo'));
-                $img_intervention->resize(256, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($route);
-
-            }
-
-
-            $organizacions->update([
-                'logotipo' => $image
-            ]);
+        if ($request->file('logotipo') != null or !empty($request->file('logotipo'))) {
+            $extension = pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+            $new_name_image = 'UID_' . $organizacions->id . '_' . $name_image . '.' . $extension;
+            $route = public_path() . '/images/' . $new_name_image;
+            $image = $new_name_image;
+            //Usamos image_intervention para disminuir el peso de la imagen
+            $img_intervention = Image::make($request->file('logotipo'));
+            $img_intervention->resize(256, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($route);
+        }
 
 
+        $organizacions->update([
+            'logotipo' => $image
+        ]);
 
-    // dd($organizacions);
-    //    $organizacion = Organizacion::create($request->all());
-    //    if ($request->input('logotipo', false)) {
-    //       $organizacion->addMedia(storage_path('tmp/uploads/' . $request->input('logotipo')))->toMediaCollection('logotipo');
-    //    }
+
+
+        // dd($organizacions);
+        //    $organizacion = Organizacion::create($request->all());
+        //    if ($request->input('logotipo', false)) {
+        //       $organizacion->addMedia(storage_path('tmp/uploads/' . $request->input('logotipo')))->toMediaCollection('logotipo');
+        //    }
 
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $organizacion->id]);
         }
 
-        return redirect()->route('admin.organizacions.index');
+        return redirect()->route('admin.organizacions.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Organizacion $organizacion)
     {
-       // dd($organizacion->logotipo);
+        // dd($organizacion->logotipo);
         abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacion->load('team');
@@ -207,7 +209,7 @@ class OrganizacionController extends Controller
             $organizacions->logotipo = $nombre;
             //dd($nombre);
             $organizacions->save();
-            }
+        }
 
         /*if ($request->input('logotipo', false)) {
             if (!$organizacion->logotipo || $request->input('logotipo') !== $organizacion->logotipo->file_name) {
@@ -221,8 +223,8 @@ class OrganizacionController extends Controller
             $organizacion->logotipo->delete();
         }*/
 
-        Flash::success("<h5 align='center'>Editado con éxito</h5>");
-        return redirect()->route('admin.organizacions.index');
+        // Flash::success("<h5 align='center'>Editado con éxito</h5>");
+        return redirect()->route('admin.organizacions.index')->with("success", 'Editado con éxito');
     }
 
     public function show(Organizacion $organizacion)
@@ -240,7 +242,7 @@ class OrganizacionController extends Controller
 
         $organizacion->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyOrganizacionRequest $request)

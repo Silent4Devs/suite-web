@@ -136,7 +136,7 @@ class RecursosController extends Controller
         //         return response()->json(['error' => true]);
         //     }
         // }
-        return redirect()->route('admin.recursos.index');
+        return redirect()->route('admin.recursos.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Recurso $recurso)
@@ -208,7 +208,7 @@ class RecursosController extends Controller
 
         $recurso->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyRecursoRequest $request)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Grupo;
 use App\Models\Proceso;
 use App\Models\Empleado;
@@ -202,6 +203,14 @@ class ProcesoController extends Controller
 
         $res = '<div id="resultado" width="900" height="750"></div>';
 
-        return response()->json(["gauge" => $res, 'datos' => $input, 'unidad' => $unidad], 200);
+        $barras= '<canvas id="resultadobarra" width="900" height="750"></canvas>';
+
+        $evaluaciones= EvaluacionIndicador::select('fecha', 'resultado')->where('id_indicador', $input['id'])->get();
+        foreach ($evaluaciones as $evaluacion) {
+            $evaluacion->fecha=Carbon::parse($evaluacion->fecha)->format('d-m-Y');
+        }
+        // dd($evaluaciones);
+
+        return response()->json(["gauge" => $res, "barraschart"=>$barras, "datosbarra"=>$evaluaciones ,'datos' => $input, 'unidad' => $unidad], 200);
     }
 }

@@ -41,6 +41,7 @@
               </div> --}}
         @endcan
 
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
                 href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $idAnalisis]) }}" type="submit"

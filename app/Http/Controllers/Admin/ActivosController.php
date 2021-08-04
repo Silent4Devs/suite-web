@@ -102,6 +102,15 @@ class ActivosController extends Controller
 
     public function store(StoreActivoRequest $request)
     {
+        $request->validate(
+            [
+                'nombre_activo' => 'required|string',
+                'tipoactivo' => 'required|string',
+                'subtipo' => 'required|integer',
+
+            ],
+        );
+
         $activo = Activo::create($request->all());
 
         return redirect()->route('admin.activos.index')->with("success",'Guardado con éxito');
@@ -126,6 +135,16 @@ class ActivosController extends Controller
 
     public function update(UpdateActivoRequest $request, Activo $activo)
     {
+
+        $request->validate(
+            [
+                'nombre_activo' => 'required|string',
+                'tipoactivo' => 'required|string',
+                'subtipo' => 'required|integer',
+
+            ],
+        );
+
         $activo->update($request->all());
 
         return redirect()->route('admin.activos.index')->with("success",'Editado con éxito');

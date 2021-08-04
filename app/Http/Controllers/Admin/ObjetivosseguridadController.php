@@ -72,7 +72,7 @@ class ObjetivosseguridadController extends Controller
     {
         $objetivosseguridad = Objetivosseguridad::create($request->all());
 
-        return redirect()->route('admin.objetivosseguridads.index');
+        return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Objetivosseguridad $objetivosseguridad)
@@ -88,7 +88,7 @@ class ObjetivosseguridadController extends Controller
     {
         $objetivosseguridad->update($request->all());
 
-        return redirect()->route('admin.objetivosseguridads.index');
+        return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Editado con éxito');
     }
 
     public function show(Objetivosseguridad $objetivosseguridad)
@@ -106,7 +106,7 @@ class ObjetivosseguridadController extends Controller
 
         $objetivosseguridad->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyObjetivosseguridadRequest $request)

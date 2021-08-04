@@ -96,7 +96,7 @@ class MinutasaltadireccionController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $minutasaltadireccion->id]);
         }
 
-        return redirect()->route('admin.minutasaltadireccions.index');
+        return redirect()->route('admin.minutasaltadireccions.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Minutasaltadireccion $minutasaltadireccion)
@@ -126,7 +126,7 @@ class MinutasaltadireccionController extends Controller
             $minutasaltadireccion->archivo->delete();
         }
 
-        return redirect()->route('admin.minutasaltadireccions.index');
+        return redirect()->route('admin.minutasaltadireccions.index')->with("success", 'Editado con éxito');
     }
 
     public function show(Minutasaltadireccion $minutasaltadireccion)
@@ -144,7 +144,7 @@ class MinutasaltadireccionController extends Controller
 
         $minutasaltadireccion->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyMinutasaltadireccionRequest $request)

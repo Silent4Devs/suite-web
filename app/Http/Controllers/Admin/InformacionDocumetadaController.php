@@ -140,7 +140,7 @@ class InformacionDocumetadaController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $informacionDocumetada->id]);
         }
 
-        return redirect()->route('admin.informacion-documetadas.index');
+        return redirect()->route('admin.informacion-documetadas.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(InformacionDocumetada $informacionDocumetada)
@@ -177,7 +177,7 @@ class InformacionDocumetadaController extends Controller
             $informacionDocumetada->logotipo->delete();
         }
 
-        return redirect()->route('admin.informacion-documetadas.index');
+        return redirect()->route('admin.informacion-documetadas.index')->with("success", 'Editado con éxito');
     }
 
     public function show(InformacionDocumetada $informacionDocumetada)
@@ -195,7 +195,7 @@ class InformacionDocumetadaController extends Controller
 
         $informacionDocumetada->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyInformacionDocumetadaRequest $request)

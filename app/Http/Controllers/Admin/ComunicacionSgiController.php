@@ -84,7 +84,7 @@ class ComunicacionSgiController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $comunicacionSgi->id]);
         }
 
-        return redirect()->route('admin.comunicacion-sgis.index');
+        return redirect()->route('admin.comunicacion-sgis.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(ComunicacionSgi $comunicacionSgi)
@@ -112,7 +112,7 @@ class ComunicacionSgiController extends Controller
             $comunicacionSgi->archivo->delete();
         }
 
-        return redirect()->route('admin.comunicacion-sgis.index');
+        return redirect()->route('admin.comunicacion-sgis.index')->with("success", 'Editado con éxito');
     }
 
     public function show(ComunicacionSgi $comunicacionSgi)
@@ -130,7 +130,7 @@ class ComunicacionSgiController extends Controller
 
         $comunicacionSgi->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyComunicacionSgiRequest $request)

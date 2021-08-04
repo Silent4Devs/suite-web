@@ -36,7 +36,7 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsi = PoliticaSgsi::create($request->all());
 
-        return redirect()->route('admin.politica-sgsis.index');
+        return redirect()->route('admin.politica-sgsis.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(PoliticaSgsi $politicaSgsi)
@@ -52,7 +52,7 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsi->update($request->all());
 
-        return redirect()->route('admin.politica-sgsis.index');
+        return redirect()->route('admin.politica-sgsis.index')->with("success", 'Editado con éxito');
     }
 
     public function show(PoliticaSgsi $politicaSgsi)
@@ -70,7 +70,7 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsi->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyPoliticaSgsiRequest $request)

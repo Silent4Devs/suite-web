@@ -260,8 +260,8 @@
 
         img.rounded-circle {
             border-radius: 0 !important;
-            clip-path: circle(18px at 50% 50%);
-            height: 37px;
+            clip-path: circle(12px at 50% 50%);
+            /* height: 37px; */
         }
 
     </style>
@@ -352,32 +352,66 @@
 
                     <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown"
                             href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="c-avatar"><i class="fas fa-user-circle iconos_cabecera"
-                                    style="font-size: 33px;"></i></div>
+                            <div class="c-avatar">
+                                @if (auth()->user()->empleado)
+                                    <img class="rounded-circle" style="height: 37px;clip-path: circle(18px at 50% 50%);"
+                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                        alt="{{ auth()->user()->empleado->name }}">
+                                @else
+                                    <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                @endif
+                            </div>
                         </a>
-                        <div class="pt-0 dropdown-menu dropdown-menu-right hide">
+                        <div class="pt-0 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
+                            <div class="p-2">
+                                @if (auth()->user()->empleado)
+                                    <img class="shadow rounded-circle"
+                                        style="height: 90px;clip-path: circle(43px at 50% 50%);"
+                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                        alt="" srcset="">
+                                @else
+                                    <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                @endif
+                            </div>
+                            <div>
+                                {{-- @if (auth()->user()->empleado)
+                                    <p class="m-0" style="font-weight: 600">
+                                        {{ auth()->user()->empleado->name }}
+                                    </p>
+                                    @foreach (auth()->user()->roles as $rol)
+                                        <span class="badge badge-dark"
+                                            style="font-size:13px;">{{ $rol->title }}</span>
+                                    @endforeach
 
-                            <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div>
-                            @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                                @can('profile_password_edit')
+                                @else
+                                    {{ auth()->user()->name }}
+                                    <span>{{ auth()->user()->empleado->name }}</span>
+                                @endif--}}
+                            </div>
+                            {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
+                            <div class="px-3 mt-3 d-flex justify-content-between">
+                                @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                                    @can('profile_password_edit')
 
-                                    <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
-                                        href="{{ route('profile.password.edit') }}">
-                                        <i class="fas fa-user-circle c-sidebar-nav-icon">
-                                        </i>
-                                        Perfil
-                                    </a>
+                                        <a class="btn btn-sm shadow-xs border p-2 rounded {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                            href="{{ route('profile.password.edit') }}">
+                                            <i class="mr-1 fas fa-user-cog">
+                                            </i>
+                                            Conf. Perfil
+                                        </a>
 
-                                @endcan
-                            @endif
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-fw fa-lock c-sidebar-nav-icon">
-                                </i> Bloquear</a>
-                            <a class="dropdown-item"
-                                onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                                <i class="fas fa-fw fa-sign-out-alt c-sidebar-nav-icon">
-                                </i> Cerrar sesión</a>
+                                    @endcan
+                                @endif
+                                <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
+                                    <i class="mr-1 fas fa-fw fa-lock">
+                                    </i> Bloquear
+                                </a>
+                                <a class="p-2 border rounded shadow-xs btn btn-sm"
+                                    onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                    <i class="mr-1 fas fa-sign-out-alt">
+                                    </i> Salir
+                                </a>
+                            </div>
                         </div>
                     </li>
 
@@ -712,7 +746,7 @@
                                 filtro += `
                                 <a class="list-group-item list-group-item-action" href="${value}">
                                     <i class="mr-2 fas fa-search-location"></i>${key}
-                                </a>    
+                                </a>
                             `;
                             }
                             filtro += "</ul>";

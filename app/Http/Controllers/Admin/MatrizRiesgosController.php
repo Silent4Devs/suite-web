@@ -175,7 +175,7 @@ class MatrizRiesgosController extends Controller
         $request->request->add(['resultadoponderacion' => $res]);
         $matrizRiesgo->update($request->all());
 
-        return redirect()->route('admin.matriz-riesgos.index');
+        return redirect()->route('admin.matriz-riesgos.index')->with("success", 'Editado con éxito');
     }
 
     public function show(MatrizRiesgo $matrizRiesgo)
@@ -195,7 +195,7 @@ class MatrizRiesgosController extends Controller
 
         $matrizRiesgo->delete();
 
-        return back();
+        return back()->with('deleted','Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyMatrizRiesgoRequest $request)
