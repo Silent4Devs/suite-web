@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div class="mt-5 card">
-        @can('user_create')
+        @can('configuracion_empleados_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Lista de Empleados</strong></h3>
             </div>
@@ -16,7 +16,8 @@
                     </div>
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Cree el listado de los empleados, comenzando por el de más alta jerarquía</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Cree el listado de los empleados, comenzando
+                            por el de más alta jerarquía</p>
                     </div>
                 </div>
             </div>
@@ -146,22 +147,23 @@
                 }
 
             ];
-
-            let btnAgregar = {
+            @can('configuracion_empleados_create')
+                let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
                 url: "{{ route('admin.empleados.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
+                let {
+                url
+                } = config;
+                window.location.href = url;
                 }
-            };
-            dtButtons.push(btnAgregar);
+                };
+                dtButtons.push(btnAgregar);
+            @endcan
 
-            @can('empleados_delete')
+            @can('configuracion_empleados_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -171,13 +173,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -260,19 +262,6 @@
                 ]
             };
             let table = $('.datatable-Empleado').DataTable(dtOverrideGlobals);
-
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
         });
     </script>
 @endsection

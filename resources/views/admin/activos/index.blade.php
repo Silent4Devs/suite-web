@@ -1,13 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-    @can('activo_create')
-
-        <div class="mt-5 card">
+    <div class="mt-5 card">
+        @can('configuracion_activo_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Inventario de Activos</strong></h3>
             </div>
         @endcan
-
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -162,7 +160,7 @@
                 }
 
             ];
-            @can('activo_create')
+            @can('configuracion_activo_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar inventario de activos',
@@ -175,7 +173,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            @can('activo_delete')
+            @can('configuracion_activo_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -185,13 +183,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -264,6 +262,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

@@ -171,7 +171,8 @@ class User extends Authenticatable
     {
         $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
-    public function empleado(){
+    public function empleado()
+    {
         return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado');
     }
 }

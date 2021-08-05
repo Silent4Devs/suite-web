@@ -2,6 +2,8 @@
 
 use Alexusmai\LaravelFileManager\Services\ConfigService\DefaultConfigRepository;
 use Alexusmai\LaravelFileManager\Services\ACLService\ConfigACLRepository;
+use App\Http\FileManagerRepository;
+use App\Http\UsersACLRepository;
 
 return [
 
@@ -10,14 +12,14 @@ return [
      *
      * Default - DefaultConfigRepository get config from this file
      */
-    'configRepository' => DefaultConfigRepository::class,
+    'configRepository' => FileManagerRepository::class,
 
     /**
      * ACL rules repository
      *
      * Default - ConfigACLRepository (see rules in - aclRules)
      */
-    'aclRepository' => ConfigACLRepository::class,
+    'aclRepository' => UsersACLRepository::class,
 
     //********* Default configuration for DefaultConfigRepository **************
 
@@ -31,8 +33,7 @@ return [
      * List of disk names that you want to use
      * (from config/filesystems)
      */
-    //'diskList' => ['public'],
-    'diskList'  => ['Documentos publicados', 'Documentos en aprobacion', 'Documentos obsoletos', 'Documentos versiones anteriores', 'Administrador', 'Normas'],
+    //'diskList' => ['Documentos publicados', 'Documentos en aprobacion', 'Documentos obsoletos', 'Documentos versiones anteriores', 'Administrador', 'Normas'],
 
     /**
      * Default disk for left manager
@@ -111,7 +112,7 @@ return [
      *
      * default - false(OFF)
      */
-    'acl' => false,
+    'acl' => true,
 
     /**
      * Hide files and folders from file-manager if user doesn't have access
@@ -127,7 +128,7 @@ return [
      *
      * whitelist - Deny anything(access - 0 - deny), that not allowed by the ACL rules list
      */
-    'aclStrategy' => 'blacklist',
+    'aclStrategy' => 'whitelist',
 
     /**
      * ACL Rules cache
@@ -140,32 +141,33 @@ return [
 
 
     /***************************************************************************
-     * ACL rules list - used for default ACL repository (ConfigACLRepository)
-     *
-     * 1 it's user ID
-     * null - for not authenticated user
-     *
-     * 'disk' => 'disk-name'
-     *
-     * 'path' => 'folder-name'
-     * 'path' => 'folder1*' - select folder1, folder12, folder1/sub-folder, ...
-     * 'path' => 'folder2/*' - select folder2/sub-folder,... but not select folder2 !!!
-     * 'path' => 'folder-name/file-name.jpg'
-     * 'path' => 'folder-name/*.jpg'
-     *
-     * * - wildcard
-     *
-     * access: 0 - deny, 1 - read, 2 - read/write
-     */
-    'aclRules' => [
-        // null - for not authenticated users
-        null => [
-            //['disk' => 'public', 'path' => '/', 'access' => 2],
-            //['disk' => 'Documentacion', 'path' => '/*.gitignore', 'access' => 0],
-        ],
-        1 => [
-            //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],
-            //['disk' => 'public', 'path' => 'files/*', 'access' => 1],
-        ],
-    ],
+ * ACL rules list - used for default ACL repository (ConfigACLRepository)
+ *
+ * 1 it's user ID
+ * null - for not authenticated user
+ *
+ * 'disk' => 'disk-name'
+ *
+ * 'path' => 'folder-name'
+ * 'path' => 'folder1*' - select folder1, folder12, folder1/sub-folder, ...
+ * 'path' => 'folder2/*' - select folder2/sub-folder,... but not select folder2 !!!
+ * 'path' => 'folder-name/file-name.jpg'
+ * 'path' => 'folder-name/*.jpg'
+ *
+ * * - wildcard
+ *
+ * access: 0 - deny, 1 - read, 2 - read/write
+ */
+
+    // 'aclRules' => [
+    //     // null - for not authenticated users
+    //     null => [
+    //         //['disk' => 'public', 'path' => '/', 'access' => 2],
+    //         //['disk' => 'Documentacion', 'path' => '/*.gitignore', 'access' => 0],
+    //     ],
+    //     1 => [
+    //         //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],
+    //         //['disk' => 'public', 'path' => 'files/*', 'access' => 1],
+    //     ],
+    // ],
 ];

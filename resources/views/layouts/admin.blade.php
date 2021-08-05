@@ -264,6 +264,15 @@
             /* height: 37px; */
         }
 
+        .fm-breadcrumb .breadcrumb.active-manager {
+            background-color: ##00abb229;
+            margin: -5px 0 0 0;
+        }
+
+        .breadcrumb-item.active {
+            color: #000000;
+        }
+
     </style>
 
 
@@ -362,7 +371,7 @@
                                 @endif
                             </div>
                         </a>
-                        <div class="pt-0 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
+                        <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
                             <div class="p-2">
                                 @if (auth()->user()->empleado)
                                     <img class="shadow rounded-circle"

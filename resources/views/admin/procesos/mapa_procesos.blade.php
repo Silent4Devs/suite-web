@@ -278,10 +278,7 @@
         <div class="caja2">
             <p>Necesidades del cliente</p>
         </div>
-
-
-
-        <i class="fas fa-compress-arrows-alt icono_contraer"></i>
+        {{-- <i class="fas fa-compress-arrows-alt icono_contraer"></i> --}}
 
         <div class="caja_central">
             @foreach($grupos_mapa as $grupo_map)
