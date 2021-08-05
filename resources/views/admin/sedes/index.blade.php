@@ -5,24 +5,14 @@
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Sedes</strong></h3>
         </div>
-        @can('sede_create')
+        @can('configuracion_sede_create')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    {{-- <a class="btn btn-success" href="{{ route('admin.sedes.create') }}">
-                        Agregar <strong>+</strong>
-                    </a>
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                        {{ trans('global.app_csvImport') }}
-                    </button> --}}
                     @include('csvImport.modal', ['model' => 'Sede', 'route' => 'admin.sedes.parseCsvImport'])
                 </div>
             </div>
-
         @endcan
-
-
         @if ($numero_sedes > 0)
-
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
                 <div class="row w-100">
                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -37,7 +27,6 @@
                     </div>
                 </div>
             </div>
-
             @include('partials.flashMessages')
             <div class="card-body datatable-fix">
                 <table class="table table-bordered w-100 datatable datatable-Sede">
@@ -71,11 +60,8 @@
                     </thead>
                 </table>
             </div>
-
         @else
-
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
-
                 <div class="row w-100">
                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                         <div class="w-100">
@@ -174,7 +160,7 @@
 
             ];
 
-            @can('sede_create')
+            @can('configuracion_sede_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar sede',
@@ -196,7 +182,7 @@
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
             @endcan
-            @can('sede_delete')
+            @can('configuracion_sede_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -206,13 +192,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -278,18 +264,6 @@
                 ],
             };
             let table = $('.datatable-Sede').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
         });
     </script>
 @endsection

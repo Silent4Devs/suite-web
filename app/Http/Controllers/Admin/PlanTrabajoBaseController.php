@@ -8,22 +8,21 @@ use App\Functions\Porcentaje;
 use App\Models\User;
 use App\Models\ActividadFase;
 use App\Models\Empleado;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PlanTrabajoBaseController extends Controller
 {
     public function index()
     {
-
+        abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gantt_path = 'storage/gantt/';
-
         $path = public_path($gantt_path);
-
-
-        $json_code = json_decode(file_get_contents($path.'/gantt_inicial.json'), true);
+        $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
         $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
         $write_empleados = $json_code;
-        file_put_contents($path.'/gantt_inicial.json', json_encode($write_empleados));
+        file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
 
 
         $files = glob("storage/gantt/versiones/gantt_inicial*.json");
@@ -36,17 +35,8 @@ class PlanTrabajoBaseController extends Controller
 
         $path_asset = asset('storage/gantt/versiones/');
         $gant_readed = end($archivos_gantt);
-
-        
-
         $file_gant = json_decode(file_get_contents($gant_readed), true);
-
-
-
         $empleados = Empleado::select("name")->get();
-
-
-        // $name_file_gantt = basename($gant_readed);
         $name_file_gantt = 'gantt_inicial.json';
 
 
@@ -57,11 +47,8 @@ class PlanTrabajoBaseController extends Controller
     {
 
         $gantt_path = 'storage/gantt/versiones/';
-
         $path = public_path($gantt_path);
-
         $version_gantt = glob($path . "gantt_inicial*.json");
-
         $ultima_version = 0;
 
         if (count($version_gantt)) {
@@ -69,9 +56,7 @@ class PlanTrabajoBaseController extends Controller
         }
 
         if ($request->ajax()) {
-
             $proyecto = $request->get('txt_prj');
-
             $file = Storage::disk('public')->put('gantt/versiones/gantt_inicial_v' . $ultima_version . '.json', $proyecto);
             $file = Storage::disk('public')->put('gantt/gantt_inicial.json', $proyecto);
 
@@ -89,19 +74,14 @@ class PlanTrabajoBaseController extends Controller
     {
 
         $gantt_path = 'storage/gantt/';
-
         $path = public_path($gantt_path);
-
         $files = glob($path . "gantt_inicial*.json");
         $version_gantt = [];
-
         sort($files, SORT_NATURAL | SORT_FLAG_CASE);
         foreach ($files as $clave => $valor) {
             array_push($version_gantt, $valor);
         }
 
-
-        // $path = end($version_gantt);
         $path_g = $path . 'gantt_inicial.json';
         $json_code =  json_decode(file_get_contents($path_g), true);
 
@@ -113,14 +93,9 @@ class PlanTrabajoBaseController extends Controller
     public function saveCurrentProyect(Request $request)
     {
         if ($request->ajax()) {
-
             $gantt_path = 'storage/gantt/gantt_inicial.json';
-
             $path = public_path($gantt_path);
-
-
             $store = file_put_contents($path, $request->gantt);
-
             return response('guardado con exito', 200);
         }
     }
@@ -128,9 +103,7 @@ class PlanTrabajoBaseController extends Controller
     public function saveStatus(Request $request)
     {
         if ($request->ajax()) {
-
             $status_path = 'storage/gantt/status.json';
-
             $path = public_path($status_path);
             file_put_contents($path, $request->estatuses);
 
@@ -141,11 +114,8 @@ class PlanTrabajoBaseController extends Controller
     public function checkChanges(Request $request)
     {
         if ($request->ajax()) {
-
             $proyecto = $request->txt_prj;
-
             Storage::disk('public')->put('gantt/tmp/ganttTemporal.json', $proyecto);
-
             $gantt_path = 'storage/gantt/';
             $path = public_path($gantt_path);
             $files = glob($path . "gantt_inicial*.json");

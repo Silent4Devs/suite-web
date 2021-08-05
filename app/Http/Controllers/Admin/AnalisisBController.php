@@ -8,6 +8,8 @@ use App\Models\GapTre;
 use Illuminate\Http\Request;
 use App\Models\GapUno;
 use App\Functions\Porcentaje;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class AnalisisBController extends Controller
 {
@@ -18,6 +20,7 @@ class AnalisisBController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('analisis_brechas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gapuno = GapUno::get();
         $gaptresVerif = GapTre::get()->where('estado', '=', 'verificar');
         $gaptresAct = GapTre::get()->where('estado', '=', 'actuar');

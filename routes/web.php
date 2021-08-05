@@ -74,6 +74,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('gantt/update', 'GanttController@update');
 
     // Roles
+    Route::get('roles/{role}/permisos', 'RolesController@getPermissions')->name('roles.getPermissions');
+    Route::patch('roles/{role}/edit', 'RolesController@update')->name('roles.patch');
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
 
@@ -754,7 +756,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 
 Route::view('sitemap', 'admin.sitemap.index');
-Route::view('stepper', 'stepper');
+// Route::view('stepper', 'stepper');
 //Route::view('admin/gantt', 'admin.gantt.grap');
 
 //URL::forceScheme('https');
