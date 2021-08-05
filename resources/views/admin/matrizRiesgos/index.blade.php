@@ -21,6 +21,159 @@
                 margin-top: 5px;
             }
 
+            /*
+                                                                                                    Graficas de color
+                                                                                                    */
+            .calor {
+                width: 100%;
+                margin-top: 30px;
+                float: left;
+            }
+
+            .datosCalor {
+                width: 40%;
+                float: left;
+            }
+
+            .datosColor label {
+                font-family: maven regular;
+            }
+
+            .barra1 {
+                width: 100%;
+                height: 25px;
+                float: left;
+                box-shadow: -3px 3px 3px 0px #999;
+                border-radius: 50px;
+                font-family: maven regular;
+                text-align: center;
+                padding-top: 5px;
+                color: #fff;
+            }
+
+            #s_baja {
+                background-color: #18a827;
+                display: none;
+            }
+
+            #s_media {
+                background-color: #eef100;
+                display: none;
+                color: #000;
+            }
+
+            #s_alta {
+                background-color: #ff9600;
+                display: none;
+            }
+
+            #s_muyAlta {
+                background-color: #cb0000;
+                display: none;
+            }
+
+            .barra2 {
+                width: 100%;
+                height: 25px;
+                float: left;
+                box-shadow: -3px 3px 3px 0px #999;
+                border-radius: 50px;
+                font-family: maven regular;
+                text-align: center;
+                padding-top: 5px;
+                color: #fff;
+            }
+
+            #p_baja {
+                background-color: #18a827;
+                display: none;
+            }
+
+            #p_media {
+                background-color: #eef100;
+                display: none;
+                color: #000;
+            }
+
+            #p_alta {
+                background-color: #ff9600;
+                display: none;
+            }
+
+            #p_muyAlta {
+                background-color: #cb0000;
+                display: none;
+            }
+
+            .barra3 {
+                width: 100%;
+                height: 25px;
+                float: left;
+                box-shadow: -3px 3px 3px 0px #999;
+                border-radius: 50px;
+                font-family: maven regular;
+                text-align: center;
+                padding-top: 5px;
+                color: #fff;
+            }
+
+            #r_baja {
+                background-color: #18a827;
+                display: none;
+            }
+
+            #r_media {
+                background-color: #eef100;
+                display: none;
+                color: #000;
+            }
+
+            #r_alta {
+                background-color: #ff9600;
+                display: none;
+            }
+
+            #r_muyAlta {
+                background-color: #cb0000;
+                display: none;
+            }
+
+            .mapaCalor {
+                width: 60%;
+                float: right;
+            }
+
+            .mapaCalor table {
+                font-family: maven regular;
+                margin-top: 50px;
+            }
+
+            .mapaCalor td {
+                width: 100px;
+                height: 50px;
+                text-align: center;
+            }
+
+            .mapaCalor td:hover {
+                filter: saturate(500%);
+            }
+
+            .verde {
+                background-color: #18a827;
+            }
+
+            .amarillo {
+                background-color: #eef100;
+            }
+
+            .naranja {
+                background-color: #ff9600;
+            }
+
+            .rojo {
+                background-color: #cb0000;
+            }
+
         </style>
 
         <div class="mt-5 card">
@@ -40,28 +193,39 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table datatable-MatrizRiesgo">
+            <div class="d-flex justify-content-between">
+                <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                    href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $idAnalisis]) }}" type="submit"
+                    name="action">Agregar nuevo</a>
+                <button class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;" data-toggle="modal"
+                    data-target="#graficaModal">Gráfica</button>
+            </div>
+            <table class="table datatable datatable-MatrizRiesgo">
                 <thead class="thead-dark">
                     <tr class="negras">
-                        <th class="text-center" style="background-color:#3490DC;" colspan="9">Descripción General </th>
-                        <th class="text-center" style="background-color:#1168af;" colspan="3">Impacto en la triada CID</th>
-                        <th class="text-center" style="background-color:#217bc5;" colspan="9">Evaluación de Riesgo Inicial
-                        </th>
+                        <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción General </th>
+                        <th class="text-center" style="background-color:#1168af;" colspan="3">CID</th>
+                        <th class="text-center" style="background-color:#217bc5;" colspan="4">Riesgo Inicial
+                        <th class="text-center" style="background-color:#1168af;" colspan="2">Acciones</th>
+                        <th class="text-center" style="background-color:#217bc5;" colspan="3">CID</th>
+                        <th class="text-center" style="background-color:#1168af;" colspan="4">Riesgo Residual</th>
+                        <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                     </tr>
                     <tr>
                         <th>
+                            ID
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.id') }}
+                            Sede
                         </th>
                         <th>
                             Proceso
                         </th>
                         <th>
-                            Activo
+                            Responsable
                         </th>
                         <th>
-                            Responsable&nbsp;del&nbsp;proceso&nbsp;
+                            Activo
                         </th>
                         <th>
                             Amenaza
@@ -70,158 +234,75 @@
                             Vulnerabilidad
                         </th>
                         <th>
-                            Descripción&nbsp;del&nbsp;Riesgo
+                            Descripción riesgo
+                        </th>
+                        {{-- <th>
+                            Tipo riesgo
+                        </th> --}}
+                        <th>
+                            Confidencialidad
                         </th>
                         <th>
-                            Tipo&nbsp;del&nbsp;Riesgo
+                            Integridad
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.confidencialidad') }}
+                            Disponibilidad
+                        </th>
+                        {{-- <th>
+                            Resultado ponderación por factores
+                        </th> --}}
+                        <th>
+                            Probabilidad
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.integridad') }}
+                            Impacto
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.disponibilidad') }}
+                            Nivel riesgo
                         </th>
                         <th>
-                            Ponderación&nbsp;por&nbsp;Factores
+                            Riesgo Total
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.probabilidad') }}
+                            Control
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.impacto') }}
+                            Plan de acción
                         </th>
                         <th>
-                            Nivel&nbsp;de&nbsp;Riesgo
+                            Confidencialidad
                         </th>
                         <th>
-                            Riesgo&nbsp;Total
+                            Integridad
                         </th>
                         <th>
-                            Riesgo&nbsp;Residual
+                            Disponibilidad
+                        </th>
+                        {{-- <th>
+                            Resultado ponderación por factores
+                        </th> --}}
+                        <th>
+                            Probabilidad
                         </th>
                         <th>
-                            Controles&nbsp;Anexo&nbsp;A
+                            Impacto
                         </th>
                         <th>
-                            {{ trans('cruds.matrizRiesgo.fields.justificacion') }}
+                            Nivel de riesgo
+                        </th>
+                        <th>
+                            Riesgo Total
                         </th>
                         <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($tipoactivos as $key => $item)
-                                    <option value="{{ $item->tipo }}">{{ $item->tipo }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\MatrizRiesgo::TIPO_RIESGO_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @if ($errors->has('confidencialidad'))
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endif
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @if ($errors->has('integridad'))
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endif
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @if ($errors->has('disponibilidad'))
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endif
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\MatrizRiesgo::PROBABILIDAD_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\MatrizRiesgo::IMPACTO_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($controles as $key => $item)
-                                    <option value="{{ $item->numero }}">{{ $item->numero }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
     </div>
-    </div>
 
-
+    @include('admin.matrizRiesgos.modalgrafica')
 
 @endsection
 @section('scripts')
@@ -261,8 +342,8 @@
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
-                        doc.styles.tableHeader.fontSize = 7.5;
-                        doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                        //doc.styles.tableHeader.fontSize = 7.5;
+                        //doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -296,6 +377,21 @@
                 }
 
             ];
+
+            @can('matriz_riesgo_create')
+                /*let btnAgregar = {
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                titleAttr: 'Agregar nueva matríz de riesgos',
+                url: "{{ route('admin.matriz-riesgos.create') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config){
+                let {url} = config;
+                window.location.href = url;
+                }
+                };
+                dtButtons.push(btnAgregar);*/
+            @endcan
+
             @can('matriz_riesgo_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
@@ -326,49 +422,40 @@
                 //dtButtons.push(deleteButton)
             @endcan
 
-            @can('matriz_riesgo_create')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nueva matríz de riesgos',
-                url: "{{ route('admin.matriz-riesgos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
-            @endcan
-
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
+                /*dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
-                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-                ajax: "{{ route('admin.matriz-riesgos.index') }}",
-                columns: [{
-                        data: 'placeholder',
-                        name: 'placeholder'
-                    },
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",*/
+                ajax: "{{ route('admin.matriz-seguridad') }}",
+                columns: [
+                    /*{
+                                            data: 'placeholder',
+                                            name: 'placeholder'
+                                        },*/
                     {
                         data: 'id',
                         name: 'id'
                     },
                     {
-                        data: 'proceso',
-                        name: 'proceso'
+                        data: 'id_sede',
+                        name: 'id_sede'
+                    },
+                    {
+                        data: 'id_proceso',
+                        name: 'id_proceso'
+                    },
+                    {
+                        data: 'id_responsable',
+                        name: 'id_responsable'
                     },
                     {
                         data: 'activo_id',
                         name: 'activo_id'
-                    },
-                    {
-                        data: 'responsableproceso',
-                        name: 'responsableproceso'
                     },
                     {
                         data: 'amenaza',
@@ -399,10 +486,6 @@
                         name: 'disponibilidad'
                     },
                     {
-                        data: 'resultadoponderacion',
-                        name: 'resultadoponderacion'
-                    },
-                    {
                         data: 'probabilidad',
                         name: 'probabilidad'
                     },
@@ -419,12 +502,12 @@
                         name: 'riesgototal'
                     },
                     {
-                        data: 'riesgoresidual',
-                        name: 'riesgoresidual'
+                        data: 'resultadoponderacion',
+                        name: 'resultadoponderacion'
                     },
                     {
-                        data: 'controles_numero',
-                        name: 'controles.numero'
+                        data: 'riesgoresidual',
+                        name: 'riesgoresidual'
                     },
                     {
                         data: 'justificacion',
@@ -454,6 +537,282 @@
             //         .draw()
             // });
         });
+    </script>
 
+    <script>
+        $(document).ready(function() {
+            $('.sedeSelect').select2();
+            $('.areaSelect').select2();
+        });
+    </script>
+
+    <script>
+        $(".verde").mouseenter(function() {
+            $("#r_baja").fadeIn(0);
+
+
+
+            $("#r_media").fadeOut(0);
+            $("#r_alta").fadeOut(0);
+            $("#r_muyAlta").fadeOut(0);
+        });
+
+
+
+        $(".amarillo").mouseenter(function() {
+            $("#r_media").fadeIn(0);
+
+
+
+            $("#r_baja").fadeOut(0);
+            $("#r_alta").fadeOut(0);
+            $("#r_muyAlta").fadeOut(0);
+        });
+
+
+
+        $(".naranja").mouseenter(function() {
+            $("#r_alta").fadeIn(0);
+
+
+
+            $("#r_media").fadeOut(0);
+            $("#r_baja").fadeOut(0);
+            $("#r_muyAlta").fadeOut(0);
+        });
+
+
+
+        $(".rojo").mouseenter(function() {
+            $("#r_muyAlta").fadeIn(0);
+
+
+
+            $("#r_media").fadeOut(0);
+            $("#r_alta").fadeOut(0);
+            $("#r_baja").fadeOut(0);
+        });
+
+
+
+
+
+        $("#s_baja_p_muyAlta").mouseenter(function() {
+            $("#s_baja").fadeIn(0);
+            $("#p_muyAlta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_media_p_muyAlta").mouseenter(function() {
+            $("#s_media").fadeIn(0);
+            $("#p_muyAlta").fadeIn(0);
+
+
+
+
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_alta_p_muyAlta").mouseenter(function() {
+            $("#s_alta").fadeIn(0);
+            $("#p_muyAlta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_muyAlta_p_muyAlta").mouseenter(function() {
+            $("#s_muyAlta").fadeIn(0);
+            $("#p_muyAlta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+
+
+
+        $("#s_baja_p_alta").mouseenter(function() {
+            $("#s_baja").fadeIn(0);
+            $("#p_alta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_media_p_alta").mouseenter(function() {
+            $("#s_media").fadeIn(0);
+            $("#p_alta").fadeIn(0);
+
+
+
+
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_alta_p_alta").mouseenter(function() {
+            $("#s_alta").fadeIn(0);
+            $("#p_alta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+            $("#p_media").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_muyAlta_p_alta").mouseenter(function() {
+            $("#s_muyAlta").fadeIn(0);
+            $("#p_alta").fadeIn(0);
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#p_media").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_baja_p_media").mouseenter(function() {
+            $("#s_baja").fadeIn(0);
+            $("#p_media").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_media_p_media").mouseenter(function() {
+            $("#s_media").fadeIn(0);
+            $("#p_media").fadeIn(0);
+
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_alta_p_media").mouseenter(function() {
+            $("#s_alta").fadeIn(0);
+            $("#p_media").fadeIn(0);
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_muyAlta_p_media").mouseenter(function() {
+            $("#s_muyAlta").fadeIn(0);
+            $("#p_media").fadeIn(0);
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_baja_p_baja").mouseenter(function() {
+            $("#s_baja").fadeIn(0);
+            $("#p_baja").fadeIn(0);
+            $("#s_media").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_media").fadeOut(0);
+        });
+        $("#s_media_p_baja").mouseenter(function() {
+            $("#s_media").fadeIn(0);
+            $("#p_baja").fadeIn(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_media").fadeOut(0);
+        });
+        $("#s_alta_p_baja").mouseenter(function() {
+            $("#s_alta").fadeIn(0);
+            $("#p_baja").fadeIn(0);
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_media").fadeOut(0);
+        });
+        $("#s_muyAlta_p_baja").mouseenter(function() {
+            $("#s_muyAlta").fadeIn(0);
+            $("#p_baja").fadeIn(0);
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_media").fadeOut(0);
+        });
     </script>
 @endsection
