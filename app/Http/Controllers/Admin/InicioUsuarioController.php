@@ -9,8 +9,13 @@ use App\Models\User;
 use App\Models\PlanBaseActividade;
 use App\Models\AuditoriaAnual;
 use App\Models\Recurso;
+
 use App\Models\IncidentesSeguridad;
 use App\Models\RiesgoIdentificado;
+use App\Models\Quejas;
+use App\Models\Denuncias;
+use App\Models\Mejoras;
+
 use App\Models\Activo;
 use App\Models\Documento;
 use App\Models\RevisionDocumento;
@@ -64,15 +69,51 @@ class inicioUsuarioController extends Controller
     {
         return view('admin.inicioUsuario.formularios.quejas');
     }
+    public function storeQuejas(Request $request)
+    {
+        Quejas::create([
+            'anonimo' => $request->anonimo,
+            'empleado_quejo_id' => auth()->user()->empleado->id,
+            'descripcion' => $request->descripcion,
+            'evidencia' => $request->evidencia,
+            'quejado' => $request->quejado,
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
+    }
 
     public function denuncias()
     {
         return view('admin.inicioUsuario.formularios.denuncias');
     }
+    public function storeDenuncias(Request $request)
+    {
+        Denuncias::create([
+            'anonimo' => $request->anonimo,
+            'empleado_denuncio_id' => auth()->user()->empleado->id,
+            'descripcion' => $request->descripcion,
+            'evidencia' => $request->evidencia,
+            'denunciado' => $request->denunciado,
+            'area_denunciado' => $request->area_denunciado,
+            'tipo' => $request->tipo,
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
+    }
 
     public function mejoras()
     {
         return view('admin.inicioUsuario.formularios.mejoras');
+    }
+    public function storeMejoras(Request $request)
+    {
+        Mejoras::create([
+            'empleado_mejoro_id' => auth()->user()->empleado->id,
+            'descripcion' => $request->descripcion,
+            'mejora' => $request->mejora,
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
     }
 
     public function sugerencias()

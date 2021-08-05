@@ -14,11 +14,14 @@ class CreateMejorasTable extends Migration
     public function up()
     {
         Schema::create('mejoras', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre');
-            $table->string('correo');
+            $table->id();
             $table->string('mejora');
             $table->string('descripcion');
+
+            $table->unsignedBigInteger('empleado_mejoro_id')->nullable();
+
+            $table->foreign('empleado_mejoro_id')->references('id')->on('empleados');
+
             $table->timestamps();
             $table->softDeletes();
         });

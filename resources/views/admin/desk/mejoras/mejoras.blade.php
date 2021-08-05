@@ -1,31 +1,29 @@
 <div class="datatable-fix" style="width: 100%;">
 
-   <table class="table tabla_riesgos">
+   <table class="table tabla_mejoras">
    		<thead>
+   			<tr>
        			{{-- <th>ID</th> --}}
        			<th>Folio</th>
-       			<th>Titulo</th>
-       			<th>Descripción</th>
-       			<th>Proceso afectado</th>
-       			<th>Fecha</th>
-       			<th>Quién reporto</th>
+       			<th>Nombre</th>
        			<th>Correo</th>
        			<th>Teléfono</th>
+       			<th>Descripción</th>
+       			<th>Mejora</th>
        			<th>Opciones</th> 
+   			</tr>
    		</thead>
    		<tbody>
-   			@foreach($riesgos_identificados as $riesgo)
+   			@foreach($mejoras as $mejora)
 	   			<tr>
-	       			<td>{{ $riesgo->id }}</td>
-	       			<td>{{-- {{ $incidentes-> titulo}} --}}</td>
-	       			<td>{{ $riesgo->descripción }}</td>
-	       			<td>{{ $riesgo->proceso }}</td>
-	       			<td>{{ $riesgo->fecha }}</td>
-	       			<td>{{ $riesgo->empleado_reporto_id }}</td>
-	       			<td>{{ $riesgo->empleado_reporto_id }}</td> 
-	       			<td>{{ $riesgo->empleado_reporto_id }}</td> 
+	       			<td>{{ $mejora->id }}</td>
+	       			<td>{{ $mejora->empleado_mejoro_id }}</td>
+	       			<td>{{ $mejora->empleado_mejoro_id }}</td> 
+	       			<td>{{ $mejora->empleado_mejoro_id }}</td> 
+	       			<td>{{ $mejora->descripcion }}</td>
+	       			<td>{{ $mejora->mejora }}</td>
 	       			<td>
-	       				<a href="{{ route('admin.desk.seguridad-edit', $riesgo->id) }}"><i class="fas fa-edit"></i></a>
+	       				<a href="{{ route('admin.desk.seguridad-edit', $mejora->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
 	   			</tr>
    			@endforeach
@@ -123,7 +121,7 @@
             let dtOverrideGlobals = {
                 buttons: dtButtons,
             };
-            let table = $('.tabla_riesgos').DataTable(dtOverrideGlobals);
+            let table = $('.tabla_mejoras').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();

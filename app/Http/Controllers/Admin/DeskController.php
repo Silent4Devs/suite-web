@@ -4,7 +4,13 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Models\IncidentesSeguridad;
+use App\Models\RiesgoIdentificado;
+use App\Models\Quejas;
+use App\Models\Denuncias;
+use App\Models\Mejoras;
+
 use App\Models\Empleado;
 use App\Models\Activo;
 
@@ -13,6 +19,10 @@ class DeskController extends Controller
     public function index(){
 
         $incidentes_seguridad = IncidentesSeguridad::where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->get();
+        $riesgos_identificados = RiesgoIdentificado::get();
+        $quejas = Quejas::get();
+        $denuncias = Denuncias::get();
+        $mejoras = Mejoras::get();
 
         $total = IncidentesSeguridad::get()->count();
         $nuevos = IncidentesSeguridad::where('estatus', 'nuevo')->get()->count();
@@ -21,7 +31,7 @@ class DeskController extends Controller
         $cerrados = IncidentesSeguridad::where('estatus', 'cerrado')->get()->count();
         $cancelados = IncidentesSeguridad::where('estatus', 'cancelado')->get()->count();
 
-        return view('admin.desk.index', compact('incidentes_seguridad', 'total', 'nuevos', 'en_curso', 'en_espera', 'cerrados', 'cancelados'));
+        return view('admin.desk.index', compact('incidentes_seguridad', 'total', 'nuevos', 'en_curso', 'en_espera', 'cerrados', 'cancelados', 'riesgos_identificados', 'quejas', 'denuncias', 'mejoras'));
     }
 
     public function editSeguridad(Request $request, $id_incidente){

@@ -27,9 +27,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 
     Route::get('inicioUsuario', 'inicioUsuarioController@index')->name('inicio-Usuario.index');
+
     Route::get('inicioUsuario/reportes/quejas', 'inicioUsuarioController@quejas')->name('reportes-quejas');
+    Route::post('inicioUsuario/reportes/quejas', 'inicioUsuarioController@storeQuejas')->name('reportes-quejas-store');
+
     Route::get('inicioUsuario/reportes/denuncias', 'inicioUsuarioController@denuncias')->name('reportes-denuncias');
+    Route::post('inicioUsuario/reportes/denuncias', 'inicioUsuarioController@storeDenuncias')->name('reportes-denuncias-store');
+
     Route::get('inicioUsuario/reportes/mejoras', 'inicioUsuarioController@mejoras')->name('reportes-mejoras');
+    Route::post('inicioUsuario/reportes/mejoras', 'inicioUsuarioController@storeMejoras')->name('reportes-mejoras-store');
+
     Route::get('inicioUsuario/reportes/sugerencias', 'inicioUsuarioController@sugerencias')->name('reportes-sugerencias');
 
     Route::get('inicioUsuario/reportes/seguridad', 'inicioUsuarioController@seguridad')->name('reportes-seguridad');

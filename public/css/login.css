@@ -247,24 +247,22 @@ body::after{
 
 
 
-
-
-
-    .clase_animacion .marca{
-        animation-duration: 0s;
-        animation-name: marca;
+    body::after{
+        display: none;
+        animation-duration: 3s;
     }
+
+
+    
 
 
     .clase_animacion .caja_form{
         animation-duration: 0s;
-        animation-name: caja_form;
     }
 
 
     .clase_animacion .caja_marca{
         animation-duration: 0s;
-        animation-name: caja_marca;
     }
 }
 

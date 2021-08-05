@@ -1,31 +1,33 @@
 <div class="datatable-fix" style="width: 100%;">
 
-   <table class="table tabla_riesgos">
+   <table class="table tabla_denuncias">
    		<thead>
+   			<tr>
        			{{-- <th>ID</th> --}}
        			<th>Folio</th>
-       			<th>Titulo</th>
-       			<th>Descripción</th>
-       			<th>Proceso afectado</th>
-       			<th>Fecha</th>
-       			<th>Quién reporto</th>
+       			<th>Anonimo</th>
+       			<th>Quién denuncio</th>
        			<th>Correo</th>
        			<th>Teléfono</th>
+       			<th>Descripción</th>
+       			<th>Evidencia</th>
+       			<th>Denunciado</th>
        			<th>Opciones</th> 
+   			</tr>
    		</thead>
    		<tbody>
-   			@foreach($riesgos_identificados as $riesgo)
+   			@foreach($denuncias as $denuncia)
 	   			<tr>
-	       			<td>{{ $riesgo->id }}</td>
-	       			<td>{{-- {{ $incidentes-> titulo}} --}}</td>
-	       			<td>{{ $riesgo->descripción }}</td>
-	       			<td>{{ $riesgo->proceso }}</td>
-	       			<td>{{ $riesgo->fecha }}</td>
-	       			<td>{{ $riesgo->empleado_reporto_id }}</td>
-	       			<td>{{ $riesgo->empleado_reporto_id }}</td> 
-	       			<td>{{ $riesgo->empleado_reporto_id }}</td> 
+	       			<td>{{ $denuncia->id }}</td>
+	       			<td>{{ $denuncia->anonimo }}</td>
+	       			<td>{{ $denuncia->empleado_denuncio_id }}</td>
+	       			<td>{{ $denuncia->empleado_denuncio_id }}</td> 
+	       			<td>{{ $denuncia->empleado_denuncio_id }}</td> 
+	       			<td>{{ $denuncia->descripcion }}</td>
+	       			<td>{{ $denuncia->evidencia }}</td>
+	       			<td>{{ $denuncia->denunciado }}</td>
 	       			<td>
-	       				<a href="{{ route('admin.desk.seguridad-edit', $riesgo->id) }}"><i class="fas fa-edit"></i></a>
+	       				<a href="{{ route('admin.desk.seguridad-edit', $denuncia->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
 	   			</tr>
    			@endforeach
@@ -123,7 +125,7 @@
             let dtOverrideGlobals = {
                 buttons: dtButtons,
             };
-            let table = $('.tabla_riesgos').DataTable(dtOverrideGlobals);
+            let table = $('.tabla_denuncias').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();
