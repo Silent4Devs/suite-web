@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use App\Models\PlanBaseActividade;
 use App\Models\AuditoriaAnual;
 use App\Models\Recurso;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class SystemCalendarController extends Controller
 {
@@ -47,45 +49,12 @@ class SystemCalendarController extends Controller
 
     public function index()
     {
-        // $events = [];
-
-        // foreach ($this->sources as $source) {
-        //     foreach ($source['model']::all() as $model) {
-        //         $crudFieldValue = $model->getAttributes()[$source['date_field']];
-
-        //         if (!$crudFieldValue) {
-        //             continue;
-        //         }
-
-        //         $events[] = [
-        //             'title' => trim($source['prefix'] . " " . $model->{$source['field']}
-        //                 . " " . $source['suffix']),
-        //             'start' => $crudFieldValue,
-        //             'url'   => route($source['route'], $model->id),
-        //         ];
-        //     }
-        // }
-
-
-        $gantt_path = 'storage/gantt/';
-
-        $version_gantt = glob($gantt_path . "gantt_inicial*.json");
-
-        $path_gantt = end($version_gantt);
-
-        $file_gant = json_decode(file_get_contents($path_gantt), true);
-
-
-        
-        
-
-
-
+        abort_if(Gate::denies('agenda_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $gantt_path = 'storage/gantt/gantt_inicial.json';
+        $file_gant = json_decode(file_get_contents($gantt_path), true);
 
         $plan_base = PlanBaseActividade::get();
-
         $auditorias_anual = AuditoriaAnual::get();
-
         $recursos = Recurso::get();
 
         return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'file_gant'));

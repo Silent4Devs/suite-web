@@ -376,10 +376,10 @@
 
     <!-- component -->
     <div class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
-        <div class="flex justify-center -mt-16 md:justify-end">
+        {{-- <div class="flex justify-center -mt-16 md:justify-end">
             <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #00abb2;"
                 src="{{ $org_foto }}">
-        </div>
+        </div> --}}
         @if (is_null($organizacionTree))
             <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
                 <div class="flex">

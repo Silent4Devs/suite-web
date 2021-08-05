@@ -26,8 +26,7 @@ class EmpleadoController extends Controller
     {
 
 
-        // abort_if(Gate::denies('empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        abort_if(Gate::denies('configuracion_empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             // $query = DB::table('empleados')->select(DB::raw('id,
             // name,
@@ -55,9 +54,9 @@ class EmpleadoController extends Controller
             $table->addIndexColumn();
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'user_show';
-                $editGate      = 'user_edit';
-                $deleteGate    = 'user_delete';
+                $viewGate      = 'configuracion_empleados_show';
+                $editGate      = 'configuracion_empleados_edit';
+                $deleteGate    = 'configuracion_empleados_delete';
                 $crudRoutePart = 'empleados';
 
                 return view('partials.datatablesActions', compact(
@@ -68,10 +67,6 @@ class EmpleadoController extends Controller
                     'row'
                 ));
             });
-            // $table->editColumn('foto',function($row){
-
-            //     return "<img src=".public_path() . '/storage/empleados/imagenes/' .$row->foto.">";
-            // });
 
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
@@ -83,9 +78,6 @@ class EmpleadoController extends Controller
             $table->editColumn('foto', function ($row) {
                 return $row->foto ? $row->foto : '';
             });
-
-            // $dt = CarbonLocale::now();
-            // dd($dt->diffForHumans($dt->copy()->subMinutes(15)));
 
             $table->editColumn('area', function ($row) {
                 return $row->area ? $row->area->area : "";
@@ -142,7 +134,7 @@ class EmpleadoController extends Controller
     public function create()
     {
 
-        // abort_if(Gate::denies('empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
@@ -246,16 +238,12 @@ class EmpleadoController extends Controller
         $gantt_path = 'storage/gantt/gantt_inicial.json';
         $path = public_path($gantt_path);
 
-
-
-
-
         $json_code = json_decode(file_get_contents($path), true);
         $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
         $write_empleados = $json_code;
         file_put_contents($path, json_encode($write_empleados));
 
-        return redirect()->route('admin.empleados.index')->with("success",'Guardado con éxito');
+        return redirect()->route('admin.empleados.index')->with("success", 'Guardado con éxito');
     }
 
     /**
@@ -277,9 +265,7 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-
-
-        // abort_if(Gate::denies('empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::findOrfail($id);
         $empleados = Empleado::get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
@@ -299,9 +285,7 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dd($request->all());
         $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
-
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $validateSupervisor = 'nullable|exists:empleados,id';
 
@@ -401,20 +385,12 @@ class EmpleadoController extends Controller
         $gantt_path = 'storage/gantt/gantt_inicial.json';
         $path = public_path($gantt_path);
 
-
-
-
-
         $json_code = json_decode(file_get_contents($path), true);
         $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
         $write_empleados = $json_code;
         file_put_contents($path, json_encode($write_empleados));
 
-
-
-
-
-        return redirect()->route('admin.empleados.index')->with("success",'Editado con éxito');
+        return redirect()->route('admin.empleados.index')->with("success", 'Editado con éxito');
     }
 
     /**
@@ -425,11 +401,9 @@ class EmpleadoController extends Controller
      */
     public function destroy(Empleado $empleado)
     {
-        // abort_if(Gate::denies('empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        abort_if(Gate::denies('configuracion_empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado->delete();
-
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function getEmpleados(Request $request)

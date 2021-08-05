@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    @can('grupoarea_create')
-        <div class="mt-5 card">
+    <div class="mt-5 card">
+        @can('configuracion_grupoarea_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong> Grupos de Áreas</strong></h3>
             </div>
@@ -129,7 +129,7 @@
 
             ];
 
-            @can('grupoarea_create')
+            @can('configuracion_grupoarea_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar Grupo Area',
@@ -151,7 +151,7 @@
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
             @endcan
-            @can('grupoarea_delete')
+            @can('configuracion_grupoarea_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -214,9 +214,16 @@
                         name: 'Opciones',
                         render: function(data, type, row, meta) {
                             const opciones = `
+                            @can('configuracion_grupoarea_edit')
                                 <a href="/admin/grupoarea/${data}/edit" class="btn btn-sm"><i class="fas fa-edit" title="Editar"></i></a>
+                            @endcan
+                            @can('configuracion_grupoarea_show')
                                 <a href="/admin/grupoarea/${data}/show" class="btn btn-sm"><i class="fas fa-eye" title="Visualizar"></i></a>
-                                <button onclick="Eliminar('/admin/grupoarea/${data}','${data}')" class="btn btn-sm text-danger"><i class="fas fa-trash" title="Eliminar"></i></button>
+                            @endcan
+                            @can('configuracion_grupoarea_delete')
+                                <button onclick="Eliminar('/admin/grupoarea/${data}','${data}')" class="btn btn-sm text-danger"><i class="fas fa-trash"
+                                        title="Eliminar"></i></button>
+                            @endcan                        
                             `;
                             return opciones;
                         }
@@ -253,11 +260,11 @@
                     title: '¿Desea eliminar este grupo?',
                     html: `<div>
                             ${areasRelacionadas.length > 0 ? `<p>El grupo que desea eliminar está vinculado con las siguientes áreas</p>
-                                                        <ul class="list-group list-group-horizontal justify-content-center">
-                                                            ${areasRelacionadas.map(area=>{
-                                                                return `<li class="list-group-item">${area.area}</li>`;
-                                                            })}
-                                                        </ul>`:`<p>No hay relación con ningún área</p>`}
+                                                                                    <ul class="list-group list-group-horizontal justify-content-center">
+                                                                                        ${areasRelacionadas.map(area=>{
+                                                                                            return `<li class="list-group-item">${area.area}</li>`;
+                                                                                        })}
+                                                                                    </ul>`:`<p>No hay relación con ningún área</p>`}
                         </div>`,
                     icon: 'warning',
                     showCancelButton: true,

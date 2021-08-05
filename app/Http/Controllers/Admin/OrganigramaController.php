@@ -9,7 +9,9 @@ use App\Models\Empleado;
 use App\Models\Organizacion;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OrganigramaController extends Controller
@@ -17,6 +19,7 @@ class OrganigramaController extends Controller
 
     public function index(Request $request)
     {
+        abort_if(Gate::denies('organigrama_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // La construccion del arbol necesita un primer nodo (NULL)
         $organizacionTree = Empleado::with(['supervisor.children', 'supervisor.supervisor', 'area', 'children.supervisor', 'children.children'])->whereNull('supervisor_id')->first(); //Eager loading
         if ($request->ajax()) {
@@ -53,6 +56,7 @@ class OrganigramaController extends Controller
 
     public function exportTo()
     {
+        abort_if(Gate::denies('organigrama_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return Excel::download(new EmpleadosExport, 'empleados.xlsx');
     }
 }

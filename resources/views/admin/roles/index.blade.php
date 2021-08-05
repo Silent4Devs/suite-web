@@ -19,9 +19,9 @@
                         <th>
                             Nombre&nbsp;del&nbsp;rol
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.role.fields.permissions') }}
-                        </th>
+                        </th> --}}
                         <th>
                             Opciones
                         </th>
@@ -180,10 +180,10 @@
                         data: 'title',
                         name: 'title'
                     },
-                    {
-                        data: 'permissions',
-                        name: 'permissions.title'
-                    },
+                    // {
+                    //     data: 'permissions',
+                    //     name: 'permissions.title'
+                    // },
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
@@ -191,7 +191,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [0, 'desc']
                 ]
             };
             let table = $('.datatable-Role').DataTable(dtOverrideGlobals);
@@ -208,6 +208,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

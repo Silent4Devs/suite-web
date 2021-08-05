@@ -174,61 +174,63 @@
         <tbody>
             @foreach ($revisiones as $revision)
                 @if ($revision->before_level_all_answered)
-                    <tr>
-                        <td>
-                            {{ Str::limit($revision->documento ? $revision->documento->codigo : 'Sin Código Asignado', 40, '...') }}
-                        </td>
-                        <td>
-                            <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento->id) }}"
-                                class="text-dark">
-                                {{ Str::limit($revision->documento ? $revision->documento->nombre : 'Sin Documento Asignado', 40, '...') }}
-                            </a>
-                        </td>
-                        <td>{{ $revision->version }}</td>
-                        <td style="text-transform: capitalize;">
-                            {{ $revision->documento ? $revision->documento->tipo : 'El tipo no ha sido asignado' }}
-                        </td>
-                        </td>
-                        <td class="text-center" style="padding: 5px 0;">
-                            @if ($revision->documento)
-                                @if ($revision->documento->elaborador)
-                                    <img class="rounded-circle" style="clip-path: circle(40%);height: 35px"
-                                        src="{{ Storage::url('empleados/imagenes/' . $revision->documento->elaborador->avatar) }}"
-                                        alt="{{ $revision->documento->elaborador->name }}"
-                                        title="{{ $revision->documento->elaborador->name }}" />
+                    @if ($revision->estatus != $Documento::RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR)
+                        <tr>
+                            <td>
+                                {{ Str::limit($revision->documento ? $revision->documento->codigo : 'Sin Código Asignado', 40, '...') }}
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento->id) }}"
+                                    class="text-dark">
+                                    {{ Str::limit($revision->documento ? $revision->documento->nombre : 'Sin Documento Asignado', 40, '...') }}
+                                </a>
+                            </td>
+                            <td>{{ $revision->version }}</td>
+                            <td style="text-transform: capitalize;">
+                                {{ $revision->documento ? $revision->documento->tipo : 'El tipo no ha sido asignado' }}
+                            </td>
+                            </td>
+                            <td class="text-center" style="padding: 5px 0;">
+                                @if ($revision->documento)
+                                    @if ($revision->documento->elaborador)
+                                        <img class="rounded-circle" style="clip-path: circle(40%);height: 35px"
+                                            src="{{ Storage::url('empleados/imagenes/' . $revision->documento->elaborador->avatar) }}"
+                                            alt="{{ $revision->documento->elaborador->name }}"
+                                            title="{{ $revision->documento->elaborador->name }}" />
+                                    @endif
+                                @else
+                                    Sin Asignar
                                 @endif
-                            @else
-                                Sin Asignar
-                            @endif
-                        </td>
-                        <td>{{ $revision->fecha_solicitud }}</td>
-                        <td style="background-color: {{ $revision->color_revisiones_estatus }}">
-                            <span class="badge"
-                                style="color:white;background-color:{{ $revision->color_revisiones_estatus }}">{{ $revision->estatus_revisiones_formateado }}</span>
-                        <td>
-                            <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento) }}"
-                                class="btn btn-sm" style="border:none;" title="Visualizar Documento">
-                                <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
-                            </a>
-                            @if ($revision->before_level_all_answered)
-                                @if ($revision->estatus == $Documento::SOLICITUD_REVISION)
-                                    <a href="{{ route('revisiones.revisar', $revision) }}" class="btn btn-sm"
-                                        style="border:none;" title="Revisar">
-                                        <i class="fas fa-file-signature text-dark" style="font-size: 15px;"></i>
-                                    </a>
+                            </td>
+                            <td>{{ $revision->fecha_solicitud }}</td>
+                            <td style="background-color: {{ $revision->color_revisiones_estatus }}">
+                                <span class="badge"
+                                    style="color:white;background-color:{{ $revision->color_revisiones_estatus }}">{{ $revision->estatus_revisiones_formateado }}</span>
+                            <td>
+                                <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento) }}"
+                                    class="btn btn-sm" style="border:none;" title="Visualizar Documento">
+                                    <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
+                                </a>
+                                @if ($revision->before_level_all_answered)
+                                    @if ($revision->estatus == $Documento::SOLICITUD_REVISION)
+                                        <a href="{{ route('revisiones.revisar', $revision) }}" class="btn btn-sm"
+                                            style="border:none;" title="Revisar">
+                                            <i class="fas fa-file-signature text-dark" style="font-size: 15px;"></i>
+                                        </a>
+                                    @endif
+                                    @if ($revision->estatus != $Documento::SOLICITUD_REVISION)
+                                        <a class="btn btn-sm" style="border:none;" title="Archivar"
+                                            onClick="Archivar('{{ route('admin.revisiones.archivar') }}','{{ $revision->id }}')">
+                                            <i class=" fas fa-archive text-success" style="font-size: 15px;"></i>
+                                        </a>
+                                    @endif
+                                @else
+                                    <span class="badge badge-info">El nivel anterior de revisores aún no termina de
+                                        revisar</span>
                                 @endif
-                                @if ($revision->estatus != $Documento::SOLICITUD_REVISION)
-                                    <a class="btn btn-sm" style="border:none;" title="Archivar"
-                                        onClick="Archivar('{{ route('admin.revisiones.archivar') }}','{{ $revision->id }}')">
-                                        <i class=" fas fa-archive text-success" style="font-size: 15px;"></i>
-                                    </a>
-                                @endif
-                            @else
-                                <span class="badge badge-info">El nivel anterior de revisores aún no termina de
-                                    revisar</span>
-                            @endif
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @endif
                 @endif
             @endforeach
         </tbody>
