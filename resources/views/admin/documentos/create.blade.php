@@ -94,7 +94,9 @@
                 @include('admin.documentos._form')
                 <a href="{{ route('admin.documentos.index') }}" class="text-white btn btn-danger">Cancelar</a>
                 <input type="submit" class="btn btn-primary" value="Guardar">
-                <button id="publicar" class="btn btn-primary">Publicar</button>
+                @can('documentos_publish')
+                    <button id="publicar" class="btn btn-primary">Publicar</button>
+                @endcan
             </form>
             <!-- Modal -->
             <div class="modal fade" id="modalPublicar" data-backdrop="static" data-keyboard="false" tabindex="-1"

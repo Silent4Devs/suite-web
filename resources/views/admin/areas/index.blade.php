@@ -1,45 +1,38 @@
 @extends('layouts.admin')
 @section('content')
-    @can('area_create')
-
-
-
-        <div class="mt-5 card">
+    <div class="mt-5 card">
+        @can('configuracion_area_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Registro de Áreas</strong></h3>
             </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    {{-- <a class="btn btn-success" href="{{ route('admin.areas.create') }}">
-                        Agregar <strong>+</strong>
-                    </a>
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                        {{ trans('global.app_csvImport') }}
-                    </button> --}}
                     @include('csvImport.modal', ['model' => 'Area', 'route' => 'admin.areas.parseCsvImport'])
                 </div>
             </div>
-    @endcan
+        @endcan
 
-    <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
-        <div class="row w-100">
-            <div class="text-center col-1 align-items-center d-flex justify-content-center">
-                <div class="w-100">
-                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 2</p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización comenzando
+                        por la de más alta jerarquía y dé
+                        clic en finalizar
+                        <a href="{{ route('admin.areas.renderJerarquia') }}" class="item-right col-2 btn text-light"
+                            style="background-color:rgb(85, 217, 226); float:right">Finalizar</a>
+                    </p>
+
                 </div>
             </div>
-            <div class="col-11">
-                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Paso 2</p>
-                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización comenzando por la de más alta jerarquía y dé
-                    clic en finalizar
-                    <a href="{{ route("admin.areas.renderJerarquia") }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Finalizar</a>
-                </p>
-
-            </div>
         </div>
-    </div>
 
-         @include('partials.flashMessages')
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Area">
                 <thead class="thead-dark">
@@ -48,7 +41,7 @@
                             ID
                         </th>
                         <th>
-                           Nombre de Área
+                            Nombre de Área
                         </th>
                         <th>
                             Grupo
@@ -63,25 +56,10 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -155,7 +133,7 @@
 
             ];
 
-            @can('area_create')
+            @can('configuracion_area_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar area',
@@ -177,7 +155,7 @@
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
             @endcan
-            @can('area_delete')
+            @can('configuracion_area_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -187,13 +165,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -245,30 +223,15 @@
                 ]
             };
             let table = $('.datatable-Area').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
         });
-
-
     </script>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
+        $(".caja_btn_a a").click(function() {
+            $(".caja_btn_a a").removeClass("btn_a_seleccionado");
+            $(".caja_btn_a a:hover").addClass("btn_a_seleccionado");
+            $("#contenido1").removeClass("d-block");
 
-            $(".caja_btn_a a").click(function(){
-                $(".caja_btn_a a").removeClass("btn_a_seleccionado");
-                $(".caja_btn_a a:hover").addClass("btn_a_seleccionado");
-                $("#contenido1").removeClass("d-block");
-
-            });
-        </script>
+        });
+    </script>
 @endsection

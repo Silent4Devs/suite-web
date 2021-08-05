@@ -32,9 +32,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Area|null $area
  * @property Sede|null $sede
  * @property Empleado|null $empleado
+ * @property Collection|AnalisisDeRiesgo[] $analisis_de_riesgos
+ * @property Collection|Documento[] $documentos
  * @property Collection|Recurso[] $recursos
  * @property Collection|Empleado[] $empleados
+ * @property Collection|EntendimientoOrganizacion[] $entendimiento_organizacions
+ * @property Collection|HistorialVersionesDocumento[] $historial_versiones_documentos
  * @property Collection|IndicadoresSgsi[] $indicadores_sgsis
+ * @property Collection|MatrizRiesgo[] $matriz_riesgos
+ * @property Collection|RevisionDocumento[] $revision_documentos
  * @property Collection|User[] $users
  *
  * @package App\Models
@@ -62,6 +68,7 @@ class Empleado extends Model
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = ['avatar'];
+
     protected $fillable = [
         'name',
         'n_registro',
@@ -77,6 +84,7 @@ class Empleado extends Model
         'area_id',
         'sede_id'
     ];
+
     public function getAvatarAttribute()
     {
         if ($this->foto == null) {
@@ -90,9 +98,6 @@ class Empleado extends Model
         }
         return $this->foto;
     }
-
-
-
 
     public function area()
     {
@@ -109,6 +114,16 @@ class Empleado extends Model
         return $this->belongsTo(Empleado::class, 'supervisor_id');
     }
 
+    public function analisis_de_riesgos()
+    {
+        return $this->hasMany(AnalisisDeRiesgo::class, 'id_elaboro');
+    }
+
+    /*public function documentos()
+    {
+        return $this->hasMany(Documento::class, 'reviso_id');
+    }*/
+
     public function recursos()
     {
         return $this->belongsToMany(Recurso::class)
@@ -121,9 +136,29 @@ class Empleado extends Model
         return $this->hasMany(Empleado::class, 'supervisor_id', 'id'); //Sin Eager Loading
     }
 
+    public function entendimiento_organizacions()
+    {
+        return $this->hasMany(EntendimientoOrganizacion::class, 'id_elabora');
+    }
+
+    public function historial_versiones_documentos()
+    {
+        return $this->hasMany(HistorialVersionesDocumento::class, 'reviso_id');
+    }
+
     public function indicadores_sgsis()
     {
         return $this->hasMany(IndicadoresSgsi::class, 'id_empleado');
+    }
+
+    public function matriz_riesgos()
+    {
+        return $this->hasMany(MatrizRiesgo::class, 'id_responsable');
+    }
+
+    public function revision_documentos()
+    {
+        return $this->hasMany(RevisionDocumento::class);
     }
 
     public function users()

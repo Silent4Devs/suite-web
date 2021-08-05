@@ -78,13 +78,17 @@
             <div class="text-right col-lg-12" style="position:relative; z-index:1;">
                 @if (!empty($count == 1))
                 @else
-                    <a class="btn btn-success" href="{{ route('admin.organizacions.create') }}">
-                        Agregar Organización
-                    </a>
+                    @can('organizacion_create')
+                        <a class="btn btn-success" href="{{ route('admin.organizacions.create') }}">
+                            Agregar Organización
+                        </a>
+                    @endcan
                 @endif
-                <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-info'>
-                    Editar Organización
-                </a>
+                @can('organizacion_edit')
+                    <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-info'>
+                        Editar Organización
+                    </a>
+                @endcan
             </div>
 
             <div class="card-body">

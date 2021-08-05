@@ -1,21 +1,13 @@
 @extends('layouts.admin')
 @section('content')
-    @can('tipoactivo_create')
-
-
-        <div class="mt-5 card">
+    <div class="mt-5 card">
+        @can('configuracion_tipoactivo_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Categorías de Activos</strong></h3>
             </div>
 
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    {{-- <a class="btn btn-success" href="{{ route('admin.tipoactivos.create') }}">
-                        Agregar <strong>+</strong>
-                    </a>
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                        {{ trans('global.app_csvImport') }}
-                    </button> --}}
                     @include('csvImport.modal', ['model' => 'Tipoactivo', 'route' => 'admin.tipoactivos.parseCsvImport'])
                 </div>
             </div>
@@ -134,7 +126,7 @@
 
             ];
 
-            @can('tipoactivo_create')
+            @can('configuracion_tipoactivo_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar categoría de activos',
@@ -156,7 +148,7 @@
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
             @endcan
-            @can('tipoactivo_delete')
+            @can('configuracion_tipoactivo_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -166,13 +158,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-
+            
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-
+            
                 return
                 }
-
+            
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -229,6 +221,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

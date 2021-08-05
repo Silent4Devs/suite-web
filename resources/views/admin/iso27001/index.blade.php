@@ -169,284 +169,369 @@
 
             <div class="caja_caja_secciones">
                 <div class="caja_secciones">
-                    <section id="s1" class="caja_tab_reveldada">
-                        <div class="mt-5">
-                            <ul>
-                                <li><a href="{{ url('/admin/analisis-brechas') }}">
-                                    <div>
-                                        <i class="fas fa-search"></i>
-                                        Análisis de brechas
-                                    </div>
-                                </a></li>
-                                <li><a href="{{ route('admin.planTrabajoBase.index') }}">
-                                    <div>
-                                        <i class="fas fa-stream"></i>
-                                        Plan de implementación
-                                    </div>
-                                </a></li>
-                                <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
-                                        <div>
-                                            <i class="far fa-file"></i>
-                                            Declaracion de aplicabilidad
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.partes-interesadas.index') }}">
-                                        <div>
-                                            <i class="far fa-handshake"></i>
-                                            Partes interesadas
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.matriz-requisito-legales.index') }}">
-                                        <div>
-                                            <i class="fas fa-balance-scale"></i>
-                                            Matriz de requisitos legales
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.entendimiento-organizacions.index') }}">
-                                        <div>
-                                            <i class="far fa-list-alt"></i>
-                                            FODA
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.alcance-sgsis.index') }}">
-                                        <div>
-                                            <i class="fas fa-bullseye"></i>
-                                            Determinación de alcance
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.reportes-contexto.index') }}">
-                                        <div>
-                                            <i class="far fa-file-alt"></i>
-                                            Generar Reporte
-                                        </div>
-                                    </a></li>
-                            </ul>
+                    @can('contexto_access')
+                        <section id="s1" class="caja_tab_reveldada">
+                            <div class="mt-5">
+                                <ul>
+                                    <li><a href="{{ url('/admin/analisis-brechas') }}">
+                                            <div>
+                                                <i class="fas fa-search"></i>
+                                                Análisis de brechas
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.planTrabajoBase.index') }}">
+                                            <div>
+                                                <i class="fas fa-stream"></i>
+                                                Plan de implementación
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
+                                            <div>
+                                                <i class="far fa-file"></i>
+                                                Declaracion de aplicabilidad
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.partes-interesadas.index') }}">
+                                            <div>
+                                                <i class="far fa-handshake"></i>
+                                                Partes interesadas
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.matriz-requisito-legales.index') }}">
+                                            <div>
+                                                <i class="fas fa-balance-scale"></i>
+                                                Matriz de requisitos legales
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.entendimiento-organizacions.index') }}">
+                                            <div>
+                                                <i class="far fa-list-alt"></i>
+                                                FODA
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.alcance-sgsis.index') }}">
+                                            <div>
+                                                <i class="fas fa-bullseye"></i>
+                                                Determinación de alcance
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.reportes-contexto.index') }}">
+                                            <div>
+                                                <i class="far fa-file-alt"></i>
+                                                Generar Reporte
+                                            </div>
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    @else
+                        <div class="mt-5 row" style="margin-left: -10px">
+                            <div class="mb-3 col-12">
+                                <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                            </div>
+                            <div class="col-12">
+                                <strong style="font-size:12pt">
+                                    <i class="mr-1 fas fa-info-circle"></i>
+                                    No puedes acceder al módulo de Análisis de Brechas, solicita al administrador que te
+                                    otorge dichos permisos
+                                </strong>
+                            </div>
                         </div>
-                    </section>
-
-
-
-                    <section id="s2">
-                        <div class="mt-5">
-                            <ul>
-                                <li><a href="{{ route('admin.comiteseguridads.index') }}">
-                                        <div>
-                                            <i class="fas fa-shield-alt"></i>
-                                            Conformación del comité de seguridad
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.minutasaltadireccions.index') }}">
-                                        <div>
-                                            <i class="fas fa-columns"></i>
-                                            Minutas de sesiones con Ata dirección
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.evidencias-sgsis.index') }}">
-                                        <div>
-                                            <i class="far fa-window-restore"></i>
-                                            Evidencias de asignación de recursos al SGSI
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.politica-sgsis.index') }}">
-                                        <div>
-                                            <i class="fas fa-landmark"></i>
-                                            Política SGSI
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.roles-responsabilidades.index') }}">
-                                        <div>
-                                            <i class="fas fa-user-tag"></i>
-                                            Roles y responsabilidades
-                                        </div>
-                                    </a></li>
-                            </ul>
+                    @endcan
+                    @can('liderazgo_access')
+                        <section id="s2">
+                            <div class="mt-5">
+                                <ul>
+                                    <li><a href="{{ route('admin.comiteseguridads.index') }}">
+                                            <div>
+                                                <i class="fas fa-shield-alt"></i>
+                                                Conformación del comité de seguridad
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.minutasaltadireccions.index') }}">
+                                            <div>
+                                                <i class="fas fa-columns"></i>
+                                                Minutas de sesiones con Ata dirección
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.evidencias-sgsis.index') }}">
+                                            <div>
+                                                <i class="far fa-window-restore"></i>
+                                                Evidencias de asignación de recursos al SGSI
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.politica-sgsis.index') }}">
+                                            <div>
+                                                <i class="fas fa-landmark"></i>
+                                                Política SGSI
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.roles-responsabilidades.index') }}">
+                                            <div>
+                                                <i class="fas fa-user-tag"></i>
+                                                Roles y responsabilidades
+                                            </div>
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    @else
+                        <div class="mt-5 row" style="margin-left: -10px">
+                            <div class="mb-3 col-12">
+                                <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                            </div>
+                            <div class="col-12">
+                                <strong style="font-size:12pt">
+                                    <i class="mr-1 fas fa-info-circle"></i>
+                                    No puedes acceder al módulo de Liderazgo, solicita al administrador que te
+                                    otorge dichos permisos
+                                </strong>
+                            </div>
                         </div>
-                    </section>
-
-
-
-                    <section id="s3">
-                        <div class="mt-5">
-                            <ul>
-                                <li><a href="{{ route('admin.matriz-riesgos.index') }}">
-                                    <div>
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                        Análisis de riesgos
-                                    </div>
-                                </a></li>
-                                <li><a href="{{ route('admin.riesgosoportunidades.index') }}">
-                                        <div>
-                                            <i class="fas fa-asterisk"></i>
-                                            Riesgos y oportunidades
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.objetivosseguridads.index') }}">
-                                        <div>
-                                            <i class="fas fa-lock"></i>
-                                            Objetivos de seguridad
-                                        </div>
-                                    </a></li>
-                            </ul>
+                    @endcan
+                    @can('planificacion_access')
+                        <section id="s3">
+                            <div class="mt-5">
+                                <ul>
+                                    <li><a href="{{ route('admin.matriz-riesgos.index') }}">
+                                            <div>
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                Análisis de riesgos
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.riesgosoportunidades.index') }}">
+                                            <div>
+                                                <i class="fas fa-asterisk"></i>
+                                                Riesgos y oportunidades
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.objetivosseguridads.index') }}">
+                                            <div>
+                                                <i class="fas fa-lock"></i>
+                                                Objetivos de seguridad
+                                            </div>
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    @else
+                        <div class="mt-5 row" style="margin-left: -10px">
+                            <div class="mb-3 col-12">
+                                <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                            </div>
+                            <div class="col-12">
+                                <strong style="font-size:12pt">
+                                    <i class="mr-1 fas fa-info-circle"></i>
+                                    No puedes acceder al módulo de Planificación, solicita al administrador que te
+                                    otorge dichos permisos
+                                </strong>
+                            </div>
                         </div>
-                    </section>
-
-
-
-                    <section id="s4">
-                        <div class="mt-5">
-                            <ul>
-                                <li><a href="{{ route('admin.recursos.index') }}">
-                                        <div>
-                                            <i class="fas fa-chalkboard-teacher"></i>
-                                            Capacitaciones
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.competencia.index') }}">
-                                        <div>
-                                            <i class="fas fa-flag-checkered"></i>
-                                            Competencias
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.concientizacion-sgis.index') }}">
-                                        <div>
-                                            <i class="fas fa-book-reader"></i>
-                                            Concientización SGI
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.material-sgsis.index') }}">
-                                        <div>
-                                            <i class="fas fa-cubes"></i>
-                                            Material SGI
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.material-iso-veinticientes.index') }}">
-                                        <div>
-                                            <i class="far fa-object-ungroup"></i>
-                                            Material ISO 27001: 2013
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.comunicacion-sgis.index') }}">
-                                        <div>
-                                            <i class="far fa-comments"></i>
-                                            Comunicación SGI
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.politica-del-sgsi-soportes.index') }}">
-                                        <div>
-                                            <i class="fas fa-landmark"></i>
-                                            Política SGI
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.control-accesos.index') }}">
-                                        <div>
-                                            <i class="fas fa-vote-yea"></i>
-                                            Control de Accesos
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.informacion-documetadas.index') }}">
-                                        <div>
-                                            <i class="far fa-folder-open"></i>
-                                            Infomación Documentada
-                                        </div>
-                                    </a></li>
-                            </ul>
+                    @endcan
+                    @can('soporte_access')
+                        <section id="s4">
+                            <div class="mt-5">
+                                <ul>
+                                    <li><a href="{{ route('admin.recursos.index') }}">
+                                            <div>
+                                                <i class="fas fa-chalkboard-teacher"></i>
+                                                Capacitaciones
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.competencia.index') }}">
+                                            <div>
+                                                <i class="fas fa-flag-checkered"></i>
+                                                Competencias
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.concientizacion-sgis.index') }}">
+                                            <div>
+                                                <i class="fas fa-book-reader"></i>
+                                                Concientización SGI
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.material-sgsis.index') }}">
+                                            <div>
+                                                <i class="fas fa-cubes"></i>
+                                                Material SGI
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.material-iso-veinticientes.index') }}">
+                                            <div>
+                                                <i class="far fa-object-ungroup"></i>
+                                                Material ISO 27001: 2013
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.comunicacion-sgis.index') }}">
+                                            <div>
+                                                <i class="far fa-comments"></i>
+                                                Comunicación SGI
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.politica-del-sgsi-soportes.index') }}">
+                                            <div>
+                                                <i class="fas fa-landmark"></i>
+                                                Política SGI
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.control-accesos.index') }}">
+                                            <div>
+                                                <i class="fas fa-vote-yea"></i>
+                                                Control de Accesos
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.informacion-documetadas.index') }}">
+                                            <div>
+                                                <i class="far fa-folder-open"></i>
+                                                Infomación Documentada
+                                            </div>
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    @else
+                        <div class="mt-5 row" style="margin-left: -10px">
+                            <div class="mb-3 col-12">
+                                <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                            </div>
+                            <div class="col-12">
+                                <strong style="font-size:12pt">
+                                    <i class="mr-1 fas fa-info-circle"></i>
+                                    No puedes acceder al módulo de Soporte, solicita al administrador que te
+                                    otorge dichos permisos
+                                </strong>
+                            </div>
                         </div>
-                    </section>
-
-
-                    <section id="s5">
-                        <div class="mt-5">
-                            <ul>
-                                <li><a href="{{ route('admin.planificacion-controls.index') }}">
-                                        <div>
-                                            <i class="fas fa-clipboard-list"></i>
-                                            Planificaión y Control
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.tratamiento-riesgos.index') }}">
-                                        <div>
-                                            <i class="fas fa-viruses"></i>
-                                            Tratamiento de riesgos
-                                        </div>
-                                    </a></li>
-                            </ul>
+                    @endcan
+                    @can('operacion_access')
+                        <section id="s5">
+                            <div class="mt-5">
+                                <ul>
+                                    <li><a href="{{ route('admin.planificacion-controls.index') }}">
+                                            <div>
+                                                <i class="fas fa-clipboard-list"></i>
+                                                Planificaión y Control
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.tratamiento-riesgos.index') }}">
+                                            <div>
+                                                <i class="fas fa-viruses"></i>
+                                                Tratamiento de riesgos
+                                            </div>
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    @else
+                        <div class="mt-5 row" style="margin-left: -10px">
+                            <div class="mb-3 col-12">
+                                <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                            </div>
+                            <div class="col-12">
+                                <strong style="font-size:12pt">
+                                    <i class="mr-1 fas fa-info-circle"></i>
+                                    No puedes acceder al módulo de Operación, solicita al administrador que te
+                                    otorge dichos permisos
+                                </strong>
+                            </div>
                         </div>
-                    </section>
-
-
-
-                    <section id="s6">
-                        <div class="mt-5">
-                            <ul>
-                                <li><a href="{{ route('admin.indicadores-sgsis.index') }}">
-                                        <div>
-                                            <i class="fas fa-list-ul"></i>
-                                            Indicadores SGSI
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.incidentes-de-seguridads.index') }}">
-                                        <div>
-                                            <i class="fas fa-lock"></i>
-                                            Incidentes de Seguridad
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.indicadorincidentessis.index') }}">
-                                        <div>
-                                            <i class="fas fa-file-contract"></i>
-                                            Indicador Incidentes
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.auditoria-anuals.index') }}">
-                                        <div>
-                                            <i class="far fa-calendar-alt"></i>
-                                            Programa Anual de Auditoria
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.plan-auditoria.index') }}">
-                                        <div>
-                                            <i class="fas fa-clipboard-list"></i>
-                                            Plan de Auditoria
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.auditoria-internas.index') }}">
-                                        <div>
-                                            <i class="fas fa-network-wired"></i>
-                                            Auditoria Interna
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.revision-direccions.index') }}">
-                                        <div>
-                                            <i class="fas fa-tasks"></i>
-                                            Revisión por dirección
-                                        </div>
-                                    </a></li>
-                            </ul>
+                    @endcan
+                    @can('evaluacion_access')
+                        <section id="s6">
+                            <div class="mt-5">
+                                <ul>
+                                    <li><a href="{{ route('admin.indicadores-sgsis.index') }}">
+                                            <div>
+                                                <i class="fas fa-list-ul"></i>
+                                                Indicadores SGSI
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.incidentes-de-seguridads.index') }}">
+                                            <div>
+                                                <i class="fas fa-lock"></i>
+                                                Incidentes de Seguridad
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.indicadorincidentessis.index') }}">
+                                            <div>
+                                                <i class="fas fa-file-contract"></i>
+                                                Indicador Incidentes
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.auditoria-anuals.index') }}">
+                                            <div>
+                                                <i class="far fa-calendar-alt"></i>
+                                                Programa Anual de Auditoria
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.plan-auditoria.index') }}">
+                                            <div>
+                                                <i class="fas fa-clipboard-list"></i>
+                                                Plan de Auditoria
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.auditoria-internas.index') }}">
+                                            <div>
+                                                <i class="fas fa-network-wired"></i>
+                                                Auditoria Interna
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.revision-direccions.index') }}">
+                                            <div>
+                                                <i class="fas fa-tasks"></i>
+                                                Revisión por dirección
+                                            </div>
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    @else
+                        <div class="mt-5 row" style="margin-left: -10px">
+                            <div class="mb-3 col-12">
+                                <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                            </div>
+                            <div class="col-12">
+                                <strong style="font-size:12pt">
+                                    <i class="mr-1 fas fa-info-circle"></i>
+                                    No puedes acceder al módulo de Evaluación, solicita al administrador que te
+                                    otorge dichos permisos
+                                </strong>
+                            </div>
                         </div>
-                    </section>
-
-
-
-                    <section id="s7">
-                        <div class="mt-5">
-                            <ul>
-                                <li><a href="{{ route('admin.accion-correctivas.index') }}">
-                                        <div>
-                                            <i class="far fa-thumbs-down"></i>
-                                            Acción Correctiva
-                                        </div>
-                                    </a></li>
-                                <li><a href="{{ route('admin.registromejoras.index') }}">
-                                        <div>
-                                            <i class="far fa-thumbs-up"></i>
-                                            Registro Mejora
-                                        </div>
-                                    </a></li>
-                            </ul>
+                    @endcan
+                    @can('mejoras_access')
+                        <section id="s7">
+                            <div class="mt-5">
+                                <ul>
+                                    <li><a href="{{ route('admin.accion-correctivas.index') }}">
+                                            <div>
+                                                <i class="far fa-thumbs-down"></i>
+                                                Acción Correctiva
+                                            </div>
+                                        </a></li>
+                                    <li><a href="{{ route('admin.registromejoras.index') }}">
+                                            <div>
+                                                <i class="far fa-thumbs-up"></i>
+                                                Registro Mejora
+                                            </div>
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    @else
+                        <div class="mt-5 row" style="margin-left: -10px">
+                            <div class="mb-3 col-12">
+                                <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                            </div>
+                            <div class="col-12">
+                                <strong style="font-size:12pt">
+                                    <i class="mr-1 fas fa-info-circle"></i>
+                                    No puedes acceder al módulo de Mejoras, solicita al administrador que te
+                                    otorge dichos permisos
+                                </strong>
+                            </div>
                         </div>
-                    </section>
-
-
-
+                    @endcan
                     <section id="s8">
                         <div class="mt-5">
                             <ul>
@@ -537,9 +622,6 @@
                             </ul>
                         </div>
                     </section>
-
-
-
                 </div>
             </div>
         </div>
