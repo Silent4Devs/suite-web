@@ -383,7 +383,7 @@
                                 @endif
                             </div>
                             <div>
-                                @if (auth()->user()->empleado)
+                                {{-- @if (auth()->user()->empleado)
                                     <p class="m-0" style="font-weight: 600">
                                         {{ auth()->user()->empleado->name }}
                                     </p>
@@ -394,7 +394,8 @@
 
                                 @else
                                     {{ auth()->user()->name }}
-                                @endif
+                                    <span>{{ auth()->user()->empleado->name }}</span>
+                                @endif--}}
                             </div>
                             {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
                             <div class="px-3 mt-3 d-flex justify-content-between">
@@ -754,7 +755,7 @@
                                 filtro += `
                                 <a class="list-group-item list-group-item-action" href="${value}">
                                     <i class="mr-2 fas fa-search-location"></i>${key}
-                                </a>    
+                                </a>
                             `;
                             }
                             filtro += "</ul>";

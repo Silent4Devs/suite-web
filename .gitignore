@@ -19,3 +19,5 @@ bootstrap/cache/config.php
 routes/web.php
 
 bootstrap/cache/
+
+storage/debugbar/
