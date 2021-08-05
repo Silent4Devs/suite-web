@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyMatrizRiesgoRequest;
-use App\Http\Requests\StoreMatrizRiesgoRequest;
-use App\Http\Requests\UpdateMatrizRiesgoRequest;
-use App\Models\Tipoactivo;
-use App\Models\Activo;
-use App\Models\Controle;
-use App\Models\MatrizRiesgo;
-use App\Models\Team;
 use DB;
 use Gate;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
+use App\Models\Area;
+use App\Models\Sede;
+use App\Models\Team;
+use App\Models\Activo;
+use App\Models\Proceso;
+use App\Models\Controle;
+use App\Models\Empleado;
+use App\Models\Tipoactivo;
 use App\Functions\Mriesgos;
+use App\Models\MatrizRiesgo;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\StoreMatrizRiesgoRequest;
+use App\Http\Requests\UpdateMatrizRiesgoRequest;
+use App\Http\Requests\MassDestroyMatrizRiesgoRequest;
 
 class MatrizRiesgosController extends Controller
 {
@@ -134,9 +138,13 @@ class MatrizRiesgosController extends Controller
 
         //       dd($tipoactivos);
 
-        $controles = Controle::all()->pluck('numero', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $controles = Controle::get();
+        $sedes = Sede::get();
+        $areas = Area::get();
+        $procesos = Proceso::get();
+        $responsables = Empleado::get();
 
-        return view('admin.matrizRiesgos.create', compact('tipoactivos', 'controles'))->with('id_analisis', \request()->idAnalisis);
+        return view('admin.matrizRiesgos.create', compact('tipoactivos', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
 
     public function store(StoreMatrizRiesgoRequest $request)
@@ -183,7 +191,7 @@ class MatrizRiesgosController extends Controller
 
         abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if (!is_null($matrizRiesgo->activo_id)) {
-            $matrizRiesgo->load('activo_id', 'controles', 'team');
+            $matrizRiesgo->load('activo_id', 'controles');
         }
 
         return view('admin.matrizRiesgos.show', compact('matrizRiesgo'));
@@ -195,7 +203,7 @@ class MatrizRiesgosController extends Controller
 
         $matrizRiesgo->delete();
 
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyMatrizRiesgoRequest $request)
@@ -293,15 +301,18 @@ class MatrizRiesgosController extends Controller
                 return $row->justificacion ? $row->justificacion : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'activo_id']);
+            $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
 
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
-        $teams = Team::get();
+        $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
+        $sedes = Sede::get();
+        $areas = Area::get();
+        $procesos = Proceso::get();
 
-        return view('admin.matrizRiesgos.index', compact('tipoactivos', 'tipoactivos', 'controles', 'teams'))->with('idAnalisis', $request['id']);
+        return view('admin.matrizRiesgos.index', compact('tipoactivos', 'tipoactivos', 'controles', 'matriz_heat', 'sedes', 'areas', 'procesos'))->with('idAnalisis', $request['id']);
     }
 }
