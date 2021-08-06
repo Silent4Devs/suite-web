@@ -13,19 +13,19 @@
             @php
                 use App\Models\Organizacion;
                 $organizacion = Organizacion::first();
-                $logotipo = 'img/logotipo-tabantaj.png';
-                if ($organizacion->logotipo) {
+                $logotipo = 'img/logo_policromatico_2.png';
+                if ($organizacion) {
                     $logotipo = 'images/' . $organizacion->logotipo;
                 }
             @endphp
-            <img src="{{ asset($logotipo) }}" class="img_logo w-100">
+            <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
         </div>
 
     </div>
 
 
 
-    <ul class="c-sidebar-nav dark_mode1">
+    <ul class="c-sidebar-nav dark_mode1" style="margin-top: -10px;">
 
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca">Menu</font>
@@ -161,7 +161,6 @@
                 <a href="{{ route('admin.systemCalendar') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
                     <i class="iconos_menu letra_blanca fa-fw fas fa-calendar">
-
                     </i>
                     <font class="letra_blanca"> Agenda </font>
                 </a>
@@ -169,7 +168,7 @@
         @endcan
         @can('centro_atencion_access')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.desk.index') }}#incidentes"
+                <a href="{{ route('admin.desk.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/desk') || request()->is('admin/desk/*') ? 'active' : '' }}">
                     <i class="iconos_menu letra_blanca fas fa-headset"></i>
                     <font class="letra_blanca"> Centro de atención

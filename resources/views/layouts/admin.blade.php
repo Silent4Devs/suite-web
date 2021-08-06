@@ -22,7 +22,7 @@
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css"
           rel="tylesheet"/>-->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/Silent4Business-Logo-Color.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"/>-->
     <!--<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>-->
     <!--<link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet"/>-->
@@ -185,7 +185,7 @@
             color: #008186 !important;
         }
 
-        .btn.btn-success {
+        .btn.btn-success, .btn.btn-danger {
             width: 150px;
             height: 35px;
             background-color: #00abb2 !important;
@@ -194,7 +194,7 @@
             border: none !important;
         }
 
-        .btn.btn-success:hover {
+        .btn.btn-success:hover, .btn.btn-danger:hover {
             color: #00abb2 !important;
             background-color: rgba(0, 0, 0, 0) !important;
             box-shadow: 0 0 0 1px #00abb2;
@@ -213,12 +213,16 @@
             border-radius: 100px;
             border: none !important;
             transition: 0.2s;
+            display: inline-block;
+            text-align: center;
+            padding-top: 5px;
         }
 
         .btn_cancelar:hover {
             color: #888 !important;
             background-color: rgba(0, 0, 0, 0) !important;
             box-shadow: 0 0 0 1px #888;
+            text-decoration: none;
         }
 
         ol.breadcrumb {
@@ -271,6 +275,89 @@
 
         .breadcrumb-item.active {
             color: #000000;
+        }
+
+    </style>
+
+
+
+
+
+    {{-- menu tabs --}}
+    <style type="text/css">
+        .caja_botones_menu {
+            display: flex;
+            justify-content: center;
+        }
+
+        .caja_botones_menu a {
+            text-decoration: none;
+            display: inline-block;
+            color: #008186;
+            padding: 5px 20px;
+            border-top: 1px solid #ccc !important;
+            border-right: 1px solid #ccc;
+            background-color: #f9f9f9;
+            margin: 0;
+            text-align: center;
+            align-items: center;
+        }
+
+        .caja_botones_menu a:first-child {
+            border-left: 1px solid #ccc;
+        }
+
+        .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {
+            border-bottom: 1px solid #ccc;
+        }
+
+        .caja_botones_menu a i {
+            margin-right: 7px;
+            font-size: 15pt;
+        }
+
+        .caja_botones_menu a.btn_activo,
+        .caja_botones_menu a.btn_activo:hover {
+            background-color: #fff;
+        }
+
+        .caja_botones_menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .caja_caja_secciones {
+            width: 100%;
+        }
+
+        .caja_secciones {
+            width: 100%;
+            display: flex;
+        }
+
+        .caja_secciones section {
+            width: 0px;
+            overflow: hidden;
+            transition: 0.4s;
+            opacity: 0;
+        }
+
+        .caja_tab_reveldada {
+            width: 100% !important;
+            overflow: none;
+            opacity: 1 !important;
+        }
+
+
+
+        .seccion_div {
+            overflow: hidden;
+            width: 990px;
+        }
+
+        .caja_tab_reveldada .seccion_div {
+            overflow: hidden;
+            transition-delay: 0.5s;
+            width: 100%;
         }
 
     </style>
@@ -863,6 +950,33 @@
 
 
 
+
+
+    <script type="text/javascript">
+        $(".caja_botones_menu a").click(function() {
+            $(".caja_botones_menu a").removeClass("btn_activo");
+            $(".caja_botones_menu a:hover").addClass("btn_activo");
+        });
+    </script>
+
+
+
+
+    {{-- menus tabs--}}
+    <script type="text/javascript">
+        $(".caja_botones_menu a").click(function() {
+            $(".caja_botones_menu a").removeClass("btn_activo");
+            $(".caja_botones_menu a:hover").addClass("btn_activo");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(".caja_botones_menu a").click(function() {
+            $("section").removeClass("caja_tab_reveldada");
+            var id_seccion = $(".caja_botones_menu a:hover").attr('data-tabs');
+            $(document.getElementById(id_seccion)).addClass("caja_tab_reveldada");
+        });
+    </script>
 
 
     @yield('scripts')

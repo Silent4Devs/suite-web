@@ -307,7 +307,7 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label class="required" for="email"><i class="far fa-envelope iconos-crear"></i>Correo
-                            Electronico</label>
+                            electrónico</label>
                         <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
                             name="email" id="email" value="{{ old('email', '') }}" required>
                         @if ($errors->has('email'))
@@ -317,7 +317,7 @@
                         @endif
                     </div>
                     <div class="form-group col-sm-6">
-                        <label for="telefono"><i class="far fa-envelope iconos-crear"></i>Teléfono</label>
+                        <label for="telefono"><i class="fas fa-mobile-alt iconos-crear"></i></i>Teléfono móvil</label>
                         <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="text"
                             name="telefono" id="telefono" value="{{ old('telefono', '') }}">
                         @if ($errors->has('telefono'))
@@ -326,22 +326,43 @@
                             </div>
                         @endif
                     </div>
+                    <div class="form-group col-sm-4">
+                        <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono oficina</label>
+                        <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="text"
+                            name="telefono" id="telefono" value="{{ old('telefono', '') }}">
+                        @if ($errors->has('telefono'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('telefono') }}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="telefono"><i class="fas fa-phone-volume iconos-crear"></i>Ext.</label>
+                        <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="text"
+                            name="telefono" id="telefono" value="{{ old('telefono', '') }}">
+                        @if ($errors->has('telefono'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('telefono') }}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="sede_id"><i class="fas fa-building iconos-crear"></i>Sede</label>
+                        <select class="form-control select2 {{ $errors->has('sede') ? 'is-invalid' : '' }}" name="sede_id"
+                            id="sede_id">
+                            @foreach ($sedes as $sede)
+                                <option value="{{ $sede->id }}" {{ old('sede_id') == $sede->id ? 'selected' : '' }}>
+                                    {{ $sede->sede }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('sede_id'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('sede_id') }}
+                            </div>
+                        @endif
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="sede_id"><i class="fas fa-building iconos-crear"></i>Sede</label>
-                    <select class="form-control select2 {{ $errors->has('sede') ? 'is-invalid' : '' }}" name="sede_id"
-                        id="sede_id">
-                        @foreach ($sedes as $sede)
-                            <option value="{{ $sede->id }}" {{ old('sede_id') == $sede->id ? 'selected' : '' }}>
-                                {{ $sede->sede }}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('sede_id'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('sede_id') }}
-                        </div>
-                    @endif
-                </div>
+                
                 <div class="row">
                     <div class="col">
                         <div class="input-group is-invalid">
@@ -413,6 +434,7 @@
                     <input type="hidden" id="snapshoot" readonly autocomplete="off" name="snap_foto">
                 </div>
                 <div class="text-right form-group col-12">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

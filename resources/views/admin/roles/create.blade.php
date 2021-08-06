@@ -70,14 +70,16 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div class="text-right form-group col-12" style="margin-left:15px;">
-                    <button class="btn btn-danger" type="submit" id="btnEnviar">
-                        {{ trans('global.save') }}
-                    </button>
-                </div>
-            </form>
-        </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
+            </div>
+            <div class="form-group col-12 text-right"  style="margin-left:15px;">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
+            </div>
+        </form>
     </div>
 @endsection
 

@@ -14,13 +14,16 @@ class CreateQuejasTable extends Migration
     public function up()
     {
         Schema::create('quejas', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('anonimo');
-            $table->string('nombre');
-            $table->string('correo');
             $table->string('quejado');
             $table->string('descripcion');
             $table->string('evidencia');
+
+            $table->unsignedBigInteger('empleado_quejo_id')->nullable();
+
+            $table->foreign('empleado_quejo_id')->references('id')->on('empleados');
+
             $table->timestamps();
             $table->softDeletes();
         });
