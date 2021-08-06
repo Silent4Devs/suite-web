@@ -22,7 +22,7 @@ class Vulnerabilidad extends Model
 
 
     public $table = 'vulnerabilidads';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -69,5 +69,10 @@ class Vulnerabilidad extends Model
     public function idAmenaza()
     {
         return $this->belongsTo(\App\Models\Amenaza::class, 'id_amenaza');
+    }
+
+    public function matriz_riesgos()
+    {
+        return $this->hasMany(MatrizRiesgo::class, 'id_vulnerabilidad');
     }
 }
