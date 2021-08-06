@@ -11,7 +11,7 @@ class UpdateActivoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('activo_edit');
+        return Gate::allows('configuracion_activo_edit');
     }
 
     public function rules()

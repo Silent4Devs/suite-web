@@ -64,8 +64,36 @@
                 <span class="help-block">{{ trans('cruds.activo.fields.descripcion_helper') }}</span>
             </div>
 
+            {{-- <div class="input-field col-sm-12">
+                Adjuntar Contrato
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>PDF</span>
+                        <input type="file" name="documentos_relacionados" accept="application/pdf">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Elegir documento pdf" readonly>
+                    </div>
+                </div>
+                <div class="ml-4 display-flex">
+                    <label class="red-text">{{ $errors->first('Type') }}</label>
+                </div>
+            </div> --}}
 
 
+
+            <div class="mb-3 col-sm-12 input-group">
+                <label for="documentos_relacionados"><i class="fas fa-file iconos-crear"></i>Documento Relacionado</label>
+                <div class="ml-3 custom-file">
+                  <input type="file" class="custom-file-input" id="inputGroupFile01" name="documentos_relacionados" aria-describedby="inputGroupFileAddon01"  class="form-control {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}"  value="{{ old('documentos_relacionados', '') }}">
+                  <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                  @if($errors->has('documentos_relacionados'))
+                  <div class="invalid-feedback">
+                      {{ $errors->first('documentos_relacionados') }}
+                  </div>
+                 @endif
+                </div>
+              </div>
 
             <div class="form-group col-md-4">
                 <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>Dueño</label>
@@ -137,7 +165,7 @@
 
 
             <div class="form-group col-md-6 sm-12">
-                <label for="ubicacion_id"><i class="fas fa-map-marker-alt iconos-crear"></i>{{ trans('cruds.activo.fields.ubicacion') }}</label>
+                <label class="required" for="ubicacion_id"><i class="fas fa-map-marker-alt iconos-crear"></i>Sede</label>
                 <select class="form-control select2 {{ $errors->has('ubicacion') ? 'is-invalid' : '' }}" name="ubicacion_id" id="ubicacion_id">
                     @foreach($ubicacions as $id => $ubicacion)
                         <option value="{{ $id }}" {{ old('ubicacion_id') == $id ? 'selected' : '' }}>{{ $ubicacion }}</option>
@@ -149,6 +177,17 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.activo.fields.ubicacion_helper') }}</span>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="required " for="sede"><i class="fas fa-map iconos-crear"></i>Ubicación</label>
+                <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" name="sede" id="sede">
+                @if($errors->has('sede'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('sede') }}
+                    </div>
+                @endif
+                  <span class="help-block"></span>
             </div>
 
 
@@ -165,7 +204,7 @@
             <div class="col-md-6">
                 <div class="row align-items-center">
                     <div class="form-group col-md-11">
-                        <label for="marca">Marca</label>
+                        <label for="marca"><i class="fas fa-copyright iconos-crear"></i>Marca</label>
                     <select class="selecmarca" name="state">
                         {{-- @foreach($marcas as $marca)
                         <option value="{{ $marca->id }}" >{{ $marca->nombre }}</option>
@@ -232,6 +271,18 @@
             </div>
 
 
+            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="fecha_alta"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de alta </label>
+                <input class="form-control" type="date" id="fecha_alta" value="{{ date('Y-m-d') }}"
+                    name="fecha_alta">
+                @if ($errors->has('fecha_alta'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_alta') }}
+                    </div>
+                @endif
+            </div>
+
+
 
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="fecha_compra"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de compra </label>
@@ -256,6 +307,34 @@
                 @endif
             </div>
 
+            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="fecha_baja"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de baja</label>
+                <input class="form-control" type="date" id="fecha_baja"
+                    name="fecha_baja">
+                @if ($errors->has('fecha_baja'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_baja') }}
+                    </div>
+                @endif
+            </div>
+
+
+            <div class="form-group col-12">
+                <label for="observaciones"><i class="fas fa-align-left iconos-crear"></i>Observaciones</label>
+                <textarea class="form-control {{ $errors->has('observaciones') ? 'is-invalid' : '' }}" name="observaciones" id="observaciones">{{ old('observaciones') }}</textarea>
+                @if($errors->has('observaciones'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('observaciones') }}
+                    </div>
+                @endif
+            </div>
+
+
+
+
+            <div class="text-right form-group col-12">
+                <input class="btn btn-danger" type="submit" value="Guardar">
+            </div>
 
 
             <div class="modal fade" id="modelolec" tabindex="-1" aria-labelledby="modelolecLabel" aria-hidden="true">
@@ -314,11 +393,7 @@
 
 
 
-            <div class="text-right form-group col-12">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
+
         </form>
     </div>
 </div>

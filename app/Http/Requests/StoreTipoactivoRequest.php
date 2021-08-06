@@ -11,7 +11,7 @@ class StoreTipoactivoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('tipoactivo_create');
+        return Gate::allows('configuracion_tipoactivo_create');
     }
 
     public function rules()

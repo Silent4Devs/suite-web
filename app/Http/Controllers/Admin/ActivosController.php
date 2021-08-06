@@ -11,6 +11,7 @@ use App\Models\Marca;
 use App\Models\Activo;
 use App\Models\Modelo;
 use App\Models\Empleado;
+use App\Models\Documento;
 use App\Models\Tipoactivo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -153,6 +154,7 @@ class ActivosController extends Controller
 
         $modelos=Modelo::get();
 
+
         return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions','empleados','area','marcas','modelos'));
     }
 
@@ -167,8 +169,17 @@ class ActivosController extends Controller
         //     ],
         // );
         // dd($request->all());
+
+
+
         $activo = Activo::create($request->all());
 
+        $extension = pathinfo($request->file('documentos_relacionados')->getClientOriginalName(), PATHINFO_EXTENSION);
+        $nombre_original =  $request->nombreactivo;
+        $nombre_compuesto = basename($nombre_original) . '.' . $extension;
+        $request->file('documentos_relacionados')->storeAs('public/activos', $nombre_compuesto); // Almacenar Archivo
+        $activo->documentos_relacionados=$nombre_original;
+        $activo->save();
         return redirect()->route('admin.activos.index')->with("success", 'Guardado con éxito');
     }
 
@@ -208,6 +219,8 @@ class ActivosController extends Controller
 
             ],
         );
+
+
 
         $activo->update($request->all());
 

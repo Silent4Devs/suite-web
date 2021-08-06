@@ -34,7 +34,10 @@
                             Responsable
                          </th>
                         <th>
-                            {{ trans('cruds.activo.fields.ubicacion') }}
+                            Sede
+                        </th>
+                        <th>
+                            Ubicación
                         </th>
                         <th>
                            Marca
@@ -49,10 +52,19 @@
                             N° producto
                         </th>
                         <th>
-                            Fecha fin
+                            Fecha de alta
+                        </th>
+                        <th>
+                            Fecha fin de garantía
                         </th>
                         <th>
                             Fecha compra
+                        </th>
+                        <th>
+                            Fecha de baja
+                        </th>
+                        <th>
+                            Observaciones
                         </th>
                         <th>
                             Opciones
@@ -204,13 +216,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -231,14 +243,14 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.activos.index') }}",
-                columnDefs:[{targets:[6,7,8,9,10,11,12,13],visible:false}],
+                columnDefs:[{targets:[7,8,9,10,11,12,13,14,15,16,17],visible:false}],
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
                     {
-                        data: 'nombre_activo',
-                        name: 'nombre_activo'
+                        data: 'nombreactivo',
+                        name: 'nombreactivo'
 
 
                     },
@@ -267,6 +279,10 @@
                         name: 'ubicacion.sede'
                     },
                     {
+                        data: 'sede',
+                        name: 'sede'
+                    },
+                    {
                         data: 'marca',
                         name: 'marca'
                     },
@@ -283,12 +299,24 @@
                         name: 'n_producto'
                     },
                     {
+                        data: 'fecha_alta',
+                        name: 'fecha_alta'
+                    },
+                    {
                         data: 'fecha_fin',
                         name: 'fecha_fin'
                     },
                     {
                         data: 'fecha_compra',
                         name: 'fecha_compra'
+                    },
+                    {
+                        data: 'fecha_baja',
+                        name: 'fecha_baja'
+                    },
+                    {
+                        data: 'observaciones',
+                        name: 'observaciones'
                     },
                     {
                         data: 'actions',
