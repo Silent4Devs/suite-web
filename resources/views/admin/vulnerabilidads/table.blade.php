@@ -1,4 +1,4 @@
-<table class="table table-bordered w-100 datatable datatable-amenaza">
+<table class="table table-bordered w-100 datatable datatable-vulnerabilidad">
     <thead class="thead-dark">
         <tr>
             <th>
@@ -8,7 +8,7 @@
                 Nombre
             </th>
             <th>
-                Categoria
+                Amenaza
             </th>
             <th>
                 descripcion

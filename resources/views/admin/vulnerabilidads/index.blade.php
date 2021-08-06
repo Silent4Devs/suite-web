@@ -3,11 +3,11 @@
     <div class="mt-5 card">
 
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Amenazas</strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Vulnerabilidades</strong></h3>
         </div>
         <div style="margin-bottom: 10px; margin-left:10px;" class="row">
             <div class="col-lg-12">
-                @include('csvImport.modal', ['model' => 'Amenaza', 'route' => 'admin.amenazas.parseCsvImport'])
+                @include('csvImport.modal', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
             </div>
         </div>
         <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
@@ -27,7 +27,7 @@
         @include('flash::message')
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            @include('admin.amenazas.table')
+            @include('admin.vulnerabilidads.table')
         </div>
     </div>
 
@@ -39,7 +39,7 @@
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
+                    title: `Vulnerabilidads ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
@@ -49,7 +49,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
+                    title: `Vulnerabilidads ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
@@ -59,7 +59,7 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
+                    title: `Vulnerabilidads ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar PDF',
@@ -75,7 +75,7 @@
                 },
                 {
                     extend: 'print',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
+                    title: `Vulnerabilidads ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
@@ -107,8 +107,8 @@
 
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar Amenaza',
-                url: "{{ route('admin.amenazas.create') }}",
+                titleAttr: 'Agregar Vulnerabilidad',
+                url: "{{ route('admin.vulnerabilidads.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                     let {
@@ -131,7 +131,7 @@
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.amenazas.massDestroy') }}",
+                url: "{{ route('admin.vulnerabilidads.massDestroy') }}",
                 className: 'btn-danger',
                 action: function(e, dt, node, config) {
                     var ids = $.map(dt.rows({
@@ -172,7 +172,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.amenazas.index') }}",
+                ajax: "{{ route('admin.vulnerabilidads.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -182,8 +182,8 @@
                         name: 'nombre'
                     },
                     {
-                        data: 'categoria',
-                        name: 'categoria'
+                        data: 'amenaza',
+                        name: 'amenaza'
                     },
                     {
                         data: 'descripcion',
@@ -199,7 +199,7 @@
                     [1, 'desc']
                 ],
             };
-            let table = $('.datatable-amenaza').DataTable(dtOverrideGlobals);
+            let table = $('.datatable-vulnerabilidad').DataTable(dtOverrideGlobals);
         });
     </script>
 @endsection

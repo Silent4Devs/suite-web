@@ -11,7 +11,7 @@ use App\Http\Requests\CreateAmenazaRequest;
 use App\Http\Requests\UpdateAmenazaRequest;
 use App\Repositories\AmenazaRepository;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\MassDestroySedeRequest;
+use App\Http\Requests\MassDestroyAmenazaRequest;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use Flash;
