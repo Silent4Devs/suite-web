@@ -1,6 +1,6 @@
 <div class="datatable-fix" style="width: 100%;">
 
-   <table class="table tabla_mejoras">
+   <table class="table tabla_sugerencias">
    		<thead>
    			<tr>
        			{{-- <th>ID</th> --}}
@@ -9,21 +9,21 @@
        			<th>Correo</th>
        			<th>Teléfono</th>
        			<th>Descripción</th>
-       			<th>Mejora</th>
+       			<th>sugerencia</th>
        			<th>Opciones</th> 
    			</tr>
    		</thead>
    		<tbody>
-   			@foreach($mejoras as $mejora)
+   			@foreach($sugerencias as $sugerencia)
 	   			<tr>
-	       			<td>{{ $mejora->id }}</td>
-	       			<td>{{ $mejora->empleado_mejoro_id }}</td>
-	       			<td>{{ $mejora->empleado_mejoro_id }}</td> 
-	       			<td>{{ $mejora->empleado_mejoro_id }}</td> 
-	       			<td>{{ $mejora->descripcion }}</td>
-	       			<td>{{ $mejora->mejora }}</td>
+	       			<td>{{ $sugerencia->id }}</td>
+	       			<td>{{ $sugerencia->empleado_sugerir_id }}</td>
+	       			<td>{{ $sugerencia->empleado_sugerir_id }}</td> 
+	       			<td>{{ $sugerencia->empleado_sugerir_id }}</td> 
+	       			<td>{{ $sugerencia->descripcion }}</td>
+	       			<td>{{ $sugerencia->sugerencia_dirigida }}</td>
 	       			<td>
-	       				<a href="{{ route('admin.desk.mejoras-edit', $mejora->id) }}"><i class="fas fa-edit"></i></a>
+	       				<a href="{{ route('admin.desk.sugerencias-edit', $sugerencia->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
 	   			</tr>
    			@endforeach
@@ -121,7 +121,7 @@
             let dtOverrideGlobals = {
                 buttons: dtButtons,
             };
-            let table = $('.tabla_mejoras').DataTable(dtOverrideGlobals);
+            let table = $('.tabla_sugerencias').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();

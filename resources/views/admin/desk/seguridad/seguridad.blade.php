@@ -3,7 +3,7 @@
 		width: 100%;
 		height: 80px;
 		color: #fff;
-		margin: 40px 0;
+		margin-bottom: 40px;
 		font-size: 15pt;
 		border-radius: 6px;
 	}

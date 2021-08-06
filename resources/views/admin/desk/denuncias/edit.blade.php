@@ -63,8 +63,8 @@
 					<label class="form-label">Describa detalladamente su denuncia</label><br>
 					<div style="color: #555;">
 						Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o
-					desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,
-					¿Cuándo?, ¿Dónde?, considerando lugares y fechas, horas, palabras utilizadas, acciones que dan origen al hecho
+						desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,
+						¿Cuándo?, ¿Dónde?, considerando lugares y fechas, horas, palabras utilizadas, acciones que dan origen al hecho
 					</div>
 					<input type="" name="descripcion" class="form-control">
 				</div>

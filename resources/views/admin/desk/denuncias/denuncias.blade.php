@@ -27,7 +27,7 @@
 	       			<td>{{ $denuncia->evidencia }}</td>
 	       			<td>{{ $denuncia->denunciado }}</td>
 	       			<td>
-	       				<a href="{{ route('admin.desk.seguridad-edit', $denuncia->id) }}"><i class="fas fa-edit"></i></a>
+	       				<a href="{{ route('admin.desk.denuncias-edit', $denuncia->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
 	   			</tr>
    			@endforeach

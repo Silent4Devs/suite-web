@@ -37,7 +37,7 @@
                     <i class="fas fa-user iconos_menu letra_blanca"></i>
 
                     </i>
-                    <span class="letra_blanca"> Mi perfil</span>
+                    <font class="letra_blanca"> Mi perfil</font>
                 </a>
             </li>
         @endcan

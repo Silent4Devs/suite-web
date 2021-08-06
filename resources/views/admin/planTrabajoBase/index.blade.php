@@ -106,7 +106,6 @@
         .botones_vistas_gantt a {
             width: 100px;
             display: inline-block;
-            height: auto;
             padding: 5px 10px;
             background-color: #fff;
             color: #00abb2;
@@ -163,33 +162,7 @@
         }
 
 
-        .caja_tabs_general {
-            position: relative;
-            width: 100%;
-            height: auto;
-            overflow: hidden;
-            scroll-behavior: smooth;
-            margin-top: -200px;
-            padding-top: 200px;
-            z-index: 0;
-        }
-
-        .caja_tabs {
-            width: 400%;
-            height: auto;
-            top: 0;
-            left: 0;
-            display: flex;
-        }
-
-        section {
-            width: 25%;
-        }
-
-        section:target {
-            margin-top: -500px;
-            padding-top: 500px;
-        }
+        
 
         @media print {
 
@@ -251,16 +224,16 @@
                 <div class="col-4">
                     <h2 id="titlo-tab" class="text-capitalize">Gantt</h2>
                 </div>
-                <div class="text-right col-8">
-                    <a href="#original_gantt"
+                <div class="text-right col-8 caja_botones_menu">
+                    <a href="#" data-tabs="original_gantt"
                         onclick="loadGanttFromServer();cambiarTitulo('Gantt');checkChangesGantt('Gantt')"
                         class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
-                    <a href="#tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');checkChangesGantt('Tabla')"
+                    <a href="#" data-tabs="tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');checkChangesGantt('Tabla')"
                         class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
-                    <a href="#calendario_gantt"
+                    <a href="#" data-tabs="calendario_gantt"
                         onclick="initCalendar();cambiarTitulo('Calendario');checkChangesGantt('Calendario')"
                         class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
-                    <a href="#kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');checkChangesGantt('Kanban')"
+                    <a href="#" data-tabs="kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');checkChangesGantt('Kanban')"
                         class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
                 </div>
             </div>
@@ -268,9 +241,9 @@
 
         </div>
         <div id="plan_trabajo_workspace">
-            <div class="caja_tabs_general">
-                <div class="caja_tabs">
-                    <section id="original_gantt">
+            <div class="caja_caja_secciones">
+                <div class="caja_secciones">
+                    <section id="original_gantt" class="caja_tab_reveldada">
                         @include('admin.planTrabajoBase.gantt')
                     </section>
 
