@@ -1,6 +1,6 @@
 <div id="sistema_gantt">
     <p>
-        Se debera guardar los cambios realizados presionando el icono "Guardar"
+        Se deberán guardar los cambios realizados presionando el icono "Guardar"
     </p>
 
 

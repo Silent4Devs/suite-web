@@ -199,14 +199,14 @@
         @endcan
         {{-- <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.planTrabajoBase.index') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/planTrabajoBase') || request()->is('admin/planTrabajoBase/*') ? 'active' : '' }}">
+                class="c-sidebar-nav-link {{989 request()->is('admin/planTrabajoBase') || request()->is('admin/planTrabajoBase/*') ? 'active' : '' }}">
                 <i class="fas fa-clipboard-list iconos_menu letra_blanca"></i>
 
                 </i>
                 <font class="letra_blanca"> Plan de implementación </font>
             </a>
         </li> --}}
-        @can('analisis_riesgo_access')
+        {{-- @can('analisis_riesgo_access')
             {{-- <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.analisis-riesgos.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/analisis-riesgos') || request()->is('admin/analisis-riesgos/*') ? 'active' : '' }}">
@@ -214,51 +214,49 @@
                     <font class="letra_blanca"> Análisis de riesgos </font>
                 </a>
             </li> --}}
-            <li
-                class="c-sidebar-nav-dropdown {{ request()->is('admin/matriz-riesgos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-unos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-dos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-tres*') ? 'c-show' : '' }}">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
-                    <font class="letra_blanca"> Análisis de riesgos </font>
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.organizacions.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
-                            <i class="fas fa-skull-crossbones iconos_menu letra_blanca">
-
-                            </i>
-                            <font class="letra_blanca" style="margin-left:5px;"> Amenazas</font>
-                        </a>
-                    </li>
-                    @can('sede_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.sedes.obtenerListaSedes') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/obtenerListaSedes') || request()->is('admin/obtenerListaSedes/*') ? 'active' : '' }}">
-                                <i class="fas fa-radiation-alt iconos_menu letra_blanca">
-
-                                </i>
-                                <font class="letra_blanca"> Vulnerabilidades</font>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('area_access')
-                        {{-- <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.analisis-riesgos.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
-                                <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
+        <li
+            class="c-sidebar-nav-dropdown {{ request()->is('admin/matriz-riesgos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-unos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-dos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-tres*') ? 'c-show' : '' }}">
+            <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                <i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
+                <font class="letra_blanca"> Análisis de riesgos </font>
+            </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route('admin.amenazas.index') }}"
+                        class="c-sidebar-nav-link {{ request()->is('admin/amenazas') || request()->is('admin/amenazas/*') ? 'active' : '' }}">
+                        <i class="fas fa-fire iconos_menu letra_blanca">
 
                         </i>
-                                <i class="fas fa-table iconos_menu letra_blanca">
+                        <font class="letra_blanca" style="margin-left:5px;"> Amenazas</font>
+                    </a>
+                </li>
 
-                                </i>
-                                <font class="letra_blanca">Matriz de riesgos</font>
-                            </a>
-                        </li> --}}
-                    @endcan
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.vulnerabilidads.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/vulnerabilidads') || request()->is('admin/vulnerabilidads/*') ? 'active' : '' }}">
+                            <i class="fas fa-shield-alt iconos_menu letra_blanca">
 
-                </ul>
-            </li>
-            {{-- <li
+                            </i>
+                            <font class="letra_blanca"> Vulnerabilidades</font>
+                        </a>
+                    </li>
+
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.analisis-riesgos.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
+                            {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
+
+                        </i> --}}
+                            <i class="fas fa-table iconos_menu letra_blanca">
+
+                            </i>
+                            <font class="letra_blanca">Matriz de Riesgos</font>
+                        </a>
+                    </li>
+
+            </ul>
+        </li>
+        {{-- <li
                 class="c-sidebar-nav-dropdown {{ request()->is('admin/matriz-riesgos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-unos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-dos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-tres*') ? 'c-show' : '' }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fas fa-exclamation-triangle iconos_menu letra_blanca">
@@ -280,7 +278,7 @@
                     @endcan
                 </ul>
             </li> --}}
-        @endcan
+        {{-- @endcan --}}
         {{-- <li class="c-sidebar-nav-item">
             <a href="{{ url('/admin/analisis-brechas') }}" class="c-sidebar-nav-link">
                 <i class="iconos_menu letra_blanca fas fa-fw fa-file-signature">
@@ -289,7 +287,7 @@
                 <font class="letra_blanca"> Análisis de brechas</font>
             </a>
         </li> --}}
-        @can('normas_access')
+        {{-- @can('area_access')
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca">Normas</font>
             </li>
@@ -302,7 +300,7 @@
                     </a>
                 </li>
             @endcan
-        @endcan
+        @endcan --}}
         @can('administracion_access')
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca">Administración</font>

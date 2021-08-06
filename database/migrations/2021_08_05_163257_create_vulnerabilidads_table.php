@@ -14,8 +14,12 @@ class CreateVulnerabilidadsTable extends Migration
     public function up()
     {
         Schema::create('vulnerabilidads', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->string('nombre');
+            $table->string('descripcion')->nullable();
+            $table->unsignedInteger('id_amenaza')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

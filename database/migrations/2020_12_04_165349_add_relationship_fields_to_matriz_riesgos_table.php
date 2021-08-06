@@ -9,8 +9,6 @@ class AddRelationshipFieldsToMatrizRiesgosTable extends Migration
     public function up()
     {
         Schema::table('matriz_riesgos', function (Blueprint $table) {
-            $table->unsignedInteger('activo_id')->nullable();
-            $table->foreign('activo_id', 'activo_fk_2702072')->references('id')->on('tipoactivos');
             $table->unsignedInteger('controles_id')->nullable();
             $table->foreign('controles_id', 'controles_fk_2702087')->references('id')->on('controles');
             $table->unsignedInteger('team_id')->nullable();

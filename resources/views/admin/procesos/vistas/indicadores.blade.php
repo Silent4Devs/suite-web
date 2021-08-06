@@ -26,16 +26,13 @@
 </style>
 
 
-<div id="contenedor_resultado" class="row d-none">
-    <div class="col-sm-12">
-        <canvas id="resultadobarra" style="width:100%; height:400px;"></canvas>
-    </div>
-</div>
+
 
 <div class="row">
     <div class="col-sm-7">
         <div class="card-body datatable-fix">
 
+            <p class="ml-5">De click sobre una fila para desplegar información</p>
 
 
             <table class="table table-hover table-bordered tbl-categorias w-100">
@@ -84,20 +81,31 @@
             </table>
         </div>
     </div>
-    <div class="col-sm-5">
 
-        <div class="d-flex justify-content-center">
-            <div style="" id="resultado">
-                <h5>De click sobre una fila para desplegar información</h5>
+
+        <div class="mt-5 col-sm-5">
+
+            <div class="d-flex justify-content-center">
+                <div style="" id="resultado" style="width:100%;">
+
+                </div>
+
             </div>
 
         </div>
 
+
+
+
+
+
+</div>
+
+
+<div id="contenedor_resultado" class="row d-none">
+    <div class="col-sm-12">
+        <canvas id="resultadobarra" style="width:100%; height:300px;"></canvas>
     </div>
-
-
-
-
 </div>
 
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>

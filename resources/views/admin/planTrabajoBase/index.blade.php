@@ -215,14 +215,14 @@
 
     <div class="mt-5 mb-5">
         <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Plan de Trabajo </strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Plan de Implementación ISO 27001</strong></h3>
         </div>
         <div id="bloqueado"></div>
 
         <div class="botones_vistas_gantt">
             <div class="row">
                 <div class="col-4">
-                    <h2 id="titlo-tab" class="text-capitalize">Gantt</h2>
+                    <h2 id="titlo-tab" class="text-capitalize">Diagrama Gantt</h2>
                 </div>
                 <div class="text-right col-8 caja_botones_menu">
                     <a href="#" data-tabs="original_gantt"
