@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="col-2">
                                         <p><a href="sede-ubicacionorganizacion/{{ $sedes->id }}" target="_blank"><i
-                                                    class="fas fa-map-marked-alt fa-2x text-info"></i></a></p>
+                                                    class="fas fa-map-marked-alt fa-2x text-info "></i></a></p>
                                     </div>
                                 </div>
 

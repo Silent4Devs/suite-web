@@ -43,6 +43,7 @@
             background-color: #f1f1f1;
         }
 
+
         #desk .caja_caja_secciones {
             width: 100%;
         }
@@ -79,6 +80,7 @@
         .caja_oculta_dinamica {
             display: none;
         }
+
 
         #digrama textarea {
             position: absolute;

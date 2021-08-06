@@ -16,6 +16,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -24,7 +26,7 @@ class DocumentosController extends Controller
 {
     public function index()
     {
-
+        abort_if(Gate::denies('documentos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones', 'proceso', 'macroproceso')->get();
 
         return view('admin.documentos.index', compact('documentos'));
@@ -32,6 +34,7 @@ class DocumentosController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('documentos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
         $procesos = Proceso::get();
         $empleados = Empleado::get();
@@ -156,13 +159,9 @@ class DocumentosController extends Controller
         return $documento;
     }
 
-    public function show(Documento $documento)
-    {
-        //
-    }
-
     public function edit(Documento $documento)
     {
+        abort_if(Gate::denies('documentos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
         $procesos = Proceso::get();
         $empleados = Empleado::get();
@@ -324,6 +323,7 @@ class DocumentosController extends Controller
 
     public function destroy(Request $request, Documento $documento)
     {
+        abort_if(Gate::denies('documentos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             if ($documento->tipo == 'proceso') {
                 // logica para eliminar el proceso vinculado al documento
@@ -446,6 +446,7 @@ class DocumentosController extends Controller
 
     public function renderHistoryReview(Documento $documento)
     {
+        abort_if(Gate::denies('documentos_history_reviews'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento->id)->get();
 
         return view('admin.documentos.history-reviews', compact('documento', 'revisiones'));
@@ -453,6 +454,7 @@ class DocumentosController extends Controller
 
     public function renderViewDocument(Documento $documento)
     {
+        abort_if(Gate::denies('documentos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $path_documento = $this->getPathDocumento($documento, 'storage');
 
         return view('admin.documentos.view-document-file', compact('documento', 'path_documento'));
@@ -611,6 +613,7 @@ class DocumentosController extends Controller
 
     public function renderHistoryVersions(Documento $documento)
     {
+        abort_if(Gate::denies('documentos_versiones'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
 
         return view('admin.documentos.versions-document', compact('documento', 'versiones'));

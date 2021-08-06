@@ -24,7 +24,7 @@ class ActivosController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('activo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configuracion_activo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Activo::with(['tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team'])->select(sprintf('%s.*', (new Activo)->table));
@@ -34,9 +34,9 @@ class ActivosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'activo_show';
-                $editGate      = 'activo_edit';
-                $deleteGate    = 'activo_delete';
+                $viewGate      = 'configuracion_activo_show';
+                $editGate      = 'configuracion_activo_edit';
+                $deleteGate    = 'configuracion_activo_delete';
                 $crudRoutePart = 'activos';
 
                 return view('partials.datatablesActions', compact(
@@ -53,7 +53,7 @@ class ActivosController extends Controller
             });
 
             $table->editColumn('nombre_activo', function ($row) {
-                return $row->nombreactivo ? $row->nombreactivo: "";
+                return $row->nombre_activo ? $row->nombre_activo : "";
             });
 
             $table->addColumn('tipoactivo_tipo', function ($row) {
@@ -135,7 +135,7 @@ class ActivosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('activo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configuracion_activo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -169,13 +169,12 @@ class ActivosController extends Controller
         // dd($request->all());
         $activo = Activo::create($request->all());
 
-
-        return redirect()->route('admin.activos.index')->with("success",'Guardado con éxito');
+        return redirect()->route('admin.activos.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Activo $activo)
     {
-        abort_if(Gate::denies('activo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configuracion_activo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -212,12 +211,12 @@ class ActivosController extends Controller
 
         $activo->update($request->all());
 
-        return redirect()->route('admin.activos.index')->with("success",'Editado con éxito');
+        return redirect()->route('admin.activos.index')->with("success", 'Editado con éxito');
     }
 
     public function show(Activo $activo)
     {
-        abort_if(Gate::denies('activo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configuracion_activo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activo->load('tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team', 'activoIncidentesDeSeguridads');
 
@@ -226,11 +225,11 @@ class ActivosController extends Controller
 
     public function destroy(Activo $activo)
     {
-        abort_if(Gate::denies('activo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configuracion_activo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activo->delete();
 
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyActivoRequest $request)

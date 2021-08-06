@@ -208,5 +208,153 @@
     <script src="{{ asset('../js/calendar_tui/tui-calendar.js') }}"></script>
     <script src="{{ asset('../js/calendar_tui/calendars.js') }}"></script>
     <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
+    <script type="text/javascript">
+
+        // let recursos = @json($recursos);
+        // let recursos_array = recursos.map(recurso=>{
+        //     return { 
+        //         id: `recursos${recurso.id}`,
+        //         calendarId: '3',
+        //         title: `${recurso.cursoscapacitaciones}`,
+        //         category: 'allday',
+        //         dueDateClass: '',
+        //         start: `${recurso.fecha_curso}`,
+        //         end: `${recurso.fecha_fin}`,
+        //         isReadOnly : true,
+        //     }
+        // });
+
+        // let actividades = @json($actividades);
+        // actividades.forEach(task => {
+        //     console.log(task);
+        // });
+        // let actividades_array = actividades.map(task=>{
+        //    let foto = 'man.png';
+        //          let images = "";
+        //          let assigs = task.assigs.map(asignado => {
+        //              return response.resources.find(r => Number(r.id) === Number(asignado.resourceId));
+        //          });
+        //          let filteredAssigs = assigs.filter(function(a) {
+        //              return a != null;
+        //          });
+        //          let bgColor = "#00b1e1";
+        //          let estatus = "Sin iniciar";
+        //          if (filteredAssigs.length > 0) {
+        //              filteredAssigs.forEach(assig => {
+        //                  if (assig.foto == null) {
+        //                      if (assig.genero == 'M') {
+        //                          foto = 'woman.png';
+        //                      } else {
+        //                          foto = 'usuario_no_cargado.png';
+        //                      }
+        //                  } else {
+        //                      foto = assig.foto;
+        //                  }
+
+        //                  images +=
+        //                      `<img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}" title="${assig.name}"/>`;
+        //              });
+        //          }
+        //          switch (task.status) {
+        //              case "STATUS_ACTIVE":
+        //                  bgColor = "#ecde00";
+        //                  estatus = "En progreso"
+        //                  break;
+        //              case "STATUS_DONE":
+        //                  bgColor = "#17d300";
+        //                  estatus = "Completado"
+        //                  break;
+        //              case "STATUS_FAILED":
+        //                  bgColor = "#e10000";
+        //                  estatus = "Con retraso"
+        //                  break;
+        //              case "STATUS_SUSPENDED":
+        //                  bgColor = "#e7e7e7";
+        //                  estatus = "Suspendida"
+        //                  break;
+        //              case "STATUS_UNDEFINED":
+        //                  bgColor = "#00b1e1";
+        //                  estatus = "Sin iniciar"
+        //                  break;
+        //              default:
+        //                  bgColor = "#00b1e1";
+        //                  estatus = "Sin iniciar"
+        //                  break;
+        //          }
+        //          return {
+        //              id: `r_${task.id}`,
+        //              calendarId: `${task.level == 0 ? '1': '2'}`,
+        //             //  bgColor: bgColor,
+        //              title: `${task.level == 0 ? 'Fase: ': 'Actividad: '}${task.name}`,
+        //              category: 'allday',
+        //              body: `${filteredAssigs.length > 0 ? "<h5>Responsables</h5>":""} ${images} <p>Estatus: <span class="badge ${task.status}">${estatus}</span></p>`,
+        //              dueDateClass: '',
+        //              start: `${moment.unix((task.start)/1000).format("YYYY-MM-DD")} 04:59:59`,
+        //              end: `${moment.unix((task.end)/1000).format("YYYY-MM-DD")} 05:00:00`,
+        //              isReadOnly: true,
+        //              disableClick: true,
+        //              useCreationPopup: true
+        //          }
+        // });
+        // console.log(actividades);
+
+         ScheduleList = [
+            
+
+           
+
+
+            @foreach($recursos as $it_recursos)
+
+                {
+
+                    id: 'recursos{{$it_recursos->id}}',
+                    calendarId: '3',
+                    title: '{{$it_recursos->cursoscapacitaciones}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{  \Carbon\Carbon::parse($it_recursos->fecha_curso)->format('Y-m-d') }}',
+                    end: '{{  \Carbon\Carbon::parse($it_recursos->fecha_fin)->format('Y-m-d') }}',
+                    body: `
+                        <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
+                        <font style="font-weight: bold;">Duración:</font> ${@json($it_recursos->duracion)} horas<br>
+                        <font style="font-weight: bold;">Instructor:</font> ${@json($it_recursos->instructor)}<br>
+                        <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}:</font> ${@json($it_recursos->ubicacion)}<br>
+                    `,
+                    isReadOnly : true,
+                },
+
+            @endforeach
+
+             @foreach($auditorias_anual as $it_auditorias_anual)
+                {
+                    id: 'auditoria{{$it_auditorias_anual->id}}',
+                    calendarId: '2',
+                    title: 'Tipo: {{$it_auditorias_anual->tipo}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_auditorias_anual->fechainicio)->format("Y-m-d") }}',
+                    end: '',
+                    isReadOnly : true, 
+                },
+            @endforeach
+
+            @foreach($actividades as $task)
+                 {
+                    id: 'recurasdsos{{$task['id']}}',
+                    calendarId: '1',
+                    title: 'Actividad: {{$task['name']}}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ \Carbon\Carbon::createFromTimestamp($task['start'] / 1000)->toDateTimeString()
+                     }}',
+                    end: '{{ \Carbon\Carbon::createFromTimestamp($task['end'] / 1000)->toDateTimeString()
+                     }}',
+                    isReadOnly : true,
+
+                },
+            @endforeach
+        ]
+    </script>
     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
 @endsection

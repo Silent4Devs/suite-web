@@ -16,6 +16,7 @@
                 @include('admin.entendimientoOrganizacions._form', [
                 'btnText' => 'Actualizar',
                 ])
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
             </form>
         </div>
     </div>

@@ -48,9 +48,11 @@
                             <th style="vertical-align: top">
                                 Responsable
                             </th>
-                            <th style="vertical-align: top">
-                                Visualizar
-                            </th>
+                            @can('documentos_show')
+                                <th style="vertical-align: top">
+                                    Visualizar
+                                </th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -137,16 +139,17 @@
                                         <span class="badge badge-info">Sin Asignar</span>
                                     @endif
                                 </td>
-                                <td>
-                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                @can('documentos_show')
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
 
-                                        <a class="btn btn-sm" title="Visualizar Documento"
-                                            href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    </div>
-                                </td>
-
+                                            <a class="btn btn-sm" title="Visualizar Documento"
+                                                href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

@@ -8,6 +8,8 @@ use App\Models\Organizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
 class MacroprocesoController extends Controller
@@ -19,6 +21,7 @@ class MacroprocesoController extends Controller
      */
     public function index(Request $request)
     {
+        abort_if(Gate::denies('configuracion_macroproceso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($query = Macroproceso::get());
         if ($request->ajax()) {
             $query = Macroproceso::get();
@@ -72,6 +75,7 @@ class MacroprocesoController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('configuracion_macroproceso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos = DB::table('grupos')->select('id', 'nombre')->get();
         //dd("teasdas". $organizaciones);
 
@@ -96,40 +100,23 @@ class MacroprocesoController extends Controller
         );
         $macroprocesos = Macroproceso::create($request->all());
         Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
-        return redirect()->route('admin.macroprocesos.index')->with("success",'Guardado con éxito');
+        return redirect()->route('admin.macroprocesos.index')->with("success", 'Guardado con éxito');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Macroproceso  $macroproceso
-     * @return \Illuminate\Http\Response
-     */
     public function show(Macroproceso $macroproceso)
     {
+        abort_if(Gate::denies('configuracion_macroproceso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.macroprocesos.show', compact('macroproceso'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Macroproceso  $macroproceso
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Macroproceso $macroproceso)
     {
+        abort_if(Gate::denies('configuracion_macroproceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos = DB::table('grupos')->select('id', 'nombre')->get();
 
         return view('admin.macroprocesos.edit', compact('macroproceso'))->with('grupos', $grupos);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Macroproceso  $macroproceso
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Macroproceso $macroproceso)
     {
         $request->validate(
@@ -141,22 +128,13 @@ class MacroprocesoController extends Controller
             ],
         );
         $macroproceso->update($request->all());
-        // Flash::success('<h5 class="text-center">Macroproceso actualizado satisfactoriamente</h5>');
-        return redirect()->route('admin.macroprocesos.index')->with("success",'Editado con éxito');
+        return redirect()->route('admin.macroprocesos.index')->with("success", 'Editado con éxito');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Macroproceso  $macroproceso
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Macroproceso $macroproceso)
     {
+        abort_if(Gate::denies('configuracion_macroproceso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso->delete();
-        // Flash::success('<h5 class="text-center">Macroproceso eliminado satisfactoriamente</h5>');
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
-
-
 }

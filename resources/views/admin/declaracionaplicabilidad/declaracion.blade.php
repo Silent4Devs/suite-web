@@ -1,5 +1,3 @@
-
-
 <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
     <div class="row w-100">
         <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -9,7 +7,8 @@
         </div>
         <div class="col-11">
             <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Intrucciones</p>
-            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor seleccione de los siguientes controles cuales
+            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor seleccione de los siguientes controles
+                cuales
                 serán aplicables a su organización y justifique su selección
             </p>
 
@@ -24,11 +23,13 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="mb-2 col">
-                            <button url="{{ route('admin.declaracion-aplicabilidad.descargar') }}"
-                                onclik="generarReporte()" class="btn btn-sm btn-outline-primary generar-reporte">
-                                <i class="mr-1 fas fa-print"></i>
-                                Generar Reporte
-                            </button>
+                            @can('declaracion_aplicabilidad_reporte')
+                                <button url="{{ route('admin.declaracion-aplicabilidad.descargar') }}"
+                                    onclik="generarReporte()" class="btn btn-sm btn-outline-primary generar-reporte">
+                                    <i class="mr-1 fas fa-print"></i>
+                                    Generar Reporte
+                                </button>
+                            @endcan
                             @if (count($lista_archivos_declaracion) > 0)
                                 <div class="btn-group dropright">
                                     <button type="button" class="btn btn-sm btn-outline-danger dropdown-toggle"
@@ -61,12 +62,12 @@
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.5 Políticas de Seguridad de Información</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">A.5
+                                            Políticas de Seguridad de Información</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.5.1 Directivas de la gestión para seguridad de la
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.5.1 Directivas de la gestión para seguridad de la
                                             información</td>
                                     </tr>
                                     @foreach ($gapda5s as $g5s)
@@ -85,17 +86,15 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g5s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g5s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g5s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
                                             <td class="text-justify">
                                                 <a data-type="textarea" data-pk="{{ $g5s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
-                                                    data-title="Justificacion"
-                                                    data-value="{{ $g5s->justificacion }}" class="justificacion"
-                                                    data-name="justificacion">
+                                                    data-title="Justificacion" data-value="{{ $g5s->justificacion }}"
+                                                    class="justificacion" data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -118,12 +117,12 @@
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.6 Organización de la seguridad de la información</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">A.6
+                                            Organización de la seguridad de la información</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.6.1 organización interna</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.6.1 organización interna</td>
                                     </tr>
 
                                     @foreach ($gapda6s as $g6s)
@@ -140,18 +139,16 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g6s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g6s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g6s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g6s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g6s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g6s->id) }}"
-                                                    data-title="Justificacion"
-                                                    data-value="{{ $g6s->justificacion }}" class="justificacion"
-                                                    data-name="justificacion">
+                                                    data-title="Justificacion" data-value="{{ $g6s->justificacion }}"
+                                                    class="justificacion" data-name="justificacion">
                                                 </a>
                                             </td>
 
@@ -192,9 +189,8 @@
                                         <td class="text-justify">
                                             <a href="#" data-type="textarea" data-pk="{{ $g62s->id }}"
                                                 data-url="{{ route('admin.declaracion-aplicabilidad.update', $g62s->id) }}"
-                                                data-title="Justificacion"
-                                                data-value="{{ $g62s->justificacion }}" class="justificacion"
-                                                data-name="justificacion">
+                                                data-title="Justificacion" data-value="{{ $g62s->justificacion }}"
+                                                class="justificacion" data-name="justificacion">
                                             </a>
                                         </td>
                                     </tr>
@@ -216,12 +212,12 @@
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.7 seguridad de los recursos humanos</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">A.7
+                                            seguridad de los recursos humanos</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.7.1 Antes de empleo</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.7.1 Antes de empleo</td>
                                     </tr>
 
 
@@ -239,9 +235,8 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g71s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g71s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g71s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g71s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
                                             <td class="text-justify">
@@ -272,8 +267,8 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A 7.2 Durante el empleo</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">A
+                                            7.2 Durante el empleo</td>
                                     </tr>
                                     @foreach ($gapda72s as $g72s)
                                         <tr>
@@ -289,9 +284,8 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g72s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g72s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g72s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g72s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
 
@@ -322,8 +316,8 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.7.3 Cese al empleo o cambio de puesto de trabajo</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.7.3 Cese al empleo o cambio de puesto de trabajo</td>
                                     </tr>
                                     @foreach ($gapda73s as $g73s)
                                         <tr>
@@ -339,9 +333,8 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g73s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g73s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g73s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g73s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
 
@@ -372,12 +365,12 @@
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.8 Administración de activos</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">A.8
+                                            Administración de activos</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.8.1 Responsabilidad sobre los activos</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.8.1 Responsabilidad sobre los activos</td>
                                     </tr>
 
                                     @foreach ($gapda81s as $g81s)
@@ -394,9 +387,8 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g81s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g81s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g81s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g81s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
 
@@ -427,12 +419,12 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.8.2 Clasificación de la información</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.8.2 Clasificación de la información</td>
                                     </tr>
                                     <tr class="grises">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">Objetivo de control: Asegurar que la información reciba un
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            Objetivo de control: Asegurar que la información reciba un
                                             nivel adecuado de protección, de acuerdo con su importancia para la
                                             organización.</td>
                                     </tr>
@@ -450,9 +442,8 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g82s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g82s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g82s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g82s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
 
@@ -483,8 +474,8 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.8.3 Manipulación de los soportes</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.8.3 Manipulación de los soportes</td>
                                     </tr>
                                     @foreach ($gapda83s as $g83s)
                                         <tr>
@@ -500,9 +491,8 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g83s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g83s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g83s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g83s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
 
@@ -551,9 +541,8 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g91s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g91s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g91s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
 
@@ -584,8 +573,8 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.9.2 Gestión de accesos de usuario</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.9.2 Gestión de accesos de usuario</td>
                                     </tr>
 
 
@@ -604,9 +593,8 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g92s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g92s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g92s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g92s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
 
@@ -614,8 +602,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g92s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g92s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g92s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g92s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -637,8 +625,8 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.9.3 Responsabilidades del usuario</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.9.3 Responsabilidades del usuario</td>
                                     </tr>
 
                                     @foreach ($gapda93s as $g93s)
@@ -655,9 +643,8 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g93s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g93s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g93s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g93s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
 
@@ -665,8 +652,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g93s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g93s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g93s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g93s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -689,8 +676,8 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.9.4 Control de acceso a sistema y aplicaciones</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.9.4 Control de acceso a sistema y aplicaciones</td>
                                     </tr>
                                     @foreach ($gapda94s as $g94s)
                                         <tr>
@@ -706,9 +693,8 @@
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g94s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g94s->id) }}"
-                                                    data-title="Seleccionar aplica"
-                                                    data-value="{{ $g94s->aplica }}" class="aplica2"
-                                                    data-name="aplica">
+                                                    data-title="Seleccionar aplica" data-value="{{ $g94s->aplica }}"
+                                                    class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
 
@@ -716,8 +702,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g94s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g94s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g94s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g94s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -739,12 +725,12 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.10 Criptografía</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.10 Criptografía</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.10.1 Controles Criptografícos </td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.10.1 Controles Criptografícos </td>
                                     </tr>
                                     @foreach ($gapda101s as $g101s)
                                         <tr>
@@ -770,8 +756,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g101s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g101s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g101s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g101s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -792,12 +778,12 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.11 Seguridad Física y del Entorno</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.11 Seguridad Física y del Entorno</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.11.1 Áreas seguras </td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.11.1 Áreas seguras </td>
                                     </tr>
                                     @foreach ($gapda111s as $g111s)
                                         <tr>
@@ -823,8 +809,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g111s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g111s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g111s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g111s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -846,8 +832,8 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.11.2 Seguridad de los Equipos</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.11.2 Seguridad de los Equipos</td>
                                     </tr>
 
                                     @foreach ($gapda112s as $g112s)
@@ -874,8 +860,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g112s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g112s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g112s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g112s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -896,12 +882,12 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.12 Seguridad de las Operaciones</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.12 Seguridad de las Operaciones</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.12.1 Procedimientos y Responsbilidades Operacionales</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.12.1 Procedimientos y Responsbilidades Operacionales</td>
                                     </tr>
                                     @foreach ($gapda121s as $g121s)
                                         <tr>
@@ -927,8 +913,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g121s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g121s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g121s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g121s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -949,8 +935,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.12.2 Protección contra el software malicioso</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.12.2 Protección contra el software malicioso</td>
                                     </tr>
                                     @foreach ($gapda122s as $g122s)
                                         <tr>
@@ -975,8 +961,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g122s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g122s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g122s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g122s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -997,8 +983,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.12.3 Copias de Seguridad</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.12.3 Copias de Seguridad</td>
                                     </tr>
                                     @foreach ($gapda123s as $g123s)
                                         <tr>
@@ -1024,8 +1010,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g123s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g123s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g123s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g123s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1046,8 +1032,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.12.4 Registro y Supervisión </td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.12.4 Registro y Supervisión </td>
                                     </tr>
                                     @foreach ($gapda124s as $g124s)
                                         <tr>
@@ -1073,8 +1059,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g124s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g124s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g124s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g124s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1096,8 +1082,8 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.12.5 Control de Software y Explotación </td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.12.5 Control de Software y Explotación </td>
                                     </tr>
                                     @foreach ($gapda125s as $g125s)
                                         <tr>
@@ -1123,8 +1109,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g125s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g125s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g125s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g125s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1146,8 +1132,8 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.12.6 Gestión de la Vulnerabilidad Técnica </td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.12.6 Gestión de la Vulnerabilidad Técnica </td>
                                     </tr>
                                     @foreach ($gapda126s as $g126s)
                                         <tr>
@@ -1173,8 +1159,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g126s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g126s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g126s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g126s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1195,8 +1181,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.12.7 Consideraciones sobre la auditoria de sistemas de
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.12.7 Consideraciones sobre la auditoria de sistemas de
                                             información</td>
                                     </tr>
                                     @foreach ($gapda127s as $g127s)
@@ -1223,8 +1209,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g127s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g127s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g127s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g127s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1245,12 +1231,12 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.13 Seguridad de las comunicaciones</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.13 Seguridad de las comunicaciones</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.13.1 Gestión de la seguridad de redes</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.13.1 Gestión de la seguridad de redes</td>
                                     </tr>
                                     @foreach ($gapda131s as $g131s)
                                         <tr>
@@ -1276,8 +1262,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g131s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g131s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g131s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g131s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1298,8 +1284,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.13.2 Intercambio de información</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.13.2 Intercambio de información</td>
                                     </tr>
                                     @foreach ($gapda132s as $g132s)
                                         <tr>
@@ -1325,8 +1311,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g132s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g132s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g132s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1347,13 +1333,13 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.14 Adquisición, desarrollo y mantenimiento de los sistemas
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.14 Adquisición, desarrollo y mantenimiento de los sistemas
                                             de información</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.14.1 Requisitos de seguridad en sistemas de información
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.14.1 Requisitos de seguridad en sistemas de información
                                         </td>
                                     </tr>
                                     @foreach ($gapda141s as $g141s)
@@ -1380,8 +1366,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g141s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g141s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g141s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g141s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1402,8 +1388,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.14.2 Seguridad en el desarrollo y en los procesos de
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.14.2 Seguridad en el desarrollo y en los procesos de
                                             soporte</td>
                                     </tr>
 
@@ -1431,8 +1417,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g142s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g142s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g142s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g142s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1453,8 +1439,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.14.3 Datos de prueba</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.14.3 Datos de prueba</td>
                                     </tr>
                                     @foreach ($gapda143s as $g143s)
                                         <tr>
@@ -1480,8 +1466,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g143s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g143s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g143s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g143s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1503,12 +1489,12 @@
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.15 Relación con los proveedores</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.15 Relación con los proveedores</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.15.1 Requisitos de seguridad en sistemas de información
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.15.1 Requisitos de seguridad en sistemas de información
                                         </td>
                                     </tr>
                                     @foreach ($gapda151s as $g151s)
@@ -1535,8 +1521,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g151s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g151s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g151s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g151s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1557,8 +1543,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.15.2 Gestión de la provisión de servicios del proveedor
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.15.2 Gestión de la provisión de servicios del proveedor
                                         </td>
                                     </tr>
                                     @foreach ($gapda152s as $g152s)
@@ -1585,8 +1571,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g152s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g152s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g152s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g152s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1607,13 +1593,13 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.16 Gestión de incidentes de Seguridad de la Información
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.16 Gestión de incidentes de Seguridad de la Información
                                         </td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.16.1 Gestión de incidentes de Seguridad de la Información
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.16.1 Gestión de incidentes de Seguridad de la Información
                                             y mejoras</td>
                                     </tr>
                                     @foreach ($gapda161s as $g161s)
@@ -1640,8 +1626,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g161s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g161s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g161s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g161s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1662,13 +1648,13 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.17 Aspectos de seguridad de la información para la gestión
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.17 Aspectos de seguridad de la información para la gestión
                                             de la continuidad del Instituto</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.17.1 Continuidad de la Seguridad de la Información</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.17.1 Continuidad de la Seguridad de la Información</td>
                                     </tr>
                                     @foreach ($gapda171s as $g171s)
                                         <tr>
@@ -1694,8 +1680,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g171s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g171s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g171s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g171s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1716,8 +1702,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.17.2 Redundancias</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.17.2 Redundancias</td>
                                     </tr>
 
                                     @foreach ($gapda172s as $g172s)
@@ -1744,8 +1730,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g172s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g132s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g132s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1766,12 +1752,12 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.18 Cumplimiento</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.18 Cumplimiento</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.18.1 Cumplimiento de los requisitos legales y
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.18.1 Cumplimiento de los requisitos legales y
                                             contractuales</td>
                                     </tr>
                                     @foreach ($gapda181s as $g181s)
@@ -1798,8 +1784,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g132s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g132s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g132s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
@@ -1820,8 +1806,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="6">A.18.2 Revisiones de la Seguridad de la Información</td>
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                            A.18.2 Revisiones de la Seguridad de la Información</td>
                                     </tr>
                                     @foreach ($gapda182s as $g182s)
                                         <tr>
@@ -1847,8 +1833,8 @@
                                                 <a href="#" data-type="textarea" data-pk="{{ $g132s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g132s->justificacion }}"
-                                                    class="justificacion" data-name="justificacion">
+                                                    data-value="{{ $g132s->justificacion }}" class="justificacion"
+                                                    data-name="justificacion">
                                                 </a>
                                             </td>
                                         </tr>
