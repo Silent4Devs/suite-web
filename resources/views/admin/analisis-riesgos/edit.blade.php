@@ -1,13 +1,21 @@
 @extends('layouts.admin')
-@section('content')
 
-    <div class="card mt-4">
-        <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong>Matríz de Riesgos</h3>
+@section('content')
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{!! route('admin.analisis-riesgos.index') !!}">Análisis de Riesgo</a>
+        </li>
+        <li class="breadcrumb-item active">Editar</li>
+    </ol>
+    <div class="mt-4 card">
+        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Análisis de Riesgo</h3>
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.analisis-riesgos.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.analisis-riesgos.update', [$analisis->id]) }}"
+                enctype="multipart/form-data">
+                @method('PUT')
                 @csrf
 
                 <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#1BB0B0">
@@ -24,7 +32,7 @@
                     <div class="form-group col-md-4 col-sm-4">
                         <label for="nombre"><i class="fas fa-table iconos-crear"></i>Nombre</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
-                            name="nombre" id="nombre" value="{{ old('nombre', '') }}">
+                            name="nombre" id="nombre" value="{{ old('nombre', $analisis->nombre) }}">
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
@@ -39,7 +47,8 @@
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::TipoSelect as $key => $label)
                                 <option value="{{ $key }}"
-                                    {{ old('tipo', '') === (string) $key ? 'selected' : '' }}>{{ $label }}
+                                    {{ old('tipo', $analisis->tipo) === (string) $key ? 'selected' : '' }}>
+                                    {{ $label }}
                                 </option>
                             @endforeach
                         </select>
@@ -71,7 +80,9 @@
                             <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($empleados as $key => $label)
-                                <option value="{{ $label->id }}">{{ $label->name }}
+                                <option value="{{ $label->id }}"
+                                    {{ $label->id == $analisis->id_elaboro ? 'selected' : '' }}>
+                                    {{ $label->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -111,7 +122,7 @@
                             Implementacion</label>
                         <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
                             type="text" name="porcentaje_implementacion" id="porcentaje_implementacion"
-                            value="{{ old('porcentaje_implementacion', '') }}">
+                            value="{{ old('porcentaje_implementacion', $analisis->porcentaje_implementacion) }}">
                         @if ($errors->has('porcentaje_implementacion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('porcentaje_implementacion') }}
@@ -126,8 +137,8 @@
                             <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
-                                <option value="{{ $key }}"
-                                    {{ old('estatus', '') === (string) $key ? 'selected' : '' }}>{{ $label }}
+                                <option value="{{ $key }}" {{ $key == $analisis->estatus ? 'selected' : '' }}>
+                                    {{ $label }}
                                 </option>
                             @endforeach
                         </select>
@@ -151,6 +162,7 @@
             </form>
         </div>
     </div>
+
 @endsection
 
 @section('scripts')
