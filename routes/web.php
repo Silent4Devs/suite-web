@@ -258,6 +258,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
     Route::resource('activos', 'ActivosController');
 
+      // Marca
+    Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
+    Route::resource('marcas', 'MarcaController');
+
+    // Modelo
+    Route::get('modelos/get-modelos', 'ModeloController@getModelos')->name('modelos.getModelos');
+    Route::resource('modelos', 'ModeloController');
+
     // Tratamiento Riesgos
     Route::delete('tratamiento-riesgos/destroy', 'TratamientoRiesgosController@massDestroy')->name('tratamiento-riesgos.massDestroy');
     Route::resource('tratamiento-riesgos', 'TratamientoRiesgosController');
