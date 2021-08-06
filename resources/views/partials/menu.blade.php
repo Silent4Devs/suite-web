@@ -242,18 +242,18 @@
                         </li>
                     @endcan
                     @can('area_access')
-                        <li class="c-sidebar-nav-item">
+                        {{-- <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.analisis-riesgos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
-                                {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
+                                <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
-                        </i> --}}
+                        </i>
                                 <i class="fas fa-table iconos_menu letra_blanca">
 
                                 </i>
                                 <font class="letra_blanca">Matriz de riesgos</font>
                             </a>
-                        </li>
+                        </li> --}}
                     @endcan
 
                 </ul>
