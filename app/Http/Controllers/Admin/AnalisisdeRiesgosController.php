@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Area;
 use App\Models\Empleado;
 use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
@@ -67,7 +68,11 @@ class AnalisisdeRiesgosController extends Controller
             });
 
             $table->editColumn('estatus', function ($row) {
-                return $row->estatus ? $row->estatus : "";
+                if ($row->estatus == 1) {
+                    return $row->estatus ? "Válido" : "";
+                } else {
+                    return $row->estatus ? "Obsoleto" : "";
+                }
             });
 
             $table->rawColumns(['actions', 'placeholder', 'activo_id', 'controles']);
@@ -119,9 +124,11 @@ class AnalisisdeRiesgosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $analisis = AnalisisDeRiesgo::find($id);
+
+        return view('admin.analisis-riesgos.show', compact('analisis'));
     }
 
     /**
@@ -132,7 +139,10 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $empleados = Empleado::get();
+        $analisis = AnalisisDeRiesgo::find($id);
+
+        return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
     }
 
     /**
@@ -144,7 +154,17 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $analisis = AnalisisDeRiesgo::find($id);
+
+        $analisis->update([
+            "nombre" =>  $request->nombre,
+            "tipo" =>  $request->tipo,
+            "fecha" =>  $request->fecha,
+            "id_elaboro" =>  $request->id_elaboro,
+            "porcentaje_implementacion" => $request->porcentaje_implementacion,
+            "estatus" =>  $request->estatus,
+        ]);
+        return redirect()->route('admin.analisis-riesgos.index')->with("success", 'Editado con éxito');
     }
 
     /**
@@ -155,6 +175,17 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $analisis = AnalisisDeRiesgo::find($id);
+        $analisis->delete();
+
+        return back()->with('deleted', 'Registro eliminado con éxito');
+    }
+
+    public function getEmployeeData(Request $request)
+    {
+        $empleados = Empleado::find($request->id);
+        $areas = Area::find($empleados->area_id);
+
+        return response()->json(["puesto" => $empleados->puesto, 'area' => $areas->area]);
     }
 }
