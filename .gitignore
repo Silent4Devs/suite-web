@@ -21,3 +21,5 @@ routes/web.php
 bootstrap/cache/
 
 storage/debugbar/
+
+storage/app/public/gantt/

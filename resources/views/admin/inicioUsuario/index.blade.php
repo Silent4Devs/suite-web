@@ -1,5 +1,12 @@
 @extends('layouts.admin')
 @section('content')
+    
+
+    
+
+
+
+
 
     <style type="text/css">
         body {
@@ -32,72 +39,7 @@
             margin-top: 8px;
         }
 
-        #inicio_usuario .caja_botones {
-            height: 40px;
-        }
-
-        #inicio_usuario .caja_botones a {
-            width: 135px;
-            text-decoration: none;
-            display: inline-block;
-            color: #008186;
-            padding: 5px 0px;
-            border-top: 1px solid #ccc !important;
-            border-right: 1px solid #ccc;
-            background-color: #f3f3f3;
-            margin: 0;
-            text-align: center;
-        }
-
-        #inicio_usuario .caja_botones a:first-child {
-            border-left: 1px solid #ccc;
-        }
-
-        #inicio_usuario .caja_botones a:not(#inicio_usuario .caja_botones a.btn_activo) {
-            border-bottom: 1px solid #ccc;
-        }
-
-        #inicio_usuario .caja_botones a i {
-            margin-right: 7px;
-            font-size: 15pt;
-        }
-
-        #inicio_usuario .caja_botones a.btn_activo {
-            border-top: 2px solid #00abb2 !important;
-            background-color: #fff;
-        }
-
-        #inicio_usuario .caja_botones a:hover {
-            border-top: 2px solid #00abb2 !important;
-        }
-
-        #inicio_usuario .caja_caja_secciones {
-            width: 100%;
-            overflow: hidden;
-            scroll-behavior: smooth;
-        }
-
-        #inicio_usuario .caja_secciones {
-            width: 500%;
-            display: flex;
-        }
-
-        #inicio_usuario section {
-            width: 20% !important;
-        }
-
-        #inicio_usuario section:target {
-            padding-top: 200px;
-            margin-top: -200px;
-        }
-
-        #inicio_usuario section:not(#inicio_usuario section:target) {
-            height: 100px;
-        }
-
-        .caja {
-            margin-top: -30px;
-        }
+        
 
         table td i {
             font-size: 17pt;
@@ -161,19 +103,19 @@
         </div>
         <div class="col-lg-9 row caja_botones_secciones">
             @if ($usuario->empleado)
-                <div class="col-12 caja_botones">
-                    <a href="#calendario" class="btn_activo"><i class="fas fa-calendar-alt"></i> Calendario</a>
-                    <a href="#actividades"><i class="fas fa-stopwatch"></i>Actividades</a>
-                    <a href="#aprobaciones"><i class="fas fa-check"></i>Aprobaciones</a>
-                    <a href="#capacitaciones"><i class="fas fa-chalkboard-teacher"></i>Capacitaciones</a>
-                    <a href="#reportes"><i class="fas fa-clipboard-list"></i>Reportes</a>
+                <div class="col-12 caja_botones_menu">
+                    <a href="#" data-tabs="calendario" class="btn_activo"><i class="fas fa-calendar-alt"></i> Calendario</a>
+                    <a href="#" data-tabs="actividades"><i class="fas fa-stopwatch"></i>Actividades</a>
+                    <a href="#" data-tabs="aprobaciones"><i class="fas fa-check"></i>Aprobaciones</a>
+                    <a href="#" data-tabs="capacitaciones"><i class="fas fa-chalkboard-teacher"></i>Capacitaciones</a>
+                    <a href="#" data-tabs="reportes"><i class="fas fa-clipboard-list"></i>Reportes</a>
                 </div>
             @endif
 
             <div class="caja_caja_secciones">
                 @if ($usuario->empleado)
                     <div class="caja_secciones">
-                        <section id="calendario">
+                        <section id="calendario" class="caja_tab_reveldada">
                             @include('admin.inicioUsuario.calendario')
                         </section>
                         <section id="actividades">
@@ -200,10 +142,5 @@
 
 
 @section('scripts')
-    <script type="text/javascript">
-        $(".caja_botones a").click(function() {
-            $(".caja_botones a").removeClass("btn_activo");
-            $(".caja_botones a:hover").addClass("btn_activo");
-        });
-    </script>
+  
 @endsection

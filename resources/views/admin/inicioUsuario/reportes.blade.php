@@ -21,7 +21,7 @@
     }
 </style>
 
-<div style="text-align: center;">
+<div style="text-align: center;" class="mt-5">
     <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}" class="cards_reportes">
         <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
     </a>

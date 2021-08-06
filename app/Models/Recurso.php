@@ -35,6 +35,8 @@ class Recurso extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'modalidad',
+        'ubicacion',
         'cursoscapacitaciones',
         'fecha_curso',
         'fecha_fin',
@@ -63,7 +65,14 @@ class Recurso extends Model implements HasMedia
     public function getFechaCursoAttribute($value)
     {
         // return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-        return $value ? Carbon::parse($value)->format('d-m-Y H:i') : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y H:i:s') : null;
+        //return Carbon::parse($value)->format('d/m/Y H:i'); // Se cambio formato corroborar que nada se rompe
+    }
+
+    public function getFechaFinAttribute($value)
+    {
+        // return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y H:i:s') : null;
         //return Carbon::parse($value)->format('d/m/Y H:i'); // Se cambio formato corroborar que nada se rompe
     }
 

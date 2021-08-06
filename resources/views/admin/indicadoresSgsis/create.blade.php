@@ -360,6 +360,7 @@
 
             <div class="form-group">
                 <div class="text-center form-group col-12" style="margin-left:15px;">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-info" type="submit">
                         {{ trans('global.save') }}
                     </button>

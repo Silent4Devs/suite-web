@@ -73,13 +73,15 @@
                 @if ($role->id != null)
                     <input type="hidden" id="role_id" value="{{ $role->id }}">
                 @endif
-                <div class="form-group">
-                    <button class="btn btn-danger" type="submit" id="btnEnviar">
-                        {{ trans('global.save') }}
-                    </button>
-                </div>
-            </form>
-        </div>
+                <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
+            </div>
+        </form>
     </div>
 @endsection
 
