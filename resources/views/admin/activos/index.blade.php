@@ -11,7 +11,7 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-Activo">
+            <table class="table table-bordered w-100 datatable-Activo" id="columnaft">
                 <thead class="thead-dark">
                     <tr>
                         <th>
@@ -33,7 +33,28 @@
                             {{ trans('cruds.activo.fields.dueno') }}
                         </th>
                         <th>
+                            Responsable
+                         </th>
+                        <th>
                             {{ trans('cruds.activo.fields.ubicacion') }}
+                        </th>
+                        <th>
+                           Marca
+                        </th>
+                        <th>
+                            Modelo
+                        </th>
+                        <th>
+                            N° serie
+                        </th>
+                        <th>
+                            N° producto
+                        </th>
+                        <th>
+                            Fecha fin
+                        </th>
+                        <th>
+                            Fecha compra
                         </th>
                         <th>
                             Opciones
@@ -212,6 +233,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.activos.index') }}",
+                columnDefs:[{targets:[6,7,8,9,10,11,12,13],visible:false}],
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -219,6 +241,8 @@
                     {
                         data: 'nombre_activo',
                         name: 'nombre_activo'
+
+
                     },
                     {
                         data: 'tipoactivo_tipo',
@@ -237,8 +261,36 @@
                         name: 'dueno.name'
                     },
                     {
+                        data: 'responsable',
+                        name: 'responsable'
+                    },
+                    {
                         data: 'ubicacion_sede',
                         name: 'ubicacion.sede'
+                    },
+                    {
+                        data: 'marca',
+                        name: 'marca'
+                    },
+                    {
+                        data: 'modelo',
+                        name: 'modelo'
+                    },
+                    {
+                        data: 'n_serie',
+                        name: 'n_serie'
+                    },
+                    {
+                        data: 'n_producto',
+                        name: 'n_producto'
+                    },
+                    {
+                        data: 'fecha_fin',
+                        name: 'fecha_fin'
+                    },
+                    {
+                        data: 'fecha_compra',
+                        name: 'fecha_compra'
                     },
                     {
                         data: 'actions',
@@ -266,4 +318,7 @@
         });
 
     </script>
+
+
+
 @endsection
