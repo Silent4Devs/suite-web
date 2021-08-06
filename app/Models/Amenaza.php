@@ -22,7 +22,7 @@ class Amenaza extends Model
 
 
     public $table = 'amenazas';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -66,8 +66,15 @@ class Amenaza extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function vulnerabilidads()
-    {
-        return $this->hasMany(\App\Models\Vulnerabilidad::class, 'id_amenaza');
-    }
+
+    public function matriz_riesgos()
+	{
+		return $this->hasMany(MatrizRiesgo::class, 'id_amenaza');
+	}
+
+	public function vulnerabilidads()
+	{
+		return $this->hasMany(Vulnerabilidad::class, 'id_amenaza');
+	}
 }
+
