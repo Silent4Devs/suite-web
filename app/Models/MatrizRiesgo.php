@@ -122,10 +122,10 @@ class MatrizRiesgo extends Model
 		'id_vulnerabilidad'
 	];
 
-    protected function serializeDate(DateTimeInterface $date)
+    /*protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
+    }*/
 
     public function generateTwoFactorCode()
     {
