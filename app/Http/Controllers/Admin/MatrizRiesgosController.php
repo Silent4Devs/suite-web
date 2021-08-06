@@ -38,9 +38,9 @@ class MatrizRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'matriz_riesgo_show';
-                $editGate = 'matriz_riesgo_edit';
-                $deleteGate = 'matriz_riesgo_delete';
+                $viewGate      = 'user_show';
+                $editGate      = 'user_edit';
+                $deleteGate    = 'user_delete';
                 $crudRoutePart = 'matriz-riesgos';
 
                 return view('partials.datatablesActions', compact(

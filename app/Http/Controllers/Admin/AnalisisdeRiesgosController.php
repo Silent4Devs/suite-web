@@ -29,9 +29,9 @@ class AnalisisdeRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'analisis-riesgos_show';
-                $editGate = 'analisis-riesgos_edit';
-                $deleteGate = 'analisis-riesgos_delete';
+                $viewGate      = 'user_show';
+                $editGate      = 'user_edit';
+                $deleteGate    = 'user_delete';
                 $crudRoutePart = 'analisis-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -63,7 +63,7 @@ class AnalisisdeRiesgosController extends Controller
             });
 
             $table->editColumn('elaboro', function ($row) {
-                return $row->id_elaboro ? $row->id_elaboro : "";
+                return $row->empleado ? $row->empleado->name : "";
             });
 
             $table->editColumn('estatus', function ($row) {

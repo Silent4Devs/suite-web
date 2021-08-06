@@ -222,9 +222,9 @@
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.organizacions.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
-                            <i class="fas fa-skull-crossbones iconos_menu letra_blanca">
+                        <a href="{{ route('admin.amenazas.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/amenazas') || request()->is('admin/amenazas/*') ? 'active' : '' }}">
+                            <i class="fas fa-fire iconos_menu letra_blanca">
 
                             </i>
                             <font class="letra_blanca" style="margin-left:5px;"> Amenazas</font>
@@ -232,9 +232,9 @@
                     </li>
                     @can('sede_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.sedes.obtenerListaSedes') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/obtenerListaSedes') || request()->is('admin/obtenerListaSedes/*') ? 'active' : '' }}">
-                                <i class="fas fa-radiation-alt iconos_menu letra_blanca">
+                            <a href="{{ route('admin.vulnerabilidads.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/vulnerabilidads') || request()->is('admin/vulnerabilidads/*') ? 'active' : '' }}">
+                                <i class="fas fa-shield-alt iconos_menu letra_blanca">
 
                                 </i>
                                 <font class="letra_blanca"> Vulnerabilidades</font>
@@ -251,7 +251,7 @@
                                 <i class="fas fa-table iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca">Matriz de riesgos</font>
+                                <font class="letra_blanca">Matriz de Riesgos</font>
                             </a>
                         </li>
                     @endcan
@@ -289,7 +289,7 @@
                 <font class="letra_blanca"> Análisis de brechas</font>
             </a>
         </li> --}}
-        @can('normas_access')
+        @can('area_access')
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca">Normas</font>
             </li>
