@@ -74,8 +74,12 @@ class AnalisisdeRiesgosController extends Controller
                     return $row->estatus ? "Obsoleto" : "";
                 }
             });
+            $table->editColumn('enlace', function ($row) {
+                return $row->id ? $row->id : "";
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'activo_id', 'controles']);
+
 
             return $table->make(true);
         }
