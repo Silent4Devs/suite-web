@@ -67,6 +67,9 @@
                             Estatus
                         </th>
                         <th>
+                            Mátriz
+                        </th>
+                        <th>
                             Opciones
                         </th>
                     </tr>
@@ -347,6 +350,13 @@
                     {
                         data: 'estatus',
                         name: 'estatus'
+                    },
+                    {
+                        data: 'enlace',
+                        name: 'enlace',
+                        render: function(data, type, row, meta) {
+                            return `<div class="text-center w-100"><a href="matriz-seguridad/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>`;
+                        }
                     },
                     {
                         data: 'actions',

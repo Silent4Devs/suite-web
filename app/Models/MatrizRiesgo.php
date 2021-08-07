@@ -81,6 +81,14 @@ class MatrizRiesgo extends Model
 
 
 	protected $casts = [
+        'plan_de_accion' => 'string',
+        'confidencialidad_cid' => 'string',
+        'integridad_cid' => 'string',
+        'disponibilidad_cid' => 'string',
+        'probabilidad_residual' => 'string',
+        'impacto_residual' => 'string',
+        'nivelriesgo_residual' => 'string',
+        'riesgo_total_residual' => 'string',
 		'nivelriesgo' => 'float',
 		'riesgototal' => 'float',
 		'resultadoponderacion' => 'float',
@@ -119,7 +127,15 @@ class MatrizRiesgo extends Model
 		'activo_id',
 		'id_amenaza',
 		'id_area',
-		'id_vulnerabilidad'
+		'id_vulnerabilidad',
+        'plan_de_accion',
+        'confidencialidad_cid',
+        'integridad_cid',
+        'disponibilidad_cid',
+        'probabilidad_residual',
+        'impacto_residual',
+        'nivelriesgo_residual',
+        'riesgo_total_residual',
 	];
 
     /*protected function serializeDate(DateTimeInterface $date)
