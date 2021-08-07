@@ -38,6 +38,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('inicioUsuario/reportes/mejoras', 'inicioUsuarioController@storeMejoras')->name('reportes-mejoras-store');
 
     Route::get('inicioUsuario/reportes/sugerencias', 'inicioUsuarioController@sugerencias')->name('reportes-sugerencias');
+    Route::post('inicioUsuario/reportes/sugerencias', 'inicioUsuarioController@storeSugerencias')->name('reportes-sugerencias-store');
 
     Route::get('inicioUsuario/reportes/seguridad', 'inicioUsuarioController@seguridad')->name('reportes-seguridad');
     Route::post('inicioUsuario/reportes/seguridad/media', 'inicioUsuarioController@storeMedia')->name('reportes-seguridad.storeMedia');
@@ -53,6 +54,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('desk/{incidente}/archivar', 'DeskController@archivadoSeguridad')->name('desk.seguridad-archivar');
     Route::get('desk/seguridad-archivo', 'DeskController@archivoSeguridad')->name('desk.seguridad-archivo');
     Route::get('desk/seguridad', 'DeskController@indexSeguridad')->name('desk.seguridad-index');
+
+    Route::get('desk/{riesgos}/riesgos-edit', 'DeskController@editRiesgos')->name('desk.riesgos-edit');
+    Route::post('desk/{riesgos}/riesgos-update', 'DeskController@updateRiesgos')->name('desk.riesgos-update');
+
+    Route::get('desk/{quejas}/quejas-edit', 'DeskController@editQuejas')->name('desk.quejas-edit');
+    Route::post('desk/{quejas}/quejas-update', 'DeskController@updateQuejas')->name('desk.quejas-update');
+
+    Route::get('desk/{denuncias}/denuncias-edit', 'DeskController@editDenuncias')->name('desk.denuncias-edit');
+    Route::post('desk/{denuncias}/denuncias-update', 'DeskController@updateDenuncias')->name('desk.denuncias-update');
+
+    Route::get('desk/{mejoras}/mejoras-edit', 'DeskController@editMejoras')->name('desk.mejoras-edit');
+    Route::post('desk/{mejoras}/mejoras-update', 'DeskController@updateMejoras')->name('desk.mejoras-update');
+
+    Route::get('desk/{sugerencias}/sugerencias-edit', 'DeskController@editSugerencias')->name('desk.sugerencias-edit');
+    Route::post('desk/{sugerencias}/sugerencias-update', 'DeskController@updateSugerencias')->name('desk.sugerencias-update');
 
     Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
     Route::post('planTrabajoBase/save/current', 'PlanTrabajoBaseController@saveCurrentProyect')->name('planTrabajoBase.saveCurrentProyect');
@@ -430,9 +446,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
     Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
 
+    //amenzas
+    Route::resource('amenazas', 'AmenazaController');
+    Route::delete('amenazas/destroy', 'AmenazaController@massDestroy')->name('amenazas.massDestroy');
+    Route::post('amenazas/parse-csv-import', 'AmenazaController@parseCsvImport')->name('amenazas.parseCsvImport');
+    Route::post('amenazas/process-csv-import', 'AmenazaController@processCsvImport')->name('amenazas.processCsvImport');
+
+    //vulnerabilidades
+    Route::resource('vulnerabilidads', 'VulnerabilidadController');
+    Route::delete('vulnerabilidads/destroy', 'VulnerabilidadController@massDestroy')->name('vulnerabilidads.massDestroy');
+    Route::post('vulnerabilidads/parse-csv-import', 'VulnerabilidadController@parseCsvImport')->name('vulnerabilidads.parseCsvImport');
+    Route::post('vulnerabilidads/process-csv-import', 'VulnerabilidadController@processCsvImport')->name('vulnerabilidads.processCsvImport');
+
+
     // analisis Riesgos
     Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
     Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
+    Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
 
     // Matriz Riesgos
     Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');

@@ -23,7 +23,7 @@
 	       			<td>{{ $mejora->descripcion }}</td>
 	       			<td>{{ $mejora->mejora }}</td>
 	       			<td>
-	       				<a href="{{ route('admin.desk.seguridad-edit', $mejora->id) }}"><i class="fas fa-edit"></i></a>
+	       				<a href="{{ route('admin.desk.mejoras-edit', $mejora->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
 	   			</tr>
    			@endforeach

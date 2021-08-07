@@ -14,9 +14,10 @@ class CreateAmenazasTable extends Migration
     public function up()
     {
         Schema::create('amenazas', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('nombre');
-
+            $table->string('categoria')->nullable();
+            $table->string('descripcion')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

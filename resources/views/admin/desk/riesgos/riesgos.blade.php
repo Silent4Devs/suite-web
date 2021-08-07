@@ -25,7 +25,7 @@
 	       			<td>{{ $riesgo->empleado_reporto_id }}</td> 
 	       			<td>{{ $riesgo->empleado_reporto_id }}</td> 
 	       			<td>
-	       				<a href="{{ route('admin.desk.seguridad-edit', $riesgo->id) }}"><i class="fas fa-edit"></i></a>
+	       				<a href="{{ route('admin.desk.riesgos-edit', $riesgo->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
 	   			</tr>
    			@endforeach

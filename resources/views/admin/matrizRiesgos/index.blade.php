@@ -469,10 +469,10 @@
                         data: 'descripcionriesgo',
                         name: 'descripcionriesgo'
                     },
-                    {
+                    /*{
                         data: 'tipo_riesgo',
                         name: 'tipo_riesgo'
-                    },
+                    },*/
                     {
                         data: 'confidencialidad',
                         name: 'confidencialidad'
@@ -501,6 +501,10 @@
                         data: 'riesgototal',
                         name: 'riesgototal'
                     },
+                    {
+                        data: 'controles_id',
+                        name: 'controles_id'
+                    }
                     {
                         data: 'resultadoponderacion',
                         name: 'resultadoponderacion'

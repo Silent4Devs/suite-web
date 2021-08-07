@@ -15,6 +15,7 @@ use App\Models\RiesgoIdentificado;
 use App\Models\Quejas;
 use App\Models\Denuncias;
 use App\Models\Mejoras;
+use App\Models\Sugerencias;
 
 use App\Models\Activo;
 use App\Models\Documento;
@@ -132,6 +133,16 @@ class inicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('sugerencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.inicioUsuario.formularios.sugerencias');
+    }
+    public function storeSugerencias(Request $request)
+    {
+        Sugerencias::create([
+            'empleado_sugerir_id' => auth()->user()->empleado->id,
+            'descripcion' => $request->descripcion,
+            'sugerencia_dirigida' => $request->sugerencia_dirigida,
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
     }
 
     public function seguridad()

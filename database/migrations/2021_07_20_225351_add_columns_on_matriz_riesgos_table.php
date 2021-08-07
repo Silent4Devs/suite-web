@@ -24,6 +24,8 @@ class AddColumnsOnMatrizRiesgosTable extends Migration
             $table->foreign('id_proceso')->references('id')->on('procesos');
             $table->unsignedBigInteger('id_responsable')->nullable();
             $table->foreign('id_responsable')->references('id')->on('empleados');
+            $table->unsignedInteger('activo_id')->nullable();
+            $table->foreign('activo_id')->references('id')->on('activos');
         });
     }
 

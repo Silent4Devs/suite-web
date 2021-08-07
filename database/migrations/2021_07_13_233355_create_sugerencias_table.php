@@ -14,11 +14,14 @@ class CreateSugerenciasTable extends Migration
     public function up()
     {
         Schema::create('sugerencias', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre');
-            $table->string('correo');
+            $table->id();
             $table->string('sugerencia_dirigida');
             $table->string('descripcion');
+
+            $table->unsignedBigInteger('empleado_sugerir_id')->nullable();
+
+            $table->foreign('empleado_sugerir_id')->references('id')->on('empleados');
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -21,7 +21,7 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.sede.fields.sede_helper') }}</span>
-                </div>  
+                </div>
 
                 <div class="form-group col-sm-6">
                     <label for="foto_sedes"><i class="fas fa-images iconos-crear"></i>Fotografía de la Sede</label>
@@ -82,7 +82,5 @@
         </form>
     </div>
 </div>
-
-
 
 @endsection
