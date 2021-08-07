@@ -2,13 +2,12 @@
 @section('content')
 	<div class="card">
 		<div class="card-header text-center" style="background-color: #00abb2;">
-			<strong style="font-size: 16pt; color: #fff;"><i class="fas fa-shield-virus mr-4"></i>Riesgos identificados</strong>
+			<strong style="font-size: 16pt; color: #fff;"><i class="fas fa-rocket mr-4"></i>Mejoras</strong>
 		</div>
 		<div class="card-body">
-			<strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clickc en el botón "Enviar"
+			<strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
 
-			<form class="row" method="POST" action="{{ route('admin.reportes-riesgos-store') }}">
-
+			<form class="row" method="POST" action="{{ route('admin.reportes-mejoras-store') }}">
 				@csrf
 
 				<div class="form-group mt-2 col-4">
@@ -37,28 +36,18 @@
 				</div>
 
 				<div class="form-group mt-2 col-4">
-					<label class="form-label">Fecha y Hora</label>
-					<input type="datetime-local" name="fecha" class="form-control">
+					<label class="form-label">Nombre de la mejora</label>
+					<input type="" name="mejora" class="form-control">
 				</div>
 
-				<div class="form-group mt-2 col-6">
-					<label class="form-label">Titulo corto de riesgo</label>
-					<input class="form-control" name="titulo">
-				</div>
-
-				<div class="form-group mt-2 col-6">
-					<label class="form-label">Proceso al que afecta</label>
-					<select class="form-control" name="proceso"></select>
-				</div>
-
-				<div class="form-group mt-2 col-12">
-					<label class="form-label">Describa detalladamente el riesgo identificado</label>
+				<div class="form-group mt-4 col-12">
+					<label class="form-label">Describa detalladamente la mejora</label>
 					<textarea name="descripcion" class="form-control"></textarea>
 				</div>
 
-				<div class="form-group mt-2 text-right col-12">
+				<div class="form-group mt-4 text-right col-12">
 					<a href="{{ asset('admin/inicioUsuario') }}" class="btn btn_cancelar">Cancelar</a>
-					<input type="submit" class="btn btn-success" value="Enviar">
+					<input type="submit" name="" class="btn btn-success" value="Enviar">
 				</div>
 
 			</form>

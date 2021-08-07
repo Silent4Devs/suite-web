@@ -10,6 +10,7 @@ use App\Models\RiesgoIdentificado;
 use App\Models\Quejas;
 use App\Models\Denuncias;
 use App\Models\Mejoras;
+use App\Models\Sugerencias;
 
 use App\Models\Empleado;
 use App\Models\Activo;
@@ -26,6 +27,7 @@ class DeskController extends Controller
         $quejas = Quejas::get();
         $denuncias = Denuncias::get();
         $mejoras = Mejoras::get();
+        $sugerencias = Sugerencias::get();
 
         $total = IncidentesSeguridad::get()->count();
         $nuevos = IncidentesSeguridad::where('estatus', 'nuevo')->get()->count();
@@ -34,9 +36,17 @@ class DeskController extends Controller
         $cerrados = IncidentesSeguridad::where('estatus', 'cerrado')->get()->count();
         $cancelados = IncidentesSeguridad::where('estatus', 'cancelado')->get()->count();
 
-        return view('admin.desk.index', compact('incidentes_seguridad', 'total', 'nuevos', 'en_curso', 'en_espera', 'cerrados', 'cancelados', 'riesgos_identificados', 'quejas', 'denuncias', 'mejoras'));
+        return view('admin.desk.index', compact('incidentes_seguridad', 'total', 'nuevos', 'en_curso', 'en_espera', 'cerrados', 'cancelados', 'riesgos_identificados', 'quejas', 'denuncias', 'mejoras', 'sugerencias'));
     }
 
+    
+
+    public function indexSeguridad()
+    {
+        $incidentes_seguridad = IncidentesSeguridad::with('asignado', 'reporto')->where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->get();
+
+        return datatables()->of($incidentes_seguridad)->toJson();
+    }
     public function editSeguridad(Request $request, $id_incidente)
     {
 
@@ -48,14 +58,6 @@ class DeskController extends Controller
 
         return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados'));
     }
-
-    public function indexSeguridad()
-    {
-        $incidentes_seguridad = IncidentesSeguridad::with('asignado', 'reporto')->where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->get();
-
-        return datatables()->of($incidentes_seguridad)->toJson();
-    }
-
     public function updateSeguridad(Request $request, $id_incidente)
     {
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
@@ -76,7 +78,6 @@ class DeskController extends Controller
 
         return redirect()->route('admin.desk.index');
     }
-
     public function archivadoSeguridad(Request $request, $incidente)
     {
         if ($request->ajax()) {
@@ -87,12 +88,88 @@ class DeskController extends Controller
             return response()->json(['success' => true]);
         }
     }
-
     public function archivoSeguridad()
     {
 
         $incidentes_seguridad_archivados = IncidentesSeguridad::where('archivado', IncidentesSeguridad::ARCHIVADO)->get();
 
         return view('admin.desk.seguridad.archivo', compact('incidentes_seguridad_archivados'));
+    }
+
+
+
+
+    public function editRiesgos(Request $request, $id_riesgos)
+    {
+
+        $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
+
+        $activos = Activo::get();
+
+        $empleados = Empleado::get();
+
+        return view('admin.desk.riesgos.edit', compact('riesgos', 'activos', 'empleados'));
+    }
+
+
+
+
+    public function editQuejas(Request $request, $id_quejas)
+    {
+
+        $quejas = RiesgoIdentificado::findOrfail(intval($id_quejas));
+
+        $activos = Activo::get();
+
+        $empleados = Empleado::get();
+
+        return view('admin.desk.quejas.edit', compact('quejas', 'activos', 'empleados'));
+    }
+
+
+
+
+
+    public function editDenuncias(Request $request, $id_denuncias)
+    {
+
+        $denuncias = Denuncias::findOrfail(intval($id_denuncias));
+
+        $activos = Activo::get();
+
+        $empleados = Empleado::get();
+
+        return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados'));
+    }
+
+
+
+
+
+
+    public function editMejoras(Request $request, $id_mejoras)
+    {
+
+        $mejoras = Mejoras::findOrfail(intval($id_mejoras));
+
+        $activos = Activo::get();
+
+        $empleados = Empleado::get();
+
+        return view('admin.desk.mejoras.edit', compact('mejoras', 'activos', 'empleados'));
+    }
+
+
+
+    public function editSugerencias(Request $request, $id_sugerencias)
+    {
+
+        $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
+
+        $activos = Activo::get();
+
+        $empleados = Empleado::get();
+
+        return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados'));
     }
 }
