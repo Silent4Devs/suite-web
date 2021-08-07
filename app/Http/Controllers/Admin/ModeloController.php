@@ -139,8 +139,23 @@ class ModeloController extends Controller
     public function update(Request $request, Modelo $modelo)
     {
 
-        return redirect()->route('admin.modelo.index')->with("success", 'Editado con éxito');
+        if($request->ajax()){
+            $request->validate([
+                'nombre'=>'required|string|unique:modelo,nombre'
+            ]);
+            $nombre=$request->nombre;
+            // dd($request->all());
+        $modelo=Modelo::create([
+                "nombre"=>$nombre
+            ]);
+            if ($modelo) {
+                return response()->json(['success'=>true]);
+            }
+            else{
+                return response()->json(['success'=>false]);
 
+            }
+        }
     }
 
     /**
