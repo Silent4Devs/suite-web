@@ -316,6 +316,7 @@
                     <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.justificacion_helper') }}</span>
                 </div>
                 <div class="text-right form-group col-12">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

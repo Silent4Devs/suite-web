@@ -155,6 +155,7 @@
                 <textarea class="form-control {{ $errors->has('antecedentes') ? 'is-invalid' : '' }}" name="antecedentes" id="antecedentes">{{ old('antecedentes') }}</textarea>
             </div>
             <div class="text-right form-group col-12">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

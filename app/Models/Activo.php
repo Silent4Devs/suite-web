@@ -23,7 +23,7 @@ class Activo extends Model
     protected $fillable = [
         'tipoactivo_id',
         'subtipo_id',
-        'nombre_activo',
+        'nombreactivo',
         'descripcion',
         'dueno_id',
         'ubicacion_id',
@@ -31,6 +31,15 @@ class Activo extends Model
         'updated_at',
         'deleted_at',
         'team_id',
+        'marca',
+        'modelo',
+        'n_serie',
+        'n_producto',
+        'fecha_fin',
+        'fecha_compra',
+        'id_responsable',
+
+
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -55,7 +64,7 @@ class Activo extends Model
 
     public function dueno()
     {
-        return $this->belongsTo(User::class, 'dueno_id');
+        return $this->belongsTo(Empleado::class, 'dueno_id');
     }
 
     public function ubicacion()
@@ -67,4 +76,10 @@ class Activo extends Model
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function empleado()
+	{
+        return $this->belongsTo(Empleado::class, 'id_responsable', 'id');
+
+	}
 }

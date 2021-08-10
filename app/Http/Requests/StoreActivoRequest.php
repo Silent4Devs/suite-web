@@ -11,7 +11,7 @@ class StoreActivoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('activo_create');
+        return Gate::allows('configuracion_activo_create');
     }
 
     public function rules()

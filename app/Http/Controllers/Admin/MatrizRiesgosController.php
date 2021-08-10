@@ -8,6 +8,7 @@ use App\Models\Area;
 use App\Models\Sede;
 use App\Models\Team;
 use App\Models\Activo;
+use App\Models\Amenaza;
 use App\Models\Proceso;
 use App\Models\Controle;
 use App\Models\Empleado;
@@ -15,6 +16,7 @@ use App\Models\Tipoactivo;
 use App\Functions\Mriesgos;
 use App\Models\MatrizRiesgo;
 use Illuminate\Http\Request;
+use App\Models\Vulnerabilidad;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,9 +40,9 @@ class MatrizRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'matriz_riesgo_show';
-                $editGate = 'matriz_riesgo_edit';
-                $deleteGate = 'matriz_riesgo_delete';
+                $viewGate      = 'user_show';
+                $editGate      = 'user_edit';
+                $deleteGate    = 'user_delete';
                 $crudRoutePart = 'matriz-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -129,26 +131,21 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /*$activos = Activo::all()->pluck('descripcion', 'id')->prepend(trans('global.pleaseSelect'), '');*/
-
-        //$activos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $tipoactivos = Tipoactivo::get();
-
-        //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        //       dd($tipoactivos);
-
         $controles = Controle::get();
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
         $responsables = Empleado::get();
+        $activos = Activo::get();
+        $amenazas = Amenaza::get();
+        $vulnerabilidades = Vulnerabilidad::get();
 
-        return view('admin.matrizRiesgos.create', compact('tipoactivos', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
+        return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
 
     public function store(StoreMatrizRiesgoRequest $request)
     {
+        //dd($request->all());
         $matrizRiesgo = MatrizRiesgo::create($request->all());
 
         return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with("success", 'Guardado con éxito');

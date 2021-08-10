@@ -43,6 +43,7 @@
             background-color: #f1f1f1;
         }
 
+
         #desk .caja_caja_secciones {
             width: 100%;
         }
@@ -79,6 +80,7 @@
         .caja_oculta_dinamica {
             display: none;
         }
+
 
         #digrama textarea {
             position: absolute;
@@ -151,8 +153,8 @@
         <div class="caja_botones">
             <a href="#" data-tabs="registro" class="btn_activo"><i class="fas fa-exclamation-triangle mr-4"></i>Registro de
                 Incidentes</a>
-            <a href="#" data-tabs="plan"><i class="fas fa-tasks mr-4"></i>Plan de Acción</a>
             <a href="#" data-tabs="analisis"><i class="fas fa-clipboard-list mr-4"></i>Análisis Causa Raíz</a>
+            <a href="#" data-tabs="plan"><i class="fas fa-tasks mr-4"></i>Plan de Acción</a>
         </div>
         <div class="card-body">
 
@@ -291,7 +293,7 @@
                                 <div class="form-group mt-2 col-12">
                                     <label class="form-label">Describa detalladamente el incidente</label>
                                     <textarea name="descripcion" class="form-control">{{ $incidentesSeguridad->descripcion }}
-             </textarea>
+                                    </textarea>
                                 </div>
 
                                 <div class="form-group mt-2 col-4">

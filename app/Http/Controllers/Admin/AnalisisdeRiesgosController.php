@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Area;
 use App\Models\Empleado;
 use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
@@ -29,9 +30,9 @@ class AnalisisdeRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'analisis-riesgos_show';
-                $editGate = 'analisis-riesgos_edit';
-                $deleteGate = 'analisis-riesgos_delete';
+                $viewGate      = 'user_show';
+                $editGate      = 'user_edit';
+                $deleteGate    = 'user_delete';
                 $crudRoutePart = 'analisis-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -63,14 +64,22 @@ class AnalisisdeRiesgosController extends Controller
             });
 
             $table->editColumn('elaboro', function ($row) {
-                return $row->id_elaboro ? $row->id_elaboro : "";
+                return $row->empleado ? $row->empleado->name : "";
             });
 
             $table->editColumn('estatus', function ($row) {
-                return $row->estatus ? $row->estatus : "";
+                if ($row->estatus == 1) {
+                    return $row->estatus ? "Válido" : "";
+                } else {
+                    return $row->estatus ? "Obsoleto" : "";
+                }
+            });
+            $table->editColumn('enlace', function ($row) {
+                return $row->id ? $row->id : "";
             });
 
             $table->rawColumns(['actions', 'placeholder', 'activo_id', 'controles']);
+
 
             return $table->make(true);
         }
@@ -119,9 +128,11 @@ class AnalisisdeRiesgosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $analisis = AnalisisDeRiesgo::find($id);
+
+        return view('admin.analisis-riesgos.show', compact('analisis'));
     }
 
     /**
@@ -132,7 +143,10 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $empleados = Empleado::get();
+        $analisis = AnalisisDeRiesgo::find($id);
+
+        return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
     }
 
     /**
@@ -144,7 +158,17 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $analisis = AnalisisDeRiesgo::find($id);
+
+        $analisis->update([
+            "nombre" =>  $request->nombre,
+            "tipo" =>  $request->tipo,
+            "fecha" =>  $request->fecha,
+            "id_elaboro" =>  $request->id_elaboro,
+            "porcentaje_implementacion" => $request->porcentaje_implementacion,
+            "estatus" =>  $request->estatus,
+        ]);
+        return redirect()->route('admin.analisis-riesgos.index')->with("success", 'Editado con éxito');
     }
 
     /**
@@ -155,6 +179,17 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $analisis = AnalisisDeRiesgo::find($id);
+        $analisis->delete();
+
+        return back()->with('deleted', 'Registro eliminado con éxito');
+    }
+
+    public function getEmployeeData(Request $request)
+    {
+        $empleados = Empleado::find($request->id);
+        $areas = Area::find($empleados->area_id);
+
+        return response()->json(["puesto" => $empleados->puesto, 'area' => $areas->area]);
     }
 }

@@ -1,0 +1,276 @@
+body{
+    background-image: url(none);
+    margin: 0;
+    padding: 0;
+    background-color: #fff !important;
+}
+body::before{
+    content: "";
+    background: url(../img/login/chip_a.png);
+    background-size: auto 600px; 
+    background-position: -200px -200px; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    animation: anima_fondo 3s linear;
+}
+body::after{
+    content: "";
+    background:  url(../img/login/chip_b.png);
+    background-size: auto 700px; 
+    background-position: 100% 70px; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    animation: anima_fondo 3s linear;
+    z-index: 0;
+}
+.c-app.flex-row.align-items-center{
+    background-color: #fff;
+}
+.fondo{
+    width: 100%;
+    height: 100%;
+    position: absolute; 
+    top: 0;
+    background: rgba(0,0,0,0);
+    z-index: 1;
+}
+.caja_marca{
+    width: calc(100% - 450px);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.marca{
+    width: 100%;
+    text-align: center;
+}
+.marca img{
+    width: 400px;
+}
+.marca .by{
+    width: 400px;
+    text-align: right;
+    margin: auto;
+}
+.marca .bienvenidos{
+    margin-top: 30px;
+    font-size: 20pt;
+}
+.caja_form{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(239, 239, 239, 0.8);
+    width: 450px;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+}
+form{
+    width: 350px;
+    height: 450px;
+    box-sizing: border-box;
+    text-align: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+form img.logo_silent{
+    width: 100px;
+    margin: auto;
+}
+form h3{
+    font-weight: bolder;
+}
+form .btn_enviar{
+    width: 40%;
+    height: 40px;
+    background-color: #3c4b64;
+    color: #fff;
+    border-radius: 0px;
+    border: none;
+    box-shadow: none;
+    transition: 1s;
+}
+form .btn_enviar:hover{
+    border-radius: 100px;
+}
+form .btn_registrate{
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #3c4b64;
+    color: #3c4b64;
+    font-size: 15pt;
+}
+
+
+
+
+
+
+.clase_animacion .marca{
+    animation-duration: 2s;
+    animation-name: marca;
+}
+@keyframes marca{
+    0%{
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50%{
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100%{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+.clase_animacion .caja_form{
+    animation-duration: 4s;
+    animation-name: caja_form;
+}
+@keyframes caja_form{
+    0%{
+        width: 0%;
+    }
+    70%{
+        width: 0%;
+    }
+    100%{
+        width: 450px;
+    }
+}
+
+
+.clase_animacion .caja_marca{
+    animation-duration: 4s;
+    animation-name: caja_marca;
+}
+@keyframes caja_marca{
+    0%{
+        width: 100%;
+    }
+    70%{
+        width: 100%;
+    }
+    100%{
+        width: calc(100% - 450px);
+    }
+}
+
+
+body::before{
+    content: "";
+    animation-duration: 6s;
+    animation-name: chip_a;
+    animation-timing-function: ease-out;
+}
+@keyframes chip_a{
+    0%{
+        background-position: 200px -600px; 
+    }
+    70%{
+        background-position: 200px -600px; 
+    }
+    100%{
+        background-position: -200px -200px; 
+    }
+}
+
+
+body::after{
+    content: "";
+    animation-duration: 6s;
+    animation-name: chip_b;
+    animation-timing-function: ease-out;
+}
+@keyframes chip_b{
+    0%{
+        background-position: calc(100% - 600px) 700px; 
+    }
+    70%{
+        background-position: calc(100% - 600px) 700px;  
+    }
+    100%{
+        background-position: 100% 70px; 
+    }
+}
+
+
+@media(max-width: 850px){
+    .caja_marca{
+        width: 100%;
+        animation: none;
+    }
+    .caja_form{
+        width: 100%;
+        top: 100%;
+        left: 0;
+        animation: none;
+    }
+    .marca{
+        animation: none;
+    }
+    .marca img{
+        width: 80%;
+    }
+    .marca .by{
+        width: 80%;
+    }
+    .caja_form{
+        width: 100%;
+    }
+    form{
+        width: 80%;
+    }
+
+
+
+    body::after{
+        display: none;
+        animation-duration: 3s;
+    }
+
+
+    
+
+
+    .clase_animacion .caja_form{
+        animation-duration: 0s;
+    }
+
+
+    .clase_animacion .caja_marca{
+        animation-duration: 0s;
+    }
+}
+
+
+
+
+
+
+
+
+

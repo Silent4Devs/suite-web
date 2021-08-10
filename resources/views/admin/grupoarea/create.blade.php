@@ -49,6 +49,7 @@
             </div>
 
             <div class="text-right form-group col-12" style="margin-left:15px;">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

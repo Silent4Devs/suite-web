@@ -106,7 +106,6 @@
         .botones_vistas_gantt a {
             width: 100px;
             display: inline-block;
-            height: auto;
             padding: 5px 10px;
             background-color: #fff;
             color: #00abb2;
@@ -163,33 +162,7 @@
         }
 
 
-        .caja_tabs_general {
-            position: relative;
-            width: 100%;
-            height: auto;
-            overflow: hidden;
-            scroll-behavior: smooth;
-            margin-top: -200px;
-            padding-top: 200px;
-            z-index: 0;
-        }
-
-        .caja_tabs {
-            width: 400%;
-            height: auto;
-            top: 0;
-            left: 0;
-            display: flex;
-        }
-
-        section {
-            width: 25%;
-        }
-
-        section:target {
-            margin-top: -500px;
-            padding-top: 500px;
-        }
+        
 
         @media print {
 
@@ -242,14 +215,14 @@
 
     <div class="mt-5 mb-5">
         <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Plan de Trabajo </strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Plan de Implementación ISO 27001</strong></h3>
         </div>
         <div id="bloqueado"></div>
 
         <div class="botones_vistas_gantt">
             <div class="row">
                 <div class="col-4">
-                    <h2 id="titlo-tab" class="text-capitalize">Gantt</h2>
+                    <h2 id="titlo-tab" class="text-capitalize">Diagrama Gantt</h2>
                 </div>
                 <div class="text-right col-8">
                     <a href="#original_gantt" onclick="loadGanttFromServer();cambiarTitulo('Gantt');"
@@ -266,9 +239,9 @@
 
         </div>
         <div id="plan_trabajo_workspace">
-            <div class="caja_tabs_general">
-                <div class="caja_tabs">
-                    <section id="original_gantt">
+            <div class="caja_caja_secciones">
+                <div class="caja_secciones">
+                    <section id="original_gantt" class="caja_tab_reveldada">
                         @include('admin.planTrabajoBase.gantt')
                     </section>
 

@@ -9,8 +9,14 @@ use App\Models\User;
 use App\Models\PlanBaseActividade;
 use App\Models\AuditoriaAnual;
 use App\Models\Recurso;
+
 use App\Models\IncidentesSeguridad;
 use App\Models\RiesgoIdentificado;
+use App\Models\Quejas;
+use App\Models\Denuncias;
+use App\Models\Mejoras;
+use App\Models\Sugerencias;
+
 use App\Models\Activo;
 use App\Models\Documento;
 use App\Models\PlanImplementacion;
@@ -107,11 +113,37 @@ class inicioUsuarioController extends Controller
         abort_if(Gate::denies('quejas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.inicioUsuario.formularios.quejas');
     }
+    public function storeQuejas(Request $request)
+    {
+        Quejas::create([
+            'anonimo' => $request->anonimo,
+            'empleado_quejo_id' => auth()->user()->empleado->id,
+            'descripcion' => $request->descripcion,
+            'evidencia' => $request->evidencia,
+            'quejado' => $request->quejado,
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
+    }
 
     public function denuncias()
     {
         abort_if(Gate::denies('denuncias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.inicioUsuario.formularios.denuncias');
+    }
+    public function storeDenuncias(Request $request)
+    {
+        Denuncias::create([
+            'anonimo' => $request->anonimo,
+            'empleado_denuncio_id' => auth()->user()->empleado->id,
+            'descripcion' => $request->descripcion,
+            'evidencia' => $request->evidencia,
+            'denunciado' => $request->denunciado,
+            'area_denunciado' => $request->area_denunciado,
+            'tipo' => $request->tipo,
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
     }
 
     public function mejoras()
@@ -119,11 +151,31 @@ class inicioUsuarioController extends Controller
         abort_if(Gate::denies('mejoras_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.inicioUsuario.formularios.mejoras');
     }
+    public function storeMejoras(Request $request)
+    {
+        Mejoras::create([
+            'empleado_mejoro_id' => auth()->user()->empleado->id,
+            'descripcion' => $request->descripcion,
+            'mejora' => $request->mejora,
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
+    }
 
     public function sugerencias()
     {
         abort_if(Gate::denies('sugerencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.inicioUsuario.formularios.sugerencias');
+    }
+    public function storeSugerencias(Request $request)
+    {
+        Sugerencias::create([
+            'empleado_sugerir_id' => auth()->user()->empleado->id,
+            'descripcion' => $request->descripcion,
+            'sugerencia_dirigida' => $request->sugerencia_dirigida,
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
     }
 
     public function seguridad()

@@ -118,6 +118,8 @@ class RecursosController extends Controller
             "duracion" => $duracion,
             "instructor" => $request->instructor,
             "descripcion" => $request->descripcion,
+            "modalidad" => $request->modalidad,
+            "ubicacion" => $request->ubicacion,
         ]);
         // if ($request->ajax()) {
         //     $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
@@ -172,6 +174,8 @@ class RecursosController extends Controller
                 "duracion" => $duracion,
                 "instructor" => $request->instructor,
                 "descripcion" => $request->descripcion,
+                "modalidad" => $request->modalidad,
+                "ubicacion" => $request->ubicacion,
             ]);
 
             // $recurso_actualizado->participantes()->sync($request->input('participantes', []));

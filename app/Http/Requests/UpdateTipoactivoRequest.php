@@ -11,7 +11,7 @@ class UpdateTipoactivoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('tipoactivo_edit');
+        return Gate::allows('configuracion_tipoactivo_edit');
     }
 
     public function rules()
