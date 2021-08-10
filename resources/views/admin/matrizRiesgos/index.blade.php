@@ -506,16 +506,36 @@
                         name: 'controles_id'
                     }
                     {
-                        data: 'resultadoponderacion',
-                        name: 'resultadoponderacion'
+                        data: 'plan_de_accion',
+                        name: 'plan_de_accion'
                     },
                     {
-                        data: 'riesgoresidual',
-                        name: 'riesgoresidual'
+                        data: 'confidencialidad_cid',
+                        name: 'confidencialidad_cid'
                     },
                     {
-                        data: 'justificacion',
-                        name: 'justificacion'
+                        data: 'integridad_cid',
+                        name: 'integridad_cid'
+                    },
+                    {
+                        data: 'disponibilidad_cid',
+                        name: 'disponibilidad_cid'
+                    },
+                    {
+                        data: 'probabilidad_residual',
+                        name: 'probabilidad_residual'
+                    },
+                    {
+                        data: 'impacto_residual',
+                        name: 'impacto_residual'
+                    },
+                    {
+                        data: 'nivelriesgo_residual',
+                        name: 'nivelriesgo_residual'
+                    },
+                    {
+                        data: 'riesgo_total_residual',
+                        name: 'riesgo_total_residual'
                     },
                     {
                         data: 'actions',

@@ -212,6 +212,8 @@ class MatrizRiesgosController extends Controller
 
     public function SeguridadInfo(Request $request)
     {
+        $query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
+        dd($query);
         abort_if(Gate::denies('matriz_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //$query = MatrizRiesgo::with(['controles', 'team'])->where('id_analisis', '=', $request['id'])->get();
         if ($request->ajax()) {
