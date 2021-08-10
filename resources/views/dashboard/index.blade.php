@@ -1,14 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
+{{ Breadcrumbs::render('admin.analisis-brechas.index') }}
     <div class="content">
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="card mt-5">
-                    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center "
+                <div class="mt-5 card">
+                    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
                          style="margin-top:-40px; ">
-                        <h3 class="mb-2  text-center text-white"><strong>Análisis de Brechas ISO 27001</strong></h3>
+                        <h3 class="mb-2 text-center text-white"><strong>Análisis de Brechas ISO 27001</strong></h3>
                     </div>
 
                     <div class="card-body">
@@ -97,7 +98,7 @@
 @section('scripts')
 
 <script>
-        
+
     const ejecutar = document.querySelector('#btn_ejecutar');
     ejecutar.addEventListener('click', () => {
         document.getElementById('profile-tab').classList.add('active');

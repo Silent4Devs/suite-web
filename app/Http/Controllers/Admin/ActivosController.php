@@ -146,16 +146,16 @@ class ActivosController extends Controller
 
         $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados=Empleado::get();
+        $empleados = Empleado::get();
 
-        $area=Area::get();
+        $area = Area::get();
 
-        $marcas=Marca::get();
+        $marcas = Marca::get();
 
-        $modelos=Modelo::get();
+        $modelos = Modelo::get();
 
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions','empleados','area','marcas','modelos'));
+        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos'));
     }
 
     public function store(StoreActivoRequest $request)
@@ -168,18 +168,61 @@ class ActivosController extends Controller
 
         //     ],
         // );
+
         // dd($request->all());
+        // dd($request->hasfile('documentos_relacionados'));
+        // $activo = Activo::create($request->all());
+        $data = array();
+
+        if ($request->hasfile('documentos_relacionados')) {
 
 
 
-        $activo = Activo::create($request->all());
+            foreach ($request->file('documentos_relacionados') as $file) {
 
-        $extension = pathinfo($request->file('documentos_relacionados')->getClientOriginalName(), PATHINFO_EXTENSION);
-        $nombre_original =  $request->nombreactivo;
-        $nombre_compuesto = basename($nombre_original) . '.' . $extension;
-        $request->file('documentos_relacionados')->storeAs('public/activos', $nombre_compuesto); // Almacenar Archivo
-        $activo->documentos_relacionados=$nombre_original;
-        $activo->save();
+
+                // $nombre_original =  $request->nombreactivo;
+                // $nombre_compuesto = basename($nombre_original) . '.' . $file->extension();
+                $nombre_compuesto = $file->getClientOriginalName();
+                $file->storeAs('public/activos', $nombre_compuesto); // Almacenar Archivo
+
+
+                $data[] = $nombre_compuesto;
+            }
+        } else {
+            $data = array();
+        }
+
+        // $extension = pathinfo($request->file('documentos_relacionados')->getClientOriginalName(), PATHINFO_EXTENSION);
+        // $nombre_original =  $request->nombreactivo;
+        // $nombre_compuesto = basename($nombre_original) . '.' . $extension;
+        // $request->file('documentos_relacionados')->storeAs('public/activos', $nombre_compuesto); // Almacenar Archivo
+        // $activo->documentos_relacionados = $data;
+        // $activo->save();
+
+
+        Activo::create([
+            "nombreactivo" => $request->nombreactivo,
+            "descripcion" => $request->descripcion,
+            "marca" => intval($request->marca),
+            "modelo" => intval($request->modelo),
+            "n_serie" => $request->n_serie,
+            "n_producto" => $request->n_producto,
+            "fecha_fin" => $request->fecha_fin,
+            "fecha_compra" => $request->fecha_compra,
+            "fecha_baja" => $request->fecha_baja,
+            "fecha_alta" => $request->fecha_alta,
+            "dueno_id" => $request->dueno_id,
+            "id_responsable" => $request->id_responsable,
+            "tipoactivo_id" => $request->tipoactivo_id,
+            "subtipo_id" => $request->subtipo_id,
+            "ubicacion_id" => $request->ubicacion_id,
+            "sede" => $request->sede,
+            "observaciones" => $request->observaciones,
+            "documentos_relacionados" => json_encode($data)
+
+        ]);
+
         return redirect()->route('admin.activos.index')->with("success", 'Guardado con éxito');
     }
 
@@ -197,32 +240,66 @@ class ActivosController extends Controller
 
         $activo->load('tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team');
 
-        $empleados=Empleado::get();
+        $empleados = Empleado::get();
 
-        $area=Area::get();
+        $area = Area::get();
 
-        $marcas=Marca::get();
+        $marcas = Marca::get();
 
-        $modelos=Modelo::get();
+        $modelos = Modelo::get();
 
-        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'activo','empleados','area','marcas','modelos'));
+        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'activo', 'empleados', 'area', 'marcas', 'modelos'));
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)
     {
 
-        $request->validate(
-            [
-                'nombreactivo' => 'required|string',
-                'tipoactivo_id' => 'required|string',
-                'subtipo_id' => 'required|integer',
-
-            ],
-        );
 
 
 
-        $activo->update($request->all());
+
+
+        $data = array();
+        if ($request->hasfile('documentos_relacionados')) {
+
+            foreach ($request->file('documentos_relacionados') as $file) {
+
+
+                $nombre_compuesto = $file->getClientOriginalName();
+                $file->storeAs('public/activos', $nombre_compuesto); // Almacenar Archivo
+
+
+                $data[] = $nombre_compuesto;
+            }
+        }
+        else{
+            $data=$activo->documentos_relacionados;
+        }
+
+        $activo->update([
+            "nombreactivo" => $request->nombreactivo,
+            "descripcion" => $request->descripcion,
+            "marca" => intval($request->marca),
+            "modelo" => intval($request->modelo),
+            "n_serie" => $request->n_serie,
+            "n_producto" => $request->n_producto,
+            "fecha_fin" => $request->fecha_fin,
+            "fecha_compra" => $request->fecha_compra,
+            "fecha_baja" => $request->fecha_baja,
+            "fecha_alta" => $request->fecha_alta,
+            "dueno_id" => $request->dueno_id,
+            "id_responsable" => $request->id_responsable,
+            "tipoactivo_id" => $request->tipoactivo_id,
+            "subtipo_id" => $request->subtipo_id,
+            "ubicacion_id" => $request->ubicacion_id,
+            "sede" => $request->sede,
+            "observaciones" => $request->observaciones,
+            "documentos_relacionados" => $data
+
+        ]);
+            //  dd($activo);
+
+
 
         return redirect()->route('admin.activos.index')->with("success", 'Editado con éxito');
     }

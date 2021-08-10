@@ -50,7 +50,7 @@
                             {{ trans('cruds.partesInteresada.fields.requisitos') }}
                         </th>
                         <th>
-                            {{ trans('cruds.partesInteresada.fields.clausala') }}
+                            Cláusula
                         </th>
                         <th>
                             Opciones
