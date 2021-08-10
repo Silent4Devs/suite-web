@@ -34,8 +34,8 @@
     #kanban ul {
         padding: 20px 0;
         list-style: none;
-        width: 300px;
-        margin-right: 50px;
+        width: 200px;
+        margin-right: 10px;
         border-radius: 8px;
         box-shadow: 0 5px 8px -1px rgba(0, 0, 0, 0.3);
         display: table;
@@ -257,10 +257,20 @@
         });
 
         function initKanban() {
-            let url = '{{ asset('storage/gantt/') }}/{{ $name_file_gantt }}';
+            // let url = '{{ asset('storage/gantt/') }}/{{ $name_file_gantt }}';
+            // $.ajax({
+            //     type: "get",
+            //     url: url,
+            //     success: function(response) {
+            //         renderKanban(response);
+            //     }
+            // });
             $.ajax({
-                type: "get",
-                url: url,
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('admin.planTrabajoBase.loadProyect') }}",
                 success: function(response) {
                     renderKanban(response);
                 }
@@ -277,7 +287,7 @@
                     estatuses.forEach(estatus => {
                         let key = Object.keys(estatus)[0];
                         let value = Object.values(estatus)[0];
-                        let actividades = response.tasks.filter(task => task.level > 0);
+                        let actividades = response.tasks.filter(task => task.level > 1);
                         let actividad_por_estatus = actividades.filter(actividad => actividad.status ==
                             key);
                         // data-simplebar
@@ -286,11 +296,14 @@
                         actividad_por_estatus.forEach(actividad => {
                             let foto = 'man.png';
                             let imagenes = "";
-                            let assigs = actividad.assigs.map(asignado => {
-                                return response.resources.find(r => Number(r.id) ===
-                                    Number(
-                                        asignado.resourceId));
-                            });
+                            let assigs = [];
+                            if (actividad.assigs) {
+                                assigs = actividad.assigs.map(asignado => {
+                                    return response.resources.find(r => Number(r.id) ===
+                                        Number(
+                                            asignado.resourceId));
+                                });
+                            }
                             let filteredAssigs = assigs.filter(function(a) {
                                 return a != null;
                             });
@@ -400,10 +413,12 @@
                     estatus_select
                         .forEach(s_status => {
                             s_status.addEventListener('change', function() {
-                                let id_row = Number(this.closest('li').getAttribute(
-                                    'actividad-id'));
+                                // let id_row = Number(this.closest('li').getAttribute(
+                                //     'actividad-id'));
+                                let id_row = this.closest('li').getAttribute(
+                                    'actividad-id');
                                 let valor_nuevo = this.value;
-                                let actividad_correspondiente = response.tasks.find(t => t.id ==
+                                let actividad_correspondiente = response.tasks?.find(t => t.id ==
                                     id_row);
                                 actividad_correspondiente.status = valor_nuevo;
 
@@ -417,8 +432,10 @@
                     td_resources
                         .forEach(element => {
                             element.addEventListener('click', function() {
-                                let id_row = Number(this.closest('li').getAttribute(
-                                    'actividad-id'));
+                                // let id_row = Number(this.closest('li').getAttribute(
+                                //     'actividad-id'));
+                                let id_row = this.closest('li').getAttribute(
+                                    'actividad-id');
                                 let valor_nuevo = this.value;
                                 let contenedor = document.getElementById('modales');
 
