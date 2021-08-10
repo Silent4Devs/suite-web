@@ -2,6 +2,7 @@
 
    <table class="table tabla_quejas">
    		<thead>
+            <tr>
        			<th>Folio</th>
        			<th>Anonimo</th>
        			<th>Quién se quejo</th>
@@ -11,20 +12,21 @@
        			<th>Evidencia</th>
        			<th>Quejado</th>
        			<th>Opciones</th> 
+            </tr>
    		</thead>
    		<tbody>
-   			@foreach($quejas as $qeuja)
+   			@foreach($quejas as $queja)
 	   			<tr>
-	       			<td>{{ $qeuja->id }}</td>
-	       			<td>{{ $qeuja->anonimo }}</td>
-	       			<td>{{ $qeuja->empleado_quejo_id }}</td>
-	       			<td>{{ $qeuja->empleado_quejo_id }}</td> 
-	       			<td>{{ $qeuja->empleado_quejo_id }}</td> 
-	       			<td>{{ $qeuja->descripcion }}</td>
-	       			<td>{{ $qeuja->evidencia }}</td>
-	       			<td>{{ $qeuja->quejado }}</td>
+	       			<td>{{ $queja->id }}</td>
+	       			<td>{{ $queja->anonimo }}</td>
+	       			<td>{{ $queja->quejo->name }}</td>
+	       			<td>{{ $queja->quejo->email }}</td> 
+	       			<td>{{ $queja->quejo->telefono }}</td> 
+	       			<td>{{ $queja->descripcion }}</td>
+	       			<td>{{ $queja->evidencia }}</td>
+	       			<td>{{ $queja->quejado }}</td>
 	       			<td>
-	       				<a href="{{ route('admin.desk.quejas-edit', $qeuja->id) }}"><i class="fas fa-edit"></i></a>
+	       				<a href="{{ route('admin.desk.quejas-edit', $queja->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
 	   			</tr>
    			@endforeach

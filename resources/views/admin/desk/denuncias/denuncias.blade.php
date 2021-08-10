@@ -20,9 +20,9 @@
 	   			<tr>
 	       			<td>{{ $denuncia->id }}</td>
 	       			<td>{{ $denuncia->anonimo }}</td>
-	       			<td>{{ $denuncia->empleado_denuncio_id }}</td>
-	       			<td>{{ $denuncia->empleado_denuncio_id }}</td> 
-	       			<td>{{ $denuncia->empleado_denuncio_id }}</td> 
+	       			<td>{{ $denuncia->denuncio->name }}</td>
+	       			<td>{{ $denuncia->denuncio->email }}</td> 
+	       			<td>{{ $denuncia->denuncio->telefono }}</td> 
 	       			<td>{{ $denuncia->descripcion }}</td>
 	       			<td>{{ $denuncia->evidencia }}</td>
 	       			<td>{{ $denuncia->denunciado }}</td>

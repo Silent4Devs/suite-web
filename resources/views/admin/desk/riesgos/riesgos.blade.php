@@ -2,6 +2,7 @@
 
    <table class="table tabla_riesgos">
    		<thead>
+            <tr>
        			{{-- <th>ID</th> --}}
        			<th>Folio</th>
        			<th>Titulo</th>
@@ -12,6 +13,7 @@
        			<th>Correo</th>
        			<th>Teléfono</th>
        			<th>Opciones</th> 
+            </tr>
    		</thead>
    		<tbody>
    			@foreach($riesgos_identificados as $riesgo)
@@ -21,9 +23,9 @@
 	       			<td>{{ $riesgo->descripción }}</td>
 	       			<td>{{ $riesgo->proceso }}</td>
 	       			<td>{{ $riesgo->fecha }}</td>
-	       			<td>{{ $riesgo->empleado_reporto_id }}</td>
-	       			<td>{{ $riesgo->empleado_reporto_id }}</td> 
-	       			<td>{{ $riesgo->empleado_reporto_id }}</td> 
+	       			<td>{{ $riesgo->reporto->name }}</td>
+	       			<td>{{ $riesgo->reporto->email }}</td> 
+	       			<td>{{ $riesgo->reporto->telefono }}</td> 
 	       			<td>
 	       				<a href="{{ route('admin.desk.riesgos-edit', $riesgo->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
