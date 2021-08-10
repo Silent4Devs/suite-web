@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PlanImplementacion;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
             EmpleadosSeeder::class,
             MacroprocesoSeeder::class,
             DocumentoSeeder::class,
+            PlanImplementacionSeeder::class  // Necesario se carga inicialmente el Diagrama Universal de Gantt
             //PlanBaseSeeder::class,
         ]);
     }

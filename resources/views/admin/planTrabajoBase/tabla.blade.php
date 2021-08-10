@@ -319,28 +319,38 @@
 		});
 
 		function initTable() {
-			let url = '{{ asset('storage/gantt/')}}/{{$name_file_gantt}}';
+			// let url = '{{ asset('storage/gantt/')}}/{{$name_file_gantt}}';
+			// $.ajax({
+			// 	type: "get",
+			// 	url: url,
+			// 	success: function (response) {			
+			// 		renderTable(response);
+			// 	}
+		    // });
 			$.ajax({
-				type: "get",
-				url: url,
-				success: function (response) {			
-					renderTable(response);
-				}
-		    });
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('admin.planTrabajoBase.loadProyect') }}",
+                success: function(response) {
+                    renderTable(response);
+                }
+            });
 		}
 			
 
 		function saveOnServer(response){
 			$.ajax({
 			    type: "post",
-			    url: "{{ route('admin.planTrabajoBase.saveCurrentProyect') }}",
+			    url: "{{ route('admin.planTrabajoBase.saveProyect') }}",
 			    data: { 
 			    	_token:"{{ csrf_token() }}",
-			    	gantt:JSON.stringify(response),
+			    	prj:response,
 			    },
 			    dataType: "JSON",
 			    success: function (response) {
-			        console.log(response);
+			        // console.log(response);
 			    }
 			});
 		}
@@ -349,7 +359,7 @@
 		function renderTable(response, id_tbody = null){
 			let resources = response.resources;
 					
-
+			// console.log(resources);
 			let html = '';
 			let contador = 0;
 			let contador_registros = 1;
@@ -377,7 +387,7 @@
 				}
 				
 				
-				if (Number(task.level) == 0){
+				if (Number(task.level) == 1){
 					contador ++;
 					html += `
 					</table>
@@ -398,7 +408,7 @@
 						<tbody id="${contador}_contenedor" class="${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">
 					`;
 					
-				}else{
+				}else if(Number(task.level) > 1){
 					html += `
 					
 						<tr id="${task.id}" numero-registro="${contador_registros}">
@@ -411,10 +421,12 @@
 									<input class="name_input" value="${task.name}" style="width: 100%">
 								</div>
 							</td>`;
-								
-								let assigs = task.assigs.map(asignado => {
-									return(resources.find(r => r.id === Number(asignado.resourceId)));
-								});
+								let assigs= [];
+								if (task.assigs != null) {
+									assigs = task.assigs.map(asignado => {
+										return(resources.find(r => r.id === Number(asignado.resourceId)));
+									});
+								}
 								assigs = assigs.filter(r => r);
 								let imagenes = '';
 								if (assigs.length > 0) {
@@ -491,7 +503,7 @@
 									</div>
 								</div>
 							</td>
-							<td class="td_secundario" style="width:10%;">${/*task.depends != "" ? response.tasks[Number(task.depends)-1].name.substr(0,20)+'...':''*/ task.depends}</td>
+							<td class="td_secundario" style="width:10%;">${/*task.depends != "" ? response.tasks[Number(task.depends)-1].name.substr(0,20)+'...':''*/ task.depends != undefined ? task.depends : ''}</td>
 						</tr>
 					`;
 				}
@@ -506,8 +518,9 @@
 					dateFormat: 'yy-mm-dd',
 					changeYear: true,
 					onSelect: function(dateText) {
-						console.log(this.closest('tbody').getAttribute('id'));
-						let id_row = Number(this.closest('tr').getAttribute('id'));
+						// console.log(this.closest('tbody').getAttribute('id'));
+						// let id_row = Number(this.closest('tr').getAttribute('id'));
+						let id_row = this.closest('tr').getAttribute('id');
 						let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
 						let valor_nuevo = moment(this.value).valueOf();
 						let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
@@ -549,8 +562,9 @@
 					dateFormat: 'yy-mm-dd',
 					changeYear: true,
 					onSelect: function(dateText) {
-						console.log(this.closest('tbody').getAttribute('id'));
-						let id_row = Number(this.closest('tr').getAttribute('id'));
+						// console.log(this.closest('tbody').getAttribute('id'));
+						// let id_row = Number(this.closest('tr').getAttribute('id'));
+						let id_row = this.closest('tr').getAttribute('id');
 						let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
 						let valor_nuevo = moment(this.value).valueOf();
 						let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
@@ -559,8 +573,8 @@
 						
 						let dependencias = response.tasks.filter(t => t.depends == numero_registro);
 						let fecha_fin_actual = moment.unix(valor_nuevo/1000).format("YYYY-MM-DD");
-						console.log(fecha_inicio);
-						console.log(fecha_fin_actual);
+						// console.log(fecha_inicio);
+						// console.log(fecha_fin_actual);
 						tarea_correspondiente.duration = duracion+1;
 						tarea_correspondiente.end = valor_nuevo;
 
@@ -583,9 +597,13 @@
 			let name_input = document.querySelectorAll('.name_input');
 			name_input.forEach(i_nombre =>{
 				i_nombre.addEventListener('change', function(){
-					let id_row = Number(this.parentElement.parentElement.getAttribute('id'));
+					// let id_row = Number(this.parentElement.parentElement.getAttribute('id'));
+					let id_row = this.closest('tr').getAttribute('id');
+					// console.log( this.closest('tr'));
+					// console.log(id_row);
 					let valor_nuevo = this.value;
-					let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
+					let tarea_correspondiente = response.tasks?.find(t => t.id == id_row);
+					// console.log(tarea_correspondiente);
 					tarea_correspondiente.name = valor_nuevo;
 					saveOnServer(response);
 				});
@@ -595,7 +613,8 @@
 			let estatus_select = document.querySelectorAll('.estatus_select');
 			estatus_select.forEach(s_status => {
 				s_status.addEventListener('change', function(){
-					let id_row = Number(this.parentElement.parentElement.getAttribute('id'));
+					// let id_row = Number(this.parentElement.parentElement.getAttribute('id'));
+					let id_row = this.parentElement.parentElement.getAttribute('id');
 					let valor_nuevo = this.value;
 					let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
 					tarea_correspondiente.status = valor_nuevo;
@@ -678,7 +697,8 @@
 			let duracion_inputs = document.querySelectorAll('.input_duracion');
 			duracion_inputs.forEach(duracion_input => {
 				duracion_input.addEventListener('change',function(){
-					let id_row = Number(this.closest('tr').getAttribute('id'));
+					// let id_row = Number(this.closest('tr').getAttribute('id'));
+					let id_row = this.closest('tr').getAttribute('id');
 					if (Number(this.value) > 0) {
 						let valor_nuevo = Number(this.value);
 						let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
@@ -713,7 +733,8 @@
 			let td_resources = document.querySelectorAll('.td_resources');
 			td_resources.forEach(element => {
 				element.addEventListener('click',function(){
-					let id_row = Number(this.parentElement.getAttribute('id'));
+					// let id_row = Number(this.parentElement.getAttribute('id'));
+					let id_row = this.parentElement.getAttribute('id');
 					let valor_nuevo = this.value;
 					let id_tbody = element.closest('tbody').getAttribute('id');
 					let contenedor = document.getElementById('modales');
@@ -827,7 +848,7 @@
 			}else{
 				recursos = response.resources.filter(r => r.name.toLowerCase().includes(nombre.toLowerCase()));
 			}
-			console.log(recursos);
+			// console.log(recursos);
 			let res = recursos.map(resource => {
 				let foto = 'man.png';
 				if(resource.foto == null){ 
@@ -840,14 +861,14 @@
 					foto = resource.foto;
 				}
 
-				return `<li class="list-group-item ${tarea_correspondiente.assigs.some(assig => Number(assig.resourceId) == Number(resource.id)) ? 'selected_resource_task':''}" resource-id="${resource.id}">
+				return `<li class="list-group-item ${tarea_correspondiente.assigs?.some(assig => Number(assig.resourceId) == Number(resource.id)) ? 'selected_resource_task':''}" resource-id="${resource.id}">
 						<div class="row">
 							<div class="col-11">
 								<img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}" title="${resource.name}" />
 								<span class="m-0 ml-2">${resource.name}</span>
 							</div>
 							<div class="col-1 text-center">
-								${tarea_correspondiente.assigs.some(assig => Number(assig.resourceId) == Number(resource.id)) ? '<i class="fas fa-trash-alt resources-modal-remove text-danger" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>':'<i class="fa fa-plus-circle resources-modal text-success" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>'}
+								${tarea_correspondiente.assigs?.some(assig => Number(assig.resourceId) == Number(resource.id)) ? '<i class="fas fa-trash-alt resources-modal-remove text-danger" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>':'<i class="fa fa-plus-circle resources-modal text-success" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>'}
 							</div>
 						</div>
 						</li>`;
@@ -873,9 +894,9 @@
 						"roleId": "tmp_1",
 						"effort": 0
 					};
-					let isResponsableTask = tarea_correspondiente.assigs.find(a => Number(a.resourceId) == id);
+					let isResponsableTask = tarea_correspondiente.assigs?.find(a => Number(a.resourceId) == id);
 					if (isResponsableTask == undefined) {
-						tarea_correspondiente.assigs.push(new_assig);
+						tarea_correspondiente.assigs?.push(new_assig);
 
 						let id_tbody = this.closest('.modal').getAttribute('tbody-contenedor');
 						saveOnServer(response);						

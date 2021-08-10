@@ -411,22 +411,13 @@ Ganttalendar.prototype.drawTask = function (task) {
 
     //svg.title(taskSvg, task.name);
     //external box
-     if (task.isParent()){
-
-      svg.rect(taskSvg, 0, 0, "100%", 3, {fill:"#000"});
-
-    }else{
-
-    var layout = svg.rect(taskSvg, 0, 0, "100%", "100%", {class:"taskLayout", rx:"2", ry:"2"});  
-
-    }
-    // var layout = svg.rect(taskSvg, 0, 0, "100%", "100%", {class:"taskLayout", rx:"2", ry:"2"});
+    var layout = svg.rect(taskSvg, 0, 0, "100%", "100%", {class:"taskLayout", rx:"2", ry:"2"});
     //external dep
     if (task.hasExternalDep)
       svg.rect(taskSvg, 0, 0, "100%", "100%", {fill:"url(#extDep)"});
 
     //progress
-    if (task.progress > 0  && !task.isParent()) {
+    if (task.progress > 0) {
       var progress = svg.rect(taskSvg, 0, "20%", (task.progress > 100 ? 100 : task.progress) + "%", "60%", {rx:"2", ry:"2",fill:"rgba(0,0,0,.4)"});
       if (dimensions.width > 50) {
         var textStyle = {fill:"#888", "font-size":"10px",class:"textPerc teamworkIcons",transform:"translate(5)"};
@@ -1029,7 +1020,7 @@ $.fn.dragExtedSVG = function (svg, opt) {
       ).bind("mousemove.deSVG",
         function (e) {
           var el = $(this);
-          var x1 = el.find("[class*=taskLayout]") ? el.find("[class*=taskLayout]").offset().left : null;
+          var x1 = el.find("[class*=taskLayout]").offset().left;
           var x2 = x1 + parseFloat(el.attr("width"));
           var posx = e.pageX;
 

@@ -13,6 +13,7 @@ use App\Models\IncidentesSeguridad;
 use App\Models\RiesgoIdentificado;
 use App\Models\Activo;
 use App\Models\Documento;
+use App\Models\PlanImplementacion;
 use App\Models\RevisionDocumento;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -26,19 +27,54 @@ class inicioUsuarioController extends Controller
         abort_if(Gate::denies('mi_perfil_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $usuario = auth()->user();
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
-        $gantt_path = 'storage/gantt/gantt_inicial.json';
+        //$gantt_path = 'storage/gantt/gantt_inicial.json';
         $actividades = [];
-        if (file_exists($gantt_path)) {
-            $file_gantt = json_decode(file_get_contents($gantt_path), true);
-            $actividades = array_filter($file_gantt['tasks'], function ($tarea) use ($empleado_id) {
-                $assigs = $tarea['assigs'];
-                foreach ($assigs as $assig) {
-                    if ($assig['resourceId'] == $empleado_id) {
-                        return $tarea;
+        // if (file_exists($gantt_path)) {
+        //     $file_gantt = json_decode(file_get_contents($gantt_path), true);
+        //     $actividades = array_filter($file_gantt['tasks'], function ($tarea) use ($empleado_id) {
+        //         $assigs = $tarea['assigs'];
+        //         foreach ($assigs as $assig) {
+        //             if ($assig['resourceId'] == $empleado_id) {
+        //                 return $tarea;
+        //             }
+        //         }
+        //     });
+        // }
+        $implementacion = PlanImplementacion::first();
+        $tasks = $implementacion->tasks;
+        foreach ($tasks as $task) {
+            $task->end = intval($task->end);
+            $task->start = intval($task->start);
+            $task->canAdd = $task->canAdd == 'true' ? true : false;
+            $task->canWrite = $task->canWrite == 'true' ? true : false;
+            $task->duration = intval($task->duration);
+            $task->progress = intval($task->progress);
+            $task->canDelete = $task->canDelete == 'true' ? true : false;
+            isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
+            isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
+            $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
+            $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
+            $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
+            $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+        }
+        $implementacion->tasks = $tasks;
+        // if (!isset($implementacion->assigs)) {
+        //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
+        // }
+        $actividades = collect($implementacion->tasks)->filter(function ($task) use ($empleado_id, $implementacion) {
+            if ($task->level > 1) {
+                if (isset($task->assigs)) {
+                    $assigs = $task->assigs;
+                    $task->parent = $implementacion->parent;
+                    $task->slug = $implementacion->slug;
+                    foreach ($assigs as $assig) {
+                        if ($assig->resourceId == $empleado_id) {
+                            return $task;
+                        }
                     }
                 }
-            });
-        }
+            }
+        });
         $auditorias_anual = AuditoriaAnual::get();
         $recursos = Recurso::whereHas('empleados', function ($query) use ($usuario) {
             $query->where('empleados.id', $usuario->id);

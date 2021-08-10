@@ -13,6 +13,7 @@
         <thead>
             <tr>
                 <th>Actividad</th>
+                <th>Tipo</th>
                 {{-- <th>Categoria</th> --}}
                 {{-- <th>Urgencia</th> --}}
                 <th>Fecha&nbsp;inicio</th>
@@ -25,38 +26,26 @@
         </thead>
         <tbody>
             @foreach ($actividades as $task)
-                <tr>
-                    <td>{{ $task['name'] }}</td>
+                <tr id="{{ $task->id }}" data-parent-plan="{{ $task->slug }}">
+                    <td>{{ $task->name }}</td>
+                    <td><span class="badge badge-primary">{{ $task->parent }}</span></td>
                     {{-- <td>Categoria</td> --}}
                     {{-- <td>Urgencia</td> --}}
-                    <td>{{ \Carbon\Carbon::createFromTimestamp($task['start'] / 1000)->toDateTime()->format('Y-m-d') }}
+                    <td>{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTime()->format('Y-m-d') }}
                     </td>
-                    <td>{{ \Carbon\Carbon::createFromTimestamp($task['end'] / 1000)->toDateTime()->format('Y-m-d') }}
+                    <td>{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('Y-m-d') }}
                     </td>
                     <td>
                         <div class="td_div_recursos">
-                            @foreach ($task['assigs'] as $assig)
+                            @foreach ($task->assigs as $assig)
                                 @php
-                                    $foto = 'user.png';
-                                    $empleado = $Empleado->where('id', intval($assig['resourceId']))->first();
-                                    if ($empleado) {
-                                        if ($empleado->foto != null) {
-                                            $foto = $empleado->foto;
-                                        } else {
-                                            $genero = $empleado->genero;
-                                            if ($genero == 'M') {
-                                                $foto = 'woman.png';
-                                            }
-                                            if ($genero == 'H') {
-                                                $foto = 'man.png';
-                                            }
-                                        }
-                                    }
+                                    $empleado = $Empleado->where('id', intval($assig->resourceId))->first();
                                 @endphp
                                 @if ($empleado)
-                                    <img src="{{ asset('storage/empleados/imagenes/' . $foto) }}"
+                                    <img src="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
+                                        style="height: 37px; clip-path: circle(18px at 50% 50%);"
                                         class="rounded-circle {{ $empleado->id == auth()->user()->empleado->id ? 'd-none' : '' }}"
-                                        title="{{ $empleado->name }}">
+                                        alt="{{ $empleado->name }}" title="{{ $empleado->name }}">
                                     {{ $empleado->id == auth()->user()->empleado->id ? '' : '' }}
                                 @endif
                             @endforeach
@@ -64,7 +53,7 @@
                     </td>
                     {{-- <td>Asignada por</td> --}}
                     <td>
-                        @switch($task['status'])
+                        @switch($task->status)
                             @case('STATUS_ACTIVE')
                                 <span class="badge" style="background-color:rgb(253, 171, 61)">En proceso</span>
                             @break
