@@ -84,7 +84,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //analisis brechas
     //Route::resource('analisis-brechas', 'AnalisisBController');
-    Route::get('analisis-brechas', 'AnalisisBController@index');
+    Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
     Route::post('analisis-brechas/update', 'AnalisisBController@update');
 
     // Declaracion de Aplicabilidad

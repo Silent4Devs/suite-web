@@ -15,7 +15,7 @@ class AddColumnObservacionesToActivosTable extends Migration
     {
         Schema::table('activos', function (Blueprint $table) {
             $table->longText('observaciones')->nullable();
-            $table->string('sede')->unique()->nullable();
+            $table->string('sede')->nullable();
             $table->string('documentos_relacionados')->nullable();
             $table->date('fecha_alta')->nullable();
             $table->date('fecha_baja')->nullable();
