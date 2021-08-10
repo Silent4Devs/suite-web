@@ -110,6 +110,20 @@ class DeskController extends Controller
 
         return view('admin.desk.riesgos.edit', compact('riesgos', 'activos', 'empleados'));
     }
+    public function updateRiesgos(Request $request, $id_riesgos)
+    {
+        $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
+        $riesgos->update([
+            'fecha' => $request->fecha,
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'activos_afectados' => $request->activos_afectados,
+            'proceso' => $request->proceso,
+        ]);
+
+
+        return redirect()->route('admin.desk.index');
+    }
 
 
 
@@ -117,13 +131,28 @@ class DeskController extends Controller
     public function editQuejas(Request $request, $id_quejas)
     {
 
-        $quejas = RiesgoIdentificado::findOrfail(intval($id_quejas));
+        $quejas = Quejas::findOrfail(intval($id_quejas));
 
         $activos = Activo::get();
 
         $empleados = Empleado::get();
 
         return view('admin.desk.quejas.edit', compact('quejas', 'activos', 'empleados'));
+    }
+    public function updateQuejas(Request $request, $id_quejas)
+    {
+        $quejas = Quejas::findOrfail(intval($id_quejas));
+        $quejas->update([
+            'fecha' => $request->fecha,
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'activos_afectados' => $request->activos_afectados,
+            'proceso' => $request->proceso,
+            'evidencia' => $request->evidencia,
+        ]);
+
+
+        return redirect()->route('admin.desk.index');
     }
 
 
@@ -140,6 +169,21 @@ class DeskController extends Controller
         $empleados = Empleado::get();
 
         return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados'));
+    }
+    public function updateDenuncias(Request $request, $id_denuncias)
+    {
+        $denuncias = Denuncias::findOrfail(intval($id_denuncias));
+        $denuncias->update([
+            'anonimo' => $request->anonimo,
+            'descripcion' => $request->descripcion,
+            'evidencia' => $request->evidencia,
+            'denunciado' => $request->denunciado,
+            'area_denunciado' => $request->area_denunciado,
+            'tipo' => $request->tipo,
+        ]);
+
+
+        return redirect()->route('admin.desk.index');
     }
 
 
@@ -158,6 +202,18 @@ class DeskController extends Controller
 
         return view('admin.desk.mejoras.edit', compact('mejoras', 'activos', 'empleados'));
     }
+    public function updateMejoras(Request $request, $id_mejoras)
+    {
+        $mejoras = Mejoras::findOrfail(intval($id_mejoras));
+        $mejoras->update([
+            'descripcion' => $request->descripcion,
+            'mejora' => $request->mejora,
+        ]);
+
+        return redirect()->route('admin.desk.index');
+    }
+
+
 
 
 
@@ -171,5 +227,16 @@ class DeskController extends Controller
         $empleados = Empleado::get();
 
         return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados'));
+    }
+    public function updateSugerencias(Request $request, $id_sugerencias)
+    {
+        $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
+        $sugerencias->update([
+            'empleado_sugerir_id' => auth()->user()->empleado->id,
+            'descripcion' => $request->descripcion,
+            'sugerencia_dirigida' => $request->sugerencia_dirigida,
+        ]);
+
+        return redirect()->route('admin.desk.index');
     }
 }

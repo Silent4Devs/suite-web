@@ -3,7 +3,6 @@
    <table class="table tabla_sugerencias">
    		<thead>
    			<tr>
-       			{{-- <th>ID</th> --}}
        			<th>Folio</th>
        			<th>Nombre</th>
        			<th>Correo</th>
@@ -17,9 +16,9 @@
    			@foreach($sugerencias as $sugerencia)
 	   			<tr>
 	       			<td>{{ $sugerencia->id }}</td>
-	       			<td>{{ $sugerencia->empleado_sugerir_id }}</td>
-	       			<td>{{ $sugerencia->empleado_sugerir_id }}</td> 
-	       			<td>{{ $sugerencia->empleado_sugerir_id }}</td> 
+	       			<td>{{ $sugerencia->sugerir->name }}</td>
+	       			<td>{{ $sugerencia->sugerir->email }}</td> 
+	       			<td>{{ $sugerencia->sugerir->telefono }}</td> 
 	       			<td>{{ $sugerencia->descripcion }}</td>
 	       			<td>{{ $sugerencia->sugerencia_dirigida }}</td>
 	       			<td>

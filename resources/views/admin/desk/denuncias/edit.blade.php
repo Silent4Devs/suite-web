@@ -7,7 +7,7 @@
 		<div class="card-body">
 			<strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clickc en el botón "Enviar"
 
-			<form class="row" method="POST" action="{{ route('admin.reportes-denuncias-store') }}">
+			<form class="row" method="POST" action="{{ route('admin.desk.denuncias-update', $denuncias) }}">
 				@csrf
 				<div class="form-group col-12">
 					<label class="form-label">Su queja será:</label><br>
@@ -21,42 +21,42 @@
 
 				<div class="form-group mt-2 col-4">
 					<label class="form-label">Nombre</label>
-					<div class="form-control">{{ auth()->user()->empleado->name }}</div>
+					<div class="form-control">{{ $denuncias->denuncio->name }}</div>
 				</div>
 
 				<div class="form-group mt-2 col-4">
 					<label class="form-label">Area</label>
-					<div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
+					<div class="form-control">{{ $denuncias->denuncio->area->area }}</div>
 				</div>
 
 				<div class="form-group mt-2 col-4">
 					<label class="form-label">Puesto</label>
-					<div class="form-control">{{ auth()->user()->empleado->puesto }}</div>
+					<div class="form-control">{{ $denuncias->denuncio->puesto }}</div>
 				</div>
 
 				<div class="form-group mt-2 col-4">
 					<label class="form-label">Correo electrónico</label>
-					<div class="form-control">{{ auth()->user()->empleado->email }}</div>
+					<div class="form-control">{{ $denuncias->denuncio->email }}</div>
 				</div>
 
 				<div class="form-group mt-2 col-4">
 					<label class="form-label">Telefono</label>
-					<div class="form-control">{{ auth()->user()->empleado->telefono }}</div>
+					<div class="form-control">{{ $denuncias->denuncio->telefono }}</div>
 				</div>
 
 				<div class="form-group mt-2 col-4">
 					<label class="form-label">Seleccione al colaborador al que denuncia</label>
-					<input type="" name="denunciado" class="form-control">
+					<input type="" name="denunciado" class="form-control" value="{{ $denuncias->denunciado }}">
 				</div>
 
 				<div class="form-group mt-4 col-6">
 					<label class="form-label">Area al pertenece colaborador denunciado</label>
-					<input type="" name="area_denunciado" class="form-control">
+					<input type="" name="area_denunciado" class="form-control" value="">
 				</div>
 
 				<div class="form-group mt-4 col-6">
 					<label class="form-label">Indique el tipo de denuncia de que se trata</label>
-					<input type="" name="tipo" class="form-control">
+					<input type="" name="tipo" class="form-control" value="{{ $denuncias->tipo }}">
 				</div>
 
 				<div class="form-group mt-4 col-12">
@@ -66,12 +66,12 @@
 						desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,
 						¿Cuándo?, ¿Dónde?, considerando lugares y fechas, horas, palabras utilizadas, acciones que dan origen al hecho
 					</div>
-					<input type="" name="descripcion" class="form-control">
+					<textarea type="" name="descripcion" class="form-control">{{ $denuncias->descripcion }}</textarea>
 				</div>
 
 				<div class="form-group mt-4 col-12">
 					<label class="form-label">Adjuntar evidencia</label>
-					<input type="" name="evidencia" class="form-control">
+					<input type="" name="evidencia" class="form-control" value="{{ $denuncias->evidencia }}">
 				</div>
 
 				<div class="form-group mt-4 text-right col-12">

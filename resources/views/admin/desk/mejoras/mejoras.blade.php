@@ -3,7 +3,6 @@
    <table class="table tabla_mejoras">
    		<thead>
    			<tr>
-       			{{-- <th>ID</th> --}}
        			<th>Folio</th>
        			<th>Nombre</th>
        			<th>Correo</th>
@@ -17,9 +16,9 @@
    			@foreach($mejoras as $mejora)
 	   			<tr>
 	       			<td>{{ $mejora->id }}</td>
-	       			<td>{{ $mejora->empleado_mejoro_id }}</td>
-	       			<td>{{ $mejora->empleado_mejoro_id }}</td> 
-	       			<td>{{ $mejora->empleado_mejoro_id }}</td> 
+	       			<td>{{ $mejora->mejoro->name }}</td>
+	       			<td>{{ $mejora->mejoro->email }}</td> 
+	       			<td>{{ $mejora->mejoro->telefono }}</td> 
 	       			<td>{{ $mejora->descripcion }}</td>
 	       			<td>{{ $mejora->mejora }}</td>
 	       			<td>

@@ -287,11 +287,10 @@
                 <font class="letra_blanca"> Análisis de brechas</font>
             </a>
         </li> --}}
-        {{-- @can('area_access')
-            <li class="c-sidebar-nav-title">
+                   <li class="c-sidebar-nav-title">
                 <font class="letra_blanca">Normas</font>
             </li>
-            @can('isoveinticieteuno_access')
+            
 
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('admin.iso27001.index') }}">
@@ -299,8 +298,7 @@
                         <font class="letra_blanca"> ISO 27001 </font>
                     </a>
                 </li>
-            @endcan
-        @endcan --}}
+           
         @can('administracion_access')
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca">Administración</font>
