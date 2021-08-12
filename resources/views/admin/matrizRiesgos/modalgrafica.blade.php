@@ -1,3 +1,156 @@
+<style>
+    .calor {
+        width: 100%;
+        margin-top: 30px;
+        float: left;
+    }
+
+    .datosCalor {
+        width: 40%;
+        float: left;
+    }
+
+    .datosColor label {
+        font-family: maven regular;
+    }
+
+    .barra1 {
+        width: 100%;
+        height: 25px;
+        float: left;
+        box-shadow: -3px 3px 3px 0px #999;
+        border-radius: 50px;
+        font-family: maven regular;
+        text-align: center;
+        padding-top: 5px;
+        color: #fff;
+    }
+
+    #s_baja {
+        background-color: #18a827;
+        display: none;
+    }
+
+    #s_media {
+        background-color: #eef100;
+        display: none;
+        color: #000;
+    }
+
+    #s_alta {
+        background-color: #ff9600;
+        display: none;
+    }
+
+    #s_muyAlta {
+        background-color: #cb0000;
+        display: none;
+    }
+
+    .barra2 {
+        width: 100%;
+        height: 25px;
+        float: left;
+        box-shadow: -3px 3px 3px 0px #999;
+        border-radius: 50px;
+        font-family: maven regular;
+        text-align: center;
+        padding-top: 5px;
+        color: #fff;
+    }
+
+    #p_baja {
+        background-color: #18a827;
+        display: none;
+    }
+
+    #p_media {
+        background-color: #eef100;
+        display: none;
+        color: #000;
+    }
+
+    #p_alta {
+        background-color: #ff9600;
+        display: none;
+    }
+
+    #p_muyAlta {
+        background-color: #cb0000;
+        display: none;
+    }
+
+    .barra3 {
+        width: 100%;
+        height: 25px;
+        float: left;
+        box-shadow: -3px 3px 3px 0px #999;
+        border-radius: 50px;
+        font-family: maven regular;
+        text-align: center;
+        padding-top: 5px;
+        color: #fff;
+    }
+
+    #r_baja {
+        background-color: #18a827;
+        display: none;
+    }
+
+    #r_media {
+        background-color: #eef100;
+        display: none;
+        color: #000;
+    }
+
+    #r_alta {
+        background-color: #ff9600;
+        display: none;
+    }
+
+    #r_muyAlta {
+        background-color: #cb0000;
+        display: none;
+    }
+
+    .mapaCalor {
+        width: 60%;
+        float: right;
+    }
+
+    .mapaCalor table {
+        font-family: maven regular;
+        margin-top: 50px;
+    }
+
+    .mapaCalor td {
+        width: 100px;
+        height: 50px;
+        text-align: center;
+    }
+
+    .mapaCalor td:hover {
+        filter: saturate(500%);
+    }
+
+    .verde {
+        background-color: #18a827;
+    }
+
+    .amarillo {
+        background-color: #eef100;
+    }
+
+    .naranja {
+        background-color: #ff9600;
+    }
+
+    .rojo {
+        background-color: #cb0000;
+    }
+
+</style>
+
 <!-- Modal -->
 <div class="modal fade" id="graficaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
@@ -47,11 +200,15 @@
                         <div class="barra1" id="s_alta">Alta</div>
                         <div class="barra1" id="s_muyAlta">Muy Alta</div>
 
+
+
                         <label>Probabilidad</label>
                         <div class="barra2" id="p_baja">Baja</div>
                         <div class="barra2" id="p_media">Media</div>
                         <div class="barra2" id="p_alta">Alta</div>
                         <div class="barra2" id="p_muyAlta">Muy Alta</div>
+
+
 
                         <label>Riesgo</label>
                         <div class="barra3" id="r_baja">Baja</div>
@@ -108,3 +265,340 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+
+        $(".verde").mouseenter(function() {
+            $("#r_baja").fadeIn(0);
+
+
+
+            $("#r_media").fadeOut(0);
+            $("#r_alta").fadeOut(0);
+            $("#r_muyAlta").fadeOut(0);
+        });
+
+
+
+        $(".amarillo").mouseenter(function() {
+            $("#r_media").fadeIn(0);
+
+
+
+            $("#r_baja").fadeOut(0);
+            $("#r_alta").fadeOut(0);
+            $("#r_muyAlta").fadeOut(0);
+        });
+
+
+
+        $(".naranja").mouseenter(function() {
+            $("#r_alta").fadeIn(0);
+
+
+
+            $("#r_media").fadeOut(0);
+            $("#r_baja").fadeOut(0);
+            $("#r_muyAlta").fadeOut(0);
+        });
+
+
+
+        $(".rojo").mouseenter(function() {
+            $("#r_muyAlta").fadeIn(0);
+
+
+
+            $("#r_media").fadeOut(0);
+            $("#r_alta").fadeOut(0);
+            $("#r_baja").fadeOut(0);
+        });
+
+
+
+
+
+        $("#s_baja_p_muyAlta").mouseenter(function() {
+            $("#s_baja").fadeIn(0);
+            $("#p_muyAlta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_media_p_muyAlta").mouseenter(function() {
+            $("#s_media").fadeIn(0);
+            $("#p_muyAlta").fadeIn(0);
+
+
+
+
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_alta_p_muyAlta").mouseenter(function() {
+            $("#s_alta").fadeIn(0);
+            $("#p_muyAlta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_muyAlta_p_muyAlta").mouseenter(function() {
+            $("#s_muyAlta").fadeIn(0);
+            $("#p_muyAlta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_alta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+
+
+
+        $("#s_baja_p_alta").mouseenter(function() {
+            $("#s_baja").fadeIn(0);
+            $("#p_alta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_media_p_alta").mouseenter(function() {
+            $("#s_media").fadeIn(0);
+            $("#p_alta").fadeIn(0);
+
+
+
+
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_alta_p_alta").mouseenter(function() {
+            $("#s_alta").fadeIn(0);
+            $("#p_alta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_muyAlta_p_alta").mouseenter(function() {
+            $("#s_muyAlta").fadeIn(0);
+            $("#p_alta").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+
+
+
+            $("#p_media").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+
+
+
+        $("#s_baja_p_media").mouseenter(function() {
+            $("#s_baja").fadeIn(0);
+            $("#p_media").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_media_p_media").mouseenter(function() {
+            $("#s_media").fadeIn(0);
+            $("#p_media").fadeIn(0);
+
+
+
+
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_alta_p_media").mouseenter(function() {
+            $("#s_alta").fadeIn(0);
+            $("#p_media").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+        $("#s_muyAlta_p_media").mouseenter(function() {
+            $("#s_muyAlta").fadeIn(0);
+            $("#p_media").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+
+
+
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_baja").fadeOut(0);
+        });
+
+
+
+        $("#s_baja_p_baja").mouseenter(function() {
+            $("#s_baja").fadeIn(0);
+            $("#p_baja").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_media").fadeOut(0);
+        });
+        $("#s_media_p_baja").mouseenter(function() {
+            $("#s_media").fadeIn(0);
+            $("#p_baja").fadeIn(0);
+
+
+
+
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_media").fadeOut(0);
+        });
+        $("#s_alta_p_baja").mouseenter(function() {
+            $("#s_alta").fadeIn(0);
+            $("#p_baja").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_muyAlta").fadeOut(0);
+
+
+
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_media").fadeOut(0);
+        });
+        $("#s_muyAlta_p_baja").mouseenter(function() {
+            $("#s_muyAlta").fadeIn(0);
+            $("#p_baja").fadeIn(0);
+
+
+
+
+            $("#s_media").fadeOut(0);
+            $("#s_baja").fadeOut(0);
+            $("#s_alta").fadeOut(0);
+
+
+
+            $("#p_alta").fadeOut(0);
+            $("#p_muyAlta").fadeOut(0);
+            $("#p_media").fadeOut(0);
+        });
+    });
+</script>

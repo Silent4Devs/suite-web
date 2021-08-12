@@ -61,8 +61,8 @@ class MatrizRiesgo extends Model
     ];
 
     const TIPO_RIESGO_SELECT = [
-        'Negativo' => 'Negativo',
-        'Positivo' => 'Positivo',
+        '0' => 'Negativo',
+        '1' => 'Positivo',
     ];
 
     const PROBABILIDAD_SELECT = [
