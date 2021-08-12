@@ -143,16 +143,11 @@
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                             Atención</p>
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado
-                            Sedes a la
-                            organización
-                            <a href="{{ route('admin.sedes.create') }}"><i class="fas fa-share"></i></a>
+                            matrices de riesgo
+                            <a href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}"><i class="fas fa-share"></i></a>
                         </p>
                     </div>
                 </div>
-            </div>
-            <div class="d-flex justify-content-center">
-                <img src="{{ asset('img/sedes.png') }}" alt="No se pudo cargar el organigrama" class="mt-3"
-                    style="height: 300px;">
             </div>
         @endif
     </div>

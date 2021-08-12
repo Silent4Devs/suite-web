@@ -66,17 +66,17 @@ class MatrizRiesgo extends Model
     ];
 
     const PROBABILIDAD_SELECT = [
-        'ALTA'  => 'ALTA',
-        'BAJA'  => 'BAJA',
-        'MEDIA' => 'MEDIA',
-        'NULA'  => 'NULA',
+        '9'  => 'ALTA',
+        '6' => 'MEDIA',
+        '3'  => 'BAJA',
+        '0'  => 'NULA',
     ];
 
     const IMPACTO_SELECT = [
-        'MUY ALTO' => 'MUY ALTO',
-        'ALTO'     => 'ALTO',
-        'MEDIO'    => 'MEDIO',
-        'BAJO'     => 'BAJO',
+        '9' => 'MUY ALTO',
+        '6'     => 'ALTO',
+        '3'    => 'MEDIO',
+        '0'     => 'BAJO',
     ];
 
 

@@ -119,24 +119,30 @@ class MatrizRiesgosController extends Controller
 
     public function edit(MatrizRiesgo $matrizRiesgo)
     {
-
-        abort_if(Gate::denies('matriz_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $controles = Controle::all()->pluck('numero', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        if (!is_null($matrizRiesgo->activo_id)) {
+        /*if (!is_null($matrizRiesgo->activo_id)) {
             $matrizRiesgo->load('activo_id', 'controles', 'team');
-        }
+        }*/
 
-        $disponibilidadcons = MatrizRiesgo::find($matrizRiesgo->id);
+        /*$disponibilidadcons = MatrizRiesgo::find($matrizRiesgo->id);
         $disponibilidad = $disponibilidadcons->disponibilidad;
         $integridad = $disponibilidadcons->integridad;
-        $confidencialidad = $disponibilidadcons->confidencialidad;
+        $confidencialidad = $disponibilidadcons->confidencialidad;*/
+        $organizacions = Organizacion::all();
+        $teams = Team::get();
+        $activos = Activo::get();
+        $tipoactivos = Tipoactivo::get();
+        $controles = Controle::get();
+        //$matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
+        $sedes = Sede::get();
+        $areas = Area::get();
+        $amenazas = Amenaza::get();
+        $procesos = Proceso::get();
+        $numero_sedes = Sede::count();
+        $numero_matriz = MatrizRiesgo::count();
+        $responsables = Empleado::get();
+        $vulnerabilidades = Vulnerabilidad::get();
 
-
-        return view('admin.matrizRiesgos.edit', compact('tipoactivos', 'controles', 'matrizRiesgo', 'disponibilidad', 'integridad', 'confidencialidad',));
+        return view('admin.matrizRiesgos.edit', compact('matrizRiesgo', 'vulnerabilidades','controles' ,'amenazas', 'activos', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz', 'tipoactivos', 'responsables'));
     }
 
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
@@ -176,131 +182,6 @@ class MatrizRiesgosController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    /*public function SeguridadInfo(Request $request)
-    {
-        $query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        dd($query);
-        abort_if(Gate::denies('matriz_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //$query = MatrizRiesgo::with(['controles', 'team'])->where('id_analisis', '=', $request['id'])->get();
-        if ($request->ajax()) {
-            //Esta es el error , activo_id no lo encuentra, hay que modificar la relacion en el modelo de matrizriesgo
-            $query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'matriz_riesgo_show';
-                $editGate = 'matriz_riesgo_edit';
-                $deleteGate = 'matriz_riesgo_delete';
-                $crudRoutePart = 'matriz-riesgos';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-            $table->editColumn('id_sede', function ($row) {
-                return $row->id_sede ? $row->id_sede : "";
-            });
-
-            $table->editColumn('id_proceso', function ($row) {
-                return $row->id_proceso ? $row->id_proceso : "";
-            });
-
-            $table->editColumn('id_responsable', function ($row) {
-                return $row->id_proceso ? $row->id_responsable : "";
-            });
-            $table->editColumn('activo_id', function ($row) {
-                return $row->activo_id ? $row->activo_id : "";
-            });
-            $table->editColumn('amenaza', function ($row) {
-                return $row->amenaza ? $row->amenaza : "";
-            });
-            $table->editColumn('vulnerabilidad', function ($row) {
-                return $row->vulnerabilidad ? $row->vulnerabilidad : "";
-            });
-            $table->editColumn('descripcionriesgo', function ($row) {
-                return $row->descripcionriesgo ? $row->descripcionriesgo : '';
-            });
-            /*$table->editColumn('tipo_riesgo', function ($row) {
-                return $row->tipo_riesgo ? $row->tipo_riesgo : "";
-            });
-            $table->editColumn('confidencialidad', function ($row) {
-                return $row->confidencialidad ? $row->confidencialidad : "";
-            });
-            $table->editColumn('integridad', function ($row) {
-                return $row->integridad ? $row->integridad : "";
-            });
-            $table->editColumn('disponibilidad', function ($row) {
-                return $row->disponibilidad ? $row->disponibilidad : '';
-            });
-            $table->editColumn('probabilidad', function ($row) {
-                return $row->probabilidad ? $row->probabilidad : '';
-            });
-            $table->editColumn('impacto', function ($row) {
-                return $row->impacto ? $row->impacto : "";
-            });
-            $table->editColumn('nivelriesgo', function ($row) {
-                return $row->nivelriesgo ? $row->nivelriesgo : "";
-            });
-            $table->editColumn('riesgototal', function ($row) {
-                return $row->riesgototal ? $row->riesgototal : "";
-            });
-            $table->editColumn('riesgototal', function ($row) {
-                return $row->riesgototal ? $row->riesgototal : "";
-            });
-            $table->editColumn('controles_id', function ($row) {
-                return $row->controles_id ? $row->controles_id : "";
-            });
-            $table->editColumn('plan_de_accion', function ($row) {
-                return $row->plan_de_accion ? $row->plan_de_accion : "";
-            });
-            $table->editColumn('confidencialidad_cid', function ($row) {
-                return $row->confidencialidad_cid ? $row->confidencialidad_cid : "";
-            });
-            $table->editColumn('integridad_cid', function ($row) {
-                return $row->integridad_cid ? $row->integridad_cid : "";
-            });
-            $table->editColumn('disponibilidad_cid', function ($row) {
-                return $row->disponibilidad_cid ? $row->disponibilidad_cid : "";
-            });
-            $table->editColumn('probabilidad_residual', function ($row) {
-                return $row->probabilidad_residual ? $row->probabilidad_residual : "";
-            });
-            $table->addColumn('impacto_residual', function ($row) {
-                return $row->impacto_residual ? $row->impacto_residual : '';
-            });
-            $table->editColumn('nivelriesgo_residual', function ($row) {
-                return $row->nivelriesgo_residual ? $row->nivelriesgo_residual : "";
-            });
-            $table->editColumn('riesgo_total_residual', function ($row) {
-                return $row->riesgo_total_residual ? $row->nivelriesgo_residual : "";
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        $tipoactivos = Tipoactivo::get();
-        $controles = Controle::get();
-        $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        $sedes = Sede::get();
-        $areas = Area::get();
-        $procesos = Proceso::get();
-
-        return view('admin.matrizRiesgos.index', compact('tipoactivos', 'tipoactivos', 'controles', 'matriz_heat', 'sedes', 'areas', 'procesos'))->with('idAnalisis', $request['id']);
-    }*/
-
     public function SeguridadInfo(Request $request)
     {
         /*$query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
@@ -317,7 +198,7 @@ class MatrizRiesgosController extends Controller
                 $viewGate      = 'configuracion_sede_show';
                 $editGate      = 'configuracion_sede_edit';
                 $deleteGate    = 'configuracion_sede_delete';
-                $crudRoutePart = 'sedes';
+                $crudRoutePart = 'matriz-riesgos';
 
                 return view('partials.datatablesActions', compact(
                     'viewGate',
@@ -373,9 +254,9 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('nivelriesgo', function ($row) {
                 return $row->nivelriesgo ? $row->nivelriesgo : "";
             });
-            $table->editColumn('riesgototal', function ($row) {
+            /*$table->editColumn('riesgototal', function ($row) {
                 return $row->riesgototal ? $row->riesgototal : "";
-            });
+            });*/
             $table->editColumn('control', function ($row) {
                 return $row->controles->control ? $row->controles->control : "";
             });
@@ -410,8 +291,6 @@ class MatrizRiesgosController extends Controller
         }
 
         $organizacions = Organizacion::all();
-        //$org = $organizacions->organizacion;
-        //dd($organizacions->organizacion, $organizacions);
         $teams = Team::get();
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
@@ -422,9 +301,6 @@ class MatrizRiesgosController extends Controller
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
 
-        //$sede_inicio = !is_null($sedes) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
-
-
-        return view('admin.matrizRiesgos.index', compact('sedes', 'areas', 'procesos' ,'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
+        return view('admin.matrizRiesgos.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
 }

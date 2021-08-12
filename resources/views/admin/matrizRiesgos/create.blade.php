@@ -169,8 +169,9 @@
 
                 <div class="form-group">
                     <label for="descripcionriesgo"><i class="far fa-file-alt iconos-crear"></i>Descripción Riesgo</label>
-                    <textarea class="form-control {{ $errors->has('descripcionriesgo') ? 'is-invalid' : '' }}" type="text"
-                        name="descripcionriesgo" id="descripcionriesgo" value="{{ old('descripcionriesgo', '') }}" rows="3"></textarea>
+                    <textarea class="form-control {{ $errors->has('descripcionriesgo') ? 'is-invalid' : '' }}"
+                        type="text" name="descripcionriesgo" id="descripcionriesgo"
+                        value="{{ old('descripcionriesgo', '') }}" rows="3"></textarea>
                     @if ($errors->has('descripcionriesgo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcionriesgo') }}
@@ -179,6 +180,10 @@
                     <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
                 </div>
                 <hr>
+                <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
+                    <p class"text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
+                        riesgo inicial</p>
+                </div>
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
 
@@ -287,7 +292,7 @@
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                     </div>
 
-                    <div class="form-group col-sm-4">
+                    {{-- <div class="form-group col-sm-4">
                         <label for="riesgoresidual"><i class="fas fa-radiation iconos-crear"></i>Riesgo Residual</label>
                         <input class="form-control {{ $errors->has('riesgoresidual') ? 'is-invalid' : '' }}" type="text"
                             name="riesgoresidual" id="riesgoresidual" value="{{ old('riesgoresidual', '') }}">
@@ -324,7 +329,7 @@
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -373,6 +378,73 @@
 
                 </div>
                 <hr>
+                <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
+                    <p class"text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
+                        riesgo residual</p>
+                </div>
+                <p class="font-weight-bold" style="font-size:11pt;">Riesgo Residual</p>
+                <div class="row">
+
+                    <div class="form-group col-sm-4">
+                        <label for="probabilidad_residual"><i
+                                class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
+                        <select class="form-control {{ $errors->has('probabilidad_residual') ? 'is-invalid' : '' }}"
+                            name="probabilidad_residual" id="probabilidad_residual">
+                            <option value disabled {{ old('probabilidad_residual', null) === null ? 'selected' : '' }}>
+                                Selecciona una opción</option>
+                            @foreach (App\Models\MatrizRiesgo::PROBABILIDAD_SELECT as $key => $label)
+                                <option value="{{ $key }}"
+                                    {{ old('probabilidad_residual', '') === (string) $key ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('probabilidad_residual'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('probabilidad_residual') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label for="impacto_residual"><i class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
+                        <select class="form-control {{ $errors->has('impacto_residual') ? 'is-invalid' : '' }}"
+                            name="impacto_residual" id="impacto_residual">
+                            <option value disabled {{ old('impacto_residual', null) === null ? 'selected' : '' }}>
+                                Selecciona una opción</option>
+                            @foreach (App\Models\MatrizRiesgo::IMPACTO_SELECT as $key => $label)
+                                <option value="{{ $key }}"
+                                    {{ old('impacto_residual', '') === (string) $key ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('impacto_residual'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('impacto_residual') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label for="nivelriesgo_residual"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel
+                            Riesgo</label>
+                        <input class="form-control {{ $errors->has('nivelriesgo_residual') ? 'is-invalid' : '' }}"
+                            type="number" name="nivelriesgo_residual" id="nivelriesgo_residual"
+                            value="{{ old('nivelriesgo_residual', '') }}">
+                        @if ($errors->has('nivelriesgo_residual'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('nivelriesgo_residual') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
+                    </div>
+
+                </div>
+                <hr>
+
                 <p class="font-weight-bold" style="font-size:11pt;">CID Riesgo Residual</p>
                 <div class="row py-2">
                     <div class="form-group col-sm-3">
@@ -421,70 +493,13 @@
                     </div>
 
                 </div>
-                <hr>
-                <p class="font-weight-bold" style="font-size:11pt;">Riesgo Residual</p>
-                <div class="row">
 
-                    <div class="form-group col-sm-4">
-                        <label for="probabilidad_residual"><i class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
-                        <select class="form-control {{ $errors->has('probabilidad_residual') ? 'is-invalid' : '' }}"
-                            name="probabilidad_residual" id="probabilidad_residual">
-                            <option value disabled {{ old('probabilidad_residual', null) === null ? 'selected' : '' }}>
-                                Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::PROBABILIDAD_SELECT as $key => $label)
-                                <option value="{{ $key }}"
-                                    {{ old('probabilidad_residual', '') === (string) $key ? 'selected' : '' }}>
-                                    {{ $label }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('probabilidad_residual'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('probabilidad_residual') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
-                    </div>
-
-                    <div class="form-group col-sm-4">
-                        <label for="impacto_residual"><i class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
-                        <select class="form-control {{ $errors->has('impacto_residual') ? 'is-invalid' : '' }}" name="impacto_residual"
-                            id="impacto_residual">
-                            <option value disabled {{ old('impacto_residual', null) === null ? 'selected' : '' }}>
-                                Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::IMPACTO_SELECT as $key => $label)
-                                <option value="{{ $key }}"
-                                    {{ old('impacto_residual', '') === (string) $key ? 'selected' : '' }}>
-                                    {{ $label }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('impacto_residual'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('impacto_residual') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
-                    </div>
-
-                    <div class="form-group col-sm-4">
-                        <label for="nivelriesgo_residual"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo</label>
-                        <input class="form-control {{ $errors->has('nivelriesgo_residual') ? 'is-invalid' : '' }}" type="number"
-                            name="nivelriesgo_residual" id="nivelriesgo_residual" value="{{ old('nivelriesgo_residual', '') }}">
-                        @if ($errors->has('nivelriesgo_residual'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('nivelriesgo_residual') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
-                    </div>
-
-                </div>
                 <hr>
                 <div class="form-group">
                     <label for="justificacion"><i class="far fa-file-alt iconos-crear"></i>Justificación</label>
                     <textarea class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}" type="text"
-                        name="justificacion" id="justificacion" value="{{ old('justificacion', '') }}"rows="3"></textarea>
+                        name="justificacion" id="justificacion" value="{{ old('justificacion', '') }}"
+                        rows="3"></textarea>
                     @if ($errors->has('justificacion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('justificacion') }}
@@ -507,30 +522,4 @@
 
 @endsection
 
-@section('scripts')
-    <script type=text/javascript>
-        $('#id_responsable').change(function() {
-            var elaboroID = $(this).val();
-            if (elaboroID) {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ url('admin/getEmployeeData') }}?id=" + elaboroID,
-                    success: function(res) {
-                        if (res) {
-                            $("#id_puesto").empty();
-                            $("#id_puesto").attr("value", res.puesto);
-                            $("#id_area").empty();
-                            $("#id_area").attr("value", res.area);
-                        } else {
-                            $("#id_puesto").empty();
-                            $("#id_area").empty();
-                        }
-                    }
-                });
-            } else {
-                $("#id_puesto").empty();
-                $("#id_area").empty();
-            }
-        });
-    </script>
-@endsection
+@include('admin.matrizRiesgos.scripts')
