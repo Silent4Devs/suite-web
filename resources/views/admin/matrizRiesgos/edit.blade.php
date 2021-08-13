@@ -1,6 +1,21 @@
 @extends('layouts.admin')
 @section('content')
 
+    <style>
+        .text-orange {
+            color: orange !important;
+        }
+
+        .mayus {
+            text-transform: uppercase;
+        }
+
+        .text-yellow {
+            color: #f4c272 !important;
+        }
+
+    </style>
+
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Riesgo </h3>
@@ -283,15 +298,20 @@
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo</label>
-                        <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}" type="number"
-                            name="nivelriesgo" id="nivelriesgo" value="{{ old('nivelriesgo', '') }}">
-                        @if ($errors->has('nivelriesgo'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('nivelriesgo') }}
+                        <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
+                        </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text text-dark mayus" id="nivelriesgo_pre"></span>
                             </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
+                            <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}"
+                                type="number" name="nivelriesgo" id="nivelriesgo" value="{{ old('nivelriesgo', '') }}">
+                            @if ($errors->has('nivelriesgo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('nivelriesgo') }}
+                                </div>
+                            @endif
+                        </div>
                     </div>
 
                     {{-- <div class="form-group col-sm-4">
@@ -431,17 +451,21 @@
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label for="nivelriesgo_residual"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel
-                            Riesgo</label>
-                        <input class="form-control {{ $errors->has('nivelriesgo_residual') ? 'is-invalid' : '' }}"
-                            type="number" name="nivelriesgo_residual" id="nivelriesgo_residual"
-                            value="{{ old('nivelriesgo_residual', '') }}">
-                        @if ($errors->has('nivelriesgo_residual'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('nivelriesgo_residual') }}
+                        <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
+                        </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text text-dark mayus" id="nivelriesgo_residual_pre"></span>
                             </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
+                            <input class="form-control {{ $errors->has('nivelriesgo_residual') ? 'is-invalid' : '' }}"
+                                type="number" name="nivelriesgo_residual" id="nivelriesgo_residual"
+                                value="{{ old('nivelriesgo_residual', '') }}">
+                            @if ($errors->has('nivelriesgo_residual'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('nivelriesgo_residual') }}
+                                </div>
+                            @endif
+                        </div>
                     </div>
 
                 </div>

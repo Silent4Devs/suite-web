@@ -194,7 +194,7 @@
                     <div class="barra1" id="s_muyAlta">Muy Alta</div>
                 </div>
                 <div class="mapaCalor">
-                    <div class="txtVertical">Impacto</div>
+                    <div class="txtVertical text-primary font-weight-bold" style="position:absolute; margin-top: 20px;font-size: 20px;">Impacto</div>
                     <table>
                         <tr>
                             <td>Muy Alta</td>
@@ -232,7 +232,7 @@
                             <td>Muy Alta</td>
                         </tr>
                     </table>
-                    <div class="txtHorizontal">Probabilidad</div>
+                    <div class="txtHorizontal text-primary font-weight-bold" style="margin-left: 150px; font-size: 20px;">Probabilidad</div>
                 </div>
             </div>
 
