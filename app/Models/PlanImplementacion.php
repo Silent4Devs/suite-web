@@ -21,10 +21,19 @@ class PlanImplementacion extends Model
         'selectedRow',
         'zoom',
         'parent',
-        'slug'
+        'norma',
+        'modulo_origen',
+        'objetivo',
+        'elaboro_id',
+        'plan_implementacionable_id',
+        'plan_implementacionable_type'
     ];
 
     protected $casts = ['tasks' => 'object'];
+
+    const NORMAS = [
+        'ISO 27001' => 'ISO 27001'
+    ];
 
     // public function tasks()
     // {
@@ -41,5 +50,15 @@ class PlanImplementacion extends Model
     {
         $empleado = Empleado::all();
         return $empleado;
+    }
+
+    public function elaborador()
+    {
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id');
+    }
+
+    public function matriz_requsitos_legales()
+    {
+        return $this->morphedByMany(MatrizRequisitoLegale::class, 'plan_implementacionable');
     }
 }

@@ -137,6 +137,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('implementacions', 'ImplementacionController');
 
+    // Planes de Acción
+    Route::post('planes-de-accion/{plan}/save', 'PlanesAccionController@saveProject')->name('planes-de-accion.saveProject');
+    Route::post('planes-de-accion/{plan}/load', 'PlanesAccionController@loadProject')->name('planes-de-accion.loadProject');
+    // Route::get('planes-de-accion/create/', 'PlanesAccionController@create')->name('planes-de-accion.create');
+    Route::resource('planes-de-accion', 'PlanesAccionController')->except(['create']);
 
     // Glosarios
     Route::delete('glosarios/destroy', 'GlosarioController@massDestroy')->name('glosarios.massDestroy');
@@ -163,6 +168,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('partes-interesadas', 'PartesInteresadasController');
 
     // Matriz Requisito Legales
+    Route::get('matriz-requisito-legales/planes-de-accion/create/{id}', 'MatrizRequisitoLegalesController@createPlanAccion')->name('matriz-requisito-legales.createPlanAccion');
+    Route::post('matriz-requisito-legales/planes-de-accion/store/{id}', 'MatrizRequisitoLegalesController@storePlanAccion')->name('matriz-requisito-legales.storePlanAccion');
     Route::delete('matriz-requisito-legales/destroy', 'MatrizRequisitoLegalesController@massDestroy')->name('matriz-requisito-legales.massDestroy');
     Route::resource('matriz-requisito-legales', 'MatrizRequisitoLegalesController');
 
@@ -274,7 +281,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
     Route::resource('activos', 'ActivosController');
 
-      // Marca
+    // Marca
     Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
     Route::resource('marcas', 'MarcaController');
 
@@ -467,7 +474,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Matriz Riesgos
     Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
     Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+    Route::post('matriz-riesgos/parse-csv-import', 'MatrizRiesgosController@parseCsvImport')->name('matriz-riesgos.parseCsvImport');
     Route::get('matriz-seguridad', 'MatrizRiesgosController@SeguridadInfo')->name('matriz-seguridad');
+    Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
 
     // Gap Unos
     Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');

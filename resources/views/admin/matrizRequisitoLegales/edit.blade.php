@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
+{{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px">
-         <h3 class="mb-1 text-center text-white"><strong>Editar:</strong> Matriz de Requisitos Legales  </h3>
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px">
+        <h3 class="mb-1 text-center text-white"><strong>Editar:</strong> Matriz de Requisitos Legales </h3>
     </div>
 
     <div class="card-body">
@@ -16,9 +16,9 @@
                 <label class="required" for="nombrerequisito"><i class="fas fa-clipboard-list iconos-crear"></i>Fundamento</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="Nombre de la ley,norma,reglamento o documento donde se encuentra el requisito"></i>
                 <input class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }}" type="text" name="nombrerequisito" id="nombrerequisito" value="{{ old('nombrerequisito', $matrizRequisitoLegale->nombrerequisito) }}" required>
                 @if($errors->has('nombrerequisito'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('nombrerequisito') }}
-                    </div>
+                <div class="invalid-feedback">
+                    {{ $errors->first('nombrerequisito') }}
+                </div>
                 @endif
             </div>
 
@@ -62,9 +62,9 @@
                 <label for="fechaexpedicion"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion') }}</label>
                 <input class="form-control date {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}" type="text" name="fechaexpedicion" id="fechaexpedicion" value="{{ old('fechaexpedicion', $matrizRequisitoLegale->fechaexpedicion) }}">
                 @if($errors->has('fechaexpedicion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fechaexpedicion') }}
-                    </div>
+                <div class="invalid-feedback">
+                    {{ $errors->first('fechaexpedicion') }}
+                </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
             </div>
@@ -73,9 +73,9 @@
                 <label for="fechavigor"> <i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
                 <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="text" name="fechavigor" id="fechavigor" value="{{ old('fechavigor', $matrizRequisitoLegale->fechavigor) }}">
                 @if($errors->has('fechavigor'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fechavigor') }}
-                    </div>
+                <div class="invalid-feedback">
+                    {{ $errors->first('fechavigor') }}
+                </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
             </div>
@@ -95,9 +95,9 @@
                 <label for="requisitoacumplir"> <i class="fas fa-clipboard-list iconos-crear"></i>Requisito(s) a cumplir</label>
                 <textarea class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }}" type="text" name="requisitoacumplir" id="requisitoacumplir">{{ old('requisitoacumplir', $matrizRequisitoLegale->requisitoacumplir) }}</textarea>
                 @if($errors->has('requisitoacumplir'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('requisitoacumplir') }}
-                    </div>
+                <div class="invalid-feedback">
+                    {{ $errors->first('requisitoacumplir') }}
+                </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}</span>
             </div>
@@ -123,13 +123,13 @@
                 <select class="form-control {{ $errors->has('cumplerequisito') ? 'is-invalid' : '' }}" name="cumplerequisito" id="cumplerequisito">
                     <option value disabled {{ old('cumplerequisito', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\MatrizRequisitoLegale::CUMPLEREQUISITO_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('cumplerequisito', $matrizRequisitoLegale->cumplerequisito) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    <option value="{{ $key }}" {{ old('cumplerequisito', $matrizRequisitoLegale->cumplerequisito) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('cumplerequisito'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('cumplerequisito') }}
-                    </div>
+                <div class="invalid-feedback">
+                    {{ $errors->first('cumplerequisito') }}
+                </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.cumplerequisito_helper') }}</span>
             </div>
@@ -152,6 +152,24 @@
                     <div class="invalid-feedback">
                         {{ $errors->first('metodo') }}
                     </div>
+            {{-- INICIO PLAN ACCIÓN --}}
+            <div class="row w-100 align-items-center" style="margin-left: 1px;">
+                @livewire('planes-implementacion-select',['planes_seleccionados'=>$planes_seleccionados])
+                <div class="pl-0 ml-0 col-2">
+                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#planAccionModal">
+                        <i class="mr-1 fas fa-plus-circle"></i> Crear
+                    </button>
+                </div>
+                @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de Requisitos Legales'])
+            </div>
+            {{-- FIN PLAN ACCIÓN --}}
+            <div class="form-group col-sm-6">
+                <label for="periodicidad_cumplimiento"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.periodicidad_cumplimiento') }}</label>
+                <input class="form-control {{ $errors->has('periodicidad_cumplimiento') ? 'is-invalid' : '' }}" type="text" name="periodicidad_cumplimiento" id="periodicidad_cumplimiento" value="{{ old('periodicidad_cumplimiento', $matrizRequisitoLegale->periodicidad_cumplimiento) }}">
+                @if($errors->has('periodicidad_cumplimiento'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('periodicidad_cumplimiento') }}
+                </div>
                 @endif
             </div>
 
@@ -283,8 +301,41 @@
     </div>
 </div>
 
+@endsection
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let cumple = document.getElementById('cumplerequisito');
+        cumple.addEventListener('change', function(e) {
+            let respuesta = e.target.value;
+            if (respuesta == 'No') {
+                $("#plan_accion_select").show(1000);
+            } else {
+                $("#plan_accion_select").hide(1000);
+            }
+        })
+    })
 
+</script>
+<script type="text/javascript">
+    Livewire.on('planStore', () => {
+        $('#planAccionModal').modal('hide');
+        $('.modal-backdrop').hide();
+        toastr.success('Plan de Acción creado con éxito');
+    });
+    window.initSelect2 = () => {
+        $('.select2').select2({
+            'theme': 'bootstrap4'
+        });
+    }
 
+    initSelect2();
+
+    Livewire.on('select2', () => {
+        initSelect2();
+    });
+
+</script>
 @endsection
 
 

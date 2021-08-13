@@ -129,4 +129,10 @@ class MatrizRequisitoLegale extends Model
     public function evidencias_matriz(){
         return $this->hasMany(EvidenciaMatrizRequisitoLegale::class, 'id_matriz_requisito');
     }
+
+    // Relacion con plan de accion
+    public function planes()
+    {
+        return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
+    }
 }

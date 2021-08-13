@@ -20,12 +20,16 @@ class PlanImplementacionSeeder extends Seeder
             'tasks' => [],
             'canAdd' => true,
             'canWrite' =>  true,
-            'canWriteOnParent' => false,
+            'canWriteOnParent' => true,
             'changesReasonWhy' => false,
             'selectedRow' => 0,
             'zoom' => '3d',
             'parent' => 'Plan de Trabajo',
             'slug' => Str::slug('Plan de Trabajo'),
+            'norma' => 'ISO 27001',
+            'modulo_origen' => 'Implementación',
+            'objetivo' => null,
+            'elaboro_id' => null,
         ]);
     }
 }

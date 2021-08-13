@@ -44,26 +44,13 @@
 </style>
 
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
-    
-    @can('matriz_requisito_legale_create')
-
-        <div class="mt-5 card">
+    <div class="mt-5 card">
+        @can('matriz_requisito_legale_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Matriz de Requisitos Legales</strong></h3>
             </div>
-
-            {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    <a class="btn btn-success" href="{{ route('admin.matriz-requisito-legales.create') }}">
-                        Agregar <strong>+</strong>
-                    </a>
-                </div>
-            </div> --}}
         @endcan
-        
-       
- 
- @include('partials.flashMessages')
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table datatable-MatrizRequisitoLegale">
                 <thead class="thead-dark">
@@ -129,41 +116,6 @@
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\MatrizRequisitoLegale::CUMPLEREQUISITO_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
@@ -174,6 +126,7 @@
 @endsection
 @section('scripts')
     @parent
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script>
         $(function() {
             //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
@@ -244,35 +197,6 @@
                 }
 
             ];
-            @can('matriz_requisito_legale_delete')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.matriz-requisito-legales.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-            
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-            
-                return
-                }
-            
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
             @can('matriz_requisito_legale_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
@@ -286,6 +210,7 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
+
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -432,6 +357,47 @@
                         }
                     },
                     {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let urlVerMatrizRequisitoLegal =
+                                `/admin/matriz-requisito-legales/${data}`;
+                            let urlEditarMatrizRequisitoLegal =
+                                `/admin/matriz-requisito-legales/${data}/edit`;
+                            let urlEliminarMatrizRequisitoLegal =
+                                `/admin/matriz-requisito-legales/${data}`;
+                            let urlCrearPlanAccion =
+                                `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
+                            let urlVerPlanAccion =
+                                `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
+                            let botones = `                           
+                            <div class="btn-group">
+                                <a class="btn btn-sm" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i></a>                                                        
+                                ${row.planes ? `
+                                    <div class="dropdown">
+                                        <a class="btn btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-stream"></i>
+                                        </a>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            ${!row.planes? `
+                                                <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-columns"></i>Crear y vincular plan de acción</a>                                                       
+                                                <div class="dropdown-divider"></div>    
+                                            `:''}                                            
+                                            <span class="ml-4 badge badge-primary">Planes de acción asociados</span>
+                                           ${row.planes.map(plan => {
+                                               return `
+                                                <a class="dropdown-item" href="/admin/planes-de-accion/${plan.id}"><i class="mr-1 fas fa-search"></i>${plan.parent}<a>
+                                               `;
+                                           })}
+                                        </div>
+                                    </div>
+                                    `:''}
+                                 <button class="btn btn-sm" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i></button>    
+                            </div>
+                             `;
+                            return botones;
+                        }
                         data: 'reviso',
                         name: 'reviso'
                     },
@@ -458,19 +424,53 @@
                 ],
             };
             let table = $('.datatable-MatrizRequisitoLegale').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
-        });
 
+            window.eliminar = function(url, nombre) {
+                Swal.fire({
+                    title: `¿Estás seguro de eliminar la siguiente matríz de requisito legal?`,
+                    html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, eliminar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            headers: {
+                                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: url,
+                            beforeSend: function() {
+                                Swal.fire(
+                                    '¡Estamos Eliminando!',
+                                    `La Matríz de requisito legal: ${nombre} está siendo eliminada`,
+                                    'info'
+                                )
+                            },
+                            success: function(response) {
+                                Swal.fire(
+                                    'Eliminado!',
+                                    `La Matríz de requisito legal: ${nombre} ha sido eliminada`,
+                                    'success'
+                                )
+                                table.ajax.reload();
+                            },
+                            error: function(error) {
+                                console.log(error);
+                                Swal.fire(
+                                    'Ocurrió un error',
+                                    `Error: ${error.responseJSON.message}`,
+                                    'error'
+                                )
+                            }
+                        });
+                    }
+                })
+            }
+
+        });
     </script>
 @endsection
