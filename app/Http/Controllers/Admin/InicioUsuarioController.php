@@ -49,6 +49,7 @@ class inicioUsuarioController extends Controller
         $implementacion = PlanImplementacion::first();
         $tasks = $implementacion->tasks;
         foreach ($tasks as $task) {
+            $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
             $task->end = intval($task->end);
             $task->start = intval($task->start);
             $task->canAdd = $task->canAdd == 'true' ? true : false;
@@ -63,6 +64,7 @@ class inicioUsuarioController extends Controller
             $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
             $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
         }
+
         $implementacion->tasks = $tasks;
         // if (!isset($implementacion->assigs)) {
         //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
