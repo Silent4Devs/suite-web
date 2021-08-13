@@ -1,6 +1,48 @@
 @extends('layouts.admin')
 @section('content')
 
+
+<style>
+
+.img-size{
+/* 	padding: 0;
+	margin: 0; */
+	height: 450px;
+	width: 700px;
+	background-size: cover;
+	overflow: hidden;
+}
+.modal-content {
+   width: 700px;
+  border:none;
+}
+.modal-body {
+   padding: 0;
+}
+
+.carousel-control-prev-icon {
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+	width: 30px;
+	height: 48px;
+}
+.carousel-control-next-icon {
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+	width: 30px;
+	height: 48px;
+}
+
+.carousel-control-next {
+    top: 100px;
+    height: 10px;
+}
+
+.carousel-control-prev {
+    height: 40px;
+    top: 80px;
+}
+
+</style>
+
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
     <div class="mt-5 card">
         @can('matriz_requisito_legale_create')
@@ -20,29 +62,56 @@
                             {{ trans('cruds.matrizRequisitoLegale.fields.id') }}
                         </th>
                         <th>
-                            Nombre&nbsp;del&nbsp;Requisito
+                            Tipo&nbsp;de&nbsp;requisito
                         </th>
                         <th>
-                            Fecha&nbsp;de&nbsp;Expedicion
+                            Fundamento
+                        </th>
+                        <th>
+                            Apartado
+                        </th>
+                        <th>
+                            Requisito(s)&nbsp;a&nbsp;cumplir
+                        </th>
+                        <th>
+                            Alcance&nbsp;y&nbsp;grado&nbsp;de&nbsp;aplicabilidad
+                        </th>
+                        <th>
+                            Medio&nbsp;de&nbsp;publicación
+                        </th>
+                        <th>
+                            Fecha&nbsp;de&nbsp;publicación
                         </th>
                         <th>
                             Fecha&nbsp;de&nbsp;entrada&nbsp;en&nbsp;vigor
                         </th>
                         <th>
-                            Requisito&nbsp;a&nbsp;cumplir
-                        </th>
-                        <th>
-                            ¿Se&nbsp;cumple&nbsp;con&nbsp;el&nbsp;requisito?
-                        </th>
-                        <th>
-                            ¿De&nbsp;que&nbsp;forma&nbsp;cumple?
-                        </th>
-                        <th>
                             Periodicidad&nbsp;de&nbsp;cumplimiento
                         </th>
                         <th>
-                            Fecha&nbsp;de&nbsp;verificación
+                            ¿En&nbsp;cumplimiento?
                         </th>
+                        <th>
+                            Descripción&nbsp;del&nbsp;cumplimiento/incumplimiento
+                        </th>
+                        <th>
+                            Método&nbsp;utilizado&nbsp;de&nbsp;verificación    
+                        </th>                    </th>
+                        <th>
+                            Evidencia
+                        </th>
+                        <th>
+                            Revisó
+                        </th>
+                        <th>
+                           Puesto
+                        </th>
+                        <th>
+                           Área
+                        </th>
+                        <th>
+                            Comentarios
+                         </th>
                         <th>
                             Opciones
                         </th>
@@ -149,13 +218,34 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.matriz-requisito-legales.index') }}",
+                columnDefs:[{targets:[5,12,11,17],visible:false}],
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
                     {
+                        data: 'tipo',
+                        name: 'tipo'
+                    },
+                    {
                         data: 'nombrerequisito',
                         name: 'nombrerequisito'
+                    },
+                    {
+                        data: 'formacumple',
+                        name: 'formacumple'
+                    },
+                    {
+                        data: 'requisitoacumplir',
+                        name: 'requisitoacumplir'
+                    },
+                    {
+                        data: 'alcance',
+                        name: 'alcance'
+                    },
+                    {
+                        data: 'medio',
+                        name: 'medio'
                     },
                     {
                         data: 'fechaexpedicion',
@@ -166,24 +256,105 @@
                         name: 'fechavigor'
                     },
                     {
-                        data: 'requisitoacumplir',
-                        name: 'requisitoacumplir'
+                        data: 'periodicidad_cumplimiento',
+                        name: 'periodicidad_cumplimiento'
                     },
                     {
                         data: 'cumplerequisito',
                         name: 'cumplerequisito'
                     },
                     {
-                        data: 'formacumple',
-                        name: 'formacumple'
+                        data: 'metodo',
+                        name: 'metodo'
                     },
                     {
-                        data: 'periodicidad_cumplimiento',
-                        name: 'periodicidad_cumplimiento'
+                        data: 'descripcion_cumplimiento',
+                        name: 'descripcion_cumplimiento'
                     },
                     {
-                        data: 'fechaverificacion',
-                        name: 'fechaverificacion'
+                        data: 'evidencia',
+                        name: 'evidencia',
+                        render:function(data,type,row,meta){
+                            console.log(JSON.parse(data))
+                             let archivo="";
+                             let archivos=JSON.parse(data)
+                               archivo=` <div class="container">
+                                    
+                                    <div class="row mb-4">
+                                    <div class="col text-center">
+                                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#largeModal${row.id}"><i class="fas fa-file mr-2 text-white" style="font-size:13pt"></i>Visualizar evidencias</a>
+                                    </div>
+                                    </div>
+                                
+                                    <!-- modal -->
+                                    <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                        <div class="modal-body">
+                                            <!-- carousel -->
+                                            <div
+                                                id='carouselExampleIndicators${row.id}'
+                                                class='carousel slide'
+                                                data-ride='carousel'
+                                                >
+                                            <ol class='carousel-indicators'>
+                                                <li
+                                                    data-target='#carouselExampleIndicators${row.id}'
+                                                    data-slide-to='0'
+                                                    class='active'
+                                                    ></li>
+                                                <li
+                                                    data-target='#carouselExampleIndicators${row.id}'
+                                                    data-slide-to='1'
+                                                    ></li>
+                                                <li
+                                                    data-target='#carouselExampleIndicators${row.id}'
+                                                    data-slide-to='2'
+                                                    ></li>
+                                            </ol>
+                                            <div class='carousel-inner'>
+                                                    ${archivos.map((archivo,idx)=>{
+                                                        return `
+                                                    <div class='carousel-item ${idx==0?"active":""}'>
+                                                        <iframe seamless class='img-size' src='{{asset("storage/matriz_evidencias")}}/${archivo.evidencia}'></iframe>
+                                                    </div>`
+                                                    })}
+                                                
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <a
+                                                class='carousel-control-prev'
+                                                href='#carouselExampleIndicators${row.id}'
+                                                role='button'
+                                                data-slide='prev'
+                                                >
+                                                <span class='carousel-control-prev-icon'
+                                                    aria-hidden='true'
+                                                    ></span>
+                                                <span class='sr-only'>Previous</span>
+                                            </a>
+                                            <a
+                                                class='carousel-control-next'
+                                                href='#carouselExampleIndicators${row.id}'
+                                                role='button'
+                                                data-slide='next'
+                                                >
+                                                <span
+                                                    class='carousel-control-next-icon'
+                                                    aria-hidden='true'
+                                                    ></span>
+                                                <span class='sr-only'>Next</span>
+                                            </a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>`
+                            return archivo;
+                        }
                     },
                     {
                         data: 'id',
@@ -227,6 +398,24 @@
                              `;
                             return botones;
                         }
+                        data: 'reviso',
+                        name: 'reviso'
+                    },
+                    {
+                        data: 'puesto',
+                        name: 'puesto'
+                    },
+                    {
+                        data: 'area',
+                        name: 'area'
+                    },
+                    {
+                        data: 'comentarios',
+                        name: 'comentarios'
+                    },
+                    {
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}'
                     }
                 ],
                 orderCellsTop: true,
