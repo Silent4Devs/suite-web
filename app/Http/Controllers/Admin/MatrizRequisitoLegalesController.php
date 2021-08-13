@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\StoreMatrizRequisitoLegaleRequest;
 use App\Http\Requests\UpdateMatrizRequisitoLegaleRequest;
 use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
+use App\Models\Empleado;
+use Illuminate\Support\Facades\Storage;
 
 class MatrizRequisitoLegalesController extends Controller
 {
@@ -22,92 +24,93 @@ class MatrizRequisitoLegalesController extends Controller
     {
         abort_if(Gate::denies('matriz_requisito_legale_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($query = MatrizRequisitoLegale::with(['team','evidencias_matriz','empleado'])->get());
+        // dd(MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado')->get());
         if ($request->ajax()) {
-            $query = MatrizRequisitoLegale::with(['team','evidencias_matriz','empleado'])->select(sprintf('%s.*', (new MatrizRequisitoLegale)->table));
-            $table = Datatables::of($query);
+            // $query = MatrizRequisitoLegale::with(['team','evidencias_matriz','empleado'])->select(sprintf('%s.*', (new MatrizRequisitoLegale)->table));
+            // $table = Datatables::of($query);
 
-            // $table->addColumn('placeholder', '&nbsp;');
-            // $table->addColumn('actions', '&nbsp;');
+            // // $table->addColumn('placeholder', '&nbsp;');
+            // // $table->addColumn('actions', '&nbsp;');
 
-            // $table->editColumn('actions', function ($row) {
-            //     $viewGate      = 'matriz_requisito_legale_show';
-            //     $editGate      = 'matriz_requisito_legale_edit';
-            //     $deleteGate    = 'matriz_requisito_legale_delete';
-            //     $crudRoutePart = 'matriz-requisito-legales';
+            // // $table->editColumn('actions', function ($row) {
+            // //     $viewGate      = 'matriz_requisito_legale_show';
+            // //     $editGate      = 'matriz_requisito_legale_edit';
+            // //     $deleteGate    = 'matriz_requisito_legale_delete';
+            // //     $crudRoutePart = 'matriz-requisito-legales';
 
-            //     return view('partials.datatablesActions', compact(
-            //         'viewGate',
-            //         'editGate',
-            //         'deleteGate',
-            //         'crudRoutePart',
-            //         'row'
-            //     ));
+            // //     return view('partials.datatablesActions', compact(
+            // //         'viewGate',
+            // //         'editGate',
+            // //         'deleteGate',
+            // //         'crudRoutePart',
+            // //         'row'
+            // //     ));
+            // // });
+
+            // $table->editColumn('id', function ($row) {
+            //     return $row->id ? $row->id : "";
+            // });
+            // $table->editColumn('tipo', function ($row) {
+            //     return $row->tipo ? $row->tipo : "";
+            // });
+            // $table->editColumn('nombrerequisito', function ($row) {
+            //     return $row->nombrerequisito ? $row->nombrerequisito : "";
+            // });
+            // $table->editColumn('formacumple', function ($row) {
+            //     return $row->formacumple ? $row->formacumple : "";
+            // });
+            // $table->editColumn('requisitoacumplir', function ($row) {
+            //     return $row->requisitoacumplir ? $row->requisitoacumplir : "";
+            // });
+            // $table->editColumn('alcance', function ($row) {
+            //     return $row->alcance ? $row->alcance : "";
+            // });
+            // $table->editColumn('medio', function ($row) {
+            //     return $row->medio ? $row->medio : "";
+            // });
+            // $table->editColumn('fechaexpedicion', function ($row) {
+            //     return $row->fechaexpedicion ? $row->fechaexpedicion : "";
+            // });
+            // $table->editColumn('fechavigor', function ($row) {
+            //     return $row->fechavigor ? $row->fechavigor : "";
+            // });
+            // $table->editColumn('periodicidad_cumplimiento', function ($row) {
+            //     return $row->periodicidad_cumplimiento ? $row->periodicidad_cumplimiento : "";
+            // });
+            // $table->editColumn('cumplerequisito', function ($row) {
+            //     return $row->cumplerequisito ? MatrizRequisitoLegale::CUMPLEREQUISITO_SELECT[$row->cumplerequisito] : '';
+            // });
+            // $table->editColumn('metodo', function ($row) {
+            //     return $row->metodo ? $row->metodo : "";
+            // });
+            // $table->editColumn('descripcion_cumplimiento', function ($row) {
+            //     return $row->descripcion_cumplimiento ? $row->descripcion_cumplimiento : "";
+            // });
+            // $table->editColumn('evidencia', function ($row) {
+            //     return $row->evidencias_matriz ? $row->evidencias_matriz : "";
             // });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-            $table->editColumn('tipo', function ($row) {
-                return $row->tipo ? $row->tipo : "";
-            });
-            $table->editColumn('nombrerequisito', function ($row) {
-                return $row->nombrerequisito ? $row->nombrerequisito : "";
-            });
-            $table->editColumn('formacumple', function ($row) {
-                return $row->formacumple ? $row->formacumple : "";
-            });
-            $table->editColumn('requisitoacumplir', function ($row) {
-                return $row->requisitoacumplir ? $row->requisitoacumplir : "";
-            });
-            $table->editColumn('alcance', function ($row) {
-                return $row->alcance ? $row->alcance : "";
-            });
-            $table->editColumn('medio', function ($row) {
-                return $row->medio ? $row->medio : "";
-            });
-            $table->editColumn('fechaexpedicion', function ($row) {
-                return $row->fechaexpedicion ? $row->fechaexpedicion : "";
-            });
-            $table->editColumn('fechavigor', function ($row) {
-                return $row->fechavigor ? $row->fechavigor : "";
-            });
-            $table->editColumn('periodicidad_cumplimiento', function ($row) {
-                return $row->periodicidad_cumplimiento ? $row->periodicidad_cumplimiento : "";
-            });
-            $table->editColumn('cumplerequisito', function ($row) {
-                return $row->cumplerequisito ? MatrizRequisitoLegale::CUMPLEREQUISITO_SELECT[$row->cumplerequisito] : '';
-            });
-            $table->editColumn('metodo', function ($row) {
-                return $row->metodo ? $row->metodo : "";
-            });
-            $table->editColumn('descripcion_cumplimiento', function ($row) {
-                return $row->descripcion_cumplimiento ? $row->descripcion_cumplimiento : "";
-            });
-            $table->editColumn('evidencia', function ($row) {
-                return $row->evidencias_matriz ? $row->evidencias_matriz : "";
-            });
+            // $table->editColumn('reviso', function ($row) {
+            //     return $row->empleado ? $row->empleado->name : "";
+            // });
 
-            $table->editColumn('reviso', function ($row) {
-                return $row->empleado ? $row->empleado->name : "";
-            });
+            // $table->editColumn('puesto', function ($row) {
+            //     return $row->empleado ? $row->empleado->puesto : "";
+            // });
 
-            $table->editColumn('puesto', function ($row) {
-                return $row->empleado ? $row->empleado->puesto : "";
-            });
+            // $table->editColumn('area', function ($row) {
+            //     return $row->empleado ? $row->empleado->area->area : "";
+            // });
 
-            $table->editColumn('area', function ($row) {
-                return $row->empleado ? $row->empleado->area->area : "";
-            });
-
-            $table->editColumn('comentarios', function ($row) {
-                return $row->comentarios ? $row->comentarios : "";
-            });
+            // $table->editColumn('comentarios', function ($row) {
+            //     return $row->comentarios ? $row->comentarios : "";
+            // });
 
 
-            $table->rawColumns(['actions', 'placeholder']);
+            // $table->rawColumns(['actions', 'placeholder']);
 
             // return $table->make(true);
-            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes')->get();
+            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado')->get();
             return datatables()->of($matrizRequisitoLegales)->toJson();
         }
 
@@ -119,17 +122,31 @@ class MatrizRequisitoLegalesController extends Controller
     {
         abort_if(Gate::denies('matriz_requisito_legale_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
-        return view('admin.matrizRequisitoLegales.create', compact('planes_implementacion'));
+        $empleados = Empleado::with('area')->get();
+        return view('admin.matrizRequisitoLegales.create', compact('planes_implementacion', 'empleados'));
     }
 
     public function store(StoreMatrizRequisitoLegaleRequest $request)
     {
-        // dd($request->all());
+
         $matrizRequisitoLegale = MatrizRequisitoLegale::create($request->all());
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/matriz_evidencias', $file, $file->getClientOriginalName())) {
+                    EvidenciaMatrizRequisitoLegale::create([
+                        'evidencia' => $file->getClientOriginalName(),
+                        'id_matriz_requisito' => $matrizRequisitoLegale->id,
+                    ]);
+                }
+            }
+        }
+
         if (isset($request->plan_accion)) {
             // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
             $matrizRequisitoLegale->planes()->sync($request->plan_accion);
         }
+
         return redirect()->route('admin.matriz-requisito-legales.index');
     }
 
@@ -145,60 +162,28 @@ class MatrizRequisitoLegalesController extends Controller
             }
         }
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::with('area')->get();
 
         $matrizRequisitoLegale->load('team');
 
-
-        return view('admin.matrizRequisitoLegales.edit', compact('matrizRequisitoLegale','empleados'));
+        return view('admin.matrizRequisitoLegales.edit', compact('matrizRequisitoLegale', 'empleados', 'planes_seleccionados'));
     }
 
     public function update(UpdateMatrizRequisitoLegaleRequest $request, MatrizRequisitoLegale $matrizRequisitoLegale)
     {
-        
-
-        $matrizRequisitoLegale->update([
-
-            'nombrerequisito' => $request->nombrerequisito,
-            'fechaexpedicion'=> $request->fechaexpedicion,
-            'fechavigor'=> $request->fechavigor,
-            'requisitoacumplir'=> $request->requisitoacumplir,
-            'cumplerequisito'=> $request->cumplerequisito,
-            'formacumple'=> $request->formacumple,
-            'periodicidad_cumplimiento'=> $request->periodicidad_cumplimiento,
-            'fechaverificacion'=> $request->fechaverificacion,
-            'medio'=> $request->medio,
-            'tipo'=> $request->tipo,
-            'descripcion_cumplimiento'=> $request->descripcion_cumplimiento,
-            'evidencia'=> $request->evidencia,
-            'id_reviso'=> $request->id_reviso,
-        ]);
-
-        dd($matrizRequisitoLegale, $request);
-
-        $image=null;
-
-        if($request->file('evidencia') !=null or !empty($request->file('evidencia'))){ 
-
-            $extension = pathinfo($request->file('evidencia')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('evidencia')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
-            $new_name_image = 'Evidencia_' . $matriz_requisito->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/matriz_evidencias/' . $new_name_image;
-            $image = $new_name_image;
-            //Usamos image_intervention para disminuir el peso de la imagen
-            $img_intervention = Image::make($request->file('evidencia'));
-            $img_intervention->resize(256, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($route);
+        $matrizRequisitoLegale->update($request->all());
+        $files = $request->file('files');
+        if ($request->hasFile('files')) {
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/matriz_evidencias', $file, $file->getClientOriginalName())) {
+                    EvidenciaMatrizRequisitoLegale::create([
+                        'evidencia' => $file->getClientOriginalName(),
+                        'id_matriz_requisito' => $matrizRequisitoLegale->id,
+                    ]);
+                }
+            }
         }
 
-
-        EvidenciaMatrizRequisitoLegale::update([
-            'evidencia'=> $name_image,
-            'id_matriz_requisito' =>$matrizRequisitoLegale->id,
-            
-            
-        ]); 
 
         if (isset($request->plan_accion)) {
             // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
@@ -206,7 +191,6 @@ class MatrizRequisitoLegalesController extends Controller
         }
 
         return redirect()->route('admin.matriz-requisito-legales.index')->with("success", 'Editado con éxito');
-        
     }
 
     public function show(MatrizRequisitoLegale $matrizRequisitoLegale)

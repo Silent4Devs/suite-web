@@ -40,7 +40,7 @@ class MatrizRequisitoLegale extends Model
         'Regulatorio' => 'Regulatorio',
         'Contractual' => 'Contractual',
         'Otro' => 'Otro',
-        
+
     ];
 
     const CUMPLEREQUISITO_SELECT = [
@@ -49,9 +49,9 @@ class MatrizRequisitoLegale extends Model
     ];
 
     protected $dates = [
-        // 'fechaexpedicion',
-        // 'fechavigor',
-        // 'fechaverificacion',
+        'fechaexpedicion',
+        'fechavigor',
+        'fechaverificacion',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -85,20 +85,20 @@ class MatrizRequisitoLegale extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    // public function getFechaexpedicionAttribute($value)
-    // {
-    //     return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    // }
+    public function getFechaexpedicionAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
 
     // public function setFechaexpedicionAttribute($value)
     // {
     //     $this->attributes['fechaexpedicion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     // }
 
-    // public function getFechavigorAttribute($value)
-    // {
-    //     return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    // }
+    public function getFechavigorAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
 
     // public function setFechavigorAttribute($value)
     // {
@@ -107,7 +107,7 @@ class MatrizRequisitoLegale extends Model
 
     public function getFechaverificacionAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
     // public function setFechaverificacionAttribute($value)
@@ -121,12 +121,12 @@ class MatrizRequisitoLegale extends Model
     }
 
     public function empleado()
-	{
+    {
         return $this->belongsTo(Empleado::class, 'id_reviso', 'id')->with('area');
+    }
 
-	}
-
-    public function evidencias_matriz(){
+    public function evidencias_matriz()
+    {
         return $this->hasMany(EvidenciaMatrizRequisitoLegale::class, 'id_matriz_requisito');
     }
 
