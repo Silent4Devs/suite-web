@@ -151,8 +151,7 @@ class MatrizRiesgosController extends Controller
         $res = $calculo->CalculoD($request);
         $request->request->add(['resultadoponderacion' => $res]);
         $matrizRiesgo->update($request->all());
-
-        return redirect()->route('admin.matriz-riesgos.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with("success", 'Actualizado con éxito');
     }
 
     public function show(MatrizRiesgo $matrizRiesgo)
