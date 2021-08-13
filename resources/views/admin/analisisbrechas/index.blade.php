@@ -1,8 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-<div class="card mt-5">
-    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-        <h3 class="mb-2  text-center text-white"><strong>Análisis de Brechas ISO 27001</strong></h3>
+
+
+
+<div class="mt-5 card">
+    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+        <h3 class="mb-2 text-center text-white"><strong>Análisis de Brechas ISO 27001</strong></h3>
     </div>
     <div class="card-body">
         <div class="row">
@@ -24,7 +27,7 @@
                         <a class="nav-link" id="dash-tab-just" data-toggle="tab" href="#dash-just" role="tab" aria-controls="dash-just" aria-selected="false"><font class="letra_blanca">DASHBOARD</font></a>
                     </li>
                 </ul>
-                <div class="tab-content card pt-5" id="myTabContentJust">
+                <div class="pt-5 tab-content card" id="myTabContentJust">
                     <div class="tab-pane fade show active" id="intr-just" role="tabpanel" aria-labelledby="intr-tab-just">
                         @include('admin.analisisbrechas.introduccion')
                     </div>

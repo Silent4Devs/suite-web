@@ -162,7 +162,7 @@
         }
 
 
-        
+
 
         @media print {
 
@@ -212,6 +212,9 @@
         }
 
     </style>
+
+    {{ Breadcrumbs::render('admin.planTrabajoBase.index') }}
+
 
     <div class="mt-5 mb-5">
         <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">

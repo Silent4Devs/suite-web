@@ -157,14 +157,14 @@
         </div>
         <div class="card-body">
             <div class="caja_botones_menu">
-                <a href="#" data-tabs="s1" class="btn_activo"><i class="fa-fw fas fa-archive"></i> Contexto </a>
-                <a href="#" data-tabs="s2"><i class="fa-fw fas fa-gavel"></i> Liderazgo </a>
-                <a href="#" data-tabs="s3"><i class="fa-fw fas fa-tasks"></i> Planificación </a>
-                <a href="#" data-tabs="s4"><i class="fa-fw fas fa-headset"></i> Soporte</a>
-                <a href="#" data-tabs="s5"><i class="fa-fw fas fa-briefcase"></i> Operación </a>
-                <a href="#" data-tabs="s6"><i class="fa-fw fas fa-file-signature"></i> Evaluación</a>
-                <a href="#" data-tabs="s7"><i class="fa-fw fas fa-infinity"></i> Mejora</a>
-                <a href="#" data-tabs="s8"><i class="fas fa-tasks"></i>Controles </a>
+                <a href="#" data-tabs="s1" class="btn_activo"><i class="fa-fw fas fa-archive"></i><br> Contexto </a>
+                <a href="#" data-tabs="s2"><i class="fa-fw fas fa-gavel"></i><br> Liderazgo </a>
+                <a href="#" data-tabs="s3"><i class="fa-fw fas fa-tasks"></i><br> Planificación </a>
+                <a href="#" data-tabs="s4"><i class="fa-fw fas fa-headset"></i><br> Soporte</a>
+                <a href="#" data-tabs="s5"><i class="fa-fw fas fa-briefcase"></i><br> Operación </a>
+                <a href="#" data-tabs="s6"><i class="fa-fw fas fa-file-signature"></i><br> Evaluación</a>
+                <a href="#" data-tabs="s7"><i class="fa-fw fas fa-infinity"></i><br> Mejora</a>
+                <a href="#" data-tabs="s8"><i class="fas fa-tasks"></i><br>Controles </a>
             </div>
 
             <div class="caja_caja_secciones">
@@ -188,7 +188,7 @@
                                     <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
                                             <div>
                                                 <i class="far fa-file"></i>
-                                                Declaracion de aplicabilidad
+                                                Declaración de aplicabilidad
                                             </div>
                                         </a></li>
                                     <li><a href="{{ route('admin.partes-interesadas.index') }}">
