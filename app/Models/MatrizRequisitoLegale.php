@@ -87,4 +87,10 @@ class MatrizRequisitoLegale extends Model
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    // Relacion con plan de accion
+    public function planes()
+    {
+        return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
+    }
 }

@@ -1,9 +1,22 @@
-<?php 
+<?php
 
 
 
 Breadcrumbs::for('admin.iso27001.index', function ($trail) {
     $trail->push('ISO 27001', route('admin.iso27001.index'));
+});
+
+
+
+Breadcrumbs::for('admin.analisis-brechas.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Análisis de Brechas', route('admin.analisis-brechas.index'));
+});
+
+
+Breadcrumbs::for('admin.planTrabajoBase.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Plan de Implementación', route('admin.planTrabajoBase.index'));
 });
 
 

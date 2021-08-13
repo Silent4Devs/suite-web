@@ -45,6 +45,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style type="text/css">
+        /*TOASTR*/
+        #toast-container > div{
+            opacity: 1 !important;
+        }
+        .toast-success {
+            /* background-color: #06b966; */
+            background-color: #06a755;
+        }
+
         /* DATATABLE */
         .datatable-fix table.dataTable thead .sorting:after {
             opacity: 0.5;
