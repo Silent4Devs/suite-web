@@ -96,7 +96,7 @@
                         </th>
                         <th>
                             Método&nbsp;utilizado&nbsp;de&nbsp;verificación    
-                        </th>                    </th>
+                        </th>                  
                         <th>
                             Evidencia
                         </th>
@@ -275,14 +275,13 @@
                         data: 'evidencia',
                         name: 'evidencia',
                         render:function(data,type,row,meta){
-                            console.log(JSON.parse(data))
                              let archivo="";
-                             let archivos=JSON.parse(data)
+                             let archivos=row.evidencias_matriz;
                                archivo=` <div class="container">
                                     
-                                    <div class="row mb-4">
-                                    <div class="col text-center">
-                                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#largeModal${row.id}"><i class="fas fa-file mr-2 text-white" style="font-size:13pt"></i>Visualizar evidencias</a>
+                                    <div class="mb-4 row">
+                                    <div class="text-center col">
+                                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar evidencias</a>
                                     </div>
                                     </div>
                                 
@@ -297,23 +296,17 @@
                                                 class='carousel slide'
                                                 data-ride='carousel'
                                                 >
-                                            <ol class='carousel-indicators'>
-                                                <li
+                                            <ol class='carousel-indicators'>                                        
+                                                    ${archivos?.map((archivo,idx)=>{
+                                                        return `
+                                                    <li
                                                     data-target='#carouselExampleIndicators${row.id}'
-                                                    data-slide-to='0'
-                                                    class='active'
-                                                    ></li>
-                                                <li
-                                                    data-target='#carouselExampleIndicators${row.id}'
-                                                    data-slide-to='1'
-                                                    ></li>
-                                                <li
-                                                    data-target='#carouselExampleIndicators${row.id}'
-                                                    data-slide-to='2'
-                                                    ></li>
+                                                    data-slide-to='${idx}'
+                                                    ></li>`
+                                                    })}
                                             </ol>
                                             <div class='carousel-inner'>
-                                                    ${archivos.map((archivo,idx)=>{
+                                                    ${archivos?.map((archivo,idx)=>{
                                                         return `
                                                     <div class='carousel-item ${idx==0?"active":""}'>
                                                         <iframe seamless class='img-size' src='{{asset("storage/matriz_evidencias")}}/${archivo.evidencia}'></iframe>
@@ -325,7 +318,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                             <a
                                                 class='carousel-control-prev'
                                                 href='#carouselExampleIndicators${row.id}'
@@ -356,8 +349,33 @@
                             return archivo;
                         }
                     },
+                    {                        
+                        data: 'reviso',
+                        name: 'reviso',
+                        render: function(data, type, row, meta) {
+                            return row.empleado.name;
+                        }
+                    },
                     {
-                        data: 'id',
+                        data: 'puesto',
+                        name: 'puesto',
+                        render: function(data, type, row, meta) {
+                            return row.empleado.puesto;
+                        }
+                    },
+                    {
+                        data: 'area',
+                        name: 'area',
+                        render: function(data, type, row, meta) {
+                            return row.empleado.area.area;
+                        }
+                    },
+                    {
+                        data: 'comentarios',
+                        name: 'comentarios'
+                    },
+                    {
+                       data: 'id',
                         render: function(data, type, row, meta) {
                             let urlVerMatrizRequisitoLegal =
                                 `/admin/matriz-requisito-legales/${data}`;
@@ -398,24 +416,6 @@
                              `;
                             return botones;
                         }
-                        data: 'reviso',
-                        name: 'reviso'
-                    },
-                    {
-                        data: 'puesto',
-                        name: 'puesto'
-                    },
-                    {
-                        data: 'area',
-                        name: 'area'
-                    },
-                    {
-                        data: 'comentarios',
-                        name: 'comentarios'
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
                     }
                 ],
                 orderCellsTop: true,
