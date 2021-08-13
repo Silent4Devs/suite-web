@@ -29,7 +29,20 @@
         $('#probabilidad').change(function() {
             var impactoID = document.getElementById("impacto").value;
             let probabilidadID = $(this).val();
-            $("#nivelriesgo").attr("value", Number(probabilidadID) * Number(impactoID));
+            let result = Number(probabilidadID) * Number(impactoID);
+            $("#nivelriesgo").attr("value", result);
+            switch (result1) {
+                case 0:
+                    $('#nivelriesgo_pre').text('Resultado: ' + Number(probabilidadID) * Number(impactoID));
+                    break;
+                case valor2:
+                    instrucciones;
+                    break;
+                default:
+                    sentencias;
+                    break;
+            }
+
         });
 
         $('#impacto').change(function() {

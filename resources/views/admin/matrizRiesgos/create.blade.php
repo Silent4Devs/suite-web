@@ -281,7 +281,7 @@
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo</label>
+                        <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:  <span class="" id="nivelriesgo_pre"></span></label>
                         <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}" type="number"
                             name="nivelriesgo" id="nivelriesgo" value="{{ old('nivelriesgo', '') }}">
                         @if ($errors->has('nivelriesgo'))

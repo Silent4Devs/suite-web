@@ -30,11 +30,11 @@ use App\Http\Requests\MassDestroyMatrizRiesgoRequest;
 
 class MatrizRiesgosController extends Controller
 {
-    public function index(Request $request)
+    /*public function index(Request $request)
     {
         /*abort_if(Gate::denies('matriz_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');*/
+        abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         //dd(%$query);
@@ -91,7 +91,7 @@ class MatrizRiesgosController extends Controller
 
 
         return view('admin.matriz-seguridad', compact('tipoactivos', 'tipoactivos', 'controles', 'teams'));
-    }
+    }*/
 
     public function create()
     {
@@ -142,7 +142,7 @@ class MatrizRiesgosController extends Controller
         $responsables = Empleado::get();
         $vulnerabilidades = Vulnerabilidad::get();
 
-        return view('admin.matrizRiesgos.edit', compact('matrizRiesgo', 'vulnerabilidades','controles' ,'amenazas', 'activos', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz', 'tipoactivos', 'responsables'));
+        return view('admin.matrizRiesgos.edit', compact('matrizRiesgo', 'vulnerabilidades', 'controles', 'amenazas', 'activos', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz', 'tipoactivos', 'responsables'));
     }
 
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
@@ -302,5 +302,10 @@ class MatrizRiesgosController extends Controller
         $numero_matriz = MatrizRiesgo::count();
 
         return view('admin.matrizRiesgos.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
+    }
+
+    public function MapaCalor(Request $request)
+    {
+        return view('admin.matrizRiesgos.heatchart')->with('id', $request->idAnalisis);
     }
 }
