@@ -235,13 +235,13 @@ class EmpleadoController extends Controller
             'foto' => $image
         ]);
 
-        $gantt_path = 'storage/gantt/gantt_inicial.json';
-        $path = public_path($gantt_path);
+        // $gantt_path = 'storage/gantt/gantt_inicial.json';
+        // $path = public_path($gantt_path);
 
-        $json_code = json_decode(file_get_contents($path), true);
-        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        $write_empleados = $json_code;
-        file_put_contents($path, json_encode($write_empleados));
+        // $json_code = json_decode(file_get_contents($path), true);
+        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $write_empleados = $json_code;
+        // file_put_contents($path, json_encode($write_empleados));
 
         return redirect()->route('admin.empleados.index')->with("success", 'Guardado con éxito');
     }
@@ -382,13 +382,13 @@ class EmpleadoController extends Controller
             "sede_id" => $request->sede_id
         ]);
 
-        $gantt_path = 'storage/gantt/gantt_inicial.json';
-        $path = public_path($gantt_path);
+        // $gantt_path = 'storage/gantt/gantt_inicial.json';
+        // $path = public_path($gantt_path);
 
-        $json_code = json_decode(file_get_contents($path), true);
-        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        $write_empleados = $json_code;
-        file_put_contents($path, json_encode($write_empleados));
+        // $json_code = json_decode(file_get_contents($path), true);
+        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $write_empleados = $json_code;
+        // file_put_contents($path, json_encode($write_empleados));
 
         return redirect()->route('admin.empleados.index')->with("success", 'Editado con éxito');
     }
