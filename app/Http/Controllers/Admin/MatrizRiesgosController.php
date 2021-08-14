@@ -158,9 +158,9 @@ class MatrizRiesgosController extends Controller
     {
 
         abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if (!is_null($matrizRiesgo->activo_id)) {
+        /*if (!is_null($matrizRiesgo->activo_id)) {
             $matrizRiesgo->load('activo_id', 'controles');
-        }
+        }*/
 
         return view('admin.matrizRiesgos.show', compact('matrizRiesgo'));
     }

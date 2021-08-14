@@ -1,4 +1,25 @@
 <div>
+    <style>
+        .text-orange {
+            color: orange !important;
+        }
+
+        .mayus {
+            text-transform: uppercase;
+        }
+
+        .text-yellow {
+            color: #f4c272 !important;
+        }
+
+        .table-scroll {
+            display: block;
+            height: 300px;
+            overflow-y: scroll;
+        }
+
+    </style>
+
     <div class="row">
         <div class="col-md-4">
             <p class="text-xl text-gray-700">Sede:</p>
@@ -29,31 +50,97 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="calor">
                 <div class="datosCalor">
                     <label class="text-primary" style="font-size: 20px;">Riesgo inicial</label>
-                    <table>
-                        <td>hola</td>
+                    <table class="table table-hover table-scroll">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Riesgo</th>
+                                <th scope="col">Probabilidad</th>
+                                <th scope="col">Impacto</th>
+                                <th scope="col">Nivel riesgo</th>
+                            </tr>
+                        </thead>
+                        @foreach ($listados as $listado)
+                            <tr class="con" href="{{ route('admin.matriz-riesgos.show', [$listado->id]) }}">
+                                <td>{{ $listado->id }}</td>
+                                <td>{{ wordwrap($listado->descripcionriesgo, 10, "\n" ,TRUE) }}</td>
+                                <td>{{ $listado->probabilidad }}</td>
+                                <td>{{ $listado->impacto }}</td>
+                                <td>
+                                    @switch($listado->nivelriesgo)
+                                        @case(0)
+                                            <span class="text-green mayus">Baja ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(9)
+                                            <span class="text-yellow mayus">Media ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(18)
+                                            <span class="text-yellow mayus">Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(27)
+                                            <span class="text-orange mayus">Muy Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(36)
+                                            <span class="text-danger mayus">Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(54)
+                                            <span class="text-danger mayus">Muy Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(81)
+                                            <span class="text-danger mayus">Muy Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @default
+                                    @endswitch
+                                </td>
+                            </tr>
+                        @endforeach
                     </table>
                 </div>
                 <div class="mapaCalor">
                     <div class="txtVertical text-primary font-weight-bold"
-                        style="position:absolute; margin-top: 20px;font-size: 20px;">Impacto</div>
+                        style="position:absolute; margin-top: 20px;font-size: 20px; margin-left: 15px;">Impacto</div>
                     <table>
                         <tr>
                             <td>Muy Alta</td>
-                            <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callFunction">0</td>
-                            <td class="naranja" id="s_media_p_muyAlta" wire:model="td_value">27</td>
-                            <td class="rojo" id="s_alta_p_muyAlta" wire:model="td_value">54</td>
-                            <td class="rojo" id="s_muyAlta_p_muyAlta" wire:model="td_value">81</td>
+                            <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQuery(0 , '1')">
+                                @if ($changer == '1')
+                                    {{ $conteo }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="naranja" id="s_media_p_muyAlta" wire:click="callQuery(27, '2')">
+                                @if ($changer == '2')
+                                    {{ $conteo }}
+                                @else
+                                    27
+                                @endif
+                            </td>
+                            <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQuery(54, '3')">
+                                @if ($changer == '3')
+                                    {{ $conteo }}
+                                @else
+                                    54
+                                @endif
+                            </td>
+                            <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQuery(81, '4')">
+                                @if ($changer == '4')
+                                    {{ $conteo }}
+                                @else
+                                    81
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>Alta</td>
-                            <td class="amarillo" id="s_baja_p_alta">0</td>
-                            <td class="amarillo" id="s_media_p_alta">18</td>
-                            <td class="naranja" id="s_alta_p_alta">36</td>
-                            <td class="rojo" id="s_muyAlta_p_alta">54</td>
+                            <td class="amarillo" id="s_baja_p_alta" wire:click="callQuery(0)">0</td>
+                            <td class="amarillo" id="s_media_p_alta" wire:click="callQuery(18)">18</td>
+                            <td class="naranja" id="s_alta_p_alta" wire:click="callQuery(36)">36</td>
+                            <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQuery(54)">54</td>
                         </tr>
                         <tr>
                             <td>Media</td>
@@ -78,20 +165,62 @@
                         </tr>
                     </table>
                     <div class="txtHorizontal text-primary font-weight-bold"
-                        style="margin-left: 150px; font-size: 20px;">Probabilidad</div>
+                        style="margin-left: 250px; font-size: 20px;">Probabilidad</div>
                 </div>
             </div>
 
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
 
             <div class="calor">
                 <div class="datosCalor">
                     <label class="text-primary" style="font-size: 20px;">Riesgo residual</label>
+                    <table class="table table-hover table-scroll">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Riesgo</th>
+                                <th scope="col">Nivel riesgo</th>
+                            </tr>
+                        </thead>
+                        @foreach ($listados as $listado)
+                            <tr class="con" href="{{ route('admin.matriz-riesgos.show', [$listado->id]) }}">
+                                <td>{{ $listado->id }}</td>
+                                <td>{{ $listado->descripcionriesgo }}</td>
+                                <td>
+                                    @switch($listado->nivelriesgo)
+                                        @case(0)
+                                            <span class="text-green mayus">Baja ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(9)
+                                            <span class="text-yellow mayus">Media ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(18)
+                                            <span class="text-yellow mayus">Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(27)
+                                            <span class="text-orange mayus">Muy Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(36)
+                                            <span class="text-danger mayus">Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(54)
+                                            <span class="text-danger mayus">Muy Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(81)
+                                            <span class="text-danger mayus">Muy Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @default
+                                    @endswitch
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </div>
+
                 <div class="mapaCalor">
                     <div class="txtVertical text-primary font-weight-bold"
-                        style="position:absolute; margin-top: 20px;font-size: 20px;">Impacto</div>
+                        style="position:absolute; margin-top: 20px;font-size: 20px; margin-left: 15px;">Impacto</div>
                     <table>
                         <tr>
                             <td>Muy Alta</td>
@@ -130,7 +259,7 @@
                         </tr>
                     </table>
                     <div class="txtHorizontal text-primary font-weight-bold"
-                        style="margin-left: 150px; font-size: 20px;">Probabilidad</div>
+                        style="margin-left: 250px; font-size: 20px;">Probabilidad</div>
                 </div>
             </div>
 
