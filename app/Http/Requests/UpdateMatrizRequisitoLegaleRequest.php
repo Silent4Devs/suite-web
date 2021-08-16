@@ -22,11 +22,11 @@ class UpdateMatrizRequisitoLegaleRequest extends FormRequest
                 'required',
             ],
             'fechaexpedicion'           => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
             'fechavigor'                => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
             'requisitoacumplir'         => [
@@ -42,7 +42,7 @@ class UpdateMatrizRequisitoLegaleRequest extends FormRequest
                 'nullable',
             ],
             'fechaverificacion'         => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
         ];
