@@ -151,17 +151,16 @@ class MatrizRiesgosController extends Controller
         $res = $calculo->CalculoD($request);
         $request->request->add(['resultadoponderacion' => $res]);
         $matrizRiesgo->update($request->all());
-
-        return redirect()->route('admin.matriz-riesgos.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with("success", 'Actualizado con éxito');
     }
 
     public function show(MatrizRiesgo $matrizRiesgo)
     {
 
         abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if (!is_null($matrizRiesgo->activo_id)) {
+        /*if (!is_null($matrizRiesgo->activo_id)) {
             $matrizRiesgo->load('activo_id', 'controles');
-        }
+        }*/
 
         return view('admin.matrizRiesgos.show', compact('matrizRiesgo'));
     }
@@ -234,13 +233,25 @@ class MatrizRiesgosController extends Controller
                 return $row->descripcionriesgo ? $row->descripcionriesgo : "";
             });
             $table->editColumn('confidencialidad', function ($row) {
-                return $row->confidencialidad ? $row->confidencialidad : '';
+                if ($row->confidencialidad) {
+                    return 'Sí' ? 'Sí' : '';
+                }else{
+                    return 'No' ? 'No' : '';
+                }
             });
             $table->editColumn('integridad', function ($row) {
-                return $row->integridad ? $row->direccion : "";
+                if ($row->integridad) {
+                    return 'Sí' ? 'Sí' : '';
+                }else{
+                    return 'No' ? 'No' : '';
+                }
             });
             $table->editColumn('disponibilidad', function ($row) {
-                return $row->disponibilidad ? $row->disponibilidad : "";
+                if ($row->disponibilidad) {
+                    return 'Sí' ? 'Sí' : '';
+                }else{
+                    return 'No' ? 'No' : '';
+                }
             });
             $table->editColumn('resultadoponderacion', function ($row) {
                 return $row->resultadoponderacion ? $row->resultadoponderacion : "";
@@ -264,13 +275,25 @@ class MatrizRiesgosController extends Controller
                 return $row->plan_de_accion ? $row->plan_de_accion : "";
             });
             $table->editColumn('confidencialidad_cid', function ($row) {
-                return $row->confidencialidad_cid ? $row->confidencialidad_cid : "";
+                if ($row->confidencialidad_cid) {
+                    return 'Sí' ? 'Sí' : '';
+                }else{
+                    return 'No' ? 'No' : '';
+                }
             });
             $table->editColumn('integridad_cid', function ($row) {
-                return $row->integridad_cid ? $row->integridad_cid : "";
+                if ($row->integridad_cid) {
+                    return 'Sí' ? 'Sí' : '';
+                }else{
+                    return 'No' ? 'No' : '';
+                }
             });
             $table->editColumn('disponibilidad_cid', function ($row) {
-                return $row->disponibilidad_cid ? $row->disponibilidad_cid : "";
+                if ($row->disponibilidad_cid) {
+                    return 'Sí' ? 'Sí' : '';
+                }else{
+                    return 'No' ? 'No' : '';
+                }
             });
             $table->editColumn('probabilidad_residual', function ($row) {
                 return $row->probabilidad_residual ? $row->probabilidad_residual : "";
