@@ -182,7 +182,7 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor, Seleccione opciones para mostrar sus
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor, seleccione opciones para mostrar sus
                         datos</p>
                 </div>
             </div>

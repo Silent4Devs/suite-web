@@ -18,6 +18,10 @@
             overflow-y: scroll;
         }
 
+        .con {
+            cursor: pointer;
+        }
+
     </style>
 
     {{-- <div class="row">
@@ -65,9 +69,12 @@
                             </tr>
                         </thead>
                         @foreach ($listados as $listado)
-                            <tr class="con" href="{{ route('admin.matriz-riesgos.show', [$listado->id]) }}">
+                            <tr class="con">
                                 <td>{{ $listado->id }}</td>
-                                <td>{{ wordwrap($listado->descripcionriesgo, 10, "\n", true) }}</td>
+                                <td data-toggle="tooltip" data-placement="top" title="Pulse aquí para más información">
+                                    <a target="_blank"
+                                        href="{{ route('admin.matriz-riesgos.show', [$listado->id]) }}">{{ wordwrap($listado->descripcionriesgo, 10, "\n", true) }}</a>
+                                </td>
                                 <td>{{ $listado->probabilidad }}</td>
                                 <td>{{ $listado->impacto }}</td>
                                 <td>
@@ -82,16 +89,19 @@
                                             <span class="text-yellow mayus">Alta ({{ $listado->nivelriesgo }})</span>
                                         @break
                                         @case(27)
-                                            <span class="text-orange mayus">Muy Alta ({{ $listado->nivelriesgo }})</span>
+                                            <span class="text-orange mayus">Muy Alta
+                                                ({{ $listado->nivelriesgo }})</span>
                                         @break
                                         @case(36)
                                             <span class="text-danger mayus">Alta ({{ $listado->nivelriesgo }})</span>
                                         @break
                                         @case(54)
-                                            <span class="text-danger mayus">Muy Alta ({{ $listado->nivelriesgo }})</span>
+                                            <span class="text-danger mayus">Muy Alta
+                                                ({{ $listado->nivelriesgo }})</span>
                                         @break
                                         @case(81)
-                                            <span class="text-danger mayus">Muy Alta ({{ $listado->nivelriesgo }})</span>
+                                            <span class="text-danger mayus">Muy Alta
+                                                ({{ $listado->nivelriesgo }})</span>
                                         @break
                                         @default
                                     @endswitch
@@ -260,7 +270,10 @@
                         @foreach ($listados_residual as $listado)
                             <tr class="con" href="{{ route('admin.matriz-riesgos.show', [$listado->id]) }}">
                                 <td>{{ $listado->id }}</td>
-                                <td>{{ wordwrap($listado->descripcionriesgo, 10, "\n", true) }}</td>
+                                <td data-toggle="tooltip" data-placement="top" title="Pulse aquí para más información">
+                                    <a target="_blank"
+                                        href="{{ route('admin.matriz-riesgos.show', [$listado->id]) }}">{{ wordwrap($listado->descripcionriesgo, 10, "\n", true) }}</a>
+                                </td>
                                 <td>{{ $listado->probabilidad_residual }}</td>
                                 <td>{{ $listado->impacto_residual }}</td>
                                 <td>
@@ -443,8 +456,7 @@
             </div>
 
         </div>
-        <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}"
-            class="btn btn-danger">Cerrar</a>
+        <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}" class="btn btn-danger">Cerrar</a>
     </div>
 
 </div>
