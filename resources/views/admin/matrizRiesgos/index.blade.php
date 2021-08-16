@@ -144,7 +144,8 @@
                             Atención</p>
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado
                             matrices de riesgo
-                            <a href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}"><i class="fas fa-share"></i></a>
+                            <a href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}"><i
+                                    class="fas fa-share"></i></a>
                         </p>
                     </div>
                 </div>
@@ -227,7 +228,7 @@
 
             ];
 
-            /*@can('configuracion_sede_create')
+            @can('configuracion_sede_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar sede',
@@ -248,7 +249,7 @@
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
-            @endcan*/
+            @endcan
             @can('configuracion_sede_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
@@ -356,7 +357,15 @@
                     },
                     {
                         data: 'plan_de_accion',
-                        name: 'plan_de_accion'
+                        name: 'plan_de_accion',
+                        /*render: function(data, type, row, meta) {
+                            let botones =
+                                data.map(plan => {
+                                    return `<a href="/admin/planes-de-accion/${plan.id}">Ver</a>`;
+                                })
+                            console.log(data);
+                            return botones;
+                        }*/
                     },
                     {
                         data: 'confidencialidad_cid',

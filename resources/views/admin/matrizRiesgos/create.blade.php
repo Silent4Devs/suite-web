@@ -16,9 +16,9 @@
 
     </style>
 
-    <div class="card mt-4">
-        <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Riesgo</h3>
+    <div class="mt-4 card">
+        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Riesgo</h3>
         </div>
 
         <div class="card-body">
@@ -202,7 +202,7 @@
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
 
-                <div class="row py-2">
+                <div class="py-2 row">
                     <div class="form-group col-sm-3">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="confidencialidad"
@@ -298,7 +298,7 @@
                     <div class="form-group col-sm-4">
                         <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
                         </label>
-                        <div class="input-group mb-3">
+                        <div class="mb-3 input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text text-dark mayus" id="nivelriesgo_pre"></span>
                             </div>
@@ -376,8 +376,8 @@
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                     </div>
 
-                    <div class="form-group col-sm-4">
-                        <label for="plan_de_accion"><i class="fas fa-lightbulb iconos-crear"></i>Plan de acción</label>
+                    <div class="form-group col-sm-6">
+                        {{-- <label for="plan_de_accion"><i class="fas fa-lightbulb iconos-crear"></i>Plan de acción</label>
                         <select class="form-control {{ $errors->has('plan_de_accion') ? 'is-invalid' : '' }}"
                             name="plan_de_accion" id="plan_de_accion">
                             <option value disabled {{ old('plan_de_accion', null) === null ? 'selected' : '' }}>
@@ -393,7 +393,19 @@
                                 {{ $errors->first('plan_de_accion') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span> --}}
+                        {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        <div class="row w-100 align-items-center" style="margin-left: 1px;">
+                            @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
+                            <div class="pl-0 mt-2 ml-0 col-2">
+                                <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
+                                    data-target="#planAccionModal">
+                                    <i class="mr-1 fas fa-plus-circle"></i> Crear
+                                </button>
+                            </div>
+                            @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de riesgos', 'id_matriz' => $id_analisis])
+                        </div>
+                        {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
 
                 </div>
@@ -452,7 +464,7 @@
                     <div class="form-group col-sm-4">
                         <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
                         </label>
-                        <div class="input-group mb-3">
+                        <div class="mb-3 input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text text-dark mayus" id="nivelriesgo_residual_pre"></span>
                             </div>
@@ -471,7 +483,7 @@
                 <hr>
 
                 <p class="font-weight-bold" style="font-size:11pt;">CID Riesgo Residual</p>
-                <div class="row py-2">
+                <div class="py-2 row">
                     <div class="form-group col-sm-3">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="confidencialidad_cid"
@@ -533,7 +545,7 @@
                     <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
                 </div>
 
-                <div class="form-group col-12 text-right">
+                <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}"
                         class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">

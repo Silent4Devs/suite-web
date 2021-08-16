@@ -209,4 +209,10 @@ class MatrizRiesgo extends Model
     {
         return $this->belongsTo(Team::class);
     }
+
+    // Relacion con plan de accion
+    public function planes()
+    {
+        return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
+    }
 }
