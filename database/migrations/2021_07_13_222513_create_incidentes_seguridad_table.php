@@ -17,14 +17,25 @@ class CreateIncidentesSeguridadTable extends Migration
         Schema::create('incidentes_seguridad', function (Blueprint $table) {
             $table->id();
             $table->string('titulo')->nullable();
-            $table->longText('descripcion')->nullable();
-            $table->text('activos_afectados')->nullable();
+            $table->string('estatus')->default('nuevo');
             $table->dateTime('fecha')->nullable();
+            $table->dateTime('fecha_cierre')->nullable();
+
             $table->string('categoria')->nullable();
             $table->string('subcategoria')->nullable();
-            $table->string('clasificacion')->nullable();
+            $table->string('sede')->nullable();
+            $table->string('ubicacion')->nullable();
+
+            $table->longText('descripcion')->nullable();
+            
+            $table->text('areas_afectados')->nullable();
+            $table->text('procesos_afectados')->nullable();
+            $table->text('activos_afectados')->nullable();
+
+            $table->string('urgencia')->nullable();
+            $table->string('impacto')->nullable();
             $table->string('prioridad')->nullable();
-            $table->string('estatus')->default('nuevo');
+
             $table->longText('comentarios')->nullable();
 
 

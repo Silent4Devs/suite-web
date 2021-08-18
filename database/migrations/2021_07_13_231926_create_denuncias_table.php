@@ -15,16 +15,29 @@ class CreateDenunciasTable extends Migration
     {
         Schema::create('denuncias', function (Blueprint $table) {
             $table->id();
-            $table->string('anonimo');
-            $table->string('denunciado');
-            $table->string('area_denunciado')->nullable();
-            $table->string('tipo')->nullable();
-            $table->string('descripcion')->nullable();
-            $table->string('evidencia')->nullable();
+
+            $table->string('anonimo')->nullable();
+
+            $table->string('estatus')->nullable();
 
             $table->unsignedBigInteger('empleado_denuncio_id')->nullable();
-
             $table->foreign('empleado_denuncio_id')->references('id')->on('empleados');
+
+            $table->unsignedBigInteger('empleado_denunciado_id')->nullable();
+            $table->foreign('empleado_denunciado_id')->references('id')->on('empleados');
+
+            $table->string('tipo')->nullable();
+
+            $table->date('fecha')->nullable();
+            $table->date('fecha_cierre')->nullable();
+
+            $table->string('sede')->nullable();
+            $table->string('ubicacion')->nullable();
+
+            $table->longText('descripcion')->nullable();
+            $table->string('evidencia')->nullable();
+
+            $table->longText('comentarios')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

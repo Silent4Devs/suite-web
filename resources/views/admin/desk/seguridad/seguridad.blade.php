@@ -84,17 +84,24 @@
        			{{-- <th>ID</th> --}}
        			<th>Folio</th>
        			<th>Titulo</th>
+       			<th>Sede</th>
+       			<th>Ubicación</th>
        			<th>Descripción</th>
+       			<th>Areas, Afectadas</th>
+       			<th>Procesos, Afectados</th>
        			<th>Activos, Afectados</th>
        			<th>Fecha</th>
        			<th>Quién reporto</th>
        			<th>Correo</th>
        			<th>Teléfono</th>
        			<th>Categoría</th>
-       			<th>Calificación</th>
+       			<th>Subcategoria</th>
+       			<th>Urgencia</th>
+       			<th>Impacto</th>
        			<th>Prioridad</th>
        			<th>Estatus</th>
-       			<th>Asigando a</th>
+       			<th>Fecha de cierre</th>
+       			<th>Asignado a</th>
        			<th>Comentarios</th>
        			<th>Opciones</th> 
    			</tr>
@@ -224,7 +231,11 @@
                 	// {data: 'id'},
                 	{data: 'folio'},
                 	{data: 'titulo'},
+                	{data: 'sede'},
+                	{data: 'ubicacion'},
                 	{data: 'descripcion'},
+                	{data: 'areas_afectados'},
+                	{data: 'procesos_afectados'},
                 	{data: 'activos_afectados'},
                 	{data: 'fecha'},
                 	{
@@ -246,9 +257,12 @@
                 		}
                 	},
                 	{data: 'categoria'},
-                	{data: 'clasificacion'},
+                	{data: 'subcategoria'},
+                	{data: 'urgencia'},
+                	{data: 'impacto'},
                 	{data: 'prioridad'},
                 	{data: 'estatus'},
+                	{data: 'fecha_cierre'},
                 	{
                 		data: 'id', 
                 		render: function(data, type, row, meta){
@@ -261,9 +275,7 @@
                 		render: function(data, type, row, meta){
                 			let html = `
                 			<div class="botones_tabla">
-                				<button class="btn archivar">
-                				<a href='/admin/desk/${data}/seguridad-edit/'><i class="fas fa-edit"></i></a>
-                				</button>`;
+                				<a href="/admin/desk/${data}/seguridad-edit/" class="btn archivar"><i class="fas fa-edit"></i></a>`;
 
 
 			       				if( (row.estatus == 'cerrado') || (row.estatus == 'cancelado') ){
