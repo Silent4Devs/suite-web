@@ -401,10 +401,16 @@ GridEditor.prototype.bindRowInputEvents = function (task, taskRow) {
         self.master.deleteCurrentTask(taskId);
 
 
-      } else if (field == "progress" ) {
-        task[field]=parseFloat(el.val())||0;
-        el.val(task[field]);
-
+      } else if (field == "progress" ) {        
+        if (el.val() < 0 || el.val() > 100 ) {
+          alert('Progreso debe estar dentro del rango 0-100');
+          row.find("[name=progress]").val(row.find("[name=progress]")[0].defaultValue);
+          return false;
+        }else{        
+          task[field]=parseFloat(el.val())||0;
+          el.val(task[field]);
+          task.recalculateProgress();
+        }
       } else {
         task[field] = el.val();
       }
@@ -413,7 +419,6 @@ GridEditor.prototype.bindRowInputEvents = function (task, taskRow) {
     } else if (field == "name" && el.val() == "") { // remove unfilled task even if not changed
       if (task.getRow()!=0) {
         self.master.deleteCurrentTask(taskId);
-
       }else {
         el.oneTime(1,"foc",function(){$(this).focus()}); //
         event.preventDefault();
@@ -628,6 +633,11 @@ GridEditor.prototype.openFullEditor = function (task, editOnlyAssig) {
     //save task
     taskEditor.bind("saveFullEditor.gantt",function () {
       //console.debug("saveFullEditor");
+      if (Number(taskEditor.find("#progress").val()) < 0 || Number(taskEditor.find("#progress").val()) > 100) {
+        alert('Progreso debe estar dentro del rango 0-100');        
+        taskEditor.find("#progress").css('border','1px solid red');
+      }else{
+      taskEditor.find("#progress").css('border','none');
       var task = self.master.getTask(taskId); // get task again because in case of rollback old task is lost
 
       self.master.beginTransaction();
@@ -635,6 +645,7 @@ GridEditor.prototype.openFullEditor = function (task, editOnlyAssig) {
       task.description = taskEditor.find("#description").val();
       task.code = taskEditor.find("#code").val();
       task.progress = parseFloat(taskEditor.find("#progress").val());
+      
       //task.duration = parseInt(taskEditor.find("#duration").val()); //bicch rimosso perchè devono essere ricalcolata dalla start end, altrimenti sbaglia
       task.startIsMilestone = taskEditor.find("#startIsMilestone").is(":checked");
       task.endIsMilestone = taskEditor.find("#endIsMilestone").is(":checked");
@@ -704,11 +715,13 @@ GridEditor.prototype.openFullEditor = function (task, editOnlyAssig) {
       //change status
       task.changeStatus(taskEditor.find("#status").val());
 
+      //task recalculate progress
+      task.recalculateProgress();
       if (self.master.endTransaction()) {
         taskEditor.find(":input").updateOldValue();
         closeBlackPopup();
       }
-
+    }
     });
   }
 

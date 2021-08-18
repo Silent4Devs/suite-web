@@ -17,6 +17,7 @@ use App\Http\Requests\UpdateMatrizRequisitoLegaleRequest;
 use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
 use App\Models\Empleado;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class MatrizRequisitoLegalesController extends Controller
 {
@@ -246,8 +247,29 @@ class MatrizRequisitoLegalesController extends Controller
             'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
         ]);
 
+        $matrizRequisitoLegal = $id;
         $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
-        $planImplementacion->tasks = [];
+        $planImplementacion->tasks = [
+            [
+                "id" => "1",
+                "end" => Carbon::now()->timestamp * 1000,
+                "name" => $request->parent,
+                "level" => "0",
+                "start" => Carbon::now()->timestamp * 1000,
+                "canAdd" => true,
+                "status" => "STATUS_ACTIVE",
+                "canWrite" => true,
+                "duration" => "1",
+                "progress" => "0",
+                "canDelete" => true,
+                "collapsed" => false,
+                "relevance" => "0",
+                "canAddIssue" => true,
+                "endIsMilestone" => false,
+                "startIsMilestone" => false,
+                "progressByWorklog" => false
+            ]
+        ];
         $planImplementacion->canAdd = true;
         $planImplementacion->canWrite = true;
         $planImplementacion->canWriteOnParent = true;
@@ -260,7 +282,6 @@ class MatrizRequisitoLegalesController extends Controller
         $planImplementacion->objetivo = $request->objetivo;
         $planImplementacion->elaboro_id = auth()->user()->empleado->id;
 
-        $matrizRequisitoLegal = $id;
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
         return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');

@@ -113,11 +113,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('macroprocesos', 'MacroprocesoController');
 
     // Users
+    Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     //Route::post('users/get', 'UsersController@getUsers')->name('users.get');
     Route::resource('users', 'UsersController');
 
-    // Empleados
+    // Empleados    
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
     Route::resource('empleados', 'EmpleadoController');
 

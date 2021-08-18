@@ -376,7 +376,7 @@
                     },
                     {
                        data: 'id',
-                        render: function(data, type, row, meta) {
+                        render: function(data, type, row, meta) {                            
                             let urlVerMatrizRequisitoLegal =
                                 `/admin/matriz-requisito-legales/${data}`;
                             let urlEditarMatrizRequisitoLegal =
@@ -397,15 +397,13 @@
                                             <i class="fas fa-stream"></i>
                                         </a>
 
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            ${!row.planes? `
-                                                <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-columns"></i>Crear y vincular plan de acción</a>                                                       
-                                                <div class="dropdown-divider"></div>    
-                                            `:''}                                            
-                                            <span class="ml-4 badge badge-primary">Planes de acción asociados</span>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">                                            
+                                                <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-stream"></i>Crear y vincular plan de acción</a>                                                       
+                                                <div class="dropdown-divider"></div>                                                
+                                            <span class="ml-4 badge badge-dark">Planes de acción asociados</span>
                                            ${row.planes.map(plan => {
                                                return `
-                                                <a class="dropdown-item" href="/admin/planes-de-accion/${plan.id}"><i class="mr-1 fas fa-search"></i>${plan.parent}<a>
+                                                <a class="dropdown-item" href="/admin/planes-de-accion/${plan.id}"><i class="mr-1 fas fa-search"></i>${plan.parent} ${plan.tasks?.find(t=>Number(t.level) == 0) != undefined ? `<span class="badge badge-primary">${plan.tasks?.find(t=>Number(t.level) == 0).progress} %</span>` : `<span class="badge badge-primary">0 %</span>`}<a>
                                                `;
                                            })}
                                         </div>

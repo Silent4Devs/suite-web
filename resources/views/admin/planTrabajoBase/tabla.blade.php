@@ -350,7 +350,8 @@
 			    },
 			    dataType: "JSON",
 			    success: function (response) {
-			        // console.log(response);
+					$('#workSpace').trigger('refreshTasks.gantt');
+			        toastr.success('Tarea actualizada con éxito');
 			    }
 			});
 		}
@@ -385,22 +386,27 @@
 						estatus = 'Sin iniciar';
 					break;
 				}
-				
+				if (Number(task.level)==0) {
+					html +=`
+					<h3 id="level_zero" data-id="${task.id}">Proyecto Base: ${task.name} (${Math.ceil(task.progress)} %)</h3>
+					`;
+				}
 				
 				if (Number(task.level) == 1){
 					contador ++;
 					html += `
-					</table>
+					</table>										
 					<table class="tabla_gantt_fase">
-						<thead class="${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'th_activo' : '' : contador == 1 ? 'th_activo' : ''}">
-							<tr>
+						<thead class="${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'th_activo' : '' : contador == 1 ? 'th_activo' : ''}">							
+							<tr data-id=${task.id} data-level=${task.level}>
 								<th style="width:10px;"><span><i class="fas ${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'fa-minus-circle' : 'fa-plus-circle' : contador == 1 ? 'fa-minus-circle' : 'fa-plus-circle'}"></i></span></th>
-								<th>${task.name}</th>
+								<th>${task.name} (${Math.ceil(task.progress)} %)</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Responsable</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Estatus</th>
+								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Progreso</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Fecha Inicio</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Fecha Fin</th>
-								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Duración</th>
+								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Duración</th>								
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Dependencia</th>
 							</tr>
 						</thead>
@@ -411,7 +417,7 @@
 				}else if(Number(task.level) > 1){
 					html += `
 					
-						<tr id="${task.id}" numero-registro="${contador_registros}">
+						<tr id="${task.id}" data-level=${task.level} numero-registro="${contador_registros}">
 							<td>${contador_registros}</td>
 							<td style="padding-left: ${task.level * 15}px;">
 								<div class="d-flex" style="width: calc(400px - ${task.level * 15}px);">
@@ -487,6 +493,10 @@
 
 								</select>
 							</td>
+							<td class="td_secundario td_progress" style="position:relative;">
+								<input class="progress_task" type="number" min="0" max="100" value="${Math.ceil(task.progress)}" ${isParent(task,response.tasks) ? 'readonly':''} />
+								<span style="position:absolute;top:11px;right:2px;">%</span>
+							</td>
 							<td class="td_secundario td_fecha_inicio" style="width:10%; position:relative">
 								<input class="input_fecha_inicio" type="text" value="${moment.unix((task.start)/1000).format("YYYY-MM-DD")}" ${task.depends != "" ? 'disabled': ''} />
 								<span class="icon-calendar"><i class="fas fa-calendar-day"></i></span>
@@ -502,7 +512,7 @@
 										<span>Días</span>
 									</div>
 								</div>
-							</td>
+							</td>							
 							<td class="td_secundario" style="width:10%;">${/*task.depends != "" ? response.tasks[Number(task.depends)-1].name.substr(0,20)+'...':''*/ task.depends != undefined ? task.depends : ''}</td>
 						</tr>
 					`;
@@ -618,7 +628,10 @@
 					let valor_nuevo = this.value;
 					let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
 					tarea_correspondiente.status = valor_nuevo;
-					
+					// if (valor_nuevo == 'STATUS_DONE') {
+					// 	tarea_correspondiente.progress = 100;
+					// }
+					// recalculateProgress(tarea_correspondiente,response.tasks);
 					let id_tbody = s_status.closest('tbody').getAttribute('id');
 					saveOnServer(response);
 					renderTable(response,id_tbody);
@@ -728,6 +741,38 @@
 				});
 			});
 
+			// Evento Progreso Propagar a Childs or Parent
+			let progress_task = document.querySelectorAll('.progress_task');
+			progress_task.forEach(element => {
+				element.addEventListener('change', function(){
+					let current_task_id = this.closest('tr').getAttribute('id');
+					let current_task = response.tasks.find(t => t.id ==current_task_id);
+					if(Number(this.value) >= 0 && Number(this.value) <= 100){
+						current_task.progress = Number(this.value);
+						if(Number(this.value) == 100){
+							current_task.status = "STATUS_DONE";							
+						}else{
+							current_task.status = "STATUS_ACTIVE";								
+						}
+						recalculateProgress(current_task,response.tasks);
+
+						let id_tbody = element.closest('tbody').getAttribute('id');
+						saveOnServer(response);
+						renderTable(response,id_tbody);		 
+					}else{
+						 Swal.fire(
+							'¡Información!',
+							`El progreso de la tarea debe estár en un rango de 0 a 100`,
+							'info'
+						)
+						this.value = current_task.progress;
+					}
+					
+					// let parent_task = getParent(current_task,response.tasks); // tarea padre de la tarea actual					
+					// let all_children_task = getChildren(parent_task,response.tasks);
+										
+				});
+			});
 
 			//Evento click para td resources
 			let td_resources = document.querySelectorAll('.td_resources');
@@ -752,7 +797,7 @@
 									</button>
 								</div>
 								<div class="modal-body">
-									<div class="input-group mb-3">
+									<div class="mb-3 input-group">
 										<div class="input-group-prepend">
 											<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
 										</div>
@@ -841,6 +886,80 @@
 			});
 
 		}
+
+		function recalculateProgress(task,tasks) {
+				let parents_task = getParents(task,tasks);
+				parents_task.forEach(parent_task =>{
+					let children_tasks = getChildren(parent_task,response.tasks);
+					let average = 0;
+					children_tasks.forEach(child_task =>{
+						average += child_task.progress;
+					});
+					let total_average = average / children_tasks.length;
+					parent_task.progress = total_average;
+					if(Number(parent_task.progress) == 100){
+						parent_task.status = "STATUS_DONE";
+					}else{
+						parent_task.status = "STATUS_ACTIVE";								
+					}
+				});
+			}
+
+			function getRow(task,tasks) {
+				let ret = -1; // default level 0
+				ret = tasks.indexOf(task);
+				return ret;
+			}
+
+			function getParents(task,tasks) {
+				var ret;
+				var topLevel = task.level;
+				var pos = getRow(task,tasks);
+				ret = [];
+				for (var i = pos; i >= 0; i--) {
+					var par = tasks[i];
+					if (topLevel > par.level) {
+						topLevel = par.level;
+						ret.push(par);
+					}
+				}
+				return ret;
+			};
+
+			function getParent(task,tasks){
+				var ret;
+				for (var i = getRow(task,tasks); i >= 0; i--) {
+				var par = tasks[i];
+				if (task.level > par.level) {
+					ret = par;
+					break;
+				}
+				}
+				return ret;
+			}
+
+			function isParent(task,tasks) {
+				var ret = false;
+				var pos = getRow(task,tasks);
+				if (pos < tasks.length - 1)
+				ret = tasks[pos + 1].level > task.level;
+				return ret;
+			};
+
+			function getChildren(task,tasks) {
+				var ret = [];
+					var pos = getRow(task,tasks);
+					for (var i = pos + 1; i < tasks.length; i++) {
+						var ch = tasks[i];
+						if (ch.level == task.level + 1)
+							ret.push(ch);
+						else if (ch.level <= task.level) // exit loop if parent or brother
+							break;
+					}
+				return ret;
+			};
+
+
 		function renderResources(response,tarea_correspondiente, nombre = null){
 			let recursos = null;
 			if (nombre == null || nombre == '') {
@@ -867,7 +986,7 @@
 								<img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}" title="${resource.name}" />
 								<span class="m-0 ml-2">${resource.name}</span>
 							</div>
-							<div class="col-1 text-center">
+							<div class="text-center col-1">
 								${tarea_correspondiente.assigs?.some(assig => Number(assig.resourceId) == Number(resource.id)) ? '<i class="fas fa-trash-alt resources-modal-remove text-danger" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>':'<i class="fa fa-plus-circle resources-modal text-success" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>'}
 							</div>
 						</div>
@@ -896,8 +1015,12 @@
 					};
 					let isResponsableTask = tarea_correspondiente.assigs?.find(a => Number(a.resourceId) == id);
 					if (isResponsableTask == undefined) {
-						tarea_correspondiente.assigs?.push(new_assig);
-
+						if( tarea_correspondiente.assigs){
+                            tarea_correspondiente.assigs.push(new_assig);
+                        }else{
+                            tarea_correspondiente.assigs = [];
+                            tarea_correspondiente.assigs.push(new_assig);
+                        }
 						let id_tbody = this.closest('.modal').getAttribute('tbody-contenedor');
 						saveOnServer(response);						
 						funRenderCallback(response,id_tbody);
