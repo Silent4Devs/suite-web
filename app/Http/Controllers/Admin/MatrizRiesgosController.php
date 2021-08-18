@@ -281,7 +281,7 @@ class MatrizRiesgosController extends Controller
                 return $row->controles->control ? $row->controles->control : "";
             });
             $table->editColumn('plan_de_accion', function ($row) {
-                return $row->plan_de_accion ? $row->plan_de_accion : "";
+                return $row->planes ? $row->planes : "";
             });
             $table->editColumn('confidencialidad_cid', function ($row) {
                 if ($row->confidencialidad_cid) {

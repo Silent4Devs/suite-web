@@ -358,14 +358,16 @@
                     {
                         data: 'plan_de_accion',
                         name: 'plan_de_accion',
-                        /*render: function(data, type, row, meta) {
+                        render: function(data, type, row, meta) {
+                            let planes = JSON.parse(data);
                             let botones =
-                                data.map(plan => {
-                                    return `<a href="/admin/planes-de-accion/${plan.id}">Ver</a>`;
-                                })
-                            console.log(data);
+                                planes.map(plan => {
+                                    return `<a href="/admin/planes-de-accion/${plan.id}" class="btn btn-sm" title="Visualizar Plan de Acción">
+                                        <i class="fas fa-stream"></i>
+                                        </a>`;
+                                });
                             return botones;
-                        }*/
+                        }
                     },
                     {
                         data: 'confidencialidad_cid',
