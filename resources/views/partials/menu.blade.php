@@ -15,7 +15,9 @@
                 $organizacion = Organizacion::first();
                 $logotipo = 'img/logo_policromatico_2.png';
                 if ($organizacion) {
-                    $logotipo = 'images/' . $organizacion->logotipo;
+                    if ($organizacion->logotipo) {
+                        $logotipo = 'images/' . $organizacion->logotipo;
+                    }
                 }
             @endphp
             <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
@@ -231,28 +233,28 @@
                     </a>
                 </li>
 
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.vulnerabilidads.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/vulnerabilidads') || request()->is('admin/vulnerabilidads/*') ? 'active' : '' }}">
-                            <i class="fas fa-shield-alt iconos_menu letra_blanca">
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route('admin.vulnerabilidads.index') }}"
+                        class="c-sidebar-nav-link {{ request()->is('admin/vulnerabilidads') || request()->is('admin/vulnerabilidads/*') ? 'active' : '' }}">
+                        <i class="fas fa-shield-alt iconos_menu letra_blanca">
 
-                            </i>
-                            <font class="letra_blanca"> Vulnerabilidades</font>
-                        </a>
-                    </li>
+                        </i>
+                        <font class="letra_blanca"> Vulnerabilidades</font>
+                    </a>
+                </li>
 
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.analisis-riesgos.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
-                            {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route('admin.analisis-riesgos.index') }}"
+                        class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
+                        {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
                         </i> --}}
-                            <i class="fas fa-table iconos_menu letra_blanca">
+                        <i class="fas fa-table iconos_menu letra_blanca">
 
-                            </i>
-                            <font class="letra_blanca">Matriz de Riesgos</font>
-                        </a>
-                    </li>
+                        </i>
+                        <font class="letra_blanca">Matriz de Riesgos</font>
+                    </a>
+                </li>
 
             </ul>
         </li>
@@ -287,18 +289,18 @@
                 <font class="letra_blanca"> Análisis de brechas</font>
             </a>
         </li> --}}
-                   <li class="c-sidebar-nav-title">
-                <font class="letra_blanca">Normas</font>
-            </li>
-            
+        <li class="c-sidebar-nav-title">
+            <font class="letra_blanca">Normas</font>
+        </li>
 
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('admin.iso27001.index') }}">
-                        <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
-                        <font class="letra_blanca"> ISO 27001 </font>
-                    </a>
-                </li>
-           
+
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ route('admin.iso27001.index') }}">
+                <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
+                <font class="letra_blanca"> ISO 27001 </font>
+            </a>
+        </li>
+
         @can('administracion_access')
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca">Administración</font>
@@ -333,6 +335,14 @@
                 </ul>
             </li>
         @endcan
+        {{-- @can('planes_accion_access') --}}
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.planes-de-accion.index') }}" class="c-sidebar-nav-link {{ request()->is('admin/planes-de-accion') || request()->is('admin/planes-de-accion/*/edit') || request()->is('admin/planes-de-accion/create') || request()->is('admin/planes-de-accion/*') ? 'active' : '' }}">
+                    <i class="iconos_menu letra_blanca fas fa-fw fa-stream"></i>
+                    <font class="letra_blanca">Planes de Acción</font>
+                </a>
+            </li>
+        {{-- @endcan --}}
         @can('configuracion_datos_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">

@@ -236,10 +236,20 @@
          });
 
          function initCalendar() {
-             let url = '{{ asset('storage/gantt/') }}/{{ $name_file_gantt }}';
+             //  let url = '{{ asset('storage/gantt/') }}/{{ $name_file_gantt }}';
+             //  $.ajax({
+             //      type: "get",
+             //      url: url,
+             //      success: function(response) {
+             //          renderCalendar(response);
+             //      }
+             //  });
              $.ajax({
-                 type: "get",
-                 url: url,
+                 type: "POST",
+                 headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                 },
+                 url: "{{ route('admin.planTrabajoBase.loadProyect') }}",
                  success: function(response) {
                      renderCalendar(response);
                  }
@@ -247,13 +257,17 @@
          }
 
          function renderCalendar(response) {
-             let data = response.tasks.map(task => {
+             let tasks = response.tasks.filter(t => t.level > 0);
+             let data = tasks.map(task => {
 
                  let foto = 'man.png';
                  let images = "";
-                 let assigs = task.assigs.map(asignado => {
-                     return response.resources.find(r => Number(r.id) === Number(asignado.resourceId));
-                 });
+                 let assigs = [];
+                 if (task.assigs) {
+                     assigs = task.assigs.map(asignado => {
+                         return response.resources.find(r => Number(r.id) === Number(asignado.resourceId));
+                     });
+                 }
                  let filteredAssigs = assigs.filter(function(a) {
                      return a != null;
                  });
@@ -303,9 +317,9 @@
                  }
                  return {
                      id: `r_${task.id}`,
-                     calendarId: `${task.level == 0 ? '1': '2'}`,
-                    //  bgColor: bgColor,
-                     title: `${task.level == 0 ? 'Fase: ': 'Actividad: '}${task.name}`,
+                     calendarId: `${task.level == 1 ? '1': '2'}`,
+                     //  bgColor: bgColor,
+                     title: `${task.level == 1 ? 'Fase: ': 'Actividad: '}${task.name}`,
                      category: 'allday',
                      body: `${filteredAssigs.length > 0 ? "<h5>Responsables</h5>":""} ${images} <p>Estatus: <span class="badge ${task.status}">${estatus}</span></p>`,
                      dueDateClass: '',

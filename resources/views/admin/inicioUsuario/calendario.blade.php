@@ -341,14 +341,14 @@
 
             @foreach($actividades as $task)
                  {
-                    id: 'recurasdsos{{$task['id']}}',
+                    id: 'recurasdsos{{$task->id}}',
                     calendarId: '1',
-                    title: 'Actividad: {{$task['name']}}',
+                    title: 'Actividad: {{$task->name}}',
                     category: 'allday',
                     dueDateClass: '',
-                    start: '{{ \Carbon\Carbon::createFromTimestamp($task['start'] / 1000)->toDateTimeString()
+                    start: '{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTimeString()
                      }}',
-                    end: '{{ \Carbon\Carbon::createFromTimestamp($task['end'] / 1000)->toDateTimeString()
+                    end: '{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTimeString()
                      }}',
                     isReadOnly : true,
 

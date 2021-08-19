@@ -84,7 +84,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //analisis brechas
     //Route::resource('analisis-brechas', 'AnalisisBController');
-    Route::get('analisis-brechas', 'AnalisisBController@index');
+    Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
     Route::post('analisis-brechas/update', 'AnalisisBController@update');
 
     // Declaracion de Aplicabilidad
@@ -113,11 +113,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('macroprocesos', 'MacroprocesoController');
 
     // Users
+    Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     //Route::post('users/get', 'UsersController@getUsers')->name('users.get');
     Route::resource('users', 'UsersController');
 
-    // Empleados
+    // Empleados    
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
     Route::resource('empleados', 'EmpleadoController');
 
@@ -137,6 +138,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('implementacions', 'ImplementacionController');
 
+    // Planes de Acción
+    Route::post('planes-de-accion/{plan}/save', 'PlanesAccionController@saveProject')->name('planes-de-accion.saveProject');
+    Route::post('planes-de-accion/{plan}/load', 'PlanesAccionController@loadProject')->name('planes-de-accion.loadProject');
+    // Route::get('planes-de-accion/create/', 'PlanesAccionController@create')->name('planes-de-accion.create');
+    Route::resource('planes-de-accion', 'PlanesAccionController')->except(['create']);
 
     // Glosarios
     Route::delete('glosarios/destroy', 'GlosarioController@massDestroy')->name('glosarios.massDestroy');
@@ -163,6 +169,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('partes-interesadas', 'PartesInteresadasController');
 
     // Matriz Requisito Legales
+    Route::get('matriz-requisito-legales/planes-de-accion/create/{id}', 'MatrizRequisitoLegalesController@createPlanAccion')->name('matriz-requisito-legales.createPlanAccion');
+    Route::post('matriz-requisito-legales/planes-de-accion/store/{id}', 'MatrizRequisitoLegalesController@storePlanAccion')->name('matriz-requisito-legales.storePlanAccion');
     Route::delete('matriz-requisito-legales/destroy', 'MatrizRequisitoLegalesController@massDestroy')->name('matriz-requisito-legales.massDestroy');
     Route::resource('matriz-requisito-legales', 'MatrizRequisitoLegalesController');
 
@@ -274,12 +282,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
     Route::resource('activos', 'ActivosController');
 
-      // Marca
+    // Marca
     Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
     Route::resource('marcas', 'MarcaController');
 
     // Modelo
-    Route::get('modelos/get-modelos', 'ModeloController@getModelos')->name('modelos.getModelos');
+    Route::get('modelos/get-modelos/{id?}', 'ModeloController@getModelos')->name('modelos.getModelos');
     Route::resource('modelos', 'ModeloController');
 
     // Tratamiento Riesgos
@@ -467,7 +475,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Matriz Riesgos
     Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
     Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+    Route::post('matriz-riesgos/parse-csv-import', 'MatrizRiesgosController@parseCsvImport')->name('matriz-riesgos.parseCsvImport');
     Route::get('matriz-seguridad', 'MatrizRiesgosController@SeguridadInfo')->name('matriz-seguridad');
+    Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
 
     // Gap Unos
     Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');

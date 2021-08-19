@@ -20,7 +20,7 @@
                             {{ trans('cruds.comiteseguridad.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.comiteseguridad.fields.nombrerol') }}
+                            Nombre del rol
                         </th>
                         <th>
                             {{ trans('cruds.comiteseguridad.fields.personaasignada') }}

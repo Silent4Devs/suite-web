@@ -11,7 +11,7 @@ class StoreSedeRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('sede_create');
+        return Gate::allows('configuracion_sede_create');
     }
 
     public function rules()

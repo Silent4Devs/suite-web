@@ -411,22 +411,13 @@ Ganttalendar.prototype.drawTask = function (task) {
 
     //svg.title(taskSvg, task.name);
     //external box
-     if (task.isParent()){
-
-      svg.rect(taskSvg, 0, 0, "100%", 3, {fill:"#000"});
-
-    }else{
-
-    var layout = svg.rect(taskSvg, 0, 0, "100%", "100%", {class:"taskLayout", rx:"2", ry:"2"});  
-
-    }
-    // var layout = svg.rect(taskSvg, 0, 0, "100%", "100%", {class:"taskLayout", rx:"2", ry:"2"});
+    var layout = svg.rect(taskSvg, 0, 0, "100%", "100%", {class:"taskLayout", rx:"2", ry:"2"});
     //external dep
     if (task.hasExternalDep)
       svg.rect(taskSvg, 0, 0, "100%", "100%", {fill:"url(#extDep)"});
 
     //progress
-    if (task.progress > 0  && !task.isParent()) {
+    if (task.progress > 0) {
       var progress = svg.rect(taskSvg, 0, "20%", (task.progress > 100 ? 100 : task.progress) + "%", "60%", {rx:"2", ry:"2",fill:"rgba(0,0,0,.4)"});
       if (dimensions.width > 50) {
         var textStyle = {fill:"#888", "font-size":"10px",class:"textPerc teamworkIcons",transform:"translate(5)"};
@@ -439,7 +430,9 @@ Ganttalendar.prototype.drawTask = function (task) {
     }
 
 		if (task.isParent())
-      svg.rect(taskSvg, 0, 0, "100%", 3, {fill:"#000"});
+      svg.image(taskSvg, 8, dimensions.height/2-8, 12, 12, self.master.resourceUrl +"parent_alt.png")
+    //   svg.rect(taskSvg, 0, 0, "100%", 2, {fill:"#000",rx: "10px",
+    // ry: "1px"});
 
     if (task.startIsMilestone) {
       svg.image(taskSvg, -9, dimensions.height/2-9, 18, 18, self.master.resourceUrl +"milestone.png")
@@ -932,8 +925,8 @@ $.fn.dragExtedSVG = function (svg, opt) {
           var x2 = x1 + parseFloat(el.attr("width"));
           var posx = e.pageX;
 
-          $("body").unselectable();
-
+          // $("body").unselectable();
+          $("body").addClass("unselectable")
           //start resize end
           if (options.canResize && Math.abs(posx-x2)<=options.resizeZoneWidth) {
             //store offset mouse x2
@@ -1029,7 +1022,7 @@ $.fn.dragExtedSVG = function (svg, opt) {
       ).bind("mousemove.deSVG",
         function (e) {
           var el = $(this);
-          var x1 = el.find("[class*=taskLayout]") ? el.find("[class*=taskLayout]").offset().left : null;
+          var x1 = el.find("[class*=taskLayout]").offset().left;
           var x2 = x1 + parseFloat(el.attr("width"));
           var posx = e.pageX;
 
@@ -1052,7 +1045,8 @@ $.fn.dragExtedSVG = function (svg, opt) {
     if (target && target.attr("oldw")!=target.attr("width"))
       options.stopResize.call(target.get(0), e); //callback
     target = undefined;
-    $("body").clearUnselectable();
+    // $("body").clearUnselectable();
+    $('body').removeClass('unselectable');
   }
 
   function drop(e) {
@@ -1060,7 +1054,9 @@ $.fn.dragExtedSVG = function (svg, opt) {
     if (target && target.attr("oldx") != target.attr("x"))
       options.drop.call(target.get(0), e); //callback
     target = undefined;
-    $("body").clearUnselectable();
+    // $("body").clearUnselectable();
+    $('body').removeClass('unselectable');
+    
   }
 
 };
