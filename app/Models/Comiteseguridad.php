@@ -61,4 +61,10 @@ class Comiteseguridad extends Model
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function asignacion()
+	{
+        return $this->belongsTo(Empleado::class, 'id_asignada', 'id');
+
+	}
 }

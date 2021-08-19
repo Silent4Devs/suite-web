@@ -1,9 +1,12 @@
 @extends('layouts.admin')
 @section('content')
+
+{{ Breadcrumbs::render('admin.entendimiento-organizacions.index') }}
+
     @can('entendimiento_organizacion_create')
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Entendimiento de la organización</strong></h3>
+                <h3 class="mb-2 text-center text-white"><strong>Análisis FODA</strong></h3>
             </div>
         @endcan
 

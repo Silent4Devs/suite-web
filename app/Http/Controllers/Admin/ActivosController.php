@@ -146,7 +146,7 @@ class ActivosController extends Controller
 
         $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::with('area')->get();
 
         $area = Area::get();
 
@@ -240,7 +240,7 @@ class ActivosController extends Controller
 
         $activo->load('tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::with('area')->get();
 
         $area = Area::get();
 
@@ -253,10 +253,6 @@ class ActivosController extends Controller
 
     public function update(UpdateActivoRequest $request, Activo $activo)
     {
-
-
-
-
 
 
         $data = array();

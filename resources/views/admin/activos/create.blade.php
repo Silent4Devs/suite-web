@@ -483,7 +483,8 @@
                                     },
                                     theme: "bootstrap4"
                                 });
-                                // $('#marcaslec').modal('hide')
+                                $('#marcaslec').modal('hide')
+                                $('.modal-backdrop').hide();
                                 Swal.fire(
                                     'Guardada con exito!',
                                     '',
@@ -523,7 +524,8 @@
                         },
                         dataType: "json",
                         success: function(response) {
-                            $('#marcaslec').modal('hide')
+                            $('#modelolec').modal('hide')
+                            $('.modal-backdrop').hide();
                             if (response.success) {
                                 document.querySelector('#modelo-name').value = '';
                                 $('.selecmodelo').select2('destroy');

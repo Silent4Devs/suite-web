@@ -286,7 +286,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('marcas', 'MarcaController');
 
     // Modelo
-    Route::get('modelos/get-modelos', 'ModeloController@getModelos')->name('modelos.getModelos');
+    Route::get('modelos/get-modelos/{id?}', 'ModeloController@getModelos')->name('modelos.getModelos');
     Route::resource('modelos', 'ModeloController');
 
     // Tratamiento Riesgos

@@ -188,7 +188,7 @@
                     <div class="form-group col-md-11">
                         <label class="required" for="marca"><i class="fas fa-copyright iconos-crear"></i> Marca</label>
                         <select class="selecmarca form-control {{ $errors->has('marca') ? 'is-invalid' : '' }}" type="text" name="marca"
-                            id="marca" value="{{ old('marca', $activo->marca) }}" required>
+                            id="marca" required>
                             @if ($errors->has('marca'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('marca') }}
@@ -237,7 +237,7 @@
 
 
             <div class="form-group col-sm-6">
-                <label class="required" for="n_serie"><i class="fas fa-barcode iconos-crear"></i>No de producto</label>
+                <label class="required" for="n_producto"><i class="fas fa-barcode iconos-crear"></i>No de producto</label>
                 <input class="form-control {{ $errors->has('n_serie') ? 'is-invalid' : '' }}" type="text" name="n_producto"
                     id="n_producto" value="{{ old('n_producto', $activo->n_producto) }}" required>
                 @if ($errors->has('n_producto'))
@@ -514,7 +514,7 @@
                     $('.selecmodelo').select2('destroy');
                     $('.selecmodelo').select2({
                         ajax:{
-                            url:"{{route('admin.modelos.getModelos')}}",
+                            url:"{{route('admin.modelos.getModelos',$activo->modelo)}}",
                             dataType:"json",
                         },
                         theme:"bootstrap4"

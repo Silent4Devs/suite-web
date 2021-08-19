@@ -41,6 +41,36 @@
     top: 80px;
 }
 
+.table tr td:nth-child(6){
+
+    max-width:415px !important;
+    width:415px !important;
+
+}
+
+.table tr th:nth-child(6){
+
+    width:415px !important;
+    max-width:415px !important;
+}
+
+.table tr td:nth-child(10){
+
+    text-align: center;
+
+}
+
+.tamaño{
+
+    width:168px !important;
+
+}
+
+
+
+
+
+
 </style>
 
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
@@ -68,10 +98,10 @@
                             Fundamento
                         </th>
                         <th>
-                            Apartado
+                            Apartado&nbsp;@for ($i = 0; $i < 70; $i++)&nbsp;@endfor
                         </th>
                         <th>
-                            Requisito(s)&nbsp;a&nbsp;cumplir
+                            Requisito(s)&nbsp;a&nbsp;cumplir&nbsp;@for ($i = 0; $i < 80; $i++)&nbsp;@endfor
                         </th>
                         <th>
                             Alcance&nbsp;y&nbsp;grado&nbsp;de&nbsp;aplicabilidad
@@ -80,13 +110,13 @@
                             Medio&nbsp;de&nbsp;publicación
                         </th>
                         <th>
-                            Fecha&nbsp;de&nbsp;publicación
+                            Fecha&nbsp;de publicación
                         </th>
                         <th>
-                            Fecha&nbsp;de&nbsp;entrada&nbsp;en&nbsp;vigor
+                            Fecha&nbsp;de&nbsp;entrada en&nbsp;vigor
                         </th>
                         <th>
-                            Periodicidad&nbsp;de&nbsp;cumplimiento
+                            Periodicidad&nbsp;de cumplimiento
                         </th>
                         <th>
                             ¿En&nbsp;cumplimiento?
@@ -95,22 +125,22 @@
                             Descripción&nbsp;del&nbsp;cumplimiento/incumplimiento
                         </th>
                         <th>
-                            Método&nbsp;utilizado&nbsp;de&nbsp;verificación    
-                        </th>                  
-                        <th>
+                            Método&nbsp;utilizado&nbsp;de&nbsp;verificación
+                        </th>
+                        <th style="text-align:center;">
                             Evidencia
                         </th>
                         <th>
-                            Revisó
+                            Revisó&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
                         </th>
                         <th>
-                           Puesto
+                           Puesto&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
                         </th>
                         <th>
-                           Área
+                           Área&nbsp;@for ($i = 0; $i < 25; $i++)&nbsp;@endfor
                         </th>
                         <th>
-                            Comentarios
+                            Comentarios&nbsp;@for ($i = 0; $i < 70; $i++)&nbsp;@endfor
                          </th>
                         <th>
                             Opciones
@@ -163,7 +193,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         doc.styles.tableHeader.fontSize = 8.5;
-                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10 
+                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -278,13 +308,13 @@
                              let archivo="";
                              let archivos=row.evidencias_matriz;
                                archivo=` <div class="container">
-                                    
+
                                     <div class="mb-4 row">
                                     <div class="text-center col">
-                                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar evidencias</a>
+                                        <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
                                     </div>
                                     </div>
-                                
+
                                     <!-- modal -->
                                     <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
@@ -296,7 +326,7 @@
                                                 class='carousel slide'
                                                 data-ride='carousel'
                                                 >
-                                            <ol class='carousel-indicators'>                                        
+                                            <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
                                                     <li
@@ -312,7 +342,7 @@
                                                         <iframe seamless class='img-size' src='{{asset("storage/matriz_evidencias")}}/${archivo.evidencia}'></iframe>
                                                     </div>`
                                                     })}
-                                                
+
                                             </div>
 
                                             </div>
@@ -349,7 +379,7 @@
                             return archivo;
                         }
                     },
-                    {                        
+                    {
                         data: 'reviso',
                         name: 'reviso',
                         render: function(data, type, row, meta) {
@@ -387,10 +417,10 @@
                                 `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
                             let urlVerPlanAccion =
                                 `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
-                            let botones = `                           
+                            let botones = `
                             <div class="btn-group">
                                 <a class="btn btn-sm" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
-                                <a class="btn btn-sm" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i></a>                                                        
+                                <a class="btn btn-sm" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i></a>
                                 ${row.planes ? `
                                     <div class="dropdown">
                                         <a class="btn btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -399,9 +429,9 @@
 
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                             ${!row.planes? `
-                                                <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-columns"></i>Crear y vincular plan de acción</a>                                                       
-                                                <div class="dropdown-divider"></div>    
-                                            `:''}                                            
+                                                <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-columns"></i>Crear y vincular plan de acción</a>
+                                                <div class="dropdown-divider"></div>
+                                            `:''}
                                             <span class="ml-4 badge badge-primary">Planes de acción asociados</span>
                                            ${row.planes.map(plan => {
                                                return `
@@ -411,7 +441,7 @@
                                         </div>
                                     </div>
                                     `:''}
-                                 <button class="btn btn-sm" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i></button>    
+                                 <button class="btn btn-sm" onclick="eliminar('${urlEliminarMatrizRequisitoLegal}','${row.nombrerequisito}')" title="Eliminar Matríz de Requisito Legal"><i class="fas fa-trash-alt text-danger"></i></button>
                             </div>
                              `;
                             return botones;
