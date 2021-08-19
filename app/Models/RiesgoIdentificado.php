@@ -19,6 +19,12 @@ class RiesgoIdentificado extends Model
         'id'
     ];
 
+    protected $appends = ['folio'];
+
+    public function getFolioAttribute(){
+        return  sprintf('RSG-%04d', $this->id);
+    }
+
     public function reporto(){
         return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id');
     }

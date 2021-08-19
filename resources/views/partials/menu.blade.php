@@ -460,6 +460,19 @@
                             </ul>
                         </li>
                     @endcan
+
+                    @can('configuracion_empleados_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.empleados.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/empleados') || request()->is('admin/empleados/*') ? 'active' : '' }}">
+                                <i class="fas fa-exclamation-triangle iconos_menu letra_blanca">
+
+                                </i>
+                                <font class="letra_blanca"> Catálogo de Incidentes </font>
+                            </a>
+                        </li>
+                    @endcan
+
                 </ul>
             </li>
         @endcan

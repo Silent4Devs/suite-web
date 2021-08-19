@@ -1,0 +1,65 @@
+
+.caja_oculta_dinamica {
+    display: none;
+}
+
+
+#digrama textarea {
+    position: absolute;
+    background-color: #f1f1f1;
+    width: 200px;
+    min-height: 70px !important;
+    max-height: 70px !important;
+    border: none;
+    box-shadow: none;
+    border-radius: 6px;
+    resize: none;
+}
+
+.politicas_txtarea {
+    top: 40px;
+    left: calc(50% - 380px);
+}
+
+.procesos_txtarea {
+    top: 40px;
+    left: calc(50% - 120px);
+}
+
+.personas_txtarea {
+    top: 40px;
+    left: calc(50% + 150px);
+}
+
+.tecnologia_txtarea {
+    top: 230px;
+    left: calc(50% - 470px);
+}
+
+.metodos_txtarea {
+    top: 230px;
+    left: calc(50% - 200px);
+}
+
+.ambiente_txtarea {
+    top: 230px;
+    left: calc(50% + 70px);
+}
+
+.problemas_txtarea {
+    top: 270px;
+    right: 0px;
+    width: 150px !important;
+}
+
+.txt_obj_secundarios_a {
+    margin-top: 80px;
+    margin-left: 20px;
+    background-color: #e1e1e1 !important;
+}
+
+.txt_obj_secundarios_b {
+    margin-top: 80px;
+    margin-left: -20px;
+    background-color: #e1e1e1 !important;
+}

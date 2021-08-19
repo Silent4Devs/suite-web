@@ -5,10 +5,15 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+
 use App\Models\User;
 use App\Models\PlanBaseActividade;
 use App\Models\AuditoriaAnual;
 use App\Models\Recurso;
+use App\Models\Proceso;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\Sede;
 
 use App\Models\IncidentesSeguridad;
 use App\Models\RiesgoIdentificado;
@@ -16,6 +21,9 @@ use App\Models\Quejas;
 use App\Models\Denuncias;
 use App\Models\Mejoras;
 use App\Models\Sugerencias;
+
+use Intervention\Image\Facades\Image;
+use App\Models\EvidenciasQueja;
 
 use App\Models\Activo;
 use App\Models\Documento;
@@ -114,26 +122,88 @@ class inicioUsuarioController extends Controller
 
     public function quejas()
     {
+        $areas = Area::get();
+
+        $procesos = Proceso::get();
+
+        $activos = Activo::get();
+
+        $empleados = Empleado::get();
+
+        $sedes = Sede::get();
+
         abort_if(Gate::denies('quejas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.inicioUsuario.formularios.quejas');
+        return view('admin.inicioUsuario.formularios.quejas', compact('areas', 'procesos' ,'empleados', 'activos', 'sedes'));
     }
     public function storeQuejas(Request $request)
     {
-        Quejas::create([
+
+        $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
             'empleado_quejo_id' => auth()->user()->empleado->id,
+
+            'area_quejado' => $request->area_quejado,
+            'colaborador_quejado' => $request->colaborador_quejado,
+            'proceso_quejado' => $request->proceso_quejado,
+            'externo_quejado' => $request->externo_quejado,
+
+            'titulo' => $request->descripcion,
+            'fecha' => $request->fecha,
+            'sede' => $request->sede,
+            'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
-            'evidencia' => $request->evidencia,
-            'quejado' => $request->quejado,
         ]);
 
+
+
+        $image = null;
+
+        if($request->file('evidencia') != null or !empty($request->file('evidencia'))){
+
+            foreach($request->file('evidencia') as $file){
+                $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+
+                $new_name_image = 'Queja_file_' . $quejas->id . '_' . $name_image . '.' . $extension;
+
+                $route = 'public/evidencias_quejas';
+
+                $image = $new_name_image;
+
+                //Usamos image_intervention para disminuir el peso de la imagen
+
+                // $img_intervention = Image::make($file);
+
+                $file->storeAs($route, $image);
+
+                // $img_intervention->resize(256, null, function ($constraint) {
+
+                //     $constraint->aspectRatio();
+
+                // })->save($route);
+
+                EvidenciasQueja::create([
+                    'evidencia' => $image,
+                    'id_quejas' => $quejas->id,
+                ]);
+
+            }
+        }
+
+
+        
         return redirect()->route('admin.inicio-Usuario.index');
     }
 
     public function denuncias()
     {
+        $empleados = Empleado::get();
+
+        $sedes = Sede::get();
+
         abort_if(Gate::denies('denuncias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.inicioUsuario.formularios.denuncias');
+        return view('admin.inicioUsuario.formularios.denuncias', compact('empleados' , 'sedes'));
     }
     public function storeDenuncias(Request $request)
     {
@@ -141,10 +211,11 @@ class inicioUsuarioController extends Controller
             'anonimo' => $request->anonimo,
             'empleado_denuncio_id' => auth()->user()->empleado->id,
             'descripcion' => $request->descripcion,
-            'evidencia' => $request->evidencia,
-            'denunciado' => $request->denunciado,
-            'area_denunciado' => $request->area_denunciado,
+            'empleado_denunciado_id' => $request->empleado_denunciado_id,
             'tipo' => $request->tipo,
+            'sede' => $request->sede,
+            'ubicacion' => $request->ubicacion,
+            'fecha' => $request->fecha,
         ]);
 
         return redirect()->route('admin.inicio-Usuario.index');
@@ -152,8 +223,13 @@ class inicioUsuarioController extends Controller
 
     public function mejoras()
     {
+
+        $areas = Area::get();
+
+        $procesos = Proceso::get();
+
         abort_if(Gate::denies('mejoras_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.inicioUsuario.formularios.mejoras');
+        return view('admin.inicioUsuario.formularios.mejoras', compact('areas', 'procesos'));
     }
     public function storeMejoras(Request $request)
     {
@@ -168,8 +244,12 @@ class inicioUsuarioController extends Controller
 
     public function sugerencias()
     {
+        $areas = Area::get();
+
+        $empleados = Empleado::get();
+
         abort_if(Gate::denies('sugerencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.inicioUsuario.formularios.sugerencias');
+        return view('admin.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados'));
     }
     public function storeSugerencias(Request $request)
     {
@@ -184,9 +264,21 @@ class inicioUsuarioController extends Controller
 
     public function seguridad()
     {
+
+        $areas = Area::get();
+
+        $procesos = Proceso::get();
+
+        $activos = Activo::get();
+
+        $empleados = Empleado::get();
+
+        $sedes = Sede::get();
+
+
         abort_if(Gate::denies('incidentes_seguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activos = Activo::get();
-        return view('admin.inicioUsuario.formularios.seguridad', compact('activos'));
+        return view('admin.inicioUsuario.formularios.seguridad', compact('activos', 'areas', 'procesos', 'sedes'));
     }
     public function storeSeguridad(Request $request)
     {
@@ -200,9 +292,13 @@ class inicioUsuarioController extends Controller
         // ]);
 
         $incidentes_seguridad = IncidentesSeguridad::create([
-            'fecha' => $request->fecha,
             'titulo' => $request->titulo,
+            'fecha' => $request->fecha,
+            'sede' => $request->sede,
+            'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
+            'areas_afectados' => $request->areas_afectados,
+            'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
             'empleado_reporto_id' => auth()->user()->empleado->id,
         ]);
@@ -230,18 +326,32 @@ class inicioUsuarioController extends Controller
 
     public function riesgos()
     {
+        $areas = Area::get();
+
+        $procesos = Proceso::get();
+
+        $activos = Activo::get();
+
+        $empleados = Empleado::get();
+
+        $sedes = Sede::get();
+
         abort_if(Gate::denies('riesgos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.inicioUsuario.formularios.riesgos');
+        return view('admin.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }
     public function storeRiesgos(Request $request)
     {
 
         RiesgoIdentificado::create([
-            'fecha' => $request->fecha,
             'titulo' => $request->titulo,
+            'fecha' => $request->fecha,
+            'sede' => $request->sede,
+            'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
+            'comentarios' => $request->comentarios,
+            'areas_afectados' => $request->areas_afectados,
+            'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
-            'proceso' => $request->proceso,
             'empleado_reporto_id' => auth()->user()->empleado->id,
         ]);
 
