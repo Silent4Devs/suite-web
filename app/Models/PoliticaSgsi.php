@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use \DateTimeInterface;
+use Carbon\Carbon;
 use App\Traits\MultiTenantModelTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PoliticaSgsi extends Model
 {
@@ -16,9 +17,13 @@ class PoliticaSgsi extends Model
 
     public static $searchable = [
         'politicasgsi',
+
     ];
 
     protected $dates = [
+        'fecha_publicacion',
+        'fecha_entrada',
+        'fecha_revision',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -26,6 +31,10 @@ class PoliticaSgsi extends Model
 
     protected $fillable = [
         'politicasgsi',
+        'fecha_publicacion',
+        'fecha_entrada',
+        'fecha_revision',
+        'id_reviso_politica',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -37,8 +46,30 @@ class PoliticaSgsi extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+
+    public function getFechaPublicacionAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
+    public function getFechaEntradaAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
+    public function getFechaRevisionAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function empleado()
+	{
+        return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id');
+
+	}
 }
