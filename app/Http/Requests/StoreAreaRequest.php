@@ -11,7 +11,7 @@ class StoreAreaRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('area_create');
+        return Gate::allows('configuracion_area_create');
     }
 
     public function rules()

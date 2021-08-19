@@ -430,7 +430,9 @@ Ganttalendar.prototype.drawTask = function (task) {
     }
 
 		if (task.isParent())
-      svg.rect(taskSvg, 0, 0, "100%", 3, {fill:"#000"});
+      svg.image(taskSvg, 8, dimensions.height/2-8, 12, 12, self.master.resourceUrl +"parent_alt.png")
+    //   svg.rect(taskSvg, 0, 0, "100%", 2, {fill:"#000",rx: "10px",
+    // ry: "1px"});
 
     if (task.startIsMilestone) {
       svg.image(taskSvg, -9, dimensions.height/2-9, 18, 18, self.master.resourceUrl +"milestone.png")
@@ -923,8 +925,8 @@ $.fn.dragExtedSVG = function (svg, opt) {
           var x2 = x1 + parseFloat(el.attr("width"));
           var posx = e.pageX;
 
-          $("body").unselectable();
-
+          // $("body").unselectable();
+          $("body").addClass("unselectable")
           //start resize end
           if (options.canResize && Math.abs(posx-x2)<=options.resizeZoneWidth) {
             //store offset mouse x2
@@ -1043,7 +1045,8 @@ $.fn.dragExtedSVG = function (svg, opt) {
     if (target && target.attr("oldw")!=target.attr("width"))
       options.stopResize.call(target.get(0), e); //callback
     target = undefined;
-    $("body").clearUnselectable();
+    // $("body").clearUnselectable();
+    $('body').removeClass('unselectable');
   }
 
   function drop(e) {
@@ -1051,7 +1054,9 @@ $.fn.dragExtedSVG = function (svg, opt) {
     if (target && target.attr("oldx") != target.attr("x"))
       options.drop.call(target.get(0), e); //callback
     target = undefined;
-    $("body").clearUnselectable();
+    // $("body").clearUnselectable();
+    $('body').removeClass('unselectable');
+    
   }
 
 };

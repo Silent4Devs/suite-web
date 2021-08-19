@@ -31,9 +31,12 @@
                         <th>
                             Elaboró
                         </th>
+                        <th>
+                            %&nbsp;de&nbsp;Avance
+                        </th>
                         {{-- <th>
                             Participantes
-                        </th>
+                        </th> --}}
                         <th>
                             Fecha&nbsp;de&nbsp;Inicio
                         </th>
@@ -41,11 +44,8 @@
                             Fecha&nbsp;de&nbsp;Fin
                         </th>
                         <th>
-                            %&nbsp;de&nbsp;Avance
-                        </th>
-                        <th>
                             Estatus
-                        </th> --}}
+                        </th>
                         <th>
                             Opciones
                         </th>
@@ -154,7 +154,70 @@
                         }
                         return elaborador;
                     }
-                }, {
+                },{
+                    data:'id',
+                    render:function(data, type, row, meta){
+                        if(row.tasks){
+                            let tasks =row.tasks;
+                            let zero_task = tasks.find(t=>Number(t.level) == 0);
+                            if(zero_task != undefined){
+                                let progress = Math.ceil(zero_task.progress);
+                                let html = "";
+                                if(progress >= 90){
+                                    html = `<span class="badge badge-success">${progress} %</span>`;
+                                }else if(progress < 90 && progress >=60){
+                                    html = `<span class="badge badge-warning">${progress} %</span>`;
+                                }else{
+                                    html = `<span class="badge badge-danger">${progress} %</span>`;
+                                }
+                                return html;
+                            }                    
+                        }
+                        return "<span class='badge badge-primary'>Sin progreso calculable</span>"
+                    }
+                },{
+                    data:'id',
+                    render:function(data, type, row, meta){
+                        if(row.tasks){
+                            let tasks =row.tasks;
+                            let zero_task = tasks.find(t=>Number(t.level) == 0);
+                            if(zero_task != undefined){
+                                return `
+                                    <p>${moment.unix((zero_task.start)/1000).format("DD-MM-YYYY")}</p>
+                                `;
+                            }
+                        }
+                        return "<span class='badge badge-primary'>No encontrado</span>";
+                    }
+                },{
+                    data:'id',
+                    render:function(data, type, row, meta){
+                        if(row.tasks){
+                            let tasks =row.tasks;
+                            let zero_task = tasks.find(t=>Number(t.level) == 0);
+                            if(zero_task != undefined){
+                                return `
+                                    <p>${moment.unix((zero_task.end)/1000).format("DD-MM-YYYY")}</p>
+                                `;
+                            }
+                        }
+                        return "<span class='badge badge-primary'>No encontrado</span>";
+                    }
+                },{
+                    data:'id',
+                    render:function(data, type, row, meta){
+                        if(row.tasks){
+                            let tasks =row.tasks;
+                            let zero_task = tasks.find(t=>Number(t.level) == 0);
+                            if(zero_task != undefined){
+                                return `
+                                    <p>${zero_task.status}</p>
+                                `;
+                            }
+                        }
+                        return "<span class='badge badge-primary'>No encontrado</span>";
+                    }
+                },{
                     data: 'id',
                     render: function(data, type, row, meta) {
                         let urlVerPlanAccion = "";

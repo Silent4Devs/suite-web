@@ -413,7 +413,10 @@
                                 let actividad_correspondiente = response.tasks?.find(t => t.id ==
                                     id_row);
                                 actividad_correspondiente.status = valor_nuevo;
-
+                                // if (valor_nuevo == 'STATUS_DONE') {
+                                //     actividad_correspondiente.progress = 100;
+                                // }
+                                // recalculateProgress(actividad_correspondiente, response.tasks);
                                 saveOnServer(response);
                                 renderKanban(response);
                             });
@@ -499,7 +502,10 @@
                             let actividad_correspondiente = response.tasks.find(t => t.id ==
                                 id_row);
                             actividad_correspondiente.status = valor_nuevo;
-
+                            // if (valor_nuevo == 'STATUS_DONE') {
+                            //     actividad_correspondiente.progress = 100;
+                            // }
+                            // recalculateProgress(actividad_correspondiente, response.tasks);
                             saveOnServer(response);
                             renderKanban(response);
                             // saveOnServer(response);

@@ -11,7 +11,7 @@ class MassDestroyAreaRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('area_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('configuracion_area_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }

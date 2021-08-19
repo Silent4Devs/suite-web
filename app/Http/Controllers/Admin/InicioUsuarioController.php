@@ -47,53 +47,55 @@ class inicioUsuarioController extends Controller
         //     });
         // }
         $implementacion = PlanImplementacion::first();
-        $tasks = $implementacion->tasks;
-        foreach ($tasks as $task) {
-            $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
-            $task->end = intval($task->end);
-            $task->start = intval($task->start);
-            $task->canAdd = $task->canAdd == 'true' ? true : false;
-            $task->canWrite = $task->canWrite == 'true' ? true : false;
-            $task->duration = intval($task->duration);
-            $task->progress = intval($task->progress);
-            $task->canDelete = $task->canDelete == 'true' ? true : false;
-            isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
-            isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
-            $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
-            $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
-            $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
-            $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
-        }
+        if ($implementacion) {
+            $tasks = $implementacion->tasks;
+            foreach ($tasks as $task) {
+                $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
+                $task->end = intval($task->end);
+                $task->start = intval($task->start);
+                $task->canAdd = $task->canAdd == 'true' ? true : false;
+                $task->canWrite = $task->canWrite == 'true' ? true : false;
+                $task->duration = intval($task->duration);
+                $task->progress = intval($task->progress);
+                $task->canDelete = $task->canDelete == 'true' ? true : false;
+                isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
+                isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
+                $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
+                $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
+                $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
+                $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+            }
 
-        $implementacion->tasks = $tasks;
-        // if (!isset($implementacion->assigs)) {
-        //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
-        // }
-        $actividades = collect($implementacion->tasks)->filter(function ($task) use ($empleado_id, $implementacion) {
-            if ($task->level > 1) {
-                if (isset($task->assigs)) {
-                    $assigs = $task->assigs;
-                    $task->parent = $implementacion->parent;
-                    $task->slug = $implementacion->slug;
-                    foreach ($assigs as $assig) {
-                        if ($assig->resourceId == $empleado_id) {
-                            return $task;
+            $implementacion->tasks = $tasks;
+            // if (!isset($implementacion->assigs)) {
+            //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
+            // }
+            $actividades = collect($implementacion->tasks)->filter(function ($task) use ($empleado_id, $implementacion) {
+                if ($task->level > 1) {
+                    if (isset($task->assigs)) {
+                        $assigs = $task->assigs;
+                        $task->parent = $implementacion->parent;
+                        $task->slug = $implementacion->slug;
+                        foreach ($assigs as $assig) {
+                            if ($assig->resourceId == $empleado_id) {
+                                return $task;
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
         $auditorias_anual = AuditoriaAnual::get();
         $recursos = Recurso::whereHas('empleados', function ($query) use ($usuario) {
             $query->where('empleados.id', $usuario->id);
         })->get();
 
-        $documentos_publicados = Documento::where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
+        $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
         $revisiones = [];
         $mis_documentos = [];
         if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
-            $mis_documentos = Documento::where('elaboro_id', $usuario->empleado->id)->get();
+            $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $usuario->empleado->id)->get();
         }
 
 

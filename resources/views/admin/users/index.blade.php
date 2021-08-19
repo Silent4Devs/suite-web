@@ -38,7 +38,7 @@
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
                         <th style="vertical-align: top">
-                            {{ trans('cruds.user.fields.organizacion') }}
+                            Empleado Vinculado
                         </th>
                         <th style="vertical-align: top">
                             {{ trans('cruds.user.fields.area') }}
@@ -250,35 +250,116 @@
                     },
                     {
                         data: 'two_factor',
-                        name: 'two_factor'
+                        name: 'two_factor',
+                        render: function(data, type, row, meta) {
+                            return data ? 'Sí' : 'No';
+                        }
                     },
                     {
                         data: 'approved',
-                        name: 'approved'
+                        name: 'approved',
+                        render: function(data, type, row, meta) {
+                            return data ? 'Sí' : 'No';
+                        }
                     },
                     {
                         data: 'verified',
-                        name: 'verified'
+                        name: 'verified',
+                        render: function(data, type, row, meta) {
+                            return data ? 'Sí' : 'No';
+                        }
                     },
                     {
                         data: 'roles',
-                        name: 'roles.title'
+                        name: 'roles.title',
+                        render: function(data, type, row, meta) {
+                            let roles = data.map(rol => {
+                                return `
+                                    <span class="badge badge-primary">${rol.title}</span>
+                                `;
+                            })
+                            return roles;
+                        }
                     },
                     {
-                        data: 'organizacion_organizacion',
-                        name: 'organizacion.organizacion'
+                        data: 'n_empleado',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return row.empleado.name;
+                            } else {
+                                return 'Sin vincular a empleado';
+                            }
+                        }
                     },
                     {
-                        data: 'area_area',
-                        name: 'area.area'
+                        data: 'n_empleado',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return row.empleado.area.area;
+                            } else {
+                                return 'Sin vincular a empleado';
+                            }
+                        }
                     },
                     {
-                        data: 'puesto_puesto',
-                        name: 'puesto.puesto'
+                        data: 'n_empleado',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return row.empleado.puesto;
+                            } else {
+                                return 'Sin vincular a empleado';
+                            }
+                        }
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        name: '{{ trans('global.actions') }}',
+                        render: function(data, type, row, meta) {
+                            let urlButtonShow = `/admin/users/${data}`;
+                            let urlButtonDelete = `/admin/users/${data}`;
+                            let urlButtonEdit = `/admin/users/${data}/edit`;
+
+                            let htmlBotones = `
+                                <div class="btn-group">
+                                    ${!row.n_empleado ? `<button class="btn btn-sm" onclick="AbrirModal('${data}');">
+                                                                                                                                                                <i class="fas fa-user-tag"></i>
+                                                                                                                                                            </button>` : ''}
+                                    <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>                                
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>                                
+                                </div>
+
+
+                                <div data-user-id="${data}" class="modal fade" id="vincularEmpleado${data}" data-backdrop="static"
+                                    data-keyboard="false" tabindex="-1" aria-labelledby="vincularEmpleado${data}Label" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="vincularEmpleado${data}Label">Vinculación de Empleados
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <select name="n_empleado" id="n_empleado" class="select2">
+                                                    @foreach ($empleados as $empleado)
+                                                        <option value="{{ $empleado->n_empleado }}">{{ $empleado->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="n_empleado_error errores text-danger text-sm"></span>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            return htmlBotones;
+                        }
                     }
                 ],
                 orderCellsTop: true,
@@ -287,19 +368,107 @@
                 ]
             };
             let table = $('.datatable-User').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
-        });
 
+            window.Eliminar = function(url, nombre) {
+                Swal.fire({
+                    title: `¿Estás seguro de eliminar el siguiente usuario?`,
+                    html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, eliminar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            headers: {
+                                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: url,
+                            beforeSend: function() {
+                                Swal.fire(
+                                    '¡Estamos Eliminando!',
+                                    `El usuario: ${nombre} está siendo eliminado`,
+                                    'info'
+                                )
+                            },
+                            success: function(response) {
+                                Swal.fire(
+                                    'Eliminado!',
+                                    `El usuario: ${nombre} ha sido eliminado`,
+                                    'success'
+                                )
+                                table.ajax.reload();
+                            },
+                            error: function(error) {
+                                console.log(error);
+                                Swal.fire(
+                                    'Ocurrió un error',
+                                    `Error: ${error.responseJSON.message}`,
+                                    'error'
+                                )
+                            }
+                        });
+                    }
+                })
+            }
+
+
+            window.AbrirModal = function(user_id) {
+                let errores = document.querySelectorAll('.errores');
+                errores.forEach(element => {
+                    element.innerHTML = "";
+                });
+                $(`#vincularEmpleado${user_id}`).modal('show');
+                $('.select2').select2({
+                    'theme': 'bootstrap4'
+                });
+            }
+
+            window.VincularEmpleado = function(nombre, user_id) {
+                let n_empleado = $("#n_empleado").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/users/vincular",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        n_empleado,
+                        user_id
+                    },
+                    dataType: "JSON",
+                    beforeSend: function() {
+                        Swal.fire(
+                            '¡Estamos Vinculando!',
+                            `El usuario: ${nombre} está siendo vinculado`,
+                            'info'
+                        )
+                    },
+                    success: function(response) {
+                        Swal.fire(
+                            'Usuario Vinculado',
+                            `El usuario: ${nombre} ha sido vinculado`,
+                            'success'
+                        )
+                    },
+                    error: function(error) {
+                        $.each(error.responseJSON.errors, function(indexInArray,
+                            valueOfElement) {
+                            $(`span.${indexInArray}_error`).text(valueOfElement[0]);
+                            console.log(indexInArray, valueOfElement);
+                        });
+                        Swal.fire(
+                            'Ocurrió un error',
+                            `Error: ${error.responseJSON.message}`,
+                            'error'
+                        )
+                    }
+                });
+            }
+
+        });
     </script>
 @endsection
