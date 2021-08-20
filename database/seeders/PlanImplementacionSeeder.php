@@ -513,7 +513,6 @@ class PlanImplementacionSeeder extends Seeder
             'selectedRow' => 0,
             'zoom' => '3d',
             'parent' => 'Plan de Trabajo',
-            'slug' => Str::slug('Plan de Trabajo'),
             'norma' => 'ISO 27001',
             'modulo_origen' => 'Implementación',
             'objetivo' => null,

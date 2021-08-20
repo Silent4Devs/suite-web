@@ -11,6 +11,7 @@ class AddFkToMinutasaltadireccionsTable extends Migration
      *
      * @return void
      */
+/*
     public function up()
     {
         Schema::table('minutasaltadireccions', function (Blueprint $table) {
@@ -20,7 +21,7 @@ class AddFkToMinutasaltadireccionsTable extends Migration
 
         });
     }
-
+*/
     /**
      * Reverse the migrations.
      *
