@@ -3,9 +3,9 @@
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px">
-         <h3 class="mb-1  text-center text-white">
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px">
+         <h3 class="mb-1 text-center text-white">
       <strong>Registrar:</strong>  Minutas de Sesiones de Alta Dirección </h3>
     </div>
 
@@ -68,7 +68,22 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.archivo_helper') }}</span>
             </div>
-            <div class="form-group col-12 text-right">
+
+            {{-- INICIO PLAN ACCIÓN --}}
+            <div class="row w-100 align-items-center" style="margin-left: 1px;">
+                @livewire('planes-implementacion-select',['planes_seleccionados'=>$planes_seleccionados])
+                <div class="pl-0 ml-0 col-2">
+                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
+                        data-target="#planAccionModal">
+                        <i class="mr-1 fas fa-plus-circle"></i> Crear
+                    </button>
+                </div>
+                @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de Requisitos
+                Legales'])
+            </div>
+            {{-- FIN PLAN ACCIÓN --}}
+
+            <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
@@ -133,4 +148,26 @@
      }
 }
 </script>
+
+<script type="text/javascript">
+    Livewire.on('planStore', () => {
+
+        $('#planAccionModal').modal('hide');
+        $('.modal-backdrop').hide();
+        toastr.success('Plan de Acción creado con éxito');
+    });
+    window.initSelect2 = () => {
+        $('.select2').select2({
+            'theme': 'bootstrap4'
+        });
+    }
+
+    initSelect2();
+
+    Livewire.on('select2', () => {
+        initSelect2();
+    });
+</script>
+
+
 @endsection

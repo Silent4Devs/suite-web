@@ -13,17 +13,20 @@
                     <form method="POST" action="{{ route("frontend.minutasaltadireccions.store") }}" enctype="multipart/form-data">
                         @method('POST')
                         @csrf
-                        <div class="form-group">
-                            <label for="objetivoreunion">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}</label>
-                            <textarea class="form-control" name="objetivoreunion" id="objetivoreunion">{{ old('objetivoreunion') }}</textarea>
-                            @if($errors->has('objetivoreunion'))
+
+                        <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                            <label for="fechareunion">{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}</label>
+                            <input class="form-control date" type="date" name="fechareunion" id="fechareunion" value="{{ old('fechareunion') }}">
+                            @if($errors->has('fechareunion'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('objetivoreunion') }}
+                                    {{ $errors->first('fechareunion') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
                         </div>
-                        <div class="form-group">
+
+                        
+                        <div class="form-group col-sm-12 col-md-6 col-lg-6">
                             <label for="responsablereunion_id">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion') }}</label>
                             <select class="form-control select2" name="responsablereunion_id" id="responsablereunion_id">
                                 @foreach($responsablereunions as $id => $responsablereunion)
@@ -37,7 +40,32 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
                         </div>
-                        <div class="form-group">
+
+
+                        
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                            <label for="fechareunion">Tema de la reunión</label>
+                            <input class="form-control date" type="text" name="fechareunion" id="fechareunion" value="{{ old('fechareunion') }}">
+                            @if($errors->has('fechareunion'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('fechareunion') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
+                        </div>
+
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                            <label for="objetivoreunion">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}</label>
+                            <textarea class="form-control" name="objetivoreunion" id="objetivoreunion">{{ old('objetivoreunion') }}</textarea>
+                            @if($errors->has('objetivoreunion'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('objetivoreunion') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion_helper') }}</span>
+                        </div>
+
+                        <div class="form-group col-sm-12 col-md-4 col-lg-4">
                             <label for="arearesponsable">{{ trans('cruds.minutasaltadireccion.fields.arearesponsable') }}</label>
                             <input class="form-control" type="text" name="arearesponsable" id="arearesponsable" value="{{ old('arearesponsable', '') }}">
                             @if($errors->has('arearesponsable'))
@@ -47,16 +75,20 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.arearesponsable_helper') }}</span>
                         </div>
-                        <div class="form-group">
-                            <label for="fechareunion">{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}</label>
-                            <input class="form-control date" type="text" name="fechareunion" id="fechareunion" value="{{ old('fechareunion') }}">
-                            @if($errors->has('fechareunion'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('fechareunion') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
+
+                        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                            <label for="id_puesto_dueno"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                            <div class="form-control" id="puesto_dueno"></div>
+        
                         </div>
+        
+        
+                        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                            <label for="id_area_dueno"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                            <div class="form-control" id="area_dueno"></div>
+        
+                        </div>
+
                         <div class="form-group">
                             <label for="archivo">{{ trans('cruds.minutasaltadireccion.fields.archivo') }}</label>
                             <div class="needsclick dropzone" id="archivo-dropzone">

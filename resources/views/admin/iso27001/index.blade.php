@@ -249,7 +249,7 @@
                                     <li><a href="{{ route('admin.minutasaltadireccions.index') }}">
                                             <div>
                                                 <i class="fas fa-columns"></i>
-                                                Minutas de sesiones con Ata dirección
+                                                Minutas de sesiones con alta dirección
                                             </div>
                                         </a></li>
                                     <li><a href="{{ route('admin.evidencias-sgsis.index') }}">

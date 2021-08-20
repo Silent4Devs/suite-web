@@ -217,6 +217,8 @@
                         </div>
                     @endif
                 </div>
+
+                
                 {{-- INICIO PLAN ACCIÓN --}}
                 <div class="row w-100 align-items-center" style="margin-left: 1px;">
                     @livewire('planes-implementacion-select',['planes_seleccionados'=>$planes_seleccionados])
@@ -230,6 +232,8 @@
                     Legales'])
                 </div>
                 {{-- FIN PLAN ACCIÓN --}}
+
+
                 <div class="mb-3 col-sm-12">
                     <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Evidencia</label>
                     <div class="custom-file">

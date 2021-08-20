@@ -198,8 +198,8 @@
                         name: 'nombrerol'
                     },
                     {
-                        data: 'personaasignada_name',
-                        name: 'personaasignada.name'
+                        data: 'asignada',
+                        name: 'asignada'
                     },
                     {
                         data: 'fechavigor',

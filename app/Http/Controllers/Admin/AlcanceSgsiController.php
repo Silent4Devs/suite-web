@@ -91,6 +91,7 @@ class AlcanceSgsiController extends Controller
     public function store(StoreAlcanceSgsiRequest $request)
     {
         $alcanceSgsi = AlcanceSgsi::create($request->all());
+        
 
         return redirect()->route('admin.alcance-sgsis.index')->with("success", 'Guardado con éxito');
     }
