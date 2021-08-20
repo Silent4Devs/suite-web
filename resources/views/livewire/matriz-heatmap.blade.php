@@ -64,10 +64,10 @@
 
     </style>
 
-  <div class="row pb-4">
+    <div class="pb-4 row">
         <div class="col-md-4">
             <p class="text-xl text-gray-700">Sede:</p>
-            <select class="form-control" wire:model="sede">
+            <select class="form-control" wire:model="sede_id">
                 <option value="" selected disabled>Seleccione una sede</option>
                 @foreach ($sedes as $sede)
                     <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
@@ -76,8 +76,8 @@
         </div>
         <div class="col-md-4">
             <p class="text-xl text-gray-700">Area:</p>
-            <select class="form-control" wire:model="area">
-                <option value="" selected disabled>Seleccione un area</option>
+            <select class="form-control" wire:model="area_id">
+                <option value="" selected disabled>Seleccione un área</option>
                 @foreach ($areas as $area)
                     <option value="{{ $area->id }}">{{ $area->area }}</option>
                 @endforeach
@@ -85,7 +85,7 @@
         </div>
         <div class="col-md-4">
             <p class="text-xl text-gray-700">Proceso:</p>
-            <select class="form-control" wire:model="sede">
+            <select class="form-control" wire:model="proceso_id">
                 <option value="" selected disabled>Seleccione una proceso</option>
                 @foreach ($procesos as $proceso)
                     <option value="{{ $proceso->id }}">{{ $proceso->nombre }}</option>
@@ -95,34 +95,44 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <label class="text-primary" style="font-size: 24px;">Total Riesgos Iniciales</label>
+            <div class="py-2 d-flex justify-content-between">
+                <label class="text-primary" style="font-size: 24px;">Total Riesgos Iniciales</label>
+                <button class="btn btn-primary btn-sm" wire:click="clean">Ver todo</button>
+            </div>
             <div class="row">
                 <div class="col-6 col-md-3">
                     <div class="tarjetas_seguridad_indicadores"
                         style="background: linear-gradient(144deg, rgba(56, 198, 67, 1) 34%, rgba(57, 255, 220, 1) 100%);">
-                        <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i> {{ $bajos }}</div>
+                        <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
+                            {{ $bajos }}</div>
                         <div>Bajo(s)</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="tarjetas_seguridad_indicadores"
                         style="background: linear-gradient(144deg, rgba(239, 209, 0, 1) 33%,rgba(255, 255, 0, 1) 100%) ;">
-                        <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $medios }} </div>
+                        <div class="numero"><i
+                                class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $medios }}
+                        </div>
                         <div>Medio(s)</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3 ">
                     <div class="tarjetas_seguridad_indicadores"
                         style="background: linear-gradient(144deg, rgba(255, 115, 0, 1) 33%, rgba(237, 255, 86, 1) 100%);">
-                        <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $altos }} </div>
+                        <div class="numero"><i
+                                class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $altos }}
+                        </div>
                         <div>Alto(s)</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="tarjetas_seguridad_indicadores"
                         style="background: linear-gradient(144deg, rgba(255, 61, 61, 1) 33%, rgba(255, 86, 223, 1) 100%);">
-                        <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $muy_altos }}</div>
-                        <div>Muy alto(s)  </div>
+                        <div class="numero"><i
+                                class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $muy_altos }}
+                        </div>
+                        <div>Muy alto(s) </div>
                     </div>
                 </div>
             </div>
@@ -333,29 +343,36 @@
                 <div class="col-6 col-md-3">
                     <div class="tarjetas_seguridad_indicadores"
                         style="background: linear-gradient(144deg, rgba(56, 198, 67, 1) 34%, rgba(57, 255, 220, 1) 100%);">
-                        <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i> {{ $bajos_residual }}</div>
+                        <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
+                            {{ $bajos_residual }}</div>
                         <div>Bajo(s)</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="tarjetas_seguridad_indicadores"
                         style="background: linear-gradient(144deg, rgba(239, 209, 0, 1) 33%,rgba(255, 255, 0, 1) 100%) ;">
-                        <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $medios_residual }} </div>
+                        <div class="numero"><i
+                                class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $medios_residual }}
+                        </div>
                         <div>Medio(s)</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3 ">
                     <div class="tarjetas_seguridad_indicadores"
                         style="background: linear-gradient(144deg, rgba(255, 115, 0, 1) 33%, rgba(237, 255, 86, 1) 100%);">
-                        <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $altos_residual }} </div>
+                        <div class="numero"><i
+                                class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $altos_residual }}
+                        </div>
                         <div>Alto(s)</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="tarjetas_seguridad_indicadores"
                         style="background: linear-gradient(144deg, rgba(255, 61, 61, 1) 33%, rgba(255, 86, 223, 1) 100%);">
-                        <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $muy_altos_residual }}</div>
-                        <div>Muy alto(s)  </div>
+                        <div class="numero"><i
+                                class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $muy_altos_residual }}
+                        </div>
+                        <div>Muy alto(s) </div>
                     </div>
                 </div>
             </div>

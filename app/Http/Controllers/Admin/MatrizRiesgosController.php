@@ -221,22 +221,22 @@ class MatrizRiesgosController extends Controller
                 return $row->id ? $row->id : "";
             });
             $table->editColumn('id_sede', function ($row) {
-                return $row->sede->sede ? $row->sede->sede : "";
+                return $row->sede ? $row->sede->sede : "";
             });
             $table->editColumn('id_proceso', function ($row) {
-                return $row->proceso->nombre ? $row->proceso->nombre : "";
+                return $row->proceso ? $row->proceso->nombre : "";
             });
             $table->editColumn('id_responsable', function ($row) {
-                return $row->empleado->name ? $row->empleado->name : "";
+                return $row->empleado ? $row->empleado->name : "";
             });
             $table->editColumn('activo_id', function ($row) {
-                return $row->activo->nombreactivo ? $row->activo->nombreactivo : "";
+                return $row->activo ? $row->activo->nombreactivo : "";
             });
             $table->editColumn('id_amenaza', function ($row) {
-                return $row->amenaza->nombre ? $row->amenaza->nombre : "";
+                return $row->amenaza ? $row->amenaza->nombre : "";
             });
             $table->editColumn('id_vulnerabilidad', function ($row) {
-                return $row->vulnerabilidad->nombre ? $row->vulnerabilidad->nombre : "";
+                return $row->vulnerabilidad ? $row->vulnerabilidad->nombre : "";
             });
             $table->editColumn('descripcionriesgo', function ($row) {
                 return $row->descripcionriesgo ? $row->descripcionriesgo : "";
@@ -278,7 +278,7 @@ class MatrizRiesgosController extends Controller
                 return $row->riesgototal ? $row->riesgototal : "";
             });*/
             $table->editColumn('control', function ($row) {
-                return $row->controles->control ? $row->controles->control : "";
+                return $row->controles ? $row->controles->control : "";
             });
             $table->editColumn('plan_de_accion', function ($row) {
                 return $row->planes ? $row->planes : "";
