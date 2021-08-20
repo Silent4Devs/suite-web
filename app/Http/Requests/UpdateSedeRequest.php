@@ -11,7 +11,7 @@ class UpdateSedeRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('sede_edit');
+        return Gate::allows('configuracion_sede_edit');
     }
 
     public function rules()

@@ -15,7 +15,17 @@ class Denuncias extends Model
         'id'
     ];
 
+    protected $appends = ['folio'];
+
+    public function getFolioAttribute(){
+        return  sprintf('DEN-%04d', $this->id);
+    }
+
     public function denuncio(){
         return $this->belongsTo(Empleado::class, 'empleado_denuncio_id', 'id');
+    }
+
+    public function denunciado(){
+        return $this->belongsTo(Empleado::class, 'empleado_denunciado_id', 'id');
     }
 }

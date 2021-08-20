@@ -134,6 +134,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

@@ -92,7 +92,8 @@ $.gridify = function (table, opt) {
 
     var mousePos = e.pageX - colHeader.offset().left;
     if (colHeader.width() - mousePos < options.resizeZoneWidth) {
-      $("body").unselectable();
+      // $("body").unselectable();
+      $("body").addClass("unselectable");
       $.gridify.columInResize = colHeader;
       //on event for start resizing
       $(document).on("mousemove.gdf", function (e) {
@@ -110,7 +111,8 @@ $.gridify = function (table, opt) {
         //on mouse up on body to stop resizing
       }).on("mouseup.gdf", function () {
         //console.debug("mouseup.gdf")
-        $(this).off("mousemove.gdf").off("mouseup.gdf").clearUnselectable();
+        // $(this).off("mousemove.gdf").off("mouseup.gdf").clearUnselectable();
+        $(this).off("mousemove.gdf").off("mouseup.gdf").removeClass('unselectable');
         $("body").removeClass("gdfHResizing");
         delete $.gridify.columInResize;
 
@@ -237,7 +239,7 @@ $.splittify = {
       $.splittify.splitterBar = $(this);
       //on event for start resizing
       //console.debug("start splitting");
-      $("body").unselectable().on("mousemove.gdf", function (e) {
+      $("body").addClass("unselectable").on("mousemove.gdf", function (e) {
         //manage resizing
         e.preventDefault();
 
@@ -257,7 +259,8 @@ $.splittify = {
         //on mouse up on body to stop resizing
       }).on("mouseup.gdf", function () {
         //console.debug("stop splitting");
-        $(this).off("mousemove.gdf").off("mouseup.gdf").clearUnselectable();
+        // $(this).off("mousemove.gdf").off("mouseup.gdf").clearUnselectable();
+        $(this).off("mousemove.gdf").off("mouseup.gdf").removeClass('unselectable');;
         delete $.splittify.splitterBar;
 
         $("body").removeClass("gdfHResizing");

@@ -15,14 +15,36 @@ class CreateQuejasTable extends Migration
     {
         Schema::create('quejas', function (Blueprint $table) {
             $table->id();
-            $table->string('anonimo');
-            $table->string('quejado');
-            $table->string('descripcion');
-            $table->string('evidencia');
+
+            $table->string('anonimo')->nullable();
+
+            $table->string('estatus')->nullable();
 
             $table->unsignedBigInteger('empleado_quejo_id')->nullable();
 
+            $table->string('quejado')->nullable();
             $table->foreign('empleado_quejo_id')->references('id')->on('empleados');
+
+            $table->string('area_quejado')->nullable();
+            $table->string('colaborador_quejado')->nullable();
+            $table->string('proceso_quejado')->nullable();
+            $table->string('externo_quejado')->nullable();
+
+            $table->string('titulo')->nullable();
+            $table->date('fecha')->nullable();
+            $table->date('fecha_cierre')->nullable();
+
+            $table->string('sede')->nullable();
+            $table->string('ubicacion')->nullable();
+
+            $table->longText('descripcion')->nullable();
+            $table->string('evidencia')->nullable();
+
+            $table->longText('comentarios')->nullable();
+
+            
+
+            
 
             $table->timestamps();
             $table->softDeletes();

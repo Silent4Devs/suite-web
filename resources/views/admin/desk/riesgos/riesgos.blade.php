@@ -3,13 +3,13 @@
    <table class="table tabla_riesgos">
    		<thead>
             <tr>
-       			{{-- <th>ID</th> --}}
        			<th>Folio</th>
-       			<th>Titulo</th>
+       			<th>Título</th>
        			<th>Descripción</th>
+                <th>Comentarios</th>
        			<th>Proceso afectado</th>
        			<th>Fecha</th>
-       			<th>Quién reporto</th>
+       			<th>Quién reportó</th>
        			<th>Correo</th>
        			<th>Teléfono</th>
        			<th>Opciones</th> 
@@ -18,9 +18,10 @@
    		<tbody>
    			@foreach($riesgos_identificados as $riesgo)
 	   			<tr>
-	       			<td>{{ $riesgo->id }}</td>
-	       			<td>{{-- {{ $incidentes-> titulo}} --}}</td>
-	       			<td>{{ $riesgo->descripción }}</td>
+	       			<td>{{ $riesgo->folio }}</td>
+	       			<td>{{ $riesgo->titulo}}</td>
+                    <td>{{ $riesgo->descripcion }}</td>
+                    <td>{{ $riesgo->comentarios }}</td>
 	       			<td>{{ $riesgo->proceso }}</td>
 	       			<td>{{ $riesgo->fecha }}</td>
 	       			<td>{{ $riesgo->reporto->name }}</td>

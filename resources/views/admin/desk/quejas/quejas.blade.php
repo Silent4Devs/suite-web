@@ -2,29 +2,44 @@
 
    <table class="table tabla_quejas">
    		<thead>
+            <tr style="border: none !important">
+                <th colspan="2"></th>
+                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reporto</th>
+                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reportado</th>
+            </tr>
             <tr>
        			<th>Folio</th>
-       			<th>Anonimo</th>
-       			<th>Quién se quejo</th>
-       			<th>Correo</th>
-       			<th>Teléfono</th>
+                <th>Anonimo</th>
+       			<th>Nombre</th>
+                <th>Puesto</th>
+                <th>Área</th>
+                <th>Nombre</th>
+                <th>Área</th>
+                <th>Proceso</th>
+                <th>Externos</th>
        			<th>Descripción</th>
-       			<th>Evidencia</th>
-       			<th>Quejado</th>
        			<th>Opciones</th> 
             </tr>
    		</thead>
    		<tbody>
    			@foreach($quejas as $queja)
 	   			<tr>
-	       			<td>{{ $queja->id }}</td>
+	       			<td>{{ $queja->folio }}</td>
 	       			<td>{{ $queja->anonimo }}</td>
-	       			<td>{{ $queja->quejo->name }}</td>
-	       			<td>{{ $queja->quejo->email }}</td> 
-	       			<td>{{ $queja->quejo->telefono }}</td> 
+                    @if($queja->anonimo == 'no')
+                        <td>{{ $queja->quejo->name }}</td>
+                        <td>{{ $queja->quejo->puesto }}</td>
+                        <td>{{ $queja->quejo->area->area }}</td>
+                    @else
+                        <td> -- </td>
+                        <td> -- </td>
+                        <td> -- </td> 
+                    @endif
+                    <td>{{ $queja->quejado }}</td>
+                    <td>{{ $queja->area_quejado }}</td>
+                    <td>{{ $queja->proceso_quejado }}</td>
+                    <td>{{ $queja->externo_quejado }}</td>
 	       			<td>{{ $queja->descripcion }}</td>
-	       			<td>{{ $queja->evidencia }}</td>
-	       			<td>{{ $queja->quejado }}</td>
 	       			<td>
 	       				<a href="{{ route('admin.desk.quejas-edit', $queja->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
