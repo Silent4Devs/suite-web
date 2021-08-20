@@ -213,4 +213,9 @@ class Empleado extends Model
     {
         return $this->belongsToMany(PlanImplementacionTask::class, 'task_id');
     }
+
+    public function minutas()
+    {
+        return $this->belongsToMany(Minutasaltadireccion::class, 'minuta_id');
+    }
 }

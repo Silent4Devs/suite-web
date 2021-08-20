@@ -8,6 +8,7 @@ use App\Http\Requests\StoreComiteseguridadRequest;
 use App\Http\Requests\UpdateComiteseguridadRequest;
 use App\Models\Comiteseguridad;
 use App\Models\Team;
+use App\Models\Empleado;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class ComiteseguridadController extends Controller
         abort_if(Gate::denies('comiteseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Comiteseguridad::with(['personaasignada', 'team'])->select(sprintf('%s.*', (new Comiteseguridad)->table));
+            $query = Comiteseguridad::with(['personaasignada', 'team','asignacion'])->select(sprintf('%s.*', (new Comiteseguridad)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -48,8 +49,8 @@ class ComiteseguridadController extends Controller
             $table->editColumn('nombrerol', function ($row) {
                 return $row->nombrerol ? $row->nombrerol : "";
             });
-            $table->addColumn('personaasignada_name', function ($row) {
-                return $row->personaasignada ? $row->personaasignada->name : '';
+            $table->addColumn('asignada', function ($row) {
+                return $row->asignacion ? $row->asignacion->name : '';
             });
 
             $table->editColumn('responsabilidades', function ($row) {
@@ -72,8 +73,9 @@ class ComiteseguridadController extends Controller
         abort_if(Gate::denies('comiteseguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $empleados = Empleado::with('area')->get();
 
-        return view('admin.comiteseguridads.create', compact('personaasignadas'));
+        return view('admin.comiteseguridads.create', compact('personaasignadas','empleados'));
     }
 
     public function store(StoreComiteseguridadRequest $request)
@@ -90,8 +92,9 @@ class ComiteseguridadController extends Controller
         $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $comiteseguridad->load('personaasignada', 'team');
+        $empleados = Empleado::with('area')->get();
 
-        return view('admin.comiteseguridads.edit', compact('personaasignadas', 'comiteseguridad'));
+        return view('admin.comiteseguridads.edit', compact('personaasignadas', 'comiteseguridad', 'empleados'));
     }
 
     public function update(UpdateComiteseguridadRequest $request, Comiteseguridad $comiteseguridad)

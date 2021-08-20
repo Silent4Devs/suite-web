@@ -28,7 +28,7 @@ class Comiteseguridad extends Model
 
     protected $fillable = [
         'nombrerol',
-        'personaasignada_id',
+        'id_asignada',
         'fechavigor',
         'responsabilidades',
         'created_at',
