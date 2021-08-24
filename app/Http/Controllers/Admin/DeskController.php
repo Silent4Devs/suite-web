@@ -13,6 +13,9 @@ use App\Models\Denuncias;
 use App\Models\Mejoras;
 use App\Models\Sugerencias;
 use App\Models\EvidenciasQueja;
+use App\Models\SubcategoriaIncidente;
+use App\Models\CategoriaIncidente;
+use App\Models\AnalisisSeguridad;
 
 use App\Models\Empleado;
 use App\Models\Activo;
@@ -58,6 +61,8 @@ class DeskController extends Controller
 
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
 
+        $analisis = AnalisisSeguridad::findOrfail(intval($id_incidente));
+
         $activos = Activo::get();
 
         $empleados = Empleado::get();
@@ -68,7 +73,11 @@ class DeskController extends Controller
 
         $procesos = Proceso::get();
 
-        return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos'));
+        $subcategorias = SubcategoriaIncidente::get();
+
+        $categorias = CategoriaIncidente::get();
+
+        return view('admin.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis'));
     }
     public function updateSeguridad(Request $request, $id_incidente)
     {
@@ -97,7 +106,37 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.index');
+        return redirect()->route('admin.desk.seguridad-edit', $id_incidente);
+    }
+    public function updateAnalisisSeguridad(Request $request, $id_incidente)
+    {
+        $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_incidente));
+        $analisis_seguridad->update([
+            'problema' => $request->problema,
+            'causa' => $request->causa,
+            'ideas' => $request->ideas,
+            'porque_1' => $request->porque_1,
+            'porque_2' => $request->porque_2,
+            'porque_3' => $request->porque_3,
+            'porque_4' => $request->porque_4,
+            'porque_5' => $request->porque_5,
+            'control_a' => $request->control_a,
+            'control_b' => $request->control_b,
+            'proceso_a' => $request->proceso_a,
+            'proceso_b' => $request->proceso_b,
+            'personas_a' => $request->personas_a,
+            'personas_b' => $request->personas_b,
+            'tecnologia_a' => $request->tecnologia_a,
+            'tecnologia_b' => $request->tecnologia_b,
+            'metodos_a' => $request->metodos_a,
+            'metodos_b' => $request->metodos_b,
+            'ambiente_a' => $request->ambiente_a,
+            'ambiente_b' => $request->ambiente_b,
+
+        ]);
+
+
+        return redirect()->route('admin.desk.seguridad-edit', $id_incidente);
     }
     public function archivadoSeguridad(Request $request, $incidente)
     {
@@ -244,14 +283,25 @@ class DeskController extends Controller
 
         $empleados = Empleado::get();
 
-        return view('admin.desk.mejoras.edit', compact('mejoras', 'activos', 'empleados'));
+        $areas = Area::get();
+
+        $procesos = Proceso::get();
+
+        return view('admin.desk.mejoras.edit', compact('mejoras', 'activos', 'empleados', 'areas', 'procesos'));
     }
     public function updateMejoras(Request $request, $id_mejoras)
     {
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
         $mejoras->update([
+            'estatus' => $request->estatus,
+            'fecha_cierre' => $request->fecha_cierre,
             'descripcion' => $request->descripcion,
-            'mejora' => $request->mejora,
+            'beneficios' => $request->beneficios,
+            'titulo' => $request->titulo,
+            'area_mejora' => $request->area_mejora,
+            'proceso_mejora' => $request->proceso_mejora,
+            'tipo' => $request->tipo,
+            'otro' => $request->otro,
         ]);
 
         return redirect()->route('admin.desk.index');
@@ -270,15 +320,25 @@ class DeskController extends Controller
 
         $empleados = Empleado::get();
 
-        return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados'));
+        $areas = Area::get();
+
+        $procesos = Proceso::get();
+
+        return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados', 'areas', 'procesos'));
     }
     public function updateSugerencias(Request $request, $id_sugerencias)
     {
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
         $sugerencias->update([
-            'empleado_sugerir_id' => auth()->user()->empleado->id,
+            'area_sugerencias' => $request->area_sugerencias,
+            'proceso_sugerencias' => $request->proceso_sugerencias,
+
+            'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
-            'sugerencia_dirigida' => $request->sugerencia_dirigida,
+
+            'estatus' => $request->estatus,
+
+            'fecha_cierre' => $request->fecha_cierre,
         ]);
 
         return redirect()->route('admin.desk.index');

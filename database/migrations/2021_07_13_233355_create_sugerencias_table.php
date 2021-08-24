@@ -15,12 +15,17 @@ class CreateSugerenciasTable extends Migration
     {
         Schema::create('sugerencias', function (Blueprint $table) {
             $table->id();
-            $table->string('sugerencia_dirigida');
-            $table->string('descripcion');
+            $table->string('titulo');
+            $table->string('estatus')->default('nuevo');
+            $table->longText('descripcion');
 
-            $table->unsignedBigInteger('empleado_sugerir_id')->nullable();
+            $table->string('area_sugerencias')->nullable();
+            $table->string('proceso_sugerencias')->nullable();
 
-            $table->foreign('empleado_sugerir_id')->references('id')->on('empleados');
+            $table->dateTime('fecha_cierre')->nullable();
+
+            $table->unsignedBigInteger('empleado_sugirio_id')->nullable();
+            $table->foreign('empleado_sugirio_id')->references('id')->on('empleados');
 
             $table->timestamps();
             $table->softDeletes();
