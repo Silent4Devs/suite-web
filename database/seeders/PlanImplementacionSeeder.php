@@ -64,8 +64,8 @@ class PlanImplementacionSeeder extends Seeder
             // [
             //     'id'                 => 5,
             //     'actividad'               => 'PLANEACIÓN',
-            //     'fecha_inicio'            =>Carbon::now()->timestamp*1000,  
-            //     'fecha_fin'            =>Carbon::now()->timestamp*1000,  
+            //     'fecha_inicio'            =>Carbon::now()->timestamp*1000,
+            //     'fecha_fin'            =>Carbon::now()->timestamp*1000,
             //     'estatus_id' => 1,
 
             // ],
@@ -168,8 +168,8 @@ class PlanImplementacionSeeder extends Seeder
             // [
             //     'id'                 => 18,
             //     'actividad'               => 'SOPORTE',
-            //     'fecha_inicio'            =>Carbon::now()->timestamp*1000,   
-            //     'fecha_fin'            =>Carbon::now()->timestamp*1000,  
+            //     'fecha_inicio'            =>Carbon::now()->timestamp*1000,
+            //     'fecha_fin'            =>Carbon::now()->timestamp*1000,
             //     'estatus_id' => 1,
 
             // ],
@@ -240,8 +240,8 @@ class PlanImplementacionSeeder extends Seeder
             // [
             //     'id'                 => 27,
             //     'actividad'               => 'OPERACIÓN DE SGSI',
-            //     'fecha_inicio'            =>Carbon::now()->timestamp*1000,    
-            //     'fecha_fin'            =>Carbon::now()->timestamp*1000,  
+            //     'fecha_inicio'            =>Carbon::now()->timestamp*1000,
+            //     'fecha_fin'            =>Carbon::now()->timestamp*1000,
             //     'estatus_id' => 1,
             // ],
             [
@@ -407,8 +407,8 @@ class PlanImplementacionSeeder extends Seeder
             // [
             //     'id'                 => 48,
             //     'actividad'               => 'EVALUACIÓN',
-            //     'fecha_inicio'            =>Carbon::now()->timestamp*1000,    
-            //     'fecha_fin'            =>Carbon::now()->timestamp*1000,  
+            //     'fecha_inicio'            =>Carbon::now()->timestamp*1000,
+            //     'fecha_fin'            =>Carbon::now()->timestamp*1000,
             //     'estatus_id' => 1,
 
             // ],
@@ -463,8 +463,8 @@ class PlanImplementacionSeeder extends Seeder
             // [
             //     'id'                 => 55,
             //     'actividad'               => 'MEJORA CONTINUA',
-            //     'fecha_inicio'            =>Carbon::now()->timestamp*1000,    
-            //     'fecha_fin'            =>Carbon::now()->timestamp*1000,  
+            //     'fecha_inicio'            =>Carbon::now()->timestamp*1000,
+            //     'fecha_fin'            =>Carbon::now()->timestamp*1000,
             //     'estatus_id' => 1,
 
             // ],
