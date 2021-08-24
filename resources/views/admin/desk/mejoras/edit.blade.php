@@ -30,6 +30,57 @@
                         	<form class="row" method="POST" action="{{ route('admin.desk.mejoras-update', $mejoras) }}">
 								@csrf
 
+                                <div class="form-group mt-4 col-12">
+                                    <b>Datos generales:</b>
+                                </div>
+
+                                <div class="form-group mt-2 col-2">
+                                    <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+                                    <div class="form-control" id="input_folio">{{ $mejoras->folio }}</div>
+                                </div>
+
+                                <div class="form-group mt-2 col-6">
+                                    <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Titulo corto de la mejora</label>
+                                    <input type="" name="titulo" value="{{ $mejoras->titulo }}"
+                                        class="form-control">
+                                </div>
+
+                                <div class="form-group mt-2 col-4">
+                                    <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+                                    <select name="estatus" class="form-control">
+                                        <option
+                                            {{ old('estatus', $mejoras->estatus) == 'nuevo' ? 'selected' : '' }}
+                                            value="nuevo">Nuevo</option>
+                                        <option
+                                            {{ old('estatus', $mejoras->estatus) == 'en curso' ? 'selected' : '' }}
+                                            value="en curso">En curso</option>
+                                        <option
+                                            {{ old('estatus', $mejoras->estatus) == 'en espera' ? 'selected' : '' }}
+                                            value="en espera">En espera</option>
+                                        <option
+                                            {{ old('estatus', $mejoras->estatus) == 'cerrado' ? 'selected' : '' }}
+                                            value="cerrado">Cerrado</option>
+                                        <option
+                                            {{ old('estatus', $mejoras->estatus) == 'cancelado' ? 'selected' : '' }}
+                                            value="cancelado">Cancelado</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mt-2 col-6">
+                                    <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora de recepción del reporte</label>
+                                        <div class="form-control">{{ $mejoras->created_at }}</div>
+                                </div>
+
+                                <div class="form-group mt-2 col-6">
+                                    <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora de cierre del ticket</label>
+                                        <div class="form-control">{{ $mejoras->fecha_cierre }}</div>
+                                </div>
+
+
+                                <div class="form-group mt-4 col-12">
+                                    <b>Identifico mejora:</b>
+                                </div>
+
 								<div class="form-group mt-2 col-4">
 									<label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
 									<div class="form-control">{{ $mejoras->mejoro->name }}</div>
@@ -45,25 +96,78 @@
 									<div class="form-control">{{ $mejoras->mejoro->puesto }}</div>
 								</div>
 
-								<div class="form-group mt-2 col-4">
+								<div class="form-group mt-2 col-6">
 									<label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico</label>
 									<div class="form-control">{{ $mejoras->mejoro->email }}</div>
 								</div>
 
-								<div class="form-group mt-2 col-4">
+								<div class="form-group mt-2 col-6">
 									<label class="form-label"><i class="fas fa-phone iconos-crear"></i>Telefono</label>
 									<div class="form-control">{{ $mejoras->mejoro->telefono }}</div>
 								</div>
 
-								<div class="form-group mt-2 col-4">
-									<label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Nombre de la mejora</label>
-									<input type="" name="mejora" class="form-control" value="{{ $mejoras->mejora }}">
-								</div>
+
+
+                                <div class="form-group mt-4 col-12">
+                                    <b>Mejora dirigida a:</b>
+                                </div>
+
+                                <div class="form-group mt-4 col-6 multiselect_areas">
+                                    <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área(s)</label>
+                                    <select class="form-control" name="">
+                                        <option disabled selected>Seleccionar áreas</option>
+                                        @foreach ($areas as $area)
+                                            <option value="{{ $area->area }}">
+                                                {{ $area->area }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <textarea name="area_mejora" class="form-control">{{ $mejoras->area_mejora }}</textarea>
+                                </div>
+
+                                <div class="form-group mt-4 col-6 multiselect_procesos">
+                                    <label class="form-label"><i class="fas fa-dice-d20 iconos-crear"></i>Proceso(s)</label>
+                                    <select class="form-control" name="">
+                                        <option disabled selected>Seleccionar proceso</option>
+                                        @foreach ($procesos as $proceso)
+                                            <option value="{{ $proceso->codigo }}: {{ $proceso->nombre }}">
+                                                {{ $proceso->codigo }}: {{ $proceso->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <textarea name="proceso_mejora" class="form-control">{{ $mejoras->proceso_mejora }}</textarea>
+                                </div>
+
+                                <div class="form-group mt-4 col-12">
+                                    <b>Descripción de la mejora:</b>
+                                </div>
+
+								<div class="form-group mt-2 col-5 select_tipo">
+                                    <label class="form-label"><i class="fas fa-rocket iconos-crear"></i>Propuesta de mejora para un: </label>
+                                    <select name="tipo" class="form-control">
+                                        <option selected>{{$mejoras->tipo}}</option>
+                                        <option>Proceso interno/externo</option>
+                                        <option>Producto</option>
+                                        <option>Servicio</option>
+                                        <option>Modelo de negocio</option>
+                                        <option value="otra">Otro</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mt-2 col-7 otra" style="">
+                                    <label class="form-label">Descripción de otro</label>
+                                    <input name="otro" class="form-control" value="{{$mejoras->otro}}">
+                                </div>
 
 								<div class="form-group mt-4 col-12">
-									<label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Describa</label>
+									<label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción de la mejora</label>
 									<textarea name="descripcion" class="form-control">{{ $mejoras->descripcion }}</textarea>
 								</div>
+
+                                <div class="form-group mt-4 col-12">
+                                    <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Beneficios de la mejora</label>
+                                    <textarea name="beneficios" class="form-control">{{ $mejoras->beneficios }}</textarea>
+                                </div>
 
 								<div class="form-group mt-4 text-right col-12">
 									<a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
@@ -319,6 +423,33 @@
             $(".caja_oculta_dinamica").removeClass("d-block");
             var metodo_v = $("#select_metodos option:selected").attr('data-metodo');
             $(document.getElementById(metodo_v)).addClass("d-block");
+        });
+    </script>
+
+
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function(){
+            let select_activos = document.querySelector('.multiselect_areas select');
+            select_activos.addEventListener('change', function(e){
+                e.preventDefault();
+                let texto_activos = document.querySelector('.multiselect_areas textarea');
+                
+                    texto_activos.value += `${this.value}, `;
+                
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function(){
+            let select_activos = document.querySelector('.multiselect_procesos select');
+            select_activos.addEventListener('change', function(e){
+                e.preventDefault();
+                let texto_activos = document.querySelector('.multiselect_procesos textarea');
+                
+                    texto_activos.value += `${this.value}, `;
+                
+            });
         });
     </script>
 @endsection

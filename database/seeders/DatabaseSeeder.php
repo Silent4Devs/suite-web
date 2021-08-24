@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
@@ -31,6 +32,8 @@ class DatabaseSeeder extends Seeder
             EmpleadosSeeder::class,
             MacroprocesoSeeder::class,
             DocumentoSeeder::class,
+            CategoriaIncidenteSeeder::class,
+            SubcategoriaIncidenteSeeder::class,
             PlanImplementacionSeeder::class  // Necesario se carga inicialmente el Diagrama Universal de Gantt
             //PlanBaseSeeder::class,
         ]);

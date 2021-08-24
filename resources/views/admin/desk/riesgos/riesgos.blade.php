@@ -5,9 +5,17 @@
             <tr>
        			<th>Folio</th>
        			<th>Título</th>
+                <th>Fecha del indetificación</th>
+                <th>Fecha de recepción del reporte</th>
+                <th>Fecha de cierre</th>
        			<th>Descripción</th>
                 <th>Comentarios</th>
-       			<th>Proceso afectado</th>
+                <th>Estatus</th>
+                <th>Sede</th>
+                <th>Ubicación</th>
+       			<th>Procesos afectados</th>
+                <th>Áreas afectadas</th>
+                <th>Activos afectados</th>
        			<th>Fecha</th>
        			<th>Quién reportó</th>
        			<th>Correo</th>
@@ -20,9 +28,17 @@
 	   			<tr>
 	       			<td>{{ $riesgo->folio }}</td>
 	       			<td>{{ $riesgo->titulo}}</td>
+                    <td>{{ $riesgo->fecha}}</td>
+                    <td>{{ $riesgo->created_at}}</td>
+                    <td>{{ $riesgo->fecha_cierre}}</td>
                     <td>{{ $riesgo->descripcion }}</td>
                     <td>{{ $riesgo->comentarios }}</td>
-	       			<td>{{ $riesgo->proceso }}</td>
+                    <td>{{ $riesgo->estatus }}</td>
+                    <td>{{ $riesgo->sede }}</td>
+                    <td>{{ $riesgo->ubicacion }}</td>
+	       			<td>{{ $riesgo->procesos_afectados }}</td>
+                    <td>{{ $riesgo->areas_afectados }}</td>
+                    <td>{{ $riesgo->activos_afectados }}</td>
 	       			<td>{{ $riesgo->fecha }}</td>
 	       			<td>{{ $riesgo->reporto->name }}</td>
 	       			<td>{{ $riesgo->reporto->email }}</td> 
