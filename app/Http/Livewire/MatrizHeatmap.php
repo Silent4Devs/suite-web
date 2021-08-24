@@ -54,14 +54,14 @@ class MatrizHeatmap extends Component
         $areas = Area::select('id', 'area')->get();
         $procesos = Proceso::select('id', 'nombre')->get();
 
-        $muy_alto = MatrizRiesgo::select('id')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('54', '81'));
-        $alto = MatrizRiesgo::select('id')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('27', '36'));
-        $medio = MatrizRiesgo::select('id')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '9');
-        $bajo = MatrizRiesgo::select('id')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
-        $muy_alto_residual = MatrizRiesgo::select('id')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('54', '81'));
-        $alto_residual = MatrizRiesgo::select('id')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('27', '36'));
-        $medio_residual = MatrizRiesgo::select('id')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '9');
-        $bajo_residual = MatrizRiesgo::select('id')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '0');
+        $muy_alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('54', '81'));
+        $alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('27', '36'));
+        $medio = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '9');
+        $bajo = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
+        $muy_alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('54', '81'));
+        $alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('27', '36'));
+        $medio_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '9');
+        $bajo_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '0');
 
         if ($this->sede_id != "") {
             if (MatrizRiesgo::select('id')->Where('id_sede', '=', $this->sede_id)->count() > 0) {
@@ -114,6 +114,8 @@ class MatrizHeatmap extends Component
                 $this->proceso_id = "";
             }
         }
+
+        $matriz_riesgos = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
 
         return view('livewire.matriz-heatmap', [
             'sedes' => $sedes,

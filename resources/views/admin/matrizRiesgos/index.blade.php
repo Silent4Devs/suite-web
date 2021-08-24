@@ -42,10 +42,10 @@
                         <tr class="negras">
                             <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción General </th>
                             <th class="text-center" style="background-color:#1168af;" colspan="4">CID</th>
-                            <th class="text-center" style="background-color:#217bc5;" colspan="4">Riesgo Inicial
+                            <th class="text-center" style="background-color:#217bc5;" colspan="3">Riesgo Inicial
                             <th class="text-center" style="background-color:#1168af;" colspan="2">Acciones</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="3">CID</th>
-                            <th class="text-center" style="background-color:#1168af;" colspan="4">Riesgo Residual</th>
+                            <th class="text-center" style="background-color:#1168af;" colspan="3">Riesgo Residual</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </tr>
                         <tr>
@@ -94,9 +94,9 @@
                             <th>
                                 Nivel riesgo
                             </th>
-                            <th>
-                                Riesgo total
-                            </th>
+                            <!--<th>
+                                                                                                        Riesgo total
+                                                                                                    </th>-->
                             <th>
                                 Control
                             </th>
@@ -121,9 +121,9 @@
                             <th>
                                 Nivel riesgo
                             </th>
-                            <th>
-                                Riesgo total
-                            </th>
+                            <!--<th>
+                                                                                                    Riesgo total
+                                                                                                </th>-->
                             <th>
                                 Opciones
                             </th>
@@ -345,12 +345,43 @@
                     },
                     {
                         data: 'nivelriesgo',
-                        name: 'nivelriesgo'
+                        name: 'nivelriesgo',
+                        render: function(data) {
+                            //console.log(data);
+                            switch (data) {
+                                case 81:
+                                    return `<div class="text-danger"><div>MUY ALTO</div></div>`;
+                                    break;
+                                case 54:
+                                    return `<div class="text-danger"><div>MUY ALTO</div></div>`;
+                                    break;
+                                case 36:
+                                    return `<div style="color: orange;"><div>ALTO</div></div>`;
+                                    break;
+                                case 27:
+                                    return `<div style="color: orange;"><div>ALTO</div></div>`;
+                                    break;
+                                case 18:
+                                    return `<div class="bg-warning"><div>MEDIO</div></div>`;
+                                    break;
+                                case 9:
+                                    return `<div class="bg-warning"><div>MEDIO</div></div>`;
+                                    break;
+                                case 0:
+                                    return `<div class="bg-success"><div>BAJO</div></div>`;
+                                    break;
+                                case null:
+                                    return `<div class="bg-success"><div>BAJO</div></div>`;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     },
-                    {
+                    /*{
                         data: 'riesgototal',
                         name: 'riesgototal'
-                    },
+                    },*/
                     {
                         data: 'control',
                         name: 'control'
@@ -391,12 +422,13 @@
                     },
                     {
                         data: 'nivelriesgo_residual',
-                        name: 'nivelriesgo_residual'
+                        name: 'nivelriesgo_residual',
+
                     },
-                    {
+                    /*{
                         data: 'riesgo_total_residual',
                         name: 'riesgo_total_residual'
-                    },
+                    },*/
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'

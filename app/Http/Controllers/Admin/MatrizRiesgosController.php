@@ -22,10 +22,11 @@ use App\Models\Vulnerabilidad;
 use App\Models\PlanImplementacion;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
+use App\Models\DeclaracionAplicabilidad;
 use Yajra\DataTables\Facades\DataTables;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\StoreMatrizRiesgoRequest;
 
+use App\Http\Requests\StoreMatrizRiesgoRequest;
 use App\Http\Requests\UpdateMatrizRiesgoRequest;
 use App\Http\Requests\MassDestroyMatrizRiesgoRequest;
 
@@ -98,7 +99,6 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $controles = Controle::get();
         $sedes = Sede::get();
         $areas = Area::get();
         $procesos = Proceso::get();
@@ -106,6 +106,7 @@ class MatrizRiesgosController extends Controller
         $activos = Activo::get();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
+        $controles = DeclaracionAplicabilidad::select('id', 'anexo_politica')->get();
 
         return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
@@ -113,6 +114,7 @@ class MatrizRiesgosController extends Controller
     public function store(StoreMatrizRiesgoRequest $request)
     {
         //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
+        //dd($request->all());
         $matrizRiesgo = MatrizRiesgo::create($request->all());
 
         if (isset($request->plan_accion)) {
@@ -266,13 +268,49 @@ class MatrizRiesgosController extends Controller
                 return $row->resultadoponderacion ? $row->resultadoponderacion : "";
             });
             $table->editColumn('probabilidad', function ($row) {
-                return $row->probabilidad ? $row->probabilidad : "";
+                //return $row->probabilidad ? $row->probabilidad : "";
+                switch ($row->probabilidad) {
+                    case 0:
+                        return 'NULA' ? 'NULA' : '';
+                        break;
+                    case 3:
+                        return 'BAJA' ? 'BAJA' : '';
+                        break;
+                    case 6:
+                        return 'MEDIA' ? 'MEDIA' : '';
+                        break;
+                    case 9:
+                        return 'ALTA' ? 'ALTA' : '';
+                        break;
+                    default:
+                        break;
+                }
             });
             $table->editColumn('impacto', function ($row) {
-                return $row->impacto ? $row->impacto : "";
+                //return $row->impacto ? $row->impacto : "";
+                switch ($row->impacto) {
+                    case 0:
+                        return 'BAJO' ? 'BAJO' : '';
+                        break;
+                    case 3:
+                        return 'MEDIO' ? 'MEDIO' : '';
+                        break;
+                    case 6:
+                        return 'ALTO' ? 'ALTO' : '';
+                        break;
+                    case 9:
+                        return 'MUY ALTO' ? 'MUY ALTO' : '';
+                        break;
+                    default:
+                        break;
+                }
             });
             $table->editColumn('nivelriesgo', function ($row) {
-                return $row->nivelriesgo ? $row->nivelriesgo : "";
+                if (is_null($row->nivelriesgo)) {
+                    return null ? $row->nivelriesgo : "";
+                } else {
+                    return $row->nivelriesgo ? $row->nivelriesgo : "";
+                }
             });
             /*$table->editColumn('riesgototal', function ($row) {
                 return $row->riesgototal ? $row->riesgototal : "";
@@ -305,10 +343,42 @@ class MatrizRiesgosController extends Controller
                 }
             });
             $table->editColumn('probabilidad_residual', function ($row) {
-                return $row->probabilidad_residual ? $row->probabilidad_residual : "";
+                //return $row->probabilidad_residual ? $row->probabilidad_residual : "";
+                switch ($row->probabilidad_residual) {
+                    case 0:
+                        return 'NULA' ? 'NULA' : '';
+                        break;
+                    case 3:
+                        return 'BAJA' ? 'BAJA' : '';
+                        break;
+                    case 6:
+                        return 'MEDIA' ? 'MEDIA' : '';
+                        break;
+                    case 9:
+                        return 'ALTA' ? 'ALTA' : '';
+                        break;
+                    default:
+                        break;
+                }
             });
             $table->editColumn('impacto_residual', function ($row) {
-                return $row->impacto_residual ? $row->impacto_residual : "";
+                //return $row->impacto_residual ? $row->impacto_residual : "";
+                switch ($row->impacto_residual) {
+                    case 0:
+                        return 'BAJO' ? 'BAJO' : '';
+                        break;
+                    case 3:
+                        return 'MEDIO' ? 'MEDIO' : '';
+                        break;
+                    case 6:
+                        return 'ALTO' ? 'ALTO' : '';
+                        break;
+                    case 9:
+                        return 'MUY ALTO' ? 'MUY ALTO' : '';
+                        break;
+                    default:
+                        break;
+                }
             });
             $table->editColumn('nivelriesgo_residual', function ($row) {
                 return $row->nivelriesgo_residual ? $row->nivelriesgo_residual : "";
@@ -383,5 +453,9 @@ class MatrizRiesgosController extends Controller
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
         return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+    }
+
+    public function ControlesGet(){
+
     }
 }

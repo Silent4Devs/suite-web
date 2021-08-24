@@ -355,16 +355,16 @@
 
                 <hr>
                 <p class="font-weight-bold" style="font-size:11pt;">Acciones</p>
-                <div class="row">
-                    <div class="form-group col-sm-4">
+                <div class="row form-inline">
+                    <div class="form-group row col-sm-4">
                         <label for="controles_id"><i class="fas fa-gamepad iconos-crear"></i>Control</label>
-                        <select class="form-control {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
-                            name="controles_id" id="controles_id">
+                        <select class="form-control select2-multiple {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
+                            name="controles_id" id="select2-multiple-input-sm" multiple="multiple">
                             <option value disabled {{ old('controles_id', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($controles as $control)
                                 <option value="{{ $control->id }}">
-                                    {{ $control->control }}
+                                    {{ $control->anexo_politica }}
                                 </option>
                             @endforeach
                         </select>
@@ -403,7 +403,8 @@
                                     <i class="mr-1 fas fa-plus-circle"></i> Crear
                                 </button>
                             </div>
-                            @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de riesgos', 'id_matriz' => $id_analisis])
+                            @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de
+                            riesgos', 'id_matriz' => $id_analisis])
                         </div>
                         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>

@@ -211,21 +211,21 @@
                                     @if ($changer == '2')
                                         {{ $conteo }}
                                     @else
-                                        27
+                                        0
                                     @endif
                                 </td>
                                 <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQuery(54, '3')">
                                     @if ($changer == '3')
                                         {{ $conteo }}
                                     @else
-                                        54
+                                        0
                                     @endif
                                 </td>
                                 <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQuery(81, '4')">
                                     @if ($changer == '4')
                                         {{ $conteo }}
                                     @else
-                                        81
+                                        0
                                     @endif
                                 </td>
                             </tr>
@@ -242,21 +242,21 @@
                                     @if ($changer == '6')
                                         {{ $conteo }}
                                     @else
-                                        18
+                                        0
                                     @endif
                                 </td>
                                 <td class="naranja" id="s_alta_p_alta" wire:click="callQuery(36, '7')">
                                     @if ($changer == '7')
                                         {{ $conteo }}
                                     @else
-                                        36
+                                        0
                                     @endif
                                 </td>
                                 <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQuery(54, '8')">
                                     @if ($changer == '8')
                                         {{ $conteo }}
                                     @else
-                                        54
+                                        0
                                     @endif
                                 </td>
                             </tr>

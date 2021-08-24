@@ -25,6 +25,12 @@
         });
     </script>
 
+    <script>
+        $(document).ready(function() {
+            $('select').selectpicker();
+        });
+    </script>
+
     <script type=text/javascript>
         $('#probabilidad').change(function() {
             var impactoID = document.getElementById("impacto").value;
