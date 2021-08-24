@@ -154,7 +154,8 @@ class MatrizRequisitoLegalesController extends Controller
     public function edit(MatrizRequisitoLegale $matrizRequisitoLegale)
     {
         abort_if(Gate::denies('matriz_requisito_legale_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $matrizRequisitoLegale->load('team', 'planes');
+        $matrizRequisitoLegale->load('team', 'planes','evidencias_matriz');
+        // dd($matrizRequisitoLegale);
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
         $planes_seleccionados = array();
         if ($matrizRequisitoLegale->planes) {
