@@ -151,7 +151,7 @@
 
 
                 <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#1BB0B0">
-                    <p class"text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
+                    <p class ="text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
                         Verificación del Requisito</p>
                 </div>
 

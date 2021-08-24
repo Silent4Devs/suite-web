@@ -26,7 +26,7 @@ class StoreEvidenciasSgsiRequest extends FormRequest
                 'nullable',
             ],
             'fechadocumento'    => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
         ];
