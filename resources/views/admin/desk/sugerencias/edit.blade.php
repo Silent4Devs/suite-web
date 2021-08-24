@@ -30,42 +30,116 @@
                         	<form method="POST" action="{{ route('admin.desk.sugerencias-update', $sugerencias) }}" class="row">
 								@csrf
 
-								<div class="form-group mt-2 col-6">
+
+
+                                <div class="form-group mt-4 col-12">
+                                    <b>Datos generales:</b>
+                                </div>
+
+                                <div class="form-group mt-2 col-2">
+                                    <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+                                    <div class="form-control" id="input_folio">{{ $sugerencias->folio }}</div>
+                                </div>
+
+                                <div class="form-group mt-2 col-6">
+                                    <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Titulo corto de la sugerencia</label>
+                                    <input name="titulo" value="{{ $sugerencias->titulo }}"
+                                        class="form-control">
+                                </div>
+
+                                <div class="form-group mt-2 col-4">
+                                    <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+                                    <select name="estatus" class="form-control">
+                                        <option
+                                            {{ old('estatus', $sugerencias->estatus) == 'nuevo' ? 'selected' : '' }}
+                                            value="nuevo">Nuevo</option>
+                                        <option
+                                            {{ old('estatus', $sugerencias->estatus) == 'en curso' ? 'selected' : '' }}
+                                            value="en curso">En curso</option>
+                                        <option
+                                            {{ old('estatus', $sugerencias->estatus) == 'en espera' ? 'selected' : '' }}
+                                            value="en espera">En espera</option>
+                                        <option
+                                            {{ old('estatus', $sugerencias->estatus) == 'cerrado' ? 'selected' : '' }}
+                                            value="cerrado">Cerrado</option>
+                                        <option
+                                            {{ old('estatus', $sugerencias->estatus) == 'cancelado' ? 'selected' : '' }}
+                                            value="cancelado">Cancelado</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mt-2 col-6">
+                                    <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora de recepción del reporte</label>
+                                        <div class="form-control">{{ $sugerencias->created_at }}</div>
+                                </div>
+
+                                <div class="form-group mt-2 col-6">
+                                    <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora de cierre del ticket</label>
+                                        <div class="form-control">{{ $sugerencias->fecha_cierre }}</div>
+                                </div>
+
+
+
+                                <div class="form-group mt-4 col-12">
+                                    <b>Sugerencia emitida por:</b>
+                                </div>
+
+
+								<div class="form-group mt-2 col-4">
 									<label class="form-label"><i class="fas fa-user iconos-crear"></i> Nombre</label>
-									<div class="form-control">{{ $sugerencias->sugerir->name }}</div>
+									<div class="form-control">{{ $sugerencias->sugirio->name }}</div>
 								</div>
 
-								<div class="form-group mt-2 col-6">
+								<div class="form-group mt-2 col-4">
 									<label class="form-label"><i class="fas fa-project-diagram iconos-crear"></i>Área</label>
-									<div class="form-control">{{ $sugerencias->sugerir->area->area }}</div>
+									<div class="form-control">{{ $sugerencias->sugirio->area->area }}</div>
 								</div>
 
-								<div class="form-group mt-2 col-6">
+								<div class="form-group mt-2 col-4">
 									<label class="form-label"><i class="fas fa-user-tag iconos-crear"></i> Puesto</label>
-									<div class="form-control">{{ $sugerencias->sugerir->puesto }}</div>
+									<div class="form-control">{{ $sugerencias->sugirio->puesto }}</div>
 								</div>
 
 								<div class="form-group mt-2 col-6">
 									<label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electrónico</label>
-									<div class="form-control">{{ $sugerencias->sugerir->email }}</div>
+									<div class="form-control">{{ $sugerencias->sugirio->email }}</div>
 								</div>
 
 								<div class="form-group mt-2 col-6">
 									<label class="form-label"><i class="fas fa-phone iconos-crear"></i> Teléfono</label>
-									<div class="form-control">{{ $sugerencias->sugerir->telefono }}</div>
+									<div class="form-control">{{ $sugerencias->sugirio->telefono }}</div>
 								</div>
 
-								<div class="form-group mt-2 col-6">
-									<label class="form-label"><i class="fas fa-project-diagram iconos-crear"></i> Área a la que dirige su sugerencia</label>
-									<select class="form-control">
-										<option></option>
-									</select>
-								</div>
 
-								<div class="form-group mt-2 col-6">
-									<label class="form-label"><i class="fas fa-user-tie iconos-crear"></i> Nombre del colaborador a quien dirige su sugerencia</label>
-									<input name="sugerencia_dirigida" class="form-control" value="{{ $sugerencias->sugerencia_dirigida }}">
-								</div>
+                                <div class="form-group mt-4 col-12">
+                                    <b>Sugerencia dirigida a:</b>
+                                </div>
+
+								<div class="form-group mt-4 col-6 multiselect_areas">
+                                    <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área(s)</label>
+                                    <select class="form-control">
+                                        <option disabled selected>Seleccionar áreas</option>
+                                        @foreach ($areas as $area)
+                                            <option value="{{ $area->area }}">
+                                                {{ $area->area }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <textarea name="area_sugerencias" class="form-control">{{ $sugerencias->area_sugerencias }}</textarea>
+                                </div>
+
+                                <div class="form-group mt-4 col-6 multiselect_procesos">
+                                    <label class="form-label"><i class="fas fa-dice-d20 iconos-crear"></i>Proceso(s)</label>
+                                    <select class="form-control" name="">
+                                        <option disabled selected>Seleccionar proceso</option>
+                                        @foreach ($procesos as $proceso)
+                                            <option value="{{ $proceso->codigo }}: {{ $proceso->nombre }}">
+                                                {{ $proceso->codigo }}: {{ $proceso->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <textarea name="proceso_sugerencias" class="form-control">{{ $sugerencias->proceso_sugerencias }}</textarea>
+                                </div>
 
 								<div class="form-group mt-2 col-12">
 									<label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> Describa detalladamente su sugerencia</label>
@@ -308,39 +382,29 @@
 
 	
 	<script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('#activos');
-            select_activos.addEventListener('change', function(e) {
+        document.addEventListener('DOMContentLoaded', function(){
+            let select_activos = document.querySelector('.multiselect_areas select');
+            select_activos.addEventListener('change', function(e){
                 e.preventDefault();
-                let texto_activos = document.querySelector('#texto_activos');
-
-                texto_activos.value += `${this.value}, `;
-
+                let texto_activos = document.querySelector('.multiselect_areas textarea');
+                
+                    texto_activos.value += `${this.value}, `;
+                
             });
+        });
 
 
-            function padLeftWithBounds(input, padChar, maxLength, min, max) {
-                if (input <= min)
-                    return min;
-                if (input >= max)
-                    return max;
-
-                var s = input.toString(10);
-                var padding = "";
-                for (var i = 0; i < maxLength; ++i)
-                    padding += padChar;
-
-                return padding.substring(0, maxLength - s.length) + s;
-            };
-
-            $("#input_folio").on("keyup", function() {
-                if (!$(this).val())
-                    return;
-                $(this).val(padLeftWithBounds(parseInt($(this).val()), '0', 3, 0, 999));
+        document.addEventListener('DOMContentLoaded', function(){
+            let select_activos = document.querySelector('.multiselect_procesos select');
+            select_activos.addEventListener('change', function(e){
+                e.preventDefault();
+                let texto_activos = document.querySelector('.multiselect_procesos textarea');
+                
+                    texto_activos.value += `${this.value}, `;
+                
             });
         });
     </script>
-
 
 
 

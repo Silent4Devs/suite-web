@@ -15,6 +15,12 @@ class Mejoras extends Model
         'id'
     ];
 
+    protected $appends = ['folio'];
+
+    public function getFolioAttribute(){
+        return  sprintf('MJA-%04d', $this->id);
+    }
+
     public function mejoro(){
         return $this->belongsTo(Empleado::class, 'empleado_mejoro_id', 'id');
     }

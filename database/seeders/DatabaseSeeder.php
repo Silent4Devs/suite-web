@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             EmpleadosSeeder::class,
             MacroprocesoSeeder::class,
             DocumentoSeeder::class,
+            CategoriaIncidenteSeeder::class,
+            SubcategoriaIncidenteSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }

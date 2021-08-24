@@ -15,7 +15,13 @@ class Sugerencias extends Model
         'id'
     ];
 
-    public function sugerir(){
-        return $this->belongsTo(Empleado::class, 'empleado_sugerir_id', 'id');
+    protected $appends = ['folio'];
+
+    public function getFolioAttribute(){
+        return  sprintf('SUG-%04d', $this->id);
+    }
+
+    public function sugirio(){
+        return $this->belongsTo(Empleado::class, 'empleado_sugirio_id', 'id');
     }
 }
