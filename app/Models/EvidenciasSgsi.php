@@ -11,6 +11,8 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use \DateTimeInterface;
+use App\Models\EvidenciaSgsiPdf;
+use App\Models\Area;
 
 class EvidenciasSgsi extends Model implements HasMedia
 {
@@ -18,22 +20,25 @@ class EvidenciasSgsi extends Model implements HasMedia
 
     public $table = 'evidencias_sgsis';
 
-    protected $appends = [
-        'archivopdf',
-    ];
+    // protected $appends = [
+    //     'archivopdf',
+    // ];
 
     protected $dates = [
-        'fechadocumento',
+        'fechadocumento'=>'date',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
     protected $fillable = [
+        'responsable_evidencia_id',
+        'nombredocumento',
         'objetivodocumento',
         'responsable_id',
         'arearesponsable',
         'fechadocumento',
+        'evidencia',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -56,15 +61,15 @@ class EvidenciasSgsi extends Model implements HasMedia
         return $this->belongsTo(User::class, 'responsable_id');
     }
 
-    public function getFechadocumentoAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
+    // public function getFechadocumentoAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    // }
 
-    public function setFechadocumentoAttribute($value)
-    {
-        $this->attributes['fechadocumento'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
+    // public function setFechadocumentoAttribute($value)
+    // {
+    //     $this->attributes['fechadocumento'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    // }
 
     public function getArchivopdfAttribute()
     {
@@ -75,4 +80,25 @@ class EvidenciasSgsi extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function getFechaeDocumentoAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'responsable_evidencia_id');
+    }
+
+    public function area_responsable()
+    {
+        return $this->belongsTo(Area::class, 'area_id', 'id');
+    }
+    
+    public function evidencia_sgsi()
+    {
+        return $this->hasMany(EvidenciaSgsiPdf::class,'id_evidencias_sgsis');
+    }
+
 }

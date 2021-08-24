@@ -7,6 +7,8 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyEvidenciasSgsiRequest;
 use App\Http\Requests\StoreEvidenciasSgsiRequest;
 use App\Http\Requests\UpdateEvidenciasSgsiRequest;
+use App\Models\Area;
+use App\Models\Empleado;
 use App\Models\EvidenciasSgsi;
 use App\Models\Team;
 use App\Models\User;
@@ -15,6 +17,8 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
+use App\Models\EvidenciaSgsiPdf;
 
 class EvidenciasSgsiController extends Controller
 {
@@ -25,7 +29,7 @@ class EvidenciasSgsiController extends Controller
         abort_if(Gate::denies('evidencias_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = EvidenciasSgsi::with(['responsable', 'team'])->select(sprintf('%s.*', (new EvidenciasSgsi)->table));
+            $query = EvidenciasSgsi::with(['responsable', 'team', 'empleado', 'area_responsable', 'evidencia_sgsi'])->select(sprintf('%s.*', (new EvidenciasSgsi)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -53,15 +57,19 @@ class EvidenciasSgsiController extends Controller
                 return $row->objetivodocumento ? $row->objetivodocumento : "";
             });
             $table->addColumn('responsable_name', function ($row) {
-                return $row->responsable ? $row->responsable->name : '';
+                return $row->empleado ? $row->empleado->name : '';
             });
 
             $table->editColumn('arearesponsable', function ($row) {
                 return $row->arearesponsable ? $row->arearesponsable : "";
             });
 
-            $table->editColumn('archivopdf', function ($row) {
-                return $row->archivopdf ? '<a href="' . $row->archivopdf->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            $table->editColumn('fecha_documento', function ($row) {
+                return $row->fechadocumento ? $row->fechadocumento : "";
+            });
+
+            $table->editColumn('evidencia', function ($row) {
+                return $row->evidencia_sgsi ? $row->evidencia_sgsi : "";
             });
 
             $table->rawColumns(['actions', 'placeholder', 'responsable', 'archivopdf']);
@@ -73,6 +81,7 @@ class EvidenciasSgsiController extends Controller
         $teams = Team::get();
 
         return view('admin.evidenciasSgsis.index', compact('users', 'teams'));
+
     }
 
     public function create()
@@ -80,23 +89,41 @@ class EvidenciasSgsiController extends Controller
         abort_if(Gate::denies('evidencias_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.evidenciasSgsis.create', compact('responsables'));
+        $empleados = Empleado::with('area')->get();
+        $areas = Area::get();
+        return view('admin.evidenciasSgsis.create', compact('responsables', 'empleados', 'areas'));
     }
 
     public function store(StoreEvidenciasSgsiRequest $request)
     {
+        // dd($request->all());
         $evidenciasSgsi = EvidenciasSgsi::create($request->all());
 
-        if ($request->input('archivopdf', false)) {
-            $evidenciasSgsi->addMedia(storage_path('tmp/uploads/' . $request->input('archivopdf')))->toMediaCollection('archivopdf');
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/evidencias_sgsi', $file, $file->getClientOriginalName())) {
+                    EvidenciaSgsiPdf::create([
+                        'evidencia' => $file->getClientOriginalName(),
+                        'id_evidencias_sgsis' => $evidenciasSgsi->id,
+                    ]);
+                }
+            }
         }
 
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $evidenciasSgsi->id]);
-        }
+
+        // if ($request->input('archivopdf', false)) {
+        //     $evidenciasSgsi->addMedia(storage_path('tmp/uploads/' . $request->input('archivopdf')))->toMediaCollection('archivopdf');
+        // }
+
+        // if ($media = $request->input('ck-media', false)) {
+        //     Media::whereIn('id', $media)->update(['model_id' => $evidenciasSgsi->id]);
+        // }
 
         return redirect()->route('admin.evidencias-sgsis.index')->with("success", 'Guardado con éxito');
+
+
+        
     }
 
     public function edit(EvidenciasSgsi $evidenciasSgsi)
@@ -104,27 +131,42 @@ class EvidenciasSgsiController extends Controller
         abort_if(Gate::denies('evidencias_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        $empleados = Empleado::with('area')->get();
+        $areas = Area::get();
         $evidenciasSgsi->load('responsable', 'team');
 
-        return view('admin.evidenciasSgsis.edit', compact('responsables', 'evidenciasSgsi'));
+        return view('admin.evidenciasSgsis.edit', compact('responsables', 'evidenciasSgsi', 'empleados', 'areas'));
     }
 
     public function update(UpdateEvidenciasSgsiRequest $request, EvidenciasSgsi $evidenciasSgsi)
     {
         $evidenciasSgsi->update($request->all());
 
-        if ($request->input('archivopdf', false)) {
-            if (!$evidenciasSgsi->archivopdf || $request->input('archivopdf') !== $evidenciasSgsi->archivopdf->file_name) {
-                if ($evidenciasSgsi->archivopdf) {
-                    $evidenciasSgsi->archivopdf->delete();
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/evidencias_sgsi', $file, $file->getClientOriginalName())) {
+                    EvidenciaSgsiPdf::create([
+                        'evidencia' => $file->getClientOriginalName(),
+                        'id_evidencias_sgsis' => $evidenciasSgsi->id,
+                    ]);
                 }
-
-                $evidenciasSgsi->addMedia(storage_path('tmp/uploads/' . $request->input('archivopdf')))->toMediaCollection('archivopdf');
             }
-        } elseif ($evidenciasSgsi->archivopdf) {
-            $evidenciasSgsi->archivopdf->delete();
         }
+
+
+
+        // if ($request->input('archivopdf', false)) {
+        //     if (!$evidenciasSgsi->archivopdf || $request->input('archivopdf') !== $evidenciasSgsi->archivopdf->file_name) {
+        //         if ($evidenciasSgsi->archivopdf) {
+        //             $evidenciasSgsi->archivopdf->delete();
+        //         }
+
+        //         $evidenciasSgsi->addMedia(storage_path('tmp/uploads/' . $request->input('archivopdf')))->toMediaCollection('archivopdf');
+        //     }
+        // } elseif ($evidenciasSgsi->archivopdf) {
+        //     $evidenciasSgsi->archivopdf->delete();
+        // }
 
         return redirect()->route('admin.evidencias-sgsis.index')->with("success", 'Editado con éxito');
     }
