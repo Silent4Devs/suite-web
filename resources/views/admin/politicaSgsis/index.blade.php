@@ -1,8 +1,24 @@
 @extends('layouts.admin')
 @section('content')
 
+
+<style>
+
+.table tr td:nth-child(2){
+
+text-align: justify !important;
+
+}
+
+.table tr th:nth-child(2){
+
+    text-align: justify !important;
+
+}
+</style>
+
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
-    
+
     @can('politica_sgsi_create')
 
         <div class="mt-5 card">
@@ -10,17 +26,36 @@
                 <h3 class="mb-2 text-center text-white"><strong>Política SGSI</strong></h3>
             </div>
         @endcan
+
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <div class="table-responsive">
-                <table class="table table-bordered datatable-PoliticaSgsi" style="width: 100%">
+                <table class="table table-bordered w-100 datatable-PoliticaSgsi" id="datatable-PoliticaSgsi">
                     <thead class="thead-dark">
                         <tr>
                             <th style="text-transform: capitalize">
                                 {{ trans('cruds.politicaSgsi.fields.id') }}
                             </th>
-                            <th style="text-transform: capitalize">
-                                {{ trans('cruds.politicaSgsi.fields.politicasgsi') }}
+                            <th>
+                                Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión&nbsp;de&nbsp;Seguridad&nbsp;de&nbsp;la&nbsp;Información&nbsp;(SGSI)
                             </th>
+                            <th>
+                                Fecha de publicación
+                            </th>
+                            <th>
+                                Fecha&nbsp;de&nbsp;entrada en vigor
+                            </th>
+                            <th>
+                                Revisó
+                            </th>
+                            <th>
+                               Puesto
+                            </th>
+                            <th>
+                                Área
+                             </th>
+                             <th>
+                                Fecha de revisión
+                             </th>
                             <th>
                                 Opciones
                             </th>
@@ -38,55 +73,9 @@
                             </td>
                         </tr> --}}
                     </thead>
-                    <tbody>
-                        @foreach ($politicaSgsis as $key => $politicaSgsi)
-                            <tr data-entry-id="{{ $politicaSgsi->id }}">
-                                <td>
-                                    {{ $politicaSgsi->id ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $politicaSgsi->politicasgsi ?? '' }}
-                                </td>
-                                <td>
-                                    @can('politica_sgsi_show')
-                                        <a class="mr-2 rounded btn btn-sm btn-outline-primary"
-                                            href="{{ route('admin.politica-sgsis.show', $politicaSgsi->id) }}">
-                                            <i class="fas fa-eye" data-toggle="tooltip" data-placement="top" title="Ver"></i>
-                                            {{-- {{ trans('global.view') }} --}}
-                                        </a>
-                                    @endcan
-
-                                    @can('politica_sgsi_edit')
-                                        <a class="mr-2 rounded btn btn-sm btn-outline-info"
-                                            href="{{ route('admin.politica-sgsis.edit', $politicaSgsi->id) }}">
-                                            <i class="fas fa-edit" data-toggle="tooltip" data-placement="top"
-                                                title="Editar"></i>
-                                            {{-- {{ trans('global.edit') }} --}}
-                                        </a>
-                                    @endcan
-
-                                    @can('politica_sgsi_delete')
-                                        <form action="{{ route('admin.politica-sgsis.destroy', $politicaSgsi->id) }}"
-                                            method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
-                                            style="display: inline-block;">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            {{-- <input type="submit" class="rounded btn btn-sm btn-outline-danger"
-                                                value="{!! '<i>ss</i>' !!}"> --}}
-                                            <button type="submit" class="rounded btn btn-sm btn-outline-danger">
-                                                <i class="fas fa-trash" data-toggle="tooltip" data-placement="top"
-                                                    title="Eliminar"></i>
-                                            </button>
-                                        </form>
-                                    @endcan
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
                 </table>
             </div>
         </div>
-    </div>
 
 @endsection
 @section('scripts')
@@ -126,7 +115,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         doc.styles.tableHeader.fontSize = 7.5;
-                        doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -160,36 +149,6 @@
                 }
 
             ];
-            @can('politica_sgsi_delete')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-                let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.politica-sgsis.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-                return $(entry).data('entry-id')
-                });
-            
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-            
-                return
-                }
-            
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
-
             @can('politica_sgsi_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
@@ -203,16 +162,93 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
+            @can('politica_sgsi_delete')
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+                let deleteButton = {
+                text: deleteButtonTrans,
+                url: "{{ route('admin.politica-sgsis.massDestroy') }}",
+                className: 'btn-danger',
+                action: function (e, dt, node, config) {
+                var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+                return $(entry).data('entry-id')
+                });
 
-            $.extend(true, $.fn.dataTable.defaults, {
+                if (ids.length === 0) {
+                alert('{{ trans('global.datatables.zero_selected') }}')
+
+                return
+                }
+
+                if (confirm('{{ trans('global.areYouSure') }}')) {
+                $.ajax({
+                headers: {'x-csrf-token': _token},
+                method: 'POST',
+                url: config.url,
+                data: { ids: ids, _method: 'DELETE' }})
+                .done(function () { location.reload() })
+                }
+                }
+                }
+                //dtButtons.push(deleteButton)
+            @endcan
+
+
+
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                ajax: "{{ route('admin.politica-sgsis.index') }}",
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'politicasgsi',
+                        name: 'politicasgsi'
+                    },
+                    {
+                        data: 'fecha_publicacion',
+                        name: 'fecha_publicacion'
+                    },
+                    {
+                        data: 'fecha_entrada',
+                        name: 'fecha_entrada'
+                    },
+                    {
+                        data: 'reviso_politica',
+                        name: 'reviso_politica'
+                    },
+                    {
+                        data: 'puesto_reviso',
+                        name: 'puesto_reviso'
+                    },
+                    {
+                        data: 'area_reviso',
+                        name: 'area_reviso'
+                    },
+                    {
+                        data: 'fecha_revision',
+                        name: 'fecha_revision'
+                    },
+                    {
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}'
+                    }
+                ],
                 orderCellsTop: true,
                 order: [
                     [1, 'desc']
-                ]
-            });
-            let table = $('.datatable-PoliticaSgsi:not(.ajaxTable)').DataTable({
-                buttons: dtButtons
-            })
+                ],
+            };
+
+            // let table = $('.datatable-PoliticaSgsi:not(.ajaxTable)').DataTable({
+                let table = $('#datatable-PoliticaSgsi').DataTable(dtOverrideGlobals);
+
+                // buttons: dtButtons
+            // })
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
             //         .columns.adjust();
@@ -225,7 +261,7 @@
             //         .search(value, strict)
             //         .draw()
             // });
-        })
+        });
 
     </script>
 @endsection

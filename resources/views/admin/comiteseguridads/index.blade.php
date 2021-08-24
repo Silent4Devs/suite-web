@@ -20,7 +20,7 @@
                             {{ trans('cruds.comiteseguridad.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.comiteseguridad.fields.nombrerol') }}
+                            Nombre del rol
                         </th>
                         <th>
                             {{ trans('cruds.comiteseguridad.fields.personaasignada') }}
@@ -198,8 +198,8 @@
                         name: 'nombrerol'
                     },
                     {
-                        data: 'personaasignada_name',
-                        name: 'personaasignada.name'
+                        data: 'asignada',
+                        name: 'asignada'
                     },
                     {
                         data: 'fechavigor',

@@ -51,6 +51,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('desk/{seguridad}/seguridad-edit', 'DeskController@editSeguridad')->name('desk.seguridad-edit');
     Route::post('desk/{seguridad}/seguridad-update', 'DeskController@updateSeguridad')->name('desk.seguridad-update');
+    Route::post('desk/{seguridad}/analisis_seguridad-update', 'DeskController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
     Route::post('desk/{incidente}/archivar', 'DeskController@archivadoSeguridad')->name('desk.seguridad-archivar');
     Route::get('desk/seguridad-archivo', 'DeskController@archivoSeguridad')->name('desk.seguridad-archivo');
     Route::get('desk/seguridad', 'DeskController@indexSeguridad')->name('desk.seguridad-index');
@@ -113,11 +114,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('macroprocesos', 'MacroprocesoController');
 
     // Users
+    Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     //Route::post('users/get', 'UsersController@getUsers')->name('users.get');
     Route::resource('users', 'UsersController');
 
-    // Empleados
+    // Empleados    
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
     Route::resource('empleados', 'EmpleadoController');
 
@@ -182,6 +184,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('comiteseguridads', 'ComiteseguridadController');
 
     // Minutasaltadireccions
+    Route::get('minutasaltadireccions/planes-de-accion/create/{id}', 'MinutasaltadireccionController@createPlanAccion')->name('minutasaltadireccions.createPlanAccion');
+    Route::post('minutasaltadireccions/planes-de-accion/store/{id}', 'MinutasaltadireccionController@storePlanAccion')->name('minutasaltadireccions.storePlanAccion');
     Route::delete('minutasaltadireccions/destroy', 'MinutasaltadireccionController@massDestroy')->name('minutasaltadireccions.massDestroy');
     Route::post('minutasaltadireccions/media', 'MinutasaltadireccionController@storeMedia')->name('minutasaltadireccions.storeMedia');
     Route::post('minutasaltadireccions/ckmedia', 'MinutasaltadireccionController@storeCKEditorImages')->name('minutasaltadireccions.storeCKEditorImages');
@@ -286,7 +290,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('marcas', 'MarcaController');
 
     // Modelo
-    Route::get('modelos/get-modelos', 'ModeloController@getModelos')->name('modelos.getModelos');
+    Route::get('modelos/get-modelos/{id?}', 'ModeloController@getModelos')->name('modelos.getModelos');
     Route::resource('modelos', 'ModeloController');
 
     // Tratamiento Riesgos

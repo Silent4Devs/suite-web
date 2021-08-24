@@ -151,7 +151,7 @@
 
 
                 <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#1BB0B0">
-                    <p class"text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
+                    <p class ="text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
                         Verificación del Requisito</p>
                 </div>
 
@@ -218,6 +218,7 @@
                     @endif
                 </div>
 
+
                 {{-- INICIO PLAN ACCIÓN --}}
                 <div class="row w-100 align-items-center" style="margin-left: 1px;">
                     @livewire('planes-implementacion-select',['planes_seleccionados'=>$planes_seleccionados])
@@ -231,6 +232,8 @@
                     Legales'])
                 </div>
                 {{-- FIN PLAN ACCIÓN --}}
+
+
                 <div class="mb-3 col-sm-12">
                     <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Evidencia</label>
                     <div class="custom-file">
@@ -247,11 +250,10 @@
 
                 <div class="mb-3 col-10 d-flex justify-content-right">
                     <span class="float-right" type="button" class="pl-0 ml-0 btn text-primary" data-toggle="modal"
-                        data-target="#evidencia_activa">
+                        data-target="#largeModal">
                         <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Descargar Documentos
                     </span>
                 </div>
-
 
 
                 <div class="form-group col-md-4">
@@ -315,7 +317,7 @@
 
 
 
-                <div class="modal" tabindex="-1" id="evidencia_activa">
+                {{-- <div class="modal" tabindex="-1" id="evidencia_activa">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -324,10 +326,10 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body"> --}}
 
                                 {{-- @dump(json_decode($activo->documentos_relacionados)) --}}
-                                @if (json_decode($matrizRequisitoLegale->evidencia))
+                                {{-- @if (json_decode($matrizRequisitoLegale->evidencia))
                                     <div class="list-group">
                                         @foreach (json_decode($matrizRequisitoLegale->evidencia) as $documento)
 
@@ -349,6 +351,53 @@
 
 
 
+                        </div>
+                    </div>
+                </div> --}}
+
+
+
+
+                <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <!-- carousel -->
+                                <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
+                                    <ol class='carousel-indicators'>
+                                        @foreach($matrizRequisitoLegale->evidencias_matriz as $idx=>$evidencia)
+                                         <li data-target=#carouselExampleIndicators data-slide-to= {{$idx}}></li>
+
+                                        @endforeach
+
+                                    </ol>
+                                    <div class='carousel-inner'>
+                                        @foreach($matrizRequisitoLegale->evidencias_matriz as $idx=>$evidencia)
+                                        <div class='carousel-item {{$idx==0?"active":""}}'>
+                                            <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                src="{{ asset('storage/matriz_evidencias') }}/{{$evidencia->evidencia}}"></iframe>
+                                        </div>
+                                        @endforeach
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <a style="height: 50px; top: 50px;" class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
+                                    data-slide='prev'>
+                                    <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                    <span class='sr-only'>Previous</span>
+                                </a>
+                                <a style="height: 50px; top: 50px;" class='carousel-control-next' href='#carouselExampleIndicators' role='button'
+                                    data-slide='next'>
+                                    <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                    <span class='sr-only'>Next</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

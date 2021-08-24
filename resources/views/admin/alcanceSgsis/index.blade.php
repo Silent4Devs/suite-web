@@ -1,6 +1,117 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+.table tr td:nth-child(2){
+
+text-align: justify !important;
+
+}
+
+.table tr th:nth-child(3){
+
+    text-align: center !important;
+
+}
+
+.table tr td:nth-child(4){
+
+text-align: center !important;
+
+}
+
+.table tr th:nth-child(4){
+width:120px !important;
+max-width:120px !important;
+min-width:120px !important;
+text-align: center !important;
+text-align: center !important;
+
+}
+
+.table tr th:nth-child(2){
+width:700px !important;
+max-width:700px !important;
+min-width:700px !important;
+text-align: center !important;
+
+
+}
+
+.table tr td:nth-child(5){
+
+max-width:200px !important;
+min-width:200px !important;
+width:200px !important;
+text-align: center !important;
+
+}
+
+.table tr th:nth-child(5){
+
+width:200px !important;
+max-width:200px !important;
+min-width:200px !important;
+text-align: center !important;
+
+}
+
+.table tr td:nth-child(6){
+
+max-width:200px !important;
+min-width:200px !important;
+width:200px !important;
+text-align: center !important;
+
+}
+
+.table tr th:nth-child(6){
+
+width:200px !important;
+max-width:200px !important;
+min-width:200px !important;
+text-align: center !important;
+
+}
+
+.table tr td:nth-child(7){
+
+max-width:200px !important;
+min-width:200px !important;
+width:200px !important;
+text-align: center !important;
+
+}
+
+.table tr th:nth-child(7){
+
+width:200px !important;
+max-width:200px !important;
+min-width:200px !important;
+text-align: center !important;
+
+}
+
+.table tr td:nth-child(8){
+
+max-width:80px !important;
+min-width:80px !important;
+width:80px !important;
+text-align: center !important;
+
+}
+
+.table tr th:nth-child(8){
+
+width:80px !important;
+max-width:80px !important;
+min-width:80px !important;
+text-align: center !important;
+
+}
+
+</style>
+
     {{ Breadcrumbs::render('admin.alcance-sgsis.index') }}
     @can('alcance_sgsi_create')
 
@@ -26,11 +137,29 @@
                         <th>
                             {{ trans('cruds.alcanceSgsi.fields.id') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.alcanceSgsi.fields.alcancesgsi') }}
+                        <th style="text-align: center !important">
+                            Alcance&nbsp;SGSI
                         </th>
                         <th>
-                            &nbsp;
+                            Fecha de publicación
+                        </th>
+                        <th>
+                            Fecha&nbsp;de&nbsp;entrada en&nbsp;vigor
+                        </th>
+                        <th>
+                            Revisó
+                        </th>
+                        <th>
+                            Puesto
+                         </th>
+                         <th>
+                            Área
+                         </th>
+                         <th>
+                            Fecha&nbsp;de revisión
+                         </th>
+                        <th>
+                            Opciones
                         </th>
                     </tr>
                     {{-- <tr>
@@ -184,6 +313,30 @@
                         name: 'alcancesgsi'
                     },
                     {
+                        data: 'fecha_publicacion',
+                        name: 'fecha_publicacion'
+                    },
+                    {
+                        data: 'fecha_entrada',
+                        name: 'fecha_entrada'
+                    },
+                    {
+                        data: 'reviso_alcance',
+                        name: 'reviso_alcance'
+                    },
+                    {
+                        data: 'puesto_reviso',
+                        name: 'puesto_reviso'
+                    },
+                    {
+                        data: 'area_reviso',
+                        name: 'area_reviso'
+                    },
+                    {
+                        data: 'fecha_revision',
+                        name: 'fecha_revision'
+                    },
+                    {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
                     }
@@ -210,3 +363,4 @@
 
     </script>
 @endsection
+

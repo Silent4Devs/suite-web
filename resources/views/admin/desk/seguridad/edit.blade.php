@@ -1,148 +1,9 @@
 @extends('layouts.admin')
 @section('content')
 
-
-    <style type="text/css">
-        #desk .caja_botones {
-            display: flex;
-        }
-
-        #desk .caja_botones a {
-            width: 33.33%;
-            text-decoration: none;
-            display: inline-block;
-            color: #008186;
-            padding: 5px 0px;
-            border-top: 1px solid #ccc !important;
-            border-right: 1px solid #ccc;
-            background-color: #f9f9f9;
-            margin: 0;
-            text-align: center;
-            align-items: center;
-        }
-
-        #desk .caja_botones a:first-child {
-            border-left: 1px solid #ccc;
-        }
-
-        #desk .caja_botones a:not(#desk .caja_botones a.btn_activo) {
-            border-bottom: 1px solid #ccc;
-        }
-
-        #desk .caja_botones a i {
-            margin-right: 7px;
-            font-size: 15pt;
-        }
-
-        #desk .caja_botones a.btn_activo,
-        #desk .caja_botones a.btn_activo:hover {
-            background-color: #fff;
-        }
-
-        #desk .caja_botones a:hover {
-            background-color: #f1f1f1;
-        }
-
-
-        #desk .caja_caja_secciones {
-            width: 100%;
-        }
-
-        #desk .caja_secciones {
-            width: 100%;
-            display: flex;
-        }
-
-        #desk .caja_secciones section {
-            width: 0px;
-            overflow: hidden;
-            transition: 0.4s;
-            opacity: 0;
-        }
-
-        .caja_tab_reveldada {
-            width: 100% !important;
-            overflow: none;
-            opacity: 1 !important;
-        }
-
-        .seccion_div {
-            overflow: hidden;
-            width: 990px;
-        }
-
-        .caja_tab_reveldada .seccion_div {
-            overflow: hidden;
-            transition-delay: 0.5s;
-            width: 100%;
-        }
-
-        .caja_oculta_dinamica {
-            display: none;
-        }
-
-
-        #digrama textarea {
-            position: absolute;
-            background-color: #f1f1f1;
-            width: 200px;
-            min-height: 70px !important;
-            max-height: 70px !important;
-            border: none;
-            box-shadow: none;
-            border-radius: 6px;
-            resize: none;
-        }
-
-        .politicas_txtarea {
-            top: 40px;
-            left: calc(50% - 380px);
-        }
-
-        .procesos_txtarea {
-            top: 40px;
-            left: calc(50% - 120px);
-        }
-
-        .personas_txtarea {
-            top: 40px;
-            left: calc(50% + 150px);
-        }
-
-        .tecnologia_txtarea {
-            top: 230px;
-            left: calc(50% - 470px);
-        }
-
-        .metodos_txtarea {
-            top: 230px;
-            left: calc(50% - 200px);
-        }
-
-        .ambiente_txtarea {
-            top: 230px;
-            left: calc(50% + 70px);
-        }
-
-        .problemas_txtarea {
-            top: 270px;
-            right: 0px;
-            width: 150px !important;
-        }
-
-        .txt_obj_secundarios_a {
-            margin-top: 80px;
-            margin-left: 20px;
-            background-color: #e1e1e1 !important;
-        }
-
-        .txt_obj_secundarios_b {
-            margin-top: 80px;
-            margin-left: -20px;
-            background-color: #e1e1e1 !important;
-        }
-
-    </style>
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="{{asset('css/formularios_centro_atencion.css')}}">
+@endsection
 
 
     <div class="card" id="desk">
@@ -150,7 +11,7 @@
             <strong style="font-size: 16pt; color: #fff;"><i class="fas fa-exclamation-triangle mr-4"></i>Incidentes de
                 seguridad</strong>
         </div>
-        <div class="caja_botones">
+        <div class="caja_botones_menu" style=" justify-content: left !important;">
             <a href="#" data-tabs="registro" class="btn_activo"><i class="fas fa-exclamation-triangle mr-4"></i>Registro de
                 Incidentes</a>
             <a href="#" data-tabs="analisis"><i class="fas fa-clipboard-list mr-4"></i>Análisis Causa Raíz</a>
@@ -169,88 +30,62 @@
                                 action="{{ route('admin.desk.seguridad-update', $incidentesSeguridad) }}">
                                 @csrf
 
+                                <div class="form-group mt-1 col-12">
+                                    <b>Datos generales:</b>
+                                </div>
+
                                 <div class="form-group mt-2 col-2">
-                                    <label class="form-label">Folio</label>
+                                    <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                     <div class="form-control" id="input_folio">{{ $incidentesSeguridad->folio }}</div>
                                 </div>
 
-                                <div class="form-group mt-2 col-5">
-                                    <label class="form-label">Título</label>
+                                <div class="form-group mt-2 col-6">
+                                    <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Titulo corto del incidente</label>
                                     <input type="" name="titulo" value="{{ $incidentesSeguridad->titulo }}"
                                         class="form-control">
                                 </div>
 
-                                <div class="form-group mt-2 col-5">
-                                    <label class="form-label">Estatus</label>
+                                <div class="form-group mt-2 col-4">
+                                    <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                                     <select name="estatus" class="form-control">
                                         <option
                                             {{ old('estatus', $incidentesSeguridad->estatus) == 'nuevo' ? 'selected' : '' }}
-                                            value="nuevo">nuevo</option>
+                                            value="nuevo">Nuevo</option>
                                         <option
                                             {{ old('estatus', $incidentesSeguridad->estatus) == 'en curso' ? 'selected' : '' }}
-                                            value="en curso">en curso</option>
+                                            value="en curso">En curso</option>
                                         <option
                                             {{ old('estatus', $incidentesSeguridad->estatus) == 'en espera' ? 'selected' : '' }}
-                                            value="en espera">en espera</option>
+                                            value="en espera">En espera</option>
                                         <option
                                             {{ old('estatus', $incidentesSeguridad->estatus) == 'cerrado' ? 'selected' : '' }}
-                                            value="cerrado">cerrado</option>
+                                            value="cerrado">Cerrado</option>
                                         <option
                                             {{ old('estatus', $incidentesSeguridad->estatus) == 'cancelado' ? 'selected' : '' }}
-                                            value="cancelado">cancelado</option>
+                                            value="cancelado">Cancelado</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Fecha y hora de ocurrencia del incidente</label>
+                                    <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora de ocurrencia del incidente</label>
                                     <input type="datetime" name="fecha" value="{{ $incidentesSeguridad->fecha }}"
                                         class="form-control">
                                 </div>
 
                                 <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Fecha y hora de recepcion del reporte</label>
-                                    <input type="datetime" name="fecha" value="{{ $incidentesSeguridad->fecha }}"
-                                        class="form-control">
+                                    <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora de recepción del reporte</label>
+                                        <div class="form-control">{{ $incidentesSeguridad->created_at }}</div>
                                 </div>
 
                                 <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Fecha y hora de cierre del incidente</label>
-                                    <input type="datetime" name="fecha" value="{{ $incidentesSeguridad->fecha }}"
-                                        class="form-control">
+                                    <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora de cierre del ticket</label>
+                                        <div class="form-control">{{ $incidentesSeguridad->fecha_cierre }}</div>
                                 </div>
 
                                 <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Reportó</label>
-                                    <div class="form-control">{{ $incidentesSeguridad->reporto->name }}</div>
-                                </div>
-
-                                <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Correo</label>
-                                    <div class="form-control">{{ $incidentesSeguridad->reporto->email }}</div>
-                                </div>
-
-                                <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Teléfono</label>
-                                    <div class="form-control">{{ $incidentesSeguridad->reporto->telefono }}</div>
-                                </div>
-
-
-                                <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Categoría</label>
-                                    <select class="form-control" value="{{ $incidentesSeguridad->categoria }}"
-                                        name="categoria"></select>
-                                </div>
-
-                                <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Subcategoría</label>
-                                    <select class="form-control" value="{{ $incidentesSeguridad->subcategoria }}"
-                                        name="subcatgoría"></select>
-                                </div>
-
-                                <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Asignado a</label>
+                                    <label class="form-label"><i class="fas fa-user-plus iconos-crear"></i>Asignado a</label>
                                     <select name="empleado_asignado_id" class="form-control">
-                                        <option value="}" disabled selected></option>
+                                        <option value="" disabled selected></option>
                                         @foreach ($empleados as $empleado)
                                             <option
                                                 {{ old('empleado_asignado_id', $incidentesSeguridad->empleado_asignado_id) ? 'selected' : '' }}
@@ -260,70 +95,75 @@
                                 </div>
 
                                 <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Urgencia</label>
-                                    <select class="form-control" value="{{ $incidentesSeguridad->prioridad }}"
-                                        name="prioridad">
-                                        <option name="alta">Alta</option>
-                                        <option name="media">Media</option>
-                                        <option name="baja">Baja</option>
+                                    <label class="form-label"><i class="fas fa-layer-group iconos-crear"></i>Categoría</label>
+                                    <select id="select_categoria" class="form-control" value="{{ $incidentesSeguridad->categoria }}" name="categoria">
+                                            @foreach($categorias as $categoria)
+                                                <option id="categoria{{$categoria->id}}" value="{{ $categoria->id}}" class="">{{ $categoria->categoria }}</option>
+                                            @endforeach
+                                        </select>
+                                </div>
+
+                                <div class="form-group mt-2 col-4">
+                                    <label class="form-label"><i class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
+                                    <select id="select_subcategorias" class="form-control" value="{{ $incidentesSeguridad->subcategoria }}" name="subcatgoría">
+                                            @foreach($subcategorias as $subcategoria)
+                                                <option class="d-none categoria{{ $subcategoria->categoria->id}}" value="{{ $subcategoria->id}}">{{ $subcategoria->subcategoria }}</option>
+                                            @endforeach
                                     </select>
                                 </div>
 
                                 <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Impacto</label>
-                                    <select class="form-control" value="{{ $incidentesSeguridad->prioridad }}"
-                                        name="prioridad">
-                                        <option name="alta">Alta</option>
-                                        <option name="media">Media</option>
-                                        <option name="baja">Baja</option>
+                                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Sede</label>
+                                    <select class="form-control" name="sede">
+                                        <option disabled>seleccione sede</option>
+                                        @foreach($sedes as $sede)
+                                            <option value="{{ $sede->sede }}">{{ $sede->sede }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
-                                <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Prioridad</label>
-                                    <select class="form-control" value="{{ $incidentesSeguridad->prioridad }}"
-                                        name="prioridad">
-                                        <option name="alta">Alta</option>
-                                        <option name="media">Media</option>
-                                        <option name="baja">Baja</option>
-                                    </select>
+                                <div class="form-group mt-2 col-8">
+                                    <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación exacta</label>
+                                    <input type="" name="ubicacion" class="form-control" value="{{$incidentesSeguridad->ubicacion}}">
                                 </div>
-
+                                
 
                                 <div class="form-group mt-2 col-12">
-                                    <label class="form-label">Describa detalladamente el incidente</label>
+                                    <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción del incidente</label>
                                     <textarea name="descripcion" class="form-control">{{ $incidentesSeguridad->descripcion }}
                                     </textarea>
                                 </div>
 
-                                <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Áreas afectadas</label>
+                                <div class="form-group mt-2 col-12 text-center">
+                                    <button class="btn btn-danger">Evidencia</button>
+                                </div>
+
+                                <div class="form-group mt-2 col-4 areas_multiselect">
+                                    <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área(s) afectada(s)</label>
                                     <select class="form-control" id="activos">
                                         <option disabled selected>Seleccionar áreas</option>
-                                        @foreach ($activos as $activo)
-                                            <option value="{{ $activo->nombreactivo }}">{{ $activo->nombreactivo }}
+                                        @foreach ($areas as $area)
+                                            <option value="{{ $area->area }}">{{ $area->area }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <textarea name="activos_afectados" class="form-control" id="texto_activos"
-                                        required>{{ $incidentesSeguridad->activos_afectados }}</textarea>
+                                    <textarea name="areas_afectados" class="form-control" id="texto_activos" required>{{ $incidentesSeguridad->areas_afectados }}</textarea>
                                 </div>
 
-                                <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Procesos afectados</label>
+                                <div class="form-group mt-2 col-4 procesos_multiselect">
+                                    <label class="form-label"><i class="fas fa-dice-d20 iconos-crear"></i>Proceso(s) afectado(s)</label>
                                     <select class="form-control" id="activos">
                                         <option disabled selected>Seleccionar procesos</option>
-                                        @foreach ($activos as $activo)
-                                            <option value="{{ $activo->nombreactivo }}">{{ $activo->nombreactivo }}
+                                        @foreach ($procesos as $proceso)
+                                            <option value="{{ $proceso->nombre }}">{{ $proceso->nombre }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <textarea name="activos_afectados" class="form-control" id="texto_activos"
-                                        required>{{ $incidentesSeguridad->activos_afectados }}</textarea>
+                                    <textarea name="procesos_afectados" class="form-control" id="texto_activos" required>{{ $incidentesSeguridad->procesos_afectados }}</textarea>
                                 </div>
 
-                                <div class="form-group mt-2 col-4">
-                                    <label class="form-label">Activos afectados</label>
+                                <div class="form-group mt-2 col-4 activos_multiselect">
+                                    <label class="form-label"><i class="fa-fw fas fa-laptop iconos-crear"></i>Activo(s) afectado(s)</label>
                                     <select class="form-control" id="activos">
                                         <option disabled selected>Seleccionar afectados</option>
                                         @foreach ($activos as $activo)
@@ -331,16 +171,88 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <textarea name="activos_afectados" class="form-control" id="texto_activos"
-                                        required>{{ $incidentesSeguridad->activos_afectados }}</textarea>
+                                    <textarea name="activos_afectados" class="form-control" id="texto_activos" required>{{ $incidentesSeguridad->activos_afectados }}</textarea>
                                 </div>
+
+                                
+
+                                <div class="form-group mt-4 col-12">
+                                    <b>Reportó incidente:</b>
+                                </div>
+
+                                <div class="form-group mt-0 col-4">
+                                    <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                                    <div class="form-control">{{ $incidentesSeguridad->reporto->name }}</div>
+                                </div>
+
+                                <div class="form-group mt-0 col-4">
+                                    <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                                    <div class="form-control">{{ $incidentesSeguridad->reporto->puesto }}</div>
+                                </div>
+
+                                <div class="form-group mt-0 col-4">
+                                    <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i></i>Área</label>
+                                    <div class="form-control">{{ $incidentesSeguridad->reporto->area->area }}</div>
+                                </div>
+
+                                <div class="form-group mt-2 col-6">
+                                   <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico</label>
+                                    <div class="form-control">{{ $incidentesSeguridad->reporto->email }}</div>
+                                </div>
+
+                                <div class="form-group mt-2 col-6">
+                                    <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
+                                    <div class="form-control">{{ $incidentesSeguridad->reporto->telefono }}</div>
+                                </div>
+
+
+                                <div class="form-group mt-4 col-12">
+                                    <b>Priorización del incidente:</b>
+                                </div>
+
+
+                                
+
+
+                                
+
+                                <div class="form-group mt-2 col-4">
+                                    <label class="form-label"><i class="fas fa-chart-line iconos-crear"></i>Urgencia</label>
+                                    <select class="form-control" name="urgencia">
+                                        <option>{{ $incidentesSeguridad->urgencia }}</option>
+                                        <option>Alta</option>
+                                        <option>Media</option>
+                                        <option>Baja</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mt-2 col-4">
+                                    <label class="form-label"><i class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
+                                    <select class="form-control" name="impacto">
+                                        <option>{{ $incidentesSeguridad->impacto }}</option>
+                                        <option>Alta</option>
+                                        <option>Media</option>
+                                        <option>Baja</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mt-2 col-4">
+                                    <label class="form-label"><i class="fas fa-flag iconos-crear"></i>Prioridad</label>
+                                    <select class="form-control" name="prioridad">
+                                        <option>{{ $incidentesSeguridad->prioridad }}</option>
+                                        <option>Alta</option>
+                                        <option>Media</option>
+                                        <option>Baja</option>
+                                    </select>
+                                </div>
+
+                                
 
 
 
                                 <div class="form-group mt-2 col-12">
-                                    <label class="form-label">Comentarios</label>
-                                    <textarea name="comentarios"
-                                        class="form-control">{{ $incidentesSeguridad->comentarios }}</textarea>
+                                    <label class="form-label"><i class="fas fa-comment-dots iconos-crear"></i>Comentarios</label>
+                                    <textarea name="comentarios" class="form-control">{{ $incidentesSeguridad->comentarios }}</textarea>
                                 </div>
 
                                 <div class="form-group mt-2 text-right col-12">
@@ -351,126 +263,7 @@
                         </div>
                     </section>
 
-                    <section id="plan">
-                        <div class="seccion_div">
-                            <div class="datatable-fix" style="width: 100%;">
-                                <table id="tabla_plan_accion" class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Acción</th>
-                                            <th>Fecha compromiso</th>
-                                            <th>Fecha real</th>
-                                            <th>Prioridad</th>
-                                            <th>Tipo</th>
-                                            <th>Asignados</th>
-                                            <th>Estatus</th>
-                                            <th>Comentarios</th>
-                                            <th>Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>ID</td>
-                                            <td>Acción</td>
-                                            <td>Fecha compromiso</td>
-                                            <td>Fecha real</td>
-                                            <td>Prioridad</td>
-                                            <td>Tipo</td>
-                                            <td>Asignados</td>
-                                            <td>Estatus</td>
-                                            <td>Comentarios</td>
-                                            <td>Opciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ID</td>
-                                            <td>Acción</td>
-                                            <td>Fecha compromiso</td>
-                                            <td>Fecha real</td>
-                                            <td>Prioridad</td>
-                                            <td>Tipo</td>
-                                            <td>Asignados</td>
-                                            <td>Estatus</td>
-                                            <td>Comentarios</td>
-                                            <td>Opciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ID</td>
-                                            <td>Acción</td>
-                                            <td>Fecha compromiso</td>
-                                            <td>Fecha real</td>
-                                            <td>Prioridad</td>
-                                            <td>Tipo</td>
-                                            <td>Asignados</td>
-                                            <td>Estatus</td>
-                                            <td>Comentarios</td>
-                                            <td>Opciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ID</td>
-                                            <td>Acción</td>
-                                            <td>Fecha compromiso</td>
-                                            <td>Fecha real</td>
-                                            <td>Prioridad</td>
-                                            <td>Tipo</td>
-                                            <td>Asignados</td>
-                                            <td>Estatus</td>
-                                            <td>Comentarios</td>
-                                            <td>Opciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ID</td>
-                                            <td>Acción</td>
-                                            <td>Fecha compromiso</td>
-                                            <td>Fecha real</td>
-                                            <td>Prioridad</td>
-                                            <td>Tipo</td>
-                                            <td>Asignados</td>
-                                            <td>Estatus</td>
-                                            <td>Comentarios</td>
-                                            <td>Opciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ID</td>
-                                            <td>Acción</td>
-                                            <td>Fecha compromiso</td>
-                                            <td>Fecha real</td>
-                                            <td>Prioridad</td>
-                                            <td>Tipo</td>
-                                            <td>Asignados</td>
-                                            <td>Estatus</td>
-                                            <td>Comentarios</td>
-                                            <td>Opciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ID</td>
-                                            <td>Acción</td>
-                                            <td>Fecha compromiso</td>
-                                            <td>Fecha real</td>
-                                            <td>Prioridad</td>
-                                            <td>Tipo</td>
-                                            <td>Asignados</td>
-                                            <td>Estatus</td>
-                                            <td>Comentarios</td>
-                                            <td>Opciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ID</td>
-                                            <td>Acción</td>
-                                            <td>Fecha compromiso</td>
-                                            <td>Fecha real</td>
-                                            <td>Prioridad</td>
-                                            <td>Tipo</td>
-                                            <td>Asignados</td>
-                                            <td>Estatus</td>
-                                            <td>Comentarios</td>
-                                            <td>Opciones</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
+                    
 
                     <section id="analisis">
                         <div class="seccion_div">
@@ -488,78 +281,134 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="col-12" style="position: relative;">
 
+                                <form method="POST" class="col-12" action="{{ route('admin.desk.analisis_seguridad-update', $analisis) }}">
+                                    @csrf
 
-                                    <div id="ideas" class="caja_oculta_dinamica row">
-                                        <div class="form-group col-12">
-                                            <label>Ideas</label>
-                                            <textarea class="form-control"></textarea>
-                                        </div>
+                                    <div class="col-12" style="position: relative;">
+                                         
+                                            <div id="ideas" class="caja_oculta_dinamica row">
+                                                <div class="form-group col-12">
+                                                    <label>Ideas</label>
+                                                    <textarea class="form-control" name="ideas">{{ $analisis->ideas }}</textarea>
+                                                </div>
 
-                                        <div class="form-group col-12">
-                                            <label>Causa Raíz</label>
-                                            <textarea class="form-control"></textarea>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div id="porque" class="caja_oculta_dinamica row">
-                                        <div class="form-group col-12">
-                                            Problema: <textarea class="form-control"></textarea>
-                                        </div>
-                                        <div class="form-group col-12">
-                                            <label>1er porqué:</label>
-                                            <input type="" name="" class="form-control">
-                                            <label>2do porqué:</label>
-                                            <input type="" name="" class="form-control">
-                                            <label>3er porqué:</label>
-                                            <input type="" name="" class="form-control">
-                                            <label>4to porqué:</label>
-                                            <input type="" name="" class="form-control">
-                                            <label>5to porqué:</label>
-                                            <input type="" name="" class="form-control">
-                                        </div>
-                                        <div class="form-group col-12">
-                                            Causa Raíz: <textarea class="form-control"></textarea>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div id="digrama" class="caja_oculta_dinamica">
-                                        <div class="col-12 mt-5" style="overflow: auto;">
-                                            <div style="width: 100%; min-width:540px; position: relative;">
-                                                <img src="{{ asset('img/diagrama_causa_raiz.png') }}" style="width:100%">
-
-                                                <textarea name="" class="politicas_txtarea"></textarea>
-                                                <textarea name=""
-                                                    class="politicas_txtarea txt_obj_secundarios_a"></textarea>
-
-                                                <textarea name="" class="procesos_txtarea"></textarea>
-                                                <textarea name="" class="procesos_txtarea txt_obj_secundarios_a"></textarea>
-
-                                                <textarea name="" class="personas_txtarea"></textarea>
-                                                <textarea name="" class="personas_txtarea txt_obj_secundarios_a"></textarea>
-
-                                                <textarea name=""
-                                                    class="tecnologia_txtarea txt_obj_secundarios_b"></textarea>
-                                                <textarea name="" class="tecnologia_txtarea "></textarea>
-
-                                                <textarea name="" class="metodos_txtarea txt_obj_secundarios_b"></textarea>
-                                                <textarea name="" class="metodos_txtarea "></textarea>
-
-                                                <textarea name="" class="ambiente_txtarea txt_obj_secundarios_b"></textarea>
-                                                <textarea name="" class="ambiente_txtarea "></textarea>
-
-                                                <textarea name="" class="problemas_txtarea"></textarea>
+                                                <div class="form-group col-12">
+                                                    <label>Causa Raíz</label>
+                                                    <textarea class="form-control" name="causa">{{ $analisis->causa }}</textarea>
+                                                </div>
                                             </div>
-                                        </div>
+
+
+
+                                            <div id="porque" class="caja_oculta_dinamica row">
+                                                <div class="form-group col-12">
+                                                    Problema: <textarea class="form-control" name="">{{ $analisis->problema }}</textarea>
+                                                </div>
+                                                <div class="form-group col-12">
+                                                    <label>1er porqué:</label>
+                                                    <input name="porque_1" class="form-control" value="{{ $analisis->porque_1 }}">
+                                                    <label>2do porqué:</label>
+                                                    <input name="porque_2" class="form-control" value="{{ $analisis->porque_2 }}">
+                                                    <label>3er porqué:</label>
+                                                    <input name="porque_3" class="form-control" value="{{ $analisis->porque_3 }}">
+                                                    <label>4to porqué:</label>
+                                                    <input name="porque_4" class="form-control" value="{{ $analisis->porque_4 }}">
+                                                    <label>5to porqué:</label>
+                                                    <input name="porque_5" class="form-control" value="{{ $analisis->porque_5 }}">
+                                                </div>
+                                                <div class="form-group col-12">
+                                                    Causa Raíz: <textarea class="form-control" name="">{{ $analisis->causa }}</textarea>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div id="digrama" class="caja_oculta_dinamica">
+                                                <div class="col-12 mt-5" style="overflow: auto;">
+                                                    <div style="width: 100%; min-width:540px; position: relative;">
+                                                        <img src="{{ asset('img/diagrama_causa_raiz.png') }}" style="width:100%">
+
+                                                        <textarea name="control_a" class="politicas_txtarea">{{ $analisis->control_a }}</textarea>
+                                                        <textarea name="control_b" class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea>
+
+                                                        <textarea name="proceso_a" class="procesos_txtarea">{{ $analisis->proceso_a }}</textarea>
+                                                        <textarea name="proceso_b" class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea>
+
+                                                        <textarea name="personas_a" class="personas_txtarea">{{ $analisis->personas_a }}</textarea>
+                                                        <textarea name="personas_b" class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea>
+
+                                                        <textarea name="tecnologia_a" class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
+                                                        <textarea name="tecnologia_b" class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea>
+
+                                                        <textarea name="metodos_a" class="metodos_txtarea txt_obj_secundarios_b">{{ $analisis->metodos_a }}</textarea>
+                                                        <textarea name="metodos_b" class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea>
+
+                                                        <textarea name="ambiente_a" class="ambiente_txtarea txt_obj_secundarios_b">{{ $analisis->ambiente_a }}</textarea>
+                                                        <textarea name="ambiente_b" class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea>
+
+                                                        <textarea name="problema" class="problemas_txtarea">{{ $analisis->problema }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </div>
+                                    <div class="col-12 text-right py-3">
+                                        <input type="submit" class="btn btn-success">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
 
 
-                                </div>
+
+                    <section id="plan">
+                        <div class="seccion_div">
+                            <div class="" style="position: relative; ">
+                            <h5 style="position: ;"><b>Acciones para la Atención del Incidente</b></h5>
+                                <a href="#" style="position:absolute; right: 2px; top:2px;" class="btn btn-success">Agregar actividad</a>
+                            </div>
+                            <div class="datatable-fix mt-4" style="width: 100%;">
+                                <table id="tabla_plan_accion" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Actividad</th>
+                                            <th>Fecha&nbsp;de&nbsp;inicio</th>
+                                            <th>Fecha&nbsp;de&nbsp;fin</th>
+                                            <th>Prioridad</th>
+                                            <th>Tipo</th>
+                                            <th>Responsable(s)</th>
+                                            <th>Estatus</th>
+                                            <th>Comentarios</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>numero consecutivo</td>
+                                            <td>text camp</td>
+                                            <td>date camp</td>
+                                            <td>date camp</td>
+                                            <td>select, alta media baja</th>
+                                            <td>select, accion inmediata, accion subsecuente, accion posterior</th>
+                                            <td>slect silta de empleados</td>
+                                            <td>select no iniciado, en proceso, terminado</td>
+                                            <td>textarea</td>
+                                            <td>botones</td>
+                                        </tr>
+                                        <tr>
+                                            <td>replicar en forms</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <tfoot>
+                                    <tr>
+                                        Si lo requiere puede generar un plan de trabajo completo para la atencion del incidente.
+                                        <br>
+                                        <i>agregar enlaces</i>
+                                    </tr>
+                                </tfoot>
                             </div>
                         </div>
                     </section>
@@ -578,34 +427,35 @@
     @parent
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
-            let select_activos = document.querySelector('#activos');
+            let select_activos = document.querySelector('.areas_multiselect #activos');
             select_activos.addEventListener('change', function(e) {
                 e.preventDefault();
-                let texto_activos = document.querySelector('#texto_activos');
+                let texto_activos = document.querySelector('.areas_multiselect #texto_activos');
 
                 texto_activos.value += `${this.value}, `;
 
             });
+        });
 
+        document.addEventListener('DOMContentLoaded', function() {
+            let select_activos = document.querySelector('.procesos_multiselect #activos');
+            select_activos.addEventListener('change', function(e) {
+                e.preventDefault();
+                let texto_activos = document.querySelector('.procesos_multiselect #texto_activos');
 
-            function padLeftWithBounds(input, padChar, maxLength, min, max) {
-                if (input <= min)
-                    return min;
-                if (input >= max)
-                    return max;
+                texto_activos.value += `${this.value}, `;
 
-                var s = input.toString(10);
-                var padding = "";
-                for (var i = 0; i < maxLength; ++i)
-                    padding += padChar;
+            });
+        });
 
-                return padding.substring(0, maxLength - s.length) + s;
-            };
+        document.addEventListener('DOMContentLoaded', function() {
+            let select_activos = document.querySelector('.activos_multiselect #activos');
+            select_activos.addEventListener('change', function(e) {
+                e.preventDefault();
+                let texto_activos = document.querySelector('.activos_multiselect #texto_activos');
 
-            $("#input_folio").on("keyup", function() {
-                if (!$(this).val())
-                    return;
-                $(this).val(padLeftWithBounds(parseInt($(this).val()), '0', 3, 0, 999));
+                texto_activos.value += `${this.value}, `;
+
             });
         });
     </script>
@@ -614,21 +464,10 @@
 
 
 
-    <script type="text/javascript">
-        $(".caja_botones a").click(function() {
-            $(".caja_botones a").removeClass("btn_activo");
-            $(".caja_botones a:hover").addClass("btn_activo");
-        });
-    </script>
+  
 
 
-    <script type="text/javascript">
-        $(".caja_botones a").click(function() {
-            $("section").removeClass("caja_tab_reveldada");
-            var id_seccion = $(".caja_botones a:hover").attr('data-tabs');
-            $(document.getElementById(id_seccion)).addClass("caja_tab_reveldada");
-        });
-    </script>
+    
 
 
 
@@ -637,6 +476,23 @@
             $(".caja_oculta_dinamica").removeClass("d-block");
             var metodo_v = $("#select_metodos option:selected").attr('data-metodo');
             $(document.getElementById(metodo_v)).addClass("d-block");
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        $(document).on('change', '#select_categoria', function(event) {
+            $("#select_subcategorias option").addClass("d-none");
+            var categoria_selected = $("#select_categoria option:selected").attr('id');
+            $(document.getElementsByClassName(categoria_selected)).removeClass("d-none");
         });
     </script>
 @endsection

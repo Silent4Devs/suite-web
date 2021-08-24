@@ -147,30 +147,48 @@
             }
         }
 
+        .tabs{
+            outline: none;
+        }
+
+    </style>
+
+    <style>
+        .ventana_menu{
+            width:calc(100% - 40px);
+            background-color:#fff;
+            position:absolute;
+            margin:auto;
+            display:none;
+            top:130px;
+            z-index:3;
+            height:calc(100% - 40px);
+
+        }
     </style>
 
     {{ Breadcrumbs::render('admin.iso27001.index') }}
-
+    {{-- @dump(request()->getTargets()) --}}
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>ISO 27001</strong></h3>
         </div>
         <div class="card-body">
             <div class="caja_botones_menu">
-                <a href="#" data-tabs="s1" class="btn_activo"><i class="fa-fw fas fa-archive"></i><br> Contexto </a>
-                <a href="#" data-tabs="s2"><i class="fa-fw fas fa-gavel"></i><br> Liderazgo </a>
-                <a href="#" data-tabs="s3"><i class="fa-fw fas fa-tasks"></i><br> Planificación </a>
-                <a href="#" data-tabs="s4"><i class="fa-fw fas fa-headset"></i><br> Soporte</a>
-                <a href="#" data-tabs="s5"><i class="fa-fw fas fa-briefcase"></i><br> Operación </a>
-                <a href="#" data-tabs="s6"><i class="fa-fw fas fa-file-signature"></i><br> Evaluación</a>
-                <a href="#" data-tabs="s7"><i class="fa-fw fas fa-infinity"></i><br> Mejora</a>
-                <a href="#" data-tabs="s8"><i class="fas fa-tasks"></i><br>Controles </a>
+                <a href="#" id="contexto" data-tabs="s1" class="btn_activo tabs ventana_cerrar"><i class="fa-fw fas fa-archive"></i><br> Contexto </a>
+                <a href="#" id="liderazgo" data-tabs="s2" class="tabs ventana_cerrar"><i class="fa-fw fas fa-gavel"></i><br> Liderazgo </a>
+                <a href="#" id="planificacion" data-tabs="s3" class="tabs ventana_cerrar"><i class="fa-fw fas fa-tasks"></i><br> Planificación </a>
+                <a href="#" id="soporte" data-tabs="s4" class="tabs ventana_cerrar"><i class="fa-fw fas fa-headset"></i><br> Soporte</a>
+                <a href="#" id="operacion" data-tabs="s5" class="tabs ventana_cerrar"><i class="fa-fw fas fa-briefcase"></i><br> Operación </a>
+                <a href="#" id="evaluacion" data-tabs="s6" class="tabs ventana_cerrar"><i class="fa-fw fas fa-file-signature"></i><br> Evaluación</a>
+                <a href="#" id="mejora" data-tabs="s7" class="tabs ventana_cerrar"><i class="fa-fw fas fa-infinity"></i><br> Mejora</a>
+                <a href="#" id="controles" data-tabs="s8" class="tabs ventana_cerrar"><i class="fas fa-tasks"></i><br>Controles </a>
             </div>
 
             <div class="caja_caja_secciones">
                 <div class="caja_secciones">
                     @can('contexto_access')
-                        <section id="s1" class="caja_tab_reveldada">
+                        <section data-id="contexto" id="s1" class="caja_tab_reveldada caja">
                             <div class="mt-5">
                                 <ul>
                                     <li><a href="{{ url('/admin/analisis-brechas') }}">
@@ -183,12 +201,6 @@
                                             <div>
                                                 <i class="fas fa-stream"></i>
                                                 Plan de implementación
-                                            </div>
-                                        </a></li>
-                                    <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
-                                            <div>
-                                                <i class="far fa-file"></i>
-                                                Declaración de aplicabilidad
                                             </div>
                                         </a></li>
                                     <li><a href="{{ route('admin.partes-interesadas.index') }}">
@@ -206,7 +218,7 @@
                                     <li><a href="{{ route('admin.entendimiento-organizacions.index') }}">
                                             <div>
                                                 <i class="far fa-list-alt"></i>
-                                                FODA
+                                                Análisis FODA
                                             </div>
                                         </a></li>
                                     <li><a href="{{ route('admin.alcance-sgsis.index') }}">
@@ -218,7 +230,7 @@
                                     <li><a href="{{ route('admin.reportes-contexto.index') }}">
                                             <div>
                                                 <i class="far fa-file-alt"></i>
-                                                Generar Reporte
+                                                Generar reporte
                                             </div>
                                         </a></li>
                                 </ul>
@@ -239,7 +251,7 @@
                         </div>
                     @endcan
                     @can('liderazgo_access')
-                        <section id="s2">
+                        <section id="s2" data-id="liderazgo" class="caja">
                             <div class="mt-5">
                                 <ul>
                                     <li><a href="{{ route('admin.comiteseguridads.index') }}">
@@ -251,7 +263,7 @@
                                     <li><a href="{{ route('admin.minutasaltadireccions.index') }}">
                                             <div>
                                                 <i class="fas fa-columns"></i>
-                                                Minutas de sesiones con Ata dirección
+                                                Minutas de sesiones con alta dirección
                                             </div>
                                         </a></li>
                                     <li><a href="{{ route('admin.evidencias-sgsis.index') }}">
@@ -290,13 +302,43 @@
                         </div>
                     @endcan
                     @can('planificacion_access')
-                        <section id="s3">
+                        <section id="s3" data-id="planificacion" class="caja">
                             <div class="mt-5">
                                 <ul>
-                                    <li><a href="{{ route('admin.matriz-riesgos.index') }}">
+                                    <li ><a href="#" data-ventana="riesgos" data-ruta="Análisis de riesgos" class="btn_ventana_menu">
                                             <div>
                                                 <i class="fas fa-exclamation-triangle"></i>
                                                 Análisis de riesgos
+                                            </div>
+                                        </a></li>
+                                        <div class="ventana_menu" id="riesgos" style="color:#008186 !important">
+                                            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="riesgos" style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
+                                                <h3 class="text-center"><strong>Análisis de riesgos</strong></h3>
+                                            <ul>
+                                                <li><a href="{{ route('admin.amenazas.index') }}">
+                                                    <div>
+                                                        <i class="fas fa-fire"></i>
+                                                        Amenazas
+                                                    </div>
+                                                </a></li>
+                                                <li><a href="{{ route('admin.vulnerabilidads.index') }}">
+                                                    <div>
+                                                        <i class="fas fa-shield-alt"></i>
+                                                        Vulnerabilidades
+                                                    </div>
+                                                </a></li>
+                                                <li><a href="{{ route('admin.analisis-riesgos.index') }}">
+                                                    <div>
+                                                        <i class="fas fa-table"></i>
+                                                        Matriz de Riesgos
+                                                    </div>
+                                                </a></li>
+                                            </ul>
+                                        </div>
+                                        <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
+                                            <div>
+                                                <i class="far fa-file"></i>
+                                                Declaración de aplicabilidad
                                             </div>
                                         </a></li>
                                     <li><a href="{{ route('admin.riesgosoportunidades.index') }}">
@@ -329,7 +371,7 @@
                         </div>
                     @endcan
                     @can('soporte_access')
-                        <section id="s4">
+                        <section id="s4" data-id="soporte" class="caja">
                             <div class="mt-5">
                                 <ul>
                                     <li><a href="{{ route('admin.recursos.index') }}">
@@ -404,7 +446,7 @@
                         </div>
                     @endcan
                     @can('operacion_access')
-                        <section id="s5">
+                        <section id="s5" data-id="operacion" class="caja">
                             <div class="mt-5">
                                 <ul>
                                     <li><a href="{{ route('admin.planificacion-controls.index') }}">
@@ -437,7 +479,7 @@
                         </div>
                     @endcan
                     @can('evaluacion_access')
-                        <section id="s6">
+                        <section id="s6" data-id="evaluacion" class="caja">
                             <div class="mt-5">
                                 <ul>
                                     <li><a href="{{ route('admin.indicadores-sgsis.index') }}">
@@ -500,7 +542,7 @@
                         </div>
                     @endcan
                     @can('mejoras_access')
-                        <section id="s7">
+                        <section id="s7" data-id="mejora" class="caja">
                             <div class="mt-5">
                                 <ul>
                                     <li><a href="{{ route('admin.accion-correctivas.index') }}">
@@ -532,7 +574,7 @@
                             </div>
                         </div>
                     @endcan
-                    <section id="s8">
+                    <section id="s8" data-id="controles" class="caja">
                         <div class="mt-5">
                             <ul>
                                 <li><a href="#">
@@ -649,4 +691,58 @@
             $(document.getElementById(id_seccion)).addClass("caja_tab_reveldada");
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            let tabs=document.querySelectorAll('.tabs');
+            tabs.forEach(tab => {
+                if(tab.classList.contains('btn_activo')){
+                    tab.classList.remove('btn_activo')
+                }
+            });
+            let cajas=document.querySelectorAll('.caja');
+            cajas.forEach(caja => {
+                if(caja.classList.contains('caja_tab_reveldada')){
+                    caja.classList.remove('caja_tab_reveldada')
+                }
+            });
+
+            let idActual=window.location.hash.replace('#','');
+            document.getElementById(idActual).classList.add('btn_activo');
+            document.querySelector(`[data-id="${idActual}"]`).classList.add('caja_tab_reveldada');
+            setTimeout(() => {
+                window.scrollTo(0,0);
+                console.log('scroll')
+            }, 1 );
+        })
+
+    </script>
+    <script>
+        $(".btn_ventana_menu").click(function(){
+            $(".ventana_menu").fadeOut(100);
+            var id_ventana= $(".btn_ventana_menu").attr("data-ventana");
+            $(document.getElementById(id_ventana)).fadeIn(100);
+            $(".ventana_menu").css("left","0");
+            $(".ventana_menu").css("transition","0s");
+            var text_ruta= "ISO 27001 / " + $(".btn_ventana_menu").attr("data-ruta");
+            $(".breadcrumb-item.active").html(text_ruta);
+        });
+        $(".btn_cerrar_ventana").click(function(){
+            $(".ventana_menu").fadeOut(100);
+            $(".ventana_menu").css("left","-50%");
+            $(".ventana_menu").css("transition","1s");
+            $(".breadcrumb-item.active").html("ISO 27001");
+
+        });
+
+        $(".ventana_cerrar").click(function(){
+            $(".ventana_menu").fadeOut(100);
+            $(".ventana_menu").css("left","-50%");
+            $(".ventana_menu").css("transition","1s");
+            $(".breadcrumb-item.active").html("ISO 27001");
+        });
+
+    </script>
+
+
 @endsection

@@ -200,6 +200,16 @@
     @endif
 </div>
 
+
+
+<div class="col-sm-12 form-group">
+    <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Evidencia</label>
+    <div class="custom-file">
+        <input type="file" name="files[]" multiple class="form-control" id="evidencia">
+
+    </div>
+</div>
+
 {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
 <div class="row w-100 align-items-center" style="margin-left: 1px;">
     @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
@@ -212,18 +222,12 @@
 </div>
 {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
 
-<div class="col-sm-12 form-group">
-    <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Evidencia</label>
-    <div class="custom-file">
-        <input type="file" name="files[]" multiple class="form-control" id="evidencia">
-
-    </div>
+<div class="mt-1 form-group col-12">
+    <b>Revisó el requisito:</b>
 </div>
 
-
-
 <div class="form-group col-md-4">
-    <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
+    <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
     <select class="form-control {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="id_reviso" id="id_reviso">
         @foreach ($empleados as $empleado)
         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
@@ -253,6 +257,8 @@
     <div class="form-control" id="area_reviso"></div>
 
 </div>
+
+
 
 <div class="form-group col-sm-12">
     <label for="comentarios"><i class="fas fa-comment-dots iconos-crear"></i>Comentarios / observaciones</label>
@@ -290,13 +296,13 @@
         })
 
 
-        
+
         let responsable = document.querySelector('#id_reviso');
         let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
         let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
-        
-        document.getElementById('puesto_reviso').innerHTML = puesto_init; 
-        document.getElementById('area_reviso').innerHTML = area_init; 
+
+        document.getElementById('puesto_reviso').innerHTML = puesto_init;
+        document.getElementById('area_reviso').innerHTML = area_init;
         responsable.addEventListener('change', function(e) {
             e.preventDefault();
             let area = this.options[this.selectedIndex].getAttribute('data-area');

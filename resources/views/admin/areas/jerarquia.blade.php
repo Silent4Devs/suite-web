@@ -738,8 +738,7 @@
                 });
 
                 function renderOrganigrama(OrgChart, orientacion, id = null, area_filter = false, area_id = null) {
-                    let areasTree = @json($areasTree);
-                    console.log(areasTree);
+                    let areasTree = @json($areasTree);                    
                     let repositorioImagenes = @json($rutaImagenes);
                     let organizacion = @json($organizacion);
                     let chartContainer = document.querySelector('#chart-container');
@@ -772,7 +771,7 @@
                             container.appendChild(img);
                         },
                         success: function(response) {
-                            console.log(JSON.parse(response));
+                            console.log(response);
                             let container = document.querySelector('.imagen-search');
                             container.src = "";
                             document.querySelector('.texto-search').innerHTML = "";

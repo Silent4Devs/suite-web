@@ -1,34 +1,52 @@
-<div class="datatable-fix" style="width: 100%;">
+<div class="datatable-fix" style="width:100%">
 
    <table class="table tabla_denuncias">
    		<thead>
+            <tr>
+                <th colspan="6"></th>
+                <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denuncio</th>
+                <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denunciado</th>
+            </tr>
    			<tr>
-       			{{-- <th>ID</th> --}}
        			<th>Folio</th>
-       			<th>Anonimo</th>
-       			<th>Quién denuncio</th>
-       			<th>Correo</th>
-       			<th>Teléfono</th>
-       			<th>Descripción</th>
-       			<th>Evidencia</th>
-       			<th>Denunciado</th>
+       			<th>Anónimo</th>
+                <th>Estatus</th>
+                <th>Fecha de identificación</th>
+                <th>Fecha de recepción</th>
+                <th>Fecha de cierre</th>
+                <th>Nombre</th>
+                <th>Puesto</th>
+                <th>Área</th>
+                <th>Nombre</th>
+                <th>Puesto</th>
+                <th>Área</th>
+                <th>Descripción</th>
        			<th>Opciones</th> 
    			</tr>
    		</thead>
    		<tbody>
    			@foreach($denuncias as $denuncia)
 	   			<tr>
-	       			<td>{{ $denuncia->id }}</td>
+	       			<td>{{ $denuncia->folio }}</td>
 	       			<td>{{ $denuncia->anonimo }}</td>
-	       			<td>{{ $denuncia->denuncio->name }}</td>
-	       			<td>{{ $denuncia->denuncio->email }}</td> 
-	       			<td>{{ $denuncia->denuncio->telefono }}</td> 
-	       			<td>{{ $denuncia->descripcion }}</td>
-	       			<td>{{ $denuncia->evidencia }}</td>
-	       			<td>{{ $denuncia->denunciado }}</td>
-	       			<td>
-	       				<a href="{{ route('admin.desk.denuncias-edit', $denuncia->id) }}"><i class="fas fa-edit"></i></a>
-	       			</td>
+                    <td>{{ $denuncia->estatus }}</td>
+                    <td>{{ $denuncia->fecha }}</td>
+                    <td>{{ $denuncia->created_at }}</td>
+                    <td>{{ $denuncia->fecha_cierre }}</td>
+                    @if($denuncia->anonimo == 'no')
+                        <td>{{ $denuncia->denuncio->name }}</td>
+                        <td>{{ $denuncia->denuncio->puesto }}</td>
+                        <td>{{ $denuncia->denuncio->area->area }}</td>
+                    @else
+                        <td> -- </td>
+                        <td> -- </td>
+                        <td> -- </td>
+                    @endif
+                    <td>{{ $denuncia->denunciado->name }}</td>
+                    <td>{{ $denuncia->denunciado->area->area }}</td>
+                    <td>{{ $denuncia->denunciado->puesto }}</td>
+                    <td>{{ $denuncia->descripcion }}</td>
+	       			<td><a href="{{ route('admin.desk.denuncias-edit', $denuncia->id) }}"><i class="fas fa-edit"></i></a></td>
 	   			</tr>
    			@endforeach
    		</tbody>

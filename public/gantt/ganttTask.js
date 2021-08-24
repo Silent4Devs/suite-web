@@ -516,7 +516,10 @@ Task.prototype.changeStatus = function (newStatus,forceStatusCheck) {
         if (todoOk) {
           // set progress to 100% if needed by settings
           if (task.master.set100OnClose && !task.progressByWorklog ){
-            task.progress=100;
+            if (!task.isParent()) {
+              task.progress=100;
+              task.recalculateProgress();
+            }
           }
 
           //set children as done
@@ -633,7 +636,9 @@ Task.prototype.changeStatus = function (newStatus,forceStatusCheck) {
       task.status = oldStatus;
       //console.debug("status rolled back: "+task.name + " to " + oldStatus);
     }
-
+    // if(!task.isParent()){
+    //   task.recalculateStatus();
+    // }
     return todoOk;
   }
 
@@ -688,6 +693,70 @@ Task.prototype.isLocallyBlockedByDependencies = function () {
   }
   return blocked;
 };
+//<%---------- TASK PROGRESS ---------------------- --%>
+// function propagateNewProgress(task) {
+//   var taskParents = task.getParents();
+//   taskParents.forEach(taskParent =>{
+//     var taskChildren = taskParent.getChildren();
+//     var average = 0;
+//     taskChildren.forEach(taskChild =>{
+//       average += taskChild.progress;
+//     });
+//     var total = average / taskChildren.length;
+//     taskParent.progress = total;
+//   });
+// }
+
+Task.prototype.recalculateAllProgress = function(){
+  var tasks = this.master.tasks;
+  tasks.forEach(task => {
+    if (task.isParent()) {
+      var taskChildren = task.getChildren();
+      var average = 0;
+      taskChildren.forEach(taskChild =>{
+        average += taskChild.progress;
+      });
+      var total = average / taskChildren.length;
+      task.progress = total;
+    }
+  });
+}
+
+Task.prototype.recalculateProgress = function(parents = null){
+  console.log(parents);
+  if (parents) {
+    var taskParents = parents;
+  }else{
+    var taskParents = this.getParents();
+  }
+  taskParents.forEach(taskParent =>{
+    var taskChildren = taskParent.getChildren();
+    var average = 0;
+    taskChildren.forEach(taskChild =>{
+      average += taskChild.progress;
+    });
+    var total = average / taskChildren.length;
+    taskParent.progress = total;
+  });
+}
+
+Task.prototype.recalculateStatus = function(){
+  var taskParents = this.getParents();
+  taskParents.forEach(taskParent =>{
+    var taskChildren = taskParent.getChildren();
+    var done = true;
+    taskChildren.forEach(taskChild =>{
+      done = taskChild.status == "STATUS_DONE" ? true : false;
+    });
+    if (done) {
+      taskParent.status = "STATUS_DONE";
+    }else{
+      taskParent.status = "STATUS_ACTIVE";
+    }
+  });
+}
+
+
 
 //<%---------- TASK STRUCTURE ---------------------- --%>
 Task.prototype.getRow = function () {
@@ -837,8 +906,11 @@ Task.prototype.deleteTask = function () {
 
 
   //remove from in-memory collection
+  var beforeTask = this.master.tasks[this.getRow()-1];
   this.master.tasks.splice(this.getRow(), 1);
-
+  var parents = beforeTask.getParents();
+  beforeTask.recalculateProgress(parents);
+  
   //remove from links
   var task = this;
   this.master.links = this.master.links.filter(function (link) {
@@ -944,6 +1016,11 @@ Task.prototype.indent = function () {
     updateTree(this);
     //force status check starting from parent
     this.getParent().synchronizeStatus();
+    // force propagate new progress
+    // propagateNewProgress(this);
+    this.recalculateProgress();
+    // force recalculate status
+    // this.recalculateStatus();
   }
   return ret;
 };
@@ -992,6 +1069,11 @@ Task.prototype.outdent = function () {
 
   //force status check
   this.synchronizeStatus();
+  // force propagate new progress
+  // propagateNewProgress(this);
+  this.recalculateProgress();
+  // force recalculate status
+  // this.recalculateStatus();
   return ret;
 };
 

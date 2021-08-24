@@ -296,7 +296,6 @@
     <style type="text/css">
         .caja_botones_menu {
             display: flex;
-            justify-content: center;
         }
 
         .caja_botones_menu a {

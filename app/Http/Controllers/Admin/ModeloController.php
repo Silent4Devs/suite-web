@@ -175,14 +175,20 @@ class ModeloController extends Controller
 
     }
 
-    public function getModelos(Request $request)
+    public function getModelos(Request $request,$id=null)
     {
         if($request->ajax()){
-
+            $modelo_seleccionado=Modelo::find($id);
             $modelos_arr=array();
             $modelos=Modelo::get();
             // dd($marcas);
         foreach ($modelos as $modelo) {
+            if($modelo_seleccionado){
+            if ($modelo->id==$modelo_seleccionado->id) {
+
+                $modelos_arr[]=array('id'=>$modelo->id,'text'=>$modelo->nombre,'selected'=>true);
+            }
+            }
             $modelos_arr[]=array('id'=>$modelo->id,'text'=>$modelo->nombre);
 
         }

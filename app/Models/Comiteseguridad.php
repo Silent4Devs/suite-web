@@ -28,7 +28,7 @@ class Comiteseguridad extends Model
 
     protected $fillable = [
         'nombrerol',
-        'personaasignada_id',
+        'id_asignada',
         'fechavigor',
         'responsabilidades',
         'created_at',
@@ -61,4 +61,10 @@ class Comiteseguridad extends Model
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function asignacion()
+	{
+        return $this->belongsTo(Empleado::class, 'id_asignada', 'id');
+
+	}
 }

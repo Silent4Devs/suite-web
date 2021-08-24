@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,6 +20,9 @@ class AlcanceSgsi extends Model
     ];
 
     protected $dates = [
+        'fecha_publicacion',
+        'fecha_entrada',
+        'fecha_revision',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -26,6 +30,10 @@ class AlcanceSgsi extends Model
 
     protected $fillable = [
         'alcancesgsi',
+        'fecha_publicacion',
+        'fecha_entrada',
+        'fecha_revision',
+        'id_reviso_alcance',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -37,8 +45,29 @@ class AlcanceSgsi extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function getFechaPublicacionAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
+    public function getFechaEntradaAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
+    public function getFechaRevisionAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reviso_alcance', 'id')->with('area');
+    }
+
 }
