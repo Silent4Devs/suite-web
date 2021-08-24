@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
+
+
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="{!! route('admin.amenazas.index') !!}">Amenaza</a>
