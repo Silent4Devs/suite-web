@@ -147,15 +147,43 @@ Breadcrumbs::for('admin.roles-responsabilidades.create', function ($trail) {
 
 
 
-Breadcrumbs::for('admin.riesgosoportunidades.index', function ($trail) {
+Breadcrumbs::for('admin.amenazas.index', function ($trail) {
  	$trail->parent('admin.iso27001.index');
     $trail->push('Planificación',route('admin.iso27001.index').'#planificacion');
- 	$trail->push('Riesgos y Oportunidades', route('admin.riesgosoportunidades.index'));
+ 	$trail->push('Amenazas', route('admin.amenazas.index'));
+});
+
+
+
+Breadcrumbs::for('admin.vulnerabilidads.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Planificación',route('admin.iso27001.index').'#planificacion');
+    $trail->push('Vulnerabilidades', route('admin.vulnerabilidads.index'));
+});
+
+
+
+Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Planificación',route('admin.iso27001.index').'#planificacion');
+    $trail->push('Matriz de Riesgos', route('admin.analisis-riesgos.index'));
+});
+
+
+
+
+
+
+Breadcrumbs::for('admin.riesgosoportunidades.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+   $trail->push('Planificación',route('admin.iso27001.index').'#planificacion');
+    $trail->push('Riesgos y Oportunidades', route('admin.riesgosoportunidades.index'));
 });
 Breadcrumbs::for('admin.riesgosoportunidades.create', function ($trail) {
-    $trail->parent('admin.riesgosoportunidades.index');
-    $trail->push('Formulario', route('admin.riesgosoportunidades.create'));
+   $trail->parent('admin.riesgosoportunidades.index');
+   $trail->push('Formulario', route('admin.riesgosoportunidades.create'));
 });
+
 
 
 
