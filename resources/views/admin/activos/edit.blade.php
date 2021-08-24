@@ -67,10 +67,10 @@
                 <span class="help-block">{{ trans('cruds.activo.fields.descripcion_helper') }}</span>
             </div>
 
-            <div class="mb-3 col-sm-12 input-group">
+            <div class="mb-3 col-sm-9 input-group">
                 <label for="documentos_relacionados"><i class="fas fa-file iconos-crear"></i>Documento Relacionado</label>
                 <div class="ml-3 custom-file">
-                  <input type="file" class="custom-file-input" {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}" id="documentos_relacionados" aria-describedby="inputGroupFileAddon01" {{ old('descripcion', $activo->documentos_relacionados) }} multiple>
+                  <input type="file" class="custom-file-input" {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}" multiple name="documentos_relacionados[]" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" {{ old('documentos_relacionados', $activo->documentos_relacionados) }}>
                   @if($errors->has('documentos_relacionados'))
                   <div class="invalid-feedback">
                       {{ $errors->first('documentos_relacionados') }}
@@ -79,6 +79,13 @@
                   <label class="custom-file-label" for="inputGroupFile01"></label>
                 </div>
             </div>
+
+            <div class="pl-0 ml-0 col-sm-3">
+              <span type="button"  class="pl-0 ml-0 btn text-primary" data-toggle="modal" data-target="#documentos_activos">
+                <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Descargar Documentos
+              </span>
+            </div>
+
 
 
             <div class="form-group col-md-4">
@@ -162,9 +169,12 @@
                 <span class="help-block">{{ trans('cruds.activo.fields.ubicacion_helper') }}</span>
             </div>
 
+
+
+
             <div class="form-group col-6">
                 <label for="sede"><i class="fas fa-map iconos-crear"></i>Ubicación</label>
-                <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" name="sede" id="sede">{{ old('sede', $activo->sede) }}
+                <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" name="sede" id="sede" value="{{ old('sede', $activo->sede) }}">
                 @if($errors->has('sede'))
                     <div class="invalid-feedback">
                         {{ $errors->first('sede') }}
@@ -177,13 +187,13 @@
                 <div class="row align-items-center">
                     <div class="form-group col-md-11">
                         <label class="required" for="marca"><i class="fas fa-copyright iconos-crear"></i> Marca</label>
-                        <select class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="marca"
-                            id="marca" value="{{ old('marca', $activo->marca) }}" required>
+                        <select class="selecmarca form-control {{ $errors->has('marca') ? 'is-invalid' : '' }}" type="text" name="marca"
+                            id="marca" required>
                             @if ($errors->has('marca'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('marca') }}
                             </div>
-                                @endif
+                            @endif
                         </select>
                     </div>
 
@@ -198,7 +208,7 @@
                     <div class="form-group col-md-11">
                         <label class="required" for="modelo">
                             Modelo</label>
-                        <select class="form-control {{ $errors->has('modelo') ? 'is-invalid' : '' }}" type="text" name="modelo"
+                        <select class="selecmodelo form-control {{ $errors->has('modelo') ? 'is-invalid' : '' }}" type="text" name="modelo"
                             id="modelo" value="{{ old('modelo', $activo->modelo) }}" required>
                             @if ($errors->has('modelo'))
                             <div class="invalid-feedback">
@@ -227,7 +237,7 @@
 
 
             <div class="form-group col-sm-6">
-                <label class="required" for="n_serie"><i class="fas fa-barcode iconos-crear"></i>No de producto</label>
+                <label class="required" for="n_producto"><i class="fas fa-barcode iconos-crear"></i>No de producto</label>
                 <input class="form-control {{ $errors->has('n_serie') ? 'is-invalid' : '' }}" type="text" name="n_producto"
                     id="n_producto" value="{{ old('n_producto', $activo->n_producto) }}" required>
                 @if ($errors->has('n_producto'))
@@ -295,10 +305,54 @@
 
 
 
-            <div class="text-right form-group col-12">
+            {{-- <div class="text-right form-group col-12">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
+            </div> --}}
+
+            <div class="text-right form-group col-12">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
+            </div>
+
+            <div class="modal" tabindex="-1" id="documentos_activos">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Descargar Documentos</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+
+                        {{-- @dump(json_decode($activo->documentos_relacionados)) --}}
+                        @if (json_decode($activo->documentos_relacionados))
+                            <div class="list-group">
+                        @foreach(json_decode($activo->documentos_relacionados) as $documento)
+
+                            <a class="list-group-item list-group-item-action" target="_blank" href="{{asset("storage/activos" ."/". $documento)}}">
+                            <i class="mr-2 fas fa-file"></i><span>{{$documento}}</span>
+                                </a>
+                             @endforeach
+                            </div>
+                            @else
+                            <p>Sin archivos cargados</p>
+                        @endif
+
+
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    </div>
+
+
+
+                </div>
+              </div>
             </div>
 
             <div class="modal fade" id="modelolec" tabindex="-1" aria-labelledby="modelolecLabel" aria-hidden="true">
@@ -460,7 +514,7 @@
                     $('.selecmodelo').select2('destroy');
                     $('.selecmodelo').select2({
                         ajax:{
-                            url:"{{route('admin.modelos.getModelos')}}",
+                            url:"{{route('admin.modelos.getModelos',$activo->modelo)}}",
                             dataType:"json",
                         },
                         theme:"bootstrap4"
@@ -500,6 +554,12 @@
         },
         theme:"bootstrap4"
     });
+
+    $('.selecmarca').select2("data",{
+        id:"1",
+        text:"hello"
+    })
+
 
 
     $('.selecmodelo').select2({

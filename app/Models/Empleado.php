@@ -67,7 +67,7 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar'];
+    protected $appends = ['avatar', 'resourceId'];
 
     protected $fillable = [
         'name',
@@ -84,6 +84,11 @@ class Empleado extends Model
         'area_id',
         'sede_id'
     ];
+
+    public function getResourceIdAttribute()
+    {
+        return $this->id;
+    }
 
     public function getAvatarAttribute()
     {
@@ -202,5 +207,15 @@ class Empleado extends Model
     public function procesos()
     {
         return $this->hasMany(Proceso::class);
+    }
+
+    public function tasks()
+    {
+        return $this->belongsToMany(PlanImplementacionTask::class, 'task_id');
+    }
+
+    public function minutas()
+    {
+        return $this->belongsToMany(Minutasaltadireccion::class, 'minuta_id');
     }
 }

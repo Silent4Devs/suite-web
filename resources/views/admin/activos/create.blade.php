@@ -73,7 +73,7 @@
                     <span class="help-block">{{ trans('cruds.activo.fields.descripcion_helper') }}</span>
                 </div>
 
-            {{-- <div class="input-field col-sm-12">
+                {{-- <div class="input-field col-sm-12">
                 Adjuntar Contrato
                 <div class="file-field input-field">
                     <div class="btn">
@@ -91,24 +91,30 @@
 
 
 
-            <div class="mb-3 col-sm-12 input-group">
-                <label for="documentos_relacionados"><i class="fas fa-file iconos-crear"></i>Documento Relacionado</label>
-                <div class="ml-3 custom-file">
-                  <input type="file" class="custom-file-input" id="inputGroupFile01" name="documentos_relacionados" aria-describedby="inputGroupFileAddon01"  class="form-control {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}"  value="{{ old('documentos_relacionados', '') }}">
-                  <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                  @if($errors->has('documentos_relacionados'))
-                  <div class="invalid-feedback">
-                      {{ $errors->first('documentos_relacionados') }}
-                  </div>
-                 @endif
+                <div class="mb-3 col-sm-12 input-group">
+                    <label for="documentos_relacionados"><i class="fas fa-file iconos-crear"></i>Documentos
+                        Relacionados</label>
+                    <div class="ml-3 custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01" multiple
+                            name="documentos_relacionados[]" aria-describedby="inputGroupFileAddon01"
+                            class="form-control {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}"
+                            value="{{ old('documentos_relacionados', '') }}">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        @if ($errors->has('documentos_relacionados'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('documentos_relacionados') }}
+                            </div>
+                        @endif
+                    </div>
                 </div>
-              </div>
 
-            <div class="form-group col-md-4">
-                <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>Dueño</label>
-                <select class="form-control select2 {{ $errors->has('dueno_id') ? 'is-invalid' : '' }}" name="dueno_id" id="dueno_id">
-                    @foreach ($empleados as $empleado)
-                            <option data-puesto="{{ $empleado->puesto}}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area}}">
+                <div class="form-group col-md-4">
+                    <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>Dueño</label>
+                    <select class="form-control select2 {{ $errors->has('dueno_id') ? 'is-invalid' : '' }}"
+                        name="dueno_id" id="dueno_id">
+                        @foreach ($empleados as $empleado)
+                            <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                                data-area="{{ $empleado->area->area }}">
 
                                 {{ $empleado->name }}
                             </option>
@@ -175,7 +181,7 @@
 
                 <div class="form-group col-md-6 sm-12">
                     <label for="ubicacion_id"><i
-                            class="fas fa-map-marker-alt iconos-crear"></i>{{ trans('cruds.activo.fields.ubicacion') }}</label>
+                            class="fas fa-map-marker-alt iconos-crear"></i>Sede</label>
                     <select class="form-control select2 {{ $errors->has('ubicacion') ? 'is-invalid' : '' }}"
                         name="ubicacion_id" id="ubicacion_id">
                         @foreach ($ubicacions as $id => $ubicacion)
@@ -191,35 +197,19 @@
                     <span class="help-block">{{ trans('cruds.activo.fields.ubicacion_helper') }}</span>
                 </div>
 
-
-            <div class="form-group col-md-6 sm-12">
-                <label class="required" for="ubicacion_id"><i class="fas fa-map-marker-alt iconos-crear"></i>Sede</label>
-                <select class="form-control select2 {{ $errors->has('ubicacion') ? 'is-invalid' : '' }}" name="ubicacion_id" id="ubicacion_id">
-                    @foreach($ubicacions as $id => $ubicacion)
-                        <option value="{{ $id }}" {{ old('ubicacion_id') == $id ? 'selected' : '' }}>{{ $ubicacion }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('ubicacion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('ubicacion') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activo.fields.ubicacion_helper') }}</span>
-            </div>
-
-            <div class="form-group col-md-6">
-                <label class="required " for="sede"><i class="fas fa-map iconos-crear"></i>Ubicación</label>
-                <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" name="sede" id="sede">
-                @if($errors->has('sede'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('sede') }}
-                    </div>
-                @endif
-                  <span class="help-block"></span>
-            </div>
+                <div class="form-group col-sm-6">
+                    <label class="required" for="sede"><i class="fas fa-map iconos-crear"></i>Ubicación</label>
+                    <input class="form-control {{ $errors->has('sede') ? 'is-invalid' : '' }}" type="text"
+                        name="sede" id="sede" value="{{ old('sede', '') }}">
+                    @if ($errors->has('sede'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('sede') }}
+                        </div>
+                    @endif
+                </div>
 
 
-            {{-- <div class="form-group col-md-5 sm-9">
+                {{-- <div class="form-group col-md-5 sm-9">
                 <label for="marca">Marca</label>
                 <input class="form-control {{ $errors->has('marca') ? 'is-invalid' : '' }}" name="marca" id="marca" required>
                 @if ($errors->has('marca'))
@@ -229,12 +219,12 @@
                 @endif
                   <span class="help-block"></span>
             </div> --}}
-            <div class="col-md-6">
-                <div class="row align-items-center">
-                    <div class="form-group col-md-11">
-                        <label for="marca"><i class="fas fa-copyright iconos-crear"></i>Marca</label>
-                    <select class="selecmarca" name="state">
-                        {{-- @foreach($marcas as $marca)
+                <div class="col-md-6">
+                    <div class="row align-items-center">
+                        <div class="form-group col-md-11">
+                            <label for="marca"><i class="fas fa-copyright iconos-crear"></i>Marca</label>
+                            <select class="selecmarca" name="marca">
+                                {{-- @foreach ($marcas as $marca)
                         <option value="{{ $marca->id }}" >{{ $marca->nombre }}</option>
                         @endforeach --}}
                             </select>
@@ -257,7 +247,7 @@
                     <div class="row align-items-center">
                         <div class="form-group col-md-11">
                             <label for="modelo">Modelo</label>
-                            <select class="selecmodelo" name="state">
+                            <select class="selecmodelo" name="modelo">
                                 @foreach ($modelos as $modelo)
                                     <option value="{{ $modelo->id }}">{{ $modelo->nombre }}</option>
                                 @endforeach
@@ -303,29 +293,28 @@
                 </div>
 
 
-            <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="fecha_alta"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de alta </label>
-                <input class="form-control" type="date" id="fecha_alta" value="{{ date('Y-m-d') }}"
-                    name="fecha_alta">
-                @if ($errors->has('fecha_alta'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fecha_alta') }}
-                    </div>
-                @endif
-            </div>
+                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <label for="fecha_alta"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de alta </label>
+                    <input class="form-control" type="date" id="fecha_alta" value="{{ date('Y-m-d') }}"
+                        name="fecha_alta">
+                    @if ($errors->has('fecha_alta'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_alta') }}
+                        </div>
+                    @endif
+                </div>
 
 
 
-            <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="fecha_compra"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de compra </label>
-                <input class="form-control" type="date" id="fecha_compra"
-                    name="fecha_compra">
-                @if ($errors->has('fecha_compra'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fecha_compra') }}
-                    </div>
-                @endif
-            </div>
+                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <label for="fecha_compra"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de compra </label>
+                    <input class="form-control" type="date" id="fecha_compra" name="fecha_compra">
+                    @if ($errors->has('fecha_compra'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_compra') }}
+                        </div>
+                    @endif
+                </div>
 
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
@@ -338,35 +327,41 @@
                     @endif
                 </div>
 
-            <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="fecha_baja"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de baja</label>
-                <input class="form-control" type="date" id="fecha_baja"
-                    name="fecha_baja">
-                @if ($errors->has('fecha_baja'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fecha_baja') }}
-                    </div>
-                @endif
-            </div>
+                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <label for="fecha_baja"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de baja</label>
+                    <input class="form-control" type="date" id="fecha_baja" name="fecha_baja">
+                    @if ($errors->has('fecha_baja'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_baja') }}
+                        </div>
+                    @endif
+                </div>
 
 
-            <div class="form-group col-12">
-                <label for="observaciones"><i class="fas fa-align-left iconos-crear"></i>Observaciones</label>
-                <textarea class="form-control {{ $errors->has('observaciones') ? 'is-invalid' : '' }}" name="observaciones" id="observaciones">{{ old('observaciones') }}</textarea>
-                @if($errors->has('observaciones'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('observaciones') }}
-                    </div>
-                @endif
-            </div>
+                <div class="form-group col-12">
+                    <label for="observaciones"><i class="fas fa-align-left iconos-crear"></i>Observaciones</label>
+                    <textarea class="form-control {{ $errors->has('observaciones') ? 'is-invalid' : '' }}"
+                        name="observaciones" id="observaciones">{{ old('observaciones') }}</textarea>
+                    @if ($errors->has('observaciones'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('observaciones') }}
+                        </div>
+                    @endif
+                </div>
 
 
 
 
-            <div class="text-right form-group col-12">
-                <input class="btn btn-danger" type="submit" value="Guardar">
-            </div>
+                {{-- <div class="text-right form-group col-12">
+                    <input class="btn btn-danger" type="submit" value="Guardar">
+                </div> --}}
 
+                <div class="text-right form-group col-12" style="margin-left:15px;" >
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
+                </div>
 
             <div class="modal fade" id="modelolec" tabindex="-1" aria-labelledby="modelolecLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -384,203 +379,211 @@
                           <input type="text" class="form-control" id="modelo-name">
                           <span class="text-danger" id="nombre_error" class="nombre_error"></span>
                         </div>
+                      </form>
                     </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" id="guardar_modelo">Guardar</button>
+                    </div>
+                  </div>
                 </div>
+            </div>
 
-
-                <div class="modal fade" id="marcaslec" tabindex="-1" aria-labelledby="marcaslecLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Nueva Marca</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                                        <input type="text" class="form-control" id="recipient-name">
-                                        <span class="text-danger" id="nombre_error" class="nombre_error"></span>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="guardar_marca">Guardar</button>
-                            </div>
+            <div class="modal fade" id="marcaslec" tabindex="-1" aria-labelledby="marcaslecLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Nueva Marca</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Nombre:</label>
+                          <input type="text" class="form-control" id="recipient-name">
+                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
                         </div>
+                      </form>
                     </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" id="guardar_marca">Guardar</button>
+                    </div>
+                  </div>
                 </div>
+            </div>
 
 
 
 
 
-        </form>
-    </div>
+            </form>
+        </div>
 
 
 
-@endsection
+    @endsection
 
 
-@section('scripts')
+    @section('scripts')
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function(e) {
+        <script>
+            document.addEventListener('DOMContentLoaded', function(e) {
 
-            let responsable = document.querySelector('#id_responsable');
-            let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
-            let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('puesto_responsable').innerHTML = puesto_init
-            document.getElementById('area_responsable').innerHTML = area_init
+                let responsable = document.querySelector('#id_responsable');
+                let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+                let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('puesto_responsable').innerHTML = puesto_init
+                document.getElementById('area_responsable').innerHTML = area_init
 
-            let dueno = document.querySelector('#dueno_id');
-            let area = dueno.options[dueno.selectedIndex].getAttribute('data-area');
-            let puesto = dueno.options[dueno.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('puesto_dueno').innerHTML = puesto
-            document.getElementById('area_dueno').innerHTML = area
-
-            responsable.addEventListener('change', function(e) {
-                e.preventDefault();
-                let area = this.options[this.selectedIndex].getAttribute('data-area');
-                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_responsable').innerHTML = puesto
-                document.getElementById('area_responsable').innerHTML = area
-            })
-            dueno.addEventListener('change', function(e) {
-                e.preventDefault();
-                let area = this.options[this.selectedIndex].getAttribute('data-area');
-                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                let dueno = document.querySelector('#dueno_id');
+                let area = dueno.options[dueno.selectedIndex].getAttribute('data-area');
+                let puesto = dueno.options[dueno.selectedIndex].getAttribute('data-puesto');
                 document.getElementById('puesto_dueno').innerHTML = puesto
                 document.getElementById('area_dueno').innerHTML = area
+
+                responsable.addEventListener('change', function(e) {
+                    e.preventDefault();
+                    let area = this.options[this.selectedIndex].getAttribute('data-area');
+                    let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('puesto_responsable').innerHTML = puesto
+                    document.getElementById('area_responsable').innerHTML = area
+                })
+                dueno.addEventListener('change', function(e) {
+                    e.preventDefault();
+                    let area = this.options[this.selectedIndex].getAttribute('data-area');
+                    let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('puesto_dueno').innerHTML = puesto
+                    document.getElementById('area_dueno').innerHTML = area
+                })
+                document.getElementById('guardar_marca').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let nombre = document.querySelector('#recipient-name').value;
+
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        url: "{{ route('admin.marcas.store') }}",
+                        data: {
+                            nombre
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.success) {
+                                document.querySelector('#recipient-name').value = '';
+                                $('.selecmarca').select2('destroy');
+                                $('.selecmarca').select2({
+                                    ajax: {
+                                        url: "{{ route('admin.marcas.getMarcas') }}",
+                                        dataType: "json",
+                                    },
+                                    theme: "bootstrap4"
+                                });
+                                $('#marcaslec').modal('hide')
+                                $('.modal-backdrop').hide();
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                            });
+                        }
+                    });
+                    console.log('Guardando')
+                });
+
+
+
+                document.getElementById('guardar_modelo').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let nombre = document.querySelector('#modelo-name').value;
+
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        url: "{{ route('admin.modelos.store') }}",
+                        data: {
+                            nombre
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            $('#modelolec').modal('hide')
+                            $('.modal-backdrop').hide();
+                            if (response.success) {
+                                document.querySelector('#modelo-name').value = '';
+                                $('.selecmodelo').select2('destroy');
+                                $('.selecmodelo').select2({
+                                    ajax: {
+                                        url: "{{ route('admin.modelos.getModelos') }}",
+                                        dataType: "json",
+                                    },
+                                    theme: "bootstrap4"
+                                });
+
+                                Swal.fire(
+                                    'Guardada con exito!',
+                                    '',
+                                    'success'
+                                )
+
+                            }
+
+
+                        },
+                        error: function(request, status, error) {
+                            console.log(error)
+                            $.each(request.responseJSON.errors, function(indexInArray,
+
+                                valueOfElement) {
+                                console.log(valueOfElement, indexInArray);
+                                $(`span#${indexInArray}_error`).text(valueOfElement[0]);
+
+                            });
+                        }
+                    });
+                    console.log('Guardando')
+                });
+
             })
-            document.getElementById('guardar_marca').addEventListener('click', function(e) {
-                e.preventDefault();
-                let nombre = document.querySelector('#recipient-name').value;
 
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+            $(document).ready(function() {
+                $('.selecmarca').select2({
+                    ajax: {
+                        url: "{{ route('admin.marcas.getMarcas') }}",
+                        dataType: "json",
                     },
-                    url: "{{ route('admin.marcas.store') }}",
-                    data: {
-                        nombre
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        if (response.success) {
-                            document.querySelector('#recipient-name').value = '';
-                            $('.selecmarca').select2('destroy');
-                            $('.selecmarca').select2({
-                                ajax: {
-                                    url: "{{ route('admin.marcas.getMarcas') }}",
-                                    dataType: "json",
-                                },
-                                theme: "bootstrap4"
-                            });
-                            // $('#marcaslec').modal('hide')
-                            Swal.fire(
-                                'Guardada con exito!',
-                                '',
-                                'success'
-                            )
-
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.log(error)
-                        $.each(request.responseJSON.errors, function(indexInArray,
-
-                            valueOfElement) {
-                            console.log(valueOfElement, indexInArray);
-                            $(`span#${indexInArray}_error`).text(valueOfElement[0]);
-
-                        });
-                    }
+                    theme: "bootstrap4"
                 });
-                console.log('Guardando')
-            });
 
 
-
-            document.getElementById('guardar_modelo').addEventListener('click', function(e) {
-                e.preventDefault();
-                let nombre = document.querySelector('#modelo-name').value;
-
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                $('.selecmodelo').select2({
+                    ajax: {
+                        url: "{{ route('admin.modelos.getModelos') }}",
+                        dataType: "json",
                     },
-                    url: "{{ route('admin.modelos.store') }}",
-                    data: {
-                        nombre
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        $('#marcaslec').modal('hide')
-                        if (response.success) {
-                            document.querySelector('#modelo-name').value = '';
-                            $('.selecmodelo').select2('destroy');
-                            $('.selecmodelo').select2({
-                                ajax: {
-                                    url: "{{ route('admin.modelos.getModelos') }}",
-                                    dataType: "json",
-                                },
-                                theme: "bootstrap4"
-                            });
-
-                            Swal.fire(
-                                'Guardada con exito!',
-                                '',
-                                'success'
-                            )
-
-                        }
-
-
-                    },
-                    error: function(request, status, error) {
-                        console.log(error)
-                        $.each(request.responseJSON.errors, function(indexInArray,
-
-                            valueOfElement) {
-                            console.log(valueOfElement, indexInArray);
-                            $(`span#${indexInArray}_error`).text(valueOfElement[0]);
-
-                        });
-                    }
+                    theme: "bootstrap4"
                 });
-                console.log('Guardando')
+
             });
-
-        })
-
-        $(document).ready(function() {
-            $('.selecmarca').select2({
-                ajax: {
-                    url: "{{ route('admin.marcas.getMarcas') }}",
-                    dataType: "json",
-                },
-                theme: "bootstrap4"
-            });
-
-
-            $('.selecmodelo').select2({
-                ajax: {
-                    url: "{{ route('admin.modelos.getModelos') }}",
-                    dataType: "json",
-                },
-                theme: "bootstrap4"
-            });
-
-        });
-    </script>
+        </script>
 
 
 
-@endsection
+    @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+nde@extends('layouts.admin')
 @section('content')
 
 
@@ -347,17 +347,17 @@
 
 
     <script type="text/javascript">
-        @foreach($grupos_mapa as $grupo_map) @foreach($grupo_map->macroprocesos as $macro_map) 
-            $("#span_caja_macro{{$macro_map->id}}").click(function(){ 
-                $(".caja_revelada").removeClass("caja_revelada"); 
-                $("#div_caja_macro{{$macro_map->id}}").addClass("caja_revelada"); 
+        @foreach($grupos_mapa as $grupo_map) @foreach($grupo_map->macroprocesos as $macro_map)
+            $("#span_caja_macro{{$macro_map->id}}").click(function(){
+                $(".caja_revelada").removeClass("caja_revelada");
+                $("#div_caja_macro{{$macro_map->id}}").addClass("caja_revelada");
             });
         @endforeach @endforeach
 
-        $(".icono_contraer").click(function(){ 
-            $(".caja_revelada").removeClass("caja_revelada"); 
+        $(".icono_contraer").click(function(){
+            $(".caja_revelada").removeClass("caja_revelada");
             $("span p").removeClass("activo");
-        }); 
+        });
     </script>
 
 @endsection

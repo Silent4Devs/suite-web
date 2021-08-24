@@ -51,8 +51,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class MatrizRiesgo extends Model
 {
-	use SoftDeletes;
-	protected $table = 'matriz_riesgos';
+    use SoftDeletes;
+    protected $table = 'matriz_riesgos';
 
     protected $dates = [
         'created_at',
@@ -61,26 +61,26 @@ class MatrizRiesgo extends Model
     ];
 
     const TIPO_RIESGO_SELECT = [
-        'Negativo' => 'Negativo',
-        'Positivo' => 'Positivo',
+        '0' => 'Negativo',
+        '1' => 'Positivo',
     ];
 
     const PROBABILIDAD_SELECT = [
-        'ALTA'  => 'ALTA',
-        'BAJA'  => 'BAJA',
-        'MEDIA' => 'MEDIA',
-        'NULA'  => 'NULA',
+        '9'  => 'ALTA (9)',
+        '6' => 'MEDIA (6)',
+        '3'  => 'BAJA (3)',
+        '0'  => 'NULA (0)',
     ];
 
     const IMPACTO_SELECT = [
-        'MUY ALTO' => 'MUY ALTO',
-        'ALTO'     => 'ALTO',
-        'MEDIO'    => 'MEDIO',
-        'BAJO'     => 'BAJO',
+        '9' => 'MUY ALTO (9)',
+        '6'     => 'ALTO (6)',
+        '3'    => 'MEDIO (3)',
+        '0'     => 'BAJO (0)',
     ];
 
 
-	protected $casts = [
+    protected $casts = [
         'plan_de_accion' => 'string',
         'confidencialidad_cid' => 'string',
         'integridad_cid' => 'string',
@@ -89,45 +89,45 @@ class MatrizRiesgo extends Model
         'impacto_residual' => 'string',
         'nivelriesgo_residual' => 'string',
         'riesgo_total_residual' => 'string',
-		'nivelriesgo' => 'float',
-		'riesgototal' => 'float',
-		'resultadoponderacion' => 'float',
-		'riesgoresidual' => 'float',
-		'controles_id' => 'int',
-		'team_id' => 'int',
-		'id_analisis' => 'int',
-		'id_sede' => 'int',
-		'id_proceso' => 'int',
-		'id_responsable' => 'int',
-		'activo_id' => 'int',
-		'id_amenaza' => 'int',
-		'id_area' => 'int',
-		'id_vulnerabilidad' => 'int'
-	];
+        'nivelriesgo' => 'float',
+        'riesgototal' => 'float',
+        'resultadoponderacion' => 'float',
+        'riesgoresidual' => 'float',
+        'controles_id' => 'int',
+        'team_id' => 'int',
+        'id_analisis' => 'int',
+        'id_sede' => 'int',
+        'id_proceso' => 'int',
+        'id_responsable' => 'int',
+        'activo_id' => 'int',
+        'id_amenaza' => 'int',
+        'id_area' => 'int',
+        'id_vulnerabilidad' => 'int'
+    ];
 
-	protected $fillable = [
-		'descripcionriesgo',
-		'tipo_riesgo',
-		'confidencialidad',
-		'integridad',
-		'disponibilidad',
-		'probabilidad',
-		'impacto',
-		'nivelriesgo',
-		'riesgototal',
-		'resultadoponderacion',
-		'riesgoresidual',
-		'justificacion',
-		'controles_id',
-		'team_id',
-		'id_analisis',
-		'id_sede',
-		'id_proceso',
-		'id_responsable',
-		'activo_id',
-		'id_amenaza',
-		'id_area',
-		'id_vulnerabilidad',
+    protected $fillable = [
+        'descripcionriesgo',
+        'tipo_riesgo',
+        'confidencialidad',
+        'integridad',
+        'disponibilidad',
+        'probabilidad',
+        'impacto',
+        'nivelriesgo',
+        'riesgototal',
+        'resultadoponderacion',
+        'riesgoresidual',
+        'justificacion',
+        'controles_id',
+        'team_id',
+        'id_analisis',
+        'id_sede',
+        'id_proceso',
+        'id_responsable',
+        'activo_id',
+        'id_amenaza',
+        'id_area',
+        'id_vulnerabilidad',
         'plan_de_accion',
         'confidencialidad_cid',
         'integridad_cid',
@@ -136,7 +136,7 @@ class MatrizRiesgo extends Model
         'impacto_residual',
         'nivelriesgo_residual',
         'riesgo_total_residual',
-	];
+    ];
 
     /*protected function serializeDate(DateTimeInterface $date)
     {
@@ -160,53 +160,53 @@ class MatrizRiesgo extends Model
     }
 
 
-	public function controles()
-	{
-		return $this->belongsTo(Controle::class, 'controles_id');
-	}
+    public function controles()
+    {
+        return $this->belongsTo(Controle::class, 'controles_id');
+    }
 
-	public function activo()
-	{
-		return $this->belongsTo(Activo::class);
-	}
+    public function activo()
+    {
+        return $this->belongsTo(Activo::class);
+    }
 
-	public function amenaza()
-	{
-		return $this->belongsTo(Amenaza::class, 'id_amenaza');
-	}
+    public function amenaza()
+    {
+        return $this->belongsTo(Amenaza::class, 'id_amenaza');
+    }
 
-	public function analisis_de_riesgo()
-	{
-		return $this->belongsTo(AnalisisDeRiesgo::class, 'id_analisis');
-	}
+    public function analisis_de_riesgo()
+    {
+        return $this->belongsTo(AnalisisDeRiesgo::class, 'id_analisis');
+    }
 
-	public function area()
-	{
-		return $this->belongsTo(Area::class, 'id_area');
-	}
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'id_area');
+    }
 
-	public function proceso()
-	{
-		return $this->belongsTo(Proceso::class, 'id_proceso');
-	}
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'id_proceso');
+    }
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'id_responsable');
-	}
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_responsable');
+    }
 
-	public function sede()
-	{
-		return $this->belongsTo(Sede::class, 'id_sede');
-	}
+    public function sede()
+    {
+        return $this->belongsTo(Sede::class, 'id_sede');
+    }
 
-	public function vulnerabilidad()
-	{
-		return $this->belongsTo(Vulnerabilidad::class, 'id_vulnerabilidad');
-	}
+    public function vulnerabilidad()
+    {
+        return $this->belongsTo(Vulnerabilidad::class, 'id_vulnerabilidad');
+    }
 
-	public function team()
-	{
-		return $this->belongsTo(Team::class);
-	}
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }

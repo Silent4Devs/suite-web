@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PlanImplementacion;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -9,6 +10,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
@@ -32,6 +34,7 @@ class DatabaseSeeder extends Seeder
             DocumentoSeeder::class,
             CategoriaIncidenteSeeder::class,
             SubcategoriaIncidenteSeeder::class,
+            PlanImplementacionSeeder::class  // Necesario se carga inicialmente el Diagrama Universal de Gantt
             //PlanBaseSeeder::class,
         ]);
     }

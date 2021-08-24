@@ -127,9 +127,9 @@ GanttMaster.prototype.init = function (workSpace) {
   workSpace.bind("deleteFocused.gantt", function (e) {
     //delete task or link?
     var focusedSVGElement=self.gantt.element.find(".focused.focused.linkGroup");
-    if (focusedSVGElement.size()>0)
-      self.removeLink(focusedSVGElement.data("from"), focusedSVGElement.data("to"));
-    else
+    // if (focusedSVGElement.size()>0)
+    //   self.removeLink(focusedSVGElement.data("from"), focusedSVGElement.data("to"));
+    // else
     self.deleteCurrentTask();
   }).bind("addAboveCurrentTask.gantt", function () {
     self.addAboveCurrentTask();
@@ -421,10 +421,15 @@ GanttMaster.prototype.addTask = function (task, row) {
     this.editor.addTask(task, row);
     //append task to gantt
     this.gantt.addTask(task);
+    if (task) {
+      task.recalculateProgress();
+      // force recalculate status
+      task.recalculateStatus();
+    } 
   }
 
-//trigger addedTask event 
-  $(this.element).trigger("addedTask.gantt", task);
+//trigger addedTask event  
+  $(this.element).trigger("addedTask.gantt", task);  
   return ret;
 };
 
@@ -814,14 +819,13 @@ GanttMaster.prototype.storeCollapsedTasks = function () {
     else
       collTasks = localStorage.getItem("TWPGanttCollTasks");
 
-
     for (var i = 0; i < this.tasks.length; i++) {
       var task = this.tasks[i];
 
       var pos=collTasks.indexOf(task.id);
       if (task.collapsed){
-        if (pos<0)
-          collTasks.push(task.id);
+        if (pos<0)          
+          JSON.parse(collTasks).push(task.id);
       } else {
         if (pos>=0)
           collTasks.splice(pos,1);
@@ -1102,7 +1106,7 @@ GanttMaster.prototype.deleteCurrentTask = function (taskId) {
   if (task && (row > 0 || self.isMultiRoot || task.isNew()) ) {
     var par = task.getParent();
     self.beginTransaction();
-    task.deleteTask();
+    task.deleteTask();          
     task = undefined;
 
     //recompute depends string
@@ -1121,8 +1125,11 @@ GanttMaster.prototype.deleteCurrentTask = function (taskId) {
     if (!taskIsEmpty && row >= 0) {
       task = self.tasks[row];
       task.rowElement.click();
-      task.rowElement.find("[name=name]").focus();
-    }
+      task.rowElement.find("[name=name]").focus();       
+      // task.recalculateProgress(); 
+      // // force recalculate status
+      // task.recalculateStatus();
+    }    
     self.endTransaction();
   }
 };
@@ -1647,40 +1654,38 @@ GanttMaster.prototype.manageSaveRequired=function(ev, showSave) {
   function checkChanges() {
     var changes = false;
     //there is somethin in the redo stack?
-    if (self.__undoStack != null) {
-      if (self.__undoStack.length > 0) {
-        var oldProject = JSON.parse(self.__undoStack[0]);
-        //si looppano i "nuovi" task
-        for (var i = 0; !changes && i < self.tasks.length; i++) {
-          var newTask = self.tasks[i];
-          //se è un task che c'erà già
-          if (!(""+newTask.id).startsWith("tmp_")) {
-            //si recupera il vecchio task
-            var oldTask;
-            for (var j = 0; j < oldProject.tasks.length; j++) {
-              if (oldProject.tasks[j].id == newTask.id) {
-                oldTask = oldProject.tasks[j];
-                break;
-              }
-            }
-            // chack only status or dateChanges
-            if (oldTask && (oldTask.status != newTask.status || oldTask.start != newTask.start || oldTask.end != newTask.end)) {
-              changes = true;
+    if (self.__undoStack.length > 0) {
+      var oldProject = JSON.parse(self.__undoStack[0]);
+      //si looppano i "nuovi" task
+      for (var i = 0; !changes && i < self.tasks.length; i++) {
+        var newTask = self.tasks[i];
+        //se è un task che c'erà già
+        if (!(""+newTask.id).startsWith("tmp_")) {
+          //si recupera il vecchio task
+          var oldTask;
+          for (var j = 0; j < oldProject.tasks.length; j++) {
+            if (oldProject.tasks[j].id == newTask.id) {
+              oldTask = oldProject.tasks[j];
               break;
             }
           }
+          // chack only status or dateChanges
+          if (oldTask && (oldTask.status != newTask.status || oldTask.start != newTask.start || oldTask.end != newTask.end)) {
+            changes = true;
+            break;
+          }
         }
       }
-      $("#LOG_CHANGES_CONTAINER").css("display", changes ? "inline-block" : "none"); 
     }
+    $("#LOG_CHANGES_CONTAINER").css("display", changes ? "inline-block" : "none");
   }
 
 
-  if (showSave) {
-    $("body").stopTime("gantt.manageSaveRequired").oneTime(200, "gantt.manageSaveRequired", checkChanges);
-  } else {
-    $("#LOG_CHANGES_CONTAINER").hide();
-  }
+  // if (showSave) {
+  //   $("body").stopTime("gantt.manageSaveRequired").oneTime(200, "gantt.manageSaveRequired", checkChanges);
+  // } else {
+  //   $("#LOG_CHANGES_CONTAINER").hide();
+  // }
 
 }
 

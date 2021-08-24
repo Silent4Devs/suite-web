@@ -319,28 +319,39 @@
 		});
 
 		function initTable() {
-			let url = '{{ asset('storage/gantt/')}}/{{$name_file_gantt}}';
+			// let url = '{{ asset('storage/gantt/')}}/{{$name_file_gantt}}';
+			// $.ajax({
+			// 	type: "get",
+			// 	url: url,
+			// 	success: function (response) {			
+			// 		renderTable(response);
+			// 	}
+		    // });
 			$.ajax({
-				type: "get",
-				url: url,
-				success: function (response) {			
-					renderTable(response);
-				}
-		    });
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('admin.planTrabajoBase.loadProyect') }}",
+                success: function(response) {
+                    renderTable(response);
+                }
+            });
 		}
 			
 
 		function saveOnServer(response){
 			$.ajax({
 			    type: "post",
-			    url: "{{ route('admin.planTrabajoBase.saveCurrentProyect') }}",
+			    url: "{{ route('admin.planTrabajoBase.saveProyect') }}",
 			    data: { 
 			    	_token:"{{ csrf_token() }}",
-			    	gantt:JSON.stringify(response),
+			    	prj:response,
 			    },
 			    dataType: "JSON",
 			    success: function (response) {
-			        console.log(response);
+					$('#workSpace').trigger('refreshTasks.gantt');
+			        toastr.success('Tarea actualizada con éxito');
 			    }
 			});
 		}
@@ -349,7 +360,7 @@
 		function renderTable(response, id_tbody = null){
 			let resources = response.resources;
 					
-
+			// console.log(resources);
 			let html = '';
 			let contador = 0;
 			let contador_registros = 1;
@@ -375,22 +386,27 @@
 						estatus = 'Sin iniciar';
 					break;
 				}
+				if (Number(task.level)==0) {
+					html +=`
+					<h3 id="level_zero" data-id="${task.id}">Proyecto Base: ${task.name} (${Math.ceil(task.progress)} %)</h3>
+					`;
+				}
 				
-				
-				if (Number(task.level) == 0){
+				if (Number(task.level) == 1){
 					contador ++;
 					html += `
-					</table>
+					</table>										
 					<table class="tabla_gantt_fase">
-						<thead class="${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'th_activo' : '' : contador == 1 ? 'th_activo' : ''}">
-							<tr>
+						<thead class="${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'th_activo' : '' : contador == 1 ? 'th_activo' : ''}">							
+							<tr data-id=${task.id} data-level=${task.level}>
 								<th style="width:10px;"><span><i class="fas ${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'fa-minus-circle' : 'fa-plus-circle' : contador == 1 ? 'fa-minus-circle' : 'fa-plus-circle'}"></i></span></th>
-								<th>${task.name}</th>
+								<th>${task.name} (${Math.ceil(task.progress)} %)</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Responsable</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Estatus</th>
+								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Progreso</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Fecha Inicio</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Fecha Fin</th>
-								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Duración</th>
+								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Duración</th>								
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Dependencia</th>
 							</tr>
 						</thead>
@@ -398,10 +414,10 @@
 						<tbody id="${contador}_contenedor" class="${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">
 					`;
 					
-				}else{
+				}else if(Number(task.level) > 1){
 					html += `
 					
-						<tr id="${task.id}" numero-registro="${contador_registros}">
+						<tr id="${task.id}" data-level=${task.level} numero-registro="${contador_registros}">
 							<td>${contador_registros}</td>
 							<td style="padding-left: ${task.level * 15}px;">
 								<div class="d-flex" style="width: calc(400px - ${task.level * 15}px);">
@@ -411,10 +427,12 @@
 									<input class="name_input" value="${task.name}" style="width: 100%">
 								</div>
 							</td>`;
-								
-								let assigs = task.assigs.map(asignado => {
-									return(resources.find(r => r.id === Number(asignado.resourceId)));
-								});
+								let assigs= [];
+								if (task.assigs != null) {
+									assigs = task.assigs.map(asignado => {
+										return(resources.find(r => r.id === Number(asignado.resourceId)));
+									});
+								}
 								assigs = assigs.filter(r => r);
 								let imagenes = '';
 								if (assigs.length > 0) {
@@ -475,6 +493,10 @@
 
 								</select>
 							</td>
+							<td class="td_secundario td_progress" style="position:relative;">
+								<input class="progress_task" type="number" min="0" max="100" value="${Math.ceil(task.progress)}" ${isParent(task,response.tasks) ? 'readonly':''} />
+								<span style="position:absolute;top:11px;right:2px;">%</span>
+							</td>
 							<td class="td_secundario td_fecha_inicio" style="width:10%; position:relative">
 								<input class="input_fecha_inicio" type="text" value="${moment.unix((task.start)/1000).format("YYYY-MM-DD")}" ${task.depends != "" ? 'disabled': ''} />
 								<span class="icon-calendar"><i class="fas fa-calendar-day"></i></span>
@@ -490,8 +512,8 @@
 										<span>Días</span>
 									</div>
 								</div>
-							</td>
-							<td class="td_secundario" style="width:10%;">${/*task.depends != "" ? response.tasks[Number(task.depends)-1].name.substr(0,20)+'...':''*/ task.depends}</td>
+							</td>							
+							<td class="td_secundario" style="width:10%;">${/*task.depends != "" ? response.tasks[Number(task.depends)-1].name.substr(0,20)+'...':''*/ task.depends != undefined ? task.depends : ''}</td>
 						</tr>
 					`;
 				}
@@ -506,8 +528,9 @@
 					dateFormat: 'yy-mm-dd',
 					changeYear: true,
 					onSelect: function(dateText) {
-						console.log(this.closest('tbody').getAttribute('id'));
-						let id_row = Number(this.closest('tr').getAttribute('id'));
+						// console.log(this.closest('tbody').getAttribute('id'));
+						// let id_row = Number(this.closest('tr').getAttribute('id'));
+						let id_row = this.closest('tr').getAttribute('id');
 						let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
 						let valor_nuevo = moment(this.value).valueOf();
 						let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
@@ -549,8 +572,9 @@
 					dateFormat: 'yy-mm-dd',
 					changeYear: true,
 					onSelect: function(dateText) {
-						console.log(this.closest('tbody').getAttribute('id'));
-						let id_row = Number(this.closest('tr').getAttribute('id'));
+						// console.log(this.closest('tbody').getAttribute('id'));
+						// let id_row = Number(this.closest('tr').getAttribute('id'));
+						let id_row = this.closest('tr').getAttribute('id');
 						let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
 						let valor_nuevo = moment(this.value).valueOf();
 						let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
@@ -559,8 +583,8 @@
 						
 						let dependencias = response.tasks.filter(t => t.depends == numero_registro);
 						let fecha_fin_actual = moment.unix(valor_nuevo/1000).format("YYYY-MM-DD");
-						console.log(fecha_inicio);
-						console.log(fecha_fin_actual);
+						// console.log(fecha_inicio);
+						// console.log(fecha_fin_actual);
 						tarea_correspondiente.duration = duracion+1;
 						tarea_correspondiente.end = valor_nuevo;
 
@@ -583,9 +607,13 @@
 			let name_input = document.querySelectorAll('.name_input');
 			name_input.forEach(i_nombre =>{
 				i_nombre.addEventListener('change', function(){
-					let id_row = Number(this.parentElement.parentElement.getAttribute('id'));
+					// let id_row = Number(this.parentElement.parentElement.getAttribute('id'));
+					let id_row = this.closest('tr').getAttribute('id');
+					// console.log( this.closest('tr'));
+					// console.log(id_row);
 					let valor_nuevo = this.value;
-					let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
+					let tarea_correspondiente = response.tasks?.find(t => t.id == id_row);
+					// console.log(tarea_correspondiente);
 					tarea_correspondiente.name = valor_nuevo;
 					saveOnServer(response);
 				});
@@ -595,11 +623,15 @@
 			let estatus_select = document.querySelectorAll('.estatus_select');
 			estatus_select.forEach(s_status => {
 				s_status.addEventListener('change', function(){
-					let id_row = Number(this.parentElement.parentElement.getAttribute('id'));
+					// let id_row = Number(this.parentElement.parentElement.getAttribute('id'));
+					let id_row = this.parentElement.parentElement.getAttribute('id');
 					let valor_nuevo = this.value;
 					let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
 					tarea_correspondiente.status = valor_nuevo;
-					
+					// if (valor_nuevo == 'STATUS_DONE') {
+					// 	tarea_correspondiente.progress = 100;
+					// }
+					// recalculateProgress(tarea_correspondiente,response.tasks);
 					let id_tbody = s_status.closest('tbody').getAttribute('id');
 					saveOnServer(response);
 					renderTable(response,id_tbody);
@@ -678,7 +710,8 @@
 			let duracion_inputs = document.querySelectorAll('.input_duracion');
 			duracion_inputs.forEach(duracion_input => {
 				duracion_input.addEventListener('change',function(){
-					let id_row = Number(this.closest('tr').getAttribute('id'));
+					// let id_row = Number(this.closest('tr').getAttribute('id'));
+					let id_row = this.closest('tr').getAttribute('id');
 					if (Number(this.value) > 0) {
 						let valor_nuevo = Number(this.value);
 						let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
@@ -708,12 +741,45 @@
 				});
 			});
 
+			// Evento Progreso Propagar a Childs or Parent
+			let progress_task = document.querySelectorAll('.progress_task');
+			progress_task.forEach(element => {
+				element.addEventListener('change', function(){
+					let current_task_id = this.closest('tr').getAttribute('id');
+					let current_task = response.tasks.find(t => t.id ==current_task_id);
+					if(Number(this.value) >= 0 && Number(this.value) <= 100){
+						current_task.progress = Number(this.value);
+						if(Number(this.value) == 100){
+							current_task.status = "STATUS_DONE";							
+						}else{
+							current_task.status = "STATUS_ACTIVE";								
+						}
+						recalculateProgress(current_task,response.tasks);
+
+						let id_tbody = element.closest('tbody').getAttribute('id');
+						saveOnServer(response);
+						renderTable(response,id_tbody);		 
+					}else{
+						 Swal.fire(
+							'¡Información!',
+							`El progreso de la tarea debe estár en un rango de 0 a 100`,
+							'info'
+						)
+						this.value = current_task.progress;
+					}
+					
+					// let parent_task = getParent(current_task,response.tasks); // tarea padre de la tarea actual					
+					// let all_children_task = getChildren(parent_task,response.tasks);
+										
+				});
+			});
 
 			//Evento click para td resources
 			let td_resources = document.querySelectorAll('.td_resources');
 			td_resources.forEach(element => {
 				element.addEventListener('click',function(){
-					let id_row = Number(this.parentElement.getAttribute('id'));
+					// let id_row = Number(this.parentElement.getAttribute('id'));
+					let id_row = this.parentElement.getAttribute('id');
 					let valor_nuevo = this.value;
 					let id_tbody = element.closest('tbody').getAttribute('id');
 					let contenedor = document.getElementById('modales');
@@ -731,7 +797,7 @@
 									</button>
 								</div>
 								<div class="modal-body">
-									<div class="input-group mb-3">
+									<div class="mb-3 input-group">
 										<div class="input-group-prepend">
 											<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
 										</div>
@@ -820,6 +886,80 @@
 			});
 
 		}
+
+		function recalculateProgress(task,tasks) {
+				let parents_task = getParents(task,tasks);
+				parents_task.forEach(parent_task =>{
+					let children_tasks = getChildren(parent_task,response.tasks);
+					let average = 0;
+					children_tasks.forEach(child_task =>{
+						average += child_task.progress;
+					});
+					let total_average = average / children_tasks.length;
+					parent_task.progress = total_average;
+					if(Number(parent_task.progress) == 100){
+						parent_task.status = "STATUS_DONE";
+					}else{
+						parent_task.status = "STATUS_ACTIVE";								
+					}
+				});
+			}
+
+			function getRow(task,tasks) {
+				let ret = -1; // default level 0
+				ret = tasks.indexOf(task);
+				return ret;
+			}
+
+			function getParents(task,tasks) {
+				var ret;
+				var topLevel = task.level;
+				var pos = getRow(task,tasks);
+				ret = [];
+				for (var i = pos; i >= 0; i--) {
+					var par = tasks[i];
+					if (topLevel > par.level) {
+						topLevel = par.level;
+						ret.push(par);
+					}
+				}
+				return ret;
+			};
+
+			function getParent(task,tasks){
+				var ret;
+				for (var i = getRow(task,tasks); i >= 0; i--) {
+				var par = tasks[i];
+				if (task.level > par.level) {
+					ret = par;
+					break;
+				}
+				}
+				return ret;
+			}
+
+			function isParent(task,tasks) {
+				var ret = false;
+				var pos = getRow(task,tasks);
+				if (pos < tasks.length - 1)
+				ret = tasks[pos + 1].level > task.level;
+				return ret;
+			};
+
+			function getChildren(task,tasks) {
+				var ret = [];
+					var pos = getRow(task,tasks);
+					for (var i = pos + 1; i < tasks.length; i++) {
+						var ch = tasks[i];
+						if (ch.level == task.level + 1)
+							ret.push(ch);
+						else if (ch.level <= task.level) // exit loop if parent or brother
+							break;
+					}
+				return ret;
+			};
+
+
 		function renderResources(response,tarea_correspondiente, nombre = null){
 			let recursos = null;
 			if (nombre == null || nombre == '') {
@@ -827,7 +967,7 @@
 			}else{
 				recursos = response.resources.filter(r => r.name.toLowerCase().includes(nombre.toLowerCase()));
 			}
-			console.log(recursos);
+			// console.log(recursos);
 			let res = recursos.map(resource => {
 				let foto = 'man.png';
 				if(resource.foto == null){ 
@@ -840,14 +980,14 @@
 					foto = resource.foto;
 				}
 
-				return `<li class="list-group-item ${tarea_correspondiente.assigs.some(assig => Number(assig.resourceId) == Number(resource.id)) ? 'selected_resource_task':''}" resource-id="${resource.id}">
+				return `<li class="list-group-item ${tarea_correspondiente.assigs?.some(assig => Number(assig.resourceId) == Number(resource.id)) ? 'selected_resource_task':''}" resource-id="${resource.id}">
 						<div class="row">
 							<div class="col-11">
 								<img class="rounded-circle" src="{{ asset('storage/empleados/imagenes') }}/${foto}" title="${resource.name}" />
 								<span class="m-0 ml-2">${resource.name}</span>
 							</div>
-							<div class="col-1 text-center">
-								${tarea_correspondiente.assigs.some(assig => Number(assig.resourceId) == Number(resource.id)) ? '<i class="fas fa-trash-alt resources-modal-remove text-danger" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>':'<i class="fa fa-plus-circle resources-modal text-success" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>'}
+							<div class="text-center col-1">
+								${tarea_correspondiente.assigs?.some(assig => Number(assig.resourceId) == Number(resource.id)) ? '<i class="fas fa-trash-alt resources-modal-remove text-danger" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>':'<i class="fa fa-plus-circle resources-modal text-success" style="vertical-align:middle;margin-top:7px; font-size:15pt; cursor:pointer;"></i>'}
 							</div>
 						</div>
 						</li>`;
@@ -873,10 +1013,14 @@
 						"roleId": "tmp_1",
 						"effort": 0
 					};
-					let isResponsableTask = tarea_correspondiente.assigs.find(a => Number(a.resourceId) == id);
+					let isResponsableTask = tarea_correspondiente.assigs?.find(a => Number(a.resourceId) == id);
 					if (isResponsableTask == undefined) {
-						tarea_correspondiente.assigs.push(new_assig);
-
+						if( tarea_correspondiente.assigs){
+                            tarea_correspondiente.assigs.push(new_assig);
+                        }else{
+                            tarea_correspondiente.assigs = [];
+                            tarea_correspondiente.assigs.push(new_assig);
+                        }
 						let id_tbody = this.closest('.modal').getAttribute('tbody-contenedor');
 						saveOnServer(response);						
 						funRenderCallback(response,id_tbody);

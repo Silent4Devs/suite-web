@@ -1,13 +1,82 @@
 <div class="btn-group" role="group" aria-label="Basic example">
+    @if ($crudRoutePart == 'users')
+        <button class="btn btn-sm" onclick="AbrirModal();">
+            <i class="fas fa-user-tag"></i>
+        </button>
+        <div id="c_modal"></div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+
+            })
+
+            function AbrirModal() {
+                $(`#vincularEmpleado${@json($row->id)}`).modal('dispose');
+                document.getElementById('c_modal').innerHTML = `
+                <div data-user-id="${@json($row->id)}" class="modal fade" id="vincularEmpleado${@json($row->id)}" data-backdrop="static"
+                    data-keyboard="false" tabindex="-1" aria-labelledby="vincularEmpleado${@json($row->id)}Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="vincularEmpleado${@json($row->id)}Label">Vinculación de Empleados
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <select name="n_empleado" id="n_empleado" class="select2">
+                                    @foreach ($empleados as $empleado)
+                                        <option value="{{ $empleado->n_empleado }}">{{ $empleado->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary"
+                                    onclick="VincularEmpleado(this);">Vincular</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+                $(`#vincularEmpleado${@json($row->id)}`).modal('show');
+                $('.select2').select2({
+                    'theme': 'bootstrap4'
+                });
+            }
+
+            function VincularEmpleado(element) {
+                console.log($(`#vincularEmpleado${@json($row->id)}`).attr('data-user-id'));
+                let n_empleado = $("#n_empleado").val();
+                let user_id = element.closest('tr').firstChildElement;
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/users/vincular",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        n_empleado,
+                        user_id
+                    },
+                    dataType: "JSON",
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            }
+        </script>
+    @endif
     @can($viewGate)
-        <a class="mr-2 rounded btn btn-sm btn-outline-primary"
-            href="{{ route('admin.' . $crudRoutePart . '.show', $row->id) }}">
+        <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.' . $crudRoutePart . '.show', $row->id) }}">
             {{-- {{ trans('global.view') }} --}} <i class="fas fa-eye" data-toggle="tooltip" data-placement="top" title="Ver"></i>
         </a>
     @endcan
     @can($editGate)
-        <a class="mr-2 rounded btn btn-sm btn-outline-info"
-            href="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}">
+        <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}">
             {{-- {{ trans('global.edit') }} --}} <i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i>
         </a>
     @endcan
@@ -17,7 +86,7 @@
             class="{{ $row->id }}">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="btn btn-sm btn-outline-danger {{ $row->id }} rounded">
+            <div class="btn btn-sm text-danger {{ $row->id }} rounded">
                 {{-- {{ trans('global.delete') }} --}} <i class="fas fa-trash" data-toggle="tooltip" data-placement="top"
                     title="Eliminar"></i>
             </div>
@@ -84,31 +153,24 @@
                 $(".{{ $row->id }} .fondo_delete").fadeOut(100);
                 $(".{{ $row->id }} .fondo_delete").css("display", "none");
             });
-
         </script>
 
 
         <!--
-                                                            <script>
-                                                              
-                                                                var  btn_delete = document.querySelector('.btn_delete');
-                                                                btn_delete.addEventListener('click', () =>{
+                                                                                                                                                                                                                                                                                                                                                                                                                <script>
+                                                                                                                                                                                                                                                                                                                                                                                                                    var btn_delete = document.querySelector('.btn_delete');
+                                                                                                                                                                                                                                                                                                                                                                                                                    btn_delete.addEventListener('click', () => {
 
-                                                                    document.getElementById('fondo_delete').classList.add('ver');
+                                                                                                                                                                                                                                                                                                                                                                                                                        document.getElementById('fondo_delete').classList.add('ver');
 
-                                                                    var  btn_cancelar = document.querySelector('#cancelar');
-                                                                    btn_cancelar.addEventListener('click', () =>{
-                                                                        document.getElementById('fondo_delete').classList.remove('ver');
+                                                                                                                                                                                                                                                                                                                                                                                                                        var btn_cancelar = document.querySelector('#cancelar');
+                                                                                                                                                                                                                                                                                                                                                                                                                        btn_cancelar.addEventListener('click', () => {
+                                                                                                                                                                                                                                                                                                                                                                                                                            document.getElementById('fondo_delete').classList.remove('ver');
 
-                                                                    }); 
-                                                                }); 
-
-                                                                    
-
-                                                                  
-
-                                                            </script>
-                                                            -->
+                                                                                                                                                                                                                                                                                                                                                                                                                        });
+                                                                                                                                                                                                                                                                                                                                                                                                                    });
+                                                                                                                                                                                                                                                                                                                                                                                                                </script>
+                                                                                                                                                                                                                                                                                                                                                                                                                -->
 
 
     @endcan

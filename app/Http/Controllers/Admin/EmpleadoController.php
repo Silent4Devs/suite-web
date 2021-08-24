@@ -235,13 +235,13 @@ class EmpleadoController extends Controller
             'foto' => $image
         ]);
 
-        $gantt_path = 'storage/gantt/gantt_inicial.json';
-        $path = public_path($gantt_path);
+        // $gantt_path = 'storage/gantt/gantt_inicial.json';
+        // $path = public_path($gantt_path);
 
-        $json_code = json_decode(file_get_contents($path), true);
-        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        $write_empleados = $json_code;
-        file_put_contents($path, json_encode($write_empleados));
+        // $json_code = json_decode(file_get_contents($path), true);
+        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $write_empleados = $json_code;
+        // file_put_contents($path, json_encode($write_empleados));
 
         return redirect()->route('admin.empleados.index')->with("success", 'Guardado con éxito');
     }
@@ -382,13 +382,13 @@ class EmpleadoController extends Controller
             "sede_id" => $request->sede_id
         ]);
 
-        $gantt_path = 'storage/gantt/gantt_inicial.json';
-        $path = public_path($gantt_path);
+        // $gantt_path = 'storage/gantt/gantt_inicial.json';
+        // $path = public_path($gantt_path);
 
-        $json_code = json_decode(file_get_contents($path), true);
-        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        $write_empleados = $json_code;
-        file_put_contents($path, json_encode($write_empleados));
+        // $json_code = json_decode(file_get_contents($path), true);
+        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $write_empleados = $json_code;
+        // file_put_contents($path, json_encode($write_empleados));
 
         return redirect()->route('admin.empleados.index')->with("success", 'Editado con éxito');
     }
@@ -411,7 +411,7 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::select('id', 'name', 'email')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
+                $usuarios = Empleado::with('area')->select('id', 'name', 'email','puesto')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
                 $lista = "<ul class='list-group' id='empleados-lista'>";
                 foreach ($usuarios as $usuario) {
                     $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'><i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . "</button>";

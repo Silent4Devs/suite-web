@@ -11,7 +11,7 @@ class UpdateAreaRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('area_edit');
+        return Gate::allows('configuracion_area_edit');
     }
 
     public function rules()

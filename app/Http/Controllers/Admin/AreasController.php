@@ -161,7 +161,7 @@ class AreasController extends Controller
     {
         abort_if(Gate::denies('configuracion_area_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $area->load('team');
+        $area->load('team', 'grupo');
 
         return view('admin.areas.show', compact('area'));
     }
@@ -193,6 +193,7 @@ class AreasController extends Controller
     {
         abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $numero_grupos = Grupo::count();
+
         $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
 
         if ($request->ajax()) {

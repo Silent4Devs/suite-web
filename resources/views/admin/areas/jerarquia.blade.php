@@ -6,7 +6,7 @@
         integrity="sha512-0mXZvQboEKApqdohlHGMJ/OZ09yeQa6UgZRkgG+b3t3JlcyIqvDnUMgpUm5CvlHT9HNtRm9xbRAJPlKaFCXzdQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-       
+
 
 
         #chart-container {
@@ -645,7 +645,7 @@
                             @if ($numero_grupos > 0)
                                 <div class="justify-content-center">
                                     @foreach ($grupos as $grupo)
-                                        <div class="w-100">
+                                        <div style="width:calc(100% - 8px); margin-left:5px;">
                                             <div class="mt-3 card justify-content-center"
                                                 style="box-shadow: 0px 0px 0px 2px {{ $grupo->color }}!important;">
                                                 <div class="row justify-content-center">
@@ -658,8 +658,8 @@
                                                 <div class="container">
                                                     <div class="row justify-content-center">
                                                         @foreach ($grupo->areas as $area)
-                                                            <div class="mb-3 ml-2 mr-2 bg-white rounded shadow-sm col-3 sesioninicio"
-                                                                style="height:40px;"
+                                                            <div class="mb-3 ml-2 mr-2 bg-white rounded col-3 sesioninicio"
+                                                                style="height:40px; border:1px solid #ccc !important"
                                                                 onclick="renderModal(this,'{{ $area->area }}', '{{ $area->descripcion }}', '{{ $grupo->color }}')">
                                                                 <p class="text-center" style="cursor:pointer"> {{ $area->area }}
                                                                 </p>
@@ -738,8 +738,7 @@
                 });
 
                 function renderOrganigrama(OrgChart, orientacion, id = null, area_filter = false, area_id = null) {
-                    let areasTree = @json($areasTree);
-                    console.log(areasTree);
+                    let areasTree = @json($areasTree);                    
                     let repositorioImagenes = @json($rutaImagenes);
                     let organizacion = @json($organizacion);
                     let chartContainer = document.querySelector('#chart-container');
@@ -772,7 +771,7 @@
                             container.appendChild(img);
                         },
                         success: function(response) {
-                            console.log(JSON.parse(response));
+                            console.log(response);
                             let container = document.querySelector('.imagen-search');
                             container.src = "";
                             document.querySelector('.texto-search').innerHTML = "";

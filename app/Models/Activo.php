@@ -38,9 +38,19 @@ class Activo extends Model
         'fecha_fin',
         'fecha_compra',
         'id_responsable',
-
-
+        'observaciones',
+        'fecha_baja',
+        'fecha_alta',
+        'sede',
+        "documentos_relacionados"
     ];
+
+    protected $casts = [
+
+        "modelo"=>"int",
+        "marca"=>"int"
+    ];
+
 
     protected function serializeDate(DateTimeInterface $date)
     {

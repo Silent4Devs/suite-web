@@ -11,7 +11,7 @@ class MassDestroyAnalisisRiegosRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('analisis-riesgos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('riesgos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }

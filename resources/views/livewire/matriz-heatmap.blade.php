@@ -1,0 +1,462 @@
+<div>
+    <style>
+        .text-orange {
+            color: orange !important;
+        }
+
+        .mayus {
+            text-transform: uppercase;
+        }
+
+        .text-yellow {
+            color: #f4c272 !important;
+        }
+
+        .table-scroll {
+            display: block;
+            height: 300px;
+            overflow-y: scroll;
+        }
+
+        .con {
+            cursor: pointer;
+        }
+
+    </style>
+
+    {{-- <div class="row">
+        <div class="col-md-4">
+            <p class="text-xl text-gray-700">Sede:</p>
+            <select class="form-control" wire:model="sede">
+                <option value="" selected disabled>Seleccione una sede</option>
+                @foreach ($sedes as $sede)
+                    <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-4">
+            <p class="text-xl text-gray-700">Area:</p>
+            <select class="form-control" wire:model="area">
+                <option value="" selected disabled>Seleccione un area</option>
+                @foreach ($areas as $area)
+                    <option value="{{ $area->id }}">{{ $area->area }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-4">
+            <p class="text-xl text-gray-700">Proceso:</p>
+            <select class="form-control" wire:model="sede">
+                <option value="" selected disabled>Seleccione una proceso</option>
+                @foreach ($procesos as $proceso)
+                    <option value="{{ $proceso->id }}">{{ $proceso->nombre }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div> --}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="calor">
+                <div class="datosCalor">
+                    <label class="text-primary" style="font-size: 20px;">Riesgo inicial</label>
+                    <table class="table table-hover table-scroll">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Riesgo</th>
+                                <th scope="col">Probabilidad</th>
+                                <th scope="col">Impacto</th>
+                                <th scope="col">Nivel riesgo</th>
+                            </tr>
+                        </thead>
+                        @foreach ($listados as $listado)
+                            <tr class="con">
+                                <td>{{ $listado->id }}</td>
+                                <td data-toggle="tooltip" data-placement="top" title="Pulse aquí para más información">
+                                    <a target="_blank"
+                                        href="{{ route('admin.matriz-riesgos.show', [$listado->id]) }}">{{ wordwrap($listado->descripcionriesgo, 10, "\n", true) }}</a>
+                                </td>
+                                <td>{{ $listado->probabilidad }}</td>
+                                <td>{{ $listado->impacto }}</td>
+                                <td>
+                                    @switch($listado->nivelriesgo)
+                                        @case(0)
+                                            <span class="text-green mayus">Baja ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(9)
+                                            <span class="text-yellow mayus">Media ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(18)
+                                            <span class="text-yellow mayus">Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(27)
+                                            <span class="text-orange mayus">Muy Alta
+                                                ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(36)
+                                            <span class="text-danger mayus">Alta ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(54)
+                                            <span class="text-danger mayus">Muy Alta
+                                                ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @case(81)
+                                            <span class="text-danger mayus">Muy Alta
+                                                ({{ $listado->nivelriesgo }})</span>
+                                        @break
+                                        @default
+                                    @endswitch
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="mapaCalor">
+                    <div class="txtVertical text-primary font-weight-bold"
+                        style="position:absolute; margin-top: 20px;font-size: 20px; margin-left: 15px;">Impacto</div>
+                    <table>
+                        <tr>
+                            <td>Muy Alta</td>
+                            <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQuery(0 , '1')">
+                                @if ($changer == '1')
+                                    {{ $conteo }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="naranja" id="s_media_p_muyAlta" wire:click="callQuery(27, '2')">
+                                @if ($changer == '2')
+                                    {{ $conteo }}
+                                @else
+                                    27
+                                @endif
+                            </td>
+                            <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQuery(54, '3')">
+                                @if ($changer == '3')
+                                    {{ $conteo }}
+                                @else
+                                    54
+                                @endif
+                            </td>
+                            <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQuery(81, '4')">
+                                @if ($changer == '4')
+                                    {{ $conteo }}
+                                @else
+                                    81
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Alta</td>
+                            <td class="amarillo" id="s_baja_p_alta" wire:click="callQuery(0, '5')">
+                                @if ($changer == '5')
+                                    {{ $conteo }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="amarillo" id="s_media_p_alta" wire:click="callQuery(18, '6')">
+                                @if ($changer == '6')
+                                    {{ $conteo }}
+                                @else
+                                    18
+                                @endif
+                            </td>
+                            <td class="naranja" id="s_alta_p_alta" wire:click="callQuery(36, '7')">
+                                @if ($changer == '7')
+                                    {{ $conteo }}
+                                @else
+                                    36
+                                @endif
+                            </td>
+                            <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQuery(54, '8')">
+                                @if ($changer == '8')
+                                    {{ $conteo }}
+                                @else
+                                    54
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Media</td>
+                            <td class="verde" id="s_baja_p_media" wire:click="callQuery(0, '9')">
+                                @if ($changer == '9')
+                                    {{ $conteo }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="amarillo" id="s_media_p_media" wire:click="callQuery(9, '10')">
+                                @if ($changer == '10')
+                                    {{ $conteo }}
+                                @else
+                                    9
+                                @endif
+                            </td>
+                            <td class="amarillo" id="s_alta_p_media" wire:click="callQuery(18, '11')">
+                                @if ($changer == '11')
+                                    {{ $conteo }}
+                                @else
+                                    18
+                                @endif
+                            </td>
+                            <td class="naranja" id="s_muyAlta_p_media" wire:click="callQuery(27, '12')">
+                                @if ($changer == '12')
+                                    {{ $conteo }}
+                                @else
+                                    27
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Baja</td>
+                            <td class="verde" id="s_baja_p_baja" wire:click="callQuery(0, '13')">
+                                @if ($changer == '13')
+                                    {{ $conteo }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="verde" id="s_media_p_baja" wire:click="callQuery(0, '14')">
+                                @if ($changer == '14')
+                                    {{ $conteo }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="amarillo" id="s_alta_p_baja" wire:click="callQuery(0, '15')">
+                                @if ($changer == '15')
+                                    {{ $conteo }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="amarillo" id="s_muyAlta_p_baja" wire:click="callQuery(0, '16')">
+                                @if ($changer == '16')
+                                    {{ $conteo }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Baja</td>
+                            <td>Media</td>
+                            <td>Alta</td>
+                            <td>Muy Alta</td>
+                        </tr>
+                    </table>
+                    <div class="txtHorizontal text-primary font-weight-bold"
+                        style="margin-left: 250px; font-size: 20px;">Probabilidad</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+
+            <div class="calor">
+                <div class="datosCalor">
+                    <label class="text-primary" style="font-size: 20px;">Riesgo residual</label>
+                    <table class="table table-hover table-scroll">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Riesgo</th>
+                                <th scope="col">Probabilidad</th>
+                                <th scope="col">Impacto</th>
+                                <th scope="col">Nivel riesgo</th>
+                            </tr>
+                        </thead>
+                        @foreach ($listados_residual as $listado)
+                            <tr class="con" href="{{ route('admin.matriz-riesgos.show', [$listado->id]) }}">
+                                <td>{{ $listado->id }}</td>
+                                <td data-toggle="tooltip" data-placement="top" title="Pulse aquí para más información">
+                                    <a target="_blank"
+                                        href="{{ route('admin.matriz-riesgos.show', [$listado->id]) }}">{{ wordwrap($listado->descripcionriesgo, 10, "\n", true) }}</a>
+                                </td>
+                                <td>{{ $listado->probabilidad_residual }}</td>
+                                <td>{{ $listado->impacto_residual }}</td>
+                                <td>
+                                    @switch($listado->nivelriesgo_residual)
+                                        @case(0)
+                                            <span class="text-green mayus">Baja
+                                                ({{ $listado->nivelriesgo_residual }})</span>
+                                        @break
+                                        @case(9)
+                                            <span class="text-yellow mayus">Media
+                                                ({{ $listado->nivelriesgo_residual }})</span>
+                                        @break
+                                        @case(18)
+                                            <span class="text-yellow mayus">Alta
+                                                ({{ $listado->nivelriesgo_residual }})</span>
+                                        @break
+                                        @case(27)
+                                            <span class="text-orange mayus">Muy Alta
+                                                ({{ $listado->nivelriesgo_residual }})</span>
+                                        @break
+                                        @case(36)
+                                            <span class="text-danger mayus">Alta
+                                                ({{ $listado->nivelriesgo_residual }})</span>
+                                        @break
+                                        @case(54)
+                                            <span class="text-danger mayus">Muy Alta
+                                                ({{ $listado->nivelriesgo_residual }})</span>
+                                        @break
+                                        @case(81)
+                                            <span class="text-danger mayus">Muy Alta
+                                                ({{ $listado->nivelriesgo_residual }})</span>
+                                        @break
+                                        @default
+                                    @endswitch
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+
+                <div class="mapaCalor">
+                    <div class="txtVertical text-primary font-weight-bold"
+                        style="position:absolute; margin-top: 20px;font-size: 20px; margin-left: 15px;">Impacto</div>
+                    <table>
+                        <tr>
+                            <td>Muy Alta</td>
+                            <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQueryResidual(0 , '1')">
+                                @if ($changer_residual == '1')
+                                    {{ $conteo_residual }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="naranja" id="s_media_p_muyAlta" wire:click="callQueryResidual(27, '2')">
+                                @if ($changer_residual == '2')
+                                    {{ $conteo_residual }}
+                                @else
+                                    27
+                                @endif
+                            </td>
+                            <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQueryResidual(54, '3')">
+                                @if ($changer_residual == '3')
+                                    {{ $conteo_residual }}
+                                @else
+                                    54
+                                @endif
+                            </td>
+                            <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQueryResidual(81, '4')">
+                                @if ($changer_residual == '4')
+                                    {{ $conteo_residual }}
+                                @else
+                                    81
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Alta</td>
+                            <td class="amarillo" id="s_baja_p_alta" wire:click="callQueryResidual(0, '5')">
+                                @if ($changer_residual == '5')
+                                    {{ $conteo_residual }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="amarillo" id="s_media_p_alta" wire:click="callQueryResidual(18, '6')">
+                                @if ($changer_residual == '6')
+                                    {{ $conteo_residual }}
+                                @else
+                                    18
+                                @endif
+                            </td>
+                            <td class="naranja" id="s_alta_p_alta" wire:click="callQueryResidual(36, '7')">
+                                @if ($changer_residual == '7')
+                                    {{ $conteo_residual }}
+                                @else
+                                    36
+                                @endif
+                            </td>
+                            <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQueryResidual(54, '8')">
+                                @if ($changer_residual == '8')
+                                    {{ $conteo_residual }}
+                                @else
+                                    54
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Media</td>
+                            <td class="verde" id="s_baja_p_media" wire:click="callQueryResidual(0, '9')">
+                                @if ($changer_residual == '9')
+                                    {{ $conteo_residual }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="amarillo" id="s_media_p_media" wire:click="callQueryResidual(9, '10')">
+                                @if ($changer_residual == '10')
+                                    {{ $conteo_residual }}
+                                @else
+                                    9
+                                @endif
+                            </td>
+                            <td class="amarillo" id="s_alta_p_media" wire:click="callQueryResidual(18, '11')">
+                                @if ($changer_residual == '11')
+                                    {{ $conteo_residual }}
+                                @else
+                                    18
+                                @endif
+                            </td>
+                            <td class="naranja" id="s_muyAlta_p_media" wire:click="callQueryResidual(27, '12')">
+                                @if ($changer_residual == '12')
+                                    {{ $conteo_residual }}
+                                @else
+                                    27
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Baja</td>
+                            <td class="verde" id="s_baja_p_baja" wire:click="callQueryResidual(0, '13')">
+                                @if ($changer_residual == '13')
+                                    {{ $conteo_residual }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="verde" id="s_media_p_baja" wire:click="callQueryResidual(0, '14')">
+                                @if ($changer_residual == '14')
+                                    {{ $conteo_residual }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="amarillo" id="s_alta_p_baja" wire:click="callQueryResidual(0, '15')">
+                                @if ($changer_residual == '15')
+                                    {{ $conteo_residual }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                            <td class="amarillo" id="s_muyAlta_p_baja" wire:click="callQueryResidual(0, '16')">
+                                @if ($changer_residual == '16')
+                                    {{ $conteo_residual }}
+                                @else
+                                    0
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Baja</td>
+                            <td>Media</td>
+                            <td>Alta</td>
+                            <td>Muy Alta</td>
+                        </tr>
+                    </table>
+                    <div class="txtHorizontal text-primary font-weight-bold"
+                        style="margin-left: 250px; font-size: 20px;">Probabilidad</div>
+                </div>
+            </div>
+
+        </div>
+        <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}" class="btn btn-danger">Cerrar</a>
+    </div>
+
+</div>

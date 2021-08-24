@@ -1,6 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+
+.table tr td:nth-child(4){
+
+text-align: center !important;
+}
+
+
+</style>
+
     {{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
 
     @can('minutasaltadireccion_create')
@@ -28,19 +38,16 @@
                             {{ trans('cruds.minutasaltadireccion.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}
+                            Tema de la reunión
                         </th>
                         <th>
-                            {{ trans('cruds.minutasaltadireccion.fields.responsablereunion') }}
+                            Fecha
                         </th>
                         <th>
-                            {{ trans('cruds.minutasaltadireccion.fields.arearesponsable') }}
+                            Elaboró
                         </th>
                         <th>
-                            {{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.minutasaltadireccion.fields.archivo') }}
+                            Participantes
                         </th>
                         <th>
                             Opciones
@@ -206,26 +213,42 @@
                         name: 'id'
                     },
                     {
-                        data: 'objetivoreunion',
-                        name: 'objetivoreunion'
-                    },
-                    {
-                        data: 'responsablereunion_name',
-                        name: 'responsablereunion.name'
-                    },
-                    {
-                        data: 'arearesponsable',
-                        name: 'arearesponsable'
+                        data: 'tema_reunion',
+                        name: 'tema_reunion'
                     },
                     {
                         data: 'fechareunion',
                         name: 'fechareunion'
                     },
                     {
-                        data: 'archivo',
-                        name: 'archivo',
-                        sortable: false,
-                        searchable: false
+                        data: 'responsable',
+                        name: 'responsable',
+                        render: function(data, type, meta, config) {
+                            let responsablereunion="";
+                            if (data) {
+                            responsablereunion+= `
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            `;
+                        }
+                        return responsablereunion;
+                         }
+                    },
+                    {
+                        data: 'participantes',
+                        name: 'participantes',
+                        render:function(data,type,row,meta){
+                            let participantes=JSON.parse(data);
+                            let html='';
+                        participantes.forEach(participante => {
+                            html+= `
+                            <img src="{{ asset('storage/empleados/imagenes/') }}/${participante.avatar}"
+                                        class="rounded-circle" alt="${participante.name}"
+                                        title="${participante.name}" style="clip-path: circle(15px at 50% 50%);height: 30px;">
+                            `
+                            });
+                            return html;
+                        }
+
                     },
                     {
                         data: 'actions',
