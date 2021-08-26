@@ -135,6 +135,13 @@
                     <input type="file" name="files[]" multiple class="form-control" id="evidencia">
                 </div>
             </div>
+
+            <div class="mb-3 col-10 d-flex justify-content-right">
+                <span class="float-right" type="button" class="pl-0 ml-0 btn text-primary" data-toggle="modal"
+                    data-target="#largeModal">
+                    <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Descargar Documentos
+                </span>
+            </div>
             
             {{-- <div class="form-group col-12">
                 <label for="archivopdf"><i class="far fa-file-pdf iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.archivopdf') }}</label>
@@ -152,6 +159,50 @@
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
+            </div>
+
+            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <!-- carousel -->
+                            <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
+                                <ol class='carousel-indicators'>
+                                    @foreach($evidenciasSgsi->evidencia_sgsi as $idx=>$evidencia)
+                                        <li data-target=#carouselExampleIndicators data-slide-to= {{$idx}}></li>
+
+                                    @endforeach
+
+                                </ol>
+                                <div class='carousel-inner'>
+                                    @foreach($evidenciasSgsi->evidencia_sgsi as $idx=>$evidencia)
+                                    <div class='carousel-item {{$idx==0?"active":""}}'>
+                                        <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                            src="{{ asset('storage/evidencias_sgsi') }}/{{$evidencia->evidencia}}"></iframe>
+                                    </div>
+                                    @endforeach
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <a style="height: 50px; top: 50px;" class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
+                                data-slide='prev'>
+                                <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                <span class='sr-only'>Previous</span>
+                            </a>
+                            <a style="height: 50px; top: 50px;" class='carousel-control-next' href='#carouselExampleIndicators' role='button'
+                                data-slide='next'>
+                                <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                <span class='sr-only'>Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
