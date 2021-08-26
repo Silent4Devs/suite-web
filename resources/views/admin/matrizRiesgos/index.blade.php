@@ -95,8 +95,8 @@
                                 Nivel riesgo
                             </th>
                             <!--<th>
-                                                                                                        Riesgo total
-                                                                                                    </th>-->
+                                                                                                            Riesgo total
+                                                                                                        </th>-->
                             <th>
                                 Control
                             </th>
@@ -122,8 +122,8 @@
                                 Nivel riesgo
                             </th>
                             <!--<th>
-                                                                                                    Riesgo total
-                                                                                                </th>-->
+                                                                                                        Riesgo total
+                                                                                                    </th>-->
                             <th>
                                 Opciones
                             </th>
@@ -384,7 +384,15 @@
                     },*/
                     {
                         data: 'control',
-                        name: 'control'
+                        name: 'control',
+                        render: function(data) {
+                            let returnData = "<ol>";
+                            let controles = JSON.parse(data);
+                            controles.forEach (control => {
+                                returnData += `<li>${control.declaracion_aplicabilidad.anexo_politica}</li>`;
+                            });
+                            return returnData + `</ol>`;
+                        }
                     },
                     {
                         data: 'plan_de_accion',

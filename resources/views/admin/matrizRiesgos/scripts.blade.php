@@ -27,7 +27,11 @@
 
     <script>
         $(document).ready(function() {
-            $('select').selectpicker();
+            $(".js-example-basic-multiple").select2(
+                'theme': 'bootstrap4',
+                allowClear: true,
+                minimumResultsForSearch: -1,
+            );
         });
     </script>
 

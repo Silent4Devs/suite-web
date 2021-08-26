@@ -24,8 +24,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Models\DeclaracionAplicabilidad;
 use Yajra\DataTables\Facades\DataTables;
-use Symfony\Component\HttpFoundation\Response;
+use App\Models\MatrizRiesgosControlesPivot;
 
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\StoreMatrizRiesgoRequest;
 use App\Http\Requests\UpdateMatrizRiesgoRequest;
 use App\Http\Requests\MassDestroyMatrizRiesgoRequest;
@@ -106,7 +107,7 @@ class MatrizRiesgosController extends Controller
         $activos = Activo::get();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_politica')->get();
+        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice' ,'anexo_politica')->get();
 
         return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
@@ -114,8 +115,15 @@ class MatrizRiesgosController extends Controller
     public function store(StoreMatrizRiesgoRequest $request)
     {
         //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
-        //dd($request->all());
+
         $matrizRiesgo = MatrizRiesgo::create($request->all());
+
+        foreach ($request->controles_id as $item) {
+            $control = new MatrizRiesgosControlesPivot();
+            $control->matriz_id = 2;
+            $control->controles_id = $item;
+            $control->save();
+        }
 
         if (isset($request->plan_accion)) {
             // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
@@ -127,6 +135,8 @@ class MatrizRiesgosController extends Controller
 
     public function edit(MatrizRiesgo $matrizRiesgo)
     {
+
+        dd($matrizRiesgo);
         $organizacions = Organizacion::all();
         $teams = Team::get();
         $activos = Activo::get();
@@ -198,7 +208,9 @@ class MatrizRiesgosController extends Controller
         dd($query);*/
         abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
+            $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots' => function ($query) {
+                return $query->with('declaracion_aplicabilidad');
+            }])->where('id_analisis', '=', $request['id'])->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -316,7 +328,7 @@ class MatrizRiesgosController extends Controller
                 return $row->riesgototal ? $row->riesgototal : "";
             });*/
             $table->editColumn('control', function ($row) {
-                return $row->controles ? $row->controles->control : "";
+                return $row->matriz_riesgos_controles_pivots ? $row->matriz_riesgos_controles_pivots : "";
             });
             $table->editColumn('plan_de_accion', function ($row) {
                 return $row->planes ? $row->planes : "";
@@ -455,7 +467,7 @@ class MatrizRiesgosController extends Controller
         return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
     }
 
-    public function ControlesGet(){
-
+    public function ControlesGet()
+    {
     }
 }
