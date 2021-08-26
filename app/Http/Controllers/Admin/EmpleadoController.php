@@ -8,10 +8,12 @@ use App\Models\Sede;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\EducacionEmpleados;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use App\Models\ExperienciaEmpleados;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -139,7 +141,9 @@ class EmpleadoController extends Controller
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
         $sedes = Sede::get();
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes'));
+        $experiencias = ExperienciaEmpleados::get();
+        $educacions = EducacionEmpleados::get();
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias','educacions'));
     }
 
     /**
@@ -273,7 +277,9 @@ class EmpleadoController extends Controller
         $area = Area::findOrfail($empleado->area_id);
         $sedes = Sede::get();
         $sede = Sede::findOrfail($empleado->sede_id);
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes'));
+        $experiencias = ExperienciaEmpleados::get();
+        $educacions = EducacionEmpleados::get();
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes','experiencias','educacions'));
     }
 
     /**

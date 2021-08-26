@@ -371,6 +371,7 @@
             }
         });
         let url = "{{ route('admin.empleados.get') }}";
+        //busqueda
         $("#participantes_search").keyup(function() {
             $.ajax({
                 type: "POST",
@@ -405,7 +406,7 @@
         });
 
 
-
+        //listado de los empleados
         function seleccionarUsuario(user) {
             console.log(user);
             $("#participantes_search").val(user.name);
