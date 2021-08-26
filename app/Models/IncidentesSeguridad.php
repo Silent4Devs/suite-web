@@ -42,8 +42,8 @@ class IncidentesSeguridad extends Model implements HasMedia
         return $this->belongsTo(Empleado::class, 'empleado_asignado_id', 'id');
     }
 
-    public function evidencias(){
-        return $this->morphMany(Evidencia::class, 'evidenciable');
+    public function evidencias_seguridad(){
+        return $this->hasMany(EvidenciasSeguridad::class, 'id_seguridad');
     }
 
     public function getArchivoAttribute()

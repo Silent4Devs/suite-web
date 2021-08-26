@@ -49,9 +49,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
+
+    Route::post('desk/{seguridad}/analisis_seguridad-update', 'DeskController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
+    Route::post('desk/{riesgos}/analisis_riesgo-update', 'DeskController@updateAnalisisReisgos')->name('desk.analisis_riesgo-update');
+    Route::post('desk/{mejoras}/analisis_mejora-update', 'DeskController@updateAnalisisMejoras')->name('desk.analisis_mejora-update');
+    Route::post('desk/{quejas}/analisis_queja-update', 'DeskController@updateAnalisisQuejas')->name('desk.analisis_queja-update');
+    Route::post('desk/{denuncias}/analisis_denuncia-update', 'DeskController@updateAnalisisDenuncias')->name('desk.analisis_denuncia-update');
+    Route::post('desk/{sugerencias}/analisis_sugerencia-update', 'DeskController@updateAnalisisSugerencias')->name('desk.analisis_sugerencia-update');
+
+
     Route::get('desk/{seguridad}/seguridad-edit', 'DeskController@editSeguridad')->name('desk.seguridad-edit');
     Route::post('desk/{seguridad}/seguridad-update', 'DeskController@updateSeguridad')->name('desk.seguridad-update');
-    Route::post('desk/{seguridad}/analisis_seguridad-update', 'DeskController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
     Route::post('desk/{incidente}/archivar', 'DeskController@archivadoSeguridad')->name('desk.seguridad-archivar');
     Route::get('desk/seguridad-archivo', 'DeskController@archivoSeguridad')->name('desk.seguridad-archivo');
     Route::get('desk/seguridad', 'DeskController@indexSeguridad')->name('desk.seguridad-index');

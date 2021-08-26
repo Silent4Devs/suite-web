@@ -28,21 +28,21 @@
 
 .personas_txtarea {
     top: 40px;
-    left: calc(50% + 150px);
+    left: calc(50% + 140px);
 }
 
 .tecnologia_txtarea {
-    top: 230px;
+    top: 215px;
     left: calc(50% - 470px);
 }
 
 .metodos_txtarea {
-    top: 230px;
+    top: 215px;
     left: calc(50% - 200px);
 }
 
 .ambiente_txtarea {
-    top: 230px;
+    top: 215px;
     left: calc(50% + 70px);
 }
 
