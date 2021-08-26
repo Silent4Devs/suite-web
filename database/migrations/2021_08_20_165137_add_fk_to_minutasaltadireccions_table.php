@@ -14,9 +14,8 @@ class AddFkToMinutasaltadireccionsTable extends Migration
     public function up()
     {
         Schema::table('minutasaltadireccions', function (Blueprint $table) {
-            $table->dropForeign('responsablereunion_fk_2433199');
-            $table->unsignedBigInteger('responsablereunion_id')->change();
-            $table->foreign('responsablereunion_id')->references('id')->on('empleados');
+            $table->unsignedBigInteger('responsable_id')->after('responsablereunion_id');
+            $table->foreign('responsable_id')->references('id')->on('empleados');
 
         });
     }
@@ -29,10 +28,7 @@ class AddFkToMinutasaltadireccionsTable extends Migration
     public function down()
     {
         Schema::table('minutasaltadireccions', function (Blueprint $table) {
-            $table->dropForeign('responsablereunion_fk_2433199');
-            $table->unsignedInteger('responsablereunion_id')->change();
-            $table->foreign('responsablereunion_id', 'responsablereunion_fk_2433199')->references('id')->on('users');
-
+            $table->dropColumn('responsable_id');
         });
     }
 }
