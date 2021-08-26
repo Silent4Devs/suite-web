@@ -1,1 +1,127 @@
-{"id":1,"canAdd":"1","canWrite":"1","canWriteOnParent":null,"changesReasonWhy":null,"selectedRow":"1","zoom":"2w","created_at":"2021-08-06T22:22:42.000000Z","updated_at":"2021-08-06T22:23:24.000000Z","deleted_at":null,"roles":[{"id":1,"name":"Admin"},{"id":2,"name":"Consultor"},{"id":3,"name":"Consulta"},{"id":4,"name":"Recursos Humanos"}],"resources":[{"id":1,"name":"Sra. Sof\u00eda M\u00e1rquez Tercero","foto":"e8d775b2043d2f1200e4d15bd8cfda70.jpg","genero":"H","avatar":"e8d775b2043d2f1200e4d15bd8cfda70.jpg","resourceId":1},{"id":2,"name":"Francisco Sanz","foto":"2e52a642d03bf89d2cc0d9c274537450.jpg","genero":"M","avatar":"2e52a642d03bf89d2cc0d9c274537450.jpg","resourceId":2},{"id":3,"name":"Rodrigo Adame","foto":"1d04cab9657b0c7b0ba2e67e05cc3707.jpg","genero":"M","avatar":"1d04cab9657b0c7b0ba2e67e05cc3707.jpg","resourceId":3},{"id":4,"name":"Lic. Jos\u00e9 Antonio \u00c1vila Segundo","foto":"ccf440fdd4ab73cee915af6452732006.jpg","genero":"M","avatar":"ccf440fdd4ab73cee915af6452732006.jpg","resourceId":4},{"id":5,"name":"Ing. Noa Benavides Tercero","foto":"93a5768f8a7da8fc2001dd9e0a96bc7a.jpg","genero":"H","avatar":"93a5768f8a7da8fc2001dd9e0a96bc7a.jpg","resourceId":5},{"id":6,"name":"Nora Guerra","foto":"6faf4723183d23b0ab408a6bce9dc309.jpg","genero":"M","avatar":"6faf4723183d23b0ab408a6bce9dc309.jpg","resourceId":6},{"id":7,"name":"Omar Olivas Segundo","foto":"28214e07fd26dc01915e6dd8f3061e53.jpg","genero":"M","avatar":"28214e07fd26dc01915e6dd8f3061e53.jpg","resourceId":7}],"tasks":[{"id":1,"name":"Implementaci\u00f3n de Diagrama Gantt","progress":0,"progressByWorklog":"false","description":"","level":1,"status":"STATUS_ACTIVE","depends":"","start":1628226000000,"duration":2,"end":1628571599999,"startIsMilestone":"0","endIsMilestone":"0","collapsed":"false","canWrite":"true","canAdd":"true","canDelete":"true","canAddIssue":"true","id_fase":1,"id_task":"1","url":null,"plan_implementacion_id":1,"created_at":"2021-08-06T22:23:25.000000Z","updated_at":"2021-08-06T22:23:25.000000Z","deleted_at":null,"assigs":[]},{"id":2,"name":"Tabla Gantt","progress":0,"progressByWorklog":"false","description":"","level":2,"status":"STATUS_UNDEFINED","depends":"","start":1628226000000,"duration":1,"end":1628312399999,"startIsMilestone":"0","endIsMilestone":"0","collapsed":null,"canWrite":"true","canAdd":"true","canDelete":"true","canAddIssue":"true","id_fase":2,"id_task":"tmp_fk1628288595616_1","url":null,"plan_implementacion_id":1,"created_at":"2021-08-06T22:23:25.000000Z","updated_at":"2021-08-06T22:23:25.000000Z","deleted_at":null,"assigs":[]}]}
+[{
+    "id": "tmp_1629999693000_1",
+    "end": "1631163599999",
+    "name": "Minuta - Revisión Semanal 20",
+    "type": null,
+    "level": "0",
+    "start": "1629867600000",
+    "canAdd": "true",
+    "status": "STATUS_DONE",
+    "typeId": null,
+    "depends": null,
+    "canWrite": "true",
+    "duration": "11",
+    "progress": "100",
+    "canDelete": "true",
+    "collapsed": "false",
+    "relevance": "0",
+    "canAddIssue": "true",
+    "description": null,
+    "endIsMilestone": "false",
+    "startIsMilestone": "false",
+    "progressByWorklog": "false"
+}, {
+    "id": "tmp_1629830628700_1",
+    "end": "1631163599999",
+    "name": "Errores en Gantt 1",
+    "type": null,
+    "level": "1",
+    "start": "1629867600000",
+    "assigs": [{
+        "id": "2",
+        "foto": "woman.png",
+        "name": "D. Héctor Prado",
+        "genero": "M"
+    }, {
+        "id": "5",
+        "foto": "man.png",
+        "name": "Dña Adriana Rentería",
+        "genero": "H"
+    }],
+    "canAdd": "true",
+    "status": "STATUS_DONE",
+    "typeId": null,
+    "depends": null,
+    "canWrite": "true",
+    "duration": "11",
+    "progress": "100",
+    "canDelete": "true",
+    "collapsed": "false",
+    "relevance": "0",
+    "canAddIssue": "true",
+    "description": null,
+    "endIsMilestone": "false",
+    "startIsMilestone": "false",
+    "progressByWorklog": "false"
+}, {
+    "id": "tmp_1629830642278_1",
+    "end": "1631163599999",
+    "name": "Errores en Gantt 2",
+    "type": null,
+    "level": "1",
+    "start": "1629867600000",
+    "assigs": [{
+        "id": "3",
+        "foto": "05a2df46a497e4f0a0972185377e5e9e.jpg",
+        "name": "Valentina Aparicio",
+        "genero": "M"
+    }, {
+        "id": "4",
+        "foto": "bcbe8c513ac30258afa8da783daee6a1.jpg",
+        "name": "Esther Valero Segundo",
+        "genero": "M"
+    }],
+    "canAdd": "true",
+    "status": "STATUS_DONE",
+    "typeId": null,
+    "depends": null,
+    "canWrite": "true",
+    "duration": "11",
+    "progress": "100",
+    "canDelete": "true",
+    "collapsed": "false",
+    "relevance": "0",
+    "canAddIssue": "true",
+    "description": null,
+    "endIsMilestone": "false",
+    "startIsMilestone": "false",
+    "progressByWorklog": "false"
+}, {
+    "id": "tmp_1629998873840_1",
+    "end": "1631163599999",
+    "name": "Actividad 1.4",
+    "type": null,
+    "level": "2",
+    "start": "1629867600000",
+    "assigs": [{
+        "id": "2",
+        "foto": "woman.png",
+        "name": "D. Héctor Prado",
+        "genero": "M"
+    }, {
+        "id": "3",
+        "foto": "05a2df46a497e4f0a0972185377e5e9e.jpg",
+        "name": "Valentina Aparicio",
+        "genero": "M"
+    }, {
+        "id": "5",
+        "foto": "man.png",
+        "name": "Dña Adriana Rentería",
+        "genero": "H"
+    }],
+    "canAdd": "true",
+    "status": "STATUS_DONE",
+    "typeId": null,
+    "depends": null,
+    "canWrite": "true",
+    "duration": "11",
+    "progress": "100",
+    "canDelete": "true",
+    "collapsed": "false",
+    "relevance": "0",
+    "canAddIssue": "true",
+    "description": null,
+    "endIsMilestone": "false",
+    "startIsMilestone": "false",
+    "progressByWorklog": "false"
+}]

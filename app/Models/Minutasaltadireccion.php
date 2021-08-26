@@ -16,8 +16,16 @@ class Minutasaltadireccion extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
 
+
+    // ESTATUS MINUTAS
+    const EN_ELABORACION = 1;
+    const EN_REVISION = 2;
+    const PUBLICADO = 3;
+    const DOCUMENTO_RECHAZADO = 4;
+    const DOCUMENTO_OBSOLETO = 5;
+
     protected $appends = [
-        'archivo',
+        'archivo', 'estatus_formateado', 'color_estatus'
     ];
 
     public $table = 'minutasaltadireccions';
@@ -36,12 +44,14 @@ class Minutasaltadireccion extends Model implements HasMedia
     protected $fillable = [
         'objetivoreunion',
         'responsablereunion_id',
+        'responsable_id',
         'arearesponsable',
         'fechareunion',
         'hora_inicio',
         'hora_termino',
         'tema_reunion',
         'tema_tratado',
+        'estatus',
         'documento',
         'created_at',
         'updated_at',
@@ -62,7 +72,7 @@ class Minutasaltadireccion extends Model implements HasMedia
 
     public function responsable()
     {
-        return $this->belongsTo(Empleado::class, 'responsablereunion_id','id');
+        return $this->belongsTo(Empleado::class, 'responsable_id', 'id');
     }
 
     // public function getFechareunionAttribute($value)
@@ -74,6 +84,48 @@ class Minutasaltadireccion extends Model implements HasMedia
     // {
     //     $this->attributes['fechareunion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     // }
+
+    public function getEstatusFormateadoAttribute()
+    {
+        switch ($this->estatus) {
+            case strval($this::EN_ELABORACION):
+                return 'En Elaboración';
+                break;
+            case strval($this::EN_REVISION):
+                return 'En Revisión';
+                break;
+            case strval($this::PUBLICADO):
+                return 'Publicado';
+                break;
+            case strval($this::DOCUMENTO_RECHAZADO):
+                return 'Documento Rechazado';
+                break;
+            default:
+                return 'En Elaboración';
+                break;
+        }
+    }
+
+    public function getColorEstatusAttribute()
+    {
+        switch ($this->estatus) {
+            case strval($this::EN_ELABORACION):
+                return '#10A5C6';
+                break;
+            case strval($this::EN_REVISION):
+                return '#1068C6';
+                break;
+            case strval($this::PUBLICADO):
+                return '#10C639';
+                break;
+            case strval($this::DOCUMENTO_RECHAZADO):
+                return '#E10D0D';
+                break;
+            default:
+                return '#10A5C6';
+                break;
+        }
+    }
 
     public function getArchivoAttribute()
     {
@@ -97,8 +149,6 @@ class Minutasaltadireccion extends Model implements HasMedia
 
     public function participantes()
     {
-        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id','empleado_id');
+        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id');
     }
-
-
 }
