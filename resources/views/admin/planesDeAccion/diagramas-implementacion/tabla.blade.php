@@ -593,6 +593,8 @@
                             dependencia.start = moment(nueva_fecha_inicio).valueOf();
                             dependencia.end = moment(nueva_fecha_fin).valueOf();
                         });
+                        calculateAverageOnNodes(response.tasks);
+                        calculateStatus(response.tasks);
                         let id_tbody = this.closest('tbody').getAttribute('id');
                         saveOnServer(response);
                         renderTable(response, id_tbody);
@@ -614,7 +616,6 @@
                     let fecha_inicio = moment.unix((tarea_correspondiente.start) / 1000).format("YYYY-MM-DD");
                     let duracion = moment(this.value, 'YYYY-MM-DD').businessDiff(moment(fecha_inicio,
                         'YYYY-MM-DD'));
-
                     let dependencias = response.tasks.filter(t => t.depends == numero_registro);
                     let fecha_fin_actual = moment.unix(valor_nuevo / 1000).format("YYYY-MM-DD");
                     // console.log(fecha_inicio);
@@ -634,6 +635,8 @@
                             dependencia.end = moment(nueva_fecha_fin).valueOf();
                         });
                     }
+                    calculateAverageOnNodes(response.tasks);
+                    calculateStatus(response.tasks);
                     let id_tbody = this.closest('tbody').getAttribute('id');
                     saveOnServer(response);
                     renderTable(response, id_tbody);
@@ -658,90 +661,105 @@
             let estatus_select = document.querySelectorAll('.estatus_select');
             estatus_select.forEach(s_status => {
                 s_status.addEventListener('change', function() {
-                    // let id_row = Number(this.parentElement.parentElement.getAttribute('id'));
                     let id_row = this.parentElement.parentElement.getAttribute('id');
-                    let valor_nuevo = this.value;
                     let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
-                    tarea_correspondiente.status = valor_nuevo;
-                    // if (valor_nuevo == 'STATUS_DONE') {
-                    //     tarea_correspondiente.progress = 100;
-                    // }
-                    // recalculateProgress(tarea_correspondiente, response.tasks);
+                    let valor_nuevo = this.value;
                     let id_tbody = s_status.closest('tbody').getAttribute('id');
-                    saveOnServer(response);
-                    renderTable(response, id_tbody);
+                    if (!isParent(tarea_correspondiente, response.tasks)) {
+                        if (valor_nuevo == 'STATUS_DONE') {
+                            tarea_correspondiente.status = valor_nuevo;
+                            tarea_correspondiente.progress = 100; // set progress in 100
+                            calculateAverageOnNodes(response.tasks);
+                            calculateStatus(response.tasks);
+                            saveOnServer(response);
+                            renderTable(response, id_tbody);
 
+                        } else if (valor_nuevo == 'STATUS_UNDEFINED') {
+                            Swal.fire({
+                                title: '¿Estás seguro de reinicializar la actividad?',
+                                text: "No podrás revertir esto!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Sí',
+                                cancelButtonText: 'No'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    tarea_correspondiente.status = valor_nuevo;
+                                    tarea_correspondiente.progress = 0; // set progress in 0
+                                    calculateAverageOnNodes(response.tasks);
+                                    calculateStatus(response.tasks);
+                                    saveOnServer(response);
+                                }
+                                renderTable(response, id_tbody);
+                            })
+
+                        } else if (valor_nuevo == 'STATUS_SUSPENDED') {
+                            //
+                        } else if (valor_nuevo == 'STATUS_FAILED') {
+                            if (tarea_correspondiente.end - Date.now() >= 0) {
+                                toastr.info('Esta actividad no puede ser puesta en retraso');
+                                s_status.value = tarea_correspondiente.status;
+                            } else {
+                                tarea_correspondiente.status = valor_nuevo;
+                                calculateAverageOnNodes(response.tasks);
+                                calculateStatus(response.tasks);
+                                saveOnServer(response);
+                                renderTable(response, id_tbody);
+                            }
+                        } else { // Si la tarea cambia a otro estatus se pregunta el progreso
+                            Swal.fire({
+                                title: 'Ingresa el progreso, en un rango de 1-99',
+                                input: 'number',
+                                icon: 'question',
+                                inputAttributes: {
+                                    autocapitalize: 'off'
+                                },
+                                showCancelButton: true,
+                                confirmButtonText: 'Cambiar Estatus',
+                                cancelButtonText: 'Cancelar',
+                                showLoaderOnConfirm: true,
+                                inputValidator: (progress) => {
+                                    if (Number(progress) >= 1 && Number(progress) <= 99) {
+                                        return null;
+                                    } else {
+                                        return 'Debes de ingresar un número en el rango de 1 a 99';
+                                    }
+                                },
+                                preConfirm: (progress) => {
+                                    if (Number(progress) >= 1 && Number(progress) <= 99) {
+                                        tarea_correspondiente.status = valor_nuevo;
+                                        tarea_correspondiente.progress = Number(progress);
+                                        calculateAverageOnNodes(response.tasks);
+                                        calculateStatus(response.tasks);
+                                        saveOnServer(response);
+                                        renderTable(response, id_tbody);
+                                    } else {
+                                        s_status.value = tarea_correspondiente.status;
+                                    }
+                                },
+                                allowOutsideClick: () => !Swal.isLoading()
+                            }).then((result) => {
+
+                                if (result.isDismissed) {
+                                    s_status.value = tarea_correspondiente.status;
+                                    calculateAverageOnNodes(response.tasks);
+                                    calculateStatus(response.tasks);
+                                    saveOnServer(response);
+                                    renderTable(response, id_tbody);
+                                }
+
+                            })
+                        }
+                    } else {
+                        s_status.value = tarea_correspondiente.status;
+                        toastr.info('No puedes editar una actividad padre');
+                    }
                 });
             });
 
-            //Evento Fecha Inicio
-            // let fecha_inicio_inputs = document.querySelectorAll('.input_fecha_inicio');
-            // fecha_inicio_inputs.forEach(fecha_inicio_input => {
-            // 	fecha_inicio_input.addEventListener('change',function(){
-            // 		let id_row = Number(this.closest('tr').getAttribute('id'));
-            // 		let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
-            // 		let valor_nuevo = moment(this.value).valueOf();
-            // 		let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
-            // 		if (tarea_correspondiente.depends != "") {
-            // 			let padre = document.querySelector(`tr[numero-registro="${tarea_correspondiente.depends}"]`);
-            // 			let id_padre = Number(padre.getAttribute('id'));
-            // 			let tarea_correspondiente_padre = response.tasks.find(t => t.id == id_padre);
-            // 			let fecha_inicio_padre = moment.unix((tarea_correspondiente_padre.start)/1000).format("YYYY-MM-DD")
-            // 			if (moment(this.value) != 0) {
-            // 				alert('No se puede cambiar la fecha ya que esta tarea depende de otra');
-            // 				this.value = moment.unix((tarea_correspondiente_padre.start)/1000).format("YYYY-MM-DD");
-            // 			}
-            // 		}else{
-            // 			//establecer duracion
-            // 			let new_fecha_fin = moment(moment(this.value, 'YYYY-MM-DD').businessAdd(tarea_correspondiente.duration)._d).format('YYYY-MM-DD')
-            // 			let nueva_fecha_fin_menos_un_dia = moment(moment(new_fecha_fin, 'YYYY-MM-DD').businessSubtract(1)._d).format('YYYY-MM-DD');
-            // 			let dependencias = response.tasks.filter(t => t.depends == numero_registro);
-            // 			tarea_correspondiente.start = valor_nuevo;
-            // 			tarea_correspondiente.end = moment(nueva_fecha_fin_menos_un_dia).valueOf();
-
-            // 			dependencias.forEach(dependencia => {
-            // 				let nueva_fecha_inicio = moment(moment(nueva_fecha_fin_menos_un_dia, 'YYYY-MM-DD').businessAdd(1)._d).format('YYYY-MM-DD');
-            // 				let nueva_fecha_fin = moment(moment(nueva_fecha_inicio, 'YYYY-MM-DD').businessAdd(dependencia.duration)._d).format('YYYY-MM-DD');
-
-            // 				dependencia.start = moment(nueva_fecha_inicio).valueOf();
-            // 				dependencia.end = moment(nueva_fecha_fin).valueOf();
-            // 			});
-            // 			saveOnServer(response);
-            // 		}
-            // 	});
-            // });
-
-            //Evento Fecha Inicio ToDo Quitar fines de semana en datepicker
-            // let fecha_fin_inputs = document.querySelectorAll('.input_fecha_fin');
-            // fecha_fin_inputs.forEach(fecha_fin_input => {
-            // 	fecha_fin_input.addEventListener('change',function(){
-            // 		let id_row = Number(this.closest('tr').getAttribute('id'));
-            // 		let numero_registro = Number(this.closest('tr').getAttribute('numero-registro'));
-            // 		let valor_nuevo = moment(this.value).valueOf();
-            // 		let tarea_correspondiente = response.tasks.find(t => t.id == id_row);
-            // 		let fecha_inicio = moment.unix((tarea_correspondiente.start)/1000).format("YYYY-MM-DD");
-            // 		let duracion = moment(this.value, 'YYYY-MM-DD').businessDiff(moment(fecha_inicio, 'YYYY-MM-DD'));	
-
-            // 		tarea_correspondiente.duration = duracion+1;
-            // 		tarea_correspondiente.end = valor_nuevo;
-
-            // 		// Dependencias actualizadas
-            // 		let dependencias = response.tasks.filter(t => t.depends == numero_registro);
-            // 		let fecha_fin_actual = moment.unix(valor_nuevo/1000).format("YYYY-MM-DD");
-            // 		if (dependencias.length > 0) {
-            // 			dependencias.forEach(dependencia => {
-            // 				let nueva_fecha_inicio = moment(moment(fecha_fin_actual, 'YYYY-MM-DD').businessAdd(1)._d).format('YYYY-MM-DD');
-            // 				let nueva_fecha_fin = moment(moment(nueva_fecha_inicio, 'YYYY-MM-DD').businessAdd(dependencia.duration)._d).format('YYYY-MM-DD');
-
-            // 				dependencia.start = moment(nueva_fecha_inicio).valueOf();
-            // 				dependencia.end = moment(nueva_fecha_fin).valueOf();
-            // 			});
-            // 		}
-            // 		saveOnServer(response);
-            // 	});
-            // });
-
-            //Evento Fecha Inicio ToDo Quitar fines de semana en datepicker
+            //Evento Fecha Inicio 
             let duracion_inputs = document.querySelectorAll('.input_duracion');
             duracion_inputs.forEach(duracion_input => {
                 duracion_input.addEventListener('change', function() {
@@ -773,6 +791,8 @@
                                 dependencia.end = moment(nueva_fecha_fin).valueOf();
                             });
                         }
+                        calculateAverageOnNodes(response.tasks);
+                        calculateStatus(response.tasks);
                         let id_tbody = duracion_input.closest('tbody').getAttribute('id');
                         saveOnServer(response);
                         renderTable(response, id_tbody);
@@ -788,29 +808,31 @@
                 element.addEventListener('change', function() {
                     let current_task_id = this.closest('tr').getAttribute('id');
                     let current_task = response.tasks.find(t => t.id == current_task_id);
-                    if (Number(this.value) >= 0 && Number(this.value) <= 100) {
-                        current_task.progress = Number(this.value);
-                        if (Number(this.value) == 100) {
-                            current_task.status = "STATUS_DONE";
+                    if (!isParent(current_task, response.tasks)) {
+                        if (Number(this.value) >= 0 && Number(this.value) <= 100) {
+                            current_task.progress = Number(this.value);
+                            if (Number(this.value) == 100) {
+                                current_task.status = "STATUS_DONE";
+                            } else {
+                                current_task.status = "STATUS_ACTIVE";
+                            }
+                            calculateAverageOnNodes(response.tasks);
+                            calculateStatus(response.tasks);
+                            let id_tbody = element.closest('tbody').getAttribute('id');
+                            saveOnServer(response);
+                            renderTable(response, id_tbody);
                         } else {
-                            current_task.status = "STATUS_ACTIVE";
+                            Swal.fire(
+                                '¡Información!',
+                                `El progreso de la tarea debe estár en un rango de 0 a 100`,
+                                'info'
+                            )
+                            this.value = current_task.progress;
                         }
-                        recalculateProgress(current_task, response.tasks);
-                        let id_tbody = element.closest('tbody').getAttribute('id');
-                        saveOnServer(response);
-                        renderTable(response, id_tbody);
                     } else {
-                        Swal.fire(
-                            '¡Información!',
-                            `El progreso de la tarea debe estár en un rango de 0 a 100`,
-                            'info'
-                        )
-                        this.value = current_task.progress;
+                        element.value = current_task.progress;
+                        toastr.info('No puedes editar una actividad padre');
                     }
-
-                    // let parent_task = getParent(current_task,response.tasks); // tarea padre de la tarea actual					
-                    // let all_children_task = getChildren(parent_task,response.tasks);
-
                 });
             });
 
@@ -952,6 +974,73 @@
                     parent_task.status = "STATUS_ACTIVE";
                 }
             });
+        }
+
+        function calculateAverageOnNodes(tasks) {
+            let rootAverage = [];
+            let root = tasks.find(t => Number(t.level) === 0);
+            let tasksWitOutRoot = tasks.filter(t => Number(t.level) !== 0);
+            console.log(tasksWitOutRoot);
+            tasksWitOutRoot.forEach(task => {
+                if (isParent(task, tasks)) {
+                    let average = getAVG(task, tasks);
+                    task.progress = average;
+                    rootAverage.push(average);
+                } else {
+                    rootAverage.push(task.progress);
+                }
+            });
+
+            let rootTotal = rootAverage.reduce(function(acomulador, value) {
+                return acomulador + value;
+            }) / rootAverage.length;
+            root.progress = rootTotal;
+        }
+
+        function getAVG(task, tasks) {
+            let childs = getChildren(task, tasks);
+            let average = 0;
+            childs.forEach(child => {
+                average += child.progress;
+            });
+            let total = average / childs.length;
+            return total;
+        }
+
+        function calculateStatus(tasks) {
+            var root = tasks.find(t => Number(t.level) === 0);
+            let tasksWitOutRoot = tasks.filter(t => Number(t.level) !== 0);
+            tasksWitOutRoot.forEach(task => {
+                if (isParent(task, tasks)) {
+                    calculateStatusOnChildrens(task, tasks);
+                } else {
+                    changeStatusByProgress(task);
+                }
+            });
+            changeStatusByProgress(root);
+        }
+
+
+        function calculateStatusOnChildrens(node, tasks) {
+            getChildren(node, tasks).forEach(task => {
+                changeStatusByProgress(task);
+            });
+
+            changeStatusByProgress(node);
+        }
+
+        function changeStatusByProgress(task) {
+            if (task.end < Math.floor(Date.now())) {
+                task.status = "STATUS_FAILED";
+            } else {
+                if (Number(task.progress) == 100) {
+                    task.status = "STATUS_DONE";
+                } else if (Number(task.progress) >= 1 && Number(task.progress) <= 99) {
+                    task.status = "STATUS_ACTIVE";
+                } else if (Number(task.progress) == 0) {
+                    task.status = "STATUS_UNDEFINED";
+                }
+            }
         }
 
         function getRow(task, tasks) {

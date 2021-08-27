@@ -50,110 +50,8 @@ class PlanTrabajoBaseController extends Controller
 
     public function saveImplementationProyect(Request $request)
     {
-        /*$project =  $request->prj;
-        if (PlanImplementacion::find(1)) {
-            PlanImplementacion::find(1)->update([
-                'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
-                'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
-                'canWriteOnParent' => isset($project['canWriteOnParent']) ? $project['canWriteOnParent'] : null,
-                'changesReasonWhy' => isset($project['changesReasonWhy']) ? $project['changesReasonWhy'] : null,
-                'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
-                'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
-            ]);
-        } else {
-            PlanImplementacion::create([
-                'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
-                'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
-                'canWriteOnParent' => isset($project['canWriteOnParent']) ? $project['canWriteOnParent'] : null,
-                'changesReasonWhy' => isset($project['changesReasonWhy']) ? $project['changesReasonWhy'] : null,
-                'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
-                'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
-            ]);
-        }
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        DB::statement('TRUNCATE empleado_task');
-        PlanImplementacionTask::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
-        $tasks = isset($project['tasks']) ? $project['tasks'] : null;
-        if ($tasks) {
-            foreach ($tasks as $task) {
-                $assigs = isset($task['assigs']) ? $task['assigs'] : [];
-                $assigs_arr = array();
-                foreach ($assigs as $assig) {
-                    array_push($assigs_arr, intval($assig['resourceId']));
-                }
-                // dd($assigs_arr);
-                $level_formateado = isset($task['level']) ? $task['level'] : 0;
-                $task_id = $task['id'] == '-1' ? '1' : $task['id'];
-                if (PlanImplementacionTask::where('id_task', $task_id)->first()) {
-                    $task_actual = PlanImplementacionTask::where('id_task', $task_id)->first();
-                    $task_actual->update([
-                        'name' => isset($task['name']) ? $task['name'] : null,
-                        'progress' => isset($task['progress']) ? $task['progress'] : null,
-                        'progressByWorklog' => isset($task['progressByWorklog']) ? $task['progressByWorklog'] : null,
-                        'description' => isset($task['description']) ? $task['description'] : null,
-                        'level' => $level_formateado,
-                        'status' => isset($task['status']) ? $task['status'] : 'STATUS_UNDEFINED',
-                        'depends' => isset($task['depends']) ? $task['depends'] : null,
-                        'start' => isset($task['start']) ? $task['start'] : null,
-                        'duration' => isset($task['duration']) ? $task['duration'] : null,
-                        'end' => isset($task['end']) ? $task['end'] : null,
-                        'startIsMilestone' => isset($task['startIsMilestone']) ? $task['startIsMilestone'] : null,
-                        'endIsMilestone' => isset($task['endIsMilestone']) ? $task['endIsMilestone'] : null,
-                        'collapsed' => isset($task['collapsed']) ? $task['collapsed'] : null,
-                        'canWrite' => isset($task['canWrite']) ? $task['canWrite'] : null,
-                        'canAdd' => isset($task['canAdd']) ? $task['canAdd'] : null,
-                        'canDelete' => isset($task['canDelete']) ? $task['canDelete'] : null,
-                        'canAddIssue' => isset($task['canAddIssue']) ? $task['canAddIssue'] : null,
-                        'id_fase' => isset($task['id_fase']) ? $task['id_fase'] : null,
-                        'id_task' => isset($task_id) ? $task_id : null,
-                        'url' => isset($task['url']) ? $task['url'] : null,
-                        'plan_implementacion_id' => 1,
-                    ]);
-                    $task_actual->assigs()->attach($assigs_arr);
-                } else {
-                    $task_creada = PlanImplementacionTask::create([
-                        'name' => isset($task['name']) ? $task['name'] : null,
-                        'progress' => isset($task['progress']) ? $task['progress'] : null,
-                        'progressByWorklog' => isset($task['progressByWorklog']) ? $task['progressByWorklog'] : null,
-                        'description' => isset($task['description']) ? $task['description'] : null,
-                        'level' => $level_formateado,
-                        'status' => isset($task['status']) ? $task['status'] : 'STATUS_UNDEFINED',
-                        'depends' => isset($task['depends']) ? $task['depends'] : "",
-                        'start' => isset($task['start']) ? $task['start'] : null,
-                        'duration' => isset($task['duration']) ? $task['duration'] : null,
-                        'end' => isset($task['end']) ? $task['end'] : null,
-                        'startIsMilestone' => isset($task['startIsMilestone']) ? $task['startIsMilestone'] : null,
-                        'endIsMilestone' => isset($task['endIsMilestone']) ? $task['endIsMilestone'] : null,
-                        'collapsed' => isset($task['collapsed']) ? $task['collapsed'] : null,
-                        'canWrite' => isset($task['canWrite']) ? $task['canWrite'] : null,
-                        'canAdd' => isset($task['canAdd']) ? $task['canAdd'] : null,
-                        'canDelete' => isset($task['canDelete']) ? $task['canDelete'] : null,
-                        'canAddIssue' => isset($task['canAddIssue']) ? $task['canAddIssue'] : null,
-                        'id_fase' => isset($task['id_fase']) ? $task['id_fase'] : null,
-                        'id_task' => isset($task_id) ? $task_id : null,
-                        'url' => isset($task['url']) ? $task['url'] : null,
-                        'plan_implementacion_id' => 1,
-                    ]);
-                    $task_creada->assigs()->attach($assigs_arr);
-                }
-            }
-        } else {
-            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-            PlanImplementacionTask::truncate();
-            DB::statement('SET FOREIGN_KEY_CHECKS = 1');
-        }*/
-
         $project =  $request->prj;
-
-        // if (isset($project['tasks'])) {
-        //     foreach ($project['tasks'] as $task) {
-        //         if (!isset($task['assigs'])) {
-        //             $project = array_merge((array)$project, array('assigs' => []));
-        //         }
-        //     }
-        // }
-        // dd($project['tasks']);
+        
         if (PlanImplementacion::find(1)) {
             $tasks = isset($project['tasks']) ? $project['tasks'] : [];
             PlanImplementacion::find(1)->update([
@@ -178,27 +76,6 @@ class PlanTrabajoBaseController extends Controller
             ]);
         }
         return response()->json(['success' => true], 200);
-
-        // $gantt_path = 'storage/gantt/versiones/';
-        // $path = public_path($gantt_path);
-        // $version_gantt = glob($path . "gantt_inicial*.json");
-        // $ultima_version = 0;
-
-        // if (count($version_gantt)) {
-        //     $ultima_version = count($version_gantt);
-        // }
-
-        // if ($request->ajax()) {
-        //     $proyecto = $request->get('txt_prj');
-        //     $file = Storage::disk('public')->put('gantt/versiones/gantt_inicial_v' . $ultima_version . '.json', $proyecto);
-        //     $file = Storage::disk('public')->put('gantt/gantt_inicial.json', $proyecto);
-
-        //     if ($file) {
-        //         return response()->json(['success' => true], 200);
-        //     } else {
-        //         return response()->json(['error' => true], 401);
-        //     }
-        // }
     }
 
 

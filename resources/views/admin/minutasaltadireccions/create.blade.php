@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .select2-search.select2-search--inline {
             margin-top: -20px !important;
@@ -16,7 +15,6 @@
                 <strong>Registrar:</strong> Minutas de Sesiones de Alta Dirección
             </h3>
         </div>
-
         <div class="card-body">
             <form method="POST" action="{{ route('admin.minutasaltadireccions.store') }}" enctype="multipart/form-data"
                 class="row">
@@ -27,92 +25,78 @@
                     <input class="form-control date" type="date" name="fechareunion" id="fechareunion"
                         value="{{ old('fechareunion') }}">
                     @if ($errors->has('fechareunion'))
-                        <div class="invalid-feedback">
+                        <span class="text-danger">
                             {{ $errors->first('fechareunion') }}
-                        </div>
+                        </span>
                     @endif
                     <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
                 </div>
-
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label for="hora_inicio"><i class="fas fa-clock iconos-crear"></i>Horario de inicio</label>
                     <input class="form-control date" type="time" name="hora_inicio" id="hora_inicio"
                         value="{{ old('hora_inicio') }}">
                     @if ($errors->has('hora_inicio'))
-                        <div class="invalid-feedback">
+                        <span class="text-danger">
                             {{ $errors->first('hora_inicio') }}
-                        </div>
+                        </span>
                     @endif
                     <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
                 </div>
-
-
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="responsablereunion_id"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
-                    <select class="form-control select2" name="responsablereunion_id" id="responsablereunion_id">
+                    <label for="responsable_id"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
+                    <select class="form-control select2" name="responsable_id" id="responsable_id">
                         @foreach ($responsablereunions as $responsablereunion)
                             <option value="{{ $responsablereunion->id }}"
-                                {{ old ('responsablereunion_id') == $responsablereunion->id ? 'selected' : '' }}>{{ $responsablereunion->name }}
+                                {{ old('responsable_id') == $responsablereunion->id ? 'selected' : '' }}>
+                                {{ $responsablereunion->name }}
                             </option>
                         @endforeach
                     </select>
                     @if ($errors->has('responsablereunion'))
-                        <div class="invalid-feedback">
+                        <span class="text-danger">
                             {{ $errors->first('responsablereunion') }}
-                        </div>
+                        </span>
                     @endif
                     <span
                         class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
                 </div>
-
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label for="hora_termino"><i class="fas fa-clock iconos-crear"></i>Horario de término</label>
                     <input class="form-control date" type="time" name="hora_termino" id="hora_termino"
                         value="{{ old('hora_termino') }}">
                     @if ($errors->has('hora_termino'))
-                        <div class="invalid-feedback">
+                        <span class="text-danger">
                             {{ $errors->first('hora_termino') }}
-                        </div>
+                        </span>
                     @endif
                 </div>
-
-
-
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
                     <label for="tema_reunion"><i class="fas fa-file-alt iconos-crear"></i>Tema de la reunión</label>
-                    <input class="form-control date" type="text" name="tema_reunion" id="tema_reunion"
-                        value="{{ old('tema_reunion') }}">
+                    <input data-vincular-nombre='true' class="form-control date" type="text" name="tema_reunion"
+                        id="tema_reunion" value="{{ old('tema_reunion') }}">
                     @if ($errors->has('tema_reunion'))
-                        <div class="invalid-feedback">
+                        <span class="text-danger">
                             {{ $errors->first('tema_reunion') }}
-                        </div>
+                        </span>
                     @endif
                 </div>
-
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
                     <label for="objetivoreunion"><i
                             class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}</label>
                     <textarea class="form-control" name="objetivoreunion"
                         id="objetivoreunion">{{ old('objetivoreunion') }}</textarea>
                     @if ($errors->has('objetivoreunion'))
-                        <div class="invalid-feedback">
+                        <span class="text-danger">
                             {{ $errors->first('objetivoreunion') }}
-                        </div>
+                        </span>
                     @endif
                     <span
                         class="help-block">{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion_helper') }}</span>
                 </div>
-
-
-
-
-
-
                 <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #0CA193;">
                     <span class="ml-1" style="font-size: 17px; font-weight: bold;">
                         Participantes</span>
                 </div>
-
                 <div class="pl-3 row w-100">
                     <div class="form-group col-sm-12 col-md-12 col-lg-6">
                         <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
@@ -124,9 +108,9 @@
                             style="position: absolute; top: 43px; right: 25px;"></i>
                         <div id="participantes_sugeridos"></div>
                         @if ($errors->has('participantes'))
-                            <div class="invalid-feedback">
+                            <span class="text-danger">
                                 {{ $errors->first('participantes') }}
-                            </div>
+                            </span>
                         @endif
                         <span class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
                     </div>
@@ -151,11 +135,8 @@
                         style="float: right; position: relative;">
                         <i class="mr-1 fas fa-plus-circle"></i>
                         Agregar Participante
-                        {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                            style="position: absolute; top: 3px;left: 8px;"></i> --}}
                     </button>
                 </div>
-
                 <div class="mt-3 col-12 w-100 datatable-fix">
                     <table class="table w-100" id="tbl-participantes">
                         <thead class="thead-dark">
@@ -170,48 +151,30 @@
                         <tbody></tbody>
                     </table>
                 </div>
-
                 <input type="hidden" name="participantes" value="" id="participantes">
-
-
-
-
-
-                <div class="mt-3 col-sm-12 form-group">
+                {{-- <div class="mt-3 col-sm-12 form-group">
                     <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documento</label>
                     <div class="custom-file">
                         <input type="file" name="files[]" multiple class="form-control" id="evidencia">
 
                     </div>
-                </div>
-
+                </div> --}}
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
                     <label for="tema_tratado"><i class="fas fa-file-alt iconos-crear"></i>Temas tratados</label>
-                    <textarea class="form-control date" type="text" name="tema_tratado" id="temas"
-                        value="{{ old('tema_tratado') }}"></textarea>
+                    <textarea class="form-control date" type="text" name="tema_tratado" id="temas">
+                                        {{ old('tema_tratado') }}
+                                    </textarea>
                     @if ($errors->has('tema_tratado'))
-                        <div class="invalid-feedback">
+                        <span class="text-danger">
                             {{ $errors->first('tema_tratado') }}
-                        </div>
+                        </span>
                     @endif
                 </div>
-
-
                 {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                <div class="row w-100 align-items-center" style="margin-left: 1px;">
-                    @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
-                    <div class="pl-0 mt-2 ml-0 col-2">
-                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
-                            data-target="#planAccionModal">
-                            <i class="mr-1 fas fa-plus-circle"></i> Crear
-                        </button>
-                    </div>
-                    @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de Requisitos
-                    Legales'])
-                </div>
+                @include('admin.planesDeAccion.actividades.tabla',[
+                'empleados'=>$responsablereunions
+                ])
                 {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
-
-
 
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
@@ -222,9 +185,6 @@
             </form>
         </div>
     </div>
-
-
-
 @endsection
 
 @section('scripts')
@@ -362,58 +322,57 @@
     </script>
 
     <script>
-        $(document).ready(function () {
-        window.tblParticipantes=$('#tbl-participantes').DataTable({buttons:[]})
-        $("#cargando_participantes").hide();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        let url = "{{ route('admin.empleados.get') }}";
-        //busqueda
-        $("#participantes_search").keyup(function() {
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: 'nombre=' + $(this).val(),
-                beforeSend: function() {
-                    $("#cargando_participantes").show();
-                },
-                success: function(data) {
-                    $("#cargando_participantes").hide();
-                    $("#participantes_sugeridos").show();
-                    let sugeridos = document.querySelector(
-                        "#participantes_sugeridos");
-                    sugeridos.innerHTML = data;
-
-                    $("#participantes_search").css("background", "#FFF");
+        $(document).ready(function() {
+            window.tblParticipantes = $('#tbl-participantes').DataTable({
+                buttons: []
+            })
+            $("#cargando_participantes").hide();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            let url = "{{ route('admin.empleados.get') }}";
+            $("#participantes_search").keyup(function() {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: 'nombre=' + $(this).val(),
+                    beforeSend: function() {
+                        $("#cargando_participantes").show();
+                    },
+                    success: function(data) {
+                        $("#cargando_participantes").hide();
+                        $("#participantes_sugeridos").show();
+                        let sugeridos = document.querySelector(
+                            "#participantes_sugeridos");
+                        sugeridos.innerHTML = data;
+
+                        $("#participantes_search").css("background", "#FFF");
+                    }
+                });
+
+            });
+
+            document.getElementById('btn-suscribir-participante').addEventListener('click', function(e) {
+                e.preventDefault();
+                suscribirParticipante()
+            })
+
+            document.getElementById('btnGuardar').addEventListener('click', function(e) {
+                // e.preventDefault();
+                enviarParticipantes();
+                enviarActividades();
+            })
 
         });
 
-        document.getElementById('btn-suscribir-participante').addEventListener('click',function(e){
-            e.preventDefault();
-            suscribirParticipante()
-        })
-
-        document.getElementById('btnGuardar').addEventListener('click',function(e){
-            // e.preventDefault();
-            enviarParticipantes()
-        })
-
-        });
-
-
-        //listado de los empleados
         function seleccionarUsuario(user) {
-            console.log(user);
             $("#participantes_search").val(user.name);
             $("#id_empleado").val(user.id);
             $("#email").val(user.email);
             $("#puesto").val(user.puesto);
-             $("#area").val(user.area);
+            $("#area").val(user.area);
             $("#participantes_sugeridos").hide();
         }
 
@@ -421,43 +380,46 @@
         function suscribirParticipante() {
             //form-participantes
 
-            let participantes=tblParticipantes.rows().data().toArray();
-            let arrParticipantes=[];
+            let participantes = tblParticipantes.rows().data().toArray();
+            let arrParticipantes = [];
             participantes.forEach(participante => {
                 arrParticipantes.push(participante[0])
-
             });
             let id_empleado = $("#id_empleado").val();
-            if (!arrParticipantes.includes(id_empleado)) {
-                let nombre = $("#participantes_search").val();
-            let puesto = $("#puesto").val();
-            let email = $("#email").val();
-            tblParticipantes.row.add([
-                id_empleado,
-                nombre,
-                puesto,
-                email,
-            ]).draw();
+            if (id_empleado == '') {
+                Swal.fire('Debes de buscar un empleado', '', 'info')
+            } else {
+                if (!arrParticipantes.includes(id_empleado)) {
+                    let nombre = $("#participantes_search").val();
+                    let puesto = $("#puesto").val();
+                    let email = $("#email").val();
+                    tblParticipantes.row.add([
+                        id_empleado,
+                        nombre,
+                        puesto,
+                        email,
+                    ]).draw();
 
-            }else{
-                Swal.fire('Este participante ya ha sido agregado','','error')
+                } else {
+                    Swal.fire('Este participante ya ha sido agregado', '', 'error')
+                }
+
+                $("#participantes_search").val('');
+                $("#id_empleado").val('');
+                $("#email").val('');
+                $("#puesto").val('');
+                $("#area").val('');
             }
-
-            $("#participantes_search").val('');
-            $("#id_empleado").val('');
-            $("#email").val('');
-            $("#puesto").val('');
-            $("#area").val('');
         }
 
-        function enviarParticipantes(){
-            let participantes=tblParticipantes.rows().data().toArray();
-            let arrParticipantes=[];
+        function enviarParticipantes() {
+            let participantes = tblParticipantes.rows().data().toArray();
+            let arrParticipantes = [];
             participantes.forEach(participante => {
                 arrParticipantes.push(participante[0])
 
             });
-            document.getElementById('participantes').value=arrParticipantes;
+            document.getElementById('participantes').value = arrParticipantes;
             console.log(arrParticipantes);
         }
     </script>

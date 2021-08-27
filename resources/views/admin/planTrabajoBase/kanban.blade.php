@@ -287,7 +287,9 @@
                     estatuses.forEach(estatus => {
                         let key = Object.keys(estatus)[0];
                         let value = Object.values(estatus)[0];
-                        let actividades = response.tasks.filter(task => task.level > 1);
+                        let actividades = response.tasks.filter(task => task.level > 0 && !isParent(
+                            task,
+                            response.tasks));
                         let actividad_por_estatus = actividades.filter(actividad => actividad.status ==
                             key);
                         // data-simplebar
@@ -420,13 +422,8 @@
                                 let valor_nuevo = this.value;
                                 let actividad_correspondiente = response.tasks?.find(t => t.id ==
                                     id_row);
-                                actividad_correspondiente.status = valor_nuevo;
-                                // if (valor_nuevo == 'STATUS_DONE') {
-                                //     actividad_correspondiente.progress = 100;
-                                // }
-                                // recalculateProgress(actividad_correspondiente, response.tasks);
-                                saveOnServer(response);
-                                renderKanban(response);
+                                changeStatusInKanban(actividad_correspondiente, response,
+                                    valor_nuevo, s_status);
                             });
                         });
 
@@ -509,14 +506,9 @@
                             let valor_nuevo = evt.to.getAttribute('id');
                             let actividad_correspondiente = response.tasks.find(t => t.id ==
                                 id_row);
-                            actividad_correspondiente.status = valor_nuevo;
-                            // if (valor_nuevo == 'STATUS_DONE') {
-                            //     actividad_correspondiente.progress = 100;
-                            // }
-                            // recalculateProgress(actividad_correspondiente, response.tasks);
-                            saveOnServer(response);
-                            renderKanban(response);
-                            // saveOnServer(response);
+
+                            changeStatusInKanban(actividad_correspondiente, response,
+                                valor_nuevo);
                         },
                     });
                     Sortable.create(STATUS_ACTIVE, {
@@ -535,10 +527,8 @@
                             let valor_nuevo = evt.to.getAttribute('id');
                             let actividad_correspondiente = response.tasks.find(t => t.id ==
                                 id_row);
-                            actividad_correspondiente.status = valor_nuevo;
-
-                            saveOnServer(response);
-                            renderKanban(response);
+                            changeStatusInKanban(actividad_correspondiente, response,
+                                valor_nuevo);
                         },
                     });
                     Sortable.create(STATUS_FAILED, {
@@ -557,10 +547,9 @@
                             let valor_nuevo = evt.to.getAttribute('id');
                             let actividad_correspondiente = response.tasks.find(t => t.id ==
                                 id_row);
-                            actividad_correspondiente.status = valor_nuevo;
 
-                            saveOnServer(response);
-                            renderKanban(response);
+                            changeStatusInKanban(actividad_correspondiente, response,
+                                valor_nuevo);
                         },
                     });
                     Sortable.create(STATUS_SUSPENDED, {
@@ -578,10 +567,9 @@
                             let valor_nuevo = evt.to.getAttribute('id');
                             let actividad_correspondiente = response.tasks.find(t => t.id ==
                                 id_row);
-                            actividad_correspondiente.status = valor_nuevo;
 
-                            saveOnServer(response);
-                            renderKanban(response);
+                            changeStatusInKanban(actividad_correspondiente, response,
+                                valor_nuevo);
                         },
                     });
                     Sortable.create(STATUS_UNDEFINED, {
@@ -609,10 +597,8 @@
                             let valor_nuevo = evt.to.getAttribute('id');
                             let actividad_correspondiente = response.tasks.find(t => t.id ==
                                 id_row);
-                            actividad_correspondiente.status = valor_nuevo;
-
-                            saveOnServer(response);
-                            renderKanban(response);
+                            changeStatusInKanban(actividad_correspondiente, response,
+                                valor_nuevo);
                         },
                     });
 
@@ -636,6 +622,93 @@
                 }
             });
 
+        }
+
+        function changeStatusInKanban(tarea_correspondiente, response, valor_nuevo, element = null) {
+            if (!isParent(tarea_correspondiente, response.tasks)) {
+                if (valor_nuevo == 'STATUS_DONE') {
+                    tarea_correspondiente.status = valor_nuevo;
+                    tarea_correspondiente.progress = 100; // set progress in 100
+                    calculateAverageOnNodes(response.tasks);
+                    calculateStatus(response.tasks);
+                    saveOnServer(response);
+                    renderKanban(response);
+
+                } else if (valor_nuevo == 'STATUS_UNDEFINED') {
+                    tarea_correspondiente.status = valor_nuevo;
+                    tarea_correspondiente.progress = 0; // set progress in 0
+                    calculateAverageOnNodes(response.tasks);
+                    calculateStatus(response.tasks);
+                    saveOnServer(response);
+                    renderKanban(response);
+                } else if (valor_nuevo == 'STATUS_SUSPENDED') {
+                    //
+                } else if (valor_nuevo == 'STATUS_FAILED') {
+                    if (tarea_correspondiente.end - Date.now() >= 0) {
+                        toastr.info('Esta actividad no puede ser puesta en retraso');
+                        renderKanban(response);
+                        if (element) {
+                            element.value = tarea_correspondiente.status;
+                        }
+                    } else {
+                        tarea_correspondiente.status = valor_nuevo;
+                        calculateAverageOnNodes(response.tasks);
+                        calculateStatus(response.tasks);
+                        saveOnServer(response);
+                        renderKanban(response);
+                    }
+                } else { // Si la tarea cambia a otro estatus se pregunta el progreso
+                    Swal.fire({
+                        title: 'Ingresa el progreso, en un rango de 1-99',
+                        input: 'number',
+                        icon: 'question',
+                        inputAttributes: {
+                            autocapitalize: 'off'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Cambiar Estatus',
+                        cancelButtonText: 'Cancelar',
+                        showLoaderOnConfirm: true,
+                        inputValidator: (progress) => {
+                            if (Number(progress) >= 1 && Number(progress) <= 99) {
+                                return null;
+                            } else {
+                                return 'Debes de ingresar un número en el rango de 1 a 99';
+                            }
+                        },
+                        preConfirm: (progress) => {
+                            if (Number(progress) >= 1 && Number(progress) <= 99) {
+                                tarea_correspondiente.status = valor_nuevo;
+                                tarea_correspondiente.progress = Number(progress);
+                                calculateAverageOnNodes(response.tasks);
+                                calculateStatus(response.tasks);
+                                saveOnServer(response);
+                                renderKanban(response);
+                            } else {
+                                if (element) {
+                                    element.value = tarea_correspondiente.status;
+                                }
+                            }
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+
+                        if (result.isDismissed) {
+                            if (element) {
+                                element.value = tarea_correspondiente.status;
+                            }
+                            renderKanban(response);
+                        }
+
+                    })
+                }
+            } else {
+                if (element) {
+                    element.value = tarea_correspondiente.status;
+                }
+                renderKanban(response);
+                toastr.info('No puedes editar una actividad padre');
+            }
         }
 
         function saveStatusOnServer(response) {
