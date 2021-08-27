@@ -505,7 +505,6 @@ GanttMaster.prototype.addTask = function (task, row) {
     //append task to gantt
     this.gantt.addTask(task);
     if (task) {
-      this.saveChangesOnServer();
       this.calculateAverageOnNodes();
       this.calculateStatusOnNodes();
       this.saveChangesOnServer();
@@ -582,10 +581,12 @@ GanttMaster.prototype.loadProject = function (project) {
   this.endTransaction();
   var self = this;
   this.gantt.element.oneTime(200, function () { self.gantt.centerOnToday() });
-  if (this.tasks[0].id !== -1) {
+  if (this.tasks) {
+
     // console.log(this.tasks);
     this.calculateAverageOnNodes();
     this.calculateStatusOnNodes();
+
   }
 
 };
