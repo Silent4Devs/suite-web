@@ -31,9 +31,6 @@ class AddColumnResponsableToActivosTable extends Migration
             $table->unsignedBigInteger('id_responsable')->nullable();
             $table->foreign('id_responsable')->references('id')->on('empleados');
 
-
-
-
         });
     }
 
