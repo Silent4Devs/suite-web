@@ -56,6 +56,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('desk/{seguridad}/seguridad-edit', 'DeskController@editSeguridad')->name('desk.seguridad-edit');
     Route::post('desk/{seguridad}/seguridad-update', 'DeskController@updateSeguridad')->name('desk.seguridad-update');
+    Route::post('desk/{seguridad}/analisis_seguridad-update', 'DeskController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
     Route::post('desk/{incidente}/archivar', 'DeskController@archivadoSeguridad')->name('desk.seguridad-archivar');
     Route::get('desk/seguridad-archivo', 'DeskController@archivoSeguridad')->name('desk.seguridad-archivo');
     Route::get('desk/seguridad', 'DeskController@indexSeguridad')->name('desk.seguridad-index');
@@ -483,11 +484,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
 
     // Matriz Riesgos
+    Route::get('matriz-riesgos/planes-de-accion/create/{id}', 'MatrizRiesgosController@createPlanAccion')->name('matriz-riesgos.createPlanAccion');
+    Route::post('matriz-riesgos/planes-de-accion/store/{id}', 'MatrizRiesgosController@storePlanAccion')->name('matriz-riesgos.storePlanAccion');
     Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
     Route::resource('matriz-riesgos', 'MatrizRiesgosController');
     Route::post('matriz-riesgos/parse-csv-import', 'MatrizRiesgosController@parseCsvImport')->name('matriz-riesgos.parseCsvImport');
     Route::get('matriz-seguridad', 'MatrizRiesgosController@SeguridadInfo')->name('matriz-seguridad');
     Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
+    Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
 
     // Gap Unos
     Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');

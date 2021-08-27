@@ -42,10 +42,10 @@
                         <tr class="negras">
                             <th class="text-center" style="background-color:#3490DC;" colspan="8">Descripción General </th>
                             <th class="text-center" style="background-color:#1168af;" colspan="4">CID</th>
-                            <th class="text-center" style="background-color:#217bc5;" colspan="4">Riesgo Inicial
+                            <th class="text-center" style="background-color:#217bc5;" colspan="3">Riesgo Inicial
                             <th class="text-center" style="background-color:#1168af;" colspan="2">Acciones</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="3">CID</th>
-                            <th class="text-center" style="background-color:#1168af;" colspan="4">Riesgo Residual</th>
+                            <th class="text-center" style="background-color:#1168af;" colspan="3">Riesgo Residual</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </tr>
                         <tr>
@@ -94,9 +94,9 @@
                             <th>
                                 Nivel riesgo
                             </th>
-                            <th>
-                                Riesgo total
-                            </th>
+                            <!--<th>
+                                                                                                            Riesgo total
+                                                                                                        </th>-->
                             <th>
                                 Control
                             </th>
@@ -121,9 +121,9 @@
                             <th>
                                 Nivel riesgo
                             </th>
-                            <th>
-                                Riesgo total
-                            </th>
+                            <!--<th>
+                                                                                                        Riesgo total
+                                                                                                    </th>-->
                             <th>
                                 Opciones
                             </th>
@@ -144,7 +144,8 @@
                             Atención</p>
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado
                             matrices de riesgo
-                            <a href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}"><i class="fas fa-share"></i></a>
+                            <a href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}"><i
+                                    class="fas fa-share"></i></a>
                         </p>
                     </div>
                 </div>
@@ -227,7 +228,7 @@
 
             ];
 
-            /*@can('configuracion_sede_create')
+            @can('configuracion_sede_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar sede',
@@ -248,7 +249,7 @@
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
-            @endcan*/
+            @endcan
             @can('configuracion_sede_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
@@ -344,19 +345,68 @@
                     },
                     {
                         data: 'nivelriesgo',
-                        name: 'nivelriesgo'
+                        name: 'nivelriesgo',
+                        render: function(data) {
+                            //console.log(data);
+                            switch (data) {
+                                case 81:
+                                    return `<div class="text-danger"><div>MUY ALTO</div></div>`;
+                                    break;
+                                case 54:
+                                    return `<div class="text-danger"><div>MUY ALTO</div></div>`;
+                                    break;
+                                case 36:
+                                    return `<div style="color: orange;"><div>ALTO</div></div>`;
+                                    break;
+                                case 27:
+                                    return `<div style="color: orange;"><div>ALTO</div></div>`;
+                                    break;
+                                case 18:
+                                    return `<div class="bg-warning"><div>MEDIO</div></div>`;
+                                    break;
+                                case 9:
+                                    return `<div class="bg-warning"><div>MEDIO</div></div>`;
+                                    break;
+                                case 0:
+                                    return `<div class="bg-success"><div>BAJO</div></div>`;
+                                    break;
+                                case null:
+                                    return `<div class="bg-success"><div>BAJO</div></div>`;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     },
-                    {
+                    /*{
                         data: 'riesgototal',
                         name: 'riesgototal'
-                    },
+                    },*/
                     {
                         data: 'control',
-                        name: 'control'
+                        name: 'control',
+                        render: function(data) {
+                            let returnData = "<ol>";
+                            let controles = JSON.parse(data);
+                            controles.forEach (control => {
+                                returnData += `<li>${control.declaracion_aplicabilidad.anexo_politica}</li>`;
+                            });
+                            return returnData + `</ol>`;
+                        }
                     },
                     {
                         data: 'plan_de_accion',
-                        name: 'plan_de_accion'
+                        name: 'plan_de_accion',
+                        render: function(data, type, row, meta) {
+                            let planes = JSON.parse(data);
+                            let botones =
+                                planes.map(plan => {
+                                    return `<a href="/admin/planes-de-accion/${plan.id}" class="btn btn-sm" title="Visualizar Plan de Acción">
+                                        <i class="fas fa-stream"></i>
+                                        </a>`;
+                                });
+                            return botones;
+                        }
                     },
                     {
                         data: 'confidencialidad_cid',
@@ -380,12 +430,13 @@
                     },
                     {
                         data: 'nivelriesgo_residual',
-                        name: 'nivelriesgo_residual'
+                        name: 'nivelriesgo_residual',
+
                     },
-                    {
+                    /*{
                         data: 'riesgo_total_residual',
                         name: 'riesgo_total_residual'
-                    },
+                    },*/
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'

@@ -4,23 +4,33 @@
    		<thead>
    			<tr>
        			<th>Folio</th>
+                <th>Estatus</th>
+                <th>Fecha de recepción</th>
+                <th>Fecha de cierre</th>
        			<th>Nombre</th>
        			<th>Correo</th>
        			<th>Teléfono</th>
-       			<th>Descripción</th>
-       			<th>sugerencia</th>
+       			<th>Sugerencia</th>
+                <th>Área</th>
+                <th>Proceso</th>
+                <th>Descripción</th>
        			<th>Opciones</th> 
    			</tr>
    		</thead>
    		<tbody>
    			@foreach($sugerencias as $sugerencia)
 	   			<tr>
-	       			<td>{{ $sugerencia->id }}</td>
-	       			<td>{{ $sugerencia->sugerir->name }}</td>
-	       			<td>{{ $sugerencia->sugerir->email }}</td> 
-	       			<td>{{ $sugerencia->sugerir->telefono }}</td> 
+	       			<td>{{ $sugerencia->folio }}</td>
+                    <td>{{ $sugerencia->estatus }}</td>
+                    <td>{{ $sugerencia->created_at }}</td>
+                    <td>{{ $sugerencia->fecha_cierre }}</td>
+	       			<td>{{ $sugerencia->sugirio->name }}</td>
+	       			<td>{{ $sugerencia->sugirio->email }}</td> 
+	       			<td>{{ $sugerencia->sugirio->telefono }}</td>
+                    <td>{{ $sugerencia->titulo }}</td>
+                    <td>{{ $sugerencia->area_sugerencias }}</td> 
+                    <td>{{ $sugerencia->proceso_sugerencias }}</td> 
 	       			<td>{{ $sugerencia->descripcion }}</td>
-	       			<td>{{ $sugerencia->sugerencia_dirigida }}</td>
 	       			<td>
 	       				<a href="{{ route('admin.desk.sugerencias-edit', $sugerencia->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>

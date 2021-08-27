@@ -4,23 +4,39 @@
    		<thead>
    			<tr>
        			<th>Folio</th>
+                <th>Estatus</th>
+                <th>Fecha de identificación</th>
+                <th>Fecha de recepción</th>
+                <th>Fecha de cierre</th>
        			<th>Nombre</th>
        			<th>Correo</th>
        			<th>Teléfono</th>
+                <th>Mejora</th>
+                <th>Tipo de mejora</th>
+                <th>Área</th>
+                <th>Proceso</th>
        			<th>Descripción</th>
-       			<th>Mejora</th>
+                <th>Beneficios</th>
        			<th>Opciones</th> 
    			</tr>
    		</thead>
    		<tbody>
    			@foreach($mejoras as $mejora)
 	   			<tr>
-	       			<td>{{ $mejora->id }}</td>
+	       			<td>{{ $mejora->folio }}</td>
+                    <td>{{ $mejora->estatus }}</td>
+                    <td>{{ $mejora->fecha }}</td>
+                    <td>{{ $mejora->created_at }}</td>
+                    <td>{{ $mejora->fecha_cierre }}</td>
 	       			<td>{{ $mejora->mejoro->name }}</td>
 	       			<td>{{ $mejora->mejoro->email }}</td> 
 	       			<td>{{ $mejora->mejoro->telefono }}</td> 
+                    <td>{{ $mejora->titulo }}</td>
+                    <td>{{ $mejora->tipo }}</td>
+                    <td>{{ $mejora->area_mejora }}</td>
+                    <td>{{ $mejora->proceso_mejora }}</td>
 	       			<td>{{ $mejora->descripcion }}</td>
-	       			<td>{{ $mejora->mejora }}</td>
+                    <td>{{ $mejora->beneficios }}</td>
 	       			<td>
 	       				<a href="{{ route('admin.desk.mejoras-edit', $mejora->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>

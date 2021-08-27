@@ -14,6 +14,7 @@ use App\Models\Proceso;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Sede;
+use App\Models\SubcategoriaIncidente;
 
 use App\Models\IncidentesSeguridad;
 use App\Models\RiesgoIdentificado;
@@ -21,6 +22,7 @@ use App\Models\Quejas;
 use App\Models\Denuncias;
 use App\Models\Mejoras;
 use App\Models\Sugerencias;
+use App\Models\AnalisisSeguridad;
 
 use Intervention\Image\Facades\Image;
 use App\Models\EvidenciasQueja;
@@ -236,7 +238,12 @@ class inicioUsuarioController extends Controller
         Mejoras::create([
             'empleado_mejoro_id' => auth()->user()->empleado->id,
             'descripcion' => $request->descripcion,
-            'mejora' => $request->mejora,
+            'beneficios' => $request->beneficios,
+            'titulo' => $request->titulo,
+            'area_mejora' => $request->area_mejora,
+            'proceso_mejora' => $request->proceso_mejora,
+            'tipo' => $request->tipo,
+            'otro' => $request->otro,
         ]);
 
         return redirect()->route('admin.inicio-Usuario.index');
@@ -248,15 +255,21 @@ class inicioUsuarioController extends Controller
 
         $empleados = Empleado::get();
 
+        $procesos = Proceso::get();
+
         abort_if(Gate::denies('sugerencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados'));
+        return view('admin.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
     public function storeSugerencias(Request $request)
     {
         Sugerencias::create([
-            'empleado_sugerir_id' => auth()->user()->empleado->id,
+            'empleado_sugirio_id' => auth()->user()->empleado->id,
+
+            'area_sugerencias' => $request->area_sugerencias,
+            'proceso_sugerencias' => $request->proceso_sugerencias,
+
+            'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
-            'sugerencia_dirigida' => $request->sugerencia_dirigida,
         ]);
 
         return redirect()->route('admin.inicio-Usuario.index');
@@ -275,10 +288,12 @@ class inicioUsuarioController extends Controller
 
         $sedes = Sede::get();
 
+        $subcategorias = SubcategoriaIncidente::get();
+
 
         abort_if(Gate::denies('incidentes_seguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activos = Activo::get();
-        return view('admin.inicioUsuario.formularios.seguridad', compact('activos', 'areas', 'procesos', 'sedes'));
+        return view('admin.inicioUsuario.formularios.seguridad', compact('activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
     }
     public function storeSeguridad(Request $request)
     {
@@ -301,6 +316,11 @@ class inicioUsuarioController extends Controller
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
             'empleado_reporto_id' => auth()->user()->empleado->id,
+        ]);
+
+
+        AnalisisSeguridad::create([
+            'seguridad_id' => $incidentes_seguridad->id,
         ]);
 
         $archivos = explode(',', $request->input('archivo'));

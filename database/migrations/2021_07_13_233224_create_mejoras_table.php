@@ -15,12 +15,21 @@ class CreateMejorasTable extends Migration
     {
         Schema::create('mejoras', function (Blueprint $table) {
             $table->id();
-            $table->string('mejora');
-            $table->string('descripcion');
 
-            $table->unsignedBigInteger('empleado_mejoro_id')->nullable();
+            $table->string('estatus')->default('nuevo');
+            $table->dateTime('fecha_cierre')->nullable();
 
+            $table->unsignedBigInteger('empleado_mejoro_id');
             $table->foreign('empleado_mejoro_id')->references('id')->on('empleados');
+
+            $table->string('area_mejora')->nullable();
+            $table->string('proceso_mejora')->nullable();
+
+            $table->string('titulo');
+            $table->string('tipo');
+            $table->string('otro')->nullable();
+            $table->longText('descripcion');
+            $table->longText('beneficios');
 
             $table->timestamps();
             $table->softDeletes();
