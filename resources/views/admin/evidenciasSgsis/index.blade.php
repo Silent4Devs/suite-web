@@ -1,6 +1,26 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+.carousel-control-next, .carousel-control-prev {
+    width: 50px;
+    height: 50px;
+    margin-top: 100px;
+}
+
+.img-size{
+    margin-left:calc(50% - 141px);
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon{
+    background-color: #000;
+    filter: invert(100%);
+}
+
+
+</style>
+
+
     {{ Breadcrumbs::render('admin.evidencias-sgsis.index') }}
 
     @can('evidencias_sgsi_create')
@@ -202,21 +222,93 @@
                     },
                     {
                         data: 'responsable_name',
-                        name: 'responsable.name'
+                        name: 'responsable_name'
                     },
                     {
                         data: 'arearesponsable',
                         name: 'arearesponsable'
                     },
                     {
-                        data: 'fechadocumento',
-                        name: 'fechadocumento'
+                        data: 'fecha_documento',
+                        name: 'fecha_documento'
                     },
                     {
-                        data: 'archivopdf',
-                        name: 'archivopdf',
-                        sortable: false,
-                        searchable: false
+                        data: 'evidencia',
+                        name: 'evidencia',
+                        render:function(data,type,row,meta){
+                             let archivo="";
+                             let archivos= JSON.parse(data);
+                               archivo=` <div class="container">
+
+                                    <div class="mb-4 row">
+                                    <div class="text-center col">
+                                        <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                    </div>
+                                    </div>
+
+                                    <!-- modal -->
+                                    <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                        <div class="modal-body">
+                                            <!-- carousel -->
+                                            <div
+                                                id='carouselExampleIndicators${row.id}'
+                                                class='carousel slide'
+                                                data-ride='carousel'
+                                                >
+                                            <ol class='carousel-indicators'>
+                                                    ${archivos?.map((archivo,idx)=>{
+                                                        return `
+                                                    <li
+                                                    data-target='#carouselExampleIndicators${row.id}'
+                                                    data-slide-to='${idx}'
+                                                    ></li>`
+                                                    })}
+                                            </ol>
+                                            <div class='carousel-inner'>
+                                                    ${archivos?.map((archivo,idx)=>{
+                                                        return `
+                                                    <div class='carousel-item ${idx==0?"active":""}'>
+                                                        <iframe seamless class='img-size' src='{{asset("storage/evidencias_sgsi")}}/${archivo.evidencia}'></iframe>
+                                                    </div>`
+                                                    })}
+
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <a
+                                                class='carousel-control-prev'
+                                                href='#carouselExampleIndicators${row.id}'
+                                                role='button'
+                                                data-slide='prev'
+                                                >
+                                                <span class='carousel-control-prev-icon'
+                                                    aria-hidden='true'
+                                                    ></span>
+                                                <span class='sr-only'>Previous</span>
+                                            </a>
+                                            <a
+                                                class='carousel-control-next'
+                                                href='#carouselExampleIndicators${row.id}'
+                                                role='button'
+                                                data-slide='next'
+                                                >
+                                                <span
+                                                    class='carousel-control-next-icon'
+                                                    aria-hidden='true'
+                                                    ></span>
+                                                <span class='sr-only'>Next</span>
+                                            </a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>`
+                            return archivo;
+                        }
                     },
                     {
                         data: 'actions',

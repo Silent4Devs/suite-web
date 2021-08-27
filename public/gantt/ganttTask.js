@@ -862,7 +862,6 @@ Task.prototype.deleteTask = function () {
   this.master.tasks.splice(this.getRow(), 1);
   // var parents = beforeTask.getParents();
   // beforeTask.recalculateProgress(parents, beforeTask);
-  this.master.saveChangesOnServer();
   this.master.calculateAverageOnNodes();
   this.master.calculateStatusOnNodes();
   this.master.saveChangesOnServer();
@@ -977,7 +976,6 @@ Task.prototype.indent = function () {
     this.getParent().synchronizeStatus();
     // force propagate new progress
     // propagateNewProgress(this);
-    this.master.saveChangesOnServer();
     this.master.calculateAverageOnNodes();
     this.master.calculateStatusOnNodes();
     this.master.saveChangesOnServer();
@@ -1031,7 +1029,7 @@ Task.prototype.outdent = function () {
   this.synchronizeStatus();
   // force propagate new progress
   // propagateNewProgress(this);
-  this.master.saveChangesOnServer();
+
   this.master.calculateAverageOnNodes();
   this.master.calculateStatusOnNodes();
   this.master.saveChangesOnServer();
@@ -1089,7 +1087,6 @@ Task.prototype.moveUp = function () {
   }
 
   //Recalculate Progress & Status
-  this.master.saveChangesOnServer();
   this.master.calculateAverageOnNodes();
   this.master.calculateStatusOnNodes();
   this.master.saveChangesOnServer();
@@ -1151,7 +1148,7 @@ Task.prototype.moveDown = function () {
   }
 
   //Recalculate Progress & Status
-  this.master.saveChangesOnServer();
+
   this.master.calculateAverageOnNodes();
   this.master.calculateStatusOnNodes();
   this.master.saveChangesOnServer();

@@ -1048,7 +1048,6 @@ $.fn.dragExtedSVG = function (svg, opt, master = null) {
 
     // Recalculate progress
     if (master) {
-      master.saveChangesOnServer();
       master.calculateAverageOnNodes();
       master.calculateStatusOnNodes();
       master.saveChangesOnServer();
@@ -1060,7 +1059,6 @@ $.fn.dragExtedSVG = function (svg, opt, master = null) {
   function drop(e) {
     $(svg).unbind("mousemove.deSVG").unbind("mouseup.deSVG").unbind("mouseleave.deSVG");
     if (target && target.attr("oldx") != target.attr("x")) {
-      master.saveChangesOnServer();
       master.calculateAverageOnNodes();
       master.calculateStatusOnNodes();
       master.saveChangesOnServer();

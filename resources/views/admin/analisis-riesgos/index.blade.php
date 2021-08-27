@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+{{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
+
     @can('matriz_riesgo_create')
 
         <style>

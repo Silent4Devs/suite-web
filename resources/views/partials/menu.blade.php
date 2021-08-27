@@ -37,12 +37,17 @@
                 <a href="{{ route('admin.inicio-Usuario.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') ? 'active' : '' }}">
                     <i class="fas fa-user iconos_menu letra_blanca"></i>
-
-                    </i>
                     <font class="letra_blanca"> Mi perfil</font>
                 </a>
             </li>
         @endcan
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.portal-comunicacion.index') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'active' : '' }}">
+                <i class="fas fa-newspaper iconos_menu letra_blanca"></i>
+                <font class="letra_blanca"> Portal de Comunicación </font>
+            </a>
+        </li>
         @can('organizacion_access')
             <li
                 class="c-sidebar-nav-dropdown {{ request()->is('admin/matriz-riesgos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-unos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-dos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-tres*') ? 'c-show' : '' }}">
@@ -336,12 +341,13 @@
             </li>
         @endcan
         {{-- @can('planes_accion_access') --}}
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.planes-de-accion.index') }}" class="c-sidebar-nav-link {{ request()->is('admin/planes-de-accion') || request()->is('admin/planes-de-accion/*/edit') || request()->is('admin/planes-de-accion/create') || request()->is('admin/planes-de-accion/*') ? 'active' : '' }}">
-                    <i class="iconos_menu letra_blanca fas fa-fw fa-stream"></i>
-                    <font class="letra_blanca">Planes de Acción</font>
-                </a>
-            </li>
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.planes-de-accion.index') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/planes-de-accion') || request()->is('admin/planes-de-accion/*/edit') || request()->is('admin/planes-de-accion/create') || request()->is('admin/planes-de-accion/*') ? 'active' : '' }}">
+                <i class="iconos_menu letra_blanca fas fa-fw fa-stream"></i>
+                <font class="letra_blanca">Planes de Acción</font>
+            </a>
+        </li>
         {{-- @endcan --}}
         @can('configuracion_datos_access')
             <li class="c-sidebar-nav-dropdown">

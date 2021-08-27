@@ -232,7 +232,7 @@
                                     </select>
                                 </div>
 
-                                <form method="POST" class="col-12" action="{{ route('admin.desk.analisis_riesgo-update', $analisis) }}">
+                                {{-- <form method="POST" class="col-12" action="{{ route('admin.desk.analisis_riesgo-update', $analisis) }}">
                                     @csrf
 
                                     <div class="col-12" style="position: relative;">
@@ -305,7 +305,7 @@
                                     <div class="col-12 text-right py-3">
                                         <input type="submit" class="btn btn-success">
                                     </div>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                     </section>

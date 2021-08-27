@@ -167,7 +167,7 @@ class DeskController extends Controller
 
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
 
-        $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->findOrfail(intval($id_riesgos));
+        // $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->findOrfail(intval($id_riesgos));
 
         $procesos = Proceso::get();
 
@@ -179,7 +179,7 @@ class DeskController extends Controller
 
         $empleados = Empleado::get();
 
-        return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
+        return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes'));
     }
     public function updateRiesgos(Request $request, $id_riesgos)
     {

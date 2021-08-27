@@ -151,7 +151,7 @@
 
 
                 <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#1BB0B0">
-                    <p class"text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
+                    <p class ="text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
                         Verificación del Requisito</p>
                 </div>
 
@@ -218,7 +218,7 @@
                     @endif
                 </div>
 
-                
+
                 {{-- INICIO PLAN ACCIÓN --}}
                 <div class="row w-100 align-items-center" style="margin-left: 1px;">
                     @livewire('planes-implementacion-select',['planes_seleccionados'=>$planes_seleccionados])
@@ -366,16 +366,20 @@
                                 <!-- carousel -->
                                 <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
                                     <ol class='carousel-indicators'>
+                                        @foreach($matrizRequisitoLegale->evidencias_matriz as $idx=>$evidencia)
+                                         <li data-target=#carouselExampleIndicators data-slide-to= {{$idx}}></li>
 
-                                        <li data-target=#carouselExampleIndicators data-slide-to='${idx}'></li>
+                                        @endforeach
 
                                     </ol>
                                     <div class='carousel-inner'>
-
-                                        <div class='carousel-item ${idx==0?"active":""}'>
-                                            <iframe seamless class='img-size'
-                                                src={{ asset('storage/matriz_evidencias') }}></iframe>
+                                        @foreach($matrizRequisitoLegale->evidencias_matriz as $idx=>$evidencia)
+                                        <div class='carousel-item {{$idx==0?"active":""}}'>
+                                            <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                src="{{ asset('storage/matriz_evidencias') }}/{{$evidencia->evidencia}}"></iframe>
                                         </div>
+                                        @endforeach
+
 
                                     </div>
 
@@ -383,12 +387,12 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <a class='carousel-control-prev' href='#carouselExampleIndicators${row.id}' role='button'
+                                <a style="height: 50px; top: 50px;" class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
                                     data-slide='prev'>
                                     <span class='carousel-control-prev-icon' aria-hidden='true'></span>
                                     <span class='sr-only'>Previous</span>
                                 </a>
-                                <a class='carousel-control-next' href='#carouselExampleIndicators${row.id}' role='button'
+                                <a style="height: 50px; top: 50px;" class='carousel-control-next' href='#carouselExampleIndicators' role='button'
                                     data-slide='next'>
                                     <span class='carousel-control-next-icon' aria-hidden='true'></span>
                                     <span class='sr-only'>Next</span>

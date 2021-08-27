@@ -153,6 +153,20 @@
 
     </style>
 
+    <style>
+        .ventana_menu{
+            width:calc(100% - 40px);
+            background-color:#fff;
+            position:absolute;
+            margin:auto;
+            display:none;
+            top:130px;
+            z-index:3;
+            height:calc(100% - 40px);
+
+        }
+    </style>
+
     {{ Breadcrumbs::render('admin.iso27001.index') }}
     {{-- @dump(request()->getTargets()) --}}
     <div class="mt-5 card">
@@ -161,14 +175,14 @@
         </div>
         <div class="card-body">
             <div class="caja_botones_menu">
-                <a href="#" id="contexto" data-tabs="s1" class="btn_activo tabs"><i class="fa-fw fas fa-archive"></i><br> Contexto </a>
-                <a href="#" id="liderazgo" data-tabs="s2" class="tabs"><i class="fa-fw fas fa-gavel"></i><br> Liderazgo </a>
-                <a href="#" id="planificacion" data-tabs="s3" class="tabs"><i class="fa-fw fas fa-tasks"></i><br> Planificación </a>
-                <a href="#" id="soporte" data-tabs="s4" class="tabs"><i class="fa-fw fas fa-headset"></i><br> Soporte</a>
-                <a href="#" id="operacion" data-tabs="s5" class="tabs"><i class="fa-fw fas fa-briefcase"></i><br> Operación </a>
-                <a href="#" id="evaluacion" data-tabs="s6" class="tabs"><i class="fa-fw fas fa-file-signature"></i><br> Evaluación</a>
-                <a href="#" id="mejora" data-tabs="s7" class="tabs"><i class="fa-fw fas fa-infinity"></i><br> Mejora</a>
-                <a href="#" id="controles" data-tabs="s8" class="tabs"><i class="fas fa-tasks"></i><br>Controles </a>
+                <a href="#" id="contexto" data-tabs="s1" class="btn_activo tabs ventana_cerrar"><i class="fa-fw fas fa-archive"></i><br> Contexto </a>
+                <a href="#" id="liderazgo" data-tabs="s2" class="tabs ventana_cerrar"><i class="fa-fw fas fa-gavel"></i><br> Liderazgo </a>
+                <a href="#" id="planificacion" data-tabs="s3" class="tabs ventana_cerrar"><i class="fa-fw fas fa-tasks"></i><br> Planificación </a>
+                <a href="#" id="soporte" data-tabs="s4" class="tabs ventana_cerrar"><i class="fa-fw fas fa-headset"></i><br> Soporte</a>
+                <a href="#" id="operacion" data-tabs="s5" class="tabs ventana_cerrar"><i class="fa-fw fas fa-briefcase"></i><br> Operación </a>
+                <a href="#" id="evaluacion" data-tabs="s6" class="tabs ventana_cerrar"><i class="fa-fw fas fa-file-signature"></i><br> Evaluación</a>
+                <a href="#" id="mejora" data-tabs="s7" class="tabs ventana_cerrar"><i class="fa-fw fas fa-infinity"></i><br> Mejora</a>
+                <a href="#" id="controles" data-tabs="s8" class="tabs ventana_cerrar"><i class="fas fa-tasks"></i><br>Controles </a>
             </div>
 
             <div class="caja_caja_secciones">
@@ -291,12 +305,36 @@
                         <section id="s3" data-id="planificacion" class="caja">
                             <div class="mt-5">
                                 <ul>
-                                    <li><a href="{{ route('admin.matriz-riesgos.index') }}">
+                                    <li ><a href="#" data-ventana="riesgos" data-ruta="Análisis de riesgos" class="btn_ventana_menu">
                                             <div>
                                                 <i class="fas fa-exclamation-triangle"></i>
                                                 Análisis de riesgos
                                             </div>
                                         </a></li>
+                                        <div class="ventana_menu" id="riesgos" style="color:#008186 !important">
+                                            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="riesgos" style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
+                                                <h3 class="text-center"><strong>Análisis de riesgos</strong></h3>
+                                            <ul>
+                                                <li><a href="{{ route('admin.amenazas.index') }}">
+                                                    <div>
+                                                        <i class="fas fa-fire"></i>
+                                                        Amenazas
+                                                    </div>
+                                                </a></li>
+                                                <li><a href="{{ route('admin.vulnerabilidads.index') }}">
+                                                    <div>
+                                                        <i class="fas fa-shield-alt"></i>
+                                                        Vulnerabilidades
+                                                    </div>
+                                                </a></li>
+                                                <li><a href="{{ route('admin.analisis-riesgos.index') }}">
+                                                    <div>
+                                                        <i class="fas fa-table"></i>
+                                                        Matriz de Riesgos
+                                                    </div>
+                                                </a></li>
+                                            </ul>
+                                        </div>
                                         <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
                                             <div>
                                                 <i class="far fa-file"></i>
@@ -679,4 +717,32 @@
         })
 
     </script>
+    <script>
+        $(".btn_ventana_menu").click(function(){
+            $(".ventana_menu").fadeOut(100);
+            var id_ventana= $(".btn_ventana_menu").attr("data-ventana");
+            $(document.getElementById(id_ventana)).fadeIn(100);
+            $(".ventana_menu").css("left","0");
+            $(".ventana_menu").css("transition","0s");
+            var text_ruta= "ISO 27001 / " + $(".btn_ventana_menu").attr("data-ruta");
+            $(".breadcrumb-item.active").html(text_ruta);
+        });
+        $(".btn_cerrar_ventana").click(function(){
+            $(".ventana_menu").fadeOut(100);
+            $(".ventana_menu").css("left","-50%");
+            $(".ventana_menu").css("transition","1s");
+            $(".breadcrumb-item.active").html("ISO 27001");
+
+        });
+
+        $(".ventana_cerrar").click(function(){
+            $(".ventana_menu").fadeOut(100);
+            $(".ventana_menu").css("left","-50%");
+            $(".ventana_menu").css("transition","1s");
+            $(".breadcrumb-item.active").html("ISO 27001");
+        });
+
+    </script>
+
+
 @endsection
