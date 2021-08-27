@@ -17,10 +17,42 @@ class MatrizHeatmap extends Component
     public $listados = [];
     public $listados_residual = [];
     public $mensaje = '';
-    public $conteo = '';
-    public $conteo_residual = '';
     public $changer, $changer_residual;
     public $muy_alto, $alto, $medio, $bajo, $muy_alto_residual, $alto_residual, $medio_residual, $bajo_residual;
+    //var conta
+    public $nula_muyalto = 0;
+    public $nula_alto = 0;
+    public $nula_medio = 0;
+    public $nula_bajo = 0;
+    public $baja_bajo = 0;
+    public $baja_medio = 0;
+    public $baja_alto = 0;
+    public $baja_muyalto = 0;
+    public $media_bajo = 0;
+    public $media_medio = 0;
+    public $media_alto = 0;
+    public $media_muyalto = 0;
+    public $alta_bajo = 0;
+    public $alta_medio = 0;
+    public $alta_alto = 0;
+    public $alta_muyalto = 0;
+    //var conta residual
+    public $nula_muyalto_r = 0;
+    public $nula_alto_r = 0;
+    public $nula_medio_r = 0;
+    public $nula_bajo_r = 0;
+    public $baja_bajo_r = 0;
+    public $baja_medio_r = 0;
+    public $baja_alto_r = 0;
+    public $baja_muyalto_r = 0;
+    public $media_bajo_r = 0;
+    public $media_medio_r = 0;
+    public $media_alto_r = 0;
+    public $media_muyalto_r = 0;
+    public $alta_bajo_r = 0;
+    public $alta_medio_r = 0;
+    public $alta_alto_r = 0;
+    public $alta_muyalto_r = 0;
 
     public function clean()
     {
@@ -29,7 +61,7 @@ class MatrizHeatmap extends Component
         $this->proceso_id = "";
         $this->changer = '';
         $this->listados = [];
-        $this->conteo = '';
+        //$this->conteo = '';
         $this->callAlert('info', 'Los filtros se han restablecido', true, 'La información volvio a su estado original');
     }
 
@@ -62,6 +94,9 @@ class MatrizHeatmap extends Component
         $alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('27', '36'));
         $medio_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '9');
         $bajo_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '0');
+        //querys contador en grafica
+        $matriz_query = MatrizRiesgo::select('probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis);
+        $matriz_query_r = MatrizRiesgo::select('probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis);
 
         if ($this->sede_id != "") {
             if (MatrizRiesgo::select('id')->Where('id_sede', '=', $this->sede_id)->count() > 0) {
@@ -73,6 +108,8 @@ class MatrizHeatmap extends Component
                 $alto_residual->Where('id_sede', '=', $this->sede_id);
                 $medio_residual->Where('id_sede', '=', $this->sede_id);
                 $bajo_residual->Where('id_sede', '=', $this->sede_id);
+                $matriz_query->Where('id_sede', '=', $this->sede_id);
+                $matriz_query_r->Where('id_sede', '=', $this->sede_id);
                 $this->callAlert('success', 'La información se actualizo correctamente', true);
             } else {
                 $this->callAlert('warning', 'No se encontro registro con esta sede', false, 'El dashboard volvio a sus valores originales sin sede');
@@ -90,7 +127,8 @@ class MatrizHeatmap extends Component
                 $alto_residual->Where('id_area', '=', $this->area_id);
                 $medio_residual->Where('id_area', '=', $this->area_id);
                 $bajo_residual->Where('id_area', '=', $this->area_id);
-                //dd($muy_alto->get());
+                $matriz_query->Where('id_area', '=', $this->area_id);
+                $matriz_query_r->Where('id_area', '=', $this->area_id);
                 $this->callAlert('success', 'La información se actualizo correctamente', true);
             } else {
                 $this->callAlert('warning', 'No se encontro registro con esta área', false, 'El dashboard volvio a sus valores originales sin área');
@@ -108,6 +146,8 @@ class MatrizHeatmap extends Component
                 $alto_residual->Where('id_proceso', '=', $this->proceso_id);
                 $medio_residual->Where('id_proceso', '=', $this->proceso_id);
                 $bajo_residual->Where('id_proceso', '=', $this->proceso_id);
+                $matriz_query->Where('id_proceso', '=', $this->proceso_id);
+                $matriz_query_r->Where('id_proceso', '=', $this->proceso_id);
                 $this->callAlert('success', 'La información se actualizo correctamente', true);
             } else {
                 $this->callAlert('warning', 'No se encontro registro con este proceso', false, 'El dashboard volvio a sus valores originales sin proceso');
@@ -116,6 +156,145 @@ class MatrizHeatmap extends Component
         }
 
         $matriz_riesgos = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
+
+        foreach ($matriz_query->get() as $key => $value) {
+            switch ($value->probabilidad) {
+                case 0:
+                    switch ($value->impacto) {
+                        case 0:
+                            $this->nula_bajo ++;
+                            break;
+                        case 3:
+                            $this->nula_medio ++;
+                            break;
+                        case 6:
+                            $this->nula_alto ++;
+                            break;
+                        case 9:
+                            $this->nula_muyalto ++;
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch ($value->impacto) {
+                        case 0:
+                            $this->baja_bajo ++;
+                            break;
+                        case 3:
+                            $this->baja_medio ++;
+                            break;
+                        case 6:
+                            $this->baja_alto ++;
+                            break;
+                        case 9:
+                            $this->baja_muyalto ++;
+                            break;
+                    }
+                    break;
+                case 6:
+                    switch ($value->impacto) {
+                        case 0:
+                            $this->media_bajo ++;
+                            break;
+                        case 3:
+                            $this->media_medio ++;
+                            break;
+                        case 6:
+                            $this->media_alto ++;
+                            break;
+                        case 9:
+                            $this->media_muyalto ++;
+                            break;
+                    }
+                    break;
+                case 9:
+                    switch ($value->impacto) {
+                        case 0:
+                            $this->alta_bajo ++;
+                            break;
+                        case 3:
+                            $this->alta_medio ++;
+                            break;
+                        case 6:
+                            $this->alta_alto ++;
+                            break;
+                        case 9:
+                            $this->alta_muyalto ++;
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        foreach ($matriz_query_r->get() as $key => $value_r) {
+            switch ($value_r->probabilidad_residual) {
+                case 0:
+                    switch ($value_r->impacto_residual) {
+                        case 0:
+                            $this->nula_bajo_r ++;
+                            break;
+                        case 3:
+                            $this->nula_medio_r ++;
+                            break;
+                        case 6:
+                            $this->nula_alto_r ++;
+                            break;
+                        case 9:
+                            $this->nula_muyalto_r ++;
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch ($value->impacto_residual) {
+                        case 0:
+                            $this->baja_bajo_r ++;
+                            break;
+                        case 3:
+                            $this->baja_medio_r ++;
+                            break;
+                        case 6:
+                            $this->baja_alto_r ++;
+                            break;
+                        case 9:
+                            $this->baja_muyalto_r ++;
+                            break;
+                    }
+                    break;
+                case 6:
+                    switch ($value->impacto_residual) {
+                        case 0:
+                            $this->media_bajo_r ++;
+                            break;
+                        case 3:
+                            $this->media_medio_r ++;
+                            break;
+                        case 6:
+                            $this->media_alto_r ++;
+                            break;
+                        case 9:
+                            $this->media_muyalto_r ++;
+                            break;
+                    }
+                    break;
+                case 9:
+                    switch ($value->impacto_residual) {
+                        case 0:
+                            $this->alta_bajo_r ++;
+                            break;
+                        case 3:
+                            $this->alta_medio_r ++;
+                            break;
+                        case 6:
+                            $this->alta_alto_r ++;
+                            break;
+                        case 9:
+                            $this->alta_muyalto_r ++;
+                            break;
+                    }
+                    break;
+            }
+        }
+
 
         return view('livewire.matriz-heatmap', [
             'sedes' => $sedes,
@@ -129,6 +308,40 @@ class MatrizHeatmap extends Component
             'altos_residual' => $alto_residual->count(),
             'medios_residual' => $medio_residual->count(),
             'bajos_residual' => $bajo_residual->count(),
+            //conta
+            'nula_bajo' => $this->nula_bajo,
+            'nula_medio' => $this->nula_medio,
+            'nula_alto' => $this->nula_alto,
+            'nula_muyalto' => $this->nula_muyalto,
+            'baja_bajo' => $this->baja_bajo,
+            'baja_medio' => $this->baja_medio,
+            'baja_alto' => $this->baja_alto,
+            'baja_muyalto' => $this->baja_muyalto,
+            'media_bajo' => $this->media_bajo,
+            'media_medio' => $this->media_medio,
+            'media_alto' => $this->media_alto,
+            'media_muyalto' => $this->media_muyalto,
+            'alta_bajo' => $this->alta_bajo,
+            'alta_medio' => $this->alta_medio,
+            'alta_alto' => $this->alta_alto,
+            'alta_muyalto' => $this->alta_muyalto,
+            //conta residuales
+            'nula_bajo_r' => $this->nula_bajo_r,
+            'nula_medio_r' => $this->nula_medio_r,
+            'nula_alto_r' => $this->nula_alto_r,
+            'nula_muyalto_r' => $this->nula_muyalto_r,
+            'baja_bajo_r' => $this->baja_bajo_r,
+            'baja_medio_r' => $this->baja_medio_r,
+            'baja_alto_r' => $this->baja_alto_r,
+            'baja_muyalto_r' => $this->baja_muyalto_r,
+            'media_bajo_r' => $this->media_bajo_r,
+            'media_medio_r' => $this->media_medio_r,
+            'media_alto_r' => $this->media_alto_r,
+            'media_muyalto_r' => $this->media_muyalto_r,
+            'alta_bajo_r' => $this->alta_bajo_r,
+            'alta_medio_r' => $this->alta_medio_r,
+            'alta_alto_r' => $this->alta_alto_r,
+            'alta_muyalto_r' => $this->alta_muyalto_r,
         ]);
     }
 
@@ -154,12 +367,10 @@ class MatrizHeatmap extends Component
             $this->callAlert('warning', 'No se encontro registro con este nivel de riesgo', false, 'Por favor ingrese un nuevo valor');
             $this->changer = '';
             $this->listados = [];
-            $this->conteo = '';
         } else {
             $this->changer = '';
             $this->listados = $matriz_riesgos->get();
             $this->changer = $valor;
-            $this->conteo = $matriz_riesgos->count();
         }
     }
 
@@ -172,7 +383,6 @@ class MatrizHeatmap extends Component
             $this->changer_residual = '';
             $this->listados_residual = $matriz_riesgos_residual;
             $this->changer_residual = $valor;
-            $this->conteo_residual = $matriz_riesgos_residual->count();
         }
     }
 

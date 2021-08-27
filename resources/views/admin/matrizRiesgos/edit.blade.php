@@ -358,29 +358,37 @@
                 <hr>
                 <p class="font-weight-bold" style="font-size:11pt;">Acciones</p>
                 <div class="row">
-                    <div class="form-group col-sm-4">
-                        <label for="controles_id"><i class="fas fa-gamepad iconos-crear"></i>Control</label>
-                        <select class="form-control {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
-                            name="controles_id" id="controles_id">
-                            <option value disabled {{ old('controles_id', null) === null ? 'selected' : '' }}>
-                                Selecciona una opción</option>
-                            @foreach ($controles as $control)
-                                <option value="{{ $control->id }}">
-                                    {{ $control->control }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('controles_id'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('controles_id') }}
+                    <div class="form-group col-sm-12">
+                        <div class="row">
+                            <label for="controles_id" style="margin-left: 15px; margin-bottom:5px; margin-right: 0px;"><i
+                                    class="fas fa-lock iconos-crear"></i>Seleccione los control(es)
+                                a
+                                aplicar</label>
+                            <div class="mb-4 col-12">
+                                <select
+                                    class="form-control js-example-basic-multiple select2  {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
+                                    name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
+                                    <option value disabled>
+                                        Selecciona una opción</option>
+                                    @foreach ($controles as $control)
+                                        <option value="{{ $control->id }}">
+                                            {{ $control->anexo_indice }} {{ $control->anexo_politica }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('controles_id'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('controles_id') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                             </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
+                        </div>
                     </div>
 
-                    <div class="form-group col-sm-4">
-                        <label for="plan_de_accion"><i class="fas fa-lightbulb iconos-crear"></i>Plan de acción</label>
-                        {{-- <select class="form-control {{ $errors->has('plan_de_accion') ? 'is-invalid' : '' }}"
+                    <div class="form-group col-sm-12">
+                        {{-- <label for="plan_de_accion"><i class="fas fa-lightbulb iconos-crear"></i>Plan de acción</label>
+                        <select class="form-control {{ $errors->has('plan_de_accion') ? 'is-invalid' : '' }}"
                             name="plan_de_accion" id="plan_de_accion">
                             <option value disabled {{ old('plan_de_accion', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
@@ -396,9 +404,11 @@
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span> --}}
-                        {{-- INICIO PLAN ACCIÓN --}}
-                        <div class="row w-100 align-items-center" style="margin-left: 1px;">
-                            @livewire('planes-implementacion-select',['planes_seleccionados'=>$planes_seleccionados])
+                        {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
+                        <div class="row w-100">
+                            <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i
+                                    class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
+                            @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
                             <div class="pl-0 ml-0 col-2">
                                 <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
                                     data-target="#planAccionModal">
@@ -406,9 +416,9 @@
                                 </button>
                             </div>
                             @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de
-                            Requisitos Legales'])
+                            riesgos', 'id_matriz' => $matrizRiesgo->id_analisis])
                         </div>
-                        {{-- FIN PLAN ACCIÓN --}}
+                        {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
 
                 </div>

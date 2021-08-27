@@ -136,7 +136,6 @@ class MatrizRiesgosController extends Controller
     public function edit(MatrizRiesgo $matrizRiesgo)
     {
 
-        dd($matrizRiesgo);
         $organizacions = Organizacion::all();
         $teams = Team::get();
         $activos = Activo::get();
