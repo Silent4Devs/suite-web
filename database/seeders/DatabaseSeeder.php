@@ -32,9 +32,9 @@ class DatabaseSeeder extends Seeder
             EmpleadosSeeder::class,
             MacroprocesoSeeder::class,
             DocumentoSeeder::class,
+            //PlanImplementacionSeeder::class  // Necesario se carga inicialmente el Diagrama Universal de Gantt
             CategoriaIncidenteSeeder::class,
             SubcategoriaIncidenteSeeder::class,
-            PlanImplementacionSeeder::class  // Necesario se carga inicialmente el Diagrama Universal de Gantt
             //PlanBaseSeeder::class,
         ]);
     }
