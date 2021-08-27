@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+use App\Models\Team;
+use App\Models\Empleado;
+use Illuminate\Http\Request;
+use App\Models\Objetivosseguridad;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyObjetivosseguridadRequest;
+use Yajra\DataTables\Facades\DataTables;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\StoreObjetivosseguridadRequest;
 use App\Http\Requests\UpdateObjetivosseguridadRequest;
-use App\Models\Objetivosseguridad;
-use App\Models\Team;
-use Gate;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\MassDestroyObjetivosseguridadRequest;
 
 class ObjetivosseguridadController extends Controller
 {
@@ -64,12 +65,14 @@ class ObjetivosseguridadController extends Controller
     public function create()
     {
         abort_if(Gate::denies('objetivosseguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $responsables  = Empleado::get();
 
-        return view('admin.objetivosseguridads.create');
+        return view('admin.objetivosseguridads.create', compact('responsables'));
     }
 
-    public function store(StoreObjetivosseguridadRequest $request)
+    public function store(Request $request)
     {
+        dd($request->all());
         $objetivosseguridad = Objetivosseguridad::create($request->all());
 
         return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
