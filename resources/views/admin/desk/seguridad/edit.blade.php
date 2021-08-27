@@ -484,27 +484,12 @@
                                             <th>Prioridad</th>
                                             <th>Tipo</th>
                                             <th>Responsable(s)</th>
-                                            <th>Estatus</th>
                                             <th>Comentarios</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                                <td>numero consecutivo</td>
-                                            <td>text camp</td>
-                                            <td>date camp</td>
-                                            <td>date camp</td>
-                                            <td>select, alta media baja</th>
-                                            <td>select, accion inmediata, accion subsecuente, accion posterior</th>
-                                            <td>slect silta de empleados</td>
-                                            <td>select no iniciado, en proceso, terminado</td>
-                                            <td>textarea</td>
-                                            <td>botones</td>
-                                        </tr>
-                                        <tr>
-                                            <td>replicar en forms</td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                                 <tfoot>
@@ -535,10 +520,17 @@
                                     right: 0;
                                     margin: auto;
                                     display: none;
-                                    z-index: 9999999999;
+                                    z-index: 99;
                                     padding-top: 400px;
                                     transition: 0.4s;
                                     opacity: 0;
+                                }
+                                .fondo_modal{
+                                    width: 100%;
+                                    height: 100%;
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
                                 }
                                 .modal_form_plan form{
                                     width: 50%;
@@ -571,10 +563,17 @@
                                     }
                                 }
 
+                                .select2-selection--multiple{
+                                    overflow: hidden !important;
+                                    height: auto !important;
+                                }
+
                             </style>
 
                             <div class="modal_form_plan">
-                                <form class="card">
+                                <div class="fondo_modal"></div>
+                                <form class="card" id="form_plan_accion" method="POST" action="{{route('admin.desk-seguridad-actividades.store')}}">
+                                    <input type="hidden" name="seguridad_id" value="{{$incidentesSeguridad->id}}">
                                     <div class="card-header text-center" style="background-color: #00abb2;">
                                         <strong style="font-size: 16pt; color: #fff;"><i class="fas fa-tasks mr-4"></i>Crear: Plan de Acción</strong>
                                     </div>
@@ -582,37 +581,46 @@
                                         <div class="row">
                                             <div class="form-group col-md-12">
                                                 <label class="form-label"><i class="fas fa-wrench iconos-crear"></i>Actividad</label>
-                                                <input type="" name="" class="form-control">
+                                                <input type="" name="actividad" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio</label>
-                                                <input type="" name="" class="form-control">
+                                                <input type="date" name="fecha_inicio" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de fin</label>
-                                                <input type="" name="" class="form-control">
+                                                <input type="date" name="fecha_fin" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="form-label"><i class="fas fa-flag iconos-crear"></i>Prioridad</label>
-                                                <input type="" name="" class="form-control">
+                                               <select class="form-control" name="prioridad">
+                                                    <option value="Alta">Alta</option>
+                                                    <option value="Media">Media</option>
+                                                    <option value="Baja">Baja</option>
+                                                </select>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="form-label"><i class="fas fa-list-alt iconos-crear"></i>Tipo</label>
-                                                <input type="" name="" class="form-control">
+                                                <select class="form-control" name="tipo">
+                                                    <option value="Acción inmediata">Acción inmediata</option>
+                                                    <option value="Acción subsecuente">Acción subsecuente</option>
+                                                    <option value="Acción posterior">Acción posterior </option>
+                                                </select>
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-12">
                                                 <label class="form-label"><i class="fas fa-users iconos-crear"></i>Responsables</label>
-                                                <input type="" name="" class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                                <input type="" name="" class="form-control">
+                                                <select class="form-control select2" name="responsables[]" multiple>
+                                                    @foreach($empleados as $empleado)
+                                                        <option value="{{$empleado->id}}">{{$empleado->name}}</option>
+                                                    @endforeach                                                    
+                                                </select>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label class="form-label"><i class="fas fa-comments iconos-crear"></i>Comentarios</label>
-                                                <textarea class="form-control"></textarea>
+                                                <textarea class="form-control" name="comentarios"></textarea>
                                             </div>
                                             <div class="form-group col-md-12 text-right">
+                                                <a href="#" class="btn btn_cancelar">Cancelar</a>
                                                 <input type="submit" value="Guardar" class="btn btn-success btn_enviar_form_modal">
                                             </div>
                                         </div>
@@ -698,34 +706,84 @@
         });
     </script>
 
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#tabla_plan_accion").DataTable({
+                ajax: '{{route("admin.desk-seguridad-actividades.index")}}',
+                buttons:[],
+                columns:[
+                    {data: 'id'},
+                    {data: 'actividad'},
+                    {data: 'fecha_inicio'},
+                    {data: 'fecha_fin'},
+                    {data: 'prioridad'},
+                    {data: 'tipo'},
+                    {
+                        data: 'id',
+                        render:function(data, type, row, meta){
+                            let lista = '<ul>';
+                            row.responsables.forEach(responsable=>{
+                                lista += `<li>${responsable.name}</li>`;
+                            })
+                            lista += '</ul>';
 
+                            return lista;
+                        }
+                    },
+                    {data: 'comentarios'},
+                    {data: 'id'},
+                ]
+            });
+        });
+        
+    </script>
 
     <script type="text/javascript">
         $(".btn_modal_form").click(function(){
             
             $(".modal_form_plan").addClass("modal_vista_plan");
-        });
 
-        $(".btn_enviar_form_modal").click(function(){
+
+            $(".select2").select2({
+                theme:'bootstrap4'
+            });
             
+        });
+        $(".modal_form_plan .btn.btn_cancelar").click(function(){
             $(".modal_form_plan").removeClass("modal_vista_plan");
         });
-        
 
-        
+        $(".fondo_modal").click(function(){
+            $(".modal_form_plan").removeClass("modal_vista_plan");
+        });
 
-        if ($(".modal_form_plan form").mouseover()) {
-            $(".modal_form_plan").click(function(){
-                $(".modal_form_plan").removeClass("modal_vista_plan");
+        $(".btn_enviar_form_modal").click(function(e){
+            e.preventDefault();
+            $(".modal_form_plan").removeClass("modal_vista_plan");
+            let datos = $('#form_plan_accion').serialize(); 
+
+            let url = document.getElementById('form_plan_accion').getAttribute('action')
+
+            $.ajax({
+                type: "post",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: url,
+                data: datos,
+                success: function (response) {
+                    console.log(response);
+                }
             });
-        }
+        });
+
     </script>
 
 
 
 
 
+    <script type="text/javascript">
 
+    </script>
 
 
 
