@@ -120,13 +120,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-sm-6">
-                                <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i></i>Nombre del
+                                <label class="required" for="indicador"><i class="fas fa-file-signature iconos-crear"></i></i>Nombre del
                                     indicador</label>
-                                <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
-                                    name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
-                                @if ($errors->has('nombre'))
+                                <input class="form-control {{ $errors->has('indicador') ? 'is-invalid' : '' }}" type="text"
+                                    name="indicador" id="indicador" value="{{ old('indicador', '') }}" required>
+                                @if ($errors->has('indicador'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('nombre') }}
+                                        {{ $errors->first('indicador') }}
                                     </div>
                                 @endif
                                 <span class="help-block"></span>
@@ -134,18 +134,18 @@
 
                             <div class="form-group col-sm-6">
                                 <div class="form-group">
-                                    <label for='id_empleado'><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
-                                    <select class="form-control select2 {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
-                                        name='id_empleado' id='id_empleado'>
+                                    <label for='responsable_id'><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
+                                    <select class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
+                                        name='responsable_id' id='responsable_id'>
                                         <option value="">Seleccione un responsable</option>
                                         @foreach ($responsables as $responsable)
                                             <option value="{{ $responsable->id }}">
                                                 {{ $responsable->name }} </option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('id_empleado'))
+                                    @if ($errors->has('responsable_id'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('id_empleado') }}
+                                            {{ $errors->first('responsable_id') }}
                                         </div>
                                     @endif
                                 </div>
@@ -153,13 +153,13 @@
 
                         </div>
                         <div class="form-group">
-                            <label for="descripcion"><i
-                                    class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.sede.fields.descripcion') }}</label>
-                            <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
-                            @if ($errors->has('descripcion'))
+                            <label for="objetivoseguridad"><i
+                                    class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
+                            <textarea class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}"
+                                name="objetivoseguridad" id="objetivoseguridad">{{ old('objetivoseguridad') }}</textarea>
+                            @if ($errors->has('objetivoseguridad'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('descripcion') }}
+                                    {{ $errors->first('objetivoseguridad') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.sede.fields.descripcion_helper') }}</span>
@@ -214,7 +214,7 @@
 
                         <div class="row">
                             <div class="form-group col-sm-2">
-                                <label class="required" for="unidad"><i class="fas fa-calculator iconos-crear"></i>Unidad</label>
+                                <label class="required" for="unidadmedida"><i class="fas fa-calculator iconos-crear"></i>Unidad</label>
                                 <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" type="text"
                                     name="unidadmedida" id="unidadmedida" value="{{ old('unidadmedida', '') }}" required>
                                 @if ($errors->has('unidadmedida'))
@@ -255,13 +255,13 @@
 
                             <div class="form-group col-sm-2">
                                 <div class="form-group">
-                                    <label class="required" for="no_revisiones"><i class="fas fa-clipboard-check iconos-crear"></i>Revisiones</label>
-                                    <input class="form-control {{ $errors->has('no_revisiones') ? 'is-invalid' : '' }}"
-                                        type="number" name="no_revisiones" id="no_revisiones" min="0"
-                                        value="{{ old('no_revisiones', '') }}" required>
-                                    @if ($errors->has('no_revisiones'))
+                                    <label class="required" for="revisiones"><i class="fas fa-clipboard-check iconos-crear"></i>Revisiones</label>
+                                    <input class="form-control {{ $errors->has('revisiones') ? 'is-invalid' : '' }}"
+                                        type="number" name="revisiones" id="revisiones" min="0"
+                                        value="{{ old('revisiones', '') }}" required>
+                                    @if ($errors->has('revisiones'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('no_revisiones') }}
+                                            {{ $errors->first('revisiones') }}
                                         </div>
                                     @endif
                                     <span class="help-block"></span>

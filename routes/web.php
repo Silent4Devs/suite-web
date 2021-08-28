@@ -124,7 +124,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Route::post('users/get', 'UsersController@getUsers')->name('users.get');
     Route::resource('users', 'UsersController');
 
-    // Empleados    
+    // Empleados
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
     Route::resource('empleados', 'EmpleadoController');
 
@@ -220,6 +220,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Objetivosseguridads
     Route::delete('objetivosseguridads/destroy', 'ObjetivosseguridadController@massDestroy')->name('objetivosseguridads.massDestroy');
     Route::resource('objetivosseguridads', 'ObjetivosseguridadController');
+    Route::get('objetivosseguridadsInsertar', 'ObjetivosseguridadController@ObjetivoInsert')->name('objetivos-seguridadsInsertar');
+    Route::get('evaluaciones-objetivosInsertar', 'ObjetivosseguridadController@evaluacionesInsert')->name('evaluacionesobjetivosInsert');
+
 
     Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
 

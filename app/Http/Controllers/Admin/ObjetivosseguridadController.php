@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Objetivosseguridad;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\VariablesObjetivosseguridad;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\StoreObjetivosseguridadRequest;
 use App\Http\Requests\UpdateObjetivosseguridadRequest;
@@ -72,10 +73,10 @@ class ObjetivosseguridadController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
-        $objetivosseguridad = Objetivosseguridad::create($request->all());
 
-        return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
+        $objetivosseguridad = Objetivosseguridad::create($request->all());
+        //return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with("success", 'Guardado con éxito');
     }
 
     public function edit(Objetivosseguridad $objetivosseguridad)
@@ -117,5 +118,45 @@ class ObjetivosseguridadController extends Controller
         Objetivosseguridad::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function ObjetivoInsert(Request $request)
+    {
+        $id = $request->all();
+        $objetivos = Objetivosseguridad::find($id['id']);
+
+        $formula_array = explode("!", $objetivos->formula);
+
+        $finish_array = array();
+
+        foreach ($formula_array as $result) {
+            if (strstr($result, '$')) {
+                array_push($finish_array, $result);
+            }
+        };
+
+        $remplazo_formula = str_replace("!", "", $objetivos->formula);
+
+        if ($remplazo_formula) {
+            $up = $objetivos
+                ->update(['formula' => $remplazo_formula]);
+        }
+
+        foreach ($finish_array as $key => $value) {
+
+            VariablesObjetivosseguridad::create(['id_objetivo' => $objetivos->id, 'variable' => str_replace(".", "", $value)]);
+        }
+
+        return redirect()->action('Admin\ObjetivosseguridadController@evaluacionesInsert', ['id' => $objetivos->id]);
+    }
+
+    public function evaluacionesInsert(Request $request)
+    {
+        $id = $request->all();
+
+        $objetivos = Objetivosseguridad::find($id['id']);
+
+        return view('admin.objetivosseguridads.evaluacion')
+            ->with('objetivos', $objetivos);
     }
 }

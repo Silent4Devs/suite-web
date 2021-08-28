@@ -15,6 +15,7 @@ class AddColumnsToObjetivosseguridadsTable extends Migration
     {
         Schema::table('objetivosseguridads', function (Blueprint $table) {
             $table->unsignedBigInteger('responsable_id')->nullable();
+            $table->dropColumn('anio');
             $table->string('formula')->nullable();
             $table->string('verde')->nullable();
             $table->string('amarillo')->nullable();
@@ -23,6 +24,7 @@ class AddColumnsToObjetivosseguridadsTable extends Migration
             $table->string('meta')->nullable();
             $table->string('frecuencia')->nullable();
             $table->string('revisiones')->nullable();
+            $table->integer('ano')->nullable();
         });
     }
 

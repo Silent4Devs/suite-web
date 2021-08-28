@@ -14,7 +14,7 @@ class AddFkToObjetivosseguridadsTable extends Migration
     public function up()
     {
         Schema::table('objetivosseguridads', function (Blueprint $table) {
-            $table->foreign('id_empleado')->references('id')->on('matriz_requisito_legales');
+            $table->foreign('responsable_id')->references('id')->on('empleados');
         });
     }
 
