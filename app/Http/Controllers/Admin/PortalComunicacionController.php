@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\organizacion;
+
+
 
 class PortalComunicacionController extends Controller
 {
@@ -81,5 +84,13 @@ class PortalComunicacionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function reportes()
+    {
+        $organizacions = Organizacion::first();
+
+        return view('admin.portal-comunicacion.reportes', compact('organizacions'));
     }
 }

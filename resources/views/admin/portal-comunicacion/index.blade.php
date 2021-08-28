@@ -107,24 +107,189 @@
             padding-top: 0 !important;
         }
 
-        .btn-silent {
-            width: 100%;
-            border: 2px solid #00abb2;
-            background-color: transparent;
-            padding: 7px 10px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            font-weight: bold;
+        .caja_btn_silent{
+            position: relative;
         }
-
-        .btn-silent:hover {
+        .btn-silent{
+            display: block;
+            width: 100%;
+            position: relative;
+            color: #444 !important;
+            text-decoration: underline;
+            padding: 10px 0;
+            cursor: pointer;
+        }
+        .btn-silent:before{
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: 5px;
             background-color: #00abb2;
-            color: white;
-
+            transition: 0.3s;
+            z-index: 1;
+        }
+        .btn-silent:after{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 5px;
+            background-color: #e6e6e6;
+            transition: 0.4s;
+            left: 0;
+            z-index: 0;
+        }
+        .btn-silent:hover:before{
+            width: 100%;
+        }
+        .btn-silent i{
+            font-size: 15pt;
+        }
+        .btn-silent span{
+            position: absolute;
+            left: 50px;
+        } 
+        .btn-silent:hover{
+            color: #00abb2 !important;
         }
 
     </style>
-    <div class="card" style="margin-top: -30px;">
+    <style type="text/css">
+        body{
+            background-color: #fff !important;
+        }
+        .titulo-seccion{
+            font-weight: bolder;
+            font-size: 15pt;
+            margin-bottom: 0px;
+            color: #00abb2;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 7px;
+            padding-left: 20px;
+        }
+        .titulo-seccion i{
+            margin-left: -18px;
+            font-size: 17pt;
+        }
+
+
+        .carousel-item{
+            text-align: center;
+            background-color: #bbb;
+        }
+        .img_carrusel{
+            height: 300px !important;
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: all;
+        }
+
+        
+        .comunicado{
+            display: flex;
+            height: 200px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .comunicado{
+            margin-top: 10px;
+        }
+        .img_comunicado{
+            width: 33.3%;
+            height: 200px;
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: all;
+        }
+        .text_comunicado{
+            width: calc(100% - 200px);
+            padding: 0 20px;
+
+        }
+
+
+        .doc_publicado{
+            display: flex;
+            align-items: center;
+        }
+        .doc_publicado{
+            margin-top: 40px;
+        }
+        .icon_doc{
+            display: flex;
+            align-items: center;
+            width: 10%;
+        }
+        .icon_doc i{
+            font-size: 50pt;
+        }
+        .text_doc{
+            width: 70%;
+        }
+        .opciones_doc{
+            width: 20%;
+        }
+        .opciones_doc img{
+            width: 50px;
+        }
+
+
+
+        .cuadro_empelados{
+            position: sticky;
+            top: 56px;
+            height: 600px ;
+            overflow-y: auto;
+        }
+
+        @media(max-with: 1000px){
+            .cuadro_empelados{
+                position: relative !important;
+                height: auto !important;
+            }
+        }
+
+
+        .caja_nuevo{
+            background-color: #f3f3f3;
+            border-left: 2px solid #00abb2;
+            margin-top: 10px;
+            padding: 20px;
+        }
+
+        .nuevo{
+            display: flex;
+            align-items: center;
+        }
+        .nombre_nuevo{
+            font-size: 12pt;
+        }
+        .img_nuevo{
+            width: 30%;
+        }
+        .img_nuevo img{
+            width: 90%;
+        }
+        .datos_nuevo{
+            width: 70%;
+        }
+        .datos_nuevo h6{
+            margin: 0;
+            font-weight: bold;
+        }
+        .datos_nuevo p{
+            margin: 0;
+            margin-bottom: 4px;
+        }
+    </style>
+
+
+    <div class="card" style="box-shadow: none; background-color: transparent;">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
             style="margin-top:0px !important; ">
             <h3 class="mb-2 text-center text-white"
@@ -133,11 +298,12 @@
         </div>
 
         @include('partials.flashMessages')
+
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12 col-12 col-lg-3">
-                    <div class="p-3 text-center card" id="clima" style="position:relative; background:aliceblue;"></div>
-                    <div class="p-3 card" style="background:aliceblue;">
+                    <div class="p-2" id="clima" style="border-left: solid 2px #00abb2; background-color: #e6e6e6;"></div>
+                    <div class="p-3" style=" margin-top: 20px; border-left: solid 2px #00abb2;  background-color: #f3f3f3;">
                         <div class="calendar calendar-first" id="calendar_first">
                             <div class="calendar_header">
                                 <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
@@ -149,7 +315,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-12 col-lg-7">
+                <div class="col-sm-12 col-12 col-lg-6">
                     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -158,24 +324,28 @@
                         </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="{{ asset('images/casco-romano-o-griego-spartan-helmet-vector-enojado-del-gráfico-de-la-historieta-cara-guerrero-105830864.jpg') }}"
-                                    class="d-block w-100" alt="...">
+                                {{-- <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Vaporwave-4K-Wallpapers.jpg"
+                                    class="img_carrusel" alt="..."> --}}
+
+                                <div class="img_carrusel" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Vaporwave-4K-Wallpapers.jpg');"></div>
                                 <div class="carousel-caption d-none d-md-block">
                                     <h5>First slide label</h5>
                                     <p>Some representative placeholder content for the first slide.</p>
                                 </div>
                             </div>
                             <div class="carousel-item">
-                                <img src="{{ asset('images/casco-romano-o-griego-spartan-helmet-vector-enojado-del-gráfico-de-la-historieta-cara-guerrero-105830864.jpg') }}"
-                                    class="d-block w-100" alt="...">
+                                {{-- <img src="https://i.pinimg.com/originals/02/7e/e9/027ee9a9bef28aeba689612666b1c22c.jpg" class="img_carrusel" alt="..."> --}}
+                                <div class="img_carrusel" style="background-image: url('https://i.pinimg.com/originals/02/7e/e9/027ee9a9bef28aeba689612666b1c22c.jpg');"></div>
                                 <div class="carousel-caption d-none d-md-block">
                                     <h5>Second slide label</h5>
                                     <p>Some representative placeholder content for the second slide.</p>
                                 </div>
                             </div>
                             <div class="carousel-item">
-                                <img src="{{ asset('images/casco-romano-o-griego-spartan-helmet-vector-enojado-del-gráfico-de-la-historieta-cara-guerrero-105830864.jpg') }}"
-                                    class="d-block w-100" alt="...">
+                                {{-- <img src="https://wallpaperaccess.com/full/636909.jpg"
+                                    class="img_carrusel" alt="..."> --}}
+                                <div class="img_carrusel" style="background-image: url('https://wallpaperaccess.com/full/636909.jpg"
+                                    class="img_carrusel');"></div>
                                 <div class="carousel-caption d-none d-md-block">
                                     <h5>Third slide label</h5>
                                     <p>Some representative placeholder content for the third slide.</p>
@@ -192,14 +362,143 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-sm-12 col-12 col-lg-2">
-                    <button class="btn-silent"><i class="mr-2 fas fa-gopuram"></i> Organización</button>
-                    <button class="btn-silent"><i class="mr-2 fas fa-sitemap"></i> Organigrama</button>
-                    <button class="btn-silent"><i class="mr-2 fas fa-folder"></i> Documentos</button>
-                    <button class="btn-silent"><i class="mr-2 fas fa-file"></i> Política SGSI</button>
-                    <button class="btn-silent"><i class="mr-2 fas fa-users"></i> Comité del SGSI</button>
-                    <button class="btn-silent"><i class="mr-2 fas fa-plus"></i> Beneficios</button>
-                    <button class="btn-silent"><i class="mr-2 fas fa-hand-paper"></i> Reportar</button>
+                <div class="col-lg-3 caja_btn_silent">
+                    <a class="btn-silent" href="{{ asset('admin/organizacions') }}"><i class="mr-2 fas fa-gopuram"></i> <span>Organización</span></a>
+                    <a class="btn-silent" href="{{ asset('admin/organigrama') }}"><i class="mr-2 fas fa-sitemap"></i> <span>Organigrama</span></a>
+                    <a class="btn-silent" href="{{ asset('admin/documentos/publicados') }}"><i class="mr-2 fas fa-folder"></i> <span>Documentos</span></a>
+                    <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}"><i class="mr-2 fas fa-file"></i> <span>Política SGSI</span></a>
+                    <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}"><i class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
+                    <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}"><i class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
+                    <a class="btn-silent" href="{{ asset('admin') }}"><i class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
+                </div>
+
+
+
+
+                <div class="col-lg-9 mt-5">
+                    <h2 class="titulo-seccion"><i class="far fa-newspaper mr-3"></i>Comunicados</h2>
+                    <div class="comunicado" style="position:relative;"> 
+                        <div class="img_comunicado" style="background-image: url('https://directivosygerentes.es/wp-content/uploads/2018/05/oficina-pyme.jpg');"></div>
+                        <div class="text_comunicado">
+                            <h4 class="w-100">Comenzamos auditorías</h4>
+                            <p class="w-100">
+                                Proveer servicios especializados de atención y respuesta a amenazas e incidentes de seguridad, a través de mejora continua de nuestros procesos y alianzas con otras organizaciones para contribuir a un entorno digital de nuestros clientes.
+                            </p>
+                            <a href="">Leer más</a>
+                        </div>
+                    </div>
+                    <div class="comunicado" style="position:relative;"> 
+                        <div class="img_comunicado" style="background-image: url('https://directivosygerentes.es/wp-content/uploads/2018/05/oficina-pyme.jpg');"></div>
+                        <div class="text_comunicado">
+                            <h4 class="w-100">Comenzamos auditorías</h4>
+                            <p class="w-100">
+                                Proveer servicios especializados de atención y respuesta a amenazas e incidentes de seguridad, a través de mejora continua de nuestros procesos y alianzas con otras organizaciones para contribuir a un entorno digital de nuestros clientes.
+                            </p>
+                            <a href="">Leer más</a>
+                        </div>
+                    </div>
+
+
+                    <h2 class="titulo-seccion mt-5"><i class="far fa-file-alt mr-3"></i>Documentos publicados </h2>
+                    <div class="doc_publicado">
+                        <div class="icon_doc">
+                            <i class="fas fa-file"></i>
+                        </div>
+                        <div class="text_doc">
+                            <h4>M-SGHT-EDRT-234542</h4>
+                            <p>
+                                Se ha publicado el docuemnto M-SFGS-DRT Manual de SGSI el 10/10/21.
+                            </p>
+                        </div>
+                        <div class="opciones_doc">
+                            <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg"><br/>
+                            <a href="">Ver documento</a>
+                        </div>
+                    </div>
+                    <div class="doc_publicado">
+                        <div class="icon_doc">
+                            <i class="fas fa-file"></i>
+                        </div>
+                        <div class="text_doc">
+                            <h4>M-SGHT-EDRT-234542</h4>
+                            <p>
+                                Se ha publicado el docuemnto M-SFGS-DRT Manual de SGSI el 10/10/21.
+                            </p>
+                        </div>
+                        <div class="opciones_doc">
+                            <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg"><br/>
+                            <a href="">Ver documento</a>
+                        </div>
+                    </div>
+                    <div class="doc_publicado">
+                        <div class="icon_doc">
+                            <i class="fas fa-file"></i>
+                        </div>
+                        <div class="text_doc">
+                            <h4>M-SGHT-EDRT-234542</h4>
+                            <p>
+                                Se ha publicado el docuemnto M-SFGS-DRT Manual de SGSI el 10/10/21.
+                            </p>
+                        </div>
+                        <div class="opciones_doc">
+                            <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg"><br/>
+                            <a href="">Ver documento</a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-3 mt-5">
+                    <div class="cuadro_empelados">
+                        <h2 class="titulo-seccion"><i class="far fa-user mr-3"></i>Nuevos ingresos</h2>
+
+                        <div class="caja_nuevo">
+                            <h5 class="nombre_nuevo">Nombre del empelado</h5>
+                            <div class="nuevo">
+                                <div class="img_nuevo">
+                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
+                                </div>
+                                <div class="datos_nuevo">
+                                    <h6>Dato</h6>
+                                    <p>Datos de empelado</p>
+                                    <h6>Dato2</h6>
+                                    <p>Datos de empelado</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="caja_nuevo">
+                            <h5 class="nombre_nuevo">Nombre del empelado</h5>
+                            <div class="nuevo">
+                                <div class="img_nuevo">
+                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
+                                </div>
+                                <div class="datos_nuevo">
+                                    <h6>Dato</h6>
+                                    <p>Datos de empelado</p>
+                                    <h6>Dato2</h6>
+                                    <p>Datos de empelado</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="titulo-seccion mt-5"><i class="fas fa-birthday-cake mr-3"></i>Cumpleaños</h2>
+                        <div class="caja_nuevo">
+                            <h5 class="nombre_nuevo">Nombre del empelado</h5>
+                            <div class="nuevo">
+                                <div class="img_nuevo">
+                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
+                                </div>
+                                <div class="datos_nuevo">
+                                    <h6>Dato</h6>
+                                    <p>Datos de empelado</p>
+                                    <h6>Dato2</h6>
+                                    <p>Datos de empelado</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -225,26 +524,21 @@
             let climaContenedor = document.getElementById('clima');
             const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${response.weather[0]["icon"]}.svg`;
             climaContenedor.innerHTML = `
-            <h2 class="m-3"><i class="fas fa-globe-americas" style="font-size: 24px;"></i> ${response.name}</h2>
-            <h4 style="display: flex;justify-content: center;">
-                <strong style="font-size: 35px;">${Math.ceil(response.main.temp)}</strong>
-                <span style="font-size:12px">°C</span>
-            </h4>
-            <span style="text-transform:capitalize;">${response.weather[0]["description"]}</span>
-            <hr>
-            <img src="${icon}" style="position: absolute;top: -40px;right: -20px;width: 100px;height: 100px;">
-            <div class="row">
-                <div class="col-12">
-                    <p class="m-0">Sensación Real</p>
-                    <strong style="display: flex;justify-content: center;">${Math.ceil(response.main.feels_like)} <span style="font-size:10px">°C</span></strong>
+            <p class="" style="text-align:left; margin:0;">
+                <i class="fas fa-globe-americas" style="font-size:;"></i> 
+                ${response.name}
+            </p>
+            <div style="text-align:left; margin:0 ; display:inline-block;">
+                <div style="font-size:7pt; width:100px; text-align:left; float:left;">
+                    <img src="${icon}" style="width:40px; margin-top:-13px;">
+                    <strong style="font-size: 27px;">${Math.ceil(response.main.temp)}</strong>
+                    <span style="font-size:12px">°C</span>
                 </div>
-                <div class="col-6">
-                    <p class="m-0">Temp. Min</p>
-                    <strong style="display: flex;justify-content: center;">${Math.ceil(response.main.temp_min)} <span style="font-size:10px">°C</span></strong>
-                </div>
-                <div class="col-6">
-                    <p class="m-0">Temp. Máx</p>
-                    <strong style="display: flex;justify-content: center;">${Math.ceil(response.main.temp_max)} <span style="font-size:10px">°C</span></strong>
+                <div style="font-size:7pt; width:90px; text-align:left; margin-top: 5px; float:left; text-transform: capitalize;">
+                    <strong>${response.weather[0]["description"]}</strong> <br>
+                    ${Math.ceil(response.main.temp_max)}<sup>°</sup>/
+                    ${Math.ceil(response.main.temp_min)}<sup>°</sup>
+                    Temp.${Math.ceil(response.main.feels_like)}<sup>°C</sup>
                 </div>
             </div>
             `;
