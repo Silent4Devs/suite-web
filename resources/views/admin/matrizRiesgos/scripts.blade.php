@@ -25,6 +25,16 @@
         });
     </script>
 
+    <script>
+        $(document).ready(function() {
+            $(".js-example-basic-multiple").select2(
+                'theme': 'bootstrap4',
+                allowClear: true,
+                minimumResultsForSearch: -1,
+            );
+        });
+    </script>
+
     <script type=text/javascript>
         $('#probabilidad').change(function() {
             var impactoID = document.getElementById("impacto").value;
@@ -301,6 +311,25 @@
                     alert("try again");
                     break;
             }
+        });
+    </script>
+
+    <script type="text/javascript">
+        Livewire.on('planStore', () => {
+            $('#planAccionModal').modal('hide');
+            $('.modal-backdrop').hide();
+            toastr.success('Plan de Acción creado con éxito');
+        });
+        window.initSelect2 = () => {
+            $('.select2').select2({
+                'theme': 'bootstrap4'
+            });
+        }
+
+        initSelect2();
+
+        Livewire.on('select2', () => {
+            initSelect2();
         });
     </script>
 @endsection

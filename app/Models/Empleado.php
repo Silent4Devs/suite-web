@@ -101,13 +101,13 @@ class Empleado extends Model
 
     public function getAvatarAttribute()
     {
-        if ($this->foto == null) {
+        if ($this->foto == null || $this->foto == "0") {
             if ($this->genero == 'H') {
                 return "man.png";
             } elseif ($this->genero == 'M') {
                 return "woman.png";
             } else {
-                return "usuario_no_cargado";
+                return "usuario_no_cargado.png";
             }
         }
         return $this->foto;

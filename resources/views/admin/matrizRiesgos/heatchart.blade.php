@@ -122,6 +122,9 @@
         .mapaCalor {
             width: 60%;
             float: right;
+            display: flex;
+            justify-content: center;
+
         }
 
         .mapaCalor table {
