@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\organizacion;
+use App\Models\Documento;
 
 
 
@@ -17,7 +18,11 @@ class PortalComunicacionController extends Controller
      */
     public function index()
     {
-        return view('admin.portal-comunicacion.index');
+
+         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
+
+
+        return view('admin.portal-comunicacion.index', compact('documentos_publicados'));
     }
 
     /**

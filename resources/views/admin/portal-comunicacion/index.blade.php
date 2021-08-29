@@ -216,6 +216,7 @@
         .doc_publicado{
             display: flex;
             align-items: center;
+            position: relative;
         }
         .doc_publicado{
             margin-top: 40px;
@@ -227,20 +228,30 @@
         }
         .icon_doc i{
             font-size: 50pt;
+            color: #B30909;
+            transition: 0.1s;
+        }
+        .icon_doc i:hover{
+            transform: scale(1.1);
+            filter: brightness(1.5);
         }
         .text_doc{
             width: 70%;
         }
+        .text_doc h5{
+            font-weight: bold;
+        }
         .opciones_doc{
             width: 20%;
         }
-        .opciones_doc img{
-            width: 50px;
+        .img_empleado{
+            height: 40px;
+            clip-path: circle(20px at 50% 50%);
         }
 
 
 
-        .cuadro_empelados{
+        .cuadro_empleados{
             position: sticky;
             top: 56px;
             height: 600px ;
@@ -248,7 +259,7 @@
         }
 
         @media(max-with: 1000px){
-            .cuadro_empelados{
+            .cuadro_empleados{
                 position: relative !important;
                 height: auto !important;
             }
@@ -256,27 +267,31 @@
 
 
         .caja_nuevo{
-            background-color: #f3f3f3;
-            border-left: 2px solid #00abb2;
-            margin-top: 10px;
-            padding: 20px;
         }
 
         .nuevo{
-            display: flex;
-            align-items: center;
+            text-align: center;
+            background-color: #f3f3f3;
+            border-left: 2px solid #00abb2;
+            margin-top: 10px;
+            padding: 10px;
         }
         .nombre_nuevo{
             font-size: 12pt;
+            text-align: center;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: bold;
         }
         .img_nuevo{
-            width: 30%;
+            width: 100%;
+            text-align: center;
         }
         .img_nuevo img{
-            width: 90%;
+            width: 30%;
         }
         .datos_nuevo{
-            width: 70%;
+            width: 100%;
         }
         .datos_nuevo h6{
             margin: 0;
@@ -285,6 +300,8 @@
         .datos_nuevo p{
             margin: 0;
             margin-bottom: 4px;
+            line-height: 20px;
+            margin-top: -5px;
         }
     </style>
 
@@ -369,7 +386,7 @@
                     <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}"><i class="mr-2 fas fa-file"></i> <span>Política SGSI</span></a>
                     <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}"><i class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
                     <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}"><i class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
-                    <a class="btn-silent" href="{{ asset('admin') }}"><i class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
+                    <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}"><i class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
                 </div>
 
 
@@ -400,109 +417,169 @@
 
 
                     <h2 class="titulo-seccion mt-5"><i class="far fa-file-alt mr-3"></i>Documentos publicados </h2>
-                    <div class="doc_publicado">
-                        <div class="icon_doc">
-                            <i class="fas fa-file"></i>
+                   
+                    {{-- @foreach ($documentos_publicados as $documento)
+                        <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
+                            class="list-group-item cards text-dark">
+                            <i class="mr-1 fas fa-file-pdf text-danger"></i>
+                            {{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
+                            <div>
+                                <span class="badge badge-dark"
+                                    style="text-transform: capitalize">{{ $documento->tipo }}</span>
+                                @if ($documento->macroproceso_id)
+                                    <span class="badge badge-primary"
+                                        style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
+                                @endif
+                                @if ($documento->proceso_id)
+                                    <span class="badge badge-success"
+                                        style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
+                                @endif
+                            </div>
+                        </a>
+                    @endforeach --}}
+
+                    @foreach ($documentos_publicados as $documento)
+                        <div class="doc_publicado">
+                            <div class="icon_doc">
+                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}" title="Ver documento">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                            </div>
+                            <div class="text_doc">
+                                <h5>{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}</h5>
+                                <p>
+                                    Se ha publicado el documento {{$documento->codigo}} {{$documento->nombre}} el 10/10/21.
+                                </p>
+                                <p>
+                                    <span class="badge badge-dark"
+                                        style="text-transform: capitalize">{{ $documento->tipo }}</span>
+                                    @if ($documento->macroproceso_id)
+                                        <span class="badge badge-primary"
+                                            style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
+                                    @endif
+                                    @if ($documento->proceso_id)
+                                        <span class="badge badge-success"
+                                            style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
+                                    @endif
+                                </p>
+                            </div>
+                            <div class="opciones_doc">
+                                <h6><strong>Responsable:</strong></h6>
+                                <img src="{{asset('storage/empleados/imagenes/'.$documento->responsable->foto)}}" class="img_empleado" title="{{$documento->responsable->name}}"><br/>
+                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver documento</a>
+                            </div>
                         </div>
-                        <div class="text_doc">
-                            <h4>M-SGHT-EDRT-234542</h4>
-                            <p>
-                                Se ha publicado el docuemnto M-SFGS-DRT Manual de SGSI el 10/10/21.
-                            </p>
-                        </div>
-                        <div class="opciones_doc">
-                            <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg"><br/>
-                            <a href="">Ver documento</a>
-                        </div>
-                    </div>
-                    <div class="doc_publicado">
-                        <div class="icon_doc">
-                            <i class="fas fa-file"></i>
-                        </div>
-                        <div class="text_doc">
-                            <h4>M-SGHT-EDRT-234542</h4>
-                            <p>
-                                Se ha publicado el docuemnto M-SFGS-DRT Manual de SGSI el 10/10/21.
-                            </p>
-                        </div>
-                        <div class="opciones_doc">
-                            <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg"><br/>
-                            <a href="">Ver documento</a>
-                        </div>
-                    </div>
-                    <div class="doc_publicado">
-                        <div class="icon_doc">
-                            <i class="fas fa-file"></i>
-                        </div>
-                        <div class="text_doc">
-                            <h4>M-SGHT-EDRT-234542</h4>
-                            <p>
-                                Se ha publicado el docuemnto M-SFGS-DRT Manual de SGSI el 10/10/21.
-                            </p>
-                        </div>
-                        <div class="opciones_doc">
-                            <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg"><br/>
-                            <a href="">Ver documento</a>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
 
 
                 <div class="col-lg-3 mt-5">
-                    <div class="cuadro_empelados">
+                    <div class="cuadro_empleados">
                         <h2 class="titulo-seccion"><i class="far fa-user mr-3"></i>Nuevos ingresos</h2>
 
                         <div class="caja_nuevo">
-                            <h5 class="nombre_nuevo">Nombre del empelado</h5>
+
                             <div class="nuevo">
                                 <div class="img_nuevo">
                                     <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
                                 </div>
+                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
                                 <div class="datos_nuevo">
-                                    <h6>Dato</h6>
-                                    <p>Datos de empelado</p>
-                                    <h6>Dato2</h6>
-                                    <p>Datos de empelado</p>
+                                    <p>Desarrollador<br>Innovación y desarrollo</p>
+                                    <h6 class="mt-3">Fecha de ingreso</h6>
+                                    <span>10/03/2021</span>
                                 </div>
                             </div>
+
+                             <div class="nuevo">
+                                <div class="img_nuevo">
+                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
+                                </div>
+                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
+                                <div class="datos_nuevo">
+                                    <p>Desarrollador<br>Innovación y desarrollo</p>
+                                    <h6 class="mt-3">Fecha de ingreso</h6>
+                                    <span>10/03/2021</span>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="caja_nuevo">
-                            <h5 class="nombre_nuevo">Nombre del empelado</h5>
-                            <div class="nuevo">
-                                <div class="img_nuevo">
-                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
-                                </div>
-                                <div class="datos_nuevo">
-                                    <h6>Dato</h6>
-                                    <p>Datos de empelado</p>
-                                    <h6>Dato2</h6>
-                                    <p>Datos de empelado</p>
-                                </div>
-                            </div>
-                        </div>
+                        
 
                         <h2 class="titulo-seccion mt-5"><i class="fas fa-birthday-cake mr-3"></i>Cumpleaños</h2>
                         <div class="caja_nuevo">
-                            <h5 class="nombre_nuevo">Nombre del empelado</h5>
                             <div class="nuevo">
                                 <div class="img_nuevo">
                                     <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
                                 </div>
+                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
                                 <div class="datos_nuevo">
-                                    <h6>Dato</h6>
-                                    <p>Datos de empelado</p>
-                                    <h6>Dato2</h6>
-                                    <p>Datos de empelado</p>
+                                    <p>Desarrollador<br>Innovación y desarrollo</p>
+                                    <h6 class="mt-3">Fecha de cumpleaños</h6>
+                                    <span>10 de abril</span>
+                                </div>
+                            </div>
+
+                             <div class="nuevo">
+                                <div class="img_nuevo">
+                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
+                                </div>
+                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
+                                <div class="datos_nuevo">
+                                    <p>Desarrollador<br>Innovación y desarrollo</p>
+                                    <h6 class="mt-3">Fecha de cumpleaños</h6>
+                                    <span>10 de abril</span>
                                 </div>
                             </div>
                         </div>
+
+
+
+                        <h2 class="titulo-seccion mt-5"><i class="fas fa-birthday-cake mr-3"></i>Aniversarios</h2>
+                        <div class="caja_nuevo">
+                            <div class="nuevo">
+                                <div class="img_nuevo">
+                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
+                                </div>
+                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
+                                <div class="datos_nuevo">
+                                    <p>Desarrollador<br>Innovación y desarrollo</p>
+                                    <h6 class="mt-3">Antigüedad</h6>
+                                    <span>5 años</span>
+                                </div>
+                            </div>
+
+                             <div class="nuevo">
+                                <div class="img_nuevo">
+                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
+                                </div>
+                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
+                                <div class="datos_nuevo">
+                                    <p>Desarrollador<br>Innovación y desarrollo</p>
+                                    <h6 class="mt-3">Antigüedad</h6>
+                                    <span>5 años</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
+
+    
+
+
+
 
     {{-- @endcan --}}
 @endsection

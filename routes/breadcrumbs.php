@@ -83,8 +83,6 @@ Breadcrumbs::for('admin.alcance-sgsis.create', function ($trail) {
  	// $trail->push('', route('admin..index'));
 // });
 
-
-
 Breadcrumbs::for('admin.comiteseguridads.index', function ($trail) {
  	$trail->parent('admin.iso27001.index');
     $trail->push('Liderazgo',route('admin.iso27001.index').'#liderazgo');
@@ -439,6 +437,18 @@ Breadcrumbs::for('admin.registromejoras.create', function ($trail) {
 
 
 
+
+
+Breadcrumbs::for('admin.portal-comunicacion.reportes', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Reportes');
+});
+
+
+Breadcrumbs::for('admin.portal-comunicacion.sedes-organizacion', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Sedes');
+});
 
 
 
