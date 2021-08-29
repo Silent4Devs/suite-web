@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyCompetenciumRequest;
-use App\Http\Requests\StoreCompetenciumRequest;
-use App\Http\Requests\UpdateCompetenciumRequest;
-use App\Models\Competencium;
+use Gate;
+use App\Models\Area;
 use App\Models\Team;
 use App\Models\User;
-use Gate;
+use App\Models\Empleado;
+use App\Models\Competencium;
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\StoreCompetenciumRequest;
+use App\Http\Requests\UpdateCompetenciumRequest;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Requests\MassDestroyCompetenciumRequest;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class CompetenciasController extends Controller
 {
@@ -174,5 +176,16 @@ class CompetenciasController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function buscarcv(Request $request)
+    {
+        // dd($request->all());
+
+        $areas= Area::get();
+
+
+        return view('admin.competencia.buscarCV',compact('areas'));
+
     }
 }

@@ -61,4 +61,9 @@ class Competencium extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    // public function empleado()
+    // {
+    //     return $this->belongsTo(Empleado::class, 'id_empleado', 'id')->with('area');
+    // }
 }
