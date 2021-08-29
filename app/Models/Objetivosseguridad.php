@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Team|null $team
  * @property Empleado|null $empleado
  * @property Collection|VariablesObjetivosseguridad[] $variables_objetivosseguridads
+ * @property Collection|EvaluacionObjetivo[] $evaluacion_objetivos
  *
  * @package App\Models
  */
@@ -74,18 +75,23 @@ class Objetivosseguridad extends Model
         'ano'
     ];
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class);
-    }
+	public function team()
+	{
+		return $this->belongsTo(Team::class);
+	}
 
-    public function empleado()
-    {
-        return $this->belongsTo(Empleado::class, 'responsable_id');
-    }
+	public function empleado()
+	{
+		return $this->belongsTo(Empleado::class, 'responsable_id');
+	}
 
-    public function variables_objetivosseguridads()
-    {
-        return $this->hasMany(VariablesObjetivosseguridad::class, 'id_objetivo');
-    }
+	public function variables_objetivosseguridads()
+	{
+		return $this->hasMany(VariablesObjetivosseguridad::class, 'id_objetivo');
+	}
+
+	public function evaluacion_objetivos()
+	{
+		return $this->hasMany(EvaluacionObjetivo::class, 'id_objetivo');
+	}
 }
