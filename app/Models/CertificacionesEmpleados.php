@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ExperienciaEmpleados extends Model
+class CertificacionesEmpleados extends Model
 {
     use SoftDeletes;
-	protected $table = 'experiencia_empleados';
+	protected $table = 'certificaciones_empleados';
+
 
     protected $dates = [
+        'vigencia',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -21,37 +23,29 @@ class ExperienciaEmpleados extends Model
 
     protected $casts = [
         'empleado_id' => 'int',
-        'empresa' => 'string',
-        'puesto' => 'string',
-        'descripcion' => 'string',
+        'nombre' => 'string',
+        'estatus' => 'string',
 	];
 
     protected $fillable = [
 		'empleado_id',
-        'empresa',
-        'puesto',
-        'inicio_mes',
-        'fin_mes',
-        'descripcion',
+        'nombre',
+        'estatus',
+        'vigencia',
 
 	];
 
-    public function empleado_experiencia(){
+    public function empleado_certificaciones(){
 
         return $this->belongsTo(Empleado::class,'empleado_id');
 
+
     }
 
-    public function getInicioMesAttribute($value)
+    public function getVigenciaAttribute($value)
     {
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
-
-    public function getFinMesAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
-
 
 
 }

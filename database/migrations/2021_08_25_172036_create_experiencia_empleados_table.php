@@ -18,10 +18,10 @@ class CreateExperienciaEmpleadosTable extends Migration
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->string('empresa')->nullable();
             $table->string('puesto')->nullable();
-            $table->string('inicio_mes')->nullable();
-            $table->year('inicio_año')->nullable();
-            $table->year('fin_año')->nullable();
-            $table->string('fin_mes')->nullable();
+            $table->date('inicio_mes')->nullable();
+            $table->date('inicio_año')->nullable();
+            $table->date('fin_año')->nullable();
+            $table->date('fin_mes')->nullable();
             $table->string('duracion')->nullable();
             $table->longText('descripcion')->nullable();
             $table->timestamps();
