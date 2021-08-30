@@ -88,7 +88,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('desk/{sugerencias}/sugerencias-edit', 'DeskController@editSugerencias')->name('desk.sugerencias-edit');
     Route::post('desk/{sugerencias}/sugerencias-update', 'DeskController@updateSugerencias')->name('desk.sugerencias-update');
 
-    Route::resource('desk-seguridad-actividades', 'ActividadesIncidentesController');
+    // Actividades DESK - Plan Accion
+    Route::get('desk-seguridad-actividades/{seguridad_id}', 'ActividadesIncidentesController@index')->name('desk-seguridad-actividades.index');
+    Route::resource('desk-seguridad-actividades', 'ActividadesIncidentesController')->except(['index']);
+
+    Route::get('desk-riesgos-actividades/{riesgo_id}', 'ActividadesRiesgosController@index')->name('desk-riesgos-actividades.index');
+    Route::resource('desk-riesgos-actividades', 'ActividadesRiesgosController')->except(['index']);
+
+    Route::get('desk-quejas-actividades/{queja_id}', 'ActividadesQuejasController@index')->name('desk-quejas-actividades.index');
+    Route::resource('desk-quejas-actividades', 'ActividadesQuejasController')->except(['index']);
+
+    Route::get('desk-denuncias-actividades/{denuncia_id}', 'ActividadesDenunciasController@index')->name('desk-denuncias-actividades.index');
+    Route::resource('desk-denuncias-actividades', 'ActividadesDenunciasController')->except(['index']);
+
+    Route::get('desk-mejoras-actividades/{mejora_id}', 'ActividadesMejorasController@index')->name('desk-mejoras-actividades.index');
+    Route::resource('desk-mejoras-actividades', 'ActividadesMejorasController')->except(['index']);
+
+    Route::get('desk-sugerencias-actividades/{sugerencia_id}', 'ActividadesSugerenciasController@index')->name('desk-sugerencias-actividades.index');
+    Route::resource('desk-sugerencias-actividades', 'ActividadesSugerenciasController')->except(['index']);
 
     Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
     Route::post('planTrabajoBase/save/current', 'PlanTrabajoBaseController@saveCurrentProyect')->name('planTrabajoBase.saveCurrentProyect');

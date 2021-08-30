@@ -3,45 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ActividadIncidente;
-use App\Models\IncidentesSeguridad;
+use App\Models\ActividadMejora;
+use App\Models\Mejoras;
 use App\Models\PlanImplementacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ActividadesIncidentesController extends Controller
+class ActividadesMejorasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request, $seguridad_id)
+    public function index(Request $request, $mejora_id)
     {
-        // $incidente = IncidentesSeguridad::find(intval($seguridad_id));
-
         if ($request->ajax()) {
-            $actividades = ActividadIncidente::with('responsables')->where('seguridad_id', $seguridad_id)->get();
+            $actividades = ActividadMejora::with('responsables')->where('mejora_id', $mejora_id)->get();
             return datatables()->of($actividades)->toJson();
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -54,12 +31,12 @@ class ActividadesIncidentesController extends Controller
             'comentarios' => 'required',
         ]);
         if ($request->ajax()) {
-            $actividad = ActividadIncidente::create($request->all());
+            $actividad = ActividadMejora::create($request->all());
             $responsables = $request->responsables;
             $actividad->responsables()->sync($responsables);
 
-            $modelo = IncidentesSeguridad::find(intval($request->seguridad_id));
-            $actividad = ActividadIncidente::find($actividad->id);
+            $modelo = Mejoras::find(intval($request->mejora_id));
+            $actividad = ActividadMejora::find($actividad->id);
             if (!count($modelo->planes)) {
                 $this->vincularActividadesPlanDeAccion($actividad, $modelo);
             } else {
@@ -80,7 +57,7 @@ class ActividadesIncidentesController extends Controller
                     array(
                         'id' => 'tmp_' . (strtotime(now())) . '_1',
                         'end' => strtotime(now()) * 1000,
-                        'name' => 'Incidente - ' . $modelo->folio . '-' . $modelo->titulo,
+                        'name' => 'Mejora - ' . $modelo->folio . '-' . $modelo->titulo,
                         'level' => 0,
                         'start' => strtotime(now()) * 1000,
                         "canAdd" => true,
@@ -214,9 +191,9 @@ class ActividadesIncidentesController extends Controller
                 $planImplementacion->changesReasonWhy = false;
                 $planImplementacion->selectedRow = 0;
                 $planImplementacion->zoom = "3d";
-                $planImplementacion->parent = 'Incidente - ' . $modelo->folio;
+                $planImplementacion->parent = 'Mejora - ' . $modelo->folio;
                 $planImplementacion->norma = 'ISO 27001';
-                $planImplementacion->modulo_origen = 'Incidentes';
+                $planImplementacion->modulo_origen = 'Mejoras';
                 $planImplementacion->objetivo = null;
                 $planImplementacion->elaboro_id = auth()->user()->empleado->id;
 
