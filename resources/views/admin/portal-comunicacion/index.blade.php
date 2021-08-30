@@ -211,6 +211,9 @@
             padding: 0 20px;
 
         }
+        .text_comunicado p{
+            text-align: justify;
+        }
 
 
         .doc_publicado{
@@ -246,6 +249,7 @@
         }
         .img_empleado{
             height: 40px;
+            width: auto;
             clip-path: circle(20px at 50% 50%);
         }
 
@@ -288,7 +292,7 @@
             text-align: center;
         }
         .img_nuevo img{
-            width: 30%;
+            
         }
         .datos_nuevo{
             width: 100%;
@@ -399,7 +403,7 @@
                         <div class="text_comunicado">
                             <h4 class="w-100">Comenzamos auditorías</h4>
                             <p class="w-100">
-                                Proveer servicios especializados de atención y respuesta a amenazas e incidentes de seguridad, a través de mejora continua de nuestros procesos y alianzas con otras organizaciones para contribuir a un entorno digital de nuestros clientes.
+                                {{ Str::limit('Proveer servicios especializados de atención y respuesta a amenazas e incidentes de seguridad, a través de mejora continua de nuestros procesos y alianzas con otras organizaciones para contribuir a un entorno digital de nuestros clientes.', 200, '...') }}
                             </p>
                             <a href="">Leer más</a>
                         </div>
@@ -475,34 +479,34 @@
 
 
                 <div class="col-lg-3 mt-5">
-                    <div class="cuadro_empleados">
+                    <div class="cuadro_empleados scroll_estilo">
                         <h2 class="titulo-seccion"><i class="far fa-user mr-3"></i>Nuevos ingresos</h2>
 
                         <div class="caja_nuevo">
 
-                            <div class="nuevo">
-                                <div class="img_nuevo">
-                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
+                            @foreach($nuevos as $nuevo)
+                                <div class="nuevo">
+                                    <div class="img_nuevo">
+                                        @if(is_null($nuevo->foto))
+                                            <img src="{{asset('storage/empleados/imagenes/usuario_no_cargado.png')}}" class="img_empleado">
+                                        @else
+                                             <img src="{{asset('storage/empleados/imagenes/'.$nuevo->foto)}}" class="img_empleado">
+                                        @endif
+                                    </div>
+                                    <h5 class="nombre_nuevo">{{$nuevo->name}}</h5>
+                                    <div class="datos_nuevo">
+                                        <p>{{$nuevo->puesto}}<br>
+                                            @if(is_null($nuevo->area->area))
+                                                No hay Area
+                                            @else
+                                                {{$nuevo->area->area}}
+                                            @endif
+                                            </p>
+                                        <h6 class="mt-3">Fecha de ingreso</h6>
+                                        <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
+                                    </div>
                                 </div>
-                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
-                                <div class="datos_nuevo">
-                                    <p>Desarrollador<br>Innovación y desarrollo</p>
-                                    <h6 class="mt-3">Fecha de ingreso</h6>
-                                    <span>10/03/2021</span>
-                                </div>
-                            </div>
-
-                             <div class="nuevo">
-                                <div class="img_nuevo">
-                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
-                                </div>
-                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
-                                <div class="datos_nuevo">
-                                    <p>Desarrollador<br>Innovación y desarrollo</p>
-                                    <h6 class="mt-3">Fecha de ingreso</h6>
-                                    <span>10/03/2021</span>
-                                </div>
-                            </div>
+                            @endforeach
 
                         </div>
 
@@ -510,62 +514,65 @@
 
                         <h2 class="titulo-seccion mt-5"><i class="fas fa-birthday-cake mr-3"></i>Cumpleaños</h2>
                         <div class="caja_nuevo">
-                            <div class="nuevo">
-                                <div class="img_nuevo">
-                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
+                            @foreach($cumpleaños as $cumple)
+                                <div class="nuevo">
+                                    <div class="img_nuevo">
+                                        @if(is_null($cumple->foto))
+                                            <img src="{{asset('storage/empleados/imagenes/usuario_no_cargado.png')}}" class="img_empleado">
+                                        @else
+                                             <img src="{{asset('storage/empleados/imagenes/'.$cumple->foto)}}" class="img_empleado">
+                                        @endif
+                                    </div>
+                                    <h5 class="nombre_nuevo">{{$cumple->name}}</h5>
+                                    <div class="datos_nuevo">
+                                        <p>{{$cumple->puesto}}<br>
+                                            @if(is_null($cumple->area->area))
+                                                No hay Area
+                                            @else
+                                                {{$cumple->area->area}}
+                                            @endif
+                                            </p>
+                                        <h6 class="mt-3">Fecha de cumpleaños</h6>
+                                        <span>{{ \Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m-Y') }}</span>
+                                    </div>
                                 </div>
-                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
-                                <div class="datos_nuevo">
-                                    <p>Desarrollador<br>Innovación y desarrollo</p>
-                                    <h6 class="mt-3">Fecha de cumpleaños</h6>
-                                    <span>10 de abril</span>
-                                </div>
-                            </div>
-
-                             <div class="nuevo">
-                                <div class="img_nuevo">
-                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
-                                </div>
-                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
-                                <div class="datos_nuevo">
-                                    <p>Desarrollador<br>Innovación y desarrollo</p>
-                                    <h6 class="mt-3">Fecha de cumpleaños</h6>
-                                    <span>10 de abril</span>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
 
 
 
                         <h2 class="titulo-seccion mt-5"><i class="fas fa-birthday-cake mr-3"></i>Aniversarios</h2>
                         <div class="caja_nuevo">
-                            <div class="nuevo">
-                                <div class="img_nuevo">
-                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
-                                </div>
-                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
-                                <div class="datos_nuevo">
-                                    <p>Desarrollador<br>Innovación y desarrollo</p>
-                                    <h6 class="mt-3">Antigüedad</h6>
-                                    <span>5 años</span>
-                                </div>
-                            </div>
+                            <div class="caja_nuevo">
+                                @foreach($aniversarios as $aniversario)
 
-                             <div class="nuevo">
-                                <div class="img_nuevo">
-                                    <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg">
-                                </div>
-                                <h5 class="nombre_nuevo">Nombre del empleado</h5>
-                                <div class="datos_nuevo">
-                                    <p>Desarrollador<br>Innovación y desarrollo</p>
-                                    <h6 class="mt-3">Antigüedad</h6>
-                                    <span>5 años</span>
-                                </div>
-                            </div>
+                                    @if((\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y')) < $hoy->format('Y'))
+                                        <div class="nuevo">
+                                            <div class="img_nuevo">
+                                                @if(is_null($aniversario->foto))
+                                                    <img src="{{asset('storage/empleados/imagenes/usuario_no_cargado.png')}}" class="img_empleado">
+                                                @else
+                                                     <img src="{{asset('storage/empleados/imagenes/'.$aniversario->foto)}}" class="img_empleado">
+                                                @endif
+                                            </div>
+                                            <h5 class="nombre_nuevo">{{$aniversario->name}}</h5>
+                                            <div class="datos_nuevo">
+                                                <p>{{$aniversario->puesto}}<br>
+                                                    @if(is_null($aniversario->area->area))
+                                                        No hay Area
+                                                    @else
+                                                        {{$aniversario->area->area}}
+                                                    @endif
+                                                </p>
+                                                <h6 class="mt-3">Antigüedad</h6>
+                                                <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }} año(s)
+                                                </span>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
-
-                        
                     </div>
                 </div>
             </div>

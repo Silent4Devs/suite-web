@@ -27,7 +27,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
 
 
-    Route::view('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion/reportes');
+    Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
     Route::resource('portal-comunicacion', 'PortalComunicacionController');
 
     Route::post('plantTrabajoBase/bloqueo/mostrar', 'LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');

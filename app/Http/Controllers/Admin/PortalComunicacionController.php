@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\organizacion;
 use App\Models\Documento;
+use App\Models\Empleado;
+use App\Models\Area;
+use Carbon\Carbon;
+
 
 
 
@@ -19,10 +23,18 @@ class PortalComunicacionController extends Controller
     public function index()
     {
 
-         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
+        $hoy = Carbon::now();
+        $hoy->toDateString();   
+        $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+
+        $cumpleaños = Empleado::whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+
+        $aniversarios = Empleado::whereMonth('antiguedad', '=', $hoy->format('m'))->get();
+
+        $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
 
 
-        return view('admin.portal-comunicacion.index', compact('documentos_publicados'));
+        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy'));
     }
 
     /**

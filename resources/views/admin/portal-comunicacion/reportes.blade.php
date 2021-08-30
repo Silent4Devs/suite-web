@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('content')
+@section('content'){{-- 
 	
 	@section('styles')
 		<style type="text/css">
@@ -86,6 +86,40 @@
 			    <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
 			        <i class="fas fa-lightbulb"></i> Realizar sugerencia
 			    </a>
+			</div>
+		</div>
+	</div> --}}
+
+
+
+
+
+
+
+	<style type="text/css">
+		.img_comunicado{
+            width: 100%;
+            height: 300px;
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: all;
+        }
+	</style>
+
+	<div class="card card-body" style="">
+		<div class="row" style="">
+			<div class="col-12">
+				<h1 style="color:#00abb2;">Comenzamos auditorías</h1>
+			</div>
+			<div class="col-md-5 mt-3">
+				<div class="img_comunicado" style="background-image: url('https://directivosygerentes.es/wp-content/uploads/2018/05/oficina-pyme.jpg');"></div>
+			</div>
+			<div class="col-md-7 mt-3" style="display:flex; align-items: center;">
+				<p>
+					Proveer servicios especializados de atención y respuesta a amenazas e incidentes de seguridad, a través de mejora continua de nuestros procesos y alianzas con otras organizaciones para contribuir a un entorno digital de nuestros clientes.
+				</p>
 			</div>
 		</div>
 	</div>
