@@ -14,6 +14,12 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\Empleado;
+use App\Models\DocumentoComunicacionSgis;
+use App\Models\ImagenesComunicacionSgis;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+
 
 class ComunicacionSgiController extends Controller
 {
@@ -68,13 +74,71 @@ class ComunicacionSgiController extends Controller
     public function create()
     {
         abort_if(Gate::denies('comunicacion_sgi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleados=Empleado::get();
+        $documentos=DocumentoComunicacionSgis::get();
+        $imagenes=ImagenesComunicacionSgis::get();
 
-        return view('admin.comunicacionSgis.create');
+
+        return view('admin.comunicacionSgis.create',compact('empleados','documentos','imagenes'));
     }
 
     public function store(StoreComunicacionSgiRequest $request)
     {
+
+
         $comunicacionSgi = ComunicacionSgi::create($request->all());
+
+        if ($request->hasFile('imagen')) {
+
+            $this->validate($request, [
+
+                'imagen' => 'mimetypes:image/jpeg,image/bmp,image/png'
+                                        ]);
+            }
+
+
+
+
+        $image=null;
+        if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
+            $extension = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+            $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
+            $route = storage_path() . '/app/public/sedes/imagenes/' . $new_name_image;
+            $image = $new_name_image;
+            //Usamos image_intervention para disminuir el peso de la imagen
+            $img_intervention = Image::make($request->file('imagen'));
+            $img_intervention->resize(256, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($route);
+        }
+
+        $comunicacionSgi->update([
+        'imagen'=>$image
+        ]);
+
+
+
+        if ($request->hasFile('documento')) {
+
+            $this->validate($request, [
+
+                'documento' => 'mimetypes:application/xhtml+xml,application/xml,application/pdf,application/doc'
+                                        ]);
+            }
+
+         $files = $request->file('files');
+        if ($request->hasFile('files')) {
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/documento_comunicado_SGI', $file, $file->getClientOriginalName())) {
+                    DocumentoComunicacionSgis::create([
+                        'documento' => $file->getClientOriginalName(),
+                        'comunicacion_id' => $comunicacionSgi->id,
+                    ]);
+                }
+            }
+        }
+
 
         if ($request->input('archivo', false)) {
             $comunicacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
@@ -92,8 +156,10 @@ class ComunicacionSgiController extends Controller
         abort_if(Gate::denies('comunicacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $comunicacionSgi->load('team');
+        $documentos=DocumentoComunicacionSgis::get();
+        $imagenes=ImagenesComunicacionSgis::get();
 
-        return view('admin.comunicacionSgis.edit', compact('comunicacionSgi'));
+        return view('admin.comunicacionSgis.edit', compact('comunicacionSgi','documentos','imagenes'));
     }
 
     public function update(UpdateComunicacionSgiRequest $request, ComunicacionSgi $comunicacionSgi)
