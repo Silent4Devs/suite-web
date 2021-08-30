@@ -1,8 +1,70 @@
+.modal_form_plan {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    display: none;
+    z-index: 99;
+    padding-top: 400px;
+    transition: 0.4s;
+    opacity: 0;
+}
+
+.fondo_modal {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.modal_form_plan form {
+    width: 50%;
+    height: 80%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    overflow-y: auto;
+}
+
+.modal_vista_plan {
+    display: block !important;
+    transition: 0.4s;
+    opacity: 1;
+}
+
+.modal_vista_plan form {
+    animation: entrada_form 0.5s;
+}
+
+@keyframes entrada_form {
+    0% {
+        top: 50%;
+        opacity: 0;
+    }
+    100% {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+.select2-selection--multiple {
+    overflow: hidden !important;
+    height: auto !important;
+}
 
 .caja_oculta_dinamica {
     display: none;
 }
-
 
 #digrama textarea {
     position: absolute;

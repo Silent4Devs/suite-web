@@ -335,11 +335,12 @@ GanttMaster.prototype.calculateAverageOnNodes = function () {
       rootAverage.push(task.progress);
     }
   });
-
-  var rootTotal = rootAverage.reduce(function (acomulador, value) {
-    return acomulador + value;
-  }) / rootAverage.length;
-  root.progress = rootTotal;
+  if (rootAverage.length > 0) {
+    var rootTotal = rootAverage.reduce(function (acomulador, value) {
+      return acomulador + value;
+    }) / rootAverage.length;
+    root.progress = rootTotal;
+  }
 }
 
 
@@ -363,7 +364,9 @@ GanttMaster.prototype.calculateStatusOnNodes = function () {
       task.changeStatusByProgress();
     }
   });
-  root.changeStatusByProgress();
+  if (root) {
+    root.changeStatusByProgress();
+  }
 }
 
 
