@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,15 +21,17 @@ class ExperienciaEmpleados extends Model
 
     protected $casts = [
         'empleado_id' => 'int',
-        'nombre' => 'string',
+        'empresa' => 'string',
         'puesto' => 'string',
-        'descripcion' => 'longText',
+        'descripcion' => 'string',
 	];
 
     protected $fillable = [
 		'empleado_id',
-        'nombre',
+        'empresa',
         'puesto',
+        'inicio_mes',
+        'fin_mes',
         'descripcion',
 
 	];
@@ -38,4 +41,17 @@ class ExperienciaEmpleados extends Model
         return $this->belongsTo(Empleado::class,'empleado_id');
 
     }
+
+    public function getInicioMesAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
+    public function getFinMesAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
+
+
 }

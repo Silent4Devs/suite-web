@@ -310,7 +310,6 @@ GridEditor.prototype.bindRowInputEvents = function (task, taskRow) {
           self.master.endTransaction();
           inp.updateOldValue(); //in order to avoid multiple call if nothing changed
           //Recalculate Progress & Status
-          self.master.saveChangesOnServer();
           self.master.calculateAverageOnNodes();
           self.master.calculateStatusOnNodes();
           self.master.saveChangesOnServer();
@@ -340,7 +339,6 @@ GridEditor.prototype.bindRowInputEvents = function (task, taskRow) {
     }
 
     //Recalculate Progress & Status
-    self.master.saveChangesOnServer();
     self.master.calculateAverageOnNodes();
     self.master.calculateStatusOnNodes();
     self.master.saveChangesOnServer();
@@ -447,7 +445,6 @@ GridEditor.prototype.bindRowInputEvents = function (task, taskRow) {
 
     }
     //Recalculate Progress & Status
-    self.master.saveChangesOnServer();
     self.master.calculateAverageOnNodes();
     self.master.calculateStatusOnNodes();
     self.master.saveChangesOnServer();
@@ -530,7 +527,6 @@ GridEditor.prototype.bindRowInputEvents = function (task, taskRow) {
       // task.changeStatus(newStatus);
       task.status = newStatus;
       // Recalculate and save
-      self.master.saveChangesOnServer();
       self.master.calculateAverageOnNodes();
       self.master.calculateStatusOnNodes();
       self.master.saveChangesOnServer();
@@ -754,7 +750,6 @@ GridEditor.prototype.openFullEditor = function (task, editOnlyAssig) {
       //change status
       // task.changeStatus(taskEditor.find("#status").val());
       //task.status = taskEditor.find("#status").val();
-      self.master.saveChangesOnServer();
       self.master.calculateAverageOnNodes();
       self.master.calculateStatusOnNodes();
       self.master.saveChangesOnServer();

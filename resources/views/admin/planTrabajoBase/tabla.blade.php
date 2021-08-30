@@ -624,7 +624,6 @@
                     let fecha_inicio = moment.unix((tarea_correspondiente.start) / 1000).format("YYYY-MM-DD");
                     let duracion = moment(this.value, 'YYYY-MM-DD').businessDiff(moment(fecha_inicio,
                         'YYYY-MM-DD'));
-
                     let dependencias = response.tasks.filter(t => t.depends == numero_registro);
                     let fecha_fin_actual = moment.unix(valor_nuevo / 1000).format("YYYY-MM-DD");
                     // console.log(fecha_inicio);
@@ -684,12 +683,26 @@
                             renderTable(response, id_tbody);
 
                         } else if (valor_nuevo == 'STATUS_UNDEFINED') {
-                            tarea_correspondiente.status = valor_nuevo;
-                            tarea_correspondiente.progress = 0; // set progress in 0
-                            calculateAverageOnNodes(response.tasks);
-                            calculateStatus(response.tasks);
-                            saveOnServer(response);
-                            renderTable(response, id_tbody);
+                            Swal.fire({
+                                title: '¿Estás seguro de reinicializar la actividad?',
+                                text: "No podrás revertir esto!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Sí',
+                                cancelButtonText: 'No'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    tarea_correspondiente.status = valor_nuevo;
+                                    tarea_correspondiente.progress = 0; // set progress in 0
+                                    calculateAverageOnNodes(response.tasks);
+                                    calculateStatus(response.tasks);
+                                    saveOnServer(response);
+                                }
+                                renderTable(response, id_tbody);
+                            })
+
                         } else if (valor_nuevo == 'STATUS_SUSPENDED') {
                             //
                         } else if (valor_nuevo == 'STATUS_FAILED') {

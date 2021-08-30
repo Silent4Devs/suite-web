@@ -17,8 +17,8 @@ class CreateEducacionEmpleadosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->string('institucion')->nullable();
-            $table->year('año_inicio')->nullable();
-            $table->year('año_fin')->nullable();
+            $table->date('año_inicio')->nullable();
+            $table->date('año_fin')->nullable();
             $table->string('nivel')->nullable();
             $table->timestamps();
             $table->softDeletes();

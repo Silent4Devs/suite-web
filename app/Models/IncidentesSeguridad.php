@@ -19,35 +19,49 @@ class IncidentesSeguridad extends Model implements HasMedia
     const ARCHIVADO = '1';
     const NO_ARCHIVADO = '0';
 
-    protected $table='incidentes_seguridad';
+    protected $table = 'incidentes_seguridad';
 
-    protected $dates=[
+    protected $dates = [
         'fecha'
     ];
 
-    protected $guarded=[
+    protected $guarded = [
         'id'
     ];
 
     protected $appends = ['folio', 'archivo'];
 
-    public function getFolioAttribute(){
+    public function getFolioAttribute()
+    {
         return  sprintf('INC-%04d', $this->id);
     }
 
-    public function reporto(){
+    public function reporto()
+    {
         return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id');
     }
-    public function asignado(){
+    public function asignado()
+    {
         return $this->belongsTo(Empleado::class, 'empleado_asignado_id', 'id');
     }
 
-    public function evidencias(){
-        return $this->morphMany(Evidencia::class, 'evidenciable');
+    public function evidencias_seguridad()
+    {
+        return $this->hasMany(EvidenciasSeguridad::class, 'id_seguridad');
     }
 
     public function getArchivoAttribute()
     {
         return $this->getMedia('archivo')->first();
+    }
+
+    public function planes()
+    {
+        return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
+    }
+
+    public function actividades()
+    {
+        return $this->hasMany(ActividadIncidente::class, 'seguridad_id', 'id');
     }
 }

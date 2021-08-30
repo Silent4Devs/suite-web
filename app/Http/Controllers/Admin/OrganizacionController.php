@@ -73,6 +73,11 @@ class OrganizacionController extends Controller
             "antecedentes" => $request->antecedentes
         ]);
 
+        if ($request->hasFile('logotipo')) {
+            $this->validate($request, [
+                'logotipo' => 'mimetypes:image/jpeg,image/bmp,image/png'
+            ]);
+        }
         $image = 'silent4business.png';
         if ($request->file('logotipo') != null or !empty($request->file('logotipo'))) {
             $extension = pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -106,6 +111,12 @@ class OrganizacionController extends Controller
     {
         abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->update($request->all());
+
+        if ($request->hasFile('logotipo')) {
+            $this->validate($request, [
+                'logotipo' => 'mimetypes:image/jpeg,image/bmp,image/png'
+            ]);
+        }
         $file = $request->file('logotipo');
         if ($file != null) {
             $nombre = $file->getClientOriginalName();
