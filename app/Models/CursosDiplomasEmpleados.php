@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ExperienciaEmpleados extends Model
+class CursosDiplomasEmpleados extends Model
 {
     use SoftDeletes;
-	protected $table = 'experiencia_empleados';
+	protected $table = 'cursos_diplomados_empleados';
 
     protected $dates = [
         'created_at',
@@ -18,40 +18,39 @@ class ExperienciaEmpleados extends Model
         'deleted_at',
     ];
 
+    const TipoSelect = [
+        'Curso' => 'Curso',
+        'Diplomado' => 'Diplomado',
+    ];
+
 
     protected $casts = [
         'empleado_id' => 'int',
-        'empresa' => 'string',
-        'puesto' => 'string',
-        'descripcion' => 'string',
+        'curso_diploma' => 'string',
+        'tipo' => 'string',
+        'año' => 'string',
+        'duracion' => 'string',
 	];
 
     protected $fillable = [
 		'empleado_id',
-        'empresa',
-        'puesto',
-        'inicio_mes',
-        'fin_mes',
-        'descripcion',
+        'curso_diploma',
+        'tipo',
+        'año',
+        'duracion',
 
 	];
 
-    public function empleado_experiencia(){
+    public function empleado_cursos(){
 
         return $this->belongsTo(Empleado::class,'empleado_id');
 
     }
 
-    public function getInicioMesAttribute($value)
+    public function getAñoAttribute($value)
     {
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
-
-    public function getFinMesAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
-
 
 
 }

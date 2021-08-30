@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEducacionEmpleadosTable extends Migration
+class CreateCursosDiplomadosEmpleadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateEducacionEmpleadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('educacion_empleados', function (Blueprint $table) {
+        Schema::create('cursos_diplomados_empleados', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('empleado_id')->nullable();
-            $table->string('institucion')->nullable();
-            $table->date('año_inicio')->nullable();
-            $table->date('año_fin')->nullable();
-            $table->string('nivel')->nullable();
+            $table->string('curso_diploma')->nullable();
+            $table->string('tipo')->nullable();
+            $table->date('año')->nullable();
+            $table->string('duracion')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('empleado_id')->references('id')->on('empleados');
@@ -33,6 +33,6 @@ class CreateEducacionEmpleadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('educacion_empleados');
+        Schema::dropIfExists('cursos_diplomados_empleados');
     }
 }

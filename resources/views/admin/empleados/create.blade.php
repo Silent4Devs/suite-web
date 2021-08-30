@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+
     <style>
         .screenshot-image {
             width: 150px;
@@ -163,6 +164,9 @@
         }
 
     </style>
+
+
+
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Empleado </strong></h3>
@@ -408,6 +412,32 @@
                                             </div>
                                         @endif
                                     </div>
+
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-6 ">
+                                        <label for="direccion"><i class="fas fa-map iconos-crear"></i>Direccion</label>
+                                        <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
+                                            type="text" name="direccion" id="direccion" value="{{ old('direccion', '') }}">
+                                        @if ($errors->has('direccion'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('direccion') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6">
+                                        <label for="cumpleaños"><i class="fas fa-birthday-cake iconos-crear"></i>Cumpleaños</label>
+                                        <input class="form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}"
+                                            type="date" name="cumpleaños" id="cumpleaños" value="{{ old('cumpleaños', '') }}">
+                                        @if ($errors->has('cumpleaños'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('cumpleaños') }}
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -494,8 +524,7 @@
 
                                 <div class="row">
                                     <div class="form-group col-sm-12">
-                                        <label class="required" for="name"><i
-                                                class="fas fa-file-alt iconos-crear"></i>Resumen</label>
+                                        <label for="resumen"><i class="fas fa-file-alt iconos-crear"></i>Resumen</label>
                                         <textarea class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}"
                                             type="text" name="resumen" id="resumen"></textarea>{{ old('resumen', '') }}
                                         @if ($errors->has('resumen'))
@@ -513,11 +542,10 @@
 
                                 <div class="row">
                                     <div class="form-group col-sm-12">
-                                        <label class="required" for="nombre"><i
-                                                class="fas fa-file-signature iconos-crear"></i>Nombre</label>
+                                        <label for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre</label>
                                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                            type="text" name="nombre" id="nombre" value="{{ old('nombre', '') }}"
-                                            required>
+                                            type="text" name="nombre" id="nombre_certificado"
+                                            value="{{ old('nombre', '') }}">
                                         @if ($errors->has('nombre'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('nombre') }}
@@ -529,10 +557,10 @@
 
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="vigencia"><i class="far fa-calendar-alt iconos-crear"></i>Vigencia</label>
+                                        <label for="vigencia"><i
+                                                class="far fa-calendar-alt iconos-crear"></i>Vigencia</label>
                                         <input class="form-control {{ $errors->has('vigencia') ? 'is-invalid' : '' }}"
-                                            type="text" name="vigencia" id="vigencia" value="{{ old('vigencia', '') }}"
-                                            required>
+                                            type="date" name="vigencia" id="vigencia" value="{{ old('vigencia', '') }}">
                                         @if ($errors->has('vigencia'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('vigencia') }}
@@ -540,11 +568,9 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="estatus"><i
-                                                class="fas fa-street-view iconos-crear"></i>Estatus</label>
+                                        <label for="estatus"><i class="fas fa-street-view iconos-crear"></i>Estatus</label>
                                         <input class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}"
-                                            type="text" name="estatus" id="estatus" value="{{ old('estatus', '') }}"
-                                            required>
+                                            type="text" name="vencio_alta" id="vencio_alta" value="{{ old('estatus', '') }}">
                                         @if ($errors->has('estatus'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('estatus') }}
@@ -564,30 +590,32 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
-                                    <button id="btn-suscribir-participante" type="submit"
+                                <div class="mb-5 col-12">
+                                    <button id="btn-suscribir-certificado" type="submit"
                                         class="mr-3 btn btn-sm btn-outline-success"
                                         style="float: right; position: relative;">
                                         <i class="mr-1 fas fa-plus-circle"></i>
                                         Agregar Certificación
                                         {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 3px;left: 8px;"></i> --}}
+                                        style="position: absolute; top: 3px;left: 8px;"></i> --}}
                                     </button>
                                 </div>
 
                                 <div class="mt-3 col-12 w-100 datatable-fix">
-                                    <table class="table w-100" id="tbl-participantes">
+                                    <table class="table w-100" id="tbl-certificados" style="width:100% !important">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>Nombre</th>
                                                 <th>Vigencia</th>
                                                 <th>Estatus</th>
-                                                <th>Documento</th>
+                                                {{-- <th>Documento</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
                                     </table>
                                 </div>
+
+                                <input type="hidden" name="certificado" value="" id="certificado">
 
 
                                 <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
@@ -597,13 +625,13 @@
 
                                 <div class="row">
                                     <div class="form-group col-sm-12">
-                                        <label class="required" for="curso_diplomado"><i
-                                                class="fas fa-street-view iconos-crear"></i>Nombre del curso /
+                                        <label for="curso_diplomado"><i class="fas fa-street-view iconos-crear"></i>Nombre
+                                            del curso /
                                             diplomado</label>
                                         <input
                                             class="form-control {{ $errors->has('curso_diplomado') ? 'is-invalid' : '' }}"
                                             type="text" name="curso_diplomado" id="curso_diplomado"
-                                            value="{{ old('curso_diplomado', '') }}" required>
+                                            value="{{ old('curso_diplomado', '') }}">
                                         @if ($errors->has('curso_diplomado'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('curso_diplomado') }}
@@ -614,15 +642,14 @@
 
 
 
-                                    <div class="row">
-                                        <div class="form-group col-sm-6">
-                                            <label class="required" for="tipo"><i
-                                                    class="fas fa-street-view iconos-crear"></i>Tipo</label>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label for="tipo"><i class="fas fa-street-view iconos-crear"></i>Tipo</label>
                                         <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
                                             name="tipo" id="tipo">
                                             <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                                                 Selecciona una opción</option>
-                                            @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
+                                            @foreach (App\Models\CursosDiplomasEmpleados::TipoSelect as $key => $label)
                                                 <option value="{{ $key }}"
                                                     {{ old('tipo', '') === (string) $key ? 'selected' : '' }}>
                                                     {{ $label }}
@@ -639,9 +666,9 @@
 
 
                                     <div class="form-group col-sm-3">
-                                        <label class="required" for="año"><i class="far fa-calendar-alt iconos-crear"></i>Año</label>
+                                        <label for="año"><i class="far fa-calendar-alt iconos-crear"></i>Año</label>
                                         <input class="form-control {{ $errors->has('año') ? 'is-invalid' : '' }}"
-                                            type="date" name="año" id="año" value="{{ old('año', '') }}" required>
+                                            type="date" name="año" id="año" value="{{ old('año', '') }}">
                                         @if ($errors->has('año'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('año') }}
@@ -651,11 +678,10 @@
 
 
                                     <div class="form-group col-sm-3">
-                                        <label class="required" for="duracion"><i
+                                        <label for="duracion"><i
                                                 class="fas fa-street-view iconos-crear"></i>Duración</label>
                                         <input class="form-control {{ $errors->has('duracion') ? 'is-invalid' : '' }}"
-                                            type="text" name="duracion" id="duracion" value="{{ old('duracion', '') }}"
-                                            required>
+                                            type="text" name="duracion" id="duracion" value="{{ old('duracion', '') }}">
                                         @if ($errors->has('duracion'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('duracion') }}
@@ -665,19 +691,19 @@
                                 </div>
 
 
-                                <div class="col-12">
-                                    <button id="btn-suscribir-participante" type="submit"
+                                <div class="mb-5 col-12">
+                                    <button id="btn-suscribir-curso" type="submit"
                                         class="mr-3 btn btn-sm btn-outline-success"
                                         style="float: right; position: relative;">
                                         <i class="mr-1 fas fa-plus-circle"></i>
                                         Agregar Curso / Diplomado
                                         {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 3px;left: 8px;"></i> --}}
+                                        style="position: absolute; top: 3px;left: 8px;"></i> --}}
                                     </button>
                                 </div>
 
                                 <div class="mt-3 col-12 w-100 datatable-fix">
-                                    <table class="table w-100" id="tbl-participantes">
+                                    <table class="table w-100" id="tbl-cursos">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>Nombre</th>
@@ -691,6 +717,8 @@
                                 </div>
 
 
+                                <input type="hidden" name="curso" value="" id="curso">
+
 
 
                                 <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
@@ -701,10 +729,9 @@
                                 <div class="row">
 
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="empresa"><i
-                                            class="fas fa-building iconos-crear"></i>Empresa</label>
+                                        <label for="empresa"><i class="fas fa-building iconos-crear"></i>Empresa</label>
                                         <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}"
-                                            type="text" name="nombre" id="nombre" value="{{ old('empresa', '') }}">
+                                            type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}">
                                         @if ($errors->has('empresa'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('empresa') }}
@@ -713,9 +740,10 @@
                                     </div>
 
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                                        <label for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                                         <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
-                                            type="text" name="puesto" id="puesto" value="{{ old('puesto', '') }}">
+                                            type="text" name="puesto_trabajo" id="puesto_trabajo"
+                                            value="{{ old('puesto', '') }}">
                                         @if ($errors->has('puesto'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('puesto') }}
@@ -732,12 +760,13 @@
 
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="name"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
-                                        <input class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}"
-                                            type="month" name="resumen" id="resumen" value="{{ old('resumen', '') }}">
-                                        @if ($errors->has('resumen'))
+                                        <label for="inicio_mes"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
+                                        <input class="form-control {{ $errors->has('inicio_mes') ? 'is-invalid' : '' }}"
+                                            type="date" name="inicio_mes" id="inicio_mes"
+                                            value="{{ old('inicio_mes', '') }}">
+                                        @if ($errors->has('inicio_mes'))
                                             <div class="invalid-feedback">
-                                                {{ $errors->first('resumen') }}
+                                                {{ $errors->first('inicio_mes') }}
                                             </div>
                                         @endif
                                     </div>
@@ -745,12 +774,12 @@
 
 
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="name"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
-                                        <input class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}"
-                                            type="month" name="resumen" id="resumen" value="{{ old('resumen', '') }}">
-                                        @if ($errors->has('resumen'))
+                                        <label for="fin_mes"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
+                                        <input class="form-control {{ $errors->has('fin_mes') ? 'is-invalid' : '' }}"
+                                            type="date" name="fin_mes" id="fin_mes" value="{{ old('fin_mes', '') }}">
+                                        @if ($errors->has('fin_mes'))
                                             <div class="invalid-feedback">
-                                                {{ $errors->first('resumen') }}
+                                                {{ $errors->first('fin_mes') }}
                                             </div>
                                         @endif
                                     </div>
@@ -759,7 +788,7 @@
 
                                 <div class="row">
                                     <div class="form-group col-sm-12">
-                                        <label class="required" for="descripcion"><i
+                                        <label for="descripcion"><i
                                                 class="fas fa-clipboard-list iconos-crear"></i>Descripción</label>
                                         <textarea
                                             class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
@@ -775,14 +804,14 @@
                                 </div>
 
 
-                                <div class="col-12">
+                                <div class="mb-5 col-12">
                                     <button id="btn-agregar-experiencia" type="submit"
                                         class="mr-3 btn btn-sm btn-outline-success"
                                         style="float: right; position: relative;">
                                         <i class="mr-1 fas fa-plus-circle"></i>
                                         Agregar Experiencia
                                         {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 3px;left: 8px;"></i> --}}
+                                        style="position: absolute; top: 3px;left: 8px;"></i> --}}
                                     </button>
                                 </div>
 
@@ -793,13 +822,15 @@
                                                 <th>Empresa</th>
                                                 <th>Puesto</th>
                                                 <th>Descripción</th>
+                                                <th>Inicio</th>
+                                                <th>Fin</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
                                     </table>
                                 </div>
 
-                                {{-- <input type="hidden" name="experiencia" value="" id="experiencia"> --}}
+                                <input type="hidden" name="experiencia" value="" id="experiencia">
 
 
                                 <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
@@ -809,7 +840,7 @@
 
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="institucion"><i
+                                        <label for="institucion"><i
                                                 class="fas fa-school iconos-crear"></i>Institución</label>
                                         <input class="form-control {{ $errors->has('institucion') ? 'is-invalid' : '' }}"
                                             type="text" name="institucion" id="institucion"
@@ -821,17 +852,18 @@
                                         @endif
                                     </div>
 
-                                  
+
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="nivel"><i
-                                                class="fas fa-street-view iconos-crear"></i>Nivel de estudios</label>
-                                        <select class="form-control {{ $errors->has('nivel') ? 'is-invalid' : '' }}" name="nivel"
-                                            id="nivel">
+                                        <label for="nivel"><i class="fas fa-street-view iconos-crear"></i>Nivel de
+                                            estudios</label>
+                                        <select class="form-control {{ $errors->has('nivel') ? 'is-invalid' : '' }}"
+                                            name="nivel" id="nivel">
                                             <option value disabled {{ old('nivel', null) === null ? 'selected' : '' }}>
                                                 Selecciona una opción</option>
                                             @foreach (App\Models\EducacionEmpleados::NivelSelect as $key => $label)
                                                 <option value="{{ $key }}"
-                                                    {{ old('nivel', '') === (string) $key ? 'selected' : '' }}>{{ $label }}
+                                                    {{ old('nivel', '') === (string) $key ? 'selected' : '' }}>
+                                                    {{ $label }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -846,12 +878,13 @@
 
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="name"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
-                                        <input class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}"
-                                            type="month" name="resumen" id="resumen" value="{{ old('resumen', '') }}">
-                                        @if ($errors->has('resumen'))
+                                        <label for="año_inicio"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
+                                        <input class="form-control {{ $errors->has('año_inicio') ? 'is-invalid' : '' }}"
+                                            type="date" name="año_inicio" id="año_inicio"
+                                            value="{{ old('año_inicio', '') }}">
+                                        @if ($errors->has('año_inicio'))
                                             <div class="invalid-feedback">
-                                                {{ $errors->first('resumen') }}
+                                                {{ $errors->first('año_inicio') }}
                                             </div>
                                         @endif
                                     </div>
@@ -859,12 +892,12 @@
 
 
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="name"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
-                                        <input class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}"
-                                            type="month" name="resumen" id="resumen" value="{{ old('resumen', '') }}">
-                                        @if ($errors->has('resumen'))
+                                        <label for="año_fin"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
+                                        <input class="form-control {{ $errors->has('año_fin') ? 'is-invalid' : '' }}"
+                                            type="date" name="año_fin" id="año_fin" value="{{ old('año_fin', '') }}">
+                                        @if ($errors->has('año_fin'))
                                             <div class="invalid-feedback">
-                                                {{ $errors->first('resumen') }}
+                                                {{ $errors->first('año_fin') }}
                                             </div>
                                         @endif
                                     </div>
@@ -872,19 +905,19 @@
                                 </div>
 
 
-                                <div class="col-12">
-                                    <button id="btn-suscribir-participante" type="submit"
+                                <div class="mb-5 col-12">
+                                    <button id="btn-agregar-educacion" type="submit"
                                         class="mr-3 btn btn-sm btn-outline-success"
                                         style="float: right; position: relative;">
                                         <i class="mr-1 fas fa-plus-circle"></i>
                                         Agregar Educacion
                                         {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 3px;left: 8px;"></i> --}}
+                                        style="position: absolute; top: 3px;left: 8px;"></i> --}}
                                     </button>
                                 </div>
 
                                 <div class="mt-3 col-12 w-100 datatable-fix">
-                                    <table class="table w-100" id="tbl-participantes">
+                                    <table class="table w-100" id="tbl-educacion">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>Institucion</th>
@@ -899,6 +932,10 @@
                                 </div>
 
 
+                                <input type="hidden" name="educacion" value="" id="educacion">
+
+
+
                                 <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
                                     <span style="font-size: 17px; font-weight: bold;">
                                         Documentos</span>
@@ -906,7 +943,8 @@
 
                                 <div class="mt-3 col-sm-12 form-group">
                                     <label for="documentos"><i
-                                            class="fas fa-folder-open iconos-crear"></i>Documentos</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
+                                            class="fas fa-folder-open iconos-crear"></i>Documentos</label><i
+                                        class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
                                     <div class="custom-file">
                                         <input type="file" name="files[]" multiple class="form-control" id="documentos">
 
@@ -914,14 +952,14 @@
                                 </div>
 
 
-                                <div class="text-right form-group col-12">
-                                    <a href="{{ redirect()->getUrlGenerator()->previous() }}"
-                                        class="btn_cancelar">Cancelar</a>
-                                    <button class="btn btn-danger" type="submit" id="btnGuardar">
-                                        {{ trans('global.save') }}
-                                    </button>
-                                </div>
+                            </div>
 
+                            <div class="text-right form-group col-12">
+                                <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                                    class="btn_cancelar">Cancelar</a>
+                                <button class="btn btn-danger" type="submit" id="btnGuardar">
+                                    {{ trans('global.save') }}
+                                </button>
                             </div>
 
                         </div>
@@ -1099,7 +1137,16 @@
             window.tblExperiencia = $('#tbl-experiencia').DataTable({
                 buttons: []
             })
-            $("#cargando_experiencia").hide();
+            window.tblEducacion = $('#tbl-educacion').DataTable({
+                buttons: []
+            })
+            window.tblCurso = $('#tbl-cursos').DataTable({
+                buttons: []
+            })
+            window.tblCertificado = $('#tbl-certificados').DataTable({
+                buttons: []
+            })
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1114,9 +1161,28 @@
                 suscribirExperiencia()
             })
 
+            document.getElementById('btn-agregar-educacion').addEventListener('click', function(e) {
+                e.preventDefault();
+                suscribirEducacion()
+            })
+
+            document.getElementById('btn-suscribir-curso').addEventListener('click', function(e) {
+                e.preventDefault();
+                suscribirCurso()
+            })
+
+            document.getElementById('btn-suscribir-certificado').addEventListener('click', function(e) {
+                e.preventDefault();
+                suscribirCertificado()
+            })
+
+
             document.getElementById('btnGuardar').addEventListener('click', function(e) {
                 // e.preventDefault();
                 enviarExperiencia()
+                enviarEducacion()
+                enviarCurso()
+                enviarCertificado()
             })
 
         });
@@ -1127,46 +1193,183 @@
         function suscribirExperiencia() {
             //form-participantes
 
-            let experiencias = tblExperencia.rows().data().toArray();
+            let experiencias = tblExperiencia.rows().data().toArray();
             let arrExperiencia = [];
             experiencias.forEach(experiencia => {
                 arrExperiencia.push(experiencia[0])
 
             });
             //no se puedan agregar datos que ya estan
+            let nombre = $("#empresa").val();
+            if (!arrExperiencia.includes(nombre)) {
 
-            if (!arrExperiencia.includes()) {
-                let nombre = $("#nombre").val();
-                let puesto = $("#puesto").val();
+                let puesto = $("#puesto_trabajo").val();
                 let descripcion = $("#descripcion").val();
+                let inicio_mes = $("#inicio_mes").val();
+                let fin_mes = $("#fin_mes").val();
                 tblExperiencia.row.add([
                     nombre,
                     puesto,
                     descripcion,
+                    inicio_mes,
+                    fin_mes
                 ]).draw();
 
             } else {
                 Swal.fire('Este participante ya ha sido agregado', '', 'error')
             }
 
-
-            $("#nombre").val('');
-            $("#puesto").val('');
+            //limpia campos
+            $("#empresa").val('');
+            $("#puesto_trabajo").val('');
             $("#descripcion").val('');
-
+            $("#inicio_mes").val('');
+            $("#fin_mes").val('');
         }
 
         function enviarExperiencia() {
             let experiencias = tblExperiencia.rows().data().toArray();
             let arrExperiencia = [];
-            participantes.forEach(experiencia => {
-                arrExperiencia.push(experiencia[0])
+            experiencias.forEach(experiencia => {
+                arrExperiencia.push(experiencia)
 
             });
-            document.getElementById('experiencia').value = arrExperiencia;
+            document.getElementById('experiencia').value = JSON.stringify(arrExperiencia);
             console.log(arrExperiencia);
         }
+
+        function suscribirEducacion() {
+            //form-participantes
+
+            let educacions = tblEducacion.rows().data().toArray();
+            let arrEducacion = [];
+            educacions.forEach(educacion => {
+                arrEducacion.push(educacion[0])
+
+            });
+            //no se puedan agregar datos que ya estan
+            let institucion = $("#institucion").val();
+            if (!arrEducacion.includes(institucion)) {
+                let año_inicio = $("#año_inicio").val();
+                let año_fin = $("#año_fin").val();
+                let nivel = $("#nivel").val();
+                tblEducacion.row.add([
+                    institucion,
+                    año_inicio,
+                    año_fin,
+                    nivel,
+                ]).draw();
+
+            } else {
+                Swal.fire('Este registro ya ha sido agregado', '', 'error')
+            }
+
+            //limpia campos
+            $("#institucion").val('');
+            $("#año_inicio").val('');
+            $("#año_fin").val('');
+            $("#nivel").val('');
+        }
+
+        function enviarEducacion() {
+            let educacions = tblEducacion.rows().data().toArray();
+            let arrEducacion = [];
+            educacions.forEach(educacion => {
+                arrEducacion.push(educacion)
+
+            });
+            document.getElementById('educacion').value = JSON.stringify(arrEducacion);
+            console.log(arrEducacion);
+        }
+
+        function suscribirCurso() {
+            //form-participantes
+
+            let cursos = tblCurso.rows().data().toArray();
+            let arrCurso = [];
+            cursos.forEach(curso => {
+                arrCurso.push(curso[0])
+
+            });
+            //no se puedan agregar datos que ya estan
+            let curso_diplomado = $("#curso_diplomado").val();
+            if (!arrCurso.includes(curso_diplomado)) {
+                let tipo = $("#tipo").val();
+                let año = $("#año").val();
+                let duracion = $("#duracion").val();
+                tblCurso.row.add([
+                    curso_diplomado,
+                    tipo,
+                    año,
+                    duracion,
+                ]).draw();
+
+            } else {
+                Swal.fire('Este registro ya ha sido agregado', '', 'error')
+            }
+
+            //limpia campos
+            $("#curso_diplomado").val('');
+            $("#tipo").val('');
+            $("#año").val('');
+            $("#duracion").val('');
+        }
+
+        function enviarCurso() {
+            let cursos = tblCurso.rows().data().toArray();
+            let arrCurso = [];
+            cursos.forEach(curso => {
+                arrCurso.push(curso)
+
+            });
+            document.getElementById('curso').value = JSON.stringify(arrCurso);
+            console.log(arrCurso);
+        }
+
+        function suscribirCertificado() {
+            //form-participantes
+
+            let certificados = tblCertificado.rows().data().toArray();
+            let arrCertificado = [];
+            certificados.forEach(certificado => {
+                arrCertificado.push(certificado[0])
+
+            });
+            //no se puedan agregar datos que ya estan
+            let nombre_certificado = $("#nombre_certificado").val();
+            if (!arrCertificado.includes(nombre_certificado)) {
+                let vigencia = $("#vigencia").val();
+                let estatus = $("#vencio_alta").val();
+                tblCertificado.row.add([
+                    nombre_certificado,
+                    vigencia,
+                    estatus,
+                ]).draw();
+
+            } else {
+                Swal.fire('Este registro ya ha sido agregado', '', 'error')
+            }
+
+            //limpia campos
+            $("#nombre_certificado").val('');
+            $("#vigencia").val('');
+            $("#vencio_alta").val('');
+
+        }
+
+        function enviarCertificado() {
+            let certificados = tblCertificado.rows().data().toArray();
+            let arrCertificado = [];
+            certificados.forEach(certificado => {
+                arrCertificado.push(certificado)
+
+            });
+            document.getElementById('certificado').value = JSON.stringify(arrCertificado);
+            console.log(arrCertificado);
+        }
     </script>
+
+
 
 
 
