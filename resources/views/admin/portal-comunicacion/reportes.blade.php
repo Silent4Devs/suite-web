@@ -108,18 +108,23 @@
         }
 	</style>
 
-	<div class="card card-body" style="">
-		<div class="row" style="">
-			<div class="col-12">
-				<h1 style="color:#00abb2;">Comenzamos auditorías</h1>
-			</div>
-			<div class="col-md-5 mt-3">
-				<div class="img_comunicado" style="background-image: url('https://directivosygerentes.es/wp-content/uploads/2018/05/oficina-pyme.jpg');"></div>
-			</div>
-			<div class="col-md-7 mt-3" style="display:flex; align-items: center;">
-				<p>
-					Proveer servicios especializados de atención y respuesta a amenazas e incidentes de seguridad, a través de mejora continua de nuestros procesos y alianzas con otras organizaciones para contribuir a un entorno digital de nuestros clientes.
-				</p>
+	<div class="card mt-5" style="">
+		<div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            <h3 class="mb-2 text-center text-white"><strong>Organizaciones</strong></h3>
+        </div>
+		<div class=" card-body" style="">
+			<div class="row">
+				<div class="col-12">
+					<h1 style="color:#00abb2;">Comenzamos auditorías</h1>
+				</div>
+				<div class="col-md-5 mt-3">
+					<div class="img_comunicado" style="background-image: url('https://directivosygerentes.es/wp-content/uploads/2018/05/oficina-pyme.jpg');"></div>
+				</div>
+				<div class="col-md-7 mt-3" style="display:flex; align-items: center;">
+					<p>
+						Proveer servicios especializados de atención y respuesta a amenazas e incidentes de seguridad, a través de mejora continua de nuestros procesos y alianzas con otras organizaciones para contribuir a un entorno digital de nuestros clientes.
+					</p>
+				</div>
 			</div>
 		</div>
 	</div>
