@@ -35,6 +35,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $id_amenaza
  * @property int|null $id_area
  * @property int|null $id_vulnerabilidad
+ * @property string|null $plan_de_accion
+ * @property string|null $confidencialidad_cid
+ * @property string|null $integridad_cid
+ * @property string|null $disponibilidad_cid
+ * @property string|null $probabilidad_residual
+ * @property string|null $impacto_residual
+ * @property string|null $nivelriesgo_residual
+ * @property string|null $riesgo_total_residual
  *
  * @property Controle|null $controle
  * @property Activo|null $activo
@@ -46,6 +54,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Sede|null $sede
  * @property Vulnerabilidad|null $vulnerabilidad
  * @property Team|null $team
+ * @property Collection|MatrizRiesgosControlesPivot[] $matriz_riesgos_controles_pivots
  *
  * @package App\Models
  */
@@ -93,7 +102,7 @@ class MatrizRiesgo extends Model
         'riesgototal' => 'float',
         'resultadoponderacion' => 'float',
         'riesgoresidual' => 'float',
-        'controles_id' => 'int',
+        //'controles_id' => 'int',
         'team_id' => 'int',
         'id_analisis' => 'int',
         'id_sede' => 'int',
@@ -118,7 +127,7 @@ class MatrizRiesgo extends Model
         'resultadoponderacion',
         'riesgoresidual',
         'justificacion',
-        'controles_id',
+        //'controles_id',
         'team_id',
         'id_analisis',
         'id_sede',
@@ -208,5 +217,16 @@ class MatrizRiesgo extends Model
     public function team()
     {
         return $this->belongsTo(Team::class);
+    }
+
+    // Relacion con plan de accion
+    public function planes()
+    {
+        return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
+    }
+
+    public function matriz_riesgos_controles_pivots()
+    {
+        return $this->hasMany(MatrizRiesgosControlesPivot::class, 'matriz_id');
     }
 }

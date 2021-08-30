@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use \DateTimeInterface;
 
 /**
  * Class Empleado
@@ -82,8 +83,16 @@ class Empleado extends Model
         'n_empleado',
         'supervisor_id',
         'area_id',
-        'sede_id'
+        'sede_id',
+        'direccion',
+        'cumpleaños',
+        'resumen',
     ];
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     public function getResourceIdAttribute()
     {
@@ -92,13 +101,13 @@ class Empleado extends Model
 
     public function getAvatarAttribute()
     {
-        if ($this->foto == null) {
+        if ($this->foto == null || $this->foto == "0") {
             if ($this->genero == 'H') {
                 return "man.png";
             } elseif ($this->genero == 'M') {
                 return "woman.png";
             } else {
-                return "usuario_no_cargado";
+                return "usuario_no_cargado.png";
             }
         }
         return $this->foto;
@@ -218,4 +227,35 @@ class Empleado extends Model
     {
         return $this->belongsToMany(Minutasaltadireccion::class, 'minuta_id');
     }
+
+    public function empleado_experiencia()
+    {
+        return $this->hasMany(ExperienciaEmpleados::class);
+    }
+
+    public function empleado_certificaciones()
+    {
+        return $this->hasMany(CertificacionesEmpleados::class);
+    }
+
+    public function empleado_cursos()
+    {
+        return $this->hasMany(CursosDiplomasEmpleados::class);
+    }
+
+
+    public function empleado_educacion()
+    {
+        return $this->hasMany(EducacionEmpleados::class);
+    }
+
+
+    public function foto_organizacion()
+    {
+        return $this->hasMany(Organizacion::class);
+    }
+
+
+
+
 }

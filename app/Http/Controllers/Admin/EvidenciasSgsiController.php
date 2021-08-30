@@ -141,9 +141,8 @@ class EvidenciasSgsiController extends Controller
     public function update(UpdateEvidenciasSgsiRequest $request, EvidenciasSgsi $evidenciasSgsi)
     {
         $evidenciasSgsi->update($request->all());
-
+        $files = $request->file('files');
         if ($request->hasFile('files')) {
-            $files = $request->file('files');
             foreach ($files as $file) {
                 if (Storage::putFileAs('public/evidencias_sgsi', $file, $file->getClientOriginalName())) {
                     EvidenciaSgsiPdf::create([

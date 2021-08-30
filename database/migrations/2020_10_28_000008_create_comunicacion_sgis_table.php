@@ -16,3 +16,6 @@ class CreateComunicacionSgisTable extends Migration
         });
     }
 }
+
+
+

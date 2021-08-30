@@ -19,6 +19,7 @@
     </div> --}}
         @endcan
 
+        <a href="{{ route('admin.buscarCV') }}" class="mb-2 btn btn-dark d-block">Buscar CV</a>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Competencium">
