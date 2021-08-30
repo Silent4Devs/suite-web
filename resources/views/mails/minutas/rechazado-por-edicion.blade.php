@@ -83,10 +83,9 @@
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p>Descripción:</p>
                                             <p>Buen día {{ $revision->empleado->name }}, </p>
-                                            <p>Le informamos que la minuta que le ha llegado anteriormente para su
-                                                revisón ha sido rechazada en consecuencia por la edición del formulario,
-                                                por lo que en unos instantes usted recibirá la minuta actualizada, para
-                                                su posterior Aprobación o Rechazo.
+                                            <p> Le informamos que la minuta ha sido actualizada por
+                                                {{ $minuta->responsable->name }}, por lo que se solicita nuevamente de
+                                                su aprobación.
                                             </p>
                                             <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-file-earmark-richtext"

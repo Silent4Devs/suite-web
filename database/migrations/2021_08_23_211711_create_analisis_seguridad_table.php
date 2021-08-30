@@ -19,19 +19,38 @@ class CreateAnalisisSeguridadTable extends Migration
             $table->unsignedBigInteger('seguridad_id')->nullable();
             $table->foreign('seguridad_id')->references('id')->on('incidentes_seguridad');
 
-            $table->longText('causa')->nullable();
-            
+            $table->unsignedBigInteger('riesgos_id')->nullable();
+            $table->foreign('riesgos_id')->references('id')->on('riesgos_identificados');
 
-            $table->longText('problema')->nullable();
+            $table->unsignedBigInteger('quejas_id')->nullable();
+            $table->foreign('quejas_id')->references('id')->on('quejas');
 
+            $table->unsignedBigInteger('denuncias_id')->nullable();
+            $table->foreign('denuncias_id')->references('id')->on('denuncias');
+
+            $table->unsignedBigInteger('mejoras_id')->nullable();
+            $table->foreign('mejoras_id')->references('id')->on('mejoras');
+
+            $table->unsignedBigInteger('sugerencias_id')->nullable();
+            $table->foreign('sugerencias_id')->references('id')->on('sugerencias');
+
+
+
+            $table->string('formulario')->nullable();
+
+
+            $table->longText('causa_ideas')->nullable();
             $table->longText('ideas')->nullable();
 
+            $table->longText('problema_porque')->nullable();
             $table->string('porque_1')->nullable();
             $table->string('porque_2')->nullable();
             $table->string('porque_3')->nullable();
             $table->string('porque_4')->nullable();
             $table->string('porque_5')->nullable();
+            $table->longText('causa_porque')->nullable();
 
+            $table->longText('problema_diagrama')->nullable();
             $table->string('control_a')->nullable();
             $table->string('control_b')->nullable();
             $table->string('proceso_a')->nullable();

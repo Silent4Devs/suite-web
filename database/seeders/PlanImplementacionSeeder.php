@@ -17,7 +17,7 @@ class PlanImplementacionSeeder extends Seeder
     public function run()
     {
 
-        $planbs = [
+        /*$planbs = [
             [
                 "id" => "1",
                 "end" => Carbon::now()->timestamp * 1000,
@@ -502,7 +502,7 @@ class PlanImplementacionSeeder extends Seeder
             ],
 
 
-        ];
+        ];*/
 
         PlanImplementacion::create([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
             'tasks' => [],
