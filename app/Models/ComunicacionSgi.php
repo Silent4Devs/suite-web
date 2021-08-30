@@ -17,8 +17,14 @@ class ComunicacionSgi extends Model implements HasMedia
 
     public $table = 'comunicacion_sgis';
 
-    protected $appends = [
-        'archivo',
+    // protected $appends = [
+    //     'archivo',
+    // ];
+
+    const TipoSelect = [
+    'Carrusel' => 'Carrusel',
+    'Blog'     => 'Blog',
+    'Ambos'    => 'Ambos',
     ];
 
     public static $searchable = [
@@ -32,7 +38,14 @@ class ComunicacionSgi extends Model implements HasMedia
     ];
 
     protected $fillable = [
+
         'descripcion',
+        'id_publico',
+        'fecha_publicacion',
+        'titulo',
+        'publicar_en',
+        'habilitar',
+        'link',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -58,5 +71,13 @@ class ComunicacionSgi extends Model implements HasMedia
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+    public function documentos_comunicacion()
+    {
+        return $this->hasMany(DocumentoComunicacionSgis::class);
+    }
+    public function imagenes_comunicacion()
+    {
+        return $this->hasMany(ImagenesComunicacionSgis::class);
     }
 }
