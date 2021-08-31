@@ -381,7 +381,7 @@
                 url: "{{ route('admin.planTrabajoBase.saveProyect') }}",
                 data: {
                     _token: "{{ csrf_token() }}",
-                    prj: response,
+                    prj: JSON.stringify(response),
                 },
                 dataType: "JSON",
                 success: function(response) {

@@ -51,7 +51,8 @@ class PlanTrabajoBaseController extends Controller
     public function saveImplementationProyect(Request $request)
     {
         $project =  $request->prj;
-        
+        $project = (array)json_decode($project);
+
         if (PlanImplementacion::find(1)) {
             $tasks = isset($project['tasks']) ? $project['tasks'] : [];
             PlanImplementacion::find(1)->update([
@@ -94,27 +95,22 @@ class PlanTrabajoBaseController extends Controller
             $task->canDelete = $task->canDelete == 'true' ? true : false;
             isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
             isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
-            $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
-            $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
-            $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
-            $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+            if (isset($task->canAddIssue)) {
+                $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
+            }
+            if (isset($task->endIsMilestone)) {
+                $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
+            }
+            if (isset($task->startIsMilestone)) {
+                $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
+            }
+            if (isset($task->progressByWorklog)) {
+                $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+            }
         }
         $implementacion->tasks = $tasks;
 
         return $implementacion;
-        // $gantt_path = 'storage/gantt/';
-        // $path = public_path($gantt_path);
-        // $files = glob($path . "gantt_inicial*.json");
-        // $version_gantt = [];
-        // sort($files, SORT_NATURAL | SORT_FLAG_CASE);
-        // foreach ($files as $clave => $valor) {
-        //     array_push($version_gantt, $valor);
-        // }
-
-        // $path_g = $path . 'gantt_inicial.json';
-        // $json_code =  json_decode(file_get_contents($path_g), true);
-
-        // return $json_code;
     }
 
 
