@@ -505,39 +505,6 @@
 
                         @empty
                         <p>Sin documentos registrados</p>
-
-
-
-                        <div class="doc_publicado">
-                            <div class="icon_doc">
-                                <a href="" title="Ver documento">
-                                    <i class="fas fa-file-pdf"></i>
-                                </a>
-                            </div>
-                            <div class="text_doc">
-                                <h5></h5>
-                                <p>
-                                    
-                                </p>
-                                <p>
-                                    <span class="badge badge-dark"
-                                        style="text-transform: capitalize">{{ $documento->tipo }}</span>
-                                    @if ($documento->macroproceso_id)
-                                        <span class="badge badge-primary"
-                                            style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
-                                    @endif
-                                    @if ($documento->proceso_id)
-                                        <span class="badge badge-success"
-                                            style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
-                                    @endif
-                                </p>
-                            </div>
-                            <div class="opciones_doc">
-                                <h6><strong>Responsable:</strong></h6>
-                                <img src="{{asset('storage/empleados/imagenes/'.$documento->responsable->foto)}}" class="img_empleado" title="{{$documento->responsable->name}}"><br/>
-                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver documento</a>
-                            </div>
-                        </div>
                     @endforelse
                 </div>
 
