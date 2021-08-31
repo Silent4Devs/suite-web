@@ -74,10 +74,10 @@ class ComunicacionSgi extends Model implements HasMedia
     }
     public function documentos_comunicacion()
     {
-        return $this->hasMany(DocumentoComunicacionSgis::class);
+        return $this->hasMany(DocumentoComunicacionSgis::class, 'comunicacion_id', 'id');
     }
     public function imagenes_comunicacion()
     {
-        return $this->hasMany(ImagenesComunicacionSgis::class);
+        return $this->hasMany(ImagenesComunicacionSgis::class, 'comunicacion_id', 'id');
     }
 }

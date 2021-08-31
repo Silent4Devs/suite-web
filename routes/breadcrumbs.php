@@ -83,18 +83,18 @@ Breadcrumbs::for('admin.alcance-sgsis.create', function ($trail) {
  	// $trail->push('', route('admin..index'));
 // });
 
-
-
 Breadcrumbs::for('admin.comiteseguridads.index', function ($trail) {
  	$trail->parent('admin.iso27001.index');
     $trail->push('Liderazgo',route('admin.iso27001.index').'#liderazgo');
  	$trail->push('Conformación del Comité de Seguridad', route('admin.comiteseguridads.index'));
 });
-
-
 Breadcrumbs::for('admin.comiteseguridads.create', function ($trail) {
     $trail->parent('admin.comiteseguridads.index');
     $trail->push('Formulario', route('admin.comiteseguridads.create'));
+});
+Breadcrumbs::for('admin.comiteseguridads.visualizacion', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Comite de Seguridad');
 });
 
 
@@ -131,6 +131,11 @@ Breadcrumbs::for('admin.politica-sgsis.index', function ($trail) {
 Breadcrumbs::for('admin.politica-sgsis.create', function ($trail) {
     $trail->parent('admin.politica-sgsis.index');
     $trail->push('Formulario', route('admin.politica-sgsis.create'));
+});
+
+Breadcrumbs::for('admin.politicaSgsis.visualizacion', function ($trail) {
+    $trail->push('Portal de comunicación',route('admin.portal-comunicacion.index'));
+    $trail->push('Politica SGSI');
 });
 
 
@@ -438,6 +443,23 @@ Breadcrumbs::for('admin.registromejoras.create', function ($trail) {
 
 
 
+
+
+Breadcrumbs::for('admin.portal-comunicacion.reportes', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Reportes');
+});
+
+
+Breadcrumbs::for('admin.portal-comunicacion.sedes-organizacion', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Sedes');
+});
+
+Breadcrumbs::for('admin.comunicacion-sgis.show', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Comunicados');
+});
 
 
 

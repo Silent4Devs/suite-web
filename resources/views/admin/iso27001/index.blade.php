@@ -182,7 +182,7 @@
                 <a href="#" id="operacion" data-tabs="s5" class="tabs ventana_cerrar"><i class="fa-fw fas fa-briefcase"></i><br> Operación </a>
                 <a href="#" id="evaluacion" data-tabs="s6" class="tabs ventana_cerrar"><i class="fa-fw fas fa-file-signature"></i><br> Evaluación</a>
                 <a href="#" id="mejora" data-tabs="s7" class="tabs ventana_cerrar"><i class="fa-fw fas fa-infinity"></i><br> Mejora</a>
-                <a href="#" id="controles" data-tabs="s8" class="tabs ventana_cerrar"><i class="fas fa-tasks"></i><br>Controles </a>
+                {{-- <a href="#" id="controles" data-tabs="s8" class="tabs ventana_cerrar"><i class="fas fa-tasks"></i><br>Controles </a> --}}
             </div>
 
             <div class="caja_caja_secciones">
@@ -395,25 +395,19 @@
                                     <li><a href="{{ route('admin.material-sgsis.index') }}">
                                             <div>
                                                 <i class="fas fa-cubes"></i>
-                                                Material SGI
+                                                Material SGSI
                                             </div>
                                         </a></li>
-                                    <li><a href="{{ route('admin.material-iso-veinticientes.index') }}">
+                                    {{-- <li><a href="{{ route('admin.material-iso-veinticientes.index') }}">
                                             <div>
                                                 <i class="far fa-object-ungroup"></i>
                                                 Material ISO 27001: 2013
                                             </div>
-                                        </a></li>
+                                        </a></li> --}}
                                     <li><a href="{{ route('admin.comunicacion-sgis.index') }}">
                                             <div>
                                                 <i class="far fa-comments"></i>
                                                 Comunicación SGI
-                                            </div>
-                                        </a></li>
-                                    <li><a href="{{ route('admin.politica-del-sgsi-soportes.index') }}">
-                                            <div>
-                                                <i class="fas fa-landmark"></i>
-                                                Política SGI
                                             </div>
                                         </a></li>
                                     <li><a href="{{ route('admin.control-accesos.index') }}">
@@ -422,7 +416,7 @@
                                                 Control de Accesos
                                             </div>
                                         </a></li>
-                                    <li><a href="{{ route('admin.informacion-documetadas.index') }}">
+                                    <li><a href="{{ asset('admin/documentos/publicados') }}">
                                             <div>
                                                 <i class="far fa-folder-open"></i>
                                                 Infomación Documentada
@@ -452,7 +446,7 @@
                                     <li><a href="{{ route('admin.planificacion-controls.index') }}">
                                             <div>
                                                 <i class="fas fa-clipboard-list"></i>
-                                                Planificaión y Control
+                                                Planificación y Control
                                             </div>
                                         </a></li>
                                     <li><a href="{{ route('admin.tratamiento-riesgos.index') }}">
@@ -488,18 +482,18 @@
                                                 Indicadores SGSI
                                             </div>
                                         </a></li>
-                                    <li><a href="{{ route('admin.incidentes-de-seguridads.index') }}">
+                                    <li><a href="{{ route('admin.desk.index') }}">
                                             <div>
                                                 <i class="fas fa-lock"></i>
                                                 Incidentes de Seguridad
                                             </div>
                                         </a></li>
-                                    <li><a href="{{ route('admin.indicadorincidentessis.index') }}">
+                                    {{-- <li><a href="{{ route('admin.indicadorincidentessis.index') }}">
                                             <div>
                                                 <i class="fas fa-file-contract"></i>
                                                 Indicador Incidentes
                                             </div>
-                                        </a></li>
+                                        </a></li> --}}
                                     <li><a href="{{ route('admin.auditoria-anuals.index') }}">
                                             <div>
                                                 <i class="far fa-calendar-alt"></i>
@@ -574,7 +568,7 @@
                             </div>
                         </div>
                     @endcan
-                    <section id="s8" data-id="controles" class="caja">
+                    {{-- <section id="s8" data-id="controles" class="caja">
                         <div class="mt-5">
                             <ul>
                                 <li><a href="#">
@@ -663,7 +657,7 @@
                                     </a></li>
                             </ul>
                         </div>
-                    </section>
+                    </section> --}}
                 </div>
             </div>
         </div>
