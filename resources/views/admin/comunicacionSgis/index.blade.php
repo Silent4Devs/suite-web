@@ -20,7 +20,7 @@
                             {{ trans('cruds.comunicacionSgi.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('Titulo') }}
+                            {{ trans('Título') }}
                         </th>
                         <th>
                             {{ trans('cruds.comunicacionSgi.fields.archivo') }}
