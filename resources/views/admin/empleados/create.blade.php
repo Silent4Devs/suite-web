@@ -241,7 +241,7 @@
                         <div class="caja_caja_secciones">
                             <div class="caja_secciones">
                                 <section id="contenido1" class="caja_tab_reveldada">
-                                    <div class="row">
+                                    <div>
                                         <div class="row">
                                             <div class="form-group col-sm-6">
                                                 <label class="required" for="name"><i
@@ -578,7 +578,7 @@
                                 {{-- <div class="px-4 mt-4 mb-3 tab-pane fade" id="participantes" role="tabpanel"
                                 aria-labelledby="participantes-tab"> --}}
                                 <section id="contenido2" class="mt-4">
-                                    <div class="row">
+                                    <div>
                                         <div class="row">
                                             <div class="form-group col-sm-12">
                                                 <label for="resumen"><i
@@ -987,23 +987,24 @@
 
                                             </div>
                                         </div>
-
                                     </div>
                                 </section>
 
                                 {{-- </div> --}}
 
-                                <div class="text-right form-group col-12">
+                                
+
+                                {{-- </div> --}}
+                            </div>
+                        </div>
+
+                        <div class="text-right form-group col-12">
                                     <a href="{{ redirect()->getUrlGenerator()->previous() }}"
                                         class="btn_cancelar">Cancelar</a>
                                     <button class="btn btn-danger" type="submit" id="btnGuardar">
                                         {{ trans('global.save') }}
                                     </button>
                                 </div>
-
-                                {{-- </div> --}}
-                            </div>
-                        </div>
                     </div>
                 </div>
         </div>
