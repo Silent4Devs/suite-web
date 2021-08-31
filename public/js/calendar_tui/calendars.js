@@ -48,32 +48,35 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = 'Actividades';
+    calendar.name = 'Mis Actividades';
     calendar.color = '#ffffff';
     calendar.bgColor = '#9e5fff';
     calendar.dragBgColor = '#9e5fff';
     calendar.borderColor = '#9e5fff';
     addCalendar(calendar);
 
+
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = 'Auditorias';
+    calendar.name = 'Mis Cursos';
+    calendar.color = '#ffffff';
+    calendar.bgColor = '#ff5583';
+    calendar.dragBgColor = '#ff5583';
+    calendar.borderColor = '#ff5583';
+    addCalendar(calendar);
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = 'Mis Auditorias';
     calendar.color = '#ffffff';
     calendar.bgColor = '#00a9ff';
     calendar.dragBgColor = '#00a9ff';
     calendar.borderColor = '#00a9ff';
     addCalendar(calendar);
 
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = 'Cursos';
-    calendar.color = '#ffffff';
-    calendar.bgColor = '#ff5583';
-    calendar.dragBgColor = '#ff5583';
-    calendar.borderColor = '#ff5583';
-    addCalendar(calendar);
+    
 
     
 

@@ -1,17 +1,16 @@
-nde@extends('layouts.admin')
+@extends('layouts.admin')
 @section('content')
 
 
     <style type="text/css">
-
-        :root{
+        :root {
             --color1: #0034c9;
             --color2: #c900c6;
             --color3: #c90034;
         }
 
 
-        body{
+        body {
             background-color: #fff;
         }
 
@@ -19,17 +18,22 @@ nde@extends('layouts.admin')
             pointer-events: none;
             cursor: default;
         }
-        .c-main{
+
+        .c-main {
             overflow-y: scroll !important;
         }
-        #caja_mapa_procesos{
+
+        #caja_mapa_procesos {
             width: 100%;
             position: relative;
         }
-        .caja2, .caja_central{
+
+        .caja2,
+        .caja_central {
             border-radius: 10px;
         }
-        .caja2{
+
+        .caja2 {
             box-shadow: 0px 0px 0px 1px #bbb;
             height: 500px;
             position: fixed;
@@ -39,7 +43,8 @@ nde@extends('layouts.admin')
             align-items: center;
             justify-content: center;
         }
-        .caja2 p{
+
+        .caja2 p {
             transform: rotate(90deg);
             min-width: 400px !important;
             height: 20px;
@@ -48,7 +53,8 @@ nde@extends('layouts.admin')
             align-items: center;
             justify-content: center;
         }
-        .caja_central{
+
+        .caja_central {
             width: calc(100% - 270px);
             position: absolute;
             left: 135px;
@@ -56,20 +62,29 @@ nde@extends('layouts.admin')
         }
 
 
-        .contenido_h5_and_grupos{
+        .contenido_h5_and_grupos {
             margin-top: 35px;
         }
-        .contenido_h5_and_grupos:first-child{
+
+        .contenido_h5_and_grupos:first-child {
             margin-top: -15px;
         }
 
 
 
-        .caja_central .contenido_h5_and_grupos:nth-child(n) h5{background-color: var(--color1);}
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) h5{background-color: var(--color2);}
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) h5{background-color: var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(n) h5 {
+            background-color: var(--color1);
+        }
 
-        .caja_central h5{
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) h5 {
+            background-color: var(--color2);
+        }
+
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) h5 {
+            background-color: var(--color3);
+        }
+
+        .caja_central h5 {
             width: 300px;
             margin: auto;
             margin-bottom: -10px;
@@ -78,19 +93,27 @@ nde@extends('layouts.admin')
             text-align: center;
             position: relative;
             z-index: 2;
-            font-size:12pt;
+            font-size: 12pt;
         }
 
 
 
 
 
-        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos{border: 1px solid var(--color1);}
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos{border: 1px solid var(--color2);}
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos{border: 1px solid var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos {
+            border: 1px solid var(--color1);
+        }
+
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos {
+            border: 1px solid var(--color2);
+        }
+
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos {
+            border: 1px solid var(--color3);
+        }
 
 
-        .caja_central .caja_grupos{
+        .caja_central .caja_grupos {
             background-color: #f9f9f9;
             text-align: center;
             padding: 40px 0;
@@ -105,21 +128,45 @@ nde@extends('layouts.admin')
         }
 
 
-        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p{color: var(--color1);}
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p{color: var(--color2);}
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p{color: var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p {
+            color: var(--color1);
+        }
 
-        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p:hover{border: 1px solid var(--color1);}
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p:hover{border: 1px solid var(--color2);}
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p:hover{border: 1px solid var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p {
+            color: var(--color2);
+        }
 
-        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p.activo{background-color: var(--color1);}
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p.activo{background-color: var(--color2);}
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p.activo{background-color: var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p {
+            color: var(--color3);
+        }
 
-        .caja_central p{
-            width:200px;
-            height:80px;
+        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p:hover {
+            border: 1px solid var(--color1);
+        }
+
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p:hover {
+            border: 1px solid var(--color2);
+        }
+
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p:hover {
+            border: 1px solid var(--color3);
+        }
+
+        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_grupos p.activo {
+            background-color: var(--color1);
+        }
+
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_grupos p.activo {
+            background-color: var(--color2);
+        }
+
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_grupos p.activo {
+            background-color: var(--color3);
+        }
+
+        .caja_central p {
+            width: 200px;
+            height: 80px;
             padding: 10px;
             display: inline-block;
             border: 1px solid #ccc;
@@ -128,47 +175,61 @@ nde@extends('layouts.admin')
             border-radius: 10px;
             cursor: pointer;
             text-decoration: none;
-            overflow-y:auto;
-            margin-right:10px;
+            overflow-y: auto;
+            margin-right: 10px;
         }
-        .caja_central span{
+
+        .caja_central span {
             width: auto;
             height: auto;
             display: inline-block;
             margin: 0;
             padding: 0;
         }
-        .caja_central p:hover{
+
+        .caja_central p:hover {
             border: 1px solid #1255DB;
         }
-        .caja_central p.activo{
+
+        .caja_central p.activo {
             color: #fff !important;
             background-color: #1255DB;
             border: 1px solid #fff;
         }
 
 
-        .caja_central::-webkit-scrollbar{
+        .caja_central::-webkit-scrollbar {
             width: 7px;
         }
-        .caja_central::-webkit-scrollbar-track{
+
+        .caja_central::-webkit-scrollbar-track {
             background-color: rgba(0, 0, 0, 0);
         }
-        .caja_central::-webkit-scrollbar-thumb{
+
+        .caja_central::-webkit-scrollbar-thumb {
             background-color: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
         }
-        .caja_central::-webkit-scrollbar-thumb:hover{
+
+        .caja_central::-webkit-scrollbar-thumb:hover {
             background-color: rgba(0, 0, 0, 0.3);
         }
 
 
 
-        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_procesos_dinamica{border:1px solid var(--color1);}
-        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_procesos_dinamica{border:1px solid var(--color2);}
-        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_procesos_dinamica{border:1px solid var(--color3);}
+        .caja_central .contenido_h5_and_grupos:nth-child(n) .caja_procesos_dinamica {
+            border: 1px solid var(--color1);
+        }
 
-        .caja_procesos_dinamica{
+        .caja_central .contenido_h5_and_grupos:nth-child(2n) .caja_procesos_dinamica {
+            border: 1px solid var(--color2);
+        }
+
+        .caja_central .contenido_h5_and_grupos:nth-child(3n) .caja_procesos_dinamica {
+            border: 1px solid var(--color3);
+        }
+
+        .caja_procesos_dinamica {
             width: 90%;
             padding: 20px 0;
             height: auto;
@@ -181,18 +242,21 @@ nde@extends('layouts.admin')
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
         }
-        .caja_revelada{
+
+        .caja_revelada {
             display: block !important;
             position: relative;
             animation: 0.3s caja_revelada;
             z-index: 0;
         }
-        @keyframes caja_revelada{
-            0%{
+
+        @keyframes caja_revelada {
+            0% {
                 opacity: 0;
                 margin-top: -70px;
             }
-            100%{
+
+            100% {
                 opacity: 1;
                 margin-top: 0px;
             }
@@ -200,18 +264,34 @@ nde@extends('layouts.admin')
 
 
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) .macro_a a{color: var(--color1) !important;}
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) .macro_a a{color: var(--color2) !important;}
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) .macro_a a{color: var(--color3) !important;}
+        .caja_central .contenido_h3_and_grupos:nth-child(n) .macro_a a {
+            color: var(--color1) !important;
+        }
 
-        .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_procesos_dinamica .macro_a:hover{border:1px solid var(--color1);}
-        .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_procesos_dinamica .macro_a:hover{border:1px solid var(--color2);}
-        .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_procesos_dinamica .macro_a:hover{border:1px solid var(--color3);}
+        .caja_central .contenido_h3_and_grupos:nth-child(2n) .macro_a a {
+            color: var(--color2) !important;
+        }
+
+        .caja_central .contenido_h3_and_grupos:nth-child(3n) .macro_a a {
+            color: var(--color3) !important;
+        }
+
+        .caja_central .contenido_h3_and_grupos:nth-child(n) .caja_procesos_dinamica .macro_a:hover {
+            border: 1px solid var(--color1);
+        }
+
+        .caja_central .contenido_h3_and_grupos:nth-child(2n) .caja_procesos_dinamica .macro_a:hover {
+            border: 1px solid var(--color2);
+        }
+
+        .caja_central .contenido_h3_and_grupos:nth-child(3n) .caja_procesos_dinamica .macro_a:hover {
+            border: 1px solid var(--color3);
+        }
 
 
-        .caja_procesos_dinamica .macro_a{
-            width:200px;
-            height:80px;
+        .caja_procesos_dinamica .macro_a {
+            width: 200px;
+            height: 80px;
             padding: 10px;
             display: inline-block;
             border: 1px solid #ccc;
@@ -220,60 +300,64 @@ nde@extends('layouts.admin')
             border-radius: 10px;
             cursor: pointer;
             text-decoration: none;
-            overflow-y:auto;
-            margin-right:10px;
+            overflow-y: auto;
+            margin-right: 10px;
         }
 
-        .caja_procesos_dinamica a{
+        .caja_procesos_dinamica a {
 
-            text-decoration:none;
+            text-decoration: none;
         }
 
 
 
-        .macro_a::-webkit-scrollbar, .caja_central p::-webkit-scrollbar {
-        width: 7px;
+        .macro_a::-webkit-scrollbar,
+        .caja_central p::-webkit-scrollbar {
+            width: 7px;
         }
 
 
 
         /* Track */
-        .macro_a::-webkit-scrollbar-track, .caja_central p::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0);
+        .macro_a::-webkit-scrollbar-track,
+        .caja_central p::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0);
         }
 
 
 
         /* Handle */
-        .macro_a::-webkit-scrollbar-thumb, .caja_central p::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 50px;
+        .macro_a::-webkit-scrollbar-thumb,
+        .caja_central p::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50px;
         }
 
 
 
         /* Handle on hover */
-        .macro_a::-webkit-scrollbar-thumb:hover, .caja_central p::-webkit-scrollbar-thumb:hover {
-        background: rgba(0, 0, 0, 0.5);
+        .macro_a::-webkit-scrollbar-thumb:hover,
+        .caja_central p::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
         }
 
-        .pendiente{
+        .pendiente {
 
-            display:inline-block;
-            width:100%;
-            text-align:right;
+            display: inline-block;
+            width: 100%;
+            text-align: right;
 
         }
 
     </style>
 
-    @if($exist_no_publicado)
-    <div class="pendiente">
-        <i class="fas fa-circle" style="color:yellow"></i>  Pendiente de aprobación
-    </div>
+    @if ($exist_no_publicado)
+        <div class="pendiente">
+            <i class="fas fa-circle" style="color:yellow"></i> Pendiente de aprobación
+        </div>
     @endif
 
-	<div id="caja_mapa_procesos" style="margin-top:30px;">
+    <div id="caja_mapa_procesos" style="margin-top:30px;">
 
         <div class="caja2">
             <p>Necesidades del cliente</p>
@@ -281,28 +365,30 @@ nde@extends('layouts.admin')
         {{-- <i class="fas fa-compress-arrows-alt icono_contraer"></i> --}}
 
         <div class="caja_central">
-            @foreach($grupos_mapa as $grupo_map)
+            @foreach ($grupos_mapa as $grupo_map)
                 <div class="contenido_h5_and_grupos">
-                    <h5>{{$grupo_map->nombre }}</h5>
+                    <h5>{{ $grupo_map->nombre }}</h5>
                     <div class="caja_grupos">
-                    @forelse($grupo_map->macroprocesos as $macro_map)
-                        <span id="span_caja_macro{{$macro_map->id}}">
-                            <p>{{$macro_map->nombre}}</p>
-                        </span>
-                    @empty
-                        <a href="{{ asset('admin/macroprocesos') }}">
-                             Registrar macroprocesos
-                        </a>
-                    @endforelse
+                        @forelse($grupo_map->macroprocesos as $macro_map)
+                            <span id="span_caja_macro{{ $macro_map->id }}">
+                                <p>{{ $macro_map->nombre }}</p>
+                            </span>
+                        @empty
+                            <a href="{{ asset('admin/macroprocesos') }}">
+                                Registrar macroprocesos
+                            </a>
+                        @endforelse
                     </div>
 
 
-                    @foreach($grupo_map->macroprocesos as $macro_map)
-                        <div id="div_caja_macro{{$macro_map->id}}" class="caja_procesos_dinamica">
+                    @foreach ($grupo_map->macroprocesos as $macro_map)
+                        <div id="div_caja_macro{{ $macro_map->id }}" class="caja_procesos_dinamica">
                             @forelse($macro_map->procesos as $proceso_map)
-                                <div class="macro_a" style="{{$proceso_map->estatus=='2'?'border:2px solid yellow; color:black !important':''}}">
-                                    <a class="{{$proceso_map->estatus=='2'?'not-active':''}}" href="{{route("admin.procesos.obtenerDocumentoProcesos",$proceso_map->documento_id)}}">
-                                        {{$proceso_map->nombre}}
+                                <div class="macro_a"
+                                    style="{{ $proceso_map->estatus == '2' ? 'border:2px solid yellow; color:black !important' : '' }}">
+                                    <a class="{{ $proceso_map->estatus == '2' ? 'not-active' : '' }}"
+                                        href="{{ route('admin.procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
+                                        {{ $proceso_map->nombre }}
                                     </a>
                                 </div>
                             @empty
@@ -339,7 +425,7 @@ nde@extends('layouts.admin')
 
 @section('scripts')
     <script type="text/javascript">
-        $(".caja_central p").click(function(){
+        $(".caja_central p").click(function() {
             $("span p").removeClass("activo");
             $("span:hover p").addClass("activo");
         });
@@ -347,14 +433,16 @@ nde@extends('layouts.admin')
 
 
     <script type="text/javascript">
-        @foreach($grupos_mapa as $grupo_map) @foreach($grupo_map->macroprocesos as $macro_map)
-            $("#span_caja_macro{{$macro_map->id}}").click(function(){
+        @foreach ($grupos_mapa as $grupo_map)
+            @foreach ($grupo_map->macroprocesos as $macro_map)
+                $("#span_caja_macro{{ $macro_map->id }}").click(function(){
                 $(".caja_revelada").removeClass("caja_revelada");
-                $("#div_caja_macro{{$macro_map->id}}").addClass("caja_revelada");
-            });
-        @endforeach @endforeach
+                $("#div_caja_macro{{ $macro_map->id }}").addClass("caja_revelada");
+                });
+            @endforeach
+        @endforeach
 
-        $(".icono_contraer").click(function(){
+        $(".icono_contraer").click(function() {
             $(".caja_revelada").removeClass("caja_revelada");
             $("span p").removeClass("activo");
         });

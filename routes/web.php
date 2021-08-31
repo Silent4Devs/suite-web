@@ -26,6 +26,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
 
+
+    Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
     Route::resource('portal-comunicacion', 'PortalComunicacionController');
 
     Route::post('plantTrabajoBase/bloqueo/mostrar', 'LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');
@@ -215,6 +217,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Comiteseguridads
     Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');
+
+    Route::get('comiteseguridads/visualizacion', 'ComiteseguridadController@visualizacion');
+
     Route::resource('comiteseguridads', 'ComiteseguridadController');
 
     // Minutasaltadireccions
@@ -236,7 +241,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Politica Sgsis
     Route::delete('politica-sgsis/destroy', 'PoliticaSgsiController@massDestroy')->name('politica-sgsis.massDestroy');
+
+    Route::get('politica-sgsis/visualizacion', 'PoliticaSgsiController@visualizacion')->name('politica-sgsis/visualizacion');
+
     Route::resource('politica-sgsis', 'PoliticaSgsiController');
+
+
+
 
     // Roles Responsabilidades
     Route::delete('roles-responsabilidades/destroy', 'RolesResponsabilidadesController@massDestroy')->name('roles-responsabilidades.massDestroy');

@@ -368,6 +368,31 @@
             width: 100%;
         }
 
+
+
+
+
+        /*scroll style*/
+
+        .scroll_estilo::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        /* Track */
+        .scroll_estilo::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0);
+        }
+
+        /* Handle */
+        .scroll_estilo::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50px;
+        }
+
+        /* Handle on hover */
+        .scroll_estilo::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
     </style>
 
 

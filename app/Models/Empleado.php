@@ -249,6 +249,16 @@ class Empleado extends Model
         return $this->hasMany(EducacionEmpleados::class);
     }
 
+    public function empleado_documentos()
+    {
+        return $this->hasMany(EvidenciasDocumentosEmpleados::class);
+    }
+
+    public function empleado_documentos_certificados()
+    {
+        return $this->hasMany(EvidenciasDocumentosEmpleados::class);
+    }
+
 
     public function foto_organizacion()
     {

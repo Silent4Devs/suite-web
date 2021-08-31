@@ -30,9 +30,11 @@ class EvidenciasDocumentosEmpleados extends Model
 
 	];
 
-    public function evidencias_documentos(){
+    public function empleados_documentos(){
 
         return $this->belongsTo(Empleado::class,'empleado_id');
 
     }
+
+
 }
