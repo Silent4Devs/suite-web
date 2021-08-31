@@ -12,8 +12,18 @@
         <form method="POST" action="{{ route("admin.material-sgsis.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-12">
-                <label class="required" for="objetivo"><i class="fas fa-bullseye  iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.objetivo') }}</label>
-                <input class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" type="text" name="objetivo" id="objetivo" value="{{ old('objetivo', '') }}" required>
+                <label class="required" for="nombre"><i class="fas fa-file  iconos-crear"></i>Nombre del material de capacitación</label>
+                <input class="form-control{{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
+                @if($errors->has('nombre'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('nombre') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
+            </div>
+            <div class="form-group col-12">
+                <label class="form-label"><i class="fas fa-bullseye  iconos-crear"></i>Objetivo</label>
+                <textarea class="form-control{{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo" id="objetivo" value="{{ old('objetivo', '') }}" required></textarea>
                 @if($errors->has('objetivo'))
                     <div class="invalid-feedback">
                         {{ $errors->first('objetivo') }}
@@ -66,8 +76,8 @@
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.tipoimparticion_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label for="fechacreacion_actualizacion"> <i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.fechacreacion_actualizacion') }}</label>
-                <input class="form-control date {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}" type="text" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion" value="{{ old('fechacreacion_actualizacion') }}">
+                <label for="fechacreacion_actualizacion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha de creación</label>
+                <input class="form-control {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}" type="date" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion" value="{{ old('fechacreacion_actualizacion') }}">
                 @if($errors->has('fechacreacion_actualizacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechacreacion_actualizacion') }}
@@ -76,7 +86,7 @@
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.fechacreacion_actualizacion_helper') }}</span>
             </div>
             <div class="form-group col-12">
-                <label for="archivo"><i class="far fa-file iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.archivo') }}</label>
+                <label for="archivo"><i class="far fa-file iconos-crear"></i>Material(Archivo PDF)</label>
                 <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
                 </div>
                 @if($errors->has('archivo'))

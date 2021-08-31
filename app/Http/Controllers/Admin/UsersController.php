@@ -205,9 +205,9 @@ class UsersController extends Controller
             $request->validate([
                 'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado']
             ]);
-            $usuario = User::where('id', $request->user_id)->first();
+            $usuario = User::find(intval($request->user_id));
             $usuario->update([
-                'n_empleado' => $request->n_empleado,
+                'n_empleado' => intval($request->n_empleado),
             ]);
 
             return response()->json(['success' => true]);

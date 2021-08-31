@@ -87,7 +87,7 @@ class MaterialSgsiController extends Controller
         return view('admin.materialSgsis.create', compact('arearesponsables'));
     }
 
-    public function store(StoreMaterialSgsiRequest $request)
+    public function store(Request $request)
     {
         $materialSgsi = MaterialSgsi::create($request->all());
 

@@ -6,6 +6,7 @@ use Gate;
 use App\Models\Team;
 use App\Models\Empleado;
 use App\Models\PoliticaSgsi;
+use App\Models\organizacion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
@@ -147,5 +148,15 @@ class PoliticaSgsiController extends Controller
         PoliticaSgsi::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+
+    public function visualizacion(){
+
+        $politicaSgsis = PoliticaSgsi::first();
+
+        $organizacions = Organizacion::first();
+
+        return view('admin.politicaSgsis.visualizacion', compact('politicaSgsis'));
     }
 }

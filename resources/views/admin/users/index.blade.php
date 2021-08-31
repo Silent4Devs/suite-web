@@ -321,9 +321,9 @@
 
                             let htmlBotones = `
                                 <div class="btn-group">
-                                    ${!row.n_empleado ? `<button class="btn btn-sm" onclick="AbrirModal('${data}');">
-                                                                                                                                                                <i class="fas fa-user-tag"></i>
-                                                                                                                                                            </button>` : ''}
+                                    <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm" onclick="AbrirModal('${data}');">
+                                        <i class="fas fa-user-tag"></i>
+                                    </button>
                                     <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>                                
                                     <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
                                     <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>                                
@@ -346,8 +346,8 @@
                                                     @foreach ($empleados as $empleado)
                                                         <option value="{{ $empleado->n_empleado }}">{{ $empleado->name }}</option>
                                                     @endforeach
-                                                </select>
-                                                <span class="n_empleado_error errores text-danger text-sm"></span>
+                                                </select>                                               
+                                                <span class="text-sm n_empleado_error errores text-danger"></span>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -429,6 +429,7 @@
 
             window.VincularEmpleado = function(nombre, user_id) {
                 let n_empleado = $("#n_empleado").val();
+                console.log(n_empleado);
                 $.ajax({
                     type: "POST",
                     url: "/admin/users/vincular",
@@ -453,6 +454,12 @@
                             `El usuario: ${nombre} ha sido vinculado`,
                             'success'
                         )
+                        table.ajax.reload();
+                        $(`#vincularEmpleado${user_id}`).modal('hide')
+                        $('.modal-backdrop').hide();
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
                     },
                     error: function(error) {
                         $.each(error.responseJSON.errors, function(indexInArray,

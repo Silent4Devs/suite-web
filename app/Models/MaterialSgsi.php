@@ -40,6 +40,7 @@ class MaterialSgsi extends Model implements HasMedia
 
     protected $fillable = [
         'objetivo',
+        'nombre',
         'personalobjetivo',
         'arearesponsable_id',
         'tipoimparticion',
@@ -59,7 +60,7 @@ class MaterialSgsi extends Model implements HasMedia
 
     protected function serializeDate(DateTimeInterface $date)
     {
-        return $date->format('Y-m-d H:i:s');
+        return $date->format('d-m-Y');
     }
 
     public function registerMediaConversions(Media $media = null): void
@@ -73,15 +74,9 @@ class MaterialSgsi extends Model implements HasMedia
         return $this->belongsTo(Area::class, 'arearesponsable_id');
     }
 
-    public function getFechacreacionActualizacionAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
+    
 
-    public function setFechacreacionActualizacionAttribute($value)
-    {
-        $this->attributes['fechacreacion_actualizacion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
+   
 
     public function getArchivoAttribute()
     {
