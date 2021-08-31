@@ -380,7 +380,7 @@
                                                 Capacitaciones
                                             </div>
                                         </a></li>
-                                    <li><a href="{{ route('admin.competencia.index') }}">
+                                    <li><a href="{{ route('admin.buscarCV') }}">
                                             <div>
                                                 <i class="fas fa-flag-checkered"></i>
                                                 Competencias

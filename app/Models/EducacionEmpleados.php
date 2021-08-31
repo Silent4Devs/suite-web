@@ -31,13 +31,13 @@ class EducacionEmpleados extends Model
     protected $casts = [
         'empleado_id' => 'int',
         'institucion' => 'string',
-        'carrera' => 'string',
+        'nivel' => 'string',
 	];
 
     protected $fillable = [
 		'empleado_id',
         'institucion',
-        'carrera',
+        'nivel',
         'año_inicio',
         'año_fin',
 
