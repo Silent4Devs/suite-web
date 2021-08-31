@@ -20,7 +20,7 @@
                             {{ trans('cruds.comunicacionSgi.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.comunicacionSgi.fields.descripcion') }}
+                            {{ trans('Titulo') }}
                         </th>
                         <th>
                             {{ trans('cruds.comunicacionSgi.fields.archivo') }}
@@ -181,16 +181,20 @@
                         name: 'id'
                     },
                     {
-                        data: 'descripcion',
-                        name: 'descripcion'
+                        data: 'titulo',
+                        name: 'titulo'
                     },
                     {
                         data: 'archivo',
                         name: 'archivo',
-
-                       render:function(data,type,row,meta){
+                         render:function(data,type,row,meta){
                              let archivo="";
-                             let archivos=JSON.parse(data);
+                             console.log(data);
+                             if (data !=[]) {
+
+                                let archivos=JSON.parse(data);
+
+
                                archivo=` <div class="container">
 
                                     <div class="mb-4 row">
@@ -223,8 +227,7 @@
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
                                                     <div class='carousel-item ${idx==0?"active":""}'>
-                                                        <iframe seamless class='img-size' src='{{asset("storage/documento_comunicado_SGI")}}/
-                                                        ${archivo.documento}'></iframe>
+                                                        <iframe seamless class='img-size' src='{{asset("storage/documento_comunicado_SGI")}}/${archivo.documento}'></iframe>
                                                     </div>`
                                                     })}
 
@@ -261,12 +264,9 @@
                                         </div>
                                     </div>
                                     </div>`
+                                }
                             return archivo;
-
-
-      */
-
-
+                        }
                     },
                     {
                         data: 'actions',
