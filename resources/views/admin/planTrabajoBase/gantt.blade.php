@@ -867,18 +867,23 @@
                                                         <tr>
                                                         <td  colspan="2">
                                                         <label for="status" class="">Estatus</label><br>
-                                                        <select id="status" name="status" class="taskStatus" status="(#=obj.status#)"  onchange="$(this).attr('STATUS',$(this).val());">
-                                                        <option value="STATUS_ACTIVE" class="taskStatus" status="STATUS_ACTIVE" >En Proceso</option>
-                                                        {{-- <option value="STATUS_WAITING" class="taskStatus" status="STATUS_WAITING" >En Espera</option> --}}
-                                                        <option value="STATUS_SUSPENDED" class="taskStatus" status="STATUS_SUSPENDED" >Suspendida</option>
-                                                        <option value="STATUS_DONE" class="taskStatus" status="STATUS_DONE" >Completada</option>
-                                                        <option value="STATUS_FAILED" class="taskStatus" status="STATUS_FAILED" >Con Retraso</option>
-                                                        <option value="STATUS_UNDEFINED" class="taskStatus" status="STATUS_UNDEFINED" >Sin Iniciar</option>
-                                                        </select>
+                                                         {{-- <select id="status" name="status" class="taskStatus" status="(#=obj.status#)"  onchange="$(this).attr('STATUS',$(this).val());">
+            <option value="STATUS_ACTIVE" class="taskStatus" status="STATUS_ACTIVE" >En Proceso</option>
+            <option value="STATUS_WAITING" class="taskStatus" status="STATUS_WAITING" >En Espera</option>
+            <option value="STATUS_SUSPENDED" class="taskStatus" status="STATUS_SUSPENDED" >Suspendida</option>
+            <option value="STATUS_DONE" class="taskStatus" status="STATUS_DONE" >Completada</option>
+            <option value="STATUS_FAILED" class="taskStatus" status="STATUS_FAILED" >Con Retraso</option>
+            <option value="STATUS_UNDEFINED" class="taskStatus" status="STATUS_UNDEFINED" >Sin Iniciar</option>
+            </select> --}}
+
+
+                                                        <div class="taskDivStatus" status="(#=obj.status#)" >(#=obj.status#)</div>
+
+
                                                         </td>
 
                                                         <td valign="top" nowrap>
-                                                        <label>Progreso</label><br>
+                                                        <label>Progreso(%)</label><br>
                                                         <input type="text" name="progress" id="progress" size="7" class="formElements validated percentile" autocomplete="off" maxlength="255" value="" oldvalue="1" entrytype="PERCENTILE">
                                                         </td>
                                                         </tr>

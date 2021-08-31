@@ -374,12 +374,30 @@
                         <section id="s4" data-id="soporte" class="caja">
                             <div class="mt-5">
                                 <ul>
-                                    <li><a href="{{ route('admin.recursos.index') }}">
+                                    <li ><a href="#" data-ventana="capacitacion" data-ruta="Capacitaciones" class="btn_ventana_menu">
                                             <div>
                                                 <i class="fas fa-chalkboard-teacher"></i>
                                                 Capacitaciones
                                             </div>
                                         </a></li>
+                                        <div class="ventana_menu" id="capacitacion" style="color:#008186 !important">
+                                            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitacion" style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
+                                                <h3 class="text-center"><strong>Capacitaciones</strong></h3>
+                                            <ul>
+                                                <li><a href="{{ asset('admin/categoria-capacitacion') }}">
+                                                    <div>
+                                                        <i class="fas fa-layer-group"></i>
+                                                        Crear Categorias
+                                                    </div>
+                                                </a></li>
+                                                <li><a href="{{ route('admin.recursos.index') }}">
+                                                    <div>
+                                                        <i class="fas fa-graduation-cap"></i>
+                                                        Crear Capacitación
+                                                    </div>
+                                                </a></li>
+                                            </ul>
+                                        </div>
                                     <li><a href="{{ route('admin.buscarCV') }}">
                                             <div>
                                                 <i class="fas fa-flag-checkered"></i>
@@ -714,11 +732,11 @@
     <script>
         $(".btn_ventana_menu").click(function(){
             $(".ventana_menu").fadeOut(100);
-            var id_ventana= $(".btn_ventana_menu").attr("data-ventana");
+            var id_ventana= $(".btn_ventana_menu:hover").attr("data-ventana");
             $(document.getElementById(id_ventana)).fadeIn(100);
             $(".ventana_menu").css("left","0");
             $(".ventana_menu").css("transition","0s");
-            var text_ruta= "ISO 27001 / " + $(".btn_ventana_menu").attr("data-ruta");
+            var text_ruta= "ISO 27001 / " + $(".btn_ventana_menu:hover").attr("data-ruta");
             $(".breadcrumb-item.active").html(text_ruta);
         });
         $(".btn_cerrar_ventana").click(function(){

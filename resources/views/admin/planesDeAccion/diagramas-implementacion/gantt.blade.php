@@ -716,7 +716,7 @@
                                                             </td>
 
                                                             <td valign="top" nowrap>
-                                                            <label>Progreso</label><br>
+                                                            <label>Progreso(%)</label><br>
                                                             <input type="text" name="progress" id="progress" size="7" class="formElements validated percentile" autocomplete="off" maxlength="255" value="" oldvalue="1" entrytype="PERCENTILE">
                                                             </td>
                                                             </tr>

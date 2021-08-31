@@ -27,6 +27,7 @@ use App\Models\AnalisisSeguridad;
 use Intervention\Image\Facades\Image;
 use App\Models\EvidenciasQueja;
 use App\Models\EvidenciasSeguridad;
+use App\Models\EvidenciasRiesgo;
 
 use App\Models\Activo;
 use App\Models\Documento;
@@ -57,60 +58,86 @@ class inicioUsuarioController extends Controller
         //         }
         //     });
         // }
-        $implementacion = PlanImplementacion::first();
-        if ($implementacion) {
-            $tasks = $implementacion->tasks;
-            foreach ($tasks as $task) {
-                $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
-                $task->end = intval($task->end);
-                $task->start = intval($task->start);
-                $task->canAdd = $task->canAdd == 'true' ? true : false;
-                $task->canWrite = $task->canWrite == 'true' ? true : false;
-                $task->duration = intval($task->duration);
-                $task->progress = intval($task->progress);
-                $task->canDelete = $task->canDelete == 'true' ? true : false;
-                isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
-                isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
-                $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
-                $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
-                $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
-                $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
-            }
+        $implementaciones = PlanImplementacion::get();
+        $actividades = collect();
+        if ($implementaciones) {
+            foreach($implementaciones as $implementacion){
 
-            $implementacion->tasks = $tasks;
-            // if (!isset($implementacion->assigs)) {
-            //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
-            // }
-            $actividades = collect($implementacion->tasks)->filter(function ($task) use ($empleado_id, $implementacion) {
-                if ($task->level > 1) {
-                    if (isset($task->assigs)) {
-                        $assigs = $task->assigs;
-                        $task->parent = $implementacion->parent;
-                        $task->slug = $implementacion->slug;
-                        foreach ($assigs as $assig) {
-                            if ($assig->resourceId == $empleado_id) {
-                                return $task;
+            
+                $tasks = $implementacion->tasks;
+                foreach ($tasks as $task) {
+                    $task->parent_id = $implementacion->id;
+                    $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
+                    $task->end = intval($task->end);
+                    $task->start = intval($task->start);
+                    $task->canAdd = $task->canAdd == 'true' ? true : false;
+                    $task->canWrite = $task->canWrite == 'true' ? true : false;
+                    $task->duration = intval($task->duration);
+                    $task->progress = intval($task->progress);
+                    $task->canDelete = $task->canDelete == 'true' ? true : false;
+                    isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
+                    isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
+                    $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
+                    $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
+                    $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
+                    $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+                }
+
+                $implementacion->tasks = $tasks;
+                // if (!isset($implementacion->assigs)) {
+                //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
+                // }
+                $actividades_collet = collect($implementacion->tasks)->filter(function ($task) use ($empleado_id, $implementacion) {
+                    if ($task->level > 1) {
+                        if (isset($task->assigs)) {
+                            $assigs = $task->assigs;
+                            $task->parent = $implementacion->parent;
+                            $task->slug = $implementacion->slug;
+                            foreach ($assigs as $assig) {
+                                if ($assig->resourceId == $empleado_id) {
+                                    return $task;
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
+
+                $actividades->push($actividades_collet);
+            }
         }
+        $actividades = $actividades->flatten(1);
+
+        $contador_actividades = 0; 
+
+        foreach($actividades as $actividad){
+            $progreso = $actividad->progress;
+
+            if (intval($progreso) < 100) {
+                $contador_actividades++;
+            }
+        }
+
         $auditorias_anual = AuditoriaAnual::get();
         $recursos = Recurso::whereHas('empleados', function ($query) use ($usuario) {
             $query->where('empleados.id', $usuario->id);
         })->get();
+
+        $contador_recursos = Recurso::whereHas('empleados', function ($query) use ($usuario) {
+            $query->where('empleados.id', $usuario->id);
+        })->where('fecha_fin', '>=', Carbon::now()->toDateString())->count(); 
 
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
         $revisiones = [];
         $mis_documentos = [];
         if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
+
+            $contador_revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->where('estatus', Documento::SOLICITUD_REVISION)->count();
             $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $usuario->empleado->id)->get();
         }
 
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos'));
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos'));
     }
 
     public function optenerTareas($tarea)
@@ -179,17 +206,7 @@ class inicioUsuarioController extends Controller
 
                 $image = $new_name_image;
 
-                //Usamos image_intervention para disminuir el peso de la imagen
-
-                // $img_intervention = Image::make($file);
-
                 $file->storeAs($route, $image);
-
-                // $img_intervention->resize(256, null, function ($constraint) {
-
-                //     $constraint->aspectRatio();
-
-                // })->save($route);
 
                 EvidenciasQueja::create([
                     'evidencia' => $image,
@@ -409,6 +426,32 @@ class inicioUsuarioController extends Controller
             'riesgos_id' => $riesgos->id,
             'formulario' => 'riesgo',
         ]);
+
+
+        $image = null;
+
+        if($request->file('evidencia') != null or !empty($request->file('evidencia'))){
+
+            foreach($request->file('evidencia') as $file){
+                $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+
+                $new_name_image = 'Riesgo_file_' . $riesgos->id . '_' . $name_image . '.' . $extension;
+
+                $route = 'public/evidencias_riesgos';
+
+                $image = $new_name_image;
+
+                $file->storeAs($route, $image);
+
+                EvidenciasRiesgo::create([
+                    'evidencia' => $image,
+                    'id_riesgos' => $riesgos->id,
+                ]);
+
+            }
+        }
 
         return redirect()->route('admin.inicio-Usuario.index');
     }
