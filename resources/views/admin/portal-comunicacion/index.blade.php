@@ -176,15 +176,43 @@
 
         .carousel-item{
             text-align: center;
-            background-color: #bbb;
+            background-color: #000;
         }
         .img_carrusel{
             height: 300px !important;
+            opacity: 1;
 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: all;
+        }
+        .carousel-caption{
+            z-index: 3;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+        .carousel-inner h5{
+            text-shadow: 0px 0px 3px #000 !important;
+            text-align: left;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.2);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 7px;
+            opacity: 0;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .carousel-inner:hover h5{
+            opacity: 1;
+        }
+        .carousel-inner p{
+            display: none;
         }
 
         
@@ -311,7 +339,7 @@
 
 
     <div class="card" style="box-shadow: none; background-color: transparent;">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
+        <div class="py-2 col-md-10 col-sm-9 card card-body bg-primary align-self-center "
             style="margin-top:0px !important; ">
             <h3 class="mb-2 text-center text-white"
                 style="background: #00abb2;color: white !important;padding: 5px;border-radius: 8px;"><strong>Portal de
@@ -339,40 +367,35 @@
                 <div class="col-sm-12 col-12 col-lg-6">
                     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+                            @foreach($comunicacionSgis_carrusel as $idx=>$carrusel)
+                                <li data-target="#carouselExampleCaptions" data-slide-to="{{$idx}}" class="{{ $idx == 0 ? 'active' : ''}}"></li>
+                            @endforeach
                         </ol>
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                {{-- <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Vaporwave-4K-Wallpapers.jpg"
-                                    class="img_carrusel" alt="..."> --}}
-
-                                <div class="img_carrusel" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Vaporwave-4K-Wallpapers.jpg');"></div>
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>First slide label</h5>
-                                    <p>Some representative placeholder content for the first slide.</p>
+                            @forelse($comunicacionSgis_carrusel as $idx=>$carrusel)
+                                @php
+                                    $imagen = count($carrusel->imagenes_comunicacion) ? 'storage/imagen_comunicado_SGI/'.$carrusel->imagenes_comunicacion->imagen : 'img/tabantaj_fondo_blanco.png'; 
+                                @endphp
+                                <div class="carousel-item {{ $idx == 0 ? 'active' : ''}}">
+                                    <div class="img_carrusel" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Vaporwave-4K-Wallpapers.jpg');"></div>
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>{{$carrusel->titulo}}</h5>
+                                        {!! Str::limit($carrusel->descripcion, 100, '...') !!}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="carousel-item">
-                                {{-- <img src="https://i.pinimg.com/originals/02/7e/e9/027ee9a9bef28aeba689612666b1c22c.jpg" class="img_carrusel" alt="..."> --}}
-                                <div class="img_carrusel" style="background-image: url('https://i.pinimg.com/originals/02/7e/e9/027ee9a9bef28aeba689612666b1c22c.jpg');"></div>
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Second slide label</h5>
-                                    <p>Some representative placeholder content for the second slide.</p>
+                            @empty
+                                <div class="carousel-item active">
+                                    <div class="img_carrusel" style="background-image: url('{{asset('img/tabantaj_fondo_blanco.png')}}');"></div>
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>Sin Comunicados</h5>
+                                        <p></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="carousel-item">
-                                {{-- <img src="https://wallpaperaccess.com/full/636909.jpg"
-                                    class="img_carrusel" alt="..."> --}}
-                                <div class="img_carrusel" style="background-image: url('https://wallpaperaccess.com/full/636909.jpg"
-                                    class="img_carrusel');"></div>
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Third slide label</h5>
-                                    <p>Some representative placeholder content for the third slide.</p>
-                                </div>
-                            </div>
+                            @endforelse
                         </div>
+
+
+
                         <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
@@ -398,26 +421,32 @@
 
                 <div class="col-lg-9 mt-5">
                     <h2 class="titulo-seccion"><i class="far fa-newspaper mr-3"></i>Comunicados</h2>
-                    <div class="comunicado" style="position:relative;"> 
-                        <div class="img_comunicado" style="background-image: url('https://directivosygerentes.es/wp-content/uploads/2018/05/oficina-pyme.jpg');"></div>
-                        <div class="text_comunicado">
-                            <h4 class="w-100">Comenzamos auditorías</h4>
-                            <p class="w-100">
-                                {{ Str::limit('Proveer servicios especializados de atención y respuesta a amenazas e incidentes de seguridad, a través de mejora continua de nuestros procesos y alianzas con otras organizaciones para contribuir a un entorno digital de nuestros clientes.', 200, '...') }}
-                            </p>
-                            <a href="">Leer más</a>
+                    @forelse($comunicacionSgis as $comunicacionSgi)
+                        <div class="comunicado" style="position:relative;"> 
+                            @php
+                                $imagen = count($comunicacionSgi->imagenes_comunicacion) ? 'storage/imagen_comunicado_SGI/'.$comunicacionSgi->imagenes_comunicacion->imagen : 'img/portal_404.png'; 
+                            @endphp
+                            <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
+                            <div class="text_comunicado">
+                                <h4 class="w-100">{{$comunicacionSgi->titulo}}</h4>
+                                <p class="w-100" style="text-align: justify;">
+                                    {!! Str::limit($comunicacionSgi->descripcion, 200, '...') !!}
+                                </p>
+                                <a href="{{ asset('admin/comunicacion-sgis/'.$comunicacionSgi->id) }}">Leer más</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="comunicado" style="position:relative;"> 
-                        <div class="img_comunicado" style="background-image: url('https://directivosygerentes.es/wp-content/uploads/2018/05/oficina-pyme.jpg');"></div>
-                        <div class="text_comunicado">
-                            <h4 class="w-100">Comenzamos auditorías</h4>
-                            <p class="w-100">
-                                Proveer servicios especializados de atención y respuesta a amenazas e incidentes de seguridad, a través de mejora continua de nuestros procesos y alianzas con otras organizaciones para contribuir a un entorno digital de nuestros clientes.
-                            </p>
-                            <a href="">Leer más</a>
+                        @empty
+                        <div class="comunicado" style="position:relative;"> 
+                            <div class="img_comunicado" style="background-image: url('{{ asset('img/portal_404.png') }}');"></div>
+                            <div class="text_comunicado">
+                                <h4 class="w-100">Sin comunicados que mostar</h4>
+                                <p class="w-100">
+                                   
+                                </p>
+                                <a href=""></a>
+                            </div>
                         </div>
-                    </div>
+                    @endforelse
 
 
                     <h2 class="titulo-seccion mt-5"><i class="far fa-file-alt mr-3"></i>Documentos publicados </h2>
@@ -442,7 +471,7 @@
                         </a>
                     @endforeach --}}
 
-                    @foreach ($documentos_publicados as $documento)
+                    @forelse($documentos_publicados as $documento)
                         <div class="doc_publicado">
                             <div class="icon_doc">
                                 <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}" title="Ver documento">
@@ -473,7 +502,43 @@
                                 <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver documento</a>
                             </div>
                         </div>
-                    @endforeach
+
+                        @empty
+                        <p>Sin documentos registrados</p>
+
+
+
+                        <div class="doc_publicado">
+                            <div class="icon_doc">
+                                <a href="" title="Ver documento">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                            </div>
+                            <div class="text_doc">
+                                <h5></h5>
+                                <p>
+                                    
+                                </p>
+                                <p>
+                                    <span class="badge badge-dark"
+                                        style="text-transform: capitalize">{{ $documento->tipo }}</span>
+                                    @if ($documento->macroproceso_id)
+                                        <span class="badge badge-primary"
+                                            style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
+                                    @endif
+                                    @if ($documento->proceso_id)
+                                        <span class="badge badge-success"
+                                            style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
+                                    @endif
+                                </p>
+                            </div>
+                            <div class="opciones_doc">
+                                <h6><strong>Responsable:</strong></h6>
+                                <img src="{{asset('storage/empleados/imagenes/'.$documento->responsable->foto)}}" class="img_empleado" title="{{$documento->responsable->name}}"><br/>
+                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver documento</a>
+                            </div>
+                        </div>
+                    @endforelse
                 </div>
 
 

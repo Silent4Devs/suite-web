@@ -450,6 +450,11 @@ Breadcrumbs::for('admin.portal-comunicacion.sedes-organizacion', function ($trai
     $trail->push('Sedes');
 });
 
+Breadcrumbs::for('admin.comunicacion-sgis.show', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Comunicados');
+});
+
 
 
 // Breadcrumbs::for('admin..index', function ($trail) {
