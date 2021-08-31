@@ -7,7 +7,7 @@
 		<div class="card-body">
 			<strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
 
-			<form class="row" method="POST" action="{{ route('admin.reportes-riesgos-store') }}">
+			<form class="row" method="POST" action="{{ route('admin.reportes-riesgos-store') }}" enctype="multipart/form-data">
 
 				@csrf
 

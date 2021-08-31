@@ -7,6 +7,9 @@
         overflow-x: auto;
     }
 
+    .td_nombre{
+        min-width: 400px !important;
+    }
 </style>
 <div class="card-body datatable-fix">
     <table id="tabla_usuario_actividades" class="table">
@@ -27,7 +30,7 @@
         <tbody>
             @foreach ($actividades as $task)
                 <tr id="{{ $task->id }}" data-parent-plan="{{ $task->slug }}">
-                    <td>{{ $task->name }}</td>
+                    <td class="td_nombre">{{ $task->name }}</td>
                     <td><span class="badge badge-primary">{{ $task->parent }}</span></td>
                     {{-- <td>Categoria</td> --}}
                     {{-- <td>Urgencia</td> --}}
@@ -74,10 +77,18 @@
                         @endswitch
                     </td>
                     <td class="d-flex">
-                        <i class="far fa-file-alt"></i>
-                        <i class="fas fa-code-branch"></i>
-                        <i class="far fa-times-circle"></i>
-                        <i class="fas fa-archive"></i>
+                        @php
+                            if (intval($task->parent_id) == 1) {
+                                $ruta = '/admin/planTrabajoBase/';
+                            }
+                            else{
+                                $ruta = '/admin/planes-de-accion/'.$task->parent_id;
+                            }
+                        @endphp
+                        <a href="{{asset($ruta)}}"><i class="far fas fa-stream"></i></a>
+                        {{-- <i class="fas fa-code-branch"></i> delegar --}}
+                        {{-- <i class="far fa-times-circle"></i> rechazar --}}
+                        {{-- <i class="fas fa-archive"></i> archivado --}}
                     </td>
                 </tr>
             @endforeach

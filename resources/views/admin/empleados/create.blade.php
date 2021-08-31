@@ -999,12 +999,12 @@
                         </div>
 
                         <div class="text-right form-group col-12">
-                                    <a href="{{ redirect()->getUrlGenerator()->previous() }}"
-                                        class="btn_cancelar">Cancelar</a>
-                                    <button class="btn btn-danger" type="submit" id="btnGuardar">
-                                        {{ trans('global.save') }}
-                                    </button>
-                                </div>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                                class="btn_cancelar">Cancelar</a>
+                            <button class="btn btn-danger" type="submit" id="btnGuardar">
+                                {{ trans('global.save') }}
+                            </button>
+                        </div>
                     </div>
                 </div>
         </div>

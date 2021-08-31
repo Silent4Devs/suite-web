@@ -60,6 +60,25 @@
         .dataTables_filter {
             overflow: hidden;
         }
+        .caja_botones_secciones a{
+            position: relative;
+        }
+        .caja_botones_secciones a span{
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background-color: #FF5252;
+            color: #fff;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -5px;
+            margin-right: -5px;
+            z-index: 1;
+        }
 
     </style>
 
@@ -105,9 +124,24 @@
             @if ($usuario->empleado)
                 <div class="col-12 caja_botones_menu">
                     <a href="#" data-tabs="calendario" class="btn_activo"><i class="fas fa-calendar-alt"></i> Calendario</a>
-                    <a href="#" data-tabs="actividades"><i class="fas fa-stopwatch"></i>Actividades</a>
-                    <a href="#" data-tabs="aprobaciones"><i class="fas fa-check"></i>Aprobaciones</a>
-                    <a href="#" data-tabs="capacitaciones"><i class="fas fa-chalkboard-teacher"></i>Capacitaciones</a>
+                    <a href="#" data-tabs="actividades">
+                        @if($contador_actividades)
+                            <span>{{ $contador_actividades }}%</span>
+                        @endif
+                        <i class="fas fa-stopwatch"></i>Actividades
+                    </a>
+                    <a href="#" data-tabs="aprobaciones">
+                        @if( $contador_revisiones )
+                            <span>{{ $contador_revisiones }}</span>
+                        @endif
+                        <i class="fas fa-check"></i>Aprobaciones
+                    </a>
+                    <a href="#" data-tabs="capacitaciones">
+                        @if($contador_recursos )
+                            <span>{{ $contador_recursos }}</span>
+                        @endif
+                        <i class="fas fa-chalkboard-teacher"></i>Capacitaciones
+                    </a>
                     <a href="#" data-tabs="reportes"><i class="fas fa-clipboard-list"></i>Reportes</a>
                 </div>
             @endif
