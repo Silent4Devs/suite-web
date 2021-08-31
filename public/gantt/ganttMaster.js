@@ -335,11 +335,12 @@ GanttMaster.prototype.calculateAverageOnNodes = function () {
       rootAverage.push(task.progress);
     }
   });
-
-  var rootTotal = rootAverage.reduce(function (acomulador, value) {
-    return acomulador + value;
-  }) / rootAverage.length;
-  root.progress = rootTotal;
+  if (rootAverage.length > 0) {
+    var rootTotal = rootAverage.reduce(function (acomulador, value) {
+      return acomulador + value;
+    }) / rootAverage.length;
+    root.progress = rootTotal;
+  }
 }
 
 
@@ -363,7 +364,9 @@ GanttMaster.prototype.calculateStatusOnNodes = function () {
       task.changeStatusByProgress();
     }
   });
-  root.changeStatusByProgress();
+  if (root) {
+    root.changeStatusByProgress();
+  }
 }
 
 
@@ -505,7 +508,6 @@ GanttMaster.prototype.addTask = function (task, row) {
     //append task to gantt
     this.gantt.addTask(task);
     if (task) {
-      this.saveChangesOnServer();
       this.calculateAverageOnNodes();
       this.calculateStatusOnNodes();
       this.saveChangesOnServer();
@@ -582,10 +584,12 @@ GanttMaster.prototype.loadProject = function (project) {
   this.endTransaction();
   var self = this;
   this.gantt.element.oneTime(200, function () { self.gantt.centerOnToday() });
-  if (this.tasks[0].id !== -1) {
+  if (this.tasks) {
+
     // console.log(this.tasks);
     this.calculateAverageOnNodes();
     this.calculateStatusOnNodes();
+
   }
 
 };

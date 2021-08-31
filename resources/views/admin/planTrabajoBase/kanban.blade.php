@@ -635,12 +635,27 @@
                     renderKanban(response);
 
                 } else if (valor_nuevo == 'STATUS_UNDEFINED') {
-                    tarea_correspondiente.status = valor_nuevo;
-                    tarea_correspondiente.progress = 0; // set progress in 0
-                    calculateAverageOnNodes(response.tasks);
-                    calculateStatus(response.tasks);
-                    saveOnServer(response);
-                    renderKanban(response);
+                    Swal.fire({
+                        title: '¿Estás seguro de reinicializar la actividad?',
+                        text: "No podrás revertir esto!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            tarea_correspondiente.status = valor_nuevo;
+                            tarea_correspondiente.progress = 0; // set progress in 0
+                            calculateAverageOnNodes(response.tasks);
+                            calculateStatus(response.tasks);
+                            saveOnServer(response);
+
+                        }
+                        renderKanban(response);
+                    })
+
                 } else if (valor_nuevo == 'STATUS_SUSPENDED') {
                     //
                 } else if (valor_nuevo == 'STATUS_FAILED') {

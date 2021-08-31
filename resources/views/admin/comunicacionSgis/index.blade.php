@@ -120,8 +120,9 @@
 
             ];
 
-            @can('comunicacion_sgi_create')
+       @can('comunicacion_sgi_create')
                 let btnAgregar = {
+
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar comunicación SGSI',
                 url: "{{ route('admin.comunicacion-sgis.create') }}",
@@ -133,6 +134,11 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
+
+
+
+
+
             @can('comunicacion_sgi_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
@@ -181,8 +187,86 @@
                     {
                         data: 'archivo',
                         name: 'archivo',
-                        sortable: false,
-                        searchable: false
+
+                       render:function(data,type,row,meta){
+                             let archivo="";
+                             let archivos=JSON.parse(data);
+                               archivo=` <div class="container">
+
+                                    <div class="mb-4 row">
+                                    <div class="text-center col">
+                                        <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                    </div>
+                                    </div>
+
+                                    <!-- modal -->
+                                    <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                        <div class="modal-body">
+                                            <!-- carousel -->
+                                            <div
+                                                id='carouselExampleIndicators${row.id}'
+                                                class='carousel slide'
+                                                data-ride='carousel'
+                                                >
+                                            <ol class='carousel-indicators'>
+                                                    ${archivos?.map((archivo,idx)=>{
+                                                        return `
+                                                    <li
+                                                    data-target='#carouselExampleIndicators${row.id}'
+                                                    data-slide-to='${idx}'
+                                                    ></li>`
+                                                    })}
+                                            </ol>
+                                            <div class='carousel-inner'>
+                                                    ${archivos?.map((archivo,idx)=>{
+                                                        return `
+                                                    <div class='carousel-item ${idx==0?"active":""}'>
+                                                        <iframe seamless class='img-size' src='{{asset("storage/documento_comunicado_SGI")}}/
+                                                        ${archivo.documento}'></iframe>
+                                                    </div>`
+                                                    })}
+
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <a
+                                                class='carousel-control-prev'
+                                                href='#carouselExampleIndicators${row.id}'
+                                                role='button'
+                                                data-slide='prev'
+                                                >
+                                                <span class='carousel-control-prev-icon'
+                                                    aria-hidden='true'
+                                                    ></span>
+                                                <span class='sr-only'>Previous</span>
+                                            </a>
+                                            <a
+                                                class='carousel-control-next'
+                                                href='#carouselExampleIndicators${row.id}'
+                                                role='button'
+                                                data-slide='next'
+                                                >
+                                                <span
+                                                    class='carousel-control-next-icon'
+                                                    aria-hidden='true'
+                                                    ></span>
+                                                <span class='sr-only'>Next</span>
+                                            </a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>`
+                            return archivo;
+
+
+      */
+
+
                     },
                     {
                         data: 'actions',
@@ -194,6 +278,7 @@
                     [1, 'desc']
                 ]
             };
+
             let table = $('.datatable-ComunicacionSgi').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()

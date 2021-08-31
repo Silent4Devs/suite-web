@@ -5,7 +5,7 @@
             background-color: #fff;
         }
 
-        section{
+        section {
             padding-top: 50px;
         }
 
@@ -44,34 +44,34 @@
         </div>
 
         <div class="caja_botones_secciones">
-        
+
             <div class="caja_botones_menu">
                 <a href="#" data-tabs="incidentes" class="btn_activo">
-                	<i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
+                    <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
                 </a>
                 <a href="#" data-tabs="riesgos">
-                	<i class="fas fa-shield-virus"></i> Riesgos
+                    <i class="fas fa-shield-virus"></i> Riesgos
                 </a>
                 <a href="#" data-tabs="quejas">
-                	<i class="fas fa-frown"></i> Quejas
+                    <i class="fas fa-frown"></i> Quejas
                 </a>
                 <a href="#" data-tabs="denuncias">
-                	<i class="fas fa-hand-paper"></i> Denuncias
+                    <i class="fas fa-hand-paper"></i> Denuncias
                 </a>
                 <a href="#" data-tabs="mejoras">
-                	<i class="fas fa-rocket"></i> Mejoras
+                    <i class="fas fa-rocket"></i> Mejoras
                 </a>
                 <a href="#" data-tabs="sugerencias">
-                	<i class="fas fa-lightbulb"></i> Sugerencias
+                    <i class="fas fa-lightbulb"></i> Sugerencias
                 </a>
 
             </div>
 
             <div class="caja_caja_secciones">
-            
+
                 <div class="caja_secciones">
                     <section id="incidentes" class="caja_tab_reveldada">
-                    	@include('admin.desk.seguridad.seguridad')
+                        @include('admin.desk.seguridad.seguridad')
                     </section>
                     <section id="riesgos">
                         @include('admin.desk.riesgos.riesgos')
@@ -82,10 +82,10 @@
                     <section id="denuncias">
                         @include('admin.desk.denuncias.denuncias')
                     </section>
-                    <section id="mejoras"> 
+                    <section id="mejoras">
                         @include('admin.desk.mejoras.mejoras')
                     </section>
-                    <section id="sugerencias"> 
+                    <section id="sugerencias">
                         @include('admin.desk.sugerencias.sugerencias')
                     </section>
 
@@ -196,14 +196,14 @@
                         @endcan
                     </div>
 
+                </div>
+
             </div>
-
         </div>
-    </div>
-@endsection
+    @endsection
 
 
 
-@section('scripts')
-    
-@endsection
+    @section('scripts')
+
+    @endsection

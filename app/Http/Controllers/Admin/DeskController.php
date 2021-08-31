@@ -59,9 +59,11 @@ class DeskController extends Controller
     public function editSeguridad(Request $request, $id_incidente)
     {
 
-        $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
+        $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente))->load('evidencias_seguridad');
 
-        $analisis = AnalisisSeguridad::findOrfail(intval($id_incidente));
+        // $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
+
+        $analisis = AnalisisSeguridad::where('formulario', '=', 'seguridad')->where("seguridad_id", intval($id_incidente))->first();
 
         $activos = Activo::get();
 
@@ -112,8 +114,10 @@ class DeskController extends Controller
     {
         $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_incidente));
         $analisis_seguridad->update([
-            'problema' => $request->problema,
-            'causa' => $request->causa,
+            'problema_diagrama' => $request->problema_diagrama,
+            'problema_porque' => $request->problema_porque,
+            'causa_ideas' => $request->causa_ideas,
+            'causa_porque' => $request->causa_porque,
             'ideas' => $request->ideas,
             'porque_1' => $request->porque_1,
             'porque_2' => $request->porque_2,
@@ -132,11 +136,10 @@ class DeskController extends Controller
             'metodos_b' => $request->metodos_b,
             'ambiente_a' => $request->ambiente_a,
             'ambiente_b' => $request->ambiente_b,
-
         ]);
 
 
-        return redirect()->route('admin.desk.seguridad-edit', $id_incidente);
+        return redirect()->route('admin.desk.seguridad-edit', $analisis_seguridad->seguridad_id);
     }
     public function archivadoSeguridad(Request $request, $incidente)
     {
@@ -163,6 +166,8 @@ class DeskController extends Controller
     {
 
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
+
+        // $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->findOrfail(intval($id_riesgos));
 
         $procesos = Proceso::get();
 
@@ -196,6 +201,37 @@ class DeskController extends Controller
 
         return redirect()->route('admin.desk.index');
     }
+    public function updateAnalisisReisgos(Request $request, $id_riesgos)
+    {
+        $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_riesgos));
+        $analisis_seguridad->update([
+            'problema_diagrama' => $request->problema_diagrama,
+            'problema_porque' => $request->problema_porque,
+            'causa_ideas' => $request->causa_ideas,
+            'causa_porque' => $request->causa_porque,
+            'ideas' => $request->ideas,
+            'porque_1' => $request->porque_1,
+            'porque_2' => $request->porque_2,
+            'porque_3' => $request->porque_3,
+            'porque_4' => $request->porque_4,
+            'porque_5' => $request->porque_5,
+            'control_a' => $request->control_a,
+            'control_b' => $request->control_b,
+            'proceso_a' => $request->proceso_a,
+            'proceso_b' => $request->proceso_b,
+            'personas_a' => $request->personas_a,
+            'personas_b' => $request->personas_b,
+            'tecnologia_a' => $request->tecnologia_a,
+            'tecnologia_b' => $request->tecnologia_b,
+            'metodos_a' => $request->metodos_a,
+            'metodos_b' => $request->metodos_b,
+            'ambiente_a' => $request->ambiente_a,
+            'ambiente_b' => $request->ambiente_b,
+        ]);
+
+
+        return redirect()->route('admin.desk.riesgos-edit', $id_riesgos);
+    }
 
 
 
@@ -209,13 +245,15 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
+        $analisis = AnalisisSeguridad::where('formulario', '=', 'queja')->where("quejas_id", intval($id_quejas))->first();
+
         $areas = Area::get();
 
         $sedes = Sede::get();
 
         $empleados = Empleado::get();
 
-        return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes'));
+        return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
     public function updateQuejas(Request $request, $id_quejas)
     {
@@ -237,6 +275,37 @@ class DeskController extends Controller
 
         return redirect()->route('admin.desk.index');
     }
+    public function updateAnalisisQuejas(Request $request, $id_quejas)
+    {
+        $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_quejas));
+        $analisis_seguridad->update([
+            'problema_diagrama' => $request->problema_diagrama,
+            'problema_porque' => $request->problema_porque,
+            'causa_ideas' => $request->causa_ideas,
+            'causa_porque' => $request->causa_porque,
+            'ideas' => $request->ideas,
+            'porque_1' => $request->porque_1,
+            'porque_2' => $request->porque_2,
+            'porque_3' => $request->porque_3,
+            'porque_4' => $request->porque_4,
+            'porque_5' => $request->porque_5,
+            'control_a' => $request->control_a,
+            'control_b' => $request->control_b,
+            'proceso_a' => $request->proceso_a,
+            'proceso_b' => $request->proceso_b,
+            'personas_a' => $request->personas_a,
+            'personas_b' => $request->personas_b,
+            'tecnologia_a' => $request->tecnologia_a,
+            'tecnologia_b' => $request->tecnologia_b,
+            'metodos_a' => $request->metodos_a,
+            'metodos_b' => $request->metodos_b,
+            'ambiente_a' => $request->ambiente_a,
+            'ambiente_b' => $request->ambiente_b,
+        ]);
+
+
+        return redirect()->route('admin.desk.quejas-edit', $analisis_seguridad->quejas_id);
+    }
 
 
 
@@ -245,13 +314,15 @@ class DeskController extends Controller
     public function editDenuncias(Request $request, $id_denuncias)
     {
 
+        $analisis = AnalisisSeguridad::where('formulario', '=', 'denuncia')->where("denuncias_id", intval($id_denuncias))->first();
+
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
 
         $activos = Activo::get();
 
         $empleados = Empleado::get();
 
-        return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados'));
+        return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados', 'analisis'));
     }
     public function updateDenuncias(Request $request, $id_denuncias)
     {
@@ -267,6 +338,37 @@ class DeskController extends Controller
 
 
         return redirect()->route('admin.desk.index');
+    }
+    public function updateAnalisisDenuncias(Request $request, $id_denuncias)
+    {
+        $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_denuncias));
+        $analisis_seguridad->update([
+            'problema_diagrama' => $request->problema_diagrama,
+            'problema_porque' => $request->problema_porque,
+            'causa_ideas' => $request->causa_ideas,
+            'causa_porque' => $request->causa_porque,
+            'ideas' => $request->ideas,
+            'porque_1' => $request->porque_1,
+            'porque_2' => $request->porque_2,
+            'porque_3' => $request->porque_3,
+            'porque_4' => $request->porque_4,
+            'porque_5' => $request->porque_5,
+            'control_a' => $request->control_a,
+            'control_b' => $request->control_b,
+            'proceso_a' => $request->proceso_a,
+            'proceso_b' => $request->proceso_b,
+            'personas_a' => $request->personas_a,
+            'personas_b' => $request->personas_b,
+            'tecnologia_a' => $request->tecnologia_a,
+            'tecnologia_b' => $request->tecnologia_b,
+            'metodos_a' => $request->metodos_a,
+            'metodos_b' => $request->metodos_b,
+            'ambiente_a' => $request->ambiente_a,
+            'ambiente_b' => $request->ambiente_b,
+        ]);
+
+
+        return redirect()->route('admin.desk.denuncias-edit', $analisis_seguridad->denuncias_id);
     }
 
 
@@ -287,7 +389,10 @@ class DeskController extends Controller
 
         $procesos = Proceso::get();
 
-        return view('admin.desk.mejoras.edit', compact('mejoras', 'activos', 'empleados', 'areas', 'procesos'));
+        $analisis = AnalisisSeguridad::where('formulario', '=', 'mejora')->where("mejoras_id", intval($id_mejoras))->first();
+
+
+        return view('admin.desk.mejoras.edit', compact('mejoras', 'activos', 'empleados', 'areas', 'procesos', 'analisis'));
     }
     public function updateMejoras(Request $request, $id_mejoras)
     {
@@ -305,6 +410,37 @@ class DeskController extends Controller
         ]);
 
         return redirect()->route('admin.desk.index');
+    }
+    public function updateAnalisisMejoras(Request $request, $id_mejoras)
+    {
+        $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_mejoras));
+        $analisis_seguridad->update([
+            'problema_diagrama' => $request->problema_diagrama,
+            'problema_porque' => $request->problema_porque,
+            'causa_ideas' => $request->causa_ideas,
+            'causa_porque' => $request->causa_porque,
+            'ideas' => $request->ideas,
+            'porque_1' => $request->porque_1,
+            'porque_2' => $request->porque_2,
+            'porque_3' => $request->porque_3,
+            'porque_4' => $request->porque_4,
+            'porque_5' => $request->porque_5,
+            'control_a' => $request->control_a,
+            'control_b' => $request->control_b,
+            'proceso_a' => $request->proceso_a,
+            'proceso_b' => $request->proceso_b,
+            'personas_a' => $request->personas_a,
+            'personas_b' => $request->personas_b,
+            'tecnologia_a' => $request->tecnologia_a,
+            'tecnologia_b' => $request->tecnologia_b,
+            'metodos_a' => $request->metodos_a,
+            'metodos_b' => $request->metodos_b,
+            'ambiente_a' => $request->ambiente_a,
+            'ambiente_b' => $request->ambiente_b,
+        ]);
+
+
+        return redirect()->route('admin.desk.mejoras-edit', $analisis_seguridad->mejoras_id);
     }
 
 
@@ -324,7 +460,13 @@ class DeskController extends Controller
 
         $procesos = Proceso::get();
 
-        return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados', 'areas', 'procesos'));
+
+
+        $analisis = AnalisisSeguridad::where('formulario', '=', 'sugerencia')->where("sugerencias_id", intval($id_sugerencias))->first();
+
+        
+
+        return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados', 'areas', 'procesos', 'analisis'));
     }
     public function updateSugerencias(Request $request, $id_sugerencias)
     {
@@ -342,5 +484,36 @@ class DeskController extends Controller
         ]);
 
         return redirect()->route('admin.desk.index');
+    }
+    public function updateAnalisisSugerencias(Request $request, $id_sugerencias)
+    {
+        $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_sugerencias));
+        $analisis_seguridad->update([
+            'problema_diagrama' => $request->problema_diagrama,
+            'problema_porque' => $request->problema_porque,
+            'causa_ideas' => $request->causa_ideas,
+            'causa_porque' => $request->causa_porque,
+            'ideas' => $request->ideas,
+            'porque_1' => $request->porque_1,
+            'porque_2' => $request->porque_2,
+            'porque_3' => $request->porque_3,
+            'porque_4' => $request->porque_4,
+            'porque_5' => $request->porque_5,
+            'control_a' => $request->control_a,
+            'control_b' => $request->control_b,
+            'proceso_a' => $request->proceso_a,
+            'proceso_b' => $request->proceso_b,
+            'personas_a' => $request->personas_a,
+            'personas_b' => $request->personas_b,
+            'tecnologia_a' => $request->tecnologia_a,
+            'tecnologia_b' => $request->tecnologia_b,
+            'metodos_a' => $request->metodos_a,
+            'metodos_b' => $request->metodos_b,
+            'ambiente_a' => $request->ambiente_a,
+            'ambiente_b' => $request->ambiente_b,
+        ]);
+
+
+        return redirect()->route('admin.desk.sugerencias-edit', $analisis_seguridad->sugerencias_id);
     }
 }

@@ -26,6 +26,7 @@ use App\Models\AnalisisSeguridad;
 
 use Intervention\Image\Facades\Image;
 use App\Models\EvidenciasQueja;
+use App\Models\EvidenciasSeguridad;
 
 use App\Models\Activo;
 use App\Models\Documento;
@@ -156,6 +157,11 @@ class inicioUsuarioController extends Controller
             'descripcion' => $request->descripcion,
         ]);
 
+        AnalisisSeguridad::create([
+            'quejas_id' => $quejas->id,
+            'formulario' => 'queja',
+        ]);
+
 
 
         $image = null;
@@ -209,7 +215,7 @@ class inicioUsuarioController extends Controller
     }
     public function storeDenuncias(Request $request)
     {
-        Denuncias::create([
+        $denuncias = Denuncias::create([
             'anonimo' => $request->anonimo,
             'empleado_denuncio_id' => auth()->user()->empleado->id,
             'descripcion' => $request->descripcion,
@@ -218,6 +224,11 @@ class inicioUsuarioController extends Controller
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'fecha' => $request->fecha,
+        ]);
+
+        AnalisisSeguridad::create([
+            'denuncias_id' => $denuncias->id,
+            'formulario' => 'denuncia',
         ]);
 
         return redirect()->route('admin.inicio-Usuario.index');
@@ -235,7 +246,7 @@ class inicioUsuarioController extends Controller
     }
     public function storeMejoras(Request $request)
     {
-        Mejoras::create([
+        $mejoras = Mejoras::create([
             'empleado_mejoro_id' => auth()->user()->empleado->id,
             'descripcion' => $request->descripcion,
             'beneficios' => $request->beneficios,
@@ -244,6 +255,11 @@ class inicioUsuarioController extends Controller
             'proceso_mejora' => $request->proceso_mejora,
             'tipo' => $request->tipo,
             'otro' => $request->otro,
+        ]);
+
+        AnalisisSeguridad::create([
+            'mejoras_id' => $mejoras->id,
+            'formulario' => 'mejora',
         ]);
 
         return redirect()->route('admin.inicio-Usuario.index');
@@ -262,7 +278,7 @@ class inicioUsuarioController extends Controller
     }
     public function storeSugerencias(Request $request)
     {
-        Sugerencias::create([
+        $sugerencias = Sugerencias::create([
             'empleado_sugirio_id' => auth()->user()->empleado->id,
 
             'area_sugerencias' => $request->area_sugerencias,
@@ -270,6 +286,11 @@ class inicioUsuarioController extends Controller
 
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
+        ]);
+
+        AnalisisSeguridad::create([
+            'sugerencias_id' => $sugerencias->id,
+            'formulario' => 'sugerencia',
         ]);
 
         return redirect()->route('admin.inicio-Usuario.index');
@@ -298,14 +319,6 @@ class inicioUsuarioController extends Controller
     public function storeSeguridad(Request $request)
     {
 
-
-        // $request->validate([
-        //     'fecha'=>'required|date',
-        //     'titulo'=>'required|string',
-        //     'descripcion'=>'required|string',
-        //     'activos_afectados'=>'required|string',
-        // ]);
-
         $incidentes_seguridad = IncidentesSeguridad::create([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
@@ -321,17 +334,33 @@ class inicioUsuarioController extends Controller
 
         AnalisisSeguridad::create([
             'seguridad_id' => $incidentes_seguridad->id,
+            'formulario' => 'seguridad',
         ]);
 
-        $archivos = explode(',', $request->input('archivo'));
 
-        foreach ($archivos as $archivo) {
-            if ($request->input('archivo', false)) {
-                $incidentes_seguridad->addMedia(storage_path('tmp/uploads/' . $archivo))->toMediaCollection('archivo');
-            }
 
-            if ($media = $request->input('ck-media', false)) {
-                Media::whereIn('id', $media)->update(['model_id' => $incidentes_seguridad->id]);
+        $image = null;
+
+        if($request->file('evidencia') != null or !empty($request->file('evidencia'))){
+
+            foreach($request->file('evidencia') as $file){
+                $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+
+                $new_name_image = 'Seguridad_file_' . $incidentes_seguridad->id . '_' . $name_image . '.' . $extension;
+
+                $route = 'public/evidencias_seguridad';
+
+                $image = $new_name_image;
+
+                $file->storeAs($route, $image);
+
+                EvidenciasSeguridad::create([
+                    'evidencia' => $image,
+                    'id_seguridad' => $incidentes_seguridad->id,
+                ]);
+
             }
         }
 
@@ -362,7 +391,7 @@ class inicioUsuarioController extends Controller
     public function storeRiesgos(Request $request)
     {
 
-        RiesgoIdentificado::create([
+        $riesgos = RiesgoIdentificado::create([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
             'sede' => $request->sede,
@@ -373,6 +402,12 @@ class inicioUsuarioController extends Controller
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
             'empleado_reporto_id' => auth()->user()->empleado->id,
+        ]);
+
+        
+        AnalisisSeguridad::create([
+            'riesgos_id' => $riesgos->id,
+            'formulario' => 'riesgo',
         ]);
 
         return redirect()->route('admin.inicio-Usuario.index');
