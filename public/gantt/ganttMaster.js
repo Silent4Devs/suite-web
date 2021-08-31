@@ -304,7 +304,7 @@ GanttMaster.prototype.saveChangesOnServer = function () {
       },
       url: this.urlSaveGanttOnServer,
       data: {
-        prj
+        prj: JSON.stringify(prj)
       },
       success: function (response) {
         if (response.success) {

@@ -373,7 +373,7 @@
                 url: "{{ route('admin.planes-de-accion.saveProject', $planImplementacion) }}",
                 data: {
                     _token: "{{ csrf_token() }}",
-                    prj: response,
+                    prj: JSON.stringify(response),
                 },
                 dataType: "JSON",
                 success: function(response) {

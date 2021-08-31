@@ -152,7 +152,7 @@ class PlanesAccionController extends Controller
     public function saveProject(Request $request, $plan)
     {
         $project =  $request->prj;
-
+        $project = (array)json_decode($project);
         if (PlanImplementacion::find($plan)) {
             $tasks = isset($project['tasks']) ? $project['tasks'] : [];
             PlanImplementacion::find($plan)->update([
@@ -196,10 +196,18 @@ class PlanesAccionController extends Controller
             $task->canDelete = $task->canDelete == 'true' ? true : false;
             isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
             isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
-            $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
-            $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
-            $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
-            $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+            if (isset($task->canAddIssue)) {
+                $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
+            }
+            if (isset($task->endIsMilestone)) {
+                $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
+            }
+            if (isset($task->startIsMilestone)) {
+                $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
+            }
+            if (isset($task->progressByWorklog)) {
+                $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+            }
         }
         $implementacion->tasks = $tasks;
 
