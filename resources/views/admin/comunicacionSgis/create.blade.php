@@ -45,7 +45,7 @@
                 <div class="form-group col-md-6 col-sm-12">
                     <label for="documento"><i class="fas fa-folder-open iconos-crear"></i>Cargar Documento</label>
                         <div class="custom-file">
-                            <input type="file" name="files[]" multiple class="form-control" id="documento">
+                            <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf">
                         </div>
                 </div>
 
@@ -122,7 +122,7 @@
                     <label class="vigencia"><i class="fas fa-upload iconos-crear"></i>Habilitar contenido</label>
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="habilitar" name="habilitar">
-                        <label class="custom-control-label" for="vigencia"></label>
+                        <label class="custom-control-label" for="habilitar"></label>
                     </div>
                 </div>
 
