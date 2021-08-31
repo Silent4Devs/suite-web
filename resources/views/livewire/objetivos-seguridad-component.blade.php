@@ -43,7 +43,8 @@
 
     <div class="row">
         <div class="form-group col-sm-8">
-            <label class="required" for="formula"><i class="fas fa-square-root-alt iconos-crear"></i></i>Formúla</label>
+            <label class="required" for="formula"><i
+                    class="fas fa-square-root-alt iconos-crear"></i></i>Formúla</label>
             <input class="form-control {{ $errors->has('formula') ? 'is-invalid' : '' }}" type="text" name="formula"
                 id="formula" value="{{ old('formula', $objetivos->formula) }}" disabled>
             @if ($errors->has('formula'))
@@ -58,8 +59,7 @@
             <div class="form-group">
                 <label for="meta"><i class="fas fa-flag-checkered iconos-crear"></i></i>Meta</label>
                 <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" type="text" name="meta"
-                    id="meta" value="{{ old('meta', $objetivos->meta . $objetivos->unidadmedida) }}"
-                    disabled>
+                    id="meta" value="{{ old('meta', $objetivos->meta . $objetivos->unidadmedida) }}" disabled>
                 @if ($errors->has('meta'))
                     <div class="invalid-feedback">
                         {{ $errors->first('meta') }}
@@ -74,22 +74,18 @@
 
     <hr>
 
-    @include("livewire.evaluaciones.$view")
+    @include("livewire.evaluacionobjetivos.$view")
 
 </div>
 
 <script>
-    //listen render event receive id from product
-    var text1 = document.querySelector('.slugs-inputs');
-
-    Livewire.on('contentChanged', function(e) {
-        console.log("Evento1");
-        text1.value = '';
-    });
-
-    window.addEventListener('contentChanged', event => {
-        console.log("Evento2");
-    });
+    //listen render event receive and clean
+    Livewire.on('contentChanged', event => {
+        var inputArray = document.querySelectorAll('.slugs-inputs');
+        inputArray.forEach(function(input) {
+            input.value = "";
+        });
+    })
 
     document.querySelectorAll("button.btnAñadir").forEach(function(elem) {
         elem.addEventListener('click', agregarTexto, false);
