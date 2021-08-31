@@ -211,14 +211,20 @@ Breadcrumbs::for('admin.recursos.create', function ($trail) {
 
 
 
+// Breadcrumbs::for('admin.competencia.index', function ($trail) {
+//  	$trail->parent('admin.iso27001.index');
+//     $trail->push('Soporte',route('admin.iso27001.index').'#soporte');
+//  	$trail->push('Competencias', route('admin.competencia.index'));
+// });
+
+// Breadcrumbs::for('admin.competencia.create', function ($trail) {
+//     $trail->parent('admin.competencia.index');
+//     $trail->push('Formulario', route('admin.competencia.create'));
+// });
+
 Breadcrumbs::for('admin.competencia.index', function ($trail) {
- 	$trail->parent('admin.iso27001.index');
-    $trail->push('Soporte',route('admin.iso27001.index').'#soporte');
- 	$trail->push('Competencias', route('admin.competencia.index'));
-});
-Breadcrumbs::for('admin.competencia.create', function ($trail) {
-    $trail->parent('admin.competencia.index');
-    $trail->push('Formulario', route('admin.competencia.create'));
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Competencias',route('admin.buscarCV').'#soporte');
 });
 
 

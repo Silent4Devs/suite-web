@@ -409,31 +409,6 @@
                                         </div>
                                     @endif
                                 </div>
-
-                                <div class="row">
-                                    <div class="form-group col-sm-12 col-md-6 ">
-                                        <label for="direccion"><i class="fas fa-map iconos-crear"></i>Direccion</label>
-                                        <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
-                                            type="text" name="direccion" id="direccion" value="{{ old('direccion', $empleado->direccion) }}">
-                                        @if ($errors->has('direccion'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('direccion') }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6">
-                                        <label for="cumpleaños"><i class="fas fa-birthday-cake iconos-crear"></i>Cumpleaños</label>
-                                        <input class="form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}"
-                                            type="date" name="cumpleaños" id="cumpleaños" value="{{ old('cumpleaños', $empleado->cumpleaños) }}">
-                                        @if ($errors->has('cumpleaños'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('cumpleaños') }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-
-
                                 <div class="row">
                                     <div class="col">
                                         <div class="input-group is-invalid">
@@ -510,14 +485,14 @@
 
                             </div>
 
-
                             <div class="px-4 mt-4 mb-3 tab-pane fade" id="participantes" role="tabpanel"
                                 aria-labelledby="participantes-tab">
+
                                 <div class="row">
                                     <div class="form-group col-sm-12">
                                         <label for="resumen"><i class="fas fa-file-alt iconos-crear"></i>Resumen</label>
                                         <textarea class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}"
-                                            type="text" name="resumen" id="resumen"></textarea>{{ old('resumen', '') }}
+                                            type="text" name="resumen" id="resumen">{{ old('resumen', '') }}</textarea>
                                         @if ($errors->has('resumen'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('resumen') }}
@@ -535,13 +510,9 @@
                                     <div class="form-group col-sm-12">
                                         <label for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre</label>
                                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                            type="text" name="nombre" id="nombre" value="{{ old('nombre', '') }}"
-                                            required>
-                                        @if ($errors->has('nombre'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('nombre') }}
-                                            </div>
-                                        @endif
+                                            type="text" name="nombre" id="nombre_certificado"
+                                            value="{{ old('nombre', '') }}">
+                                        <span class="errors nombre_certificado_error"></span>
                                     </div>
                                 </div>
 
@@ -551,24 +522,17 @@
                                         <label for="vigencia"><i
                                                 class="far fa-calendar-alt iconos-crear"></i>Vigencia</label>
                                         <input class="form-control {{ $errors->has('vigencia') ? 'is-invalid' : '' }}"
-                                            type="text" name="vigencia" id="vigencia"  value="{{ old('vigencia',\Carbon\Carbon::parse($empleados->vigencia))->format('Y-m-d') }}"
-                                            required>
-                                        @if ($errors->has('vigencia'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('vigencia') }}
-                                            </div>
-                                        @endif
+                                            type="date" name="vigencia" id="vigencia" value="{{ old('vigencia', '') }}">
+                                        <span class="errors vigencia_error"></span>
                                     </div>
+
+
                                     <div class="form-group col-sm-6">
                                         <label for="estatus"><i class="fas fa-street-view iconos-crear"></i>Estatus</label>
                                         <input class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}"
-                                            type="text" name="estatus" id="estatus" value="{{ old('estatus', '') }}"
-                                            required>
-                                        @if ($errors->has('estatus'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('estatus') }}
-                                            </div>
-                                        @endif
+                                            type="text" name="vencio_alta" id="vencio_alta"
+                                            value="{{ old('estatus', '') }}" readonly>
+                                        <span class="errors vencio_alta_error"></span>
                                     </div>
                                 </div>
 
@@ -584,29 +548,39 @@
                                 </div>
 
                                 <div class="mb-5 col-12">
-                                    <button id="btn-suscribir-participante" type="submit"
+                                    <button id="btn-suscribir-certificado" type="submit"
                                         class="mr-3 btn btn-sm btn-outline-success"
                                         style="float: right; position: relative;">
                                         <i class="mr-1 fas fa-plus-circle"></i>
                                         Agregar Certificación
                                         {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 3px;left: 8px;"></i> --}}
+                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
                                     </button>
                                 </div>
 
                                 <div class="mt-3 col-12 w-100 datatable-fix">
-                                    <table class="table w-100" id="tbl-participantes">
+                                    <table class="table w-100" id="tbl-certificados" style="width:100% !important">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>Nombre</th>
                                                 <th>Vigencia</th>
                                                 <th>Estatus</th>
-                                                <th>Documento</th>
+                                                {{-- <th>Documento</th> --}}
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>
+                                            <tr>
+                                                @foreach ($empleado->empleado_certificaciones as $certificaciones)
+                                                    <td>{{ $certificaciones->nombre }}</td>
+                                                    <td>{{ $certificaciones->estatus }}</td>
+                                                    <td>{{ $certificaciones->vigencia }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
+
+                                <input type="hidden" name="certificado" value="" id="certificado">
 
 
                                 <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
@@ -622,12 +596,8 @@
                                         <input
                                             class="form-control {{ $errors->has('curso_diplomado') ? 'is-invalid' : '' }}"
                                             type="text" name="curso_diplomado" id="curso_diplomado"
-                                            value="{{ old('curso_diplomado', '') }}" required>
-                                        @if ($errors->has('curso_diplomado'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('curso_diplomado') }}
-                                            </div>
-                                        @endif
+                                            value="{{ old('curso_diplomado', '') }}">
+                                        <span class="errors curso_diplomado_error"></span>
                                     </div>
                                 </div>
 
@@ -647,11 +617,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @if ($errors->has('tipo'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('tipo') }}
-                                            </div>
-                                        @endif
+                                        <span class="errors tipo_error"></span>
                                     </div>
 
 
@@ -659,25 +625,18 @@
                                     <div class="form-group col-sm-3">
                                         <label for="año"><i class="far fa-calendar-alt iconos-crear"></i>Año</label>
                                         <input class="form-control {{ $errors->has('año') ? 'is-invalid' : '' }}"
-                                            type="month" name="año" id="año" value="{{ old('año', '') }}">
-                                        @if ($errors->has('año'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('año') }}
-                                            </div>
-                                        @endif
+                                            type="date" name="año" id="año" value="{{ old('año', '') }}">
+                                        <span class="errors año_error"></span>
                                     </div>
 
 
                                     <div class="form-group col-sm-3">
-                                        <label for="duracion"><i
-                                                class="fas fa-street-view iconos-crear"></i>Duración</label>
+                                        <label for="duracion"><i class="fas fa-street-view iconos-crear"></i>Duración
+                                            (Hrs)</label>
                                         <input class="form-control {{ $errors->has('duracion') ? 'is-invalid' : '' }}"
-                                            type="text" name="duracion" id="duracion" value="{{ old('duracion', '') }}">
-                                        @if ($errors->has('duracion'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('duracion') }}
-                                            </div>
-                                        @endif
+                                            type="number" name="duracion" id="duracion"
+                                            value="{{ old('duracion', '') }}">
+                                        <span class="errors duracion_error"></span>
                                     </div>
                                 </div>
 
@@ -689,7 +648,7 @@
                                         <i class="mr-1 fas fa-plus-circle"></i>
                                         Agregar Curso / Diplomado
                                         {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 3px;left: 8px;"></i> --}}
+                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
                                     </button>
                                 </div>
 
@@ -702,8 +661,17 @@
                                                 <th>Año</th>
                                                 <th>Duración</th>
                                             </tr>
+
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>
+                                            <tr>
+                                                @foreach ($empleado->empleado_cursos as $cursos)
+                                                    <td>{{ $cursos->curso_diploma }}</td>
+                                                    <td>{{ $cursos->tipo }}</td>
+                                                    <td>{{ $cursos->duracion }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -723,23 +691,15 @@
                                         <label for="empresa"><i class="fas fa-building iconos-crear"></i>Empresa</label>
                                         <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}"
                                             type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}">
-                                        @if ($errors->has('empresa'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('empresa') }}
-                                            </div>
-                                        @endif
+                                        <span class="errors empresa_error"></span>
                                     </div>
 
                                     <div class="form-group col-sm-6">
                                         <label for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                                         <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
-                                            type="text" name="puesto" id="puesto_trabajo"
+                                            type="text" name="puesto_trabajo" id="puesto_trabajo"
                                             value="{{ old('puesto', '') }}">
-                                        @if ($errors->has('puesto'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('puesto') }}
-                                            </div>
-                                        @endif
+                                        <span class="errors puesto_trabajo_error"></span>
                                     </div>
 
                                 </div>
@@ -753,13 +713,9 @@
                                     <div class="form-group col-sm-6">
                                         <label for="inicio_mes"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
                                         <input class="form-control {{ $errors->has('inicio_mes') ? 'is-invalid' : '' }}"
-                                            type="month" name="inicio_mes" id="inicio_mes"
-                                            value="{{ old('inicio_mes',\Carbon\Carbon::parse($alcanceSgsi->inicio_mes))->format('Y-m-d') }}">
-                                        @if ($errors->has('inicio_mes'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('inicio_mes') }}
-                                            </div>
-                                        @endif
+                                            type="date" name="inicio_mes" id="inicio_mes"
+                                            value="{{ old('inicio_mes', '') }}">
+                                        <span class="errors inicio_mes_error"></span>
                                     </div>
 
 
@@ -767,12 +723,8 @@
                                     <div class="form-group col-sm-6">
                                         <label for="fin_mes"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
                                         <input class="form-control {{ $errors->has('fin_mes') ? 'is-invalid' : '' }}"
-                                            type="month" name="fin_mes" id="fin_mes" value="{{ old('fin_mes',\Carbon\Carbon::parse($alcanceSgsi->fin_mes))->format('Y-m-d') }}">                                            >
-                                        @if ($errors->has('fin_mes'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('fin_mes') }}
-                                            </div>
-                                        @endif
+                                            type="date" name="fin_mes" id="fin_mes" value="{{ old('fin_mes', '') }}">
+                                        <span class="errors fin_mes_error"></span>
                                     </div>
 
                                 </div>
@@ -785,11 +737,7 @@
                                             class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
                                             type="text" name="descripcion"
                                             id="descripcion"> {{ old('descripcion', '') }}</textarea>
-                                        @if ($errors->has('descripcion'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('descripcion') }}
-                                            </div>
-                                        @endif
+                                        <span class="errors descripcion_error"></span>
                                     </div>
 
                                 </div>
@@ -802,7 +750,7 @@
                                         <i class="mr-1 fas fa-plus-circle"></i>
                                         Agregar Experiencia
                                         {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 3px;left: 8px;"></i> --}}
+                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
                                     </button>
                                 </div>
 
@@ -817,7 +765,17 @@
                                                 <th>Fin</th>
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>
+                                            <tr>
+                                                @foreach ($empleado->empleado_experiencia as $experiencia)
+                                                    <td>{{ $experiencia->empresa }}</td>
+                                                    <td>{{ $experiencia->puesto }}</td>
+                                                    <td>{{ $experiencia->inicio_mes }}</td>
+                                                    <td>{{ $experiencia->fin_mes }}</td>
+                                                    <td>{{ $experiencia->descripcion}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -836,11 +794,7 @@
                                         <input class="form-control {{ $errors->has('institucion') ? 'is-invalid' : '' }}"
                                             type="text" name="institucion" id="institucion"
                                             value="{{ old('institucion', '') }}">
-                                        @if ($errors->has('institucion'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('institucion') }}
-                                            </div>
-                                        @endif
+                                        <span class="errors institucion_error"></span>
                                     </div>
 
 
@@ -858,11 +812,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @if ($errors->has('nivel'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('nivel') }}
-                                            </div>
-                                        @endif
+                                        <span class="errors nivel_error"></span>
                                     </div>
                                 </div>
 
@@ -871,13 +821,9 @@
                                     <div class="form-group col-sm-6">
                                         <label for="año_inicio"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
                                         <input class="form-control {{ $errors->has('año_inicio') ? 'is-invalid' : '' }}"
-                                            type="month" name="año_inicio" id="año_inicio"
+                                            type="date" name="año_inicio" id="año_inicio"
                                             value="{{ old('año_inicio', '') }}">
-                                        @if ($errors->has('año_inicio'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('año_inicio') }}
-                                            </div>
-                                        @endif
+                                        <span class="errors año_inicio_error"></span>
                                     </div>
 
 
@@ -885,12 +831,8 @@
                                     <div class="form-group col-sm-6">
                                         <label for="año_fin"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
                                         <input class="form-control {{ $errors->has('año_fin') ? 'is-invalid' : '' }}"
-                                            type="month" name="año_fin" id="año_fin" value="{{ old('año_fin', '') }}">
-                                        @if ($errors->has('año_fin'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('año_fin') }}
-                                            </div>
-                                        @endif
+                                            type="date" name="año_fin" id="año_fin" value="{{ old('año_fin', '') }}">
+                                        <span class="errors año_fin_error"></span>
                                     </div>
 
                                 </div>
@@ -903,7 +845,7 @@
                                         <i class="mr-1 fas fa-plus-circle"></i>
                                         Agregar Educacion
                                         {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 3px;left: 8px;"></i> --}}
+                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
                                     </button>
                                 </div>
 
@@ -918,7 +860,16 @@
                                                 <th>Fin</th>
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>
+                                            <tr>
+                                                @foreach ($empleado->empleado_educacion as $educacion)
+                                                    <td> {{ $educacion->institucion }}</td>
+                                                    <td>{{ $educacion->nivel}}</td>
+                                                    <td>{{ $educacion->año_inicio}}</td>
+                                                    <td>{{ $educacion->año_fin}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -941,11 +892,13 @@
 
                                     </div>
                                 </div>
+
+
                             </div>
                             <div class="text-right form-group col-12">
                                 <a href="{{ redirect()->getUrlGenerator()->previous() }}"
                                     class="btn_cancelar">Cancelar</a>
-                                <button class="btn btn-danger" type="submit">
+                                <button class="btn btn-danger" type="submit" id="btnGuardar">
                                     {{ trans('global.save') }}
                                 </button>
                             </div>
@@ -1124,5 +1077,384 @@
             contendorCanvas.style.display = 'none';
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            window.tblExperiencia = $('#tbl-experiencia').DataTable({
+                buttons: []
+            })
+            window.tblEducacion = $('#tbl-educacion').DataTable({
+                buttons: []
+            })
+            window.tblCurso = $('#tbl-cursos').DataTable({
+                buttons: []
+            })
+            window.tblCertificado = $('#tbl-certificados').DataTable({
+                buttons: []
+            })
+
+            let vigencia_certificado = document.getElementById('vigencia');
+            vigencia_certificado.addEventListener('change', function() {
+                // console.log(this);
+                let vigencia = this.value;
+                let estatus = document.getElementById('vencio_alta');
+                if (Date.parse(vigencia) >= Date.now()) {
+                    estatus.value = "Vigente"
+                    estatus.style.border = "2px solid #57e262";
+                } else {
+                    estatus.value = 'Vencida'
+                    estatus.style.border = "2px solid #FF9C08";
+                }
+            })
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // let url = "{{ route('admin.empleados.get') }}";
+
+
+
+            document.getElementById('btn-agregar-experiencia').addEventListener('click', function(e) {
+                e.preventDefault();
+                limpiarErrores();
+                suscribirExperiencia()
+            })
+
+            document.getElementById('btn-agregar-educacion').addEventListener('click', function(e) {
+                e.preventDefault();
+                limpiarErrores();
+                suscribirEducacion()
+            })
+
+            document.getElementById('btn-suscribir-curso').addEventListener('click', function(e) {
+                e.preventDefault();
+                limpiarErrores();
+                suscribirCurso()
+            })
+
+            document.getElementById('btn-suscribir-certificado').addEventListener('click', function(e) {
+                e.preventDefault();
+                limpiarErrores();
+                suscribirCertificado()
+            })
+
+
+            document.getElementById('btnGuardar').addEventListener('click', function(e) {
+                // e.preventDefault();
+                enviarExperiencia()
+                enviarEducacion()
+                enviarCurso()
+                enviarCertificado()
+            })
+
+        });
+
+
+
+
+
+        function suscribirExperiencia() {
+            //form-participantes
+
+            let experiencias = tblExperiencia.rows().data().toArray();
+            let arrExperiencia = [];
+            experiencias.forEach(experiencia => {
+                arrExperiencia.push(experiencia[0])
+
+            });
+
+            //no se puedan agregar datos que ya estan
+            let nombre = $("#empresa").val();
+            let puesto = $("#puesto_trabajo").val();
+            let descripcion = $("#descripcion").val();
+            let inicio_mes = $("#inicio_mes").val();
+            let fin_mes = $("#fin_mes").val();
+            if (nombre.trim() == '') {
+                document.querySelector('.empresa_error').innerHTML = "El campo empresa es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+            if (puesto.trim() == '') {
+                document.querySelector('.puesto_trabajo_error').innerHTML = "El campo puesto es requerido"
+                // limpiarCamposExperienciaPorId('puesto_trabajo');
+            }
+            if (inicio_mes.trim() == '') {
+                document.querySelector('.inicio_mes_error').innerHTML = "El campo de inicio de puesto laboral es requerido"
+                // limpiarCamposExperienciaPorId('puesto_trabajo');
+            }
+            if (fin_mes.trim() == '') {
+                document.querySelector('.fin_mes_error').innerHTML = "El campo fin de puesto laboral es requerido"
+                // limpiarCamposExperienciaPorId('fin_mes');
+            }
+            if (descripcion.trim() == '') {
+                document.querySelector('.descripcion_error').innerHTML = "El campo de descripción laboral es requerido"
+                // limpiarCamposExperienciaPorId('descripcion_error');
+            }
+            if (nombre.trim() != '' && puesto.trim() != '' && inicio_mes.trim() != '' && fin_mes.trim() != '' && descripcion
+                .trim() != '') {
+                limpiarCamposExperiencia();
+
+
+                if (!arrExperiencia.includes(nombre)) {
+
+
+                    tblExperiencia.row.add([
+                        nombre,
+                        puesto,
+                        descripcion,
+                        inicio_mes,
+                        fin_mes
+                    ]).draw();
+
+                } else {
+                    Swal.fire('Este participante ya ha sido agregado', '', 'error')
+                    limpiarCamposExperiencia();
+                }
+            }
+            //limpia campos
+
+        }
+
+        function limpiarCamposExperiencia() {
+            $("#empresa").val('');
+            $("#puesto_trabajo").val('');
+            $("#descripcion").val('');
+            $("#inicio_mes").val('');
+            $("#fin_mes").val('');
+        }
+
+        function limpiarErrores() {
+            document.querySelectorAll('.errors').forEach(element => {
+                element.innerHTML = ''
+            });
+        }
+
+        function enviarExperiencia() {
+            let experiencias = tblExperiencia.rows().data().toArray();
+            let arrExperiencia = [];
+            experiencias.forEach(experiencia => {
+                arrExperiencia.push(experiencia)
+
+            });
+            document.getElementById('experiencia').value = JSON.stringify(arrExperiencia);
+            console.log(arrExperiencia);
+        }
+
+        function suscribirEducacion() {
+            //form-participantes
+
+            let educacions = tblEducacion.rows().data().toArray();
+            let arrEducacion = [];
+            educacions.forEach(educacion => {
+                arrEducacion.push(educacion[0])
+
+            });
+
+
+            //no se puedan agregar datos que ya estan
+            let institucion = $("#institucion").val();
+            let año_inicio = $("#año_inicio").val();
+            let año_fin = $("#año_fin").val();
+            let nivel = $("#nivel").val();
+
+            if (institucion.trim() == '') {
+                document.querySelector('.institucion_error').innerHTML = "El campo institucion es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+            if (año_inicio.trim() == '') {
+                document.querySelector('.año_inicio_error').innerHTML = "El campo inicio de año es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+            if (año_fin.trim() == '') {
+                document.querySelector('.año_fin_error').innerHTML = "El campo inicio de fin es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+            if (document.getElementById('nivel').value == "") {
+                document.querySelector('.nivel_error').innerHTML = "El campo nivel es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+            if (institucion.trim() != '' && año_inicio.trim() != '' && año_fin.trim() != '' && document.getElementById(
+                    'nivel').value != "") {
+                limpiarCamposEducacion();
+
+
+                if (!arrEducacion.includes(institucion)) {
+                    tblEducacion.row.add([
+                        institucion,
+                        año_inicio,
+                        año_fin,
+                        nivel,
+                    ]).draw();
+
+                } else {
+                    Swal.fire('Este registro ya ha sido agregado', '', 'error')
+                }
+            }
+            //limpia campos
+
+        }
+
+        function limpiarCamposEducacion() {
+            $("#institucion").val('');
+            $("#año_inicio").val('');
+            $("#año_fin").val('');
+            $("#nivel").val('');
+        }
+
+        function enviarEducacion() {
+            let educacions = tblEducacion.rows().data().toArray();
+            let arrEducacion = [];
+            educacions.forEach(educacion => {
+                arrEducacion.push(educacion)
+
+            });
+            document.getElementById('educacion').value = JSON.stringify(arrEducacion);
+            console.log(arrEducacion);
+        }
+
+
+        function suscribirCurso() {
+            //form-participantes
+
+            let cursos = tblCurso.rows().data().toArray();
+            let arrCurso = [];
+            cursos.forEach(curso => {
+                arrCurso.push(curso[0])
+
+            });
+            //no se puedan agregar datos que ya estan
+
+
+            let curso_diplomado = $("#curso_diplomado").val();
+            let tipo = $("#tipo").val();
+            let año = $("#año").val();
+            let duracion = $("#duracion").val();
+
+            if (curso_diplomado.trim() == '') {
+                document.querySelector('.curso_diplomado_error').innerHTML = "El campo curso/diplomado es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+
+            if (document.getElementById('tipo').value == "") {
+                document.querySelector('.tipo_error').innerHTML = "El campo tipo es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+
+            if (año.trim() == '') {
+                document.querySelector('.año_error').innerHTML = "El campo año es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+
+            if (duracion.trim() == '') {
+                document.querySelector('.duracion_error').innerHTML = "El campo duración es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+
+            if (curso_diplomado.trim() != '' && año.trim() != '' && duracion.trim() != '' && document.getElementById('tipo')
+                .value != "") {
+                limpiarCamposCursos();
+
+
+
+                if (!arrCurso.includes(curso_diplomado)) {
+
+                    tblCurso.row.add([
+                        curso_diplomado,
+                        tipo,
+                        año,
+                        duracion,
+                    ]).draw();
+
+                } else {
+                    Swal.fire('Este registro ya ha sido agregado', '', 'error')
+                }
+            }
+        }
+
+        function limpiarCamposCursos() {
+            $("#curso_diplomado").val('');
+            $("#tipo").val('');
+            $("#año").val('');
+            $("#duracion").val('');
+        }
+
+        function enviarCurso() {
+            let cursos = tblCurso.rows().data().toArray();
+            let arrCurso = [];
+            cursos.forEach(curso => {
+                arrCurso.push(curso)
+
+            });
+            document.getElementById('curso').value = JSON.stringify(arrCurso);
+            console.log(arrCurso);
+        }
+
+        function suscribirCertificado() {
+            //form-participantes
+
+            let certificados = tblCertificado.rows().data().toArray();
+            let arrCertificado = [];
+            certificados.forEach(certificado => {
+                arrCertificado.push(certificado[0])
+
+            });
+            //no se puedan agregar datos que ya estan
+            let nombre_certificado = $("#nombre_certificado").val();
+            let vigencia = $("#vigencia").val();
+            let estatus = $("#vencio_alta").val();
+
+
+            if (nombre_certificado.trim() == '') {
+                document.querySelector('.nombre_certificado_error').innerHTML =
+                    "El campo nombre del certificado es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+            if (vigencia.trim() == '') {
+                document.querySelector('.vigencia_error').innerHTML = "El campo vigencia es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+            if (estatus.trim() == '') {
+                document.querySelector('.estatus_error').innerHTML = "El campo estatus es requerido"
+                // limpiarCamposExperienciaPorId('empresa');
+            }
+
+            if (nombre_certificado.trim() != '' && vigencia.trim() != '' && estatus.trim() != '') {
+                limpiarCamposCertificados();
+
+                if (!arrCertificado.includes(nombre_certificado)) {
+
+                    tblCertificado.row.add([
+                        nombre_certificado,
+                        vigencia,
+                        estatus,
+                    ]).draw();
+
+                } else {
+                    Swal.fire('Este registro ya ha sido agregado', '', 'error')
+                }
+            }
+        }
+
+        function limpiarCamposCertificados() {
+            $("#nombre_certificado").val('');
+            $("#vigencia").val('');
+            $("#vencio_alta").val('');
+
+        }
+
+        function enviarCertificado() {
+            let certificados = tblCertificado.rows().data().toArray();
+            let arrCertificado = [];
+            certificados.forEach(certificado => {
+                arrCertificado.push(certificado)
+
+            });
+            document.getElementById('certificado').value = JSON.stringify(arrCertificado);
+            console.log(arrCertificado);
+        }
+    </script>
+
 
 @endsection
