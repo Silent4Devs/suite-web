@@ -207,12 +207,4 @@
         </section>
     </div>
     <!--col-->
-
-<<<<<<< HEAD
-
-
-
-
-=======
->>>>>>> main
 @endsection
