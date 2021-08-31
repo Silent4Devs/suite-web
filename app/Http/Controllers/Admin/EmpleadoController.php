@@ -160,7 +160,7 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-
+       
         // dd($request->all());
         $experiencias = json_decode($request->experiencia);
         $educacions = json_decode($request->educacion);
@@ -201,7 +201,8 @@ class EmpleadoController extends Controller
             "genero" =>  $request->genero,
             "n_empleado" =>  $request->n_empleado,
             "n_registro" =>  $request->n_registro,
-            "sede_id" =>  $request->sede_id
+            "sede_id" =>  $request->sede_id,
+            "resumen" =>  $request->resumen,
         ]);
         $image = null;
         if ($request->snap_foto && $request->file('foto')) {

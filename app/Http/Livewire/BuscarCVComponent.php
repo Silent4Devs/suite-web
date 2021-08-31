@@ -15,6 +15,18 @@ class BuscarCVComponent extends Component
     public $empleado_certificaciones;
     public $empleado_cursos;
     public $foto_organizacion;
+    public $empleados;
+
+
+    public function clean()
+    {
+        $this->empleado_id = "";
+        $this->area_id = "";
+        $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
+        //$this->conteo = '';
+        $this->callAlert('info', 'Los filtros se han restablecido', true, 'La información volvio a su estado original');
+    }
+
 
     public function updatedAreaId($value)
     {
@@ -28,20 +40,23 @@ class BuscarCVComponent extends Component
 
     public function mount()
     {
+        $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
     }
 
     public function render()
     {
-        $empleados = Empleado::select('id', 'area_id', 'name')->get();
         $empleadoget = Empleado::select('*')->with('empleado_experiencia');
 
         if ($this->area_id != "") {
+
             if(Empleado::where('area_id', '=', $this->area_id)->count() > 0){
-                $empleadoget->where('area_id', '=', $this->area_id);
+                $this->empleados = Empleado::where('area_id', '=', $this->area_id)->get();
                 $this->callAlert('success', 'La información se actualizo correctamente', true);
             }else{
                 $this->callAlert('warning', 'No se encontro registro con esta area', false, 'las opciones de busqueda se restablecieron');
                 $this->area_id = "";
+                $this->empleado_id="";
+                $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
             }
         }
 
@@ -52,11 +67,11 @@ class BuscarCVComponent extends Component
             }else{
                 $this->callAlert('warning', 'No se encontro registro con este empleado', false, 'las opciones de busqueda se restablecieron');
                 $this->empleado_id = "";
+                $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
             }
         }
 
         return view('livewire.buscar-c-v-component', [
-            'empleados' => $empleados,
             'empleadoget' => $empleadoget->get()->first(),
         ]);
     }
