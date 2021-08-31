@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateComiteseguridadRequest;
 use App\Models\Comiteseguridad;
 use App\Models\Team;
 use App\Models\Empleado;
+use App\Models\Organizacion;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -127,5 +128,14 @@ class ComiteseguridadController extends Controller
         Comiteseguridad::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function visualizacion()
+    {
+        $comiteseguridads = Comiteseguridad::get();
+
+        $organizacion = Organizacion::get();
+
+        return view('admin.comiteseguridads.visualizacion', compact('comiteseguridads', 'organizacion'));
     }
 }

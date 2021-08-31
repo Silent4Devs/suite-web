@@ -228,7 +228,7 @@ class ComunicacionSgiController extends Controller
     {
         abort_if(Gate::denies('comunicacion_sgi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $comunicacionSgi->load('team');
+        $comunicacionSgi->load('team', 'documentos_comunicacion', 'imagenes_comunicacion');
 
         return view('admin.comunicacionSgis.show', compact('comunicacionSgi'));
     }

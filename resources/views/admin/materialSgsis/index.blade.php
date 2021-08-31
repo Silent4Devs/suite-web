@@ -27,6 +27,9 @@
                             {{ trans('cruds.materialSgsi.fields.id') }}
                         </th>
                         <th>
+                             Nombre&nbsp;del&nbsp;material
+                        </th>
+                        <th>
                             {{ trans('cruds.materialSgsi.fields.objetivo') }}
                         </th>
                         <th>
@@ -42,7 +45,7 @@
                             Fecha&nbsp;de&nbsp;creación&nbsp;o&nbsp;actualización
                         </th>
                         <th>
-                            Material&nbsp;(PDF&nbsp;/&nbsp;JPEG)
+                            Material&nbsp;(Archivo&nbsp;PDF)
                         </th>
                         <th>
                             Opciones
@@ -218,6 +221,10 @@
                 columns: [{
                         data: 'id',
                         name: 'id'
+                    },
+                    {
+                        data: 'nombre',
+                        name: 'nombre'
                     },
                     {
                         data: 'objetivo',

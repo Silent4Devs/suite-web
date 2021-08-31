@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }*/
 
 
         #workSpace {
@@ -211,6 +211,11 @@
             display: none;
         }
 
+        .caja_botones_menu {
+
+            display: inline-block !important;
+        }
+
     </style>
     <div class="mt-5 mb-5">
         <div class="py-3 col-12 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -224,14 +229,14 @@
                 <div class="col-4">
                     <h2 id="titlo-tab" class="text-capitalize">Diagrama Gantt</h2>
                 </div>
-                <div class="text-right col-8">
-                    <a href="#original_gantt" onclick="loadGanttFromServer();cambiarTitulo('Gantt');"
+                <div class="text-right col-8 caja_botones_menu">
+                    <a href="#" data-tabs="original_gantt" onclick="loadGanttFromServer();cambiarTitulo('Gantt');"
                         class="btn_gantt_vista boton_activo"><i class="fas fa-stream"></i>Gantt</a>
-                    <a href="#tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');" class="btn_gantt_tabla_vista"><i
-                            class="fas fa-table"></i>Tabla</a>
-                    <a href="#calendario_gantt" onclick="initCalendar();cambiarTitulo('Calendario');"
+                    <a href="#" data-tabs="tabla_gantt" onclick="initTable();cambiarTitulo('Tabla');"
+                        class="btn_gantt_tabla_vista"><i class="fas fa-table"></i>Tabla</a>
+                    <a href="#" data-tabs="calendario_gantt" onclick="initCalendar();cambiarTitulo('Calendario');"
                         class="btn_gantt_calendario_vista"><i class="fas fa-calendar-alt"></i>Calendario</a>
-                    <a href="#kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');"
+                    <a href="#" data-tabs="kanban_gantt" onclick="initKanban();cambiarTitulo('Kanban');"
                         class="btn_gantt_kanban_vista"><i class="fas fa-th-large"></i>Kanban</a>
                 </div>
             </div>
@@ -243,7 +248,6 @@
                 <div class="caja_secciones">
                     <section id="original_gantt" class="caja_tab_reveldada">
                         @include('admin.planesDeAccion.diagramas-implementacion.gantt')
-                        @include('admin.planesDeAccion.diagramas-implementacion.tabla')
                     </section>
 
                     <section id="tabla_gantt">

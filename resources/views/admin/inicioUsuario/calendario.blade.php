@@ -309,7 +309,7 @@
                 {
 
                     id: 'recursos{{$it_recursos->id}}',
-                    calendarId: '3',
+                    calendarId: '2',
                     title: '{{$it_recursos->cursoscapacitaciones}}',
                     category: 'allday',
                     dueDateClass: '',
@@ -317,6 +317,8 @@
                     end: '{{  \Carbon\Carbon::parse($it_recursos->fecha_fin)->format('Y-m-d') }}',
                     body: `
                         <font style="font-weight: bold;">Categoria:</font> ${@json($it_recursos->tipo)}<br>
+                        <font style="font-weight: bold;">Inicio:</font> ${@json($it_recursos->fecha_curso)} horas<br>
+                        <font style="font-weight: bold;">Fin:</font> ${@json($it_recursos->fecha_fin)} horas<br>
                         <font style="font-weight: bold;">Duración:</font> ${@json($it_recursos->duracion)} horas<br>
                         <font style="font-weight: bold;">Instructor:</font> ${@json($it_recursos->instructor)}<br>
                         <font style="font-weight: bold;">${@json($it_recursos->modalidad)=='presencial' ? 'Ubicación' : 'Link'}:</font> ${@json($it_recursos->ubicacion)}<br>
@@ -329,7 +331,7 @@
              @foreach($auditorias_anual as $it_auditorias_anual)
                 {
                     id: 'auditoria{{$it_auditorias_anual->id}}',
-                    calendarId: '2',
+                    calendarId: '3',
                     title: 'Tipo: {{$it_auditorias_anual->tipo}}',
                     category: 'allday',
                     dueDateClass: '',

@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-
+    
+    {{ Breadcrumbs::render('admin.portal-comunicacion.sedes-organizacion') }}
 
     <div class="mt-5 card">
 

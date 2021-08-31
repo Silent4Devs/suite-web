@@ -230,6 +230,7 @@
      <script src="{{ asset('../js/calendar_tui/tui-calendar.js') }}"></script>
      <script src="{{ asset('../js/calendar_tui/calendar_gantt.js') }}"></script>
      <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
+
      <script>
          $(document).ready(function() {
              initCalendar();
@@ -326,6 +327,6 @@
              ScheduleList = data;
          }
      </script>
-     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
 
+     <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
  @endsection

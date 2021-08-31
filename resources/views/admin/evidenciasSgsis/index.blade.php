@@ -1,6 +1,26 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+.carousel-control-next, .carousel-control-prev {
+    width: 50px;
+    height: 50px;
+    margin-top: 100px;
+}
+
+.img-size{
+    margin-left:calc(50% - 141px);
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon{
+    background-color: #000;
+    filter: invert(100%);
+}
+
+
+</style>
+
+
     {{ Breadcrumbs::render('admin.evidencias-sgsis.index') }}
 
     @can('evidencias_sgsi_create')

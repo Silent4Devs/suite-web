@@ -553,6 +553,39 @@ input[readonly]{
   background-color: #00b1e1 !important;
   fill: #00b1e1 !important;
 }
+
+div.taskDivStatus{
+    width: 30%;
+    text-align: center;
+    border-radius: 5px;
+}
+
+div.taskDivStatus[status=STATUS_ACTIVE]{
+  background-color: rgb(253, 171, 61) !important;
+  
+}
+div.taskDivStatus[status=STATUS_DONE]{
+  background-color: rgb(0, 200, 117) !important;
+  
+}
+div.taskDivStatus[status=STATUS_FAILED]{
+  background-color: rgb(226, 68, 92) !important;
+  
+}
+div.taskDivStatus[status=STATUS_SUSPENDED]{
+  background-color: #aaaaaa !important;
+  
+}
+div.taskDivStatus[status=STATUS_WAITING]{
+  background-color:#F79136;
+  
+}
+div.taskDivStatus[status=STATUS_UNDEFINED]{
+  background-color: #00b1e1 !important;
+  
+}
+
+
 .taskStatus.selected{
   /*border:#666 2px solid;*/
 }
