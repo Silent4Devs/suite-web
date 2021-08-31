@@ -129,6 +129,7 @@ class inicioUsuarioController extends Controller
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
         $revisiones = [];
         $mis_documentos = [];
+        $contador_revisiones = 0;
         if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
 

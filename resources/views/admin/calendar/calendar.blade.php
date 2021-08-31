@@ -245,7 +245,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
     <script src="{{ asset('../js/calendar_tui/tui-calendar.js') }}"></script>
-    <script src="{{ asset('../js/calendar_tui/calendars.js') }}"></script>
+    <script src="{{ asset('../js/calendar_tui/calendar_agenda.js') }}"></script>
     <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
     <script>
         ScheduleList = [
@@ -265,7 +265,7 @@
             @foreach($auditorias_anual as $it_auditorias_anual)
                 {
                     id: 'auditoria{{$it_auditorias_anual->id}}',
-                    calendarId: '2',
+                    calendarId: '3',
                     title: 'Tipo: {{$it_auditorias_anual->tipo}}',
                     category: 'allday',
                     dueDateClass: '',
@@ -280,30 +280,28 @@
                 {
 
                     id: 'recursos{{$it_recursos->id}}',
-                    calendarId: '3',
+                    calendarId: '2',
                     title: 'Tipo: {{$it_recursos->cursoscapacitaciones}}',
                     category: 'allday',
                     dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::createFromFormat("d/m/Y", $it_recursos->fecha_curso)->format("Y-m-d") }}',
+                    start: '{{ \Carbon\Carbon::parse($it_recursos->fecha_curso)->format("Y-m-d") }}',
                     end: '',
                     isReadOnly : true,
                 },
 
             @endforeach
 
-            @foreach($file_gant['tasks'] as $task)
-                 {
-                    id: 'recurasdsos{{$task['id']}}',
-                    calendarId: '4',
-                    title: 'Fase: {{$task['name']}}',
-                    category: 'allday',
-                    dueDateClass: '',
-                    start: '{{ \Carbon\Carbon::createFromTimestamp($task['start'] / 1000)->toDateTimeString()
-                     }}',
-                    end: '{{ \Carbon\Carbon::createFromTimestamp($task['end'] / 1000)->toDateTimeString()
-                     }}',
-                    isReadOnly : true,
+            @foreach ($actividades as $it_plan_base)
+                {
+                id: 'planinicio{{ $it_plan_base->id }}',
+                calendarId: '1',
+                title: 'Actividad: {{ $it_plan_base->name }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{ \Carbon\Carbon::createFromTimestamp(($it_plan_base->start/1000))->toDateString()}}',
 
+                end: '{{ \Carbon\Carbon::createFromTimestamp(($it_plan_base->end/1000))->toDateString()}}',
+                isReadOnly : true,
                 },
             @endforeach
 
