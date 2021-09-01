@@ -29,10 +29,10 @@
                                     top: 29px;
                                     left: 18px;
                                 "></font>
-                              <h5 class="ml-3" style="font-size: 16px">Progreso General del Plan</h5>
+                              <h5 class="ml-3" style="font-size: 16px">Plan Base ISO 27001</h5>
                           </div>
                           <canvas id="chartActividades"></canvas>
-                          <a id="a_plan" class="btn_ver" href="admin/implementacions#plan-just">
+                          <a id="a_plan" class="btn_ver" href="admin/planTrabajoBase">
                               Ver Detalle
                           </a>
                       </div>
@@ -198,7 +198,6 @@
           a_plan.addEventListener('click', () => {
               localStorage.setItem('tab_plan', 'true');
           });
-
       </script>
       <script>
           var ctx = document.getElementById("myChart").getContext('2d');
@@ -461,22 +460,22 @@
               data: {
                   labels: [
                       "Publicados",
-                      "Aprobados",
-                      "En revisión",
-                      "Elaborado",
-                      "No elaborado"
+                      "En Elaboración",
+                      "En Revisión",
+                      "Rechazados",
+                      "Obsoletos"
                   ],
                   datasets: [{
                       label: '% Documentación',
-                      data: [{!! $documentoPubli !!}, {!! $documentoAprob !!}, {!! $documentorev !!},
-                          {!! $documentoElab !!}, {!! $docunoelab !!},
+                      data: [@json($contador_documentos_publicados), @json($contador_documentos_en_elaboracion), @json($contador_documentos_en_revision),
+                          @json($contador_documentos_rechazados), @json($contador_documentos_obsoletos),
                       ],
                       backgroundColor: [
-                          'rgba(22, 160, 133, 0.6)',
-                          'rgba(43, 65, 233 , 0.6)',
-                          'rgba(244, 208, 63, 0.6)',
-                          'rgba(133, 193, 233 , 0.6)',
-                          'rgba(231, 76, 60, 0.6)',
+                          'rgba(22, 160, 133, 0.9)',
+                          'rgba(1, 140, 250 , 0.9)',
+                          'rgba(43, 65, 233 , 0.9)',
+                          'rgba(231, 76, 60, 0.9)',
+                          'rgba(90, 100, 100 , 0.9)',
                       ]
                   }]
               },
@@ -541,51 +540,44 @@
           });
           // Progreso general Plan
           function renderProgresoGeneralPlan() {
-              //   let url = @json($path_gantt);
-              let current_url = "{{ asset($path_gantt) }}";
-              $.ajax({
-                  type: "GET",
-                  url: current_url,
-                  success: function(response) {
-                      let cantidad_done = 0; // Completadas
-                      let cantidad_undefined = 0; // Sin iniciar
-                      let cantidad_active = 0; // En proceso
-                      let cantidad_failed = 0; // Con retraso
-                      let cantidad_suspended = 0; // Suspendida
-                      let arr_cantidad_por_estatus = [];
-                      let arr_estatus = ['Completadas', 'Sin iniciar', 'En proceso', 'Con retraso',
-                          'Suspendida'
-                      ];
-                      response.tasks.forEach(task => {
-                          switch (task.status) {
-                              case 'STATUS_DONE':
-                                  cantidad_done++;
-                                  break;
-                              case 'STATUS_UNDEFINED':
-                                  cantidad_undefined++;
-                                  break;
-                              case 'STATUS_ACTIVE':
-                                  cantidad_active++;
-                                  break;
-                              case 'STATUS_FAILED':
-                                  cantidad_failed++;
-                                  break;
-                              case 'STATUS_SUSPENDED':
-                                  cantidad_suspended++;
-                                  break;
-                              default:
-                                  cantidad_undefined++;
-                                  break;
-                          }
-                      });
-                      arr_cantidad_por_estatus.push(cantidad_done);
-                      arr_cantidad_por_estatus.push(cantidad_undefined);
-                      arr_cantidad_por_estatus.push(cantidad_active);
-                      arr_cantidad_por_estatus.push(cantidad_failed);
-                      arr_cantidad_por_estatus.push(cantidad_suspended);
-                      renderGraficaProgresoGeneralPlan(arr_estatus, arr_cantidad_por_estatus)
+              let tasks = @json($actividades);
+              let cantidad_done = 0; // Completadas
+              let cantidad_undefined = 0; // Sin iniciar
+              let cantidad_active = 0; // En proceso
+              let cantidad_failed = 0; // Con retraso
+              let cantidad_suspended = 0; // Suspendida
+              let arr_cantidad_por_estatus = [];
+              let arr_estatus = ['Completadas', 'Sin iniciar', 'En proceso', 'Con retraso',
+                  'Suspendida'
+              ];
+              tasks.forEach(task => {
+                  switch (task.status) {
+                      case 'STATUS_DONE':
+                          cantidad_done++;
+                          break;
+                      case 'STATUS_UNDEFINED':
+                          cantidad_undefined++;
+                          break;
+                      case 'STATUS_ACTIVE':
+                          cantidad_active++;
+                          break;
+                      case 'STATUS_FAILED':
+                          cantidad_failed++;
+                          break;
+                      case 'STATUS_SUSPENDED':
+                          cantidad_suspended++;
+                          break;
+                      default:
+                          cantidad_undefined++;
+                          break;
                   }
               });
+              arr_cantidad_por_estatus.push(cantidad_done);
+              arr_cantidad_por_estatus.push(cantidad_undefined);
+              arr_cantidad_por_estatus.push(cantidad_active);
+              arr_cantidad_por_estatus.push(cantidad_failed);
+              arr_cantidad_por_estatus.push(cantidad_suspended);
+              renderGraficaProgresoGeneralPlan(arr_estatus, arr_cantidad_por_estatus)
           }
 
           function renderGraficaProgresoGeneralPlan(arr_estatus, arr_cantidad_por_estatus) {
@@ -600,11 +592,11 @@
                       datasets: [{
                           data: arr_cantidad_por_estatus,
                           backgroundColor: [
-                              '#3BBF67',
-                              '#0d0df5',
-                              '#F9C154',
-                              '#ec2805',
-                              '#e7e7e7',
+                              'rgb(0, 200, 117)',
+                              '#00b1e1 ',
+                              'rgb(253, 171, 61)',
+                              'rgb(226, 68, 92)',
+                              '#aaaaaa',
                           ]
                       }]
                   },
@@ -626,7 +618,6 @@
                   }
               });
           }
-
       </script>
 
   @endsection

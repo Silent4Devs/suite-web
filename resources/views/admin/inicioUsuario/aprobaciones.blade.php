@@ -1,6 +1,6 @@
 @inject('Documento', 'App\Models\Documento')
 <div class="card-body datatable-fix">
-    <h5 class="p-0 m-0 text-muted">Requeridas</h5>
+    <h5 class="p-0 m-0 text-muted">Solicitados: Documentos que envíe a aprobación</h5>
     <hr>
     <table id="tblMisDocumentos" class="table">
         <thead>
@@ -156,7 +156,7 @@
     </table>
 </div>
 <div class="card-body datatable-fix">
-    <h5 class="p-0 m-0 text-muted">Solicitadas</h5>
+    <h5 class="p-0 m-0 text-muted">Requeridos: Documentos que debo aprobar</h5>
     <hr>
     <table id="tabla_usuario_aprobaciones" class="table">
         <thead>
@@ -213,13 +213,13 @@
                                 </a>
                                 @if ($revision->before_level_all_answered)
                                     @if ($revision->estatus == $Documento::SOLICITUD_REVISION)
-                                        <a href="{{ route('revisiones.revisar', $revision) }}" class="btn btn-sm"
+                                        <a href="{{ route('revisiones.revisar', $revision) }}" class="btn btn-sm" target="_blank"
                                             style="border:none;" title="Revisar">
                                             <i class="fas fa-file-signature text-dark" style="font-size: 15px;"></i>
                                         </a>
                                     @endif
                                     @if ($revision->estatus != $Documento::SOLICITUD_REVISION)
-                                        <a class="btn btn-sm" style="border:none;" title="Archivar"
+                                        <a class="btn btn-sm" style="border:none;" title="Archivar"  
                                             onClick="Archivar('{{ route('admin.revisiones.archivar') }}','{{ $revision->id }}')">
                                             <i class=" fas fa-archive text-success" style="font-size: 15px;"></i>
                                         </a>
@@ -242,73 +242,74 @@
     @parent
     <script type="text/javascript">
         $(document).ready(function() {
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
-                }
 
-            ];
+            let dtButtons = [];
+            // let dtButtons = [{
+            //         extend: 'csvHtml5',
+            //         title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+            //         text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+            //         className: "btn-sm rounded pr-2",
+            //         titleAttr: 'Exportar CSV',
+            //         exportOptions: {
+            //             columns: ['th:not(:last-child):visible']
+            //         }
+            //     },
+            //     {
+            //         extend: 'excelHtml5',
+            //         title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+            //         text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+            //         className: "btn-sm rounded pr-2",
+            //         titleAttr: 'Exportar Excel',
+            //         exportOptions: {
+            //             columns: ['th:not(:last-child):visible']
+            //         }
+            //     },
+            //     {
+            //         extend: 'pdfHtml5',
+            //         title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+            //         text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+            //         className: "btn-sm rounded pr-2",
+            //         titleAttr: 'Exportar PDF',
+            //         orientation: 'portrait',
+            //         exportOptions: {
+            //             columns: ['th:not(:last-child):visible']
+            //         },
+            //         customize: function(doc) {
+            //             doc.pageMargins = [20, 60, 20, 30];
+            //             // doc.styles.tableHeader.fontSize = 7.5;
+            //             // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+            //         }
+            //     },
+            //     {
+            //         extend: 'print',
+            //         title: `Cursos y Capacitaciones ${new Date().toLocaleDateString().trim()}`,
+            //         text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+            //         className: "btn-sm rounded pr-2",
+            //         titleAttr: 'Imprimir',
+            //         exportOptions: {
+            //             columns: ['th:not(:last-child):visible']
+            //         }
+            //     },
+            //     {
+            //         extend: 'colvis',
+            //         text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+            //         className: "btn-sm rounded pr-2",
+            //         titleAttr: 'Seleccionar Columnas',
+            //     },
+            //     {
+            //         extend: 'colvisGroup',
+            //         text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+            //         className: "btn-sm rounded pr-2",
+            //         show: ':hidden',
+            //         titleAttr: 'Ver todo',
+            //     },
+            //     {
+            //         extend: 'colvisRestore',
+            //         text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+            //         className: "btn-sm rounded pr-2",
+            //         titleAttr: 'Restaurar a estado anterior',
+            //     }
+            // ];
 
             let btnArchivo = {
                 text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',

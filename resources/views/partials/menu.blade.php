@@ -163,6 +163,13 @@
                 </ul>
             </li>
         @endcan
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.planes-de-accion.index') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/planes-de-accion') || request()->is('admin/planes-de-accion/*/edit') || request()->is('admin/planes-de-accion/create') || request()->is('admin/planes-de-accion/*') ? 'active' : '' }}">
+                <i class="iconos_menu letra_blanca fas fa-fw fa-stream"></i>
+                <font class="letra_blanca">Planes de Acción</font>
+            </a>
+        </li>
         @can('agenda_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.systemCalendar') }}"
@@ -177,8 +184,8 @@
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.desk.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/desk') || request()->is('admin/desk/*') ? 'active' : '' }}">
-                    <i class="iconos_menu letra_blanca fas fa-headset"></i>
-                    <font class="letra_blanca"> Centro de atención
+                    <i class="fas fa-headset iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> Centro de Atención
                     </font>
                 </a>
             </li>
@@ -187,8 +194,7 @@
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.soporte.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/soporte.index') || request()->is('admin/soporte/*') ? 'active' : '' }}">
-                    <i class="fas fa-headset iconos_menu letra_blanca"></i>
-
+                    <i class="iconos_menu letra_blanca fas fa-id-card"></i>
                     <font class="letra_blanca"> Contáctanos </font>
                 </a>
             </li>
@@ -311,43 +317,9 @@
                 <font class="letra_blanca">Administración</font>
             </li>
         @endcan
-        @can('documentos_access')
-            <li
-                class="c-sidebar-nav-dropdown {{ request()->is('admin/carpeta*') ? 'c-show' : '' }} {{ request()->is('admin/crear-documentos*') ? 'c-show' : '' }}">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fas fa-folder iconos_menu letra_blanca"></i>
-                    <font class="letra_blanca"> Documentos </font>
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    @can('documentos_create')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.documentos.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
-                                <i class="fas fa-folder-plus iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> Crear Documentos </font>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('carpetum_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.carpeta.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
-                                <i class="fas fa-folder-open iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> Gestor Documental </font>
-                            </a>
-                        </li>
-                    @endcan
-                </ul>
-            </li>
-        @endcan
+        
         {{-- @can('planes_accion_access') --}}
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.planes-de-accion.index') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/planes-de-accion') || request()->is('admin/planes-de-accion/*/edit') || request()->is('admin/planes-de-accion/create') || request()->is('admin/planes-de-accion/*') ? 'active' : '' }}">
-                <i class="iconos_menu letra_blanca fas fa-fw fa-stream"></i>
-                <font class="letra_blanca">Planes de Acción</font>
-            </a>
-        </li>
+        
         {{-- @endcan --}}
         @can('configuracion_datos_access')
             <li class="c-sidebar-nav-dropdown">
@@ -358,6 +330,35 @@
                     <font class="letra_blanca"> Configuracion de Datos </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
+                    @can('documentos_access')
+                        <li
+                            class="c-sidebar-nav-dropdown {{ request()->is('admin/carpeta*') ? 'c-show' : '' }} {{ request()->is('admin/crear-documentos*') ? 'c-show' : '' }}">
+                            <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                                <i class="fas fa-folder iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca"> Documentos </font>
+                            </a>
+                            <ul class="c-sidebar-nav-dropdown-items">
+                                @can('documentos_create')
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ route('admin.documentos.index') }}"
+                                            class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
+                                            <i class="fas fa-folder-plus iconos_menu letra_blanca"></i>
+                                            <font class="letra_blanca"> Crear Documentos </font>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('carpetum_access')
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ route('admin.carpeta.index') }}"
+                                            class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
+                                            <i class="fas fa-folder-open iconos_menu letra_blanca"></i>
+                                            <font class="letra_blanca"> Gestor Documental </font>
+                                        </a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endcan
                     @can('configuracion_sede_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.sedes.index') }}"
@@ -466,6 +467,34 @@
                             </ul>
                         </li>
                     @endcan
+
+                    <li class="c-sidebar-nav-dropdown">
+                            <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                                <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca "> Capacitaciones </font>
+                            </a>
+                            <ul class="c-sidebar-nav-dropdown-items">
+                                @can('configuracion_macroproceso_access')
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ asset('admin/categoria-capacitacion') }}"
+                                            class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
+                                            <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                            <font class="letra_blanca"> Crear categorías</font>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('configuracion_procesos_access')
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ asset('admin/recursos') }}"
+                                            class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
+                                            <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
+                                                style="font-size:12pt;"></i>
+                                            <font class="letra_blanca"> Crear capacitaciones</font>
+                                        </a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
 
                     @can('configuracion_empleados_access')
                         <li class="c-sidebar-nav-item">

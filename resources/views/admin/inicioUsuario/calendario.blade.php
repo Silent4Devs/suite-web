@@ -99,6 +99,20 @@
     .tui-full-calendar-popup.tui-full-calendar-popup-detail .tui-full-calendar-popup-container{
         display: block;
     }
+
+
+    .tui-full-calendar-weekday-grid-more-schedules{
+        margin-top: -35px !important;
+        position: relative !important;
+   }
+   .tui-full-calendar-weekday-grid-more-schedules:after{
+        content: "más";
+        position: absolute;
+        background-color: #fff;
+        z-index: 1;
+        padding: 0 5px  !important;
+        left: 15px;
+   }
 </style>
 
 
@@ -197,7 +211,6 @@
 
 
 
-
 @section('scripts')
     @parent
     <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
@@ -208,6 +221,9 @@
     <script src="{{ asset('../js/calendar_tui/tui-calendar.js') }}"></script>
     <script src="{{ asset('../js/calendar_tui/calendars.js') }}"></script>
     <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
+
+
+
     <script type="text/javascript">
 
         // let recursos = @json($recursos);

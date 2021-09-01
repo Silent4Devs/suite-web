@@ -207,5 +207,4 @@
         </section>
     </div>
     <!--col-->
-
 @endsection

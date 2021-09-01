@@ -516,7 +516,7 @@
 
                         <div class="caja_nuevo">
 
-                            @foreach($nuevos as $nuevo)
+                            @forelse($nuevos as $nuevo)
                                 <div class="nuevo">
                                     <div class="img_nuevo">
                                         @if(is_null($nuevo->foto))
@@ -538,7 +538,9 @@
                                         <span>{{ \Carbon\Carbon::parse($nuevo->antiguedad)->format('d-m-Y') }}</span>
                                     </div>
                                 </div>
-                            @endforeach
+                                @empty
+                                
+                            @endforelse
 
                         </div>
 

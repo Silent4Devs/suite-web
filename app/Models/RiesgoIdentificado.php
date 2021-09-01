@@ -31,6 +31,11 @@ class RiesgoIdentificado extends Model
         return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id');
     }
 
+    public function evidencias_riesgos()
+    {
+        return $this->hasMany(EvidenciasRiesgo::class, 'id_riesgos');
+    }
+
     public function planes()
     {
         return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
