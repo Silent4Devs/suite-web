@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
 @endsection
 
-
+@include('partials.flashMessages')
 <div class="card">
     <div class="text-center card-header" style="background-color: #00abb2;">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-hand-paper"></i>Denuncias</strong>
@@ -156,16 +156,72 @@
                                     class="form-control">{{ $denuncias->descripcion }}</textarea>
                             </div>
 
-                            <div class="mt-4 form-group col-12">
-                                <a href="#" class="btn btn-danger" data-toggle="modal"
-                                    data-target="#largeModal">Evidencia</a>
+                            <div class="mt-4 text-center form-group col-12">
+                                <div class="container">
+                                    <div class="mb-4 row">
+                                        <div class="col text-start">
+                                            <a href="#" class="btn btn-danger" data-toggle="modal"
+                                                data-target="#largeModal">Evidencia</a>
+                                        </div>
+                                    </div>
+                                    <!-- modal -->
+                                    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="basicModal" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <!-- carousel -->
+                                                    <div id='carouselExampleIndicators' class='carousel slide'
+                                                        data-ride='carousel'>
+                                                        <ol class='carousel-indicators'>
+                                                            @foreach ($denuncias->evidencias_denuncias as $idx => $evidencia)
+                                                                <li data-target='#carouselExampleIndicators'
+                                                                    data-slide-to='{{ $idx }}'
+                                                                    class='{{ $idx == 0 ? 'active' : '' }}'></li>
+                                                            @endforeach
+                                                        </ol>
+                                                        <div class='carousel-inner'>
+                                                            @foreach ($denuncias->evidencias_denuncias as $idx => $evidencia)
+                                                                <div
+                                                                    class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                                    <iframe class='img-size'
+                                                                        src='{{ asset('storage/evidencias_denuncias' . '/' . $evidencia->evidencia) }}'></iframe>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <a class='carousel-control-prev'
+                                                            href='#carouselExampleIndicators' role='button'
+                                                            data-slide='prev'>
+                                                            <span class='carousel-control-prev-icon'
+                                                                aria-hidden='true'></span>
+                                                            <span class='sr-only'>Previous</span>
+                                                        </a>
+                                                        <a class='carousel-control-next'
+                                                            href='#carouselExampleIndicators' role='button'
+                                                            data-slide='next'>
+                                                            <span class='carousel-control-next-icon'
+                                                                aria-hidden='true'></span>
+                                                            <span class='sr-only'>Next</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 text-right form-group col-12">
+                                <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
+                                <input type="submit" name="" class="btn btn-success" value="Enviar">
                             </div>
                         </form>
                     </div>
-                    <div class="mt-4 text-right form-group col-12">
-                        <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
-                        <input type="submit" name="" class="btn btn-success" value="Enviar">
-                    </div>
+                    
                 </section>
 
                 <section id="analisis">

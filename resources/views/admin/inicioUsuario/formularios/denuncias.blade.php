@@ -13,7 +13,7 @@
 		<div class="card-body">
 			<strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
 
-			<form class="row" method="POST" action="{{ route('admin.reportes-denuncias-store') }}">
+			<form class="row" method="POST" action="{{ route('admin.reportes-denuncias-store') }}" enctype="multipart/form-data">
 				@csrf
 				<div class="form-group col-12 tipo_datos mt-4">
 					<label class="form-label"><strong>Su queja será:</strong></label><br>
@@ -60,21 +60,21 @@
 
 				<div class="form-group mt-2 col-4">
 					<label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
-					<select name="empleado_denunciado_id" class="form-control">
+					<select name="empleado_denunciado_id" class="form-control" id="select_empleado_denunciado">
 						@foreach($empleados as $empleado)
-							<option value="{{$empleado->id}}">{{$empleado->name}}</option>
+							<option value="{{$empleado->id}}" data-puesto="{{$empleado->puesto}}" data-area="{{$empleado->area->area}}">{{$empleado->name}}</option>
 						@endforeach
 					</select>
 				</div>
 
 				<div class="form-group mt-2 col-4">
 					<label class="form-label"><i class="fas fa-user-tag iconos-crear"></i>Puesto</label>
-					<div class="form-control">puesto</div>
+					<div class="form-control" id="puesto"></div>
 				</div>
 
 				<div class="form-group mt-2 col-4">
 					<label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i></i>Área</label>
-					<div class="form-control">area</div>
+					<div class="form-control" id="area"></div>
 				</div>
 
 				<div class="form-group mt-4 col-12">
@@ -178,5 +178,24 @@
     	$('.tipo_datos input[value="si"]').click(function(){
     		$("#datos_personales").fadeOut(100);
     	});
+    </script>
+
+    <script type="text/javascript">
+    	
+    	document.addEventListener('DOMContentLoaded', function() {
+			
+		    document.querySelector('#select_empleado_denunciado').addEventListener('change', function(e) {
+		        e.preventDefault();
+
+		       	let area = $("#select_empleado_denunciado option:selected").attr('data-area');
+
+		       	let puesto = $("#select_empleado_denunciado option:selected").attr('data-puesto');
+
+		        document.getElementById('area').innerHTML = area;
+
+		        document.getElementById('puesto').innerHTML = puesto;
+
+		    });
+	   	});
     </script>
 @endsection

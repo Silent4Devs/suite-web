@@ -28,6 +28,7 @@ use Intervention\Image\Facades\Image;
 use App\Models\EvidenciasQueja;
 use App\Models\EvidenciasSeguridad;
 use App\Models\EvidenciasRiesgo;
+use App\Models\EvidenciasDenuncia;
 
 use App\Models\Activo;
 use App\Models\Documento;
@@ -183,6 +184,7 @@ class inicioUsuarioController extends Controller
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
+            'estatus' => 'nuevo',
         ]);
 
         AnalisisSeguridad::create([
@@ -219,7 +221,7 @@ class inicioUsuarioController extends Controller
 
 
         
-        return redirect()->route('admin.inicio-Usuario.index');
+        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
     public function denuncias()
@@ -242,6 +244,7 @@ class inicioUsuarioController extends Controller
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'fecha' => $request->fecha,
+            'estatus' => 'nuevo',
         ]);
 
         AnalisisSeguridad::create([
@@ -249,7 +252,33 @@ class inicioUsuarioController extends Controller
             'formulario' => 'denuncia',
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.index');
+
+        $image = null;
+
+        if($request->file('evidencia') != null or !empty($request->file('evidencia'))){
+
+            foreach($request->file('evidencia') as $file){
+                $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+
+                $new_name_image = 'Denuncia_file_' . $denuncias->id . '_' . $name_image . '.' . $extension;
+
+                $route = 'public/evidencias_denuncias';
+
+                $image = $new_name_image;
+
+                $file->storeAs($route, $image);
+
+                EvidenciasDenuncia::create([
+                    'evidencia' => $image,
+                    'id_denuncias' => $denuncias->id,
+                ]);
+
+            }
+        }
+
+        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
     public function mejoras()
@@ -273,6 +302,7 @@ class inicioUsuarioController extends Controller
             'proceso_mejora' => $request->proceso_mejora,
             'tipo' => $request->tipo,
             'otro' => $request->otro,
+            'estatus' => 'nuevo',
         ]);
 
         AnalisisSeguridad::create([
@@ -280,7 +310,7 @@ class inicioUsuarioController extends Controller
             'formulario' => 'mejora',
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.index');
+        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
     public function sugerencias()
@@ -304,6 +334,7 @@ class inicioUsuarioController extends Controller
 
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
+            'estatus' => 'nuevo',
         ]);
 
         AnalisisSeguridad::create([
@@ -311,7 +342,7 @@ class inicioUsuarioController extends Controller
             'formulario' => 'sugerencia',
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.index');
+        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
     public function seguridad()
@@ -382,7 +413,7 @@ class inicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index');
+        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
     public function evidenciaSeguridad()
@@ -454,6 +485,6 @@ class inicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index');
+        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 }
