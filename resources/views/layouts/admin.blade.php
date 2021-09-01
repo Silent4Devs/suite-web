@@ -445,7 +445,7 @@
                     </li>
                 @endif
 
-                @livewire('campana-notificaciones-component')
+                {{-- @livewire('campana-notificaciones-component')
                 @livewire('tareas-notificaciones-component')
                 <ul class="ml-auto c-header-nav">
                     <li class="px-2 c-header-nav-item c-d-legacy-none">
@@ -474,7 +474,7 @@
                     } else {
                         document.body.classList.remove('c-dark-theme');
                     }
-                </script>
+                </script> --}}
 
 
                 <ul class="ml-auto c-header-nav">

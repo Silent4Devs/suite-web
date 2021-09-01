@@ -294,21 +294,21 @@
 
 
 
-                            <div class="mt-2 form-group col-md-4">
+                            <div class="mt-2 form-group col-md-4 select_elegir_prioridad">
                                 <label class="form-label"><i class="fas fa-chart-line iconos-crear"></i>Urgencia</label>
                                 <select class="form-control" name="urgencia" id="select_urgencia">
-                                    <option>{{ $incidentesSeguridad->urgencia }}</option>
+                                    <option disabled selected>{{ $incidentesSeguridad->urgencia }}</option>
                                     <option data-urgencia="3">Alta</option>
                                     <option data-urgencia="2">Media</option>
                                     <option data-urgencia="1">Baja</option>
                                 </select>
                             </div>
 
-                            <div class="mt-2 form-group col-md-4">
+                            <div class="mt-2 form-group col-md-4 select_elegir_prioridad">
                                 <label class="form-label"><i
                                         class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
                                 <select class="form-control" name="impacto" id="select_impacto">
-                                    <option>{{ $incidentesSeguridad->impacto }}</option>
+                                    <option disabled selected>{{ $incidentesSeguridad->impacto }}</option>
                                     <option data-impacto="3">Alta</option>
                                     <option data-impacto="2">Media</option>
                                     <option data-impacto="1">Baja</option>
@@ -519,8 +519,7 @@
                                             <span class="text-danger error_fecha_fin errors"></span>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label class="form-label"><i
-                                                    class="fas fa-flag iconos-crear"></i>Prioridad</label>
+                                            <label class="form-label"><i class="fas fa-flag iconos-crear"></i>Prioridad</label>
                                             <select class="form-control" name="prioridad" id="prioridad">
                                                 <option value="Alta">Alta</option>
                                                 <option value="Media">Media</option>
@@ -736,18 +735,62 @@
 </script>
 
 <script type="text/javascript">
-    select_impacto
+    var prioridad = 0; 
+    var impacto = 0;
+    var urgencia = 0;
+    var prioridad_nombre = '';
 
+    urgencia = new Number($('#select_urgencia option:selected').attr('data-urgencia'));
+    impacto = new Number($('#select_impacto option:selected').attr('data-impacto'));
+    prioridad = urgencia + impacto; 
+    if(prioridad <= 2){
+        prioridad_nombre = 'Baja';
+    }
+    if(prioridad >= 3){
+        prioridad_nombre = 'Media';
+    }
+    if(prioridad >= 5){
+        prioridad_nombre = 'Alta';
+    }
+    $("#prioridad").html(prioridad_nombre);
 
-    let prioridad = 0; 
+    
+    
     $(document).on('change', '#select_urgencia', function(event) {
-        if ($('#select_urgencia').attr('data-urgencia') = 3) {
-            prioridad = prioridad + 3;
+        urgencia = new Number($('#select_urgencia option:selected').attr('data-urgencia'));
+
+        prioridad = urgencia + impacto;
+
+        
+
+        if(prioridad <= 2){
+            prioridad_nombre = 'Baja';
         }
-        console.log(prioridad);
+        if(prioridad >= 3){
+            prioridad_nombre = 'Media';
+        }
+        if(prioridad >= 5){
+            prioridad_nombre = 'Alta';
+        }
+
+        $("#prioridad").html(prioridad_nombre);
     });
     $(document).on('change', '#select_impacto', function(event) {
-        
+        impacto = new Number($('#select_impacto option:selected').attr('data-impacto'));
+
+        prioridad = urgencia + impacto;
+
+       if(prioridad <= 2){
+            prioridad_nombre = 'Baja';
+        }
+        if(prioridad >= 3){
+            prioridad_nombre = 'Media';
+        }
+        if(prioridad >= 5){
+            prioridad_nombre = 'Alta';
+        }
+
+        $("#prioridad").html(prioridad_nombre);
     });
 </script>
 @endsection
