@@ -539,7 +539,7 @@
                                     </div>
                                 </div>
                                 @empty
-                                
+                                <div class="nuevo">No hay nuevos ingresos registrados en este mes.</div>
                             @endforelse
 
                         </div>
@@ -548,7 +548,7 @@
 
                         <h2 class="titulo-seccion mt-5"><i class="fas fa-birthday-cake mr-3"></i>Cumpleaños</h2>
                         <div class="caja_nuevo">
-                            @foreach($cumpleaños as $cumple)
+                            @forelse($cumpleaños as $cumple)
                                 <div class="nuevo">
                                     <div class="img_nuevo">
                                         @if(is_null($cumple->foto))
@@ -570,7 +570,9 @@
                                         <span>{{ \Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m-Y') }}</span>
                                     </div>
                                 </div>
-                            @endforeach
+                                @empty
+                                <div class="nuevo">No hay cumpleaños registrados en este mes.</div>
+                            @endforelse
                         </div>
 
 
@@ -578,7 +580,7 @@
                         <h2 class="titulo-seccion mt-5"><i class="fas fa-birthday-cake mr-3"></i>Aniversarios</h2>
                         <div class="caja_nuevo">
                             <div class="caja_nuevo">
-                                @foreach($aniversarios as $aniversario)
+                                @forelse($aniversarios as $aniversario)
 
                                     @if((\Carbon\Carbon::parse($aniversario->antiguedad)->format('Y')) < $hoy->format('Y'))
                                         <div class="nuevo">
@@ -604,7 +606,9 @@
                                             </div>
                                         </div>
                                     @endif
-                                @endforeach
+                                    @empty
+                                    <div class="nuevo">No hay aniversarios registrados en este mes.</div>
+                                @endforelse
                             </div>
                         </div>
                     </div>

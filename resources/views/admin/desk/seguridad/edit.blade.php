@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
 @endsection
 
-
+@include('partials.flashMessages')
 <div class="card" id="desk">
     <div class="text-center card-header" style="background-color: #00abb2;">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-exclamation-triangle"></i>Incidentes de
@@ -148,55 +148,6 @@
                             </div>
 
                             <div class="mt-4 text-center form-group col-12">
-
-                                <style type="text/css">
-                                    .img-size {
-                                        /*  padding: 0;
-                                            margin: 0; */
-                                        height: 400px;
-                                        width: 100%;
-                                        background-size: contain;
-                                    }
-
-                                    .modal-content {
-
-                                        height: 400px;
-                                        border: none;
-                                    }
-
-                                    .modal-body {
-                                        padding: 0;
-                                    }
-
-                                    .carousel-control-next,
-                                    .carousel-control-prev {
-                                        width: 30px;
-                                        height: 48px;
-                                        top: 50%;
-                                    }
-
-                                    .carousel-control-next {
-                                        right: 30px !important;
-                                    }
-
-                                    .carousel-control-prev {
-                                        left: 30px;
-                                    }
-
-                                    .carousel-control-prev-icon {
-                                        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-                                        width: 30px;
-                                        height: 48px;
-                                    }
-
-                                    .carousel-control-next-icon {
-                                        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-                                        width: 30px;
-                                        height: 48px;
-                                    }
-
-                                </style>
-
                                 <div class="container">
 
                                     <div class="mb-4 row">
@@ -345,33 +296,28 @@
 
                             <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i class="fas fa-chart-line iconos-crear"></i>Urgencia</label>
-                                <select class="form-control" name="urgencia">
+                                <select class="form-control" name="urgencia" id="select_urgencia">
                                     <option>{{ $incidentesSeguridad->urgencia }}</option>
-                                    <option>Alta</option>
-                                    <option>Media</option>
-                                    <option>Baja</option>
+                                    <option data-urgencia="3">Alta</option>
+                                    <option data-urgencia="2">Media</option>
+                                    <option data-urgencia="1">Baja</option>
                                 </select>
                             </div>
 
                             <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i
                                         class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
-                                <select class="form-control" name="impacto">
+                                <select class="form-control" name="impacto" id="select_impacto">
                                     <option>{{ $incidentesSeguridad->impacto }}</option>
-                                    <option>Alta</option>
-                                    <option>Media</option>
-                                    <option>Baja</option>
+                                    <option data-impacto="3">Alta</option>
+                                    <option data-impacto="2">Media</option>
+                                    <option data-impacto="1">Baja</option>
                                 </select>
                             </div>
 
                             <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i class="fas fa-flag iconos-crear"></i>Prioridad</label>
-                                <select class="form-control" name="prioridad">
-                                    <option>{{ $incidentesSeguridad->prioridad }}</option>
-                                    <option>Alta</option>
-                                    <option>Media</option>
-                                    <option>Baja</option>
-                                </select>
+                                <div class="form-control" id="prioridad"></div>
                             </div>
 
 
@@ -786,6 +732,22 @@
         $("#select_subcategorias option").addClass("d-none");
         var categoria_selected = $("#select_categoria option:selected").attr('id');
         $(document.getElementsByClassName(categoria_selected)).removeClass("d-none");
+    });
+</script>
+
+<script type="text/javascript">
+    select_impacto
+
+
+    let prioridad = 0; 
+    $(document).on('change', '#select_urgencia', function(event) {
+        if ($('#select_urgencia').attr('data-urgencia') = 3) {
+            prioridad = prioridad + 3;
+        }
+        console.log(prioridad);
+    });
+    $(document).on('change', '#select_impacto', function(event) {
+        
     });
 </script>
 @endsection

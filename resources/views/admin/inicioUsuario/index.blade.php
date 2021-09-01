@@ -79,8 +79,9 @@
             margin-right: -5px;
             z-index: 1;
         }
-
     </style>
+
+    @include('partials.flashMessages')
 
     <div id="inicio_usuario" class="mb-5 row" style="">
         <div class="col-lg-3 info-personal">

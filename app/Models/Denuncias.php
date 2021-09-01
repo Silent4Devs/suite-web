@@ -27,6 +27,12 @@ class Denuncias extends Model
         return $this->belongsTo(Empleado::class, 'empleado_denuncio_id', 'id');
     }
 
+    public function evidencias_denuncias()
+    {
+        return $this->hasMany(EvidenciasDenuncia::class, 'id_denuncias');
+    }
+
+
     public function denunciado()
     {
         return $this->belongsTo(Empleado::class, 'empleado_denunciado_id', 'id');
