@@ -36,6 +36,19 @@ class StoreRecursoRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'ubicacion' => [
+                'string',
+                'required',
+            ],
+            'categoria_capacitacion_id' => [
+                'string',
+                'required',
+            ],
+            'modalidad' => [
+                'string',
+                'required',
+            ],
+
         ];
     }
 }
