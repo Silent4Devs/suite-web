@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EvidenciasRiesgos extends Model
+class EvidenciasRiesgo extends Model
 {
     use HasFactory;
 
@@ -27,7 +26,6 @@ class EvidenciasRiesgos extends Model
         'id_riesgos',
         'evidencia',
     ];
-
 
     public function riesgos(){
         return $this->belongsTo(RiesgoIdentificado::class, 'id_riesgos');
