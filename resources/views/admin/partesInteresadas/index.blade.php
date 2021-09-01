@@ -3,6 +3,54 @@
 
     {{ Breadcrumbs::render('admin.partes-interesadas.index') }}
 
+<style>
+.table tr td:nth-child(2){
+
+
+max-width:900px !important;
+width:900px !important;
+
+}
+
+.table tr th:nth-child(2){
+
+
+max-width:900px !important;
+width:900px !important;
+
+}
+.table tr td:nth-child(3){
+
+text-align:justify !important;
+max-width:3000px !important;
+width:3000px !important;
+
+}
+.table tr th:nth-child(3){
+
+text-align:justify !important;
+max-width:3000px !important;
+width:3000px !important;
+
+}
+.table tr td:nth-child(4){
+
+text-align:justify !important;
+max-width:900px !important;
+width:900px !important;
+
+}
+
+.table tr th:nth-child(4){
+
+text-align:justify !important;
+max-width:900px !important;
+width:900px !important;
+
+}
+
+</style>
+
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Partes Interesadas</strong></h3>
