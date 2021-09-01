@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\LaravelChart;
-use App\Models\User;
 use DB;
 use Carbon\Carbon;
-use App\Models\AccionCorrectiva;
+use App\Models\User;
+use App\Models\AuditoriaAnual;
 use App\Models\Registromejora;
-use App\Models\IncidentesDeSeguridad;
+use App\Services\LaravelChart;
+use App\Models\IndicadoresSgsi;
+use App\Models\AccionCorrectiva;
 use App\Models\ControlDocumento;
 use App\Models\PlanBaseActividade;
-use App\Models\AuditoriaAnual;
+use App\Models\EvaluacionIndicador;
+use App\Models\IncidentesSeguridad;
 use App\Models\CategoriaCapacitacion;
+use App\Models\IncidentesDeSeguridad;
+use App\Models\Documento;
+use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 
 class HomeController
@@ -47,6 +52,13 @@ class HomeController
             'entries_number'     => '5',
             'relationship_name'  => 'estado',
         ];
+
+        $total = IncidentesSeguridad::select('id')->get()->count();
+        $nuevos = IncidentesSeguridad::select('id')->where('estatus', 'nuevo')->get()->count();
+        $en_curso = IncidentesSeguridad::select('id')->where('estatus', 'en curso')->get()->count();
+        $en_espera = IncidentesSeguridad::select('id')->where('estatus', 'en espera')->get()->count();
+        $cerrados = IncidentesSeguridad::select('id')->where('estatus', 'cerrado')->get()->count();
+        $cancelados = IncidentesSeguridad::select('id')->where('estatus', 'cancelado')->get()->count();
 
         $chart2 = new LaravelChart($settings2);
 
@@ -140,7 +152,7 @@ class HomeController
         ];
 
         $settings6['total_number'] = 0;
-
+        // dd('test');
         if (class_exists($settings6['model'])) {
             $settings6['total_number'] = $settings6['model']::when(isset($settings6['filter_field']), function ($query) use ($settings6) {
                 if (isset($settings6['filter_days'])) {
@@ -249,13 +261,6 @@ class HomeController
         $incidentescancelado = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '5')->count('id');
         $incidentescurso = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '2')->count('id');
 
-
-        $documentoPubli = ControlDocumento::select('id')->where('estado_id', '=', '1')->count('id');
-        $documentoAprob =  ControlDocumento::select('id')->where('estado_id', '=', '2')->count('id');
-        $documentorev = ControlDocumento::select('id')->where('estado_id', '=', '3')->count('id');
-        $documentoElab = ControlDocumento::select('id')->where('estado_id', '=', '4')->count('id');
-        $docunoelab =  ControlDocumento::select('id')->where('estado_id', '=', '5')->count('id');
-
         $actividadsininici = PlanBaseActividade::select('id')->where('estatus_id', '=', '1')->count('id');
         $actividadenproc =  PlanBaseActividade::select('id')->where('estatus_id', '=', '2')->count('id');
         $actividadcompl = PlanBaseActividade::select('id')->where('estatus_id', '=', '3')->count('id');
@@ -304,16 +309,48 @@ class HomeController
             array_push($arr_participantes, count($recurso->empleados));
         }
 
-        // Gantt
-        $gantt_path = 'storage/gantt/';
+        // Gantt Tasks
+        $actividades = collect();
+        $implementacion = PlanImplementacion::first();
+        if ($implementacion) {
+            $tasks = $implementacion->tasks;
+            foreach ($tasks as $task) {
+                $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
+                $task->end = intval($task->end);
+                $task->start = intval($task->start);
+                $task->canAdd = $task->canAdd == 'true' ? true : false;
+                $task->canWrite = $task->canWrite == 'true' ? true : false;
+                $task->duration = intval($task->duration);
+                $task->progress = intval($task->progress);
+                $task->canDelete = $task->canDelete == 'true' ? true : false;
+                isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
+                isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
+                $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
+                $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
+                $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
+                $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+                $actividades->push($task);
+            }
+        }
+        // Fin Gantt Tasks
+        //Inicio Documentos
+        $contador_documentos_publicados = Documento::where('estatus', '=', Documento::PUBLICADO)->count();
+        $contador_documentos_en_elaboracion = Documento::where('estatus', '=', Documento::EN_ELABORACION)->count();
+        $contador_documentos_en_revision = Documento::where('estatus', '=', Documento::EN_REVISION)->count();
+        $contador_documentos_rechazados = Documento::where('estatus', '=', Documento::DOCUMENTO_RECHAZADO)->count();
+        $contador_documentos_obsoletos =  Documento::where('estatus', '=', Documento::DOCUMENTO_OBSOLETO)->count();
+        //Fin Documentos
 
+        $evaluacion_indicadores = IndicadoresSgsi::select('indicadores_sgsis.nombre', 'evaluacion_indicador.*', 'indicadores_sgsis.meta', 'indicadores_sgsis.id')
+            ->join('evaluacion_indicador', 'indicadores_sgsis.id', '=', 'evaluacion_indicador.id_indicador')->get()->toArray();
+        $evaluaciones = array();
+        $evaluacion_nombre = array();
 
-
-        $version_gantt = glob($gantt_path . "gantt_inicial*.json");
-
-        $path_gantt = end($version_gantt);
-
-
+        foreach ($evaluacion_indicadores as $evaluacion) {
+            array_push($evaluaciones, $evaluacion['resultado']);
+            array_push($evaluacion_nombre, $evaluacion['nombre']);
+        }
+        // dd($evaluacion_nombre);
         return view('home', compact(
             'auditexterna',
             'auditinterna',
@@ -337,11 +374,12 @@ class HomeController
             'incidentespendiente',
             'incidentescancelado',
             'incidentescurso',
-            'documentoPubli',
-            'documentoAprob',
-            'documentorev',
-            'documentoElab',
-            'docunoelab',
+            'contador_documentos_publicados',
+            'contador_documentos_en_elaboracion',
+            'contador_documentos_en_revision',
+            'contador_documentos_rechazados',
+            'contador_documentos_obsoletos',
+            'actividades',
             'exist_doc',
             'capacitaciones',
             'categorias',
@@ -352,7 +390,15 @@ class HomeController
             'capacitaciones_year_actual_uno_antes',
             'arr_fechas_cursos',
             'arr_participantes',
-            'path_gantt'
+            'total',
+            'nuevos',
+            'en_curso',
+            'en_espera',
+            'cerrados',
+            'cancelados',
+            'evaluacion_indicadores',
+            'evaluacion_nombre',
+            'evaluaciones'
         ));
     }
 }

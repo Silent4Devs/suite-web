@@ -1,4 +1,4 @@
-  <div class="container-fluid mb-3">
+  <div class="mb-3 container-fluid">
       <div class="row">
           <div class="col-6">
               <h3 class="text-muted">Dashboard ISO 27001</h3>
@@ -12,11 +12,13 @@
               </div>
           </div>
       </div>
+
+
       <div class="row">
           <div class="col-md-7">
               <div class="row">
-                  <div class="col-md-6 card_new pr-0">
-                      <div class="row bg-white rounded shadow-propia p-3 mb-2" style="margin-right: 10px;">
+                  <div class="pr-0 col-md-6 card_new">
+                      <div class="p-3 mb-2 bg-white rounded row shadow-propia" style="margin-right: 10px;">
                           <div class="header">
                               <font class="circulo_iso_27001" style="
                                     width: 10px;
@@ -27,41 +29,44 @@
                                     top: 29px;
                                     left: 18px;
                                 "></font>
-                              <h5 class="ml-3" style="font-size: 16px">Progreso General del Plan</h5>
+                              <h5 class="ml-3" style="font-size: 16px">Plan Base ISO 27001</h5>
                           </div>
                           <canvas id="chartActividades"></canvas>
-                          <a id="a_plan" class="btn_ver" href="admin/implementacions#plan-just">
+                          <a id="a_plan" class="btn_ver" href="admin/planTrabajoBase">
                               Ver Detalle
                           </a>
                       </div>
                   </div>
-                  <div class="col-md-6 card_new pr-0">
-                      <div class="row bg-white rounded shadow-propia p-3 mb-2" style="margin-right: 10px;">
-                          <div class="header">
-                              <font class="circulo_iso_27001" style="
-                                    width: 10px;
-                                    height: 10px;
-                                    background-color: #A13D86;
-                                    border-radius: 100%;
-                                    position: absolute;
-                                    top: 29px;
-                                    left: 18px;
-                                "></font>
-                              <h5 class="ml-3" style="font-size: 16px">Documentación</h5>
-                          </div>
-                          <canvas id="chartDocu"></canvas>
-                          <div style="display: inline-flex; justify-content: center;">
-                              <a id="" class="btn_ver" style="margin-left: 0;" href="admin/carpeta">
-                                  Carpetas
-                              </a>
-                              <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/control-documentos">
-                                  Lista de documentos
-                              </a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-6 card_new pr-0">
-                      <div class="row bg-white rounded shadow-propia p-3 mb-2" style="margin-right: 10px;">
+
+
+                  <div class="pr-0 col-md-6 card_new">
+                    <div class="p-3 mb-2 bg-white rounded row shadow-propia" style="margin-right: 10px;">
+                        <div class="header">
+                            <font class="circulo_iso_27001" style="
+                                  width: 10px;
+                                  height: 10px;
+                                  background-color: #A13D86;
+                                  border-radius: 100%;
+                                  position: absolute;
+                                  top: 29px;
+                                  left: 18px;
+                              "></font>
+                            <h5 class="ml-3" style="font-size: 16px">Documentación</h5>
+                        </div>
+                        <canvas id="chartDocu"></canvas>
+                        <div style="display: inline-flex; justify-content: center;">
+                            <a id="" class="btn_ver" style="margin-left: 0;" href="admin/carpeta">
+                                Carpetas
+                            </a>
+                            <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/control-documentos">
+                                Lista de documentos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                  {{-- <div class="pr-0 col-md-6 card_new">
+                      <div class="p-3 mb-2 bg-white rounded row shadow-propia" style="margin-right: 10px;">
                           <div class="header">
                               <font class="circulo_iso_27001" style="
                                     width: 10px;
@@ -79,9 +84,9 @@
                               Ver Detalle
                           </a>
                       </div>
-                  </div>
-                  <div class="col-md-6 card_new pr-0">
-                      <div class="row bg-white rounded shadow-propia p-3 mb-2" style="margin-right: 10px;">
+                  </div>--}}
+                  <div class="pr-0 col-md-12 card_new">
+                      <div class="p-3 mb-2 bg-white rounded row shadow-propia" style="margin-right: 10px;">
                           <div class="header">
                               <font class="circulo_iso_27001" style="
                                     width: 10px;
@@ -100,12 +105,13 @@
                           </a>
                       </div>
                   </div>
+
               </div>
           </div>
           <div class="col-md-5">
               <div class="row">
                   <div class="col-md-12 card_new">
-                      <div class="row bg-white rounded shadow-propia p-3 mb-3">
+                      <div class="p-3 mb-3 bg-white rounded row shadow-propia">
                           <div class="header">
                               <font class="circulo_iso_27001" style="
                                     width: 10px;
@@ -131,8 +137,8 @@
           </div>
       </div>
       <div class="row">
-          <div class="col-md-6 card_new pr-0">
-              <div class="row bg-white rounded shadow-propia p-3 mb-3" style="margin-right: 10px;">
+          <div class="pr-0 col-md-6 card_new">
+              <div class="p-3 mb-3 bg-white rounded row shadow-propia" style="margin-right: 10px;">
                   <div class="header">
                       <font class="circulo_iso_27001" style="
                                     width: 10px;
@@ -151,8 +157,8 @@
                   </a>
               </div>
           </div>
-          <div class="col-md-6 card_new pr-0">
-              <div class="row bg-white rounded shadow-propia p-3 mb-3" style="margin-right: 1px;">
+          <div class="pr-0 col-md-6 card_new">
+              <div class="p-3 mb-3 bg-white rounded row shadow-propia" style="margin-right: 1px;">
                   <div class="header">
                       <font class="circulo_iso_27001" style="
                                     width: 10px;
@@ -192,7 +198,6 @@
           a_plan.addEventListener('click', () => {
               localStorage.setItem('tab_plan', 'true');
           });
-
       </script>
       <script>
           var ctx = document.getElementById("myChart").getContext('2d');
@@ -263,8 +268,8 @@
               data: {
                   labels: ['Estado'],
                   datasets: [{
-                          label: 'Cerrado',
-                          data: [{!! $incidentescerrado !!}],
+                          label: 'Nuevos',
+                          data: [{!! $nuevos !!}],
                           borderWidth: 2,
                           backgroundColor: 'rgba(22, 160, 133, 0.6)',
                           borderWidth: 0,
@@ -276,7 +281,7 @@
                       },
                       {
                           label: 'En curso',
-                          data: [{!! $incidentescurso !!}],
+                          data: [{!! $en_curso !!}],
                           borderWidth: 2,
                           backgroundColor: 'rgba(244, 208, 63, 0.6)',
                           borderWidth: 0,
@@ -287,8 +292,8 @@
                           pointHoverBackgroundColor: 'rgba(63,82,227,.8)',
                       },
                       {
-                          label: 'Asignado',
-                          data: [{!! $incidentesasignado !!}],
+                          label: 'En espera',
+                          data: [{!! $en_espera !!}],
                           borderWidth: 2,
                           backgroundColor: 'rgba(133, 193, 54 , 0.6)',
                           borderWidth: 0,
@@ -299,8 +304,8 @@
                           pointHoverBackgroundColor: 'rgba(63,82,227,.8)',
                       },
                       {
-                          label: 'Pendiente',
-                          data: [{!! $incidentespendiente !!}],
+                          label: 'Cerrados',
+                          data: [{!! $cerrados !!}],
                           borderWidth: 2,
                           backgroundColor: 'rgba(231, 76, 60, 0.6)',
                           borderWidth: 0,
@@ -312,7 +317,7 @@
                       },
                       {
                           label: 'Cancelado',
-                          data: [{!! $incidentescancelado !!}],
+                          data: [{!! $cancelados !!}],
                           borderWidth: 2,
                           backgroundColor: 'rgba(54, 23, 60, 0.6)',
                           borderWidth: 0,
@@ -367,63 +372,65 @@
               }
           });
 
-          var canvasccap = document.getElementById("chartCapaci");
-          var pieCapacit = new Chart(canvasccap, {
-              type: 'pie',
-              labels: {
-                  render: 'value'
-              },
-              data: {
-                  labels: [
-                      "Capacitados",
-                      "No capacitados"
-                  ],
-                  datasets: [{
-                      label: '% Capacitacion',
-                      data: [10, 1],
-                      backgroundColor: [
-                          'rgba(22, 160, 133, 0.6)',
-                          'rgba(244, 208, 63, 0.6)',
+        //   var canvasccap = document.getElementById("chartCapaci");
+        //   var pieCapacit = new Chart(canvasccap, {
+        //       type: 'pie',
+        //       labels: {
+        //           render: 'value'
+        //       },
+        //       data: {
+        //           labels: [
+        //               "Capacitados",
+        //               "No capacitados"
+        //           ],
+        //           datasets: [{
+        //               label: '% Capacitacion',
+        //               data: [10, 1],
+        //               backgroundColor: [
+        //                   'rgba(22, 160, 133, 0.6)',
+        //                   'rgba(244, 208, 63, 0.6)',
 
-                      ]
-                  }]
-              },
-              options: {
-                  responsive: true,
-                  legend: {
-                      display: true,
-                      position: 'right',
-                      labels: {
-                          fontColor: "black",
-                          boxWidth: 20,
-                          padding: 8
-                      }
-                  },
-                  tooltips: {
-                      mode: 'label'
-                  },
+        //               ]
+        //           }]
+        //       },
+        //       options: {
+        //           responsive: true,
+        //           legend: {
+        //               display: true,
+        //               position: 'right',
+        //               labels: {
+        //                   fontColor: "black",
+        //                   boxWidth: 20,
+        //                   padding: 8
+        //               }
+        //           },
+        //           tooltips: {
+        //               mode: 'label'
+        //           },
 
-              }
-          });
+        //       }
+        //   });
 
           var canvas_sgsi = document.getElementById("chartIndicadoresSGSI");
           var pie_sgsi = new Chart(canvas_sgsi, {
-              type: 'pie',
+              type: 'horizontalBar',
               labels: {
                   render: 'value'
               },
               data: {
-                  labels: [
-                      "Capacitados",
-                      "No capacitados"
-                  ],
+                  labels:
+                    JSON.parse(@json( json_encode($evaluacion_nombre))),
+
+
                   datasets: [{
-                      label: '% Capacitacion',
-                      data: [10, 1],
+                      label: '% Cumplimiento',
+                      data:JSON.parse(@json( json_encode($evaluaciones))),
+
+
                       backgroundColor: [
                           'rgba(22, 160, 133, 0.6)',
                           'rgba(244, 208, 63, 0.6)',
-
+                          'rgba(231, 76, 60, 0.6)',
                       ]
                   }]
               },
@@ -453,22 +460,22 @@
               data: {
                   labels: [
                       "Publicados",
-                      "Aprobados",
-                      "En revisión",
-                      "Elaborado",
-                      "No elaborado"
+                      "En Elaboración",
+                      "En Revisión",
+                      "Rechazados",
+                      "Obsoletos"
                   ],
                   datasets: [{
                       label: '% Documentación',
-                      data: [{!! $documentoPubli !!}, {!! $documentoAprob !!}, {!! $documentorev !!},
-                          {!! $documentoElab !!}, {!! $docunoelab !!},
+                      data: [@json($contador_documentos_publicados), @json($contador_documentos_en_elaboracion), @json($contador_documentos_en_revision),
+                          @json($contador_documentos_rechazados), @json($contador_documentos_obsoletos),
                       ],
                       backgroundColor: [
-                          'rgba(22, 160, 133, 0.6)',
-                          'rgba(43, 65, 233 , 0.6)',
-                          'rgba(244, 208, 63, 0.6)',
-                          'rgba(133, 193, 233 , 0.6)',
-                          'rgba(231, 76, 60, 0.6)',
+                          'rgba(22, 160, 133, 0.9)',
+                          'rgba(1, 140, 250 , 0.9)',
+                          'rgba(43, 65, 233 , 0.9)',
+                          'rgba(231, 76, 60, 0.9)',
+                          'rgba(90, 100, 100 , 0.9)',
                       ]
                   }]
               },
@@ -533,51 +540,44 @@
           });
           // Progreso general Plan
           function renderProgresoGeneralPlan() {
-              //   let url = @json($path_gantt);
-              let current_url = "{{ asset($path_gantt) }}";
-              $.ajax({
-                  type: "GET",
-                  url: current_url,
-                  success: function(response) {
-                      let cantidad_done = 0; // Completadas
-                      let cantidad_undefined = 0; // Sin iniciar
-                      let cantidad_active = 0; // En proceso
-                      let cantidad_failed = 0; // Con retraso
-                      let cantidad_suspended = 0; // Suspendida
-                      let arr_cantidad_por_estatus = [];
-                      let arr_estatus = ['Completadas', 'Sin iniciar', 'En proceso', 'Con retraso',
-                          'Suspendida'
-                      ];
-                      response.tasks.forEach(task => {
-                          switch (task.status) {
-                              case 'STATUS_DONE':
-                                  cantidad_done++;
-                                  break;
-                              case 'STATUS_UNDEFINED':
-                                  cantidad_undefined++;
-                                  break;
-                              case 'STATUS_ACTIVE':
-                                  cantidad_active++;
-                                  break;
-                              case 'STATUS_FAILED':
-                                  cantidad_failed++;
-                                  break;
-                              case 'STATUS_SUSPENDED':
-                                  cantidad_suspended++;
-                                  break;
-                              default:
-                                  cantidad_undefined++;
-                                  break;
-                          }
-                      });
-                      arr_cantidad_por_estatus.push(cantidad_done);
-                      arr_cantidad_por_estatus.push(cantidad_undefined);
-                      arr_cantidad_por_estatus.push(cantidad_active);
-                      arr_cantidad_por_estatus.push(cantidad_failed);
-                      arr_cantidad_por_estatus.push(cantidad_suspended);
-                      renderGraficaProgresoGeneralPlan(arr_estatus, arr_cantidad_por_estatus)
+              let tasks = @json($actividades);
+              let cantidad_done = 0; // Completadas
+              let cantidad_undefined = 0; // Sin iniciar
+              let cantidad_active = 0; // En proceso
+              let cantidad_failed = 0; // Con retraso
+              let cantidad_suspended = 0; // Suspendida
+              let arr_cantidad_por_estatus = [];
+              let arr_estatus = ['Completadas', 'Sin iniciar', 'En proceso', 'Con retraso',
+                  'Suspendida'
+              ];
+              tasks.forEach(task => {
+                  switch (task.status) {
+                      case 'STATUS_DONE':
+                          cantidad_done++;
+                          break;
+                      case 'STATUS_UNDEFINED':
+                          cantidad_undefined++;
+                          break;
+                      case 'STATUS_ACTIVE':
+                          cantidad_active++;
+                          break;
+                      case 'STATUS_FAILED':
+                          cantidad_failed++;
+                          break;
+                      case 'STATUS_SUSPENDED':
+                          cantidad_suspended++;
+                          break;
+                      default:
+                          cantidad_undefined++;
+                          break;
                   }
               });
+              arr_cantidad_por_estatus.push(cantidad_done);
+              arr_cantidad_por_estatus.push(cantidad_undefined);
+              arr_cantidad_por_estatus.push(cantidad_active);
+              arr_cantidad_por_estatus.push(cantidad_failed);
+              arr_cantidad_por_estatus.push(cantidad_suspended);
+              renderGraficaProgresoGeneralPlan(arr_estatus, arr_cantidad_por_estatus)
           }
 
           function renderGraficaProgresoGeneralPlan(arr_estatus, arr_cantidad_por_estatus) {
@@ -592,11 +592,11 @@
                       datasets: [{
                           data: arr_cantidad_por_estatus,
                           backgroundColor: [
-                              '#3BBF67',
-                              '#0d0df5',
-                              '#F9C154',
-                              '#ec2805',
-                              '#e7e7e7',
+                              'rgb(0, 200, 117)',
+                              '#00b1e1 ',
+                              'rgb(253, 171, 61)',
+                              'rgb(226, 68, 92)',
+                              '#aaaaaa',
                           ]
                       }]
                   },
@@ -618,7 +618,6 @@
                   }
               });
           }
-
       </script>
 
   @endsection

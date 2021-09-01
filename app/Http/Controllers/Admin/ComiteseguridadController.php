@@ -79,7 +79,7 @@ class ComiteseguridadController extends Controller
         return view('admin.comiteseguridads.create', compact('personaasignadas','empleados'));
     }
 
-    public function store(StoreComiteseguridadRequest $request)
+    public function store(Request $request)
     {
         $comiteseguridad = Comiteseguridad::create($request->all());
 

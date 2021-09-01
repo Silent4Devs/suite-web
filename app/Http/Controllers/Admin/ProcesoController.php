@@ -182,10 +182,11 @@ class ProcesoController extends Controller
 
         $proceso = Proceso::where('documento_id', $documento->id)->first();
         $documentos_relacionados = Documento::with('elaborador', 'revisor', 'aprobador', 'responsable', 'macroproceso')->where('proceso_id', $proceso->id)->get();
-        $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento)->get();
+        $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento->id)->get();
+        // dd($revisiones);
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
         $indicadores = IndicadoresSgsi::get();
-        // dd($indicadores::getResultado());
+        //dd($indicadores::getResultado());
 
         return view('admin.procesos.vistas', compact('documento', 'revisiones', 'documentos_relacionados', 'versiones', 'indicadores'));
     }

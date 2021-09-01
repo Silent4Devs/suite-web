@@ -11,7 +11,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.comiteseguridads.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            
+
             <div class="form-group col-sm-12 col-md-8 col-lg-8">
                 <label class="required" for="nombrerol"> <i class="fas fa-user-tag iconos-crear"></i>Nombre del rol</label>
                 <input class="form-control {{ $errors->has('nombrerol') ? 'is-invalid' : '' }}" type="text" name="nombrerol" id="nombrerol" value="{{ old('nombrerol', '') }}" required>
@@ -23,22 +23,22 @@
                 <span class="help-block">{{ trans('cruds.comiteseguridad.fields.nombrerol_helper') }}</span>
             </div>
 
+
             <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                <label for="fechavigor"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.comiteseguridad.fields.fechavigor') }}</label>
-                <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date" name="fechavigor" id="fechavigor" value="{{ old('fechavigor', '') }}">
+                <label for="fechavigor"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de entrada en vigor</label>
+                <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date" name="fechavigor" id="fechavigor" value="{{ old('fechavigor') }}">
                 @if($errors->has('fechavigor'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fechavigor') }}
-                    </div>
+                <div class="invalid-feedback">
+                    {{ $errors->first('fechavigor') }}
+                </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.comiteseguridad.fields.fechavigor_helper') }}</span>
             </div>
-           
-            
+
+
             <div class="form-group col-sm-12 col-md-4 col-lg-4">
                 <label for="id_asignada"><i class="fas fa-user-tie iconos-crear"></i>Colaborador(a) asignado</label>
-                <select class="form-control select2 {{ $errors->has(' id_asignada') ? 'is-invalid' : '' }}"
-                    name="id_asignada" id=" id_asignada">
+                <select class="form-control  {{ $errors->has(' id_asignada') ? 'is-invalid' : '' }}"
+                    name="id_asignada" id="id_asignada">
                     @foreach ($empleados as $empleado)
                         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                             data-area="{{ $empleado->area->area }}">
@@ -55,8 +55,9 @@
                 @endif
             </div>
 
-            
-            <div class="form-group col-sm-12 col-md-4 col-lg-4">
+
+
+            <div class="form-group col-md-4">
                 <label for="id_puesto_asignada"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                 <div class="form-control" id="puesto_asignada"></div>
 
@@ -69,7 +70,7 @@
 
             </div>
 
-            
+
 
             <div class="form-group col-sm-12">
                 <label for="responsabilidades"> <i class="fas fa-business-time iconos-crear"></i> {{ trans('cruds.comiteseguridad.fields.responsabilidades') }}</label>
@@ -81,7 +82,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.comiteseguridad.fields.responsabilidades_helper') }}</span>
             </div>
-            
+
             <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
@@ -102,23 +103,24 @@
 
         document.addEventListener('DOMContentLoaded', function(e) {
 
-            let asignada = document.querySelector('#id_asignada');
-            let area = asignada.options[asignada.selectedIndex].getAttribute('data-area');
-            let puesto = asignada.options[asignada.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('puesto_dueno').innerHTML = puesto
-            document.getElementById('area_dueno').innerHTML = area
+            let asignado = document.querySelector('#id_asignada');
+            let area_init = asignado.options[asignado.selectedIndex].getAttribute('data-area');
+            let puesto_init = asignado.options[asignado.selectedIndex].getAttribute('data-puesto');
 
-            asignada.addEventListener('change', function(e) {
-                e.preventDefault();
-                let area = this.options[this.selectedIndex].getAttribute('data-area');
-                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_asignada').innerHTML = puesto
-                document.getElementById('area_asignada').innerHTML = area
-            })
+            document.getElementById('puesto_asignada').innerHTML = puesto_init;
+            document.getElementById('area_asignada').innerHTML = area_init;
+            asignado.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('puesto_asignada').innerHTML = puesto;
+            document.getElementById('area_asignada').innerHTML = area;
+        })
 
         })
 
-        
+
+
     </script>
 
 @endsection

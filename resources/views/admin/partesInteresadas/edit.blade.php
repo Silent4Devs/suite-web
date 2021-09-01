@@ -32,16 +32,28 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.partesInteresada.fields.requisitos_helper') }}</span>
             </div>
-            <div class="form-group col-12">
-                <label for="clausala"><i class="far fa-file iconos-crear"></i>Cláusula(s)</label>
-                <textarea class="form-control {{ $errors->has('clausala') ? 'is-invalid' : '' }}" name="clausala" id="clausala">{{ old('clausala', $partesInteresada->clausala) }}</textarea>
-                @if($errors->has('clausala'))
+
+            <div class="form-group col-md-12 col-sm-12">
+                <label for="clausala"><i class="far fa-file iconos-crear"></i> Cláusula(s)</label>
+                <select class="form-control {{ $errors->has('clausala') ? 'is-invalid' : '' }}"
+                    name="clausala" id="clausala" class="select2" multiple>
+                    <option value disabled >
+                        Selecciona una opción</option>
+                    @foreach (App\Models\PartesInteresada::CLAUSULA_SELECT as $key => $label)
+                        <option value="{{ $key }}"
+                        {{ old('clausala', $partesInteresada->clausala) === (string) $key ? 'selected' : '' }}>
+                        {{ $label }}</option>
+
+                    @endforeach
+                </select>
+                @if ($errors->has('clausala'))
                     <div class="invalid-feedback">
                         {{ $errors->first('clausala') }}
                     </div>
                 @endif
-                <span class="help-block">Cláusula(s) que satisface el requisito de la parte interesada</span>
             </div>
+
+
             <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
@@ -52,6 +64,19 @@
     </div>
 </div>
 
+
+
+@endsection
+
+@section('scripts')
+
+    <script>
+        $(document).ready(function() {
+            $("#clausala").select2({
+                theme: "bootstrap4",
+            });
+        });
+    </script>
 
 
 @endsection
