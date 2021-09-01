@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\LaravelChart;
-use App\Models\User;
 use DB;
 use Carbon\Carbon;
-use App\Models\AccionCorrectiva;
+use App\Models\User;
+use App\Models\Recurso;
+use App\Models\AuditoriaAnual;
 use App\Models\Registromejora;
-use App\Models\IncidentesDeSeguridad;
+use App\Services\LaravelChart;
+use App\Models\IndicadoresSgsi;
+use App\Models\AccionCorrectiva;
 use App\Models\ControlDocumento;
 use App\Models\PlanBaseActividade;
-use App\Models\AuditoriaAnual;
+use App\Models\EvaluacionIndicador;
+use App\Models\IncidentesSeguridad;
 use App\Models\CategoriaCapacitacion;
-use App\Models\Recurso;
+use App\Models\IncidentesDeSeguridad;
 
 class HomeController
 {
@@ -47,6 +50,13 @@ class HomeController
             'entries_number'     => '5',
             'relationship_name'  => 'estado',
         ];
+
+        $total = IncidentesSeguridad::select('id')->get()->count();
+        $nuevos = IncidentesSeguridad::select('id')->where('estatus', 'nuevo')->get()->count();
+        $en_curso = IncidentesSeguridad::select('id')->where('estatus', 'en curso')->get()->count();
+        $en_espera = IncidentesSeguridad::select('id')->where('estatus', 'en espera')->get()->count();
+        $cerrados = IncidentesSeguridad::select('id')->where('estatus', 'cerrado')->get()->count();
+        $cancelados = IncidentesSeguridad::select('id')->where('estatus', 'cancelado')->get()->count();
 
         $chart2 = new LaravelChart($settings2);
 
@@ -140,7 +150,7 @@ class HomeController
         ];
 
         $settings6['total_number'] = 0;
-
+        // dd('test');
         if (class_exists($settings6['model'])) {
             $settings6['total_number'] = $settings6['model']::when(isset($settings6['filter_field']), function ($query) use ($settings6) {
                 if (isset($settings6['filter_days'])) {
@@ -313,7 +323,17 @@ class HomeController
 
         $path_gantt = end($version_gantt);
 
+        $evaluacion_indicadores = IndicadoresSgsi::select('indicadores_sgsis.nombre', 'evaluacion_indicador.*','indicadores_sgsis.meta','indicadores_sgsis.id')
+        ->join('evaluacion_indicador', 'indicadores_sgsis.id', '=', 'evaluacion_indicador.id_indicador')->get()->toArray();
+        $evaluaciones=array();
+        $evaluacion_nombre=array();
 
+        foreach($evaluacion_indicadores as $evaluacion){
+            array_push($evaluaciones,$evaluacion['resultado']);
+            array_push($evaluacion_nombre,$evaluacion['nombre']);
+
+        }
+        // dd($evaluacion_nombre);
         return view('home', compact(
             'auditexterna',
             'auditinterna',
@@ -352,7 +372,16 @@ class HomeController
             'capacitaciones_year_actual_uno_antes',
             'arr_fechas_cursos',
             'arr_participantes',
-            'path_gantt'
+            'path_gantt',
+            'total',
+            'nuevos',
+            'en_curso',
+            'en_espera',
+            'cerrados',
+            'cancelados',
+            'evaluacion_indicadores',
+            'evaluacion_nombre',
+            'evaluaciones'
         ));
     }
 }

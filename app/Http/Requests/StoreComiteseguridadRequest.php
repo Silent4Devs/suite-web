@@ -22,7 +22,7 @@ class StoreComiteseguridadRequest extends FormRequest
                 'required',
             ],
             'fechavigor' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format',
                 'nullable',
             ],
         ];

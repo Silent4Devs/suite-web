@@ -54,6 +54,13 @@
     max-width:415px !important;
 }
 
+.table tr td:nth-child(5){
+
+text-align:justify !important;
+
+
+}
+
 .table tr td:nth-child(10){
 
     text-align: center;
@@ -406,7 +413,7 @@
                     },
                     {
                        data: 'id',
-                        render: function(data, type, row, meta) {                            
+                        render: function(data, type, row, meta) {
                             let urlVerMatrizRequisitoLegal =
                                 `/admin/matriz-requisito-legales/${data}`;
                             let urlEditarMatrizRequisitoLegal =
@@ -427,9 +434,9 @@
                                             <i class="fas fa-stream"></i>
                                         </a>
 
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">                                            
-                                                <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-stream"></i>Crear y vincular plan de acción</a>                                                       
-                                                <div class="dropdown-divider"></div>                                                
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="${urlCrearPlanAccion}" title="Crear Plan de Acción para: ${row.nombrerequisito}"><i class="mr-1 fas fa-stream"></i>Crear y vincular plan de acción</a>
+                                                <div class="dropdown-divider"></div>
                                             <span class="ml-4 badge badge-dark">Planes de acción asociados</span>
                                            ${row.planes.map(plan => {
                                                return `

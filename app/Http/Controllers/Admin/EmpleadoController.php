@@ -19,6 +19,7 @@ use App\Models\CertificacionesEmpleados;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\EvidenciasDocumentosEmpleados;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\EvidenciasCertificadosEmpleados;
 
 class EmpleadoController extends Controller
 {
@@ -160,7 +161,7 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         // dd($request->all());
         $experiencias = json_decode($request->experiencia);
         $educacions = json_decode($request->educacion);
@@ -203,6 +204,8 @@ class EmpleadoController extends Controller
             "n_registro" =>  $request->n_registro,
             "sede_id" =>  $request->sede_id,
             "resumen" =>  $request->resumen,
+            "cumpleaños"=>$request->cumpleaños,
+            "direccion" =>$request->direccion,
         ]);
         $image = null;
         if ($request->snap_foto && $request->file('foto')) {
@@ -261,6 +264,18 @@ class EmpleadoController extends Controller
                 if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
                     EvidenciasDocumentosEmpleados::create([
                         'documentos' => $file->getClientOriginalName(),
+                        'empleado_id' => $empleado ->id,
+                    ]);
+                }
+            }
+        }
+
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/certificados_empleados', $file, $file->getClientOriginalName())) {
+                    EvidenciasCertificadosEmpleados::create([
+                        'evidencia' => $file->getClientOriginalName(),
                         'empleado_id' => $empleado ->id,
                     ]);
                 }
