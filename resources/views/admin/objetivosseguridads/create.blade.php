@@ -120,10 +120,12 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-sm-6">
-                                <label class="required" for="indicador"><i class="fas fa-file-signature iconos-crear"></i></i>Nombre del
+                                <label class="required" for="indicador"><i
+                                        class="fas fa-file-signature iconos-crear"></i></i>Nombre del
                                     indicador</label>
-                                <input class="form-control {{ $errors->has('indicador') ? 'is-invalid' : '' }}" type="text"
-                                    name="indicador" id="indicador" value="{{ old('indicador', '') }}" required>
+                                <input class="form-control {{ $errors->has('indicador') ? 'is-invalid' : '' }}"
+                                    type="text" name="indicador" id="indicador" value="{{ old('indicador', '') }}"
+                                    required>
                                 @if ($errors->has('indicador'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('indicador') }}
@@ -134,8 +136,10 @@
 
                             <div class="form-group col-sm-6">
                                 <div class="form-group">
-                                    <label for='responsable_id'><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
-                                    <select class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
+                                    <label for='responsable_id'><i
+                                            class="fas fa-user-tie iconos-crear"></i>Responsable</label>
+                                    <select
+                                        class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
                                         name='responsable_id' id='responsable_id'>
                                         <option value="">Seleccione un responsable</option>
                                         @foreach ($responsables as $responsable)
@@ -169,10 +173,11 @@
                         <div class="row">
                             <div class="form-group col-sm-4">
                                 <div class="form-group">
-                                    <label class="required" for="rojo"><span class="dotred"></span> De 0 a <span
-                                            id="textorojo"></span></label>
-                                    <input class="form-control {{ $errors->has('rojo') ? 'is-invalid' : '' }}" type="number"
-                                        name="rojo" id="rojo" value="{{ old('rojo', '') }}" min="0" required>
+                                    <label class="required" for="rojo"><span class="dotred"></span> De 0 a
+                                        <span id="textorojo"></span></label>
+                                    <input class="form-control {{ $errors->has('rojo') ? 'is-invalid' : '' }}"
+                                        type="number" name="rojo" id="rojo" value="{{ old('rojo', '') }}" min="0"
+                                        required>
                                     @if ($errors->has('rojo'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('rojo') }}
@@ -184,10 +189,11 @@
 
                             <div class="form-group col-sm-4">
                                 <div class="form-group">
-                                    <label class="required" for="amarillo"><span class="dotyellow"></span> De <span
-                                            id="textorojo2"></span> a <span id="textoamarillo"></span>:</label>
-                                    <input class="form-control {{ $errors->has('amarillo') ? 'is-invalid' : '' }}" type="number"
-                                        name="amarillo" id="amarillo" value="{{ old('amarillo', '') }}" min="" required>
+                                    <label class="required" for="amarillo"><span class="dotyellow"></span> De
+                                        <span id="textorojo2"></span> a <span id="textoamarillo"></span>:</label>
+                                    <input class="form-control {{ $errors->has('amarillo') ? 'is-invalid' : '' }}"
+                                        type="number" name="amarillo" id="amarillo" value="{{ old('amarillo', '') }}"
+                                        min="" required>
                                     @if ($errors->has('amarillo'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('amarillo') }}
@@ -202,7 +208,8 @@
                                     <span class="dotverde"></span>
                                     De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
                                 <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
-                                    name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min="" required>
+                                    name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min=""
+                                    required>
                                 @if ($errors->has('verde'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('verde') }}
@@ -214,9 +221,11 @@
 
                         <div class="row">
                             <div class="form-group col-sm-2">
-                                <label class="required" for="unidadmedida"><i class="fas fa-calculator iconos-crear"></i>Unidad</label>
-                                <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" type="text"
-                                    name="unidadmedida" id="unidadmedida" value="{{ old('unidadmedida', '') }}" required>
+                                <label class="required" for="unidadmedida"><i
+                                        class="fas fa-calculator iconos-crear"></i>Unidad</label>
+                                <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}"
+                                    type="text" name="unidadmedida" id="unidadmedida"
+                                    value="{{ old('unidadmedida', '') }}" required>
                                 @if ($errors->has('unidadmedida'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('unidadmedida') }}
@@ -227,9 +236,10 @@
 
                             <div class="form-group col-sm-2">
                                 <div class="form-group">
-                                    <label class="required" for="meta"><i class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
-                                    <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" type="text"
-                                        name="meta" id="meta" value="{{ old('meta', '') }}" required>
+                                    <label class="required" for="meta"><i
+                                            class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
+                                    <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}"
+                                        type="text" name="meta" id="meta" value="{{ old('meta', '') }}" required>
                                     @if ($errors->has('meta'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('meta') }}
@@ -241,9 +251,11 @@
 
                             <div class="form-group col-sm-2">
                                 <div class="form-group">
-                                    <label class="required" for="frecuencia"><i class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
-                                    <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}" type="text"
-                                        name="frecuencia" id="frecuencia" value="{{ old('frecuencia', '') }}" required>
+                                    <label class="required" for="frecuencia"><i
+                                            class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
+                                    <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}"
+                                        type="text" name="frecuencia" id="frecuencia" value="{{ old('frecuencia', '') }}"
+                                        required>
                                     @if ($errors->has('frecuencia'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('frecuencia') }}
@@ -255,7 +267,8 @@
 
                             <div class="form-group col-sm-2">
                                 <div class="form-group">
-                                    <label class="required" for="revisiones"><i class="fas fa-clipboard-check iconos-crear"></i>Revisiones</label>
+                                    <label class="required" for="revisiones"><i
+                                            class="fas fa-clipboard-check iconos-crear"></i>Revisiones</label>
                                     <input class="form-control {{ $errors->has('revisiones') ? 'is-invalid' : '' }}"
                                         type="number" name="revisiones" id="revisiones" min="0"
                                         value="{{ old('revisiones', '') }}" required>
@@ -269,9 +282,10 @@
                             </div>
 
                             <div class="form-group col-sm-2">
-                                <label class="required" for="ano"><i class="fas fa-calendar-alt iconos-crear"></i>Año</label>
-                                <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}" type="text"
-                                    name="ano" id="ano" value="{{ old('ano', '') }}" required>
+                                <label class="required" for="ano"><i
+                                        class="fas fa-calendar-alt iconos-crear"></i>Año</label>
+                                <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}"
+                                    type="text" name="ano" id="ano" value="{{ old('ano', '') }}" required>
                                 @if ($errors->has('ano'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('ano') }}
@@ -344,7 +358,8 @@
 
                     <div class="form-group">
                         <div class="text-center form-group col-12" style="margin-left:15px;">
-                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                                class="btn_cancelar">Cancelar</a>
                             <button class="btn btn-info" type="submit">
                                 {{ trans('global.save') }}
                             </button>

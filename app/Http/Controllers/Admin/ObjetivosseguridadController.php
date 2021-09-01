@@ -20,9 +20,9 @@ class ObjetivosseguridadController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('objetivosseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $query = Objetivosseguridad::get();
         if ($request->ajax()) {
-            $query = Objetivosseguridad::with(['team'])->select(sprintf('%s.*', (new Objetivosseguridad)->table));
+            $query = Objetivosseguridad::get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -51,6 +51,28 @@ class ObjetivosseguridadController extends Controller
             });
             $table->editColumn('indicador', function ($row) {
                 return $row->indicador ? $row->indicador : "";
+            });
+            $table->editColumn('responsable', function ($row) {
+                return $row->empleado ? $row->empleado->name : "";
+            });
+
+            $table->editColumn('formula', function ($row) {
+                return $row->formula ? $row->formula : "";
+            });
+
+            $table->editColumn('meta', function ($row) {
+                return $row->meta . $row->unidadmedida ? $row->meta . $row->unidadmedida : "";
+            });
+
+            $table->editColumn('frecuencia', function ($row) {
+                return $row->frecuencia ? $row->frecuencia : "";
+            });
+
+            $table->editColumn('ano', function ($row) {
+                return $row->ano ? $row->ano : "";
+            });
+            $table->editColumn('enlace', function ($row) {
+                return $row->id ? $row->id : "";
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -83,9 +105,9 @@ class ObjetivosseguridadController extends Controller
     {
         abort_if(Gate::denies('objetivosseguridad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $objetivosseguridad->load('team');
+        $responsables  = Empleado::get();
 
-        return view('admin.objetivosseguridads.edit', compact('objetivosseguridad'));
+        return view('admin.objetivosseguridads.edit', compact('objetivosseguridad', 'responsables'));
     }
 
     public function update(UpdateObjetivosseguridadRequest $request, Objetivosseguridad $objetivosseguridad)
@@ -151,6 +173,16 @@ class ObjetivosseguridadController extends Controller
     }
 
     public function evaluacionesInsert(Request $request)
+    {
+        $id = $request->all();
+
+        $objetivos = Objetivosseguridad::find($id['id']);
+
+        return view('admin.objetivosseguridads.evaluacion')
+            ->with('objetivos', $objetivos);
+    }
+
+    public function evaluacionesShow(Request $request)
     {
         $id = $request->all();
 
