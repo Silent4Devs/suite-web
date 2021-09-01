@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Recurso;
 use App\Models\AuditoriaAnual;
 use App\Models\Registromejora;
 use App\Services\LaravelChart;
@@ -342,21 +341,14 @@ class HomeController
         $contador_documentos_obsoletos =  Documento::where('estatus', '=', Documento::DOCUMENTO_OBSOLETO)->count();
         //Fin Documentos
 
+        $evaluacion_indicadores = IndicadoresSgsi::select('indicadores_sgsis.nombre', 'evaluacion_indicador.*', 'indicadores_sgsis.meta', 'indicadores_sgsis.id')
+            ->join('evaluacion_indicador', 'indicadores_sgsis.id', '=', 'evaluacion_indicador.id_indicador')->get()->toArray();
+        $evaluaciones = array();
+        $evaluacion_nombre = array();
 
-
-        $version_gantt = glob($gantt_path . "gantt_inicial*.json");
-
-        $path_gantt = end($version_gantt);
-
-        $evaluacion_indicadores = IndicadoresSgsi::select('indicadores_sgsis.nombre', 'evaluacion_indicador.*','indicadores_sgsis.meta','indicadores_sgsis.id')
-        ->join('evaluacion_indicador', 'indicadores_sgsis.id', '=', 'evaluacion_indicador.id_indicador')->get()->toArray();
-        $evaluaciones=array();
-        $evaluacion_nombre=array();
-
-        foreach($evaluacion_indicadores as $evaluacion){
-            array_push($evaluaciones,$evaluacion['resultado']);
-            array_push($evaluacion_nombre,$evaluacion['nombre']);
-
+        foreach ($evaluacion_indicadores as $evaluacion) {
+            array_push($evaluaciones, $evaluacion['resultado']);
+            array_push($evaluacion_nombre, $evaluacion['nombre']);
         }
         // dd($evaluacion_nombre);
         return view('home', compact(
@@ -387,6 +379,7 @@ class HomeController
             'contador_documentos_en_revision',
             'contador_documentos_rechazados',
             'contador_documentos_obsoletos',
+            'actividades',
             'exist_doc',
             'capacitaciones',
             'categorias',
@@ -397,7 +390,6 @@ class HomeController
             'capacitaciones_year_actual_uno_antes',
             'arr_fechas_cursos',
             'arr_participantes',
-            'path_gantt',
             'total',
             'nuevos',
             'en_curso',
