@@ -9,7 +9,7 @@
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Objetivos de Seguridad</strong></h3>
             </div>
-    @endcan
+        @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -26,7 +26,22 @@
                             {{ trans('cruds.objetivosseguridad.fields.indicador') }}
                         </th>
                         <th>
-                            {{ trans('cruds.objetivosseguridad.fields.anio') }}
+                            Responsable
+                        </th>
+                        <th>
+                            Formula
+                        </th>
+                        <th>
+                            Meta
+                        </th>
+                        <th>
+                            Frecuencia
+                        </th>
+                        <th>
+                            Año
+                        </th>
+                        <th>
+                            Evaluaciones
                         </th>
                         <th>
                             Opciones
@@ -189,8 +204,31 @@
                         name: 'indicador'
                     },
                     {
-                        data: 'anio',
-                        name: 'anio'
+                        data: 'responsable',
+                        name: 'responsable'
+                    },
+                    {
+                        data: 'formula',
+                        name: 'formula'
+                    },
+                    {
+                        data: 'meta',
+                        name: 'meta'
+                    },
+                    {
+                        data: 'frecuencia',
+                        name: 'frecuencia'
+                    },
+                    {
+                        data: 'ano',
+                        name: 'ano'
+                    },
+                    {
+                        data: 'enlace',
+                        name: 'enlace',
+                        render: function(data, type, row, meta) {
+                            return `<div class="text-center w-100"><a href="evaluaciones-objetivosShow/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>`;
+                        }
                     },
                     {
                         data: 'actions',
@@ -216,6 +254,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection
