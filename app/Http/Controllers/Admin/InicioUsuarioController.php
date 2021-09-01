@@ -62,9 +62,9 @@ class inicioUsuarioController extends Controller
         $implementaciones = PlanImplementacion::get();
         $actividades = collect();
         if ($implementaciones) {
-            foreach($implementaciones as $implementacion){
+            foreach ($implementaciones as $implementacion) {
 
-            
+
                 $tasks = $implementacion->tasks;
                 foreach ($tasks as $task) {
                     $task->parent_id = $implementacion->id;
@@ -108,9 +108,9 @@ class inicioUsuarioController extends Controller
         }
         $actividades = $actividades->flatten(1);
 
-        $contador_actividades = 0; 
+        $contador_actividades = 0;
 
-        foreach($actividades as $actividad){
+        foreach ($actividades as $actividad) {
             $progreso = $actividad->progress;
 
             if (intval($progreso) < 100) {
@@ -119,14 +119,19 @@ class inicioUsuarioController extends Controller
         }
 
         $auditorias_anual = AuditoriaAnual::get();
-        $recursos = Recurso::whereHas('empleados', function ($query) use ($usuario) {
-            $query->where('empleados.id', $usuario->id);
-        })->get();
-
-        $contador_recursos = Recurso::whereHas('empleados', function ($query) use ($usuario) {
-            $query->where('empleados.id', $usuario->id);
-        })->where('fecha_fin', '>=', Carbon::now()->toDateString())->count(); 
-
+        $empleado = auth()->user()->empleado;
+        $recursos = new Recurso;
+        if ($usuario->empleado) {
+            $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
+                $query->where('empleados.id', $empleado->id);
+            })->get();
+        }
+        $contador_recursos = 0;
+        if ($usuario->empleado) {
+            $contador_recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
+                $query->where('empleados.id', $empleado->id);
+            })->where('fecha_fin', '>=', Carbon::now()->toDateString())->count();
+        }
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
         $revisiones = [];
         $mis_documentos = [];
@@ -165,7 +170,7 @@ class inicioUsuarioController extends Controller
         $sedes = Sede::get();
 
         abort_if(Gate::denies('quejas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.inicioUsuario.formularios.quejas', compact('areas', 'procesos' ,'empleados', 'activos', 'sedes'));
+        return view('admin.inicioUsuario.formularios.quejas', compact('areas', 'procesos', 'empleados', 'activos', 'sedes'));
     }
     public function storeQuejas(Request $request)
     {
@@ -196,9 +201,9 @@ class inicioUsuarioController extends Controller
 
         $image = null;
 
-        if($request->file('evidencia') != null or !empty($request->file('evidencia'))){
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
 
-            foreach($request->file('evidencia') as $file){
+            foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
                 $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
@@ -215,12 +220,11 @@ class inicioUsuarioController extends Controller
                     'evidencia' => $image,
                     'id_quejas' => $quejas->id,
                 ]);
-
             }
         }
 
 
-        
+
         return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
@@ -231,7 +235,7 @@ class inicioUsuarioController extends Controller
         $sedes = Sede::get();
 
         abort_if(Gate::denies('denuncias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.inicioUsuario.formularios.denuncias', compact('empleados' , 'sedes'));
+        return view('admin.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
     }
     public function storeDenuncias(Request $request)
     {
@@ -255,9 +259,9 @@ class inicioUsuarioController extends Controller
 
         $image = null;
 
-        if($request->file('evidencia') != null or !empty($request->file('evidencia'))){
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
 
-            foreach($request->file('evidencia') as $file){
+            foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
                 $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
@@ -274,7 +278,6 @@ class inicioUsuarioController extends Controller
                     'evidencia' => $image,
                     'id_denuncias' => $denuncias->id,
                 ]);
-
             }
         }
 
@@ -390,9 +393,9 @@ class inicioUsuarioController extends Controller
 
         $image = null;
 
-        if($request->file('evidencia') != null or !empty($request->file('evidencia'))){
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
 
-            foreach($request->file('evidencia') as $file){
+            foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
                 $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
@@ -409,7 +412,6 @@ class inicioUsuarioController extends Controller
                     'evidencia' => $image,
                     'id_seguridad' => $incidentes_seguridad->id,
                 ]);
-
             }
         }
 
@@ -453,7 +455,7 @@ class inicioUsuarioController extends Controller
             'empleado_reporto_id' => auth()->user()->empleado->id,
         ]);
 
-        
+
         AnalisisSeguridad::create([
             'riesgos_id' => $riesgos->id,
             'formulario' => 'riesgo',
@@ -462,9 +464,9 @@ class inicioUsuarioController extends Controller
 
         $image = null;
 
-        if($request->file('evidencia') != null or !empty($request->file('evidencia'))){
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
 
-            foreach($request->file('evidencia') as $file){
+            foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
                 $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
@@ -481,7 +483,6 @@ class inicioUsuarioController extends Controller
                     'evidencia' => $image,
                     'id_riesgos' => $riesgos->id,
                 ]);
-
             }
         }
 

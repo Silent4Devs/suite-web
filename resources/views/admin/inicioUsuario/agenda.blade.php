@@ -255,23 +255,25 @@
                 },
             @endforeach
 
-
-            @foreach ($recursos as $it_recursos)
-                {
+            @if ($recursos->count() > 1)
             
-                id: 'recursos{{ $it_recursos->id }}',
-                calendarId: '3',
-                title: 'Tipo: {{ $it_recursos->cursoscapacitaciones }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::createFromFormat('d/m/Y', $it_recursos->fecha_curso)->format('Y-m-d') }}',
-                end: '',
-                isReadOnly : true,
-                },
             
-            @endforeach
-
-
+                @foreach ($recursos as $it_recursos)
+                    {
+                
+                    id: 'recursos{{ $it_recursos->id }}',
+                    calendarId: '3',
+                    title: 'Tipo: {{ $it_recursos->cursoscapacitaciones }}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ \Carbon\Carbon::createFromFormat('d/m/Y', $it_recursos->fecha_curso)->format('Y-m-d') }}',
+                    end: '',
+                    isReadOnly : true,
+                    },
+                
+                @endforeach
+            
+            @endif
 
 
 
