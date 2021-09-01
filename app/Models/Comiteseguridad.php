@@ -49,12 +49,7 @@ class Comiteseguridad extends Model
 
     public function getFechavigorAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setFechavigorAttribute($value)
-    {
-        $this->attributes['fechavigor'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
     public function team()

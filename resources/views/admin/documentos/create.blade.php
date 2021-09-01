@@ -92,10 +92,12 @@
                 enctype="multipart/form-data">
                 @csrf
                 @include('admin.documentos._form')
-                <a href="{{ route('admin.documentos.index') }}" class="text-white btn btn-danger">Cancelar</a>
-                <input type="submit" class="btn btn-primary" value="Guardar">
+                <div class="text-right form-group col-12">
+                <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
+                <input type="submit" class="btn btn-danger" value="Guardar">
                 @can('documentos_publish')
-                    <button id="publicar" class="btn btn-primary">Publicar</button>
+                    <button id="publicar" class="btn btn-danger">Publicar</button>
+                </div>
                 @endcan
             </form>
             <!-- Modal -->

@@ -82,7 +82,7 @@
                             class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion') }}</label>
                     <input class="form-control date {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}"
                         type="date" name="fechaexpedicion" id="fechaexpedicion"
-                        value="{{ old('fechaexpedicion', $matrizRequisitoLegale->fechaexpedicion) }}">
+                        value="{{ old('fechaexpedicion',\Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion))->format('Y-m-d') }}">
                     @if ($errors->has('fechaexpedicion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechaexpedicion') }}
@@ -97,7 +97,7 @@
                             class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
                     <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
                         name="fechavigor" id="fechavigor"
-                        value="{{ old('fechavigor', $matrizRequisitoLegale->fechavigor) }}">
+                        value="{{ old('fechavigor',\Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor))->format('Y-m-d') }}">
                     @if ($errors->has('fechavigor'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechavigor') }}

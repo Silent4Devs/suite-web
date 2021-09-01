@@ -129,7 +129,7 @@
     }
 
 </style>
-<div class="container-fluid mb-3 pl-0">
+<div class="pl-0 mb-3 container-fluid">
     <div class="row">
         <div class="col-6" style="padding-left: 30px">
             <h3 class="text-muted">Capacitaciones</h3>
@@ -138,14 +138,14 @@
     </div>
     <div class="row">
         <div class="col-md-8 card_new">
-            <div class="bg-white rounded shadow-propia p-3 mb-3">
+            <div class="p-3 mb-3 bg-white rounded shadow-propia">
                 <div class="header d-flex align-items-baseline">
                     <h5>Histórico/Capacitaciones {{ date('Y') }}: </h5>
                     <p class="ml-3">{{ $capacitaciones_year_actual }} capacitaciones</p>
                 </div>
                 <canvas id="line" height="150px"></canvas>
             </div>
-            <div class="bg-white text-dark rounded shadow-propia p-3 datatable-fix"
+            <div class="p-3 bg-white rounded text-dark shadow-propia datatable-fix"
                 style="width: 100%; position: relative;">
                 <div class="header d-flex align-items-baseline">
                     <h5>Lista de capacitaciones: </h5>
@@ -183,16 +183,16 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-12 card_texto">
-                    <div class="row bg-white rounded shadow-propia p-3 mb-3">
+                    <div class="p-3 mb-3 bg-white rounded row shadow-propia">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                             <div class="text-center" style="font-size: 24pt">
-                                <i class="fas fa-chalkboard-teacher bg-success text-white p-3 rounded"></i>
+                                <i class="p-3 text-white rounded fas fa-chalkboard-teacher bg-success"></i>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0">
+                        <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-8">
                             <div class="header">
                                 <span class="text-success">Total capacitaciones</span>
-                                <p class="p-0">{{ count($capacitaciones) }} <span>capacitaciones</span></p>
+                                <p class="p-0">{{ count($capacitaciones) }} <span>capacitacion(es)</span></p>
                             </div>
                         </div>
                     </div>
@@ -200,17 +200,17 @@
             </div>
             <div class="row">
                 <div class="col-md-12 card_texto">
-                    <div class="row bg-white rounded shadow-propia p-3 mb-3">
+                    <div class="p-3 mb-3 bg-white rounded row shadow-propia">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                             <div class="text-center" style="font-size: 24pt">
-                                <i class="fas fa-calendar-week bg-primary text-white p-3 rounded"></i>
+                                <i class="p-3 text-white rounded fas fa-calendar-week bg-primary"></i>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0">
+                        <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-8">
                             <div class="header">
                                 <span class="text-primary">Capacitaciones en {{ date('Y') - 1 }}</span>
                                 <p class="p-0">{{ $capacitaciones_year_actual_uno_antes }}
-                                    <span>capacitaciones</span>
+                                    <span>capacitación(es)</span>
                                 </p>
                             </div>
                         </div>
@@ -219,16 +219,16 @@
             </div>
             <div class="row">
                 <div class="col-md-12 card_texto">
-                    <div class="row bg-white rounded shadow-propia p-3 mb-3">
+                    <div class="p-3 mb-3 bg-white rounded row shadow-propia">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                             <div class="text-center" style="font-size: 24pt">
-                                <i class="fas fa-calendar-week bg-primary text-white p-3 rounded"></i>
+                                <i class="p-3 text-white rounded fas fa-calendar-week bg-primary"></i>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0">
+                        <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-8">
                             <div class="header">
                                 <span class="text-primary">Capacitaciones en {{ date('Y') }}</span>
-                                <p class="p-0">{{ $capacitaciones_year_actual }} <span>capacitaciones</span></p>
+                                <p class="p-0">{{ $capacitaciones_year_actual }} <span>capacitación(es)</span></p>
                             </div>
                         </div>
                     </div>
@@ -236,10 +236,10 @@
             </div>
             <div class="row">
                 <div class="col-md-12 card_new">
-                    <div class="row bg-white rounded shadow-propia p-3 mb-3">
+                    <div class="p-3 mb-3 bg-white rounded row shadow-propia">
                         <div class="header d-flex align-items-baseline">
                             <h5>Categorías: </h5>
-                            <p class="ml-3">{{ count($categorias_arr) }} categorías</p>
+                            <p class="ml-3">{{ count($categorias_arr) }} categoría(s)</p>
                         </div>
                         <canvas id="chart_categorias"></canvas>
                         <a id="a_plan" class="btn_ver" href="admin/recursos">
@@ -250,7 +250,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 card_new">
-                    <div class="row bg-white rounded shadow-propia p-3">
+                    <div class="p-3 bg-white rounded row shadow-propia">
                         <div class="header d-flex align-items-baseline">
                             <h5>Tipos: </h5>
                             <p class="ml-3">{{ count($tipos_total_arr) }} tipos</p>
@@ -265,7 +265,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid mb-3 card_new">
+<div class="mb-3 container-fluid card_new">
     <div id="contenedor_card_participantes"></div>
 </div>
 
@@ -317,7 +317,7 @@
                 },
                 options: {
                     responsive: true, // Instruct chart js to respond nicely.
-                    maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height 
+                    maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height
                     legend: {
                         display: true,
                         position: 'bottom',
@@ -430,20 +430,20 @@
                         let renderHTML = `
                                  <div class="row">
                     <div class="col-12">
-                        <h3 class="text-muted mb-3">Información detallada de la capacitación: <span
+                        <h3 class="mb-3 text-muted">Información detallada de la capacitación: <span
                                 class="text-dark">${nombre}</span></h3>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 card_texto mb-3 p-0 pr-2">
-                        <div class="bg-white text-dark rounded shadow-propia p-3">
+                    <div class="p-0 pr-2 mb-3 col-md-4 card_texto">
+                        <div class="p-3 bg-white rounded text-dark shadow-propia">
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex">
                                     <div class="text-center" style="font-size: 24pt">
-                                        <i class="fas fa-user text-white bg-info p-3 rounded"></i>
+                                        <i class="p-3 text-white rounded fas fa-user bg-info"></i>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-8 d-flex align-items-center">
                                     <div class="header">
                                         <span class="text-info">Instructor</span>
                                         <p class="p-0 m-0" title="${instructor}" style="text-transform:capitalize">
@@ -453,15 +453,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 card_texto mb-3 p-0 pr-2">
-                        <div class="bg-white text-dark rounded shadow-propia p-3">
+                    <div class="p-0 pr-2 mb-3 col-md-4 card_texto">
+                        <div class="p-3 bg-white rounded text-dark shadow-propia">
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex">
                                     <div class="text-center" style="font-size: 24pt">
-                                        <i class="fas fa-th-list text-white bg-success p-3 rounded"></i>
+                                        <i class="p-3 text-white rounded fas fa-th-list bg-success"></i>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-8 d-flex align-items-center">
                                     <div class="header">
                                         <span class="text-success">Categoría</span>
                                         <p class="p-0 m-0" title="${categoria}">${categoria.length >= 20 ?
@@ -471,15 +471,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 card_texto mb-3 p-0">
-                        <div class="bg-white text-dark rounded shadow-propia p-3">
+                    <div class="p-0 mb-3 col-md-4 card_texto">
+                        <div class="p-3 bg-white rounded text-dark shadow-propia">
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex">
                                     <div class="text-center" style="font-size: 24pt">
-                                        <i class="fas fa-th-list text-white bg-success p-3 rounded"></i>
+                                        <i class="p-3 text-white rounded fas fa-th-list bg-success"></i>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-8 d-flex align-items-center">
                                     <div class="header">
                                         <span class="text-success">Tipo</span>
                                         <p class="p-0 m-0" title="${tipo}">${tipo.length >= 20 ? tipo.substr(0,20)+'...':tipo}
@@ -491,15 +491,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 card_texto mb-3 p-0 pr-2">
-                        <div class="bg-white text-dark rounded shadow-propia p-3">
+                    <div class="p-0 pr-2 mb-3 col-md-4 card_texto">
+                        <div class="p-3 bg-white rounded text-dark shadow-propia">
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex">
                                     <div class="text-center" style="font-size: 24pt">
-                                        <i class="fas fa-users bg-info text-white p-3 rounded"></i>
+                                        <i class="p-3 text-white rounded fas fa-users bg-info"></i>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-8 d-flex align-items-center">
                                     <div class="header">
                                         <span class="text-info">No. Participantes</span>
                                         <p class="p-0 m-0">${total_participantes} participantes inscritos</p>
@@ -508,15 +508,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 card_texto mb-3 p-0 pr-2">
-                        <div class="bg-white text-dark rounded shadow-propia p-3">
+                    <div class="p-0 pr-2 mb-3 col-md-4 card_texto">
+                        <div class="p-3 bg-white rounded text-dark shadow-propia">
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex">
                                     <div class="text-center" style="font-size: 24pt">
-                                        <i class="fas fa-calendar-day bg-primary text-white p-3 rounded"></i>
+                                        <i class="p-3 text-white rounded fas fa-calendar-day bg-primary"></i>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-8 d-flex align-items-center">
                                     <div class="header">
                                         <span class="text-primary">Fecha de Inicio</span>
                                         <p class="p-0 m-0">${moment(fecha_inicio).locale('es').format("dd DD, MMM YYYY hh:mm a")}</p>
@@ -525,15 +525,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 card_texto mb-3 p-0">
-                        <div class="bg-white text-dark rounded shadow-propia p-3">
+                    <div class="p-0 mb-3 col-md-4 card_texto">
+                        <div class="p-3 bg-white rounded text-dark shadow-propia">
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex p-0">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-4 justify-content-center d-flex">
                                     <div class="text-center" style="font-size: 24pt">
-                                        <i class="fas fa-calendar-day bg-primary text-white p-3 rounded"></i>
+                                        <i class="p-3 text-white rounded fas fa-calendar-day bg-primary"></i>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-0 d-flex align-items-center">
+                                <div class="p-0 col-12 col-sm-12 col-md-12 col-lg-8 d-flex align-items-center">
                                     <div class="header">
                                         <span class="text-primary">Fecha de Fin</span>
                                         <p class="p-0 m-0">${moment(fecha_fin).locale('es').format("dd DD, MMM YYYY hh:mm a")}
@@ -545,8 +545,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 card_new pl-0">
-                        <div class="bg-white rounded shadow-propia p-3 mb-3">
+                    <div class="pl-0 col-md-6 card_new">
+                        <div class="p-3 mb-3 bg-white rounded shadow-propia">
                             <div class="header">
                                 <h5>Participantes</h5>
                                 <p></p>
@@ -560,7 +560,7 @@
                     <div class="col-md-6">
                         <div class="row">
                             <div class="card_new w-100">
-                                <div class="bg-white rounded shadow-propia p-3 mb-3">
+                                <div class="p-3 mb-3 bg-white rounded shadow-propia">
                                     <div class="header">
                                         <h5>Aprobados/Reprobados</h5>
                                         <p></p>
