@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
 @endsection
 
-
+@include('partials.flashMessages')
 <div class="card">
     <div class="text-center card-header" style="background-color: #00abb2;">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-frown"></i></i>Quejas</strong>
@@ -94,53 +94,6 @@
                                     class="form-control">{{ $quejas->descripcion }}</textarea>
                             </div>
                             <div class="mt-4 text-center form-group col-12">
-                                <style type="text/css">
-                                    .img-size {
-                                        /*  padding: 0;
-                                            margin: 0; */
-                                        height: 400px;
-                                        width: 100%;
-                                        background-size: contain;
-                                    }
-
-                                    .modal-content {
-
-                                        height: 400px;
-                                        border: none;
-                                    }
-
-                                    .modal-body {
-                                        padding: 0;
-                                    }
-
-                                    .carousel-control-next,
-                                    .carousel-control-prev {
-                                        width: 30px;
-                                        height: 48px;
-                                        top: 50%;
-                                    }
-
-                                    .carousel-control-next {
-                                        right: 30px !important;
-                                    }
-
-                                    .carousel-control-prev {
-                                        left: 30px;
-                                    }
-
-                                    .carousel-control-prev-icon {
-                                        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-                                        width: 30px;
-                                        height: 48px;
-                                    }
-
-                                    .carousel-control-next-icon {
-                                        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-                                        width: 30px;
-                                        height: 48px;
-                                    }
-
-                                </style>
                                 <div class="container">
                                     <div class="mb-4 row">
                                         <div class="col text-start">

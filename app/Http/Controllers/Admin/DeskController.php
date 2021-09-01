@@ -38,14 +38,115 @@ class DeskController extends Controller
         $mejoras = Mejoras::get();
         $sugerencias = Sugerencias::get();
 
-        $total = IncidentesSeguridad::get()->count();
-        $nuevos = IncidentesSeguridad::where('estatus', 'nuevo')->get()->count();
-        $en_curso = IncidentesSeguridad::where('estatus', 'en curso')->get()->count();
-        $en_espera = IncidentesSeguridad::where('estatus', 'en espera')->get()->count();
-        $cerrados = IncidentesSeguridad::where('estatus', 'cerrado')->get()->count();
-        $cancelados = IncidentesSeguridad::where('estatus', 'cancelado')->get()->count();
+        $total_seguridad = IncidentesSeguridad::get()->count();
+        $nuevos_seguridad = IncidentesSeguridad::where('estatus', 'nuevo')->get()->count();
+        $en_curso_seguridad = IncidentesSeguridad::where('estatus', 'en curso')->get()->count();
+        $en_espera_seguridad = IncidentesSeguridad::where('estatus', 'en espera')->get()->count();
+        $cerrados_seguridad = IncidentesSeguridad::where('estatus', 'cerrado')->get()->count();
+        $cancelados_seguridad = IncidentesSeguridad::where('estatus', 'cancelado')->get()->count();
 
-        return view('admin.desk.index', compact('incidentes_seguridad', 'total', 'nuevos', 'en_curso', 'en_espera', 'cerrados', 'cancelados', 'riesgos_identificados', 'quejas', 'denuncias', 'mejoras', 'sugerencias'));
+
+
+        $total_riesgos = RiesgoIdentificado::get()->count();
+        $nuevos_riesgos = RiesgoIdentificado::where('estatus', 'nuevo')->get()->count();
+        $en_curso_riesgos = RiesgoIdentificado::where('estatus', 'en curso')->get()->count();
+        $en_espera_riesgos = RiesgoIdentificado::where('estatus', 'en espera')->get()->count();
+        $cerrados_riesgos = RiesgoIdentificado::where('estatus', 'cerrado')->get()->count();
+        $cancelados_riesgos = RiesgoIdentificado::where('estatus', 'cancelado')->get()->count();
+
+
+        $total_quejas = Quejas::get()->count();
+        $nuevos_quejas = Quejas::where('estatus', 'nuevo')->get()->count();
+        $en_curso_quejas = Quejas::where('estatus', 'en curso')->get()->count();
+        $en_espera_quejas = Quejas::where('estatus', 'en espera')->get()->count();
+        $cerrados_quejas = Quejas::where('estatus', 'cerrado')->get()->count();
+        $cancelados_quejas = Quejas::where('estatus', 'cancelado')->get()->count();
+
+
+
+        $total_denuncias = Denuncias::get()->count();
+        $nuevos_denuncias = Denuncias::where('estatus', 'nuevo')->get()->count();
+        $en_curso_denuncias = Denuncias::where('estatus', 'en curso')->get()->count();
+        $en_espera_denuncias = Denuncias::where('estatus', 'en espera')->get()->count();
+        $cerrados_denuncias = Denuncias::where('estatus', 'cerrado')->get()->count();
+        $cancelados_denuncias = Denuncias::where('estatus', 'cancelado')->get()->count();
+
+
+
+        $total_mejoras = Mejoras::get()->count();
+        $nuevos_mejoras = Mejoras::where('estatus', 'nuevo')->get()->count();
+        $en_curso_mejoras = Mejoras::where('estatus', 'en curso')->get()->count();
+        $en_espera_mejoras = Mejoras::where('estatus', 'en espera')->get()->count();
+        $cerrados_mejoras = Mejoras::where('estatus', 'cerrado')->get()->count();
+        $cancelados_mejoras = Mejoras::where('estatus', 'cancelado')->get()->count();
+
+
+
+        $total_sugerencias = Sugerencias::get()->count();
+        $nuevos_sugerencias = Sugerencias::where('estatus', 'nuevo')->get()->count();
+        $en_curso_sugerencias = Sugerencias::where('estatus', 'en curso')->get()->count();
+        $en_espera_sugerencias = Sugerencias::where('estatus', 'en espera')->get()->count();
+        $cerrados_sugerencias = Sugerencias::where('estatus', 'cerrado')->get()->count();
+        $cancelados_sugerencias = Sugerencias::where('estatus', 'cancelado')->get()->count();
+
+
+
+
+
+
+
+
+
+        return view('admin.desk.index', compact(
+            'incidentes_seguridad',
+            'riesgos_identificados', 
+            'quejas', 
+            'denuncias', 
+            'mejoras', 
+            'sugerencias',
+
+            'total_seguridad', 
+            'nuevos_seguridad', 
+            'en_curso_seguridad', 
+            'en_espera_seguridad', 
+            'cerrados_seguridad', 
+            'cancelados_seguridad', 
+
+            'total_riesgos',
+            'nuevos_riesgos',
+            'en_curso_riesgos',
+            'en_espera_riesgos',
+            'cerrados_riesgos',
+            'cancelados_riesgos',
+
+            'total_quejas',
+            'nuevos_quejas',
+            'en_curso_quejas',
+            'en_espera_quejas',
+            'cerrados_quejas',
+            'cancelados_quejas',
+
+            'total_denuncias',
+            'nuevos_denuncias',
+            'en_curso_denuncias',
+            'en_espera_denuncias',
+            'cerrados_denuncias',
+            'cancelados_denuncias',
+
+            'total_mejoras',
+            'nuevos_mejoras',
+            'en_curso_mejoras',
+            'en_espera_mejoras',
+            'cerrados_mejoras',
+            'cancelados_mejoras',
+
+            'total_sugerencias',
+            'nuevos_sugerencias',
+            'en_curso_sugerencias',
+            'en_espera_sugerencias',
+            'cerrados_sugerencias',
+            'cancelados_sugerencias',
+        ));
     }
 
     
@@ -108,7 +209,7 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.seguridad-edit', $id_incidente);
+        return redirect()->route('admin.desk.seguridad-edit', $id_incidente)->with('success', 'Reporte actualizado');
     }
     public function updateAnalisisSeguridad(Request $request, $id_incidente)
     {
@@ -139,7 +240,7 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.seguridad-edit', $analisis_seguridad->seguridad_id);
+        return redirect()->route('admin.desk.seguridad-edit', $analisis_seguridad->seguridad_id)->with('success', 'Reporte actualizado');
     }
     public function archivadoSeguridad(Request $request, $incidente)
     {
@@ -199,7 +300,7 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.index');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
     public function updateAnalisisReisgos(Request $request, $id_riesgos)
     {
@@ -230,7 +331,7 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.riesgos-edit', $id_riesgos);
+        return redirect()->route('admin.desk.riesgos-edit', $id_riesgos)->with('success', 'Reporte actualizado');
     }
 
 
@@ -273,7 +374,7 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.index');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
     public function updateAnalisisQuejas(Request $request, $id_quejas)
     {
@@ -304,7 +405,7 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.quejas-edit', $analisis_seguridad->quejas_id);
+        return redirect()->route('admin.desk.quejas-edit', $analisis_seguridad->quejas_id)->with('success', 'Reporte actualizado');
     }
 
 
@@ -334,10 +435,11 @@ class DeskController extends Controller
             'denunciado' => $request->denunciado,
             'area_denunciado' => $request->area_denunciado,
             'tipo' => $request->tipo,
+            'estatus' => $request->estatus,
         ]);
 
 
-        return redirect()->route('admin.desk.index');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
     public function updateAnalisisDenuncias(Request $request, $id_denuncias)
     {
@@ -368,7 +470,7 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.denuncias-edit', $analisis_seguridad->denuncias_id);
+        return redirect()->route('admin.desk.denuncias-edit', $analisis_seguridad->denuncias_id)->with('success', 'Reporte actualizado');
     }
 
 
@@ -409,7 +511,7 @@ class DeskController extends Controller
             'otro' => $request->otro,
         ]);
 
-        return redirect()->route('admin.desk.index');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
     public function updateAnalisisMejoras(Request $request, $id_mejoras)
     {
@@ -440,7 +542,7 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.mejoras-edit', $analisis_seguridad->mejoras_id);
+        return redirect()->route('admin.desk.mejoras-edit', $analisis_seguridad->mejoras_id)->with('success', 'Reporte actualizado');
     }
 
 
@@ -483,7 +585,7 @@ class DeskController extends Controller
             'fecha_cierre' => $request->fecha_cierre,
         ]);
 
-        return redirect()->route('admin.desk.index');
+        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
     public function updateAnalisisSugerencias(Request $request, $id_sugerencias)
     {
@@ -514,6 +616,6 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.sugerencias-edit', $analisis_seguridad->sugerencias_id);
+        return redirect()->route('admin.desk.sugerencias-edit', $analisis_seguridad->sugerencias_id)->with('success', 'Reporte actualizado');
     }
 }

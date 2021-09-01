@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
 @endsection
 
-
+@include('partials.flashMessages')
 <div class="card">
     <div class="text-center card-header" style="background-color: #00abb2;">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-lightbulb"></i>Sugerencias</strong>
