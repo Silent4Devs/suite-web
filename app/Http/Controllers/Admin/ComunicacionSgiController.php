@@ -106,7 +106,7 @@ class ComunicacionSgiController extends Controller
             $image = $new_name_image;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('imagen'));
-            $img_intervention->resize(256, null, function ($constraint) {
+            $img_intervention->resize(720, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($route);
         }

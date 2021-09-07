@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-    
 
-    
+
+
 
 
 
@@ -39,7 +39,7 @@
             margin-top: 8px;
         }
 
-        
+
 
         table td i {
             font-size: 17pt;
@@ -127,7 +127,7 @@
                     <a href="#" data-tabs="calendario" class="btn_activo"><i class="fas fa-calendar-alt"></i> Calendario</a>
                     <a href="#" data-tabs="actividades">
                         @if($contador_actividades)
-                            <span>{{ $contador_actividades }}%</span>
+                            <span>{{ $contador_actividades }}</span>
                         @endif
                         <i class="fas fa-stopwatch"></i>Actividades
                     </a>
@@ -177,5 +177,5 @@
 
 
 @section('scripts')
-  
+
 @endsection
