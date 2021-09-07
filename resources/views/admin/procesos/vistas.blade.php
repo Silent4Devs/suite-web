@@ -2,35 +2,6 @@
 @section('content')
 
     <style>
-        section:not(section:target) {
-            display: none !important;
-        }
-
-
-        .caja_btn_a,
-        #myTab {
-            width: 100%;
-            height: auto;
-            text-align: center;
-        }
-
-        .caja_btn_a a,
-        #myTab a {
-            padding: 15px;
-            margin-top: 10px;
-            color: #008186;
-            display: inline-block;
-            text-decoration: none;
-        }
-
-
-        .caja_btn_a a:hover,
-        .btn_a_seleccionado,
-        li.active,
-        #myTab a:hover {
-            border-bottom: 2px solid #00abb2;
-            margin-right: 10px;
-        }
 
         .info-personal .caja_img_perfil {
             border-radius: 100px;
@@ -399,59 +370,56 @@
 
 
 
-            <ul class="nav nav-tabs" id="myTab" style="border:none">
-                <li class="active"><a href="#vista-previa"> Vista Previa</a></li>
-                <li><a href="#resumen">Resumen</a></li>
-                <li><a href="#riesgos">Riesgos</a></li>
-                <li><a href="#indicadores">Indicadores</a></li>
-                <li><a href="#documentos_relacionados">Documentos Relacionados</a></li>
-                <li><a href="#versiones">Versiones</a></li>
-            </ul>
+            <div class="caja_botones_menu">
+                <a href="#" data-tabs="vista_previa" class="btn_activo"> Vista Previa</a>
+                <a href="#" data-tabs="resumen">Resumen</a>
+                <a href="#" data-tabs="riesgos">Riesgos</a>
+                <a href="#" data-tabs="indicadores">Indicadores</a>
+                <a href="#" data-tabs="versiones">Versiones</a>
+                <a href="#" data-tabs="documentos_relacionados">Documentos Relacionados</a>
+            </div>
 
-            <div class="tab-content">
-                <div class="tab-pane active" id="vista-previa" style="color:black;">
-                    <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+            <div class="caja_caja_secciones">
+                <div class="caja_secciones">
+                    <section class="caja_tab_reveldada" id="vista_previa" style="color:black;">
+                        <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
 
-                        @include('admin.procesos.vistas.vista_previa')
+                            @include('admin.procesos.vistas.vista_previa')
 
-                    </div>
-                </div>
-                <div class="tab-pane" id="resumen">
+                        </div>
+                    </section>
+                    <section class="" id="resumen">
 
-                        @include('admin.procesos.vistas.resumen')
+                            @include('admin.procesos.vistas.resumen')
 
-                </div>
-                <div class="tab-pane" id="riesgos">
-                    {{-- <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                    </section>
+                    <section class="" id="riesgos">
+                        {{-- <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
 
-                        @include('admin.procesos.vistas.resumen') --}}
-                </div>
-                <div class="tab-pane" id="indicadores">
-                    <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                            @include('admin.procesos.vistas.resumen') --}}
+                    </section>
+                    <section class="" id="indicadores">
+                        <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
 
-                        @include('admin.procesos.vistas.indicadores')
-                    </div>
-                </div>
-                <div class="tab-pane" id="versiones">
-                    <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                            @include('admin.procesos.vistas.indicadores')
+                        </div>
+                    </section>
+                    <section class="" id="versiones">
+                        <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
 
-                        @include('admin.procesos.vistas.versiones')
-                    </div>
-                </div>
-                <div class="tab-pane" id="documentos_relacionados">
-                    <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                            @include('admin.procesos.vistas.versiones')
+                        </div>
+                    </section>
+                    <section class="" id="documentos_relacionados">
+                        <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
 
-                        @include('admin.procesos.vistas.documentos_relacionados')
-                    </div>
+                            @include('admin.procesos.vistas.documentos_relacionados')
+                        </div>
+                    </section>
                 </div>
             </div>
 
-        <section id="documentos_relacionados">
-
-            <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-                @include('admin.procesos.vistas.documentos_relacionados')
-            </div>
-        </section>
+        
 
             {{-- <div class="mb-3 ml-5 row caja_btn_a ">
                 <a href="#vista-previa" class="btn_a_seleccionado" style="text-decoration:none;">
@@ -523,14 +491,7 @@
 
 @section('scripts')
 
-    <script type="text/javascript">
-        $(".caja_btn_a a").click(function() {
-            $(".caja_btn_a a").removeClass("btn_a_seleccionado");
-            $(".caja_btn_a a:hover").addClass("btn_a_seleccionado");
-            $("#vista-previa").removeClass("d-block");
-
-        });
-    </script>
+    
 
     <script>
         $('#myTab a').click(function(e) {
