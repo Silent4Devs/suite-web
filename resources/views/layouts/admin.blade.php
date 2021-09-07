@@ -44,6 +44,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
+
     <style type="text/css">
         /*TOASTR*/
         #toast-container > div{
@@ -623,6 +625,8 @@
     <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
+
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
     <script>
         window.Laravel = {!! json_encode([

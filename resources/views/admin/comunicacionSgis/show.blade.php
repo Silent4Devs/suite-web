@@ -2,31 +2,60 @@
 @section('content')
 
     @section('styles')
-         <style type="text/css">
-        .img_comunicado{
-            width: 100%;
-            height: 300px;
 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: all;
-        }
-        .documentos_sgis i{
-            font-size: 50pt;
-            color: #B30909;
-            transition: 0.1s;
-        }
-        .documentos_sgis a:hover > i{
-            transform: scale(1.07);
-            filter: brightness(1.5);
-        }
-        .documentos_sgis a{
-            display: inline-block;
-            text-align: center;
-            margin: 7px;
-        }
-    </style>
+        <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
+
+         <style type="text/css">
+            .img_comunicado{
+                width: 100%;
+                height: 300px;
+
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: all;
+            }
+            .documentos_sgis i{
+                font-size: 50pt;
+                color: #B30909;
+                transition: 0.1s;
+            }
+            .documentos_sgis a:hover > i{
+                transform: scale(1.07);
+                filter: brightness(1.5);
+            }
+            .documentos_sgis a{
+                display: inline-block;
+                text-align: center;
+                margin: 7px;
+            }
+
+            @media print {
+                .img_comunicado{
+                    width: 100%;
+                    height: 300px;
+
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-attachment: all;
+                }
+                .documentos_sgis i{
+                    font-size: 50pt;
+                    color: #B30909;
+                    transition: 0.1s;
+                }
+                .documentos_sgis a:hover > i{
+                    transform: scale(1.07);
+                    filter: brightness(1.5);
+                }
+                .documentos_sgis a{
+                    display: inline-block;
+                    text-align: center;
+                    margin: 7px;
+                }
+            }
+        </style>
     @endsection
 
     {{ Breadcrumbs::render('admin.comunicacion-sgis.show') }}
@@ -38,7 +67,18 @@
             <h3 class="mb-2 text-center text-white"><strong>Comunicados</strong></h3>
         </div>
         <div class=" card-body" style="">
-            <div class="row">
+
+            <div class="row" style="position: relative; height:35px;">
+                <button class="btn btn-danger" style="position: absolute; right:20px;" onclick="printJS({
+                    printable: 'impreso_row',
+                    type: 'html', 
+                    css: '{{ asset('css/print_comunicados.css') }}',})">
+                    <i class="fas fa-print"></i>
+                    Imprimir
+                </button>
+            </div>
+
+            <div class="row" id="impreso_row">
                 <div class="col-12">
                     <h1 style="color:#00abb2;">{{ $comunicacionSgi->titulo }}</h1>
                 </div>
@@ -84,5 +124,11 @@
     </div>
 
 
+
+@endsection
+
+@section('scripts')
+
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
 @endsection
