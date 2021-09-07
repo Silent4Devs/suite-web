@@ -31,9 +31,9 @@
 
     {{ Breadcrumbs::render('admin.comunicacion-sgis.show') }}
 
-   
 
-    <div class="card mt-5" style="">
+
+    <div class="mt-5 card" style="">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Comunicados</strong></h3>
         </div>
@@ -42,21 +42,28 @@
                 <div class="col-12">
                     <h1 style="color:#00abb2;">{{ $comunicacionSgi->titulo }}</h1>
                 </div>
-                <div class="col-md-5 mt-3">
+                <div class="mt-3 col-md-5">
                     @php
-                        $imagen = count($comunicacionSgi->imagenes_comunicacion) ? 'storage/imagen_comunicado_SGI/'.$comunicacionSgi->imagenes_comunicacion->imagen : 'img/portal_404.png'; 
-                    @endphp
+                    if(($comunicacionSgi->first()->count())){
+                        $imagen= 'storage/imagen_comunicado_SGI/'.$comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                    }
+                    else{
+                        $imagen= 'img/portal_404.png';
+                    }
+
+                @endphp
+
                     <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
                 </div>
-                <div class="col-md-7 mt-3" style="display: flex; align-items:center;">
+                <div class="mt-3 col-md-7" style="display: flex; align-items:center;">
                     <div>
                         {!! $comunicacionSgi->descripcion !!}
 
                         <p>
-                            {{ \Carbon\Carbon::parse($comunicacionSgi->fecha_publicacion)->format('d-m-Y') }} 
+                            {{ \Carbon\Carbon::parse($comunicacionSgi->fecha_publicacion)->format('d-m-Y') }}
                             &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;
-                            <a href="{{$comunicacionSgi->link}}">{{$comunicacionSgi->link}}</a> 
-                            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
+                            <a href="{{$comunicacionSgi->link}}">{{$comunicacionSgi->link}}</a>
+                            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                             Publicado en: {{$comunicacionSgi->publicar_en}}
                         </p>
 
@@ -70,7 +77,7 @@
                                 <p>Sin documentos registrados</p>
                             @endforelse
                         </div>
-                    </div>    
+                    </div>
                 </div>
             </div>
         </div>
