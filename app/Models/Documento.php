@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\VistaDocumento;
 
 class Documento extends Model
 {
@@ -30,7 +31,7 @@ class Documento extends Model
 
     protected $dates = ['fecha'];
 
-    protected $appends = ['estatus_formateado', 'fecha_dmy', 'archivo_actual', 'color_estatus'];
+    protected $appends = ['estatus_formateado', 'fecha_dmy', 'archivo_actual', 'color_estatus', 'no_vistas'];
 
     protected $fillable = [
         'codigo',
@@ -51,6 +52,12 @@ class Documento extends Model
     public function searchableAs()
     {
         return 'posts_index';
+    }
+
+    public function getNoVistasAttribute()
+    {
+        $no_vistas = VistaDocumento::where('documento_id', $this->id)->count();
+        return $no_vistas;
     }
 
     public function getFechaDMYAttribute()

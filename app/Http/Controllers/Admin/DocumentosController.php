@@ -11,6 +11,7 @@ use App\Models\HistorialRevisionDocumento;
 use App\Models\HistorialVersionesDocumento;
 use App\Models\Macroproceso;
 use App\Models\Proceso;
+use App\Models\VistaDocumento;
 use App\Models\RevisionDocumento;
 use App\Models\User;
 use Carbon\Carbon;
@@ -457,7 +458,18 @@ class DocumentosController extends Controller
         abort_if(Gate::denies('documentos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $path_documento = $this->getPathDocumento($documento, 'storage');
 
-        return view('admin.documentos.view-document-file', compact('documento', 'path_documento'));
+        if(auth()->user()->empleado){
+            if( !VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', auth()->user()->empleado->id)->exists() ){
+                VistaDocumento::create([
+                    'empleado_id' => auth()->user()->empleado->id,
+                    'documento_id' => $documento->id,
+                ]);
+            }
+        }
+
+        $empleados_vistas = VistaDocumento::with('empleados')->where('documento_id', $documento->id)->get();
+
+        return view('admin.documentos.view-document-file', compact('documento', 'path_documento', 'empleados_vistas'));
     }
 
     public function getPublicPathObsoleteDocument(Documento $documento)

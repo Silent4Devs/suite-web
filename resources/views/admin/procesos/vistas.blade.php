@@ -355,133 +355,123 @@
 
     <div class="mt-4 card">
 
-
-
-
-
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top:-40px;">
-            <h3 class="mb-1 text-center text-white"></h3>
-        </div>
-
-
-        <div class="w-full px-8 py-4 mb-16 bg-white rounded-lg ">
-
-            <h4 class="mb-1 text-center" style="color:#008186">{{ $documento->codigo }} {{ $documento->nombre }} </h4>
-
-
-
-            <div class="caja_botones_menu">
-                <a href="#" data-tabs="vista_previa" class="btn_activo"> Vista Previa</a>
-                <a href="#" data-tabs="resumen">Resumen</a>
-                <a href="#" data-tabs="riesgos">Riesgos</a>
-                <a href="#" data-tabs="indicadores">Indicadores</a>
-                <a href="#" data-tabs="versiones">Versiones</a>
-                <a href="#" data-tabs="documentos_relacionados">Documentos Relacionados</a>
+        <div class="">
+            <div class="py-3 col-12 card-body verde_silent align-self-center" style="margin-top:-30px;">
+                <h3 class="mb-1 text-center text-white">{{ $documento->codigo }} {{ $documento->nombre }}</h3>
             </div>
 
-            <div class="caja_caja_secciones">
-                <div class="caja_secciones">
-                    <section class="caja_tab_reveldada" id="vista_previa" style="color:black;">
-                        <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
 
-                            @include('admin.procesos.vistas.vista_previa')
+            <div class=" card-body">
 
-                        </div>
-                    </section>
-                    <section class="" id="resumen">
 
-                            @include('admin.procesos.vistas.resumen')
 
-                    </section>
-                    <section class="" id="riesgos">
-                        {{-- <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-
-                            @include('admin.procesos.vistas.resumen') --}}
-                    </section>
-                    <section class="" id="indicadores">
-                        <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-
-                            @include('admin.procesos.vistas.indicadores')
-                        </div>
-                    </section>
-                    <section class="" id="versiones">
-                        <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-
-                            @include('admin.procesos.vistas.versiones')
-                        </div>
-                    </section>
-                    <section class="" id="documentos_relacionados">
-                        <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-
-                            @include('admin.procesos.vistas.documentos_relacionados')
-                        </div>
-                    </section>
+                <div class="caja_botones_menu">
+                    <a href="#" data-tabs="vista_previa" class="btn_activo"> Vista Previa</a>
+                    <a href="#" data-tabs="resumen">Resumen</a>
+                    <a href="#" data-tabs="riesgos">Riesgos</a>
+                    <a href="#" data-tabs="indicadores">Indicadores</a>
+                    <a href="#" data-tabs="versiones">Versiones</a>
+                    <a href="#" data-tabs="documentos_relacionados">Documentos Relacionados</a>
                 </div>
+
+                <div class="caja_caja_secciones mt-4">
+                    <div class="caja_secciones">
+                        <section class="caja_tab_reveldada" id="vista_previa" style="color:black;">
+                            
+
+                                @include('admin.procesos.vistas.vista_previa')
+
+                            
+                        </section>
+                        <section class="" id="resumen">
+
+                                @include('admin.procesos.vistas.resumen')
+
+                        </section>
+                        <section class="" id="riesgos">
+
+                                {{-- @include('admin.procesos.vistas.resumen') --}}
+                        </section>
+                        <section class="" id="indicadores">
+
+                                @include('admin.procesos.vistas.indicadores')
+                        </section>
+                        <section class="" id="versiones">
+
+                                @include('admin.procesos.vistas.versiones')
+                        </section>
+                        <section class="" id="documentos_relacionados">
+
+                                @include('admin.procesos.vistas.documentos_relacionados')
+                        </section>
+                    </div>
+                </div>
+
+            
+
+                {{-- <div class="mb-3 ml-5 row caja_btn_a ">
+                    <a href="#vista-previa" class="btn_a_seleccionado" style="text-decoration:none;">
+                        Vista Previa</a>
+
+                    <a href="#resumen" style="text-decoration:none;">
+                        Resumen
+                    </a>
+
+                    <a href="#riesgos" style="text-decoration:none;">
+                        Riesgos</a>
+
+
+                    <a href="#indicadores" style="text-decoration:none;">
+                        Indicadores</a>
+
+                    <a href="#documentos_relacionados" style="text-decoration:none;">
+                        Documentos Relacionados
+                    </a>
+
+                    <a href="#versiones" style="text-decoration:none;">
+                        Versiones
+                    </a>
+
+                </div> --}}
+
+                {{-- <section id="vista-previa" class="d-block">
+
+                    <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                        @include('admin.procesos.vistas.vista_previa')
+                    </div>
+
+                </section>
+
+                <section id="resumen">
+
+                    @include('admin.procesos.vistas.resumen')
+
+                </section>
+
+                <section id="indicadores">
+
+                    <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                        @include('admin.procesos.vistas.indicadores')
+                    </div>
+                </section>
+
+                <section id="versiones">
+
+                    <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                        @include('admin.procesos.vistas.versiones')
+                    </div>
+                </section>
+
+                <section id="documentos_relacionados">
+
+                    <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+                        @include('admin.procesos.vistas.documentos_relacionados')
+                    </div>
+                </section> --}}
+
+
+
             </div>
-
-        
-
-            {{-- <div class="mb-3 ml-5 row caja_btn_a ">
-                <a href="#vista-previa" class="btn_a_seleccionado" style="text-decoration:none;">
-                    Vista Previa</a>
-
-                <a href="#resumen" style="text-decoration:none;">
-                    Resumen
-                </a>
-
-                <a href="#riesgos" style="text-decoration:none;">
-                    Riesgos</a>
-
-
-                <a href="#indicadores" style="text-decoration:none;">
-                    Indicadores</a>
-
-                <a href="#documentos_relacionados" style="text-decoration:none;">
-                    Documentos Relacionados
-                </a>
-
-                <a href="#versiones" style="text-decoration:none;">
-                    Versiones
-                </a>
-
-            </div> --}}
-
-            {{-- <section id="vista-previa" class="d-block">
-
-                <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-                    @include('admin.procesos.vistas.vista_previa')
-                </div>
-
-            </section>
-
-            <section id="resumen">
-
-                @include('admin.procesos.vistas.resumen')
-
-            </section>
-
-            <section id="indicadores">
-
-                <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-                    @include('admin.procesos.vistas.indicadores')
-                </div>
-            </section>
-
-            <section id="versiones">
-
-                <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-                    @include('admin.procesos.vistas.versiones')
-                </div>
-            </section>
-
-            <section id="documentos_relacionados">
-
-                <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-                    @include('admin.procesos.vistas.documentos_relacionados')
-                </div>
-            </section> --}}
-
-
 
         </div>
     </div>
