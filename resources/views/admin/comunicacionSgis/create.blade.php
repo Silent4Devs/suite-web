@@ -55,7 +55,7 @@
                     <label for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
                     <div class="mb-3 input-group">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="imagen" id="imagen" class="form-control"  accept="imagen/*" value="{{ old('imagen', '') }}" >
+                            <input type="file" class="custom-file-input" class="needsclick dropzone" name="imagen" id="imagen" class="form-control {{ $errors->has('imagen') ? 'is-invalid' : '' }}"  id="imagen-dropzone" accept="imagen/*" value="{{ old('imagen', '') }}" >
                                 <label class="custom-file-label" for="inputGroupFile02"></label>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                         </select>
                             @if ($errors->has('tipo'))
                                 <div class="invalid-feedback">
-                                {{ $errors->first('tipo') }}
+                                    {{ $errors->first('tipo') }}
                                 </div>
                             @endif
                 </div>
