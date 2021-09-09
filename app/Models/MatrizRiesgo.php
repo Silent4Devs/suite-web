@@ -145,6 +145,8 @@ class MatrizRiesgo extends Model
         'impacto_residual',
         'nivelriesgo_residual',
         'riesgo_total_residual',
+        'tipo_tratamiento',
+        'aceptar_transferir',
     ];
 
     /*protected function serializeDate(DateTimeInterface $date)

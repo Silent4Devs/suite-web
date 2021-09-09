@@ -332,4 +332,22 @@
             initSelect2();
         });
     </script>
+
+    <script type="text/javascript">
+        
+        $("#ejemplo").click(function() {
+                var val = $(this).val();
+                if(val == 0){
+                    $("#ver1").css("display", "none");
+                    $("#modulo_planaccion").css("display", "block");
+                }else{
+                    $("#ver1").css("display", "block");
+                    $("#modulo_planaccion").css("display", "none");
+
+                }
+            });
+
+    </script>
+
+
 @endsection
