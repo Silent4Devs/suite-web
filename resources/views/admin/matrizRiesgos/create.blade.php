@@ -895,19 +895,7 @@
                         </div>
                         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
-                
-            
-
-
-
-
-
-
-
 <!-- hasta aqui -->
-
-
-
                 </div>
                 <hr>
                 <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
@@ -1028,13 +1016,8 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                     </div>
-
                 </div>
-
                 <hr>
-
-
-
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}"
                         class="btn_cancelar">Cancelar</a>
