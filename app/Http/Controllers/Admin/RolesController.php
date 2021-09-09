@@ -73,6 +73,7 @@ class RolesController extends Controller
 
         $permissions = Permission::all();
 
+
         return view('admin.roles.create', compact('permissions'));
     }
 
@@ -86,7 +87,7 @@ class RolesController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   
         if ($request->ajax()) {
             // $this->validateRol($request);
             $nombre_rol = $request->nombre_rol;
@@ -95,9 +96,10 @@ class RolesController extends Controller
             $role->permissions()->sync($permissions);
             return response()->json(['success' => true]);
         }
+
         // $role = Role::create($request->all());
         // $role->permissions()->sync($request->input('permissions', []));
-        // return redirect()->route('admin.roles.index');
+        return redirect()->route('admin.roles.index');
     }
 
     public function edit(Role $role)
