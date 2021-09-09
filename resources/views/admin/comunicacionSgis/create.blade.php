@@ -82,7 +82,7 @@
                         </select>
                             @if ($errors->has('tipo'))
                                 <div class="invalid-feedback">
-                                {{ $errors->first('tipo') }}
+                                    {{ $errors->first('tipo') }}
                                 </div>
                             @endif
                 </div>

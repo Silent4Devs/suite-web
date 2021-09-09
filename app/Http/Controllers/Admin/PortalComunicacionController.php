@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\organizacion;
 use App\Models\Documento;
+use App\Models\VistaDocumento;
 use App\Models\Empleado;
 use App\Models\Area;
 use App\Models\ComunicacionSgi;
@@ -34,6 +35,7 @@ class PortalComunicacionController extends Controller
         $aniversarios = Empleado::whereMonth('antiguedad', '=', $hoy->format('m'))->get();
 
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
+
 
         $comunicacionSgis = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Blog')->orWhere('publicar_en', '=', 'Ambos')->get();
 

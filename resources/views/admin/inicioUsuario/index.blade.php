@@ -1,13 +1,6 @@
 @extends('layouts.admin')
 @section('content')
 
-
-
-
-
-
-
-
     <style type="text/css">
         body {
             background-color: #fff;

@@ -11,30 +11,30 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
 
-            /*PermissionsTableSeeder::class,
+            PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
             UsersTableSeeder::class,
-            RoleUserTableSeeder::class,*/
+            RoleUserTableSeeder::class,
             GapunoTableSeeder::class,
             GaptresTableSeeder::class,
             GapdosTableSeeder::class,
             declaracion_aplicabilidad_table::class,
-            //EstadodocumentosTableSeeder::class,
+            EstadodocumentosTableSeeder::class,
             ControlDocumentosSeeder::class,
-            //EstadoincidentesTableSeeder::class,
-            //EstusplatrabajoTableSeeder::class,
-            //ActividadFaseSeeder::class,
-            /*OrganizacionSeeder::class,
+            EstadoincidentesTableSeeder::class,
+            EstusplatrabajoTableSeeder::class,
+            ActividadFaseSeeder::class,
+            OrganizacionSeeder::class,
             SedeSeeder::class,
             GrupoSeeder::class,
             AreaSeeder::class,
             EmpleadosSeeder::class,
             MacroprocesoSeeder::class,
-            DocumentoSeeder::class,*/
+            DocumentoSeeder::class,
             PlanImplementacionSeeder::class,  // Necesario se carga inicialmente el Diagrama Universal de Gantt
-            /*CategoriaIncidenteSeeder::class,
-            SubcategoriaIncidenteSeeder::class,*/
+            CategoriaIncidenteSeeder::class,
+            SubcategoriaIncidenteSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }
