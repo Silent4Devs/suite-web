@@ -1,0 +1,26 @@
+.img_comunicado{
+    width: 100%;
+    height: 300px;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: all;
+}
+.documentos_sgis i{
+    font-size: 50pt;
+    color: #B30909;
+    transition: 0.1s;
+}
+.documentos_sgis a:hover > i{
+    transform: scale(1.07);
+    filter: brightness(1.5);
+}
+.documentos_sgis a{
+    display: inline-block;
+    text-align: center;
+    margin: 7px;
+}
+body{
+    font-family: Arial;
+}
