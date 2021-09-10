@@ -346,12 +346,14 @@
 
         .caja_secciones section {
             width: 0px;
+            height: 0px;
             overflow: hidden;
             transition: 0.4s;
             opacity: 0;
         }
 
         .caja_tab_reveldada {
+            height: auto !important;
             width: 100% !important;
             overflow: none;
             opacity: 1 !important;

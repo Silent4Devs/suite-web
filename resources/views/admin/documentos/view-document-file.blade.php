@@ -16,29 +16,35 @@
             margin-top: 10px;
             padding: 10px;
             width: 210px;
-            height: 210px;
+            height: 80px;
             display: inline-block;
             overflow: hidden;
             margin: 10px;
+            position: relative;
         }
         .nombre_nuevo{
+            width: calc(100% - 70px);
+            right: 0px;
+            position: absolute;
             font-size: 12pt;
-            text-align: center;
-            width: 100%;
-            margin-top: 10px;
+            text-align: left;
             font-weight: bold;
         }
         .img_nuevo{
-            width: 100%;
+            width: 50px;
+            left: 0;
             text-align: center;
+            position: absolute;
         }
         .img_nuevo img{
-            height: 100px;
+            height: 50px;
             width: auto;
-            clip-path: circle(50px at 50% 50%);
+            clip-path: circle(25px at 50% 50%);
         }
         .datos_nuevo{
             width: 100%;
+            position: absolute;
+            bottom: 0;
         }
         .datos_nuevo h6{
             margin: 0;
@@ -80,7 +86,7 @@
                     </div>
                     <h5 class="nombre_nuevo">{{$vista->empleados->name}}</h5>
                     <div class="datos_nuevo">
-                        <p>{{$vista->empleados->puesto}}<br>
+                        <p>{{$vista->empleados->puesto}} &nbsp;&nbsp;|&nbsp;&nbsp;
                             @if(is_null($vista->empleados->area->area))
                                 No hay Area
                             @else
@@ -93,8 +99,6 @@
                 <div class="nuevo">Este documento no tiene vistas</div>
             @endforelse
         </div>
-
-
     </div>
 
     
