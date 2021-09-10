@@ -19,7 +19,7 @@ class UsersACLRepository implements ACLRepository
      */
     public function getRules(): array
     {
-        if (auth()->user()->isAdmin) {
+        if (auth()->user()->isAdmin||auth()->user()->can('documentador')) {
             return [
                 ['disk' => 'Administrador', 'path' => '*', 'access' => 2],
                 ['disk' => 'Normas', 'path' => '*', 'access' => 2],

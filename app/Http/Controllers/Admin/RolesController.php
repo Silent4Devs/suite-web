@@ -112,6 +112,7 @@ class RolesController extends Controller
 
     public function update(Request $request, Role $role)
     {
+        // dd($request->all());
         if ($request->ajax()) {
             //$this->validateRol($request);
             $nombre_rol = $request->nombre_rol;
