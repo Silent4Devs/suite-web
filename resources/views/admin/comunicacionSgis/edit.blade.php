@@ -5,7 +5,7 @@
 
 <div class="card mt-4">
     <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Comunicación SGSI </h3>
+        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Comunicación SGSI test </h3>
     </div>
 
     <div class="card-body">
@@ -43,18 +43,11 @@
                         </div>
                 </div>
 
-
-
-
-
-                <div class="col-md-6">
-                    <label for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
-                    <div class="mb-3 input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" class="needsclick dropzone" name="imagen" id="imagen" class="form-control {{ $errors->has('imagen') ? 'is-invalid' : '' }}"  id="imagen-dropzone" accept="imagen/*" value="{{ old('imagen', '') }}" >
-                                <label class="custom-file-label" for="inputGroupFile02"></label>
-                        </div>
-                    </div>
+                <div class="form-group col-md-6">
+                    <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
+                    
+                    <input type="file" name="imagen" class="form-control" accept="image/*" value="{{ old('imagen') }}">
+                        
                     @if($errors->has('imagen'))
                         <div class="invalid-feedback">
                              {{ $errors->first('imagen') }}
@@ -128,12 +121,14 @@
                         @endif
                 </div>
 
-                <div class="col-sm-12 col-md-6">
-                    <label class="vigencia"><i class="fas fa-upload iconos-crear"></i>Habilitar contenido</label>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="habilitar" name="habilitar" {{$comunicacionSgi->habilitar=="on"?"checked":""}}>
-                        <label class="custom-control-label" for="habilitar"></label>
-                    </div>
+                <div class="col-sm-12 col-md-6 form-group">
+                    <label class="required"><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de salida</label>
+                    <input class="form-control date {{ $errors->has('fecha_programable') ? 'is-invalid' : '' }}" type="date" name="fecha_programable" value="{{ $comunicacionSgi->fecha_programable }}" required>
+                     @if($errors->has('fecha_programable'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_programable') }}
+                        </div>
+                    @endif
                 </div>
 
             <div class="form-group col-12 text-right"><br>

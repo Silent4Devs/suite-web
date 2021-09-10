@@ -86,12 +86,13 @@ class ComunicacionSgiController extends Controller
     {
 
          $request->validate([
-
-                'descripcion'=>"required",
-                'imagen' => 'required|mimetypes:image/jpeg,image/bmp,image/png',
-                'files' => 'required',
-                'files.*' => 'mimetypes:application/pdf'
-                                        ]);
+            'descripcion'=>"required",
+            'imagen' => 'required|mimetypes:image/jpeg,image/bmp,image/png',
+            'fecha_publicacion'=>"required",
+            'publicar_en'=>"required",
+            'link'=>"required",
+            'fecha_programable'=>'required',
+        ]);
 
 
         $comunicacionSgi = ComunicacionSgi::create($request->all());
@@ -162,12 +163,12 @@ class ComunicacionSgiController extends Controller
     {
 
          $request->validate([
-
-                'descripcion'=>"required",
-                'imagen' => 'mimetypes:image/jpeg,image/bmp,image/png',
-                'files' => '',
-                'files.*' => 'mimetypes:application/pdf'
-                                        ]);
+            'descripcion'=>"required",
+            'fecha_publicacion'=>"required",
+            'publicar_en'=>"required",
+            'link'=>"required",
+            'fecha_programable'=>'required',
+        ]);
 
         $comunicacionSgi->update($request->all());
         $image=null;

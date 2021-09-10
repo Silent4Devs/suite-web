@@ -176,11 +176,11 @@
 
         .carousel-item{
             text-align: center;
-            background-color: #000;
+            background-color: #666;
         }
         .img_carrusel{
             height: 300px !important;
-            opacity: 1;
+            opacity: 0.95;
 
             background-size: cover;
             background-position: center;
@@ -248,9 +248,14 @@
             display: flex;
             align-items: center;
             position: relative;
+            background-color: #f0f0f0;
+            padding: 0px 20px;
+            padding-top: 7px;
+            box-sizing: border-box;
+            border-radius: 7px;
         }
         .doc_publicado{
-            margin-top: 40px;
+            margin-top: 20px;
         }
         .icon_doc{
             display: flex;
@@ -439,6 +444,8 @@
 
                             @endphp
 
+                            {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
+
                             <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
                             <div class="text_comunicado">
                                 <h4 class="w-100">{{$comunicacionSgi->titulo}}</h4>
@@ -507,6 +514,7 @@
                                         <span class="badge badge-success"
                                             style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
                                     @endif
+                                    <span style="color:red; margin-left:20px;"><i class="fas fa-eye"></i> <strong>{{ $documento->no_vistas }}</strong></span>
                                 </p>
                             </div>
                             <div class="opciones_doc">
