@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\organizacion;
 use App\Models\Documento;
+use App\Models\VistaDocumento;
 use App\Models\Empleado;
 use App\Models\Area;
 use App\Models\ComunicacionSgi;
@@ -26,7 +27,7 @@ class PortalComunicacionController extends Controller
     {
 
         $hoy = Carbon::now();
-        $hoy->toDateString();   
+        $hoy->toDateString();
         $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
 
         $cumpleaños = Empleado::whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
@@ -35,10 +36,12 @@ class PortalComunicacionController extends Controller
 
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
 
-        $comunicacionSgis = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Blog')->orWhere('publicar_en', '=', 'Ambos')->get();
 
-        $comunicacionSgis_carrusel = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Carrusel')->orWhere('publicar_en', '=', 'Ambos')->get();
+        $comunicacionSgis = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Blog')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->get();
+        // dd($comunicacionSgis);
 
+        $comunicacionSgis_carrusel = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Carrusel')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->get();
+        // dd( $comunicacionSgis_carrusel);
 
         return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel'));
     }

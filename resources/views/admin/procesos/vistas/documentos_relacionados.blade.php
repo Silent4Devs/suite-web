@@ -1,7 +1,7 @@
 <div class="row">
     @forelse($documentos_relacionados as $documento_relacionado)
 
-        <div class="col-4 justify-content-center">
+        <div class="col-4 justify-content-center" style="border">
             <div class="card justify-content-center">
                 <div class="text-center card-header">
                     <i class="fas fa-file-pdf" style="font-size:50pt; color:red"></i>

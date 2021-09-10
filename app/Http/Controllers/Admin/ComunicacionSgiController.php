@@ -86,12 +86,13 @@ class ComunicacionSgiController extends Controller
     {
 
          $request->validate([
-
-                'descripcion'=>"required",
-                'imagen' => 'required|mimetypes:image/jpeg,image/bmp,image/png',
-                'files' => 'required',
-                'files.*' => 'mimetypes:application/pdf'
-                                        ]);
+            'descripcion'=>"required",
+            'imagen' => 'required|mimetypes:image/jpeg,image/bmp,image/png',
+            'fecha_publicacion'=>"required",
+            'publicar_en'=>"required",
+            'link'=>"required",
+            'fecha_programable'=>'required',
+        ]);
 
 
         $comunicacionSgi = ComunicacionSgi::create($request->all());
@@ -106,7 +107,7 @@ class ComunicacionSgiController extends Controller
             $image = $new_name_image;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('imagen'));
-            $img_intervention->resize(256, null, function ($constraint) {
+            $img_intervention->resize(720, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($route);
         }
@@ -162,12 +163,12 @@ class ComunicacionSgiController extends Controller
     {
 
          $request->validate([
-
-                'descripcion'=>"required",
-                'imagen' => 'mimetypes:image/jpeg,image/bmp,image/png',
-                'files' => '',
-                'files.*' => 'mimetypes:application/pdf'
-                                        ]);
+            'descripcion'=>"required",
+            'fecha_publicacion'=>"required",
+            'publicar_en'=>"required",
+            'link'=>"required",
+            'fecha_programable'=>'required',
+        ]);
 
         $comunicacionSgi->update($request->all());
         $image=null;

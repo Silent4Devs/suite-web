@@ -1621,6 +1621,10 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Acceder a Archivo',
                 'title' => 'archivo_access',
             ],
+            [
+                'name' => 'puede crear, editar y eliminar archivos en las carpetas del repositorio documental',
+                'title' => 'documentador',
+            ],
         ];
 
         Permission::insert($permissions);

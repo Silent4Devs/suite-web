@@ -1,4 +1,14 @@
-<div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
+<style>
+    .caja_img_perfil{
+        overflow: hidden !important;
+        position: relative;
+    }
+    .caja_img_perfil img{
+        position: absolute;
+        height: 100%;
+    }
+</style>
+
 
     <div class="row">
 
@@ -173,4 +183,4 @@
 
 
 
-</div>
+
