@@ -1,6 +1,20 @@
 @extends('layouts.admin')
 @section('content')
 
+<style type="text/css">
+    
+    .select2-selection--multiple {
+        overflow: hidden !important;
+        height: auto !important;
+        padding: 0 5px 5px 5px !important;
+    }
+
+    .select2-container {
+        margin-top: 10px !important;
+    }
+
+</style>
+
     {{ Breadcrumbs::render('admin.auditoria-internas.create') }}
 
 <div class="card mt-4">
@@ -22,35 +36,50 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
-                <label for="clausulas_id"><i class="fas fa-grip-horizontal iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.clausulas') }}</label>
-                <select class="form-control select2 {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas_id" id="clausulas_id">
-                    @foreach($clausulas as $id => $clausulas)
-                        <option value="{{ $id }}" {{ (old('clausulas_id') ? old('clausulas_id') : $auditoriaInterna->clausulas->id ?? '') == $id ? 'selected' : '' }}>{{ $clausulas }}</option>
+            <div class="form-group col-sm-12">
+                <label for="clausulas"><i class="far fa-file iconos-crear"></i> Cláusula(s)</label>
+                <select class="form-control {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas[]"
+                    id="clausulas" multiple>
+                    <!-- <option value disabled >Selecciona una opción</option> -->
+                    @foreach ($clausulas as $clausula)
+                        <option value="{{ $clausula->id }}" {{ in_array(old('clausulas',$clausula->id),$auditoriaInterna->clausulas->pluck('id')->toArray()) ? 'selected' : '' }}>
+                            {{ $clausula->nombre }} 
+                        </option>
                     @endforeach
                 </select>
-                @if($errors->has('clausulas'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('clausulas') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.clausulas_helper') }}</span>
+                <span class="errors tipo_error"></span>
             </div>
+            
             <div class="form-group col-md-6">
-                <label for="fechaauditoria"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.fechaauditoria') }}</label>
-                <input class="form-control date {{ $errors->has('fechaauditoria') ? 'is-invalid' : '' }}" type="text" name="fechaauditoria" id="fechaauditoria" value="{{ old('fechaauditoria', $auditoriaInterna->fechaauditoria) }}">
-                @if($errors->has('fechaauditoria'))
+                <label for="fecha_inicio"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
+                    Inicio</label>
+                <input class="form-control" type="datetime-local" id="fecha_inicio"
+                    name="fecha_inicio" value="{{ old('fecha_inicio',\Carbon\Carbon::parse($auditoriaInterna->fecha_inicio)->format('Y-m-d\TH:i')) }}">
+                @if ($errors->has('fecha_inicio'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('fechaauditoria') }}
+                        {{ $errors->first('fecha_inicio') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.fechaauditoria_helper') }}</span>
             </div>
+            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                <label for="fecha_fin"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
+                    Fin</label>
+                <input class="form-control" type="datetime-local" id="fecha_fin" name="fecha_fin"
+                    value="{{ old('fecha_fin', \Carbon\Carbon::parse($auditoriaInterna->fecha_fin)->format('Y-m-d\TH:i')) }}">
+                @if ($errors->has('fecha_fin'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_fin') }}
+                    </div>
+                @endif
+            </div>
+  
+
+
             <div class="form-group col-md-6">
                 <label for="auditorlider_id"><i class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.auditorlider') }}</label>
-                <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}" name="auditorlider_id" id="auditorlider_id">
-                    @foreach($auditorliders as $id => $auditorlider)
-                        <option value="{{ $id }}" {{ (old('auditorlider_id') ? old('auditorlider_id') : $auditoriaInterna->auditorlider->id ?? '') == $id ? 'selected' : '' }}>{{ $auditorlider }}</option>
+                <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}" name="lider_id" id="auditorlider_id">
+                    @foreach($auditorliders as $auditorlider)
+                        <option value="{{ $auditorlider->id }}" {{ old('lider_id', $auditoriaInterna->lider_id) == $auditorlider->id ? 'selected' : '' }}>{{ $auditorlider->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('auditorlider'))
@@ -62,9 +91,9 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="equipoauditoria_id"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.equipoauditoria') }}</label>
-                <select class="form-control select2 {{ $errors->has('equipoauditoria') ? 'is-invalid' : '' }}" name="equipoauditoria_id" id="equipoauditoria_id">
-                    @foreach($equipoauditorias as $id => $equipoauditoria)
-                        <option value="{{ $id }}" {{ (old('equipoauditoria_id') ? old('equipoauditoria_id') : $auditoriaInterna->equipoauditoria->id ?? '') == $id ? 'selected' : '' }}>{{ $equipoauditoria }}</option>
+                <select multiple class="form-control select2 {{ $errors->has('equipoauditoria') ? 'is-invalid' : '' }}" name="equipo[]" id="equipoauditoria_id">
+                    @foreach($equipoauditorias as $equipoauditoria)
+                        <option value="{{ $equipoauditoria->id }}" {{ in_array(old('equipo',$equipoauditoria->id),$auditoriaInterna->equipo->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $equipoauditoria->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('equipoauditoria'))
@@ -87,7 +116,7 @@
             <div class="form-group col-md-3">
                 <div class="form-check {{ $errors->has('cheknoconformidadmenor') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="cheknoconformidadmenor" value="0">
-                    <input class="form-check-input" type="checkbox" name="cheknoconformidadmenor" id="cheknoconformidadmenor" value="1" {{ $auditoriaInterna->cheknoconformidadmenor || old('cheknoconformidadmenor', 0) === 1 ? 'checked' : '' }}>
+                    <input class="form-check-input" type="checkbox" name="cheknoconformidadmenor" id="cheknoconformidadmenor" value="1" {{ old('cheknoconformidadmenor', $auditoriaInterna->cheknoconformidadmenor) == 1 ? 'checked' : '' }}>
                     <label class="form-check-label" for="cheknoconformidadmenor">{{ trans('cruds.auditoriaInterna.fields.cheknoconformidadmenor') }}</label>
                 </div>
                 @if($errors->has('cheknoconformidadmenor'))
@@ -99,7 +128,7 @@
             </div>
             <div class="form-group col-md-9">
                 <label for="totalnoconformidadmenor">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmenor') }}</label>
-                <input class="form-control {{ $errors->has('totalnoconformidadmenor') ? 'is-invalid' : '' }}" type="number" name="totalnoconformidadmenor" id="totalnoconformidadmenor" value="{{ old('totalnoconformidadmenor', $auditoriaInterna->totalnoconformidadmenor) }}" step="0.01" max="99">
+                <input class="form-control {{ $errors->has('totalnoconformidadmenor') ? 'is-invalid' : '' }}" type="number" name="totalnoconformidadmenor" id="totalnoconformidadmenor" value="{{ old('totalnoconformidadmenor', $auditoriaInterna->totalnoconformidadmenor) }}">
                 @if($errors->has('totalnoconformidadmenor'))
                     <div class="invalid-feedback">
                         {{ $errors->first('totalnoconformidadmenor') }}
@@ -110,7 +139,7 @@
             <div class="form-group col-md-3">
                 <div class="form-check {{ $errors->has('checknoconformidadmayor') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="checknoconformidadmayor" value="0">
-                    <input class="form-check-input" type="checkbox" name="checknoconformidadmayor" id="checknoconformidadmayor" value="1" {{ $auditoriaInterna->checknoconformidadmayor || old('checknoconformidadmayor', 0) === 1 ? 'checked' : '' }}>
+                    <input class="form-check-input" type="checkbox" name="checknoconformidadmayor" id="checknoconformidadmayor" value="1" {{ old('checknoconformidadmayor', $auditoriaInterna->checknoconformidadmayor) == 1 ? 'checked' : '' }}>
                     <label class="form-check-label" for="checknoconformidadmayor">{{ trans('cruds.auditoriaInterna.fields.checknoconformidadmayor') }}</label>
                 </div>
                 @if($errors->has('checknoconformidadmayor'))
@@ -133,7 +162,7 @@
             <div class="form-group col-md-3">
                 <div class="form-check {{ $errors->has('checkobservacion') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="checkobservacion" value="0">
-                    <input class="form-check-input" type="checkbox" name="checkobservacion" id="checkobservacion" value="1" {{ $auditoriaInterna->checkobservacion || old('checkobservacion', 0) === 1 ? 'checked' : '' }}>
+                    <input class="form-check-input" type="checkbox" name="checkobservacion" id="checkobservacion" value="1" {{ old('checkobservacion', $auditoriaInterna->checkobservacion) == 1 ? 'checked' : '' }}>
                     <label class="form-check-label" for="checkobservacion">{{ trans('cruds.auditoriaInterna.fields.checkobservacion') }}</label>
                 </div>
                 @if($errors->has('checkobservacion'))
@@ -156,7 +185,7 @@
             <div class="form-group col-md-3">
                 <div class="form-check {{ $errors->has('checkmejora') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="checkmejora" value="0">
-                    <input class="form-check-input" type="checkbox" name="checkmejora" id="checkmejora" value="1" {{ $auditoriaInterna->checkmejora || old('checkmejora', 0) === 1 ? 'checked' : '' }}>
+                    <input class="form-check-input" type="checkbox" name="checkmejora" id="checkmejora" value="1" {{ old('checkmejora', $auditoriaInterna->checkmejora) == 1 ? 'checked' : '' }}>
                     <label class="form-check-label" for="checkmejora">{{ trans('cruds.auditoriaInterna.fields.checkmejora') }}</label>
                 </div>
                 @if($errors->has('checkmejora'))
@@ -176,17 +205,6 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.totalmejora_helper') }}</span>
             </div>
-            <div class="form-group col-12">
-                <label for="logotipo"><i class="fas fa-image iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.logotipo') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('logotipo') ? 'is-invalid' : '' }}" id="logotipo-dropzone">
-                </div>
-                @if($errors->has('logotipo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('logotipo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.logotipo_helper') }}</span>
-            </div>
             <div class="form-group col-12 text-right">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
@@ -202,6 +220,29 @@
 @endsection
 
 @section('scripts')
+
+<script type="text/javascript">
+    
+    
+    $(document).ready(function() {
+        $("#clausulas").select2({
+            theme: "bootstrap4",
+        });
+    });
+
+
+</script>
+
+<script type="text/javascript">
+    
+    $(document).ready(function() {
+        $("#equipoauditoria_id").select2({
+            theme: "bootstrap4",
+        });
+    });
+
+</script>
+
 <script>
     Dropzone.options.logotipoDropzone = {
     url: '{{ route('admin.auditoria-internas.storeMedia') }}',
