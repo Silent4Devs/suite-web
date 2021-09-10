@@ -352,7 +352,7 @@
             $("#id_empleado").val(user.id);
             $("#email").val(user.email);
             $("#puesto").val(user.puesto);
-            $("#area").val(user.area);
+            $("#area").val(user.area.area);
             $("#participantes_sugeridos").hide();
         }
 

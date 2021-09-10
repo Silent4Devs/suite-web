@@ -23,18 +23,6 @@
                             Correo&nbsp;electrónico
                         </th>
                         <th style="vertical-align: top">
-                            Correo&nbsp;electrónico verificado
-                        </th>
-                        <th style="vertical-align: top">
-                            Autentificación&nbsp;por&nbsp;dos factores
-                        </th>
-                        <th style="vertical-align: top">
-                            {{ trans('cruds.user.fields.approved') }}
-                        </th>
-                        <th style="vertical-align: top">
-                            {{ trans('cruds.user.fields.verified') }}
-                        </th>
-                        <th style="vertical-align: top">
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
                         <th style="vertical-align: top">
@@ -244,31 +232,7 @@
                         data: 'email',
                         name: 'email'
                     },
-                    {
-                        data: 'email_verified_at',
-                        name: 'email_verified_at'
-                    },
-                    {
-                        data: 'two_factor',
-                        name: 'two_factor',
-                        render: function(data, type, row, meta) {
-                            return data ? 'Sí' : 'No';
-                        }
-                    },
-                    {
-                        data: 'approved',
-                        name: 'approved',
-                        render: function(data, type, row, meta) {
-                            return data ? 'Sí' : 'No';
-                        }
-                    },
-                    {
-                        data: 'verified',
-                        name: 'verified',
-                        render: function(data, type, row, meta) {
-                            return data ? 'Sí' : 'No';
-                        }
-                    },
+
                     {
                         data: 'roles',
                         name: 'roles.title',

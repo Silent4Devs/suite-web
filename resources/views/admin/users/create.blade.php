@@ -42,7 +42,7 @@
                 <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
             </div>
           </div>
-            <div class="form-group" style="margin-left:515px;">
+           {{-- <div class="form-group" style="margin-left:515px;">
                 <div class="form-check {{ $errors->has('approved') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="approved" value="0">
                     <input class="form-check-input" type="checkbox" name="approved" id="approved" value="1" {{ old('approved', 0) == 1 ? 'checked' : '' }}>
@@ -55,6 +55,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.approved_helper') }}</span>
             </div>
+            --}}
+
+
             <div class="form-group">
                 <label class="required" for="roles"><i class="fas fa-briefcase iconos-crear"></i>{{ trans('cruds.user.fields.roles') }}</label>
                 <div style="padding-bottom: 4px">
@@ -73,6 +76,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
             </div>
+
+            {{---
             <div class="form-group">
                 <label for="organizacion_id"><i class="fas fa-building iconos-crear"></i>{{ trans('cruds.user.fields.organizacion') }}</label>
                 <select class="form-control select2 {{ $errors->has('organizacion') ? 'is-invalid' : '' }}" name="organizacion_id" id="organizacion_id">
@@ -118,7 +123,7 @@
                 <span class="help-block">{{ trans('cruds.user.fields.puesto_helper') }}</span>
             </div>
           </div>
-            <div class="form-group">
+         {{--   <div class="form-group">
                 <label for="team_id"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.user.fields.team') }}</label>
                 <select class="form-control select2 {{ $errors->has('team') ? 'is-invalid' : '' }}" name="team_id" id="team_id">
                     @foreach($teams as $id => $team)
@@ -132,6 +137,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.team_helper') }}</span>
             </div>
+         --}}
             <div class="form-group col-12 text-right" style="margin-left:15px;">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
