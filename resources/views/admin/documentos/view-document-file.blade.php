@@ -99,8 +99,6 @@
                 <div class="nuevo">Este documento no tiene vistas</div>
             @endforelse
         </div>
-
-
     </div>
 
     

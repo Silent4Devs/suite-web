@@ -88,7 +88,6 @@ class ComunicacionSgiController extends Controller
          $request->validate([
             'descripcion'=>"required",
             'imagen' => 'required|mimetypes:image/jpeg,image/bmp,image/png',
-            'fecha_publicacion'=>"required",
             'publicar_en'=>"required",
             'link'=>"required",
             'fecha_programable'=>'required',
@@ -164,7 +163,6 @@ class ComunicacionSgiController extends Controller
 
          $request->validate([
             'descripcion'=>"required",
-            'fecha_publicacion'=>"required",
             'publicar_en'=>"required",
             'link'=>"required",
             'fecha_programable'=>'required',
