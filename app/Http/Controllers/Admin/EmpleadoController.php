@@ -513,7 +513,7 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::with('area')->select('id', 'name', 'email','puesto')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
+                $usuarios = Empleado::with('area')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
                 $lista = "<ul class='list-group' id='empleados-lista'>";
                 foreach ($usuarios as $usuario) {
                     $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'><i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . "</button>";

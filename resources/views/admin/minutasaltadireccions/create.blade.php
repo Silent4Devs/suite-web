@@ -120,12 +120,12 @@
                             style="cursor: not-allowed" />
                     </div>
                     <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                        <label for="email"><i class="fas fa-at iconos-crear"></i>Puesto</label>
+                        <label for="email"><i class="fas fa-suitcase iconos-crear"></i></i>Puesto</label>
                         <input class="form-control" type="text" id="puesto" placeholder="Puesto del participante" readonly
                             style="cursor: not-allowed" />
                     </div>
                     <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                        <label for="email"><i class="fas fa-at iconos-crear"></i>Área</label>
+                        <label for="area"><i class="fas fa-user-tag iconos-crear"></i></i>Área</label>
                         <input class="form-control" type="text" id="area" placeholder="Área del participante" readonly
                             style="cursor: not-allowed" />
                     </div>
@@ -185,6 +185,32 @@
             </form>
         </div>
     </div>
+
+    <!-- Button trigger modal -->
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="alertaVinculacion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="alertaVinculacionLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="alertaVinculacionLabel">Alerta de Vinculación</h5>
+              {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                --}}
+              </div>
+              <div class="modal-body">
+                El usuario no esta vinculado a un empleado
+
+              </div>
+              <div class="modal-footer">
+                <a type="button" href="{{route("admin.users.index")}}" class="btn btn-primary">Vincular</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
 @endsection
 
 @section('scripts')
@@ -323,6 +349,10 @@
 
     <script>
         $(document).ready(function() {
+            if (!@json($esta_vinculado)) {
+                 $('#alertaVinculacion').modal('show')
+            }
+
             window.tblParticipantes = $('#tbl-participantes').DataTable({
                 buttons: []
             })
@@ -368,11 +398,12 @@
         });
 
         function seleccionarUsuario(user) {
+            console.log(user);
             $("#participantes_search").val(user.name);
             $("#id_empleado").val(user.id);
             $("#email").val(user.email);
             $("#puesto").val(user.puesto);
-            $("#area").val(user.area);
+            $("#area").val(user.area.area);
             $("#participantes_sugeridos").hide();
         }
 
@@ -393,11 +424,13 @@
                     let nombre = $("#participantes_search").val();
                     let puesto = $("#puesto").val();
                     let email = $("#email").val();
+                    let area = $("#area").val();
                     tblParticipantes.row.add([
                         id_empleado,
                         nombre,
                         puesto,
                         email,
+                        area,
                     ]).draw();
 
                 } else {

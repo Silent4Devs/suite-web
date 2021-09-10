@@ -149,6 +149,6 @@ class Minutasaltadireccion extends Model implements HasMedia
 
     public function participantes()
     {
-        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id');
+        return $this->belongsToMany(Empleado::class, 'empleados_minutas_alta_direccion', 'minuta_id', 'empleado_id')->with('area');
     }
 }
