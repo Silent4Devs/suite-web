@@ -245,7 +245,7 @@
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
-                                        <a href="#" class="btn btn-danger" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}">Visualizar&nbsp;evidencias</a>
+                                        <a href="#" class="btn btn-danger" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}">Ver archivo</a>
                                     </div>
                                     </div>
 

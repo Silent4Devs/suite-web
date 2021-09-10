@@ -444,6 +444,8 @@
 
                             @endphp
 
+                            {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
+
                             <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
                             <div class="text_comunicado">
                                 <h4 class="w-100">{{$comunicacionSgi->titulo}}</h4>
