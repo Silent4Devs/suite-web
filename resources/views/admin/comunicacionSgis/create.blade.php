@@ -63,7 +63,7 @@
 
 
 
-            <div class="form-group col-md-6 col-sm-12">
+            <div class="form-group col-12">
                 <label class="required" for="publicar_en"><i class="fab fa-elementor iconos-crear"></i>Publicar en </label>
                 <select class="form-control {{ $errors->has('publicar_en') ? 'is-invalid' : '' }}" name="publicar_en" id="publicar_en" required>
                     <option disabled value="{{ old('publicar_en') }}" selected>
@@ -81,18 +81,6 @@
                     </div>
                 @endif
             </div>
-
-
-            <div class="form-group col-sm-6">
-                <label class="required" for="fechaverificacion"><i class="far fa-calendar-alt iconos-crear"></i> Fecha de publicación</label>
-                <input class="form-control date {{ $errors->has('fechaverificacion') ? 'is-invalid' : '' }}" type="date" name="fecha_publicacion" id="fecha_publicacion" value="{{ old('fecha_publicacion') }}" required>
-                 @if($errors->has('fechaverificacion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fechaverificacion') }}
-                    </div>
-                @endif
-            </div>
-
 
             <div class="col-sm-12 col-md-6 form-group">
                 <label class="required" for="publico"><i class="fas fa-people-arrows iconos-crear"></i>Público Objetivo</label>
@@ -114,11 +102,22 @@
             </div>
 
             <div class="col-sm-12 col-md-6 form-group">
-                <label class="required"><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de salida</label>
+                <label class="required"><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de inicio de publicación</label>
                 <input class="form-control date {{ $errors->has('fecha_programable') ? 'is-invalid' : '' }}" type="date" name="fecha_programable" value="{{ old('fecha_programable') }}" required>
                  @if($errors->has('fecha_programable'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecha_programable') }}
+                    </div>
+                @endif
+            </div>
+
+
+            <div class="col-sm-12 col-md-6 form-group">
+                <label><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de fin de publicación</label>
+                <input class="form-control date {{ $errors->has('fecha_programable_fin') ? 'is-invalid' : '' }}" type="date" name="fecha_programable_fin" value="{{ old('fecha_programable_fin') }}">
+                 @if($errors->has('fecha_programable_fin'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_programable_fin') }}
                     </div>
                 @endif
             </div>

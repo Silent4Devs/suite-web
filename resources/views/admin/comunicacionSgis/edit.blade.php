@@ -90,13 +90,9 @@
 
 
                 <div class="form-group col-sm-6">
-                    <label for="fechaverificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de publicación</label>
-                        <input class="form-control date {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}" type="date" name="fecha_publicacion" id="fecha_publicacion" value="{{ old('fecha_publicacion',$comunicacionSgi->fecha_publicacion) }}">
-                             @if($errors->has('fecha_publicacion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fecha_publicacion') }}
-                    </div>
-                            @endif
+                    <label for="fechaverificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de creación</label>
+                    
+                    <div class="form-control">{{ $comunicacionSgi->created_at }}</div>
                 </div>
 
 
@@ -122,11 +118,22 @@
                 </div>
 
                 <div class="col-sm-12 col-md-6 form-group">
-                    <label class="required"><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de salida</label>
+                    <label class="required"><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de inicio de publicación</label>
                     <input class="form-control date {{ $errors->has('fecha_programable') ? 'is-invalid' : '' }}" type="date" name="fecha_programable" value="{{ $comunicacionSgi->fecha_programable }}" required>
                      @if($errors->has('fecha_programable'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_programable') }}
+                        </div>
+                    @endif
+                </div>
+
+
+                <div class="col-sm-12 col-md-6 form-group">
+                    <label><i class="far fa-calendar-alt iconos-crear"></i>Programar fecha de fin de publicación</label>
+                    <input class="form-control date {{ $errors->has('fecha_programable_fin') ? 'is-invalid' : '' }}" type="date" name="fecha_programable_fin" value="{{ $comunicacionSgi->fecha_programable_fin }}" required>
+                     @if($errors->has('fecha_programable_fin'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_programable_fin') }}
                         </div>
                     @endif
                 </div>

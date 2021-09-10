@@ -51,6 +51,7 @@ class ComunicacionSgi extends Model implements HasMedia
         'deleted_at',
         'team_id',
         'fecha_programable',
+        'fecha_programable_fin',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
