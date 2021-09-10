@@ -1,6 +1,19 @@
 @extends('layouts.admin')
 @section('content')
 
+<style type="text/css">
+    
+    .select2-selection--multiple {
+        overflow: hidden !important;
+        height: auto !important;
+        padding: 0 5px 5px 5px !important;
+    }
+
+    .select2-container {
+        margin-top: 10px !important;
+    }
+
+</style>
     {{ Breadcrumbs::render('admin.auditoria-internas.create') }}
 
 <div class="card mt-4">
@@ -20,35 +33,50 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
-                <label for="clausulas_id"><i class="fas fa-grip-horizontal iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.clausulas') }}</label>
-                <select class="form-control select2 {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas_id" id="clausulas_id">
-                    @foreach($clausulas as $id => $clausulas)
-                        <option value="{{ $id }}" {{ old('clausulas_id') == $id ? 'selected' : '' }}>{{ $clausulas }}</option>
+            <div class="form-group col-sm-12">
+                <label for="clausulas"><i class="far fa-file iconos-crear"></i> Cláusula(s)</label>
+                <select class="form-control {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas[]"
+                    id="clausulas" multiple>
+                    <!-- <option value disabled >Selecciona una opción</option> -->
+                    @foreach ($clausulas as $clausula)
+                        <option value="{{ $clausula->id }}">
+                            {{ $clausula->nombre }} 
+                        </option>
                     @endforeach
                 </select>
-                @if($errors->has('clausulas'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('clausulas') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.clausulas_helper') }}</span>
+                <span class="errors tipo_error"></span>
             </div>
+            
             <div class="form-group col-md-6">
-                <label for="fechaauditoria"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.fechaauditoria') }}</label>
-                <input class="form-control date {{ $errors->has('fechaauditoria') ? 'is-invalid' : '' }}" type="text" name="fechaauditoria" id="fechaauditoria" value="{{ old('fechaauditoria') }}">
-                @if($errors->has('fechaauditoria'))
+                <label for="fecha_inicio"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
+                    Inicio</label>
+                <input class="form-control" type="datetime-local" id="fecha_inicio"
+                    name="fecha_inicio" value="{{ old('fecha_inicio') }}">
+                @if ($errors->has('fecha_inicio'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('fechaauditoria') }}
+                        {{ $errors->first('fecha_inicio') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.fechaauditoria_helper') }}</span>
             </div>
+            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                <label for="fecha_fin"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
+                    Fin</label>
+                <input class="form-control" type="datetime-local" id="fecha_fin" name="fecha_fin"
+                    value="{{ old('fecha_fin') }}">
+                @if ($errors->has('fecha_fin'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fecha_fin') }}
+                    </div>
+                @endif
+            </div>
+  
+
+
             <div class="form-group col-md-6">
                 <label for="auditorlider_id"><i class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.auditorlider') }}</label>
-                <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}" name="auditorlider_id" id="auditorlider_id">
-                    @foreach($auditorliders as $id => $auditorlider)
-                        <option value="{{ $id }}" {{ old('auditorlider_id') == $id ? 'selected' : '' }}>{{ $auditorlider }}</option>
+                <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}" name="lider_id" id="auditorlider_id">
+                    @foreach($auditorliders as $auditorlider)
+                        <option value="{{ $auditorlider->id }}" {{ old('auditorlider_id') == $auditorlider->id ? 'selected' : '' }}>{{ $auditorlider->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('auditorlider'))
@@ -60,9 +88,9 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="equipoauditoria_id"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.equipoauditoria') }}</label>
-                <select class="form-control select2 {{ $errors->has('equipoauditoria') ? 'is-invalid' : '' }}" name="equipoauditoria_id" id="equipoauditoria_id">
-                    @foreach($equipoauditorias as $id => $equipoauditoria)
-                        <option value="{{ $id }}" {{ old('equipoauditoria_id') == $id ? 'selected' : '' }}>{{ $equipoauditoria }}</option>
+                <select multiple class="form-control select2 {{ $errors->has('equipoauditoria') ? 'is-invalid' : '' }}" name="equipo[]" id="equipoauditoria_id">
+                    @foreach($equipoauditorias as $equipoauditoria)
+                        <option value="{{ $equipoauditoria->id }}" {{ old('equipoauditoria_id') == $equipoauditoria->id ? 'selected' : '' }}>{{ $equipoauditoria->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('equipoauditoria'))
@@ -97,7 +125,7 @@
             </div>
             <div class="form-group col-md-9">
                 <label for="totalnoconformidadmenor">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmenor') }}</label>
-                <input class="form-control {{ $errors->has('totalnoconformidadmenor') ? 'is-invalid' : '' }}" type="number" name="totalnoconformidadmenor" id="totalnoconformidadmenor" value="{{ old('totalnoconformidadmenor', '') }}" step="0.01" max="99">
+                <input class="form-control {{ $errors->has('totalnoconformidadmenor') ? 'is-invalid' : '' }}" type="number" name="totalnoconformidadmenor" id="totalnoconformidadmenor" value="{{ old('totalnoconformidadmenor', '') }}">
                 @if($errors->has('totalnoconformidadmenor'))
                     <div class="invalid-feedback">
                         {{ $errors->first('totalnoconformidadmenor') }}
@@ -174,17 +202,6 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.totalmejora_helper') }}</span>
             </div>
-            <div class="form-group col-12">
-                <label for="logotipo"><i class="fas fa-image iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.logotipo') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('logotipo') ? 'is-invalid' : '' }}" id="logotipo-dropzone">
-                </div>
-                @if($errors->has('logotipo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('logotipo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.logotipo_helper') }}</span>
-            </div>
             <div class="form-group col-12 text-right">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
@@ -200,6 +217,30 @@
 @endsection
 
 @section('scripts')
+
+<script type="text/javascript">
+    
+    
+    $(document).ready(function() {
+        $("#clausulas").select2({
+            theme: "bootstrap4",
+        });
+    });
+
+
+</script>
+
+<script type="text/javascript">
+    
+    $(document).ready(function() {
+        $("#equipoauditoria_id").select2({
+            theme: "bootstrap4",
+        });
+    });
+
+</script>
+
+
 <script>
     Dropzone.options.logotipoDropzone = {
     url: '{{ route('admin.auditoria-internas.storeMedia') }}',
@@ -254,4 +295,6 @@
     }
 }
 </script>
+
+
 @endsection
