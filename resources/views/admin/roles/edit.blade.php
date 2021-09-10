@@ -77,7 +77,7 @@
             </div>
             <div class="form-group">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
+                <button class="btn btn-danger" type="submit" id="btnEnviarPermisos">
                     {{ trans('global.save') }}
                 </button>
             </div>
@@ -102,7 +102,7 @@
                 }
             });
 
-            $("#btnEnviar").click(function(e) {
+            $("#btnEnviarPermisos").click(function(e) {
                 e.preventDefault();
                 let tblPermissions = $("#tblPermissions").DataTable();
                 let permissionsArray = tblPermissions.rows({
@@ -117,6 +117,7 @@
                     nombre_rol,
                     permissions
                 };
+
                 $.ajax({
                     type: $('input[name="_method"]').val(),
                     headers: {
