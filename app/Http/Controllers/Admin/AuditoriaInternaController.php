@@ -11,6 +11,8 @@ use App\Models\AuditoriaInterna;
 use App\Models\Controle;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Empleado;
+use App\Models\Clausula;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -26,7 +28,7 @@ class AuditoriaInternaController extends Controller
         abort_if(Gate::denies('auditoria_interna_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AuditoriaInterna::with(['clausulas', 'auditorlider', 'equipoauditoria', 'team'])->select(sprintf('%s.*', (new AuditoriaInterna)->table));
+            $query = AuditoriaInterna::with(['clausulas', 'lider', 'equipo', 'team'])->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -53,16 +55,22 @@ class AuditoriaInternaController extends Controller
             $table->editColumn('alcance', function ($row) {
                 return $row->alcance ? $row->alcance : "";
             });
-            $table->addColumn('clausulas_control', function ($row) {
-                return $row->clausulas ? $row->clausulas->control : '';
+            $table->editColumn('fecha_inicio', function ($row) {
+                return $row->fecha_inicio ? $row->fecha_inicio : "";
+            });
+            $table->editColumn('fecha_fin', function ($row) {
+                return $row->fecha_fin ? $row->fecha_fin : "";
+            });
+            $table->addColumn('clausula', function ($row) {
+                return $row->clausulas ? $row->clausulas :'';
             });
 
-            $table->addColumn('auditorlider_name', function ($row) {
-                return $row->auditorlider ? $row->auditorlider->name : '';
+            $table->addColumn('lider', function ($row) {
+                return $row->lider ? $row->lider->name : '';
             });
 
-            $table->addColumn('equipoauditoria_name', function ($row) {
-                return $row->equipoauditoria ? $row->equipoauditoria->name : '';
+            $table->addColumn('equipo', function ($row) {
+                return $row->equipo ? $row->equipo: '';
             });
 
             $table->editColumn('hallazgos', function ($row) {
@@ -92,19 +100,8 @@ class AuditoriaInternaController extends Controller
             $table->editColumn('totalmejora', function ($row) {
                 return $row->totalmejora ? $row->totalmejora : "";
             });
-            $table->editColumn('logotipo', function ($row) {
-                if ($photo = $row->logotipo) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
 
-                return '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'clausulas', 'auditorlider', 'equipoauditoria', 'cheknoconformidadmenor', 'checknoconformidadmayor', 'checkobservacion', 'checkmejora', 'logotipo']);
+            $table->rawColumns(['actions', 'placeholder', 'cheknoconformidadmenor', 'checknoconformidadmayor', 'checkobservacion', 'checkmejora']);
 
             return $table->make(true);
         }
@@ -121,26 +118,27 @@ class AuditoriaInternaController extends Controller
     {
         abort_if(Gate::denies('auditoria_interna_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clausulas = Controle::all()->pluck('control', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clausulas = Clausula::all();
 
-        $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $auditorliders = Empleado::all();
 
-        $equipoauditorias = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $equipoauditorias = Empleado::all();
+
 
         return view('admin.auditoriaInternas.create', compact('clausulas', 'auditorliders', 'equipoauditorias'));
     }
 
-    public function store(StoreAuditoriaInternaRequest $request)
+    public function store(Request $request)
     {
+        $request->validate([
+
+            'lider_id'=>'required|exists:empleados,id',
+        ]);
+        // dd($request->all());
+
         $auditoriaInterna = AuditoriaInterna::create($request->all());
-
-        if ($request->input('logotipo', false)) {
-            $auditoriaInterna->addMedia(storage_path('tmp/uploads/' . $request->input('logotipo')))->toMediaCollection('logotipo');
-        }
-
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $auditoriaInterna->id]);
-        }
+        $auditoriaInterna->equipo()->sync($request->equipo);
+        $auditoriaInterna->clausulas()->sync($request->clausulas);
 
         return redirect()->route('admin.auditoria-internas.index');
     }
@@ -149,32 +147,28 @@ class AuditoriaInternaController extends Controller
     {
         abort_if(Gate::denies('auditoria_interna_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clausulas = Controle::all()->pluck('control', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team');
 
-        $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clausulas = Clausula::all();
 
-        $equipoauditorias = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $auditorliders = Empleado::all();
 
-        $auditoriaInterna->load('clausulas', 'auditorlider', 'equipoauditoria', 'team');
+        $equipoauditorias = Empleado::all();
 
         return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'));
     }
 
     public function update(UpdateAuditoriaInternaRequest $request, AuditoriaInterna $auditoriaInterna)
     {
+        $request->validate([
+
+            'lider_id'=>'required|exists:empleados,id',
+        ]);
+
         $auditoriaInterna->update($request->all());
+        $auditoriaInterna->equipo()->sync($request->equipo);
+        $auditoriaInterna->clausulas()->sync($request->clausulas);
 
-        if ($request->input('logotipo', false)) {
-            if (!$auditoriaInterna->logotipo || $request->input('logotipo') !== $auditoriaInterna->logotipo->file_name) {
-                if ($auditoriaInterna->logotipo) {
-                    $auditoriaInterna->logotipo->delete();
-                }
-
-                $auditoriaInterna->addMedia(storage_path('tmp/uploads/' . $request->input('logotipo')))->toMediaCollection('logotipo');
-            }
-        } elseif ($auditoriaInterna->logotipo) {
-            $auditoriaInterna->logotipo->delete();
-        }
 
         return redirect()->route('admin.auditoria-internas.index');
     }
