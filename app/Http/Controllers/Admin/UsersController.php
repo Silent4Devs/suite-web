@@ -207,7 +207,7 @@ class UsersController extends Controller
             ]);
             $usuario = User::find(intval($request->user_id));
             $usuario->update([
-                'n_empleado' => intval($request->n_empleado),
+                'n_empleado' => $request->n_empleado,
             ]);
 
             return response()->json(['success' => true]);
