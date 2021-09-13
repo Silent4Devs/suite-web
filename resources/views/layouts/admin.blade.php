@@ -44,6 +44,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
+
     <style type="text/css">
         /*TOASTR*/
         #toast-container > div{
@@ -344,12 +346,14 @@
 
         .caja_secciones section {
             width: 0px;
+            height: 0px;
             overflow: hidden;
             transition: 0.4s;
             opacity: 0;
         }
 
         .caja_tab_reveldada {
+            height: auto !important;
             width: 100% !important;
             overflow: none;
             opacity: 1 !important;
@@ -911,7 +915,7 @@
                     </li>
                 @endif
 
-                @livewire('campana-notificaciones-component')
+                {{-- @livewire('campana-notificaciones-component')
                 @livewire('tareas-notificaciones-component')
                 <ul class="ml-auto c-header-nav">
                     <li class="px-2 c-header-nav-item c-d-legacy-none">
@@ -940,7 +944,7 @@
                     } else {
                         document.body.classList.remove('c-dark-theme');
                     }
-                </script>
+                </script> --}}
 
 
                 <ul class="ml-auto c-header-nav">
@@ -1089,6 +1093,8 @@
     <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
+
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
     <script>
         window.Laravel = {!! json_encode([

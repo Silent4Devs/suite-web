@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\PlanBaseActividade;
 use App\Models\AuditoriaAnual;
 use App\Models\Recurso;
+use App\Models\AuditoriaInterna;
 use App\Models\PlanImplementacion;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -90,8 +91,10 @@ class SystemCalendarController extends Controller
 
         $plan_base = PlanBaseActividade::get();
         $auditorias_anual = AuditoriaAnual::get();
+        $auditoria_internas = AuditoriaInterna::get();
+        // dd($auditoria_internas);
         $recursos = Recurso::get();
 
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades'));
+        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas'));
     }
 }

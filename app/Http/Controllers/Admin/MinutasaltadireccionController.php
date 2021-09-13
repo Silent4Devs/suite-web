@@ -97,8 +97,10 @@ class MinutasaltadireccionController extends Controller
     public function create()
     {
         abort_if(Gate::denies('minutasaltadireccion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $responsablereunions = Empleado::select('id', 'name', 'foto')->get();
-        return view('admin.minutasaltadireccions.create', compact('responsablereunions'));
+        $responsablereunions = Empleado::select('id', 'name', 'foto')->with('area')->get();
+        $esta_vinculado= auth()->user()->empleado?true:false;
+
+        return view('admin.minutasaltadireccions.create', compact('responsablereunions','esta_vinculado'));
     }
 
     public function store(StoreMinutasaltadireccionRequest $request)
@@ -202,15 +204,21 @@ class MinutasaltadireccionController extends Controller
                 )
             ];
             $actividades = json_decode($request->actividades);
-            foreach ($actividades as $actividad) {
 
-                $asignados = $actividad[6];
+            foreach ($actividades as $actividad) {
+                    $asignados=[];
                 if ($edit) {
                     if (gettype($actividad[6]) == 'string') {
-                        $asignados = explode(',', $actividad[6]);
+                        if (str_contains($actividad[6], ",")) {
+                              $asignados = explode(',', $actividad[6]);
+                        }else{
+                        array_push($asignados, $actividad[6]);
+                        }
                     } else {
                         $asignados = $actividad[6];
                     }
+                }else{
+                    $asignados = $actividad[6];
                 }
                 $assigs = [];
                 foreach ($asignados as $asignado) {
@@ -329,7 +337,7 @@ class MinutasaltadireccionController extends Controller
 
     public function update(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
-        $this->processUpdate($request, $minutasaltadireccion);
+        $this->processUpdate($request, $minutasaltadireccion,true);
 
         if ($request->input('archivo', false)) {
             if (!$minutasaltadireccion->archivo || $request->input('archivo') !== $minutasaltadireccion->archivo->file_name) {

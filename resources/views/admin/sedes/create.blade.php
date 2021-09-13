@@ -26,16 +26,10 @@
 
                     <div class="form-group col-sm-6">
                         <label for="foto_sedes"> <i class="fas fa-images iconos-crear"></i>Fotografía de la Sede</label>
-                        <div class="mb-3 input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" class="needsclick dropzone" name="foto_sedes"
-                                    id="foto_sedes"
+                                <input type="file"name="foto_sedes"
                                     class="form-control {{ $errors->has('foto_sedes') ? 'is-invalid' : '' }}"
-                                    id="foto-dropzone" accept="image/*" value="{{ old('foto_sedes', '') }}">
-                                <label class="custom-file-label" for="inputGroupFile02"></label>
-
-                            </div>
-                        </div>
+                                     accept="image/*" value="{{ old('foto_sedes', '') }}">
+                                     
                         @if ($errors->has('foto_sedes'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('foto_sedes') }}
