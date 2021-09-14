@@ -11,10 +11,9 @@
                 @csrf
 
                 <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#1BB0B0">
-                    <p class"text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
-                        DATOS
-                        GENERALES</p>
-                </div>
+                <p class"text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
+                    Datos Generales</p>
+            </div>
 
                 <div class="form-group">
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
@@ -139,14 +138,11 @@
                     </div>
                 </div>
 
-                <div class="form-group col-12 text-right">
-                    <a class="btn btn-danger" href="{{ route('admin.analisis-riesgos.index') }}" type="button">
-                        Cancelar
-                    </a>
-                    <button class="btn btn-primary" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
-
+                <div class="text-right form-group col-12">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <button class="btn btn-danger" type="submit">
+                                {{ trans('global.save') }}
+                            </button>
                 </div>
             </form>
         </div>

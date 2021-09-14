@@ -149,15 +149,11 @@
                         @endif
                     </div>
                 </div>
-
-                <div class="form-group col-12 text-right">
-                    <a class="btn btn-danger" href="{{ route('admin.analisis-riesgos.index') }}" type="button">
-                        Cancelar
-                    </a>
-                    <button class="btn btn-primary" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
-
+                <div class="text-right form-group col-12">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <button class="btn btn-danger" type="submit">
+                                {{ trans('global.save') }}
+                            </button>
                 </div>
             </form>
         </div>

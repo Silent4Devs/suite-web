@@ -489,7 +489,7 @@
                 @csrf
 
                 <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
-                    <p class"text-center text-light" style="font-size:11pt; margin-left:500px; color:#ffffff;">DATOS
+                    <p class="text-center text-light" style="font-size:11pt; margin-left:500px; color:#ffffff;">DATOS
                         GENERALES</p>
                 </div>
 
@@ -659,7 +659,7 @@
                 </div>
                 <hr>
                 <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
-                    <p class"text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
+                    <p class="text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
                         riesgo inicial</p>
                 </div>
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
@@ -883,7 +883,7 @@
                 </div>
                 <hr>
                 <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
-                    <p class"text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
+                    <p class="text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
                         riesgo residual</p>
                 </div>
                 <p class="font-weight-bold" style="font-size:11pt;">Riesgo Residual</p>
