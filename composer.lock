@@ -2870,16 +2870,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.60.0",
+            "version": "v8.61.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "44f16a31a1d4ac8a51605550d7796e2273984a48"
+                "reference": "3d528d3d3c8ecb444b50a266c212a52973a6669b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/44f16a31a1d4ac8a51605550d7796e2273984a48",
-                "reference": "44f16a31a1d4ac8a51605550d7796e2273984a48",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/3d528d3d3c8ecb444b50a266c212a52973a6669b",
+                "reference": "3d528d3d3c8ecb444b50a266c212a52973a6669b",
                 "shasum": ""
             },
             "require": {
@@ -2916,7 +2916,8 @@
                 "tightenco/collect": "<5.5.33"
             },
             "provide": {
-                "psr/container-implementation": "1.0"
+                "psr/container-implementation": "1.0",
+                "psr/simple-cache-implementation": "1.0"
             },
             "replace": {
                 "illuminate/auth": "self.version",
@@ -3034,7 +3035,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-09-08T13:37:21+00:00"
+            "time": "2021-09-14T13:31:32+00:00"
         },
         {
             "name": "laravel/passport",
@@ -4111,16 +4112,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.5.5",
+            "version": "v2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "de192292d68276d831e5fd9824c80c3b78a21ddf"
+                "reference": "0d8e44fb558a3f77835f0a8eefdaa98d766bc372"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/de192292d68276d831e5fd9824c80c3b78a21ddf",
-                "reference": "de192292d68276d831e5fd9824c80c3b78a21ddf",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/0d8e44fb558a3f77835f0a8eefdaa98d766bc372",
+                "reference": "0d8e44fb558a3f77835f0a8eefdaa98d766bc372",
                 "shasum": ""
             },
             "require": {
@@ -4171,7 +4172,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.5.5"
+                "source": "https://github.com/livewire/livewire/tree/v2.6.1"
             },
             "funding": [
                 {
@@ -4179,7 +4180,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-07-13T05:03:28+00:00"
+            "time": "2021-09-14T20:11:46+00:00"
         },
         {
             "name": "maatwebsite/excel",
@@ -4501,24 +4502,24 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "71312564759a7db5b789296369c1a264efc43aad"
+                "reference": "3962ebfe206ac7ce6c754c79e2fee0c64bf1818d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/71312564759a7db5b789296369c1a264efc43aad",
-                "reference": "71312564759a7db5b789296369c1a264efc43aad",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/3962ebfe206ac7ce6c754c79e2fee0c64bf1818d",
+                "reference": "3962ebfe206ac7ce6c754c79e2fee0c64bf1818d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2",
-                "psr/log": "^1.0.1"
+                "psr/log": "^1.0.1 || ^2.0"
             },
             "provide": {
-                "psr/log-implementation": "1.0.0"
+                "psr/log-implementation": "1.0.0 || 2.0.0"
             },
             "require-dev": {
                 "aws/aws-sdk-php": "^2.4.9 || ^3.0",
@@ -4532,8 +4533,7 @@
                 "phpstan/phpstan": "^0.12.91",
                 "phpunit/phpunit": "^8.5",
                 "predis/predis": "^1.1",
-                "rollbar/rollbar": "^1.3",
-                "ruflin/elastica": ">=0.90 <7.0.1",
+                "ruflin/elastica": ">=0.90@dev",
                 "swiftmailer/swiftmailer": "^5.3|^6.0"
             },
             "suggest": {
@@ -4541,8 +4541,11 @@
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
                 "elasticsearch/elasticsearch": "Allow sending log messages to an Elasticsearch server via official client",
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+                "ext-curl": "Required to send log messages using the IFTTTHandler, the LogglyHandler, the SendGridHandler, the SlackWebhookHandler or the TelegramBotHandler",
                 "ext-mbstring": "Allow to work properly with unicode symbols",
                 "ext-mongodb": "Allow sending log messages to a MongoDB server (via driver)",
+                "ext-openssl": "Required to send log messages using SSL",
+                "ext-sockets": "Allow sending log messages to a Syslog server (via UDP driver)",
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "mongodb/mongodb": "Allow sending log messages to a MongoDB server (via library)",
                 "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
@@ -4581,7 +4584,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.3.2"
+                "source": "https://github.com/Seldaek/monolog/tree/2.3.3"
             },
             "funding": [
                 {
@@ -4593,7 +4596,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-23T07:42:52+00:00"
+            "time": "2021-09-14T18:40:13+00:00"
         },
         {
             "name": "myclabs/php-enum",
@@ -9958,16 +9961,16 @@
         },
         {
             "name": "yajra/laravel-datatables-buttons",
-            "version": "v4.13.1",
+            "version": "v4.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables-buttons.git",
-                "reference": "3e48eca61ea5f23fd38517aa1ca5ab0bc2b2a32a"
+                "reference": "022ea8435d01a38928fd4cf75a38fae531297cc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables-buttons/zipball/3e48eca61ea5f23fd38517aa1ca5ab0bc2b2a32a",
-                "reference": "3e48eca61ea5f23fd38517aa1ca5ab0bc2b2a32a",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables-buttons/zipball/022ea8435d01a38928fd4cf75a38fae531297cc3",
+                "reference": "022ea8435d01a38928fd4cf75a38fae531297cc3",
                 "shasum": ""
             },
             "require": {
@@ -10020,7 +10023,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables-buttons/issues",
-                "source": "https://github.com/yajra/laravel-datatables-buttons/tree/v4.13.1"
+                "source": "https://github.com/yajra/laravel-datatables-buttons/tree/v4.13.2"
             },
             "funding": [
                 {
@@ -10032,7 +10035,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-07-01T02:53:11+00:00"
+            "time": "2021-09-14T02:03:47+00:00"
         },
         {
             "name": "yajra/laravel-datatables-editor",
