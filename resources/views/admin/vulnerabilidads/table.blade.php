@@ -11,7 +11,7 @@
                 Amenaza
             </th>
             <th>
-                descripcion
+                Descripción
             </th>
             <th>
                 Opciones

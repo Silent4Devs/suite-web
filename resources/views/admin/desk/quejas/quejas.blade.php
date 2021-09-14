@@ -3,7 +3,7 @@
         <div class="tarjetas_seguridad_indicadores"
             style="background: linear-gradient(144deg, rgba(12, 119, 255, 1) 35%, rgba(0, 213, 214, 1) 100%);">
             <div class="numero"><i class="fas fa-exclamation-triangle"></i> {{ $total_quejas }}</div>
-            <div>Incidentes</div>
+            <div>Quejas</div>
         </div>
     </div>
     <div class="col-6 col-md-2 ">
