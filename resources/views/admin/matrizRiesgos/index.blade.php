@@ -230,10 +230,10 @@
 
             @can('configuracion_sede_create')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar sede',
-                url: "{{ route('admin.matriz-riesgos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                // titleAttr: 'Agregar sede',
+                // url: "{{ route('admin.matriz-riesgos.create') }}",
+                // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
                 window.location.href = url;

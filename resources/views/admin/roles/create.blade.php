@@ -70,12 +70,11 @@
                             </tbody>
                         </table>
                     </div>
-                @endif
                 <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
             </div>
             <div class="form-group col-12 text-right"  style="margin-left:15px;">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
+                <button class="btn btn-danger" type="submit" id="btnEnviarPermisos">
                     {{ trans('global.save') }}
                 </button>
             </div>
@@ -100,7 +99,7 @@
                 }
             });
 
-            $("#btnEnviar").click(function(e) {
+            $("#btnEnviarPermisos").click(function(e) {
                 e.preventDefault();
                 let tblPermissions = $("#tblPermissions").DataTable();
                 let permissionsArray = tblPermissions.rows({
