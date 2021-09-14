@@ -227,12 +227,12 @@
                                                 Determinación de alcance
                                             </div>
                                         </a></li>
-                                    <li><a href="{{ route('admin.reportes-contexto.index') }}">
+                                    {{-- <li><a href="{{ route('admin.reportes-contexto.index') }}">
                                             <div>
                                                 <i class="far fa-file-alt"></i>
                                                 Generar reporte
                                             </div>
-                                        </a></li>
+                                        </a></li> --}}
                                 </ul>
                             </div>
                         </section>
