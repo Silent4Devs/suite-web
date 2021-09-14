@@ -180,7 +180,7 @@
         }
         .img_carrusel{
             height: 300px !important;
-            opacity: 0.95;
+            opacity: 0.9;
 
             background-size: cover;
             background-position: center;
@@ -213,6 +213,17 @@
         }
         .carousel-inner p{
             display: none;
+        }
+        .carousel-control-prev, .carousel-control-next{
+            opacity: 1 !important;
+            z-index: 3;
+        }
+        .carousel-indicators li{
+            opacity: 1 !important;
+        }
+        .carousel-indicators li.active{
+            opacity: 1 !important;
+            background-color: #00abb2 !important;
         }
 
 

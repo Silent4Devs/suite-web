@@ -147,21 +147,14 @@
                                         id="descripcion">{{ old('descripcion', $recurso->descripcion) }}</textarea>
                                     <span class="text-danger error_text descripcion_error"></span>
                                 </div>
-                                <div class="form-group col-12">
-                                    <div class="btn-group" role="group" aria-label="Terminar capacitacion"
-                                        style="float: right">
-                                        <button class="btn btn-success btn-general" style="position: relative">
-                                            Actualizar y salir
-                                            <i class="ml-1 fas fa-check-circle"></i>
-                                            <i id="guardando_capacitacion_1"
-                                                class="fas fa-cog fa-spin text-muted guardando_capacitacion"
-                                                style="position: absolute; top: 7px;right: 12px;"></i>
-                                        </button>
-                                        <button class="btnNext btn btn-primary" style="float: right">
-                                            Siguiente
-                                            <i class="ml-1 fas fa-arrow-right"></i>
-                                        </button>
-                                    </div>
+                                <div class="form-group col-12 text-right">
+                                    <button class="btn btn-danger" style="position: relative">
+                                        Actualizar y salir
+                                    </button>
+                                    <button class="btnNext btn btn-primary" style="border-radius:100px;">
+                                        Siguiente
+                                        <i class="ml-1 fas fa-arrow-right"></i>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -259,21 +252,18 @@
                                 </form>
                             </div>
 
-                            <div class="mt-3 form-group col-12">
-                                <div class="btn-group" role="group" aria-label="Terminar capacitacion" style="float: right">
+                            <div class="mt-3 form-group col-12 text-right">
                                     
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                                    <button class="btnPrevious btn btn-danger">
-                                        <i class="ml-1 fas fa-arrow-left"></i>
-                                        Anterior
-                                    </button>
-                                    <button id="btn-general" class="btn btn-success btn-general" style="position: relative">
-                                        Actualizar
-                                        <i class="ml-1 fas fa-check-circle"></i>
-                                        <i id="guardando_capacitacion" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 7px;right: 12px;"></i>
-                                    </button>
-                                </div>
+                                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                                <button class="btnPrevious btn btn-primary" style="border-radius:100px;">
+                                    <i class="ml-1 fas fa-arrow-left"></i>
+                                    Anterior
+                                </button>
+                                <button id="btn-general" class="btn btn-success btn-general" style="position: relative">
+                                    Actualizar
+                                    <i class="ml-1 fas fa-check-circle"></i>
+                                    <i id="guardando_capacitacion" class="fas fa-cog fa-spin text-muted" style="position: absolute; top: 7px;right: 12px;"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
