@@ -86,7 +86,7 @@
                             Proceso
                         </th>
                         <td>
-                            {{ $indicadoresSgsi->proceso }}
+                            {{ $indicadoresSgsi->proceso->nombre }}
                         </td>
                     </tr>
                 </tbody>
