@@ -157,6 +157,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Empleados
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
+    Route::post('empleados/lista', 'EmpleadoController@getEmpleadosLista')->name('empleados.lista');
     Route::resource('empleados', 'EmpleadoController');
 
     // Organizacions
@@ -283,7 +284,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('competencia/media', 'CompetenciasController@storeMedia')->name('competencia.storeMedia');
     Route::post('competencia/ckmedia', 'CompetenciasController@storeCKEditorImages')->name('competencia.storeCKEditorImages');
     Route::resource('competencia', 'CompetenciasController');
-    Route::get('buscarCV','CompetenciasController@buscarcv')->name('buscarCV');
+    Route::get('buscarCV', 'CompetenciasController@buscarcv')->name('buscarCV');
 
     // Adquirirveintidostrecientosunos
     Route::resource('adquirirveintidostrecientosunos', 'AdquirirveintidostrecientosunoController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
