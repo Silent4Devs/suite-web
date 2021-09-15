@@ -14,7 +14,7 @@ class CreateEv360ObjetivosCalificacionesTable extends Migration
     public function up()
     {
         Schema::create('ev360_objetivos_calificaciones', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->text('meta_alcanzada');
             $table->unsignedTinyInteger('calificacion');
             $table->unsignedBigInteger('objetivo_id');

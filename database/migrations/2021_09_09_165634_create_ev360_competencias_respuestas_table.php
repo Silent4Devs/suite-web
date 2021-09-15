@@ -14,7 +14,7 @@ class CreateEv360CompetenciasRespuestasTable extends Migration
     public function up()
     {
         Schema::create('ev360_competencias_respuestas', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->integer('calificacion')->default(0);
             $table->longText('descripcion')->nullable();
             $table->unsignedBigInteger('competencia_id');

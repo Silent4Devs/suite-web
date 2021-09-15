@@ -14,7 +14,7 @@ class CreateEv360EvaluadoEvaluadorTable extends Migration
     public function up()
     {
         Schema::create('ev360_evaluado_evaluador', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('evaluado_id');
             $table->unsignedBigInteger('evaluador_id');
             $table->unsignedBigInteger('evaluacion_id');

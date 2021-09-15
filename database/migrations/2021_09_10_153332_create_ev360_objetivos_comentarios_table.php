@@ -15,7 +15,7 @@ class CreateEv360ObjetivosComentariosTable extends Migration
     public function up()
     {
         Schema::create('ev360_objetivos_comentarios', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->text('comentario');
             $table->enum('tipo', [ObjetivoComentario::EVALUADOR, ObjetivoComentario::EVALUADO]);
             $table->unsignedBigInteger('empleado_id');

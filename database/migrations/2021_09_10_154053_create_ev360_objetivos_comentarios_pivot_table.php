@@ -14,7 +14,7 @@ class CreateEv360ObjetivosComentariosPivotTable extends Migration
     public function up()
     {
         Schema::create('ev360_objetivos_comentarios_pivot', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('objetivo_id');
             $table->foreign('objetivo_id')->references('id')->on('ev360_objetivos')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('comentario_id');

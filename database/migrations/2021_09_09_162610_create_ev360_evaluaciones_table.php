@@ -15,7 +15,7 @@ class CreateEv360EvaluacionesTable extends Migration
     public function up()
     {
         Schema::create('ev360_evaluaciones', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('nombre');
             $table->longText('descripcion')->nullable();
             $table->enum('estatus', [Evaluacion::DRAFT, Evaluacion::ACTIVE, Evaluacion::CLOSED])->default(Evaluacion::DRAFT);
