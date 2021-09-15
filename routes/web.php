@@ -5,8 +5,13 @@
 use App\Http\Controllers\Admin\CategoriaCapacitacionController;
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
+use App\Http\Controllers\Admin\RH\EV360GrupoCompetenciasController;
+use App\Http\Controllers\Admin\RH\EV360NivelesDominioController;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Livewire\NotificacionesComponent;
+use App\Models\RH\GrupoCompetencia;
+use App\Models\RH\NivelDominio;
+use App\Models\RH\PeriodoEvaluacion;
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
@@ -21,6 +26,62 @@ Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@ed
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa']], function () {
+    Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
+
+    Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/participantes', 'RH\EV360EvaluacionesController@getParticipantes')->name('ev360-evaluaciones.getParticipantes');
+    Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia', 'RH\EV360EvaluacionesController@relatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.relatedCompetenciaWithEvaluacion');
+    Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedCompetenciaWithEvaluacion');
+    Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion', 'RH\EV360EvaluacionesController@evaluacion')->name('ev360-evaluaciones.evaluacion');
+    Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}', 'RH\EV360EvaluacionesController@contestarCuestionario')->name('ev360-evaluaciones.contestarCuestionario');
+    Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/iniciar', 'RH\EV360EvaluacionesController@iniciarEvaluacion')->name('ev360-evaluaciones.iniciarEvaluacion');
+    Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/postergar', 'RH\EV360EvaluacionesController@postergarEvaluacion')->name('ev360-evaluaciones.postergarEvaluacion');
+    Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/cerrar', 'RH\EV360EvaluacionesController@cerrarEvaluacion')->name('ev360-evaluaciones.cerrarEvaluacion');
+    Route::resource('recursos-humanos/evaluacion-360/evaluaciones', 'RH\EV360EvaluacionesController')->names([
+        'index' => 'ev360-evaluaciones.index',
+        'create' => 'ev360-evaluaciones.create',
+        'store' => 'ev360-evaluaciones.store',
+        'show' => 'ev360-evaluaciones.show',
+        'edit' => 'ev360-evaluaciones.edit',
+        'update' => 'ev360-evaluaciones.update',
+    ]);
+
+    Route::post('recursos-humanos/evaluacion-360/competencias/store-redirect', 'RH\EV360CompetenciasController@storeAndRedirect')->name('ev360-competencias.conductas');
+    Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/conductas', 'RH\EV360CompetenciasController@conductas')->name('ev360-competencias.obtenerConductas');
+    Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/informacion', 'RH\EV360CompetenciasController@informacionCompetencia')->name('ev360-competencias.informacionCompetencia');
+    Route::post('recursos-humanos/evaluacion-360/competencias/{competencia}/repuesta', 'RH\EV360CompetenciasController@guardarRespuestaCompetencia')->name('ev360-competencias.guardarRespuestaCompetencia');
+    Route::resource('recursos-humanos/evaluacion-360/competencias', 'RH\EV360CompetenciasController')->names([
+        'index' => 'ev360-competencias.index',
+        'create' => 'ev360-competencias.create',
+        'store' => 'ev360-competencias.store',
+        'show' => 'ev360-competencias.show',
+        'edit' => 'ev360-competencias.edit',
+        'update' => 'ev360-competencias.update',
+    ]);
+
+
+    Route::post('recursos-humanos/evaluacion-360/conductas/store', 'RH\EV360ConductasController@store')->name('ev360-conductas.store');
+    Route::get('recursos-humanos/evaluacion-360/conductas/{conducta}/edit', 'RH\EV360ConductasController@edit')->name('ev360-conductas.edit');
+    Route::patch('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@update')->name('ev360-conductas.update');
+    Route::delete('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@destroy')->name('ev360-conductas.destroy');
+
+    Route::resource('recursos-humanos/evaluacion-360/objetivos', 'RH\EV360ObjetivosController')->names([
+        'index' => 'ev360-objetivos.index',
+        'create' => 'ev360-objetivos.create',
+        'store' => 'ev360-objetivos.store',
+        'show' => 'ev360-objetivos.show',
+        'edit' => 'ev360-objetivos.edit',
+        'update' => 'ev360-objetivos.update',
+    ]);
+
+
+    Route::resource('recursos-humanos/evaluacion-360/periodo', 'RH\EV360EvaluacionPeriodosController')->names([
+        'index' => 'ev360-periodo.index',
+        'create' => 'ev360-periodo.create',
+        'store' => 'ev360-periodo.store',
+        'show' => 'ev360-periodo.show',
+        'edit' => 'ev360-periodo.edit',
+        'update' => 'ev360-periodo.update',
+    ]);
 
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
 
@@ -283,7 +344,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('competencia/media', 'CompetenciasController@storeMedia')->name('competencia.storeMedia');
     Route::post('competencia/ckmedia', 'CompetenciasController@storeCKEditorImages')->name('competencia.storeCKEditorImages');
     Route::resource('competencia', 'CompetenciasController');
-    Route::get('buscarCV','CompetenciasController@buscarcv')->name('buscarCV');
+    Route::get('buscarCV', 'CompetenciasController@buscarcv')->name('buscarCV');
 
     // Adquirirveintidostrecientosunos
     Route::resource('adquirirveintidostrecientosunos', 'AdquirirveintidostrecientosunoController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);

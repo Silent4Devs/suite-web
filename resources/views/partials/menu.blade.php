@@ -300,11 +300,20 @@
                 <font class="letra_blanca"> Análisis de brechas</font>
             </a>
         </li> --}}
+
+        <li class="c-sidebar-nav-title">
+            <font class="letra_blanca">Recursos Humanos</font>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ route('admin.rh-evaluacion360.index') }}">
+                <i class="fa-fw fas fa-circle-notch iconos_menu letra_blanca"></i>
+                <font class="letra_blanca"> Evaluación 360 Grados </font>
+            </a>
+        </li>
+
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca">Normas</font>
         </li>
-
-
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="{{ route('admin.iso27001.index') }}">
                 <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
@@ -317,9 +326,9 @@
                 <font class="letra_blanca">Administración</font>
             </li>
         @endcan
-        
+
         {{-- @can('planes_accion_access') --}}
-        
+
         {{-- @endcan --}}
         @can('configuracion_datos_access')
             <li class="c-sidebar-nav-dropdown">
@@ -422,7 +431,8 @@
                                 <li class="c-sidebar-nav-item">
                                     <a href="{{ route('admin.tipoactivos.index') }}"
                                         class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
-                                        <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:13pt;"></i>
+                                        <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca"
+                                            style="font-size:13pt;"></i>
                                         <font class="letra_blanca"> Categorias</font>
                                     </a>
                                 </li>
@@ -469,32 +479,33 @@
                     @endcan
 
                     <li class="c-sidebar-nav-dropdown">
-                            <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                                <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca "> Capacitaciones </font>
-                            </a>
-                            <ul class="c-sidebar-nav-dropdown-items">
-                                @can('configuracion_macroproceso_access')
-                                    <li class="c-sidebar-nav-item">
-                                        <a href="{{ asset('admin/categoria-capacitacion') }}"
-                                            class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
-                                            <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                            <font class="letra_blanca"> Crear categorías</font>
-                                        </a>
-                                    </li>
-                                @endcan
-                                @can('configuracion_procesos_access')
-                                    <li class="c-sidebar-nav-item">
-                                        <a href="{{ asset('admin/recursos') }}"
-                                            class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
-                                            <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
-                                                style="font-size:12pt;"></i>
-                                            <font class="letra_blanca"> Crear capacitaciones</font>
-                                        </a>
-                                    </li>
-                                @endcan
-                            </ul>
-                        </li>
+                        <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                            <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca "> Capacitaciones </font>
+                        </a>
+                        <ul class="c-sidebar-nav-dropdown-items">
+                            @can('configuracion_macroproceso_access')
+                                <li class="c-sidebar-nav-item">
+                                    <a href="{{ asset('admin/categoria-capacitacion') }}"
+                                        class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
+                                        <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca"
+                                            style="font-size:12pt;"></i>
+                                        <font class="letra_blanca"> Crear categorías</font>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('configuracion_procesos_access')
+                                <li class="c-sidebar-nav-item">
+                                    <a href="{{ asset('admin/recursos') }}"
+                                        class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
+                                        <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
+                                            style="font-size:12pt;"></i>
+                                        <font class="letra_blanca"> Crear capacitaciones</font>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
 
                     @can('configuracion_empleados_access')
                         {{-- <li class="c-sidebar-nav-item">
