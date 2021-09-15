@@ -45,6 +45,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style type="text/css">
+       .select2-selection--multiple {
+            overflow: hidden !important;
+            height: auto !important;
+            padding: 0 5px 5px 5px !important;
+        }
+
+        .select2-container {
+            margin-top: 10px !important;
+        }
         /*TOASTR*/
         #toast-container > div{
             opacity: 1 !important;
