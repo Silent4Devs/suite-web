@@ -79,13 +79,13 @@
                 @if (!empty($count == 1))
                 @else
                     @can('organizacion_create')
-                        <a class="btn btn-success" href="{{ route('admin.organizacions.create') }}">
+                        <a class="btn btn-danger" href="{{ route('admin.organizacions.create') }}">
                             Agregar Organización
                         </a>
                     @endcan
                 @endif
                 @can('organizacion_edit')
-                    <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-info'>
+                    <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-danger'>
                         Editar Organización
                     </a>
                 @endcan

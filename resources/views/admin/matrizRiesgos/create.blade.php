@@ -489,7 +489,7 @@
                 @csrf
 
                 <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
-                    <p class"text-center text-light" style="font-size:11pt; margin-left:500px; color:#ffffff;">DATOS
+                    <p class="text-center text-light" style="font-size:11pt; margin-left:500px; color:#ffffff;">DATOS
                         GENERALES</p>
                 </div>
 
@@ -659,7 +659,7 @@
                 </div>
                 <hr>
                 <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
-                    <p class"text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
+                    <p class="text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
                         riesgo inicial</p>
                 </div>
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
@@ -846,7 +846,23 @@
                         </div>
                     </div>
 
+
                     <div class="form-group col-sm-12">
+                        <label for="tipo_tratamiento"><i class="fas fa-lightbulb iconos-crear"></i>Seleccione el tratamiento que desea darle a este riesgo</label>
+                        <select class="form-control" name="tipo_tratamiento" id="ejemplo">
+                            <option selected value="">Seleccione una opción</option>&gt;
+                            <option value="1">Aceptar</option>&gt;
+                            <option value="0">Mitigar</option>&gt;
+                            <option value="2">Transferir</option>&gt;   
+                        </select>
+                            <!-- Note, I changed hidden to text so you can see it<br/> --> 
+                    </div>
+                    <div class="form-group col-sm-12"> 
+                        <!-- <label for="" style="margin-left: 15px; margin-bottom:5px;"> <i class="fas fa-lightbulb iconos-crea"></i> Justificación</label> -->
+                        <textarea class="form-control" type="text" for="aceptar_transferir" name="aceptar_transferir" id="ver1" value="1" placeholder="Justificación" rows="3" style="display: none;"></textarea>
+                    </div>                   
+                    <div class="form-group col-sm-12" id="modulo_planaccion" style="display: none;">
+
                         {{-- <label for="plan_de_accion"><i class="fas fa-lightbulb iconos-crear"></i>Plan de acción</label>
                         <select class="form-control {{ $errors->has('plan_de_accion') ? 'is-invalid' : '' }}"
                             name="plan_de_accion" id="plan_de_accion">
@@ -879,11 +895,11 @@
                         </div>
                         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
-
+<!-- hasta aqui -->
                 </div>
                 <hr>
                 <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
-                    <p class"text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
+                    <p class="text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
                         riesgo residual</p>
                 </div>
                 <p class="font-weight-bold" style="font-size:11pt;">Riesgo Residual</p>
@@ -1000,23 +1016,8 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                     </div>
-
                 </div>
-
                 <hr>
-                <div class="form-group">
-                    <label for="justificacion"><i class="far fa-file-alt iconos-crear"></i>Justificación</label>
-                    <textarea class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}" type="text"
-                        name="justificacion" id="justificacion" value="{{ old('justificacion', '') }}"
-                        rows="3"></textarea>
-                    @if ($errors->has('justificacion'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('justificacion') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
-                </div>
-
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}"
                         class="btn_cancelar">Cancelar</a>

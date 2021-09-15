@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\PlanBaseActividade;
 use App\Models\AuditoriaAnual;
+use App\Models\AuditoriaInterna;
 use App\Models\Recurso;
 use App\Models\Proceso;
 use App\Models\Area;
@@ -119,9 +120,11 @@ class inicioUsuarioController extends Controller
         }
 
         $auditorias_anual = AuditoriaAnual::get();
+        $auditoria_internas = new AuditoriaInterna;
         $empleado = auth()->user()->empleado;
         $recursos = new Recurso;
         if ($usuario->empleado) {
+            $auditoria_internas = AuditoriaInterna::where('lider_id', auth()->user()->empleado->id)->get();
             $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);
             })->get();

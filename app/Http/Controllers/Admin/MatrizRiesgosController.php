@@ -120,7 +120,8 @@ class MatrizRiesgosController extends Controller
 
         foreach ($request->controles_id as $item) {
             $control = new MatrizRiesgosControlesPivot();
-            $control->matriz_id = 2;
+            // $control->matriz_id = 2;
+            $control->matriz_id = $matrizRiesgo->id;
             $control->controles_id = $item;
             $control->save();
         }
@@ -203,6 +204,7 @@ class MatrizRiesgosController extends Controller
 
     public function SeguridadInfo(Request $request)
     {
+        // dd($request->all());
         /*$query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         dd($query);*/
         abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

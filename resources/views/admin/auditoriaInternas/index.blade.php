@@ -30,10 +30,13 @@
                             Alcance&nbsp;auditoría
                         </th>
                         <th>
-                            {{ trans('cruds.auditoriaInterna.fields.clausulas') }}
+                            Fecha&nbsp;inicio
                         </th>
                         <th>
-                            Fecha&nbsp;auditoría
+                            Fecha&nbsp;fin
+                        </th>
+                        <th>
+                            {{ trans('cruds.auditoriaInterna.fields.clausulas') }}
                         </th>
                         <th>
                             Auditor&nbsp;líder
@@ -69,75 +72,10 @@
                             Total&nbsp;mejora
                         </th>
                         <th>
-                            {{ trans('cruds.auditoriaInterna.fields.logotipo') }}
-                        </th>
-                        <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($controles as $key => $item)
-                                    <option value="{{ $item->control }}">{{ $item->control }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+                    
                 </thead>
             </table>
         </div>
@@ -276,20 +214,42 @@
                         name: 'alcance'
                     },
                     {
-                        data: 'clausulas_control',
-                        name: 'clausulas.control'
+                        data: 'fecha_inicio',
+                        name: 'fecha_inicio'
                     },
                     {
-                        data: 'fechaauditoria',
-                        name: 'fechaauditoria'
+                        data: 'fecha_fin',
+                        name: 'fecha_fin'
                     },
                     {
-                        data: 'auditorlider_name',
-                        name: 'auditorlider.name'
+                        data: 'clausulas',
+                        render: function(data, type, row, meta){
+                            let html = '<ul>';
+                            data.forEach(clausula=>{
+                                html += `
+                                    <li>${clausula.nombre}</li>
+                                `;
+                            })
+                            html += '</ul>';
+                            return html
+                        }
                     },
                     {
-                        data: 'equipoauditoria_name',
-                        name: 'equipoauditoria.name'
+                        data: 'lider',
+                    },
+                    {
+                        data: 'equipo',
+                        render: function(data, type, row, meta){
+                            let equipos = JSON.parse(data);
+                            let html = '<ul>';
+                            equipos.forEach(empleado=>{
+                                html += `
+                                    <li>${empleado.name}</li>
+                                `;
+                            })
+                            html += '</ul>';
+                            return html
+                        }
                     },
                     {
                         data: 'hallazgos',
@@ -326,12 +286,6 @@
                     {
                         data: 'totalmejora',
                         name: 'totalmejora'
-                    },
-                    {
-                        data: 'logotipo',
-                        name: 'logotipo',
-                        sortable: false,
-                        searchable: false
                     },
                     {
                         data: 'actions',

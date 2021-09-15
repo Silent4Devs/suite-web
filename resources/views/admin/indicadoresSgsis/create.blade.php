@@ -345,7 +345,7 @@
                             <button id="añadir" class="btn btn-success" type="button">Añadir</button>
                         </div>
 
-                        <table id="mytable" class="table table-bordered table-hover ">
+                        <table id="mytable" class="table table-bordered table-hover mt-3">
                             <tr>
                                 <th>ID</th>
                                 <th>Variable</th>
@@ -355,17 +355,15 @@
                         </table>
 
                     </div>
+
+                     <div class="form-group text-right mt-4 col-12">
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                        <button class="btn btn-danger" type="submit">{{ trans('global.save') }}</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="text-center form-group col-12" style="margin-left:15px;">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-info" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
-                </div>
-            </div>
+           
 
         </div>
     </form>

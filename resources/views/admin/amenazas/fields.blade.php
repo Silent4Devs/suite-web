@@ -18,8 +18,9 @@
     </div>
 
     <!-- Submit Field -->
-    <div class="form-group col-sm-12">
-        {!! Form::submit('Enviar', ['class' => 'btn btn-primary']) !!}
-        <a href="{{ route('admin.amenazas.index') }}" class="btn btn-secondary">Cancelar</a>
-    </div>
+   <div class="text-right form-group col-12">
+    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+    <button class="btn btn-danger" type="submit">
+        {{ trans('global.save') }}
+    </button>
 </div>

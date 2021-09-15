@@ -149,7 +149,7 @@
         .btn-silent span{
             position: absolute;
             left: 50px;
-        } 
+        }
         .btn-silent:hover{
             color: #00abb2 !important;
         }
@@ -176,11 +176,11 @@
 
         .carousel-item{
             text-align: center;
-            background-color: #000;
+            background-color: #666;
         }
         .img_carrusel{
             height: 300px !important;
-            opacity: 1;
+            opacity: 0.9;
 
             background-size: cover;
             background-position: center;
@@ -214,8 +214,19 @@
         .carousel-inner p{
             display: none;
         }
+        .carousel-control-prev, .carousel-control-next{
+            opacity: 1 !important;
+            z-index: 3;
+        }
+        .carousel-indicators li{
+            opacity: 1 !important;
+        }
+        .carousel-indicators li.active{
+            opacity: 1 !important;
+            background-color: #00abb2 !important;
+        }
 
-        
+
         .comunicado{
             display: flex;
             height: 200px;
@@ -248,9 +259,14 @@
             display: flex;
             align-items: center;
             position: relative;
+            background-color: #f0f0f0;
+            padding: 0px 20px;
+            padding-top: 7px;
+            box-sizing: border-box;
+            border-radius: 7px;
         }
         .doc_publicado{
-            margin-top: 40px;
+            margin-top: 20px;
         }
         .icon_doc{
             display: flex;
@@ -320,7 +336,7 @@
             text-align: center;
         }
         .img_nuevo img{
-            
+
         }
         .datos_nuevo{
             width: 100%;
@@ -374,10 +390,16 @@
                         <div class="carousel-inner">
                             @forelse($comunicacionSgis_carrusel as $idx=>$carrusel)
                                 @php
-                                    $imagen = count($carrusel->imagenes_comunicacion) ? 'storage/imagen_comunicado_SGI/'.$carrusel->imagenes_comunicacion->imagen : 'img/tabantaj_fondo_blanco.png'; 
+                                    if(($carrusel->first()->count())){
+                                        $imagen= 'storage/imagen_comunicado_SGI/'.$carrusel->imagenes_comunicacion->first()->imagen;
+                                    }
+                                    else{
+                                        $imagen= 'img/tabantaj_fondo_blanco.png';
+                                    }
+
                                 @endphp
                                 <div class="carousel-item {{ $idx == 0 ? 'active' : ''}}">
-                                    <div class="img_carrusel" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Vaporwave-4K-Wallpapers.jpg');"></div>
+                                    <div class="img_carrusel" style="background-image: url('{{asset($imagen)}}');"></div>
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>{{$carrusel->titulo}}</h5>
                                         {!! Str::limit($carrusel->descripcion, 100, '...') !!}
@@ -419,13 +441,22 @@
 
 
 
-                <div class="col-lg-9 mt-5">
-                    <h2 class="titulo-seccion"><i class="far fa-newspaper mr-3"></i>Comunicados</h2>
+                <div class="mt-5 col-lg-9">
+                    <h2 class="titulo-seccion"><i class="mr-3 far fa-newspaper"></i>Comunicados</h2>
                     @forelse($comunicacionSgis as $comunicacionSgi)
-                        <div class="comunicado" style="position:relative;"> 
+                        <div class="comunicado" style="position:relative;">
                             @php
-                                $imagen = count($comunicacionSgi->imagenes_comunicacion) ? 'storage/imagen_comunicado_SGI/'.$comunicacionSgi->imagenes_comunicacion->imagen : 'img/portal_404.png'; 
+                            if(($carrusel->first()->count())){
+                                $imagen= 'storage/imagen_comunicado_SGI/'.$carrusel->imagenes_comunicacion->first()->imagen;
+                            }
+                            else{
+                                $imagen= 'img/portal_404.png';
+                            }
+
                             @endphp
+
+                            {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
+
                             <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
                             <div class="text_comunicado">
                                 <h4 class="w-100">{{$comunicacionSgi->titulo}}</h4>
@@ -436,12 +467,12 @@
                             </div>
                         </div>
                         @empty
-                        <div class="comunicado" style="position:relative;"> 
+                        <div class="comunicado" style="position:relative;">
                             <div class="img_comunicado" style="background-image: url('{{ asset('img/portal_404.png') }}');"></div>
                             <div class="text_comunicado">
                                 <h4 class="w-100">Sin comunicados que mostar</h4>
                                 <p class="w-100">
-                                   
+
                                 </p>
                                 <a href=""></a>
                             </div>
@@ -449,8 +480,8 @@
                     @endforelse
 
 
-                    <h2 class="titulo-seccion mt-5"><i class="far fa-file-alt mr-3"></i>Documentos publicados </h2>
-                   
+                    <h2 class="mt-5 titulo-seccion"><i class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
+
                     {{-- @foreach ($documentos_publicados as $documento)
                         <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
                             class="list-group-item cards text-dark">
@@ -494,6 +525,7 @@
                                         <span class="badge badge-success"
                                             style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
                                     @endif
+                                    <span style="color:red; margin-left:20px;"><i class="fas fa-eye"></i> <strong>{{ $documento->no_vistas }}</strong></span>
                                 </p>
                             </div>
                             <div class="opciones_doc">
@@ -510,9 +542,9 @@
 
 
 
-                <div class="col-lg-3 mt-5">
+                <div class="mt-5 col-lg-3">
                     <div class="cuadro_empleados scroll_estilo">
-                        <h2 class="titulo-seccion"><i class="far fa-user mr-3"></i>Nuevos ingresos</h2>
+                        <h2 class="titulo-seccion"><i class="mr-3 far fa-user"></i>Nuevos ingresos</h2>
 
                         <div class="caja_nuevo">
 
@@ -544,9 +576,9 @@
 
                         </div>
 
-                        
 
-                        <h2 class="titulo-seccion mt-5"><i class="fas fa-birthday-cake mr-3"></i>Cumpleaños</h2>
+
+                        <h2 class="mt-5 titulo-seccion"><i class="mr-3 fas fa-birthday-cake"></i>Cumpleaños</h2>
                         <div class="caja_nuevo">
                             @forelse($cumpleaños as $cumple)
                                 <div class="nuevo">
@@ -577,7 +609,7 @@
 
 
 
-                        <h2 class="titulo-seccion mt-5"><i class="fas fa-birthday-cake mr-3"></i>Aniversarios</h2>
+                        <h2 class="mt-5 titulo-seccion"><i class="mr-3 fas fa-birthday-cake"></i>Aniversarios</h2>
                         <div class="caja_nuevo">
                             <div class="caja_nuevo">
                                 @forelse($aniversarios as $aniversario)
@@ -621,7 +653,7 @@
 
 
 
-    
+
 
 
 
@@ -647,7 +679,7 @@
             const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${response.weather[0]["icon"]}.svg`;
             climaContenedor.innerHTML = `
             <p class="" style="text-align:left; margin:0;">
-                <i class="fas fa-globe-americas" style="font-size:;"></i> 
+                <i class="fas fa-globe-americas" style="font-size:;"></i>
                 ${response.name}
             </p>
             <div style="text-align:left; margin:0 ; display:inline-block;">

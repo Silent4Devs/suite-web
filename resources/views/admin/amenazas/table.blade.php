@@ -11,7 +11,7 @@
                 Categoria
             </th>
             <th>
-                descripcion
+                Descripción
             </th>
             <th>
                 Opciones
