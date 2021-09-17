@@ -47,6 +47,15 @@
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
 
     <style type="text/css">
+       .select2-selection--multiple {
+            overflow: hidden !important;
+            height: auto !important;
+            padding: 0 5px 5px 5px !important;
+        }
+
+        .select2-container {
+            margin-top: 10px !important;
+        }
         /*TOASTR*/
         #toast-container > div{
             opacity: 1 !important;
