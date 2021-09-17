@@ -188,11 +188,19 @@ class ComunicacionSgiController extends Controller
         ]);
 */
 
-
-         ImagenesComunicacionSgis::create([
-            "imagen"=>$image,
-            'comunicacion_id' => $comunicacionSgi->id,
-         ]);
+        $imagen_sgsi = ImagenesComunicacionSgis::where('comunicacion_id', $comunicacionSgi->id)->first();
+        if($imagen_sgsi){
+            $imagen_sgsi->update([     
+                "imagen"=>$image,
+                'comunicacion_id' => $comunicacionSgi->id,
+             ]);
+        } else{
+            ImagenesComunicacionSgis::create([     
+                "imagen"=>$image,
+                'comunicacion_id' => $comunicacionSgi->id,
+             ]);
+        }  
+       
 
          $files = $request->file('files');
         if ($request->hasFile('files')) {
