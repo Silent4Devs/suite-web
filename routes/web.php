@@ -218,6 +218,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Empleados
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
+    Route::post('empleados/lista', 'EmpleadoController@getEmpleadosLista')->name('empleados.lista');
     Route::resource('empleados', 'EmpleadoController');
 
     // Organizacions
