@@ -375,7 +375,7 @@
 
 
     <!-- component -->
-    <div class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
+    <div id="contenedorOrganigrama" style="position: relative" class="w-full px-8 py-4 mb-16 bg-white rounded-lg shadow-lg">
         {{-- <div class="flex justify-center -mt-16 md:justify-end">
             <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #00abb2;"
                 src="{{ $org_foto }}">
@@ -390,15 +390,16 @@
                         </svg></div>
                     <div>
                         <p class="font-bold">Atención</p>
-                        <p class="text-sm">El organigrama no se pudo generar ya que no existe un nodo raíz (CEO), defina uno
+                        <p class="text-sm">El organigrama no se pudo generar ya que no existe un nodo raíz (CEO),
+                            defina uno
                             en el apartado de empleados <a href="{{ route('admin.empleados.index') }}"><i
                                     class="fas fa-share"></i></a></p>
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="{{ asset('img/OrganigramaFinal.jpg') }}" alt="No se pudo cargar el organigrama" class="mt-3"
-                    style="width: 640px;height: 357px;">
+                <img src="{{ asset('img/OrganigramaFinal.jpg') }}" alt="No se pudo cargar el organigrama"
+                    class="mt-3" style="width: 640px;height: 357px;">
             </div>
         @else
             <div class="row">
@@ -412,9 +413,9 @@
                                         <i class="mr-1 fas fa-user-circle"></i>
                                         Búsqueda por empleado
                                     </span></label>
-                                <input class="form-control" type="text" id="participantes_search"
+                                <input class="form-control" type="search" id="participantes_search"
                                     placeholder="Nombre del empleado" style="position: relative" autocomplete="off" />
-                                <i id="cargando_participantes" class="fas fa-cog fa-spin text-primary"
+                                <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
                                     style="position: absolute; top: 42px; right: 18px;"></i>
                                 <div id="participantes_sugeridos" style="position: absolute;width: 90%;z-index: 1;"></div>
                                 @if ($errors->has('participantes'))
@@ -481,6 +482,11 @@
             </div>
         @endif
     </div>
+    {{-- Cargando... --}}
+    {{-- <div id="cargandoInformacionAnimated" style="position: absolute; top:250px; right:500px;display: none;">
+        <i class="fas fa-circle-notch fa-spin" style="font-size: 80px;"></i>
+    </div> --}}
+    {{-- End cargando... --}}
 
 @endsection
 @section('scripts')
@@ -526,39 +532,68 @@
             renderOrganigrama(OrgChart, orientacion);
 
             $("#cargando_participantes").hide();
-            let url_empleados = "{{ route('admin.empleados.get') }}";
+            let url_empleados = "{{ route('admin.empleados.lista') }}";
+            let timeout = null;
+            let inputSearchEmpleados = document.getElementById('participantes_search');
+            $('#participantes_search').on('search', function() {
+                $("#participantes_sugeridos").hide();
+            });
             $("#participantes_search").keyup(function() {
-                $.ajax({
-                    type: "POST",
-                    url: url_empleados,
-                    data: 'nombre=' + $(this).val(),
-                    beforeSend: function() {
-                        $("#cargando_participantes").show();
-                    },
-                    success: function(data) {
-                        $("#cargando_participantes").hide();
-                        $("#participantes_sugeridos").show();
-                        let sugeridos = document.querySelector(
-                            "#participantes_sugeridos");
-                        sugeridos.innerHTML = data;
-                        $("#participantes_search").css("background", "#FFF");
-                    }
-                });
-                if ($(this).val() == '') {
-                    orientacion = localStorage.getItem('orientationOrgChart');
-                    renderOrganigrama(OrgChart, orientacion, null);
+                // Clear the timeout if it has already been set.
+                // This will prevent the previous task from executing
+                // if it has been less than <MILLISECONDS>
+                clearTimeout(timeout);
+                // Make a new timeout set to go off in 1000ms (1 second)
+                // let textEscrito = $(this).val();
+                if (inputSearchEmpleados.value.trim() != '') {
+                    timeout = setTimeout(function() {
+                        $.ajax({
+                            type: "POST",
+                            url: url_empleados,
+                            data: 'nombre=' + inputSearchEmpleados.value,
+                            beforeSend: function() {
+                                $("#cargando_participantes").show();
+                            },
+                            success: function(data) {
+                                $("#cargando_participantes").hide();
+                                $("#participantes_sugeridos").show();
+                                let sugeridos = document.querySelector(
+                                    "#participantes_sugeridos");
+                                let lista =
+                                    `<ul class='list-group' id='empleados-lista'>`;
+                                data ? JSON.parse(data).forEach(usuario => {
+                                        lista += `<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' 
+                                    onClick='seleccionarUsuario("${usuario.id}","${usuario.name}","${usuario.email}");'>
+                                    <i class='mr-2 fas fa-user-circle'></i>
+                                    ${usuario.name}</button>
+                                `;
+                                    }) : lista +=
+                                    '<li class="list-group-item list-group-item-action">Sin coincidencias encontradas</li>';
+                                lista += `</ul>`;
+                                sugeridos.innerHTML = lista;
+                                $("#participantes_search").css("background", "#FFF");
+                            }
+                        });
+                        if (inputSearchEmpleados.value == '') {
+                            orientacion = localStorage.getItem('orientationOrgChart');
+                            renderOrganigrama(OrgChart, orientacion, null);
+                        }
+                    }, 500);
+                } else {
+                    $("#participantes_sugeridos").hide();
                 }
             });
 
-            window.seleccionarUsuario = function(user) {
+            window.seleccionarUsuario = function(id, name, email) {
                 $('.areas').val(null).trigger('change');
                 document.querySelector("#zoomer").value = 70;
                 document.querySelector("#output").innerHTML = 70;
                 orientacion = localStorage.getItem('orientationOrgChart');
-                renderOrganigrama(OrgChart, orientacion, user.id);
-                $("#participantes_search").val(user.name);
-                $("#id_empleado").val(user.id);
-                $("#email").val(user.email);
+                document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
+                renderOrganigrama(OrgChart, orientacion, id);
+                $("#participantes_search").val(name);
+                $("#id_empleado").val(id);
+                $("#email").val(email);
                 $("#participantes_sugeridos").hide();
             }
 
@@ -637,6 +672,8 @@
                             'direction': orientacion,
                             'urlExportCSV': "{{ route('admin.organigrama.exportar') }}"
                         });
+                        document.getElementById("contenedorOrganigrama").style.pointerEvents =
+                            'all';
                     },
                     error: function(error) {
                         let imagen = document.querySelector('.imagen-search');
@@ -678,11 +715,13 @@
                 }
                 document.querySelector("#zoomer").value = 70;
                 document.querySelector("#output").innerHTML = 70;
+                document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                 renderOrganigrama(OrgChart, orientacion, null, true, area_id);
             });
 
             $("#reloadOrg").click(function(e) {
                 e.preventDefault();
+                document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                 $('.areas').val(null).trigger('change');
                 document.querySelector("#participantes_search").value = "";
                 document.querySelector("#zoomer").value = 70;
@@ -697,6 +736,7 @@
 
             $("#orientacion").click(function(e) {
                 e.preventDefault();
+                document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                 document.querySelector("#zoomer").value = 70;
                 document.querySelector("#output").innerHTML = 70;
                 let orientacion;

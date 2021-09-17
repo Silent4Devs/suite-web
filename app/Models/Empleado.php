@@ -68,7 +68,7 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar', 'resourceId'];
+    protected $appends = ['avatar', 'resourceId', 'jefe_inmediato', 'empleados_misma_area'];
 
     protected $fillable = [
         'name',
@@ -265,7 +265,20 @@ class Empleado extends Model
         return $this->hasMany(Organizacion::class);
     }
 
+    // Recursos Humanos
+    public function evaluadores()
+    {
+        return $this->belongsToMany('App\Models\Empleado', 'ev360_evaluado_evaluador', 'evaluador_id', 'id');
+    }
 
+    public function getJefeInmediatoAttribute()
+    {
+        return $this->supervisor;
+    }
 
-
+    public function getEmpleadosMismaAreaAttribute()
+    {
+        $by_area = Empleado::where('area_id', $this->area_id)->pluck('id')->toArray();
+        return $by_area;
+    }
 }
