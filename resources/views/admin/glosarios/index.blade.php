@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin_glosario')
 @section('content')
 
     @can('glosario_create')
@@ -1199,9 +1199,7 @@
 
         $(document).ready(function() {
             var table = $('#dom').DataTable({
-                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-6 col-lg-6 m-0'l><'col-md-6 col-12 col-sm-12 m-0'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
+                dom: 'Alfrtip',
 
 
             });
