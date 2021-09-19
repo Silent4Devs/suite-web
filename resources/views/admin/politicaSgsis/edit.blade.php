@@ -13,7 +13,7 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label for="politicasgsi"><i class="fas fa-landmark iconos-crear"></i>{{ trans('cruds.politicaSgsi.fields.politicasgsi') }}</label>
+                <label for="politicasgsi"><i class="fas fa-landmark iconos-crear"></i>Política del Sistema de Gestión de Seguridad de la Información (SGSI)</label>
                 <textarea class="form-control {{ $errors->has('politicasgsi') ? 'is-invalid' : '' }}" name="politicasgsi" id="politicasgsi">{{ old('politicasgsi', $politicaSgsi->politicasgsi) }}</textarea>
                 @if($errors->has('politicasgsi'))
                     <div class="invalid-feedback">

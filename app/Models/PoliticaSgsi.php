@@ -67,9 +67,11 @@ class PoliticaSgsi extends Model
         return $this->belongsTo(Team::class, 'team_id');
     }
 
-    public function empleado()
+    public function reviso()
 	{
         return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id');
 
 	}
+
+
 }

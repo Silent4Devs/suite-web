@@ -2,20 +2,56 @@
 @section('content')
 
 <style>
-.carousel-control-next, .carousel-control-prev {
-    width: 50px;
-    height: 50px;
-    margin-top: 100px;
-}
 
-.img-size{
-    margin-left:calc(50% - 141px);
-}
+    .table tr th:nth-child(2){
+    min-width:600px !important;
+    text-align:center !important;
+    }
 
-.carousel-control-prev-icon, .carousel-control-next-icon{
-    background-color: #000;
-    filter: invert(100%);
-}
+    .table tr td:nth-child(2){
+    text-align:justify !important;
+    }
+
+    .table tr th:nth-child(3){
+    min-width:100px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(3){
+    text-align:center !important;
+    }
+
+    .table tr th:nth-child(4){
+    min-width:80px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(4){
+    text-align:center !important;
+    }
+
+    .table tr th:nth-child(5){
+    min-width:130px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(5){
+    text-align:center !important;
+    }
+    .carousel-control-next, .carousel-control-prev {
+        width: 50px;
+        height: 50px;
+        margin-top: 100px;
+    }
+
+    .img-size{
+        margin-left:calc(50% - 141px);
+    }
+
+    .carousel-control-prev-icon, .carousel-control-next-icon{
+        background-color: #000;
+        filter: invert(100%);
+    }
 
 
 </style>
@@ -222,11 +258,24 @@
                     },
                     {
                         data: 'responsable_name',
-                        name: 'responsable_name'
+                        name: 'responsable_name',
+                        render: function(data, type, row, config, meta) {
+                            let responsablereunion = "";
+                            if (row.empleado) {
+                                responsablereunion += `
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${row.empleado.avatar}" title="${row.empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            `;
+                            }
+                            return responsablereunion;
+                        }
                     },
                     {
-                        data: 'arearesponsable',
-                        name: 'arearesponsable'
+                        data: 'area',
+                        render: function(data, type, row, meta) {
+                            console.log(row)
+                            return JSON.parse(row.area).area;
+                        }
+
                     },
                     {
                         data: 'fecha_documento',
