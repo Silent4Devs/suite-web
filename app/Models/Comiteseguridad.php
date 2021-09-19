@@ -47,7 +47,7 @@ class Comiteseguridad extends Model
         return $this->belongsTo(User::class, 'personaasignada_id');
     }
 
-    public function getFechavigorAttribute($value)
+    public function getFechaVigorAttribute($value)
     {
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }

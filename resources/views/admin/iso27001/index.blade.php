@@ -278,12 +278,12 @@
                                                 Política SGSI
                                             </div>
                                         </a></li>
-                                    <li><a href="{{ route('admin.roles-responsabilidades.index') }}">
+                                    {{-- <li><a href="{{ route('admin.roles-responsabilidades.index') }}">
                                             <div>
                                                 <i class="fas fa-user-tag"></i>
                                                 Roles y responsabilidades
                                             </div>
-                                        </a></li>
+                                        </a></li> --}}
                                 </ul>
                             </div>
                         </section>

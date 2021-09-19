@@ -20,6 +20,8 @@ class ComiteseguridadController extends Controller
 {
     public function index(Request $request)
     {
+        // $query = Comiteseguridad::with(['personaasignada', 'team','asignacion'])->select(sprintf('%s.*', (new Comiteseguridad)->table))->get();
+        // dd($query[2]->asignacion->avatar);
         abort_if(Gate::denies('comiteseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
@@ -51,11 +53,13 @@ class ComiteseguridadController extends Controller
                 return $row->nombrerol ? $row->nombrerol : "";
             });
             $table->addColumn('asignada', function ($row) {
-                return $row->asignacion ? $row->asignacion->name : '';
+                return $row->asignacion ? $row->asignacion : '';
             });
-
             $table->editColumn('responsabilidades', function ($row) {
                 return $row->responsabilidades ? $row->responsabilidades : "";
+            });
+            $table->editColumn('fechavigor', function ($row) {
+                return $row->fechavigor ? $row->fechavigor : "";
             });
 
             $table->rawColumns(['actions', 'placeholder', 'personaasignada']);
@@ -82,6 +86,7 @@ class ComiteseguridadController extends Controller
     public function store(Request $request)
     {
         $comiteseguridad = Comiteseguridad::create($request->all());
+        // dd($comiteseguridad);
 
         return redirect()->route('admin.comiteseguridads.index')->with("success", 'Guardado con éxito');;
     }

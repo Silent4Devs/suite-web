@@ -5,6 +5,8 @@
             margin-top: -20px !important;
         }
 
+        
+
     </style>
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}

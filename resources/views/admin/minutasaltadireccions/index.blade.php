@@ -7,6 +7,9 @@
             text-align: center !important;
         }
 
+        
+
+
     </style>
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
@@ -143,13 +146,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
