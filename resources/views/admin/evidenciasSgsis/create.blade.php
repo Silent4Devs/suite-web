@@ -3,9 +3,9 @@
 
     {{ Breadcrumbs::render('admin.evidencias-sgsis.create') }}
 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-          <h3 class="mb-1  text-center text-white"> <strong>Registrar:</strong> Evidencias de Asignación de Recursos al SGSI</h3>
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+          <h3 class="mb-1 text-center text-white"> <strong>Registrar:</strong> Evidencias de Asignación de Recursos al SGSI</h3>
     </div>
 
     <div class="card-body">
@@ -38,7 +38,7 @@
                     <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
                         {{ $empleado->name }}
                     </option>
-            
+
                     @endforeach
                 </select>
                 @if ($errors->has('empleados'))
@@ -50,12 +50,12 @@
             <div class="form-group col-md-4">
                 <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                 <div class="form-control" id="puesto_reviso"></div>
-            
-            </div>  
+
+            </div>
             <div class="form-group col-md-4">
                 <label for="id_area_reviso"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                 <div class="form-control" id="area_reviso"></div>
-            
+
             </div>
             {{-- <div class="form-group col-md-6">
                 <label for="arearesponsable"><i class="fas fa-street-view iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.arearesponsable') }}</label>
@@ -67,20 +67,28 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.arearesponsable_helper') }}</span>
             </div> --}}
-            <div class="form-group col-sm-6">
-                <label class="required" for="arearesponsable"><i class="fas fa-street-view iconos-crear"></i>Área responsable</label>
-                <select class="custom-select areas" id="inputGroupSelect01" name="arearesponsable">
-                    <option selected value="" disabled>-- Selecciona un área --</option>
-                    @forelse ($areas as $area)
-                        <option value="{{ $area->id }}">{{ $area->area }}</option>
-                    @empty
-                        <option value="" disabled>Sin registros de áreas</option>
-                    @endforelse
+
+
+            <div class="form-group col-md-12 col-sm-12 col-lg-6">
+                <label for="area_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
+                <select class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}" name="area_id" id="area_id">
+                    @foreach ($areas as $area)
+                    <option value="{{ $area->id }}">
+                        {{ $area->area}}
+                    </option>
+
+                    @endforeach
                 </select>
+                @if ($errors->has('area'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('area') }}
+                </div>
+                @endif
             </div>
+
             <div class="form-group col-md-6">
                 <label for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del documento</label>
-                <input class="form-control date {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date" name="fechadocumento" id="fechadocumento" value="{{ old('fechadocumento') }}">
+                <input class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date" name="fechadocumento" id="fechadocumento" value="{{ old('fechadocumento') }}">
                 @if($errors->has('fechadocumento'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechadocumento') }}
@@ -92,7 +100,7 @@
                 <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documento</label>
                 <div class="custom-file">
                     <input type="file" name="files[]" multiple class="form-control" id="evidencia">
-            
+
                 </div>
             </div>
             {{-- <div class="form-group col-12">
@@ -106,7 +114,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.archivopdf_helper') }}</span>
             </div> --}}
-            <div class="form-group col-12 text-right">
+            <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

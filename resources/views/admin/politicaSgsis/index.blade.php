@@ -5,16 +5,42 @@
 <style>
 
 .table tr td:nth-child(2){
-
-text-align: justify !important;
-
+    text-align: justify !important;
 }
 
 .table tr th:nth-child(2){
-
-    text-align: justify !important;
+    min-width:900px !important;
+    text-align: center !important;
 
 }
+
+.table tr th:nth-child(3){
+    text-align: center !important;
+}
+
+.table tr th:nth-child(4){
+    min-width:70px !important;
+    text-align: center !important;
+}
+
+.table tr td:nth-child(4){
+    text-align: center !important;
+}
+
+.table tr td:nth-child(5){
+    text-align: center !important;
+}
+
+.table tr th:nth-child(6){
+    text-align: center !important;
+    min-width:130px !important;
+}
+
+.table tr th:nth-child(8){
+    text-align: center !important;
+    min-width:70px !important;
+}
+
 </style>
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
@@ -219,7 +245,16 @@ text-align: justify !important;
                     },
                     {
                         data: 'reviso_politica',
-                        name: 'reviso_politica'
+                        name: 'reviso_politica',
+                        render: function(data, type, row, config, meta) {
+                            let responsablereunion = "";
+                            if (row.reviso) {
+                                responsablereunion += `
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${row.reviso.avatar}" title="${row.reviso.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            `;
+                            }
+                            return responsablereunion;
+                        }
                     },
                     {
                         data: 'puesto_reviso',

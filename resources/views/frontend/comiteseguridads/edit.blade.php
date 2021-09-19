@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label for="fechavigor">{{ trans('cruds.comiteseguridad.fields.fechavigor') }}</label>
-                            <input class="form-control date" type="text" name="fechavigor" id="fechavigor" value="{{ old('fechavigor', $comiteseguridad->fechavigor) }}">
+                            <input class="form-control" type="date" name="fechavigor" id="fechavigor" value="{{ old('fechavigor', $comiteseguridad->fechavigor) }}">
                             @if($errors->has('fechavigor'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('fechavigor') }}

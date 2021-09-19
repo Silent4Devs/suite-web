@@ -27,7 +27,7 @@ class UpdateEvidenciasSgsiRequest extends FormRequest
             ],
             'fechadocumento'    => [
                 // 'date_format:' . config('panel.date_format'),
-                'date'
+                'date',
                 'nullable',
             ],
         ];
