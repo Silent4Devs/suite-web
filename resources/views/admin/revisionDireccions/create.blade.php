@@ -31,9 +31,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.revisionDireccion.fields.cambiosinternosexternos_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="retroalimentaciondesempeno"><i class="fas fa-shield-alt iconos-crear"></i>{{ trans('cruds.revisionDireccion.fields.retroalimentaciondesempeno') }}</label>
-                <input class="form-control {{ $errors->has('retroalimentaciondesempeno') ? 'is-invalid' : '' }}" type="text" name="retroalimentaciondesempeno" id="retroalimentaciondesempeno" value="{{ old('retroalimentaciondesempeno', '') }}">
+                <textarea class="form-control {{ $errors->has('retroalimentaciondesempeno') ? 'is-invalid' : '' }}" name="retroalimentaciondesempeno" id="retroalimentaciondesempeno">{{ old('retroalimentaciondesempeno') }}</textarea>
                 @if($errors->has('retroalimentaciondesempeno'))
                     <div class="invalid-feedback">
                         {{ $errors->first('retroalimentaciondesempeno') }}
@@ -41,9 +41,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.revisionDireccion.fields.retroalimentaciondesempeno_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="retroalimentacionpartesinteresadas"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.revisionDireccion.fields.retroalimentacionpartesinteresadas') }}</label>
-                <input class="form-control {{ $errors->has('retroalimentacionpartesinteresadas') ? 'is-invalid' : '' }}" type="text" name="retroalimentacionpartesinteresadas" id="retroalimentacionpartesinteresadas" value="{{ old('retroalimentacionpartesinteresadas', '') }}">
+                <textarea class="form-control {{ $errors->has('retroalimentacionpartesinteresadas') ? 'is-invalid' : '' }}" type="text" name="retroalimentacionpartesinteresadas" id="retroalimentacionpartesinteresadas">{{ old('retroalimentacionpartesinteresadas') }}</textarea>
                 @if($errors->has('retroalimentacionpartesinteresadas'))
                     <div class="invalid-feedback">
                         {{ $errors->first('retroalimentacionpartesinteresadas') }}

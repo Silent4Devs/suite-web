@@ -72,6 +72,10 @@
             margin-right: -5px;
             z-index: 1;
         }
+
+        .caja_botones_menu {
+                height: 36px !important;
+            }
     </style>
 
     @include('partials.flashMessages')
@@ -116,7 +120,7 @@
         </div>
         <div class="col-lg-9 row caja_botones_secciones">
             @if ($usuario->empleado)
-                <div class="col-12 caja_botones_menu" style="max-height: 60px;">
+                <div class="col-12 caja_botones_menu">
                     <a href="#" data-tabs="calendario" class="btn_activo"><i class="fas fa-calendar-alt"></i> Calendario</a>
                     <a href="#" data-tabs="actividades">
                         @if($contador_actividades)
