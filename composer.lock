@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84dc506d6ced0929116482a09969e846",
+    "content-hash": "68742dc3164a84e8e806e6c736f44e16",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -1591,20 +1591,21 @@
         },
         {
             "name": "emotality/tawk-laravel",
-            "version": "v1.1",
+            "version": "v2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/emotality/tawk-laravel.git",
-                "reference": "69224b05989b16e2838a3e76d5018c1420eaae83"
+                "reference": "4567fca57aa9cc641eb5691e6b272bc00d32b6db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/emotality/tawk-laravel/zipball/69224b05989b16e2838a3e76d5018c1420eaae83",
-                "reference": "69224b05989b16e2838a3e76d5018c1420eaae83",
+                "url": "https://api.github.com/repos/emotality/tawk-laravel/zipball/4567fca57aa9cc641eb5691e6b272bc00d32b6db",
+                "reference": "4567fca57aa9cc641eb5691e6b272bc00d32b6db",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "illuminate/support": ">=5.5.0",
+                "php": ">=7.0.0"
             },
             "type": "library",
             "extra": {
@@ -1634,6 +1635,7 @@
                 }
             ],
             "description": "A tawk.to chat widget for Laravel.",
+            "homepage": "https://github.com/emotality/tawk-laravel",
             "keywords": [
                 "chat",
                 "laravel",
@@ -1644,9 +1646,9 @@
             ],
             "support": {
                 "issues": "https://github.com/emotality/tawk-laravel/issues",
-                "source": "https://github.com/emotality/tawk-laravel/tree/v1.1"
+                "source": "https://github.com/emotality/tawk-laravel/tree/v2.1"
             },
-            "time": "2020-10-19T03:16:51+00:00"
+            "time": "2021-08-07T02:57:01+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -4112,16 +4114,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.6.1",
+            "version": "v2.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "0d8e44fb558a3f77835f0a8eefdaa98d766bc372"
+                "reference": "e39edcae6b1971b2d0f327a8e25c40e3d68cb7a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/0d8e44fb558a3f77835f0a8eefdaa98d766bc372",
-                "reference": "0d8e44fb558a3f77835f0a8eefdaa98d766bc372",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/e39edcae6b1971b2d0f327a8e25c40e3d68cb7a0",
+                "reference": "e39edcae6b1971b2d0f327a8e25c40e3d68cb7a0",
                 "shasum": ""
             },
             "require": {
@@ -4172,7 +4174,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.6.1"
+                "source": "https://github.com/livewire/livewire/tree/v2.6.5"
             },
             "funding": [
                 {
@@ -4180,7 +4182,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-14T20:11:46+00:00"
+            "time": "2021-09-18T23:19:07+00:00"
         },
         {
             "name": "maatwebsite/excel",
@@ -4502,24 +4504,24 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.3.3",
+            "version": "2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "3962ebfe206ac7ce6c754c79e2fee0c64bf1818d"
+                "reference": "437e7a1c50044b92773b361af77620efb76fff59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/3962ebfe206ac7ce6c754c79e2fee0c64bf1818d",
-                "reference": "3962ebfe206ac7ce6c754c79e2fee0c64bf1818d",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/437e7a1c50044b92773b361af77620efb76fff59",
+                "reference": "437e7a1c50044b92773b361af77620efb76fff59",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2",
-                "psr/log": "^1.0.1 || ^2.0"
+                "psr/log": "^1.0.1 || ^2.0 || ^3.0"
             },
             "provide": {
-                "psr/log-implementation": "1.0.0 || 2.0.0"
+                "psr/log-implementation": "1.0.0 || 2.0.0 || 3.0.0"
             },
             "require-dev": {
                 "aws/aws-sdk-php": "^2.4.9 || ^3.0",
@@ -4533,6 +4535,7 @@
                 "phpstan/phpstan": "^0.12.91",
                 "phpunit/phpunit": "^8.5",
                 "predis/predis": "^1.1",
+                "rollbar/rollbar": "^1.3",
                 "ruflin/elastica": ">=0.90@dev",
                 "swiftmailer/swiftmailer": "^5.3|^6.0"
             },
@@ -4584,7 +4587,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.3.3"
+                "source": "https://github.com/Seldaek/monolog/tree/2.3.4"
             },
             "funding": [
                 {
@@ -4596,7 +4599,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-14T18:40:13+00:00"
+            "time": "2021-09-15T11:27:21+00:00"
         },
         {
             "name": "myclabs/php-enum",
@@ -4816,20 +4819,20 @@
         },
         {
             "name": "nette/utils",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/utils.git",
-                "reference": "5c36cc1ba9bb6abb8a9e425cf054e0c3fd5b9822"
+                "reference": "8b90ef7f5d02df449e632aff4d4a3ba5fc5b4312"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/5c36cc1ba9bb6abb8a9e425cf054e0c3fd5b9822",
-                "reference": "5c36cc1ba9bb6abb8a9e425cf054e0c3fd5b9822",
+                "url": "https://api.github.com/repos/nette/utils/zipball/8b90ef7f5d02df449e632aff4d4a3ba5fc5b4312",
+                "reference": "8b90ef7f5d02df449e632aff4d4a3ba5fc5b4312",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2 <8.1"
+                "php": ">=7.2 <8.2"
             },
             "conflict": {
                 "nette/di": "<3.0.6"
@@ -4895,9 +4898,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/utils/issues",
-                "source": "https://github.com/nette/utils/tree/v3.2.3"
+                "source": "https://github.com/nette/utils/tree/v3.2.4"
             },
-            "time": "2021-08-16T21:05:00+00:00"
+            "time": "2021-09-19T23:30:35+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -10632,16 +10635,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.14.1",
+            "version": "2.14.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "15ead64e9828f0fc90932114429c4f7923570cb1"
+                "reference": "89584ce67dd32307f1063cc43846674f4679feda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/15ead64e9828f0fc90932114429c4f7923570cb1",
-                "reference": "15ead64e9828f0fc90932114429c4f7923570cb1",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/89584ce67dd32307f1063cc43846674f4679feda",
+                "reference": "89584ce67dd32307f1063cc43846674f4679feda",
                 "shasum": ""
             },
             "require": {
@@ -10691,7 +10694,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.14.1"
+                "source": "https://github.com/filp/whoops/tree/2.14.3"
             },
             "funding": [
                 {
@@ -10699,7 +10702,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-08-29T12:00:00+00:00"
+            "time": "2021-09-19T12:00:00+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -11312,16 +11315,16 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0"
+                "reference": "30f38bffc6f24293dadd1823936372dfa9e86e2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
-                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/30f38bffc6f24293dadd1823936372dfa9e86e2f",
+                "reference": "30f38bffc6f24293dadd1823936372dfa9e86e2f",
                 "shasum": ""
             },
             "require": {
@@ -11329,7 +11332,8 @@
                 "phpdocumentor/reflection-common": "^2.0"
             },
             "require-dev": {
-                "ext-tokenizer": "*"
+                "ext-tokenizer": "*",
+                "psalm/phar": "^4.8"
             },
             "type": "library",
             "extra": {
@@ -11355,9 +11359,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.4.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.5.0"
             },
-            "time": "2020-09-17T18:55:26+00:00"
+            "time": "2021-09-17T15:28:14+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -11428,23 +11432,23 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.6",
+            "version": "9.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "f6293e1b30a2354e8428e004689671b83871edde"
+                "reference": "d4c798ed8d51506800b441f7a13ecb0f76f12218"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/f6293e1b30a2354e8428e004689671b83871edde",
-                "reference": "f6293e1b30a2354e8428e004689671b83871edde",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d4c798ed8d51506800b441f7a13ecb0f76f12218",
+                "reference": "d4c798ed8d51506800b441f7a13ecb0f76f12218",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
-                "nikic/php-parser": "^4.10.2",
+                "nikic/php-parser": "^4.12.0",
                 "php": ">=7.3",
                 "phpunit/php-file-iterator": "^3.0.3",
                 "phpunit/php-text-template": "^2.0.2",
@@ -11493,7 +11497,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.6"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.7"
             },
             "funding": [
                 {
@@ -11501,7 +11505,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-03-28T07:26:59+00:00"
+            "time": "2021-09-17T05:39:03+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -12763,7 +12767,6 @@
                     "type": "github"
                 }
             ],
-            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
