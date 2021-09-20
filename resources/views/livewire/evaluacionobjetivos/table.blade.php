@@ -34,7 +34,7 @@
 
                 </td>
                 <td>
-                    <button wire:click="delete({{ $evaluacion->id }})" class="btn btn-danger">
+                    <button wire:click="delete({{ $evaluacion->id }})" class="btn btn-info" style="background-color: red !important; border: none !important; opacity: 0.7;">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </td>

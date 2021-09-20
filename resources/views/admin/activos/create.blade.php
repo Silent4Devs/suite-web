@@ -90,16 +90,11 @@
             </div> --}}
 
 
-
-                <div class="mb-3 col-sm-12 input-group">
-                    <label for="documentos_relacionados"><i class="fas fa-file iconos-crear"></i>Documentos
-                        Relacionados</label>
-                    <div class="ml-3 custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01" multiple
-                            name="documentos_relacionados[]" aria-describedby="inputGroupFileAddon01"
-                            class="form-control {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}"
+                <div class="col-sm-12 form-group">
+                    <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documentos Relacionados</label>
+                    <div class="custom-file">
+                        <input type="file" name="documentos_relacionados[]" multiple id="inputGroupFile01" class="form-control {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}"
                             value="{{ old('documentos_relacionados', '') }}">
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                         @if ($errors->has('documentos_relacionados'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('documentos_relacionados') }}
@@ -107,6 +102,9 @@
                         @endif
                     </div>
                 </div>
+
+
+
 
                 <div class="form-group col-md-4">
                     <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>Dueño</label>

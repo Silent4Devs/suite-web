@@ -92,7 +92,7 @@
                 @method('PATCH')
                 @csrf
                 @include('admin.documentos._form')
-                <a href="{{ route('admin.documentos.index') }}" class="text-white btn btn-danger">Cancelar</a>
+                <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
                 <input type="submit" class="btn btn-primary" value="Actualizar">
                 @can('documentos_publish')
                     <button id="publicar" class="btn btn-primary">Publicar</button>
@@ -192,7 +192,7 @@
                         </div>
                         <div class="modal-footer">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                            <button type="button" id="finalizarPublicacion" class="btn btn-primary">Enviar</button>
+                            <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
                         </div>
                     </div>
                 </div>
