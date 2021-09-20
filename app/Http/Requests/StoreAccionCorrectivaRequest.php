@@ -18,15 +18,15 @@ class StoreAccionCorrectivaRequest extends FormRequest
     {
         return [
             'fecharegistro'      => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
             'fecha_compromiso'   => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
             'fecha_verificacion' => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
         ];
