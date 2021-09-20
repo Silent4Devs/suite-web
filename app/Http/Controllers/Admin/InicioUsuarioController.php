@@ -187,7 +187,7 @@ class inicioUsuarioController extends Controller
             'proceso_quejado' => $request->proceso_quejado,
             'externo_quejado' => $request->externo_quejado,
 
-            'titulo' => $request->descripcion,
+            'titulo' => $request->titulo,
             'fecha' => $request->fecha,
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
