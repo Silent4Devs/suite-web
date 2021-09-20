@@ -315,7 +315,7 @@
             <font class="letra_blanca">Normas</font>
         </li>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="{{ route('admin.iso27001.index') }}">
+            <a class="c-sidebar-nav-link" href="{{ route('admin.iso27001.index') }}#contexto">
                 <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> ISO 27001 </font>
             </a>

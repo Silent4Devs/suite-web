@@ -25,7 +25,7 @@ class EvidenciasSgsi extends Model implements HasMedia
     // ];
 
     protected $dates = [
-        'fechadocumento'=>'date',
+        'fechadocumento',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -37,6 +37,7 @@ class EvidenciasSgsi extends Model implements HasMedia
         'objetivodocumento',
         'responsable_id',
         'arearesponsable',
+        'area_id',
         'fechadocumento',
         'evidencia',
         'created_at',
@@ -81,7 +82,7 @@ class EvidenciasSgsi extends Model implements HasMedia
         return $this->belongsTo(Team::class, 'team_id');
     }
 
-    public function getFechaeDocumentoAttribute($value)
+    public function getFechaDocumentoAttribute($value)
     {
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
@@ -91,11 +92,11 @@ class EvidenciasSgsi extends Model implements HasMedia
         return $this->belongsTo(Empleado::class, 'responsable_evidencia_id');
     }
 
-    public function area_responsable()
+    public function area()
     {
         return $this->belongsTo(Area::class, 'area_id', 'id');
     }
-    
+
     public function evidencia_sgsi()
     {
         return $this->hasMany(EvidenciaSgsiPdf::class,'id_evidencias_sgsis');

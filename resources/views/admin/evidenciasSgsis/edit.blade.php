@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-    
+
     {{ Breadcrumbs::render('admin.evidencias-sgsis.create') }}
 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
-          <h3 class="mb-1  text-center text-white"> <strong>Editar:</strong> Evidencias de Asignación de Recursos al SGSI</h3>
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
+          <h3 class="mb-1 text-center text-white"> <strong>Editar:</strong> Evidencias de Asignación de Recursos al SGSI</h3>
     </div>
 
     <div class="card-body">
@@ -30,29 +30,38 @@
                         {{ $errors->first('objetivodocumento') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>               
+                <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
             </div>
+
+
+
             <div class="form-group col-md-4">
-                <label for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
-                <select class="form-control {{ $errors->has('empleados') ? 'is-invalid' : '' }}" name="responsable_evidencia_id" id="responsable_evidencia_id">
-                    @foreach ($empleados as $empleado)
-                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
-                        {{ $empleado->name }}
-                    </option>
-            
+                <label for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
+                <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="responsable_evidencia_id"
+                    id="responsable_evidencia_id">
+                    @foreach ($empleados as $id => $empleado)
+                        <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                            data-area="{{ $empleado->area->area }}"
+                            {{ old('id_reviso', $evidenciasSgsi->responsable_evidencia_id) == $empleado->id ? 'selected' : '' }}>
+
+                            {{ $empleado->name }}
+                        </option>
                     @endforeach
                 </select>
                 @if ($errors->has('empleados'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('responsable_evidencia_id') }}
-                </div>
+                    <div class="invalid-feedback">
+                        {{ $errors->first('empleados') }}
+                    </div>
                 @endif
+                <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
             </div>
+
+
             <div class="form-group col-md-4">
                 <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                 <div class="form-control" id="puesto_reviso"></div>
-            
-            </div>  
+
+            </div>
             <div class="form-group col-md-4">
                 <label for="id_area_reviso"><i class="fas fa-street-viewa iconos-crear"></i>Área</label>
                 <div class="form-control" id="area_reviso"></div>
@@ -68,7 +77,7 @@
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.arearesponsable_helper') }}</span>
             </div> --}}
 
-           
+
             {{-- <div class="form-group col-sm-6">
                 <label class="required" for="arearesponsable"><i class="fas fa-street-view iconos-crear"></i>Área responsable</label>
                 <select class="custom-select areas" id="inputGroupSelect01" name="arearesponsable">
@@ -113,22 +122,19 @@
 
 
 
-
-
-
-
-
-
-            <div class="form-group col-md-6">
+            <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del documento</label>
-                <input class="form-control date {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date" name="fechadocumento" id="fechadocumento" value="{{ old('fechadocumento', $evidenciasSgsi->fechadocumento) }}">
-                @if($errors->has('fechadocumento'))
+                <input class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}"
+                    type="date" name="fechadocumento" id="fechadocumento"
+                    value="{{ old('fechadocumento',\Carbon\Carbon::parse($evidenciasSgsi->fechadocumento))->format('Y-m-d') }}">
+                @if ($errors->has('fechadocumento'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechadocumento') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.fechadocumento_helper') }}</span>
             </div>
+
+
             <div class="col-sm-12 form-group">
                 <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documento</label>
                 <div class="custom-file">
@@ -142,7 +148,7 @@
                     <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Descargar Documentos
                 </span>
             </div>
-            
+
             {{-- <div class="form-group col-12">
                 <label for="archivopdf"><i class="far fa-file-pdf iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.archivopdf') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('archivopdf') ? 'is-invalid' : '' }}" id="archivopdf-dropzone">
@@ -154,7 +160,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.archivopdf_helper') }}</span>
             </div> --}}
-            <div class="form-group col-12 text-right">
+            <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

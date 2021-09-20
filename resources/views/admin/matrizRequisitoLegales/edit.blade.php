@@ -257,7 +257,7 @@
 
 
                 <div class="form-group col-md-4">
-                    <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Reviso</label>
+                    <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
                     <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="id_reviso"
                         id="id_reviso">
                         @foreach ($empleados as $id => $empleado)

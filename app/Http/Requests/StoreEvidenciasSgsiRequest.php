@@ -18,7 +18,7 @@ class StoreEvidenciasSgsiRequest extends FormRequest
     {
         return [
             'objetivodocumento' => [
-                'string',
+                'longText',
                 'required',
             ],
             'arearesponsable'   => [
