@@ -217,9 +217,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
     // Empleados
+    Route::post('empleados/store/{empleado}/competencias-resumen','EmpleadoController@storeResumen')->name('empleados.storeResumen');
+    Route::post('empleados/store/{empleado}/competencias-certificaciones','EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
+    Route::post('empleados/store/competencias','EmpleadoController@storeWithCompetencia')->name('empleados.storeWithCompetencia');
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
     Route::post('empleados/lista', 'EmpleadoController@getEmpleadosLista')->name('empleados.lista');
     Route::resource('empleados', 'EmpleadoController');
+
 
     // Organizacions
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
