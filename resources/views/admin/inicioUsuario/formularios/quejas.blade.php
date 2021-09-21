@@ -127,13 +127,8 @@
 				</div>
 
 				<div class="form-group mt-4 col-12">
-					<label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción detallada de la queja</label>
-					<textarea type="" name="descripcion" class="form-control"></textarea>
-					<small style="color: #555;">
-						Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o
-						desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,
-						¿Cuándo?, ¿Dónde?
-					</small>
+					<label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción detallada de la queja</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
+					<textarea type="text" name="descripcion" class="form-control"></textarea>
 				</div>
 
 				<div class="form-group mt-4 col-12">

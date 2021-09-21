@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\PlanaccionCorrectiva;
+use Gate;
 use Flash;
-use App\Functions\GeneratePdf;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
-use App\Http\Requests\StoreAccionCorrectivaRequest;
-use App\Http\Requests\UpdateAccionCorrectivaRequest;
-use App\Models\AccionCorrectiva;
-use App\Models\Puesto;
 use App\Models\Team;
 use App\Models\User;
-use Gate;
+use App\Models\Puesto;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Symfony\Component\HttpFoundation\Response;
+use App\Functions\GeneratePdf;
+use App\Models\AccionCorrectiva;
+use App\Http\Controllers\Controller;
+use App\Models\PlanaccionCorrectiva;
 use Yajra\DataTables\Facades\DataTables;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\StoreAccionCorrectivaRequest;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Requests\UpdateAccionCorrectivaRequest;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
 
 class AccionCorrectivaController extends Controller
 {
@@ -29,7 +30,7 @@ class AccionCorrectivaController extends Controller
         abort_if(Gate::denies('accion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team'])->select(sprintf('%s.*', (new AccionCorrectiva)->table));
+            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -54,20 +55,48 @@ class AccionCorrectivaController extends Controller
                 return $row->id ? $row->id : "";
             });
 
-            $table->addColumn('nombrereporta_name', function ($row) {
-                return $row->nombrereporta ? $row->nombrereporta->name : '';
+            $table->addColumn('reporto', function ($row) {
+                return $row->empleados ? $row->empleados->name : '';
             });
 
-            $table->addColumn('puestoreporta_puesto', function ($row) {
-                return $row->puestoreporta ? $row->puestoreporta->puesto : '';
+            $table->addColumn('reporto_puesto', function ($row) {
+                return $row->empleados ? $row->empleados->puesto : '';
+            });
+            $table->addColumn('reporto_area', function ($row) {
+                return $row->empleados ? $row->empleados->area : '';
             });
 
-            $table->addColumn('nombreregistra_name', function ($row) {
-                return $row->nombreregistra ? $row->nombreregistra->name : '';
+            $table->addColumn('registro', function ($row) {
+                return $row->empleados ? $row->empleados->name : '';
             });
 
-            $table->addColumn('puestoregistra_puesto', function ($row) {
-                return $row->puestoregistra ? $row->puestoregistra->puesto : '';
+            $table->addColumn('registro_puesto', function ($row) {
+                return $row->empleados ? $row->empleados->puesto : '';
+            });
+            $table->addColumn('registro_area', function ($row) {
+                return $row->empleados ? $row->empleados->area : '';
+            });
+
+            $table->addColumn('responsable_accion', function ($row) {
+                return $row->empleados ? $row->empleados->name : '';
+            });
+
+            $table->addColumn('responsable_accion_puesto', function ($row) {
+                return $row->empleados ? $row->empleados->puesto : '';
+            });
+            $table->addColumn('responsable_accion_area', function ($row) {
+                return $row->empleados ? $row->empleados->area : '';
+            });
+
+            $table->addColumn('responsable_autorizacion', function ($row) {
+                return $row->empleados ? $row->empleados->name : '';
+            });
+
+            $table->addColumn('responsable_autorizacion_puesto', function ($row) {
+                return $row->empleados ? $row->empleados->puesto : '';
+            });
+            $table->addColumn('responsable_autorizacion_area', function ($row) {
+                return $row->empleados ? $row->empleados->area : '';
             });
 
             $table->editColumn('tema', function ($row) {
@@ -136,7 +165,9 @@ class AccionCorrectivaController extends Controller
 
         $nombre_autorizas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas'));
+        $empleados = Empleado::with('area')->get();
+
+        return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas','empleados'));
     }
 
     public function store(StoreAccionCorrectivaRequest $request)
@@ -181,9 +212,11 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->load('nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team');
 
+        $empleados = Empleado::with('area')->get();
+
         $id = $accionCorrectiva->id;
 
-        $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name')
+        $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name','empleados')
             ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
             ->join('users', 'planaccion_correctivas.responsable_id', '=', 'users.id')
             ->where('planaccion_correctivas.accioncorrectiva_id', '=', $id)

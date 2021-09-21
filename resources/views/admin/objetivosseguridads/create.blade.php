@@ -157,8 +157,7 @@
 
                         </div>
                         <div class="form-group">
-                            <label for="objetivoseguridad"><i
-                                    class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
+                            <label for="objetivoseguridad"><i class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
                             <textarea class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}"
                                 name="objetivoseguridad" id="objetivoseguridad">{{ old('objetivoseguridad') }}</textarea>
                             @if ($errors->has('objetivoseguridad'))

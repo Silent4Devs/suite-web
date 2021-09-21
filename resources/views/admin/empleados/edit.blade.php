@@ -170,39 +170,42 @@
 
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.empleados.update', [$empleado->id]) }}"
-                enctype="multipart/form-data">
-                @method('PUT')
-                @csrf
 
-                <div class="row">
-                    <div class="col-md-12">
+            <ul class="nav nav-pills nav-fill nav-tabs" id="tab-recursos" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab"
+                        aria-controls="general" aria-selected="true">
+                        <font class="letra_blanca">
+                            <i class="mr-1 fas fa-file"></i>
+                            Información General
+                        </font>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="participantes-tab" data-toggle="tab" href="#participantes" role="tab"
+                        aria-controls="participantes" aria-selected="false" onclick="participantesDataTable()">
+                        <font class="letra_blanca">
+                            <i class="mr-1 fas fa-flag-checkered"></i>
+                            Competencias
+                        </font>
+                    </a>
+                </li>
+            </ul>
 
-                        <ul class="nav nav-pills nav-fill nav-tabs" id="tab-recursos" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab"
-                                    aria-controls="general" aria-selected="true">
-                                    <font class="letra_blanca">
-                                        <i class="mr-1 fas fa-file"></i>
-                                        Información General
-                                    </font>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="participantes-tab" data-toggle="tab" href="#participantes"
-                                    role="tab" aria-controls="participantes" aria-selected="false"
-                                    onclick="participantesDataTable()">
-                                    <font class="letra_blanca">
-                                        <i class="mr-1 fas fa-flag-checkered"></i>
-                                        Competencias
-                                    </font>
-                                </a>
-                            </li>
-                        </ul>
 
-                        <div class="tab-content card" id="myTabContentJust">
-                            <div class="px-4 mt-4 tab-pane fade show active" id="general" role="tabpanel"
-                                aria-labelledby="general-tab">
+
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <div class="tab-content card" id="myTabContentJust">
+
+                        <div class="px-4 mt-4 tab-pane fade show active" id="general" role="tabpanel"
+                            aria-labelledby="general-tab">
+                            <form method="POST" action="{{ route('admin.empleados.update', [$empleado->id]) }}"
+                                enctype="multipart/form-data">
+                                @method('PUT')
+                                @csrf
                                 <div class="mb-3 text-center row justify-content-center">
                                     <div class="text-center col-sm-2 w-50 text-light card-title"
                                         style="background-color:#1BB0B0">
@@ -266,7 +269,8 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Jefe
+                                        <label class="required" for="jefe"><i
+                                                class="fas fa-user iconos-crear"></i>Jefe
                                             Inmediato</label>
                                         <div class="mb-3 input-group">
                                             <select class="custom-select supervisor" id="inputGroupSelect01"
@@ -422,7 +426,8 @@
                                                                         style="font-size: 20pt;position: relative;top: 4px;"></i>
                                                                     <span id="texto-imagen" class="pl-2">
                                                                         Subir imágen
-                                                                        <small class="text-danger" style="font-size: 10px">
+                                                                        <small class="text-danger"
+                                                                            style="font-size: 10px">
                                                                             (Opcional)</small>
                                                                     </span>
                                                                 </h5>
@@ -441,7 +446,8 @@
                                                                         style="font-size: 20pt;position: relative;top: 4px;"></i>
                                                                     <span id="texto-imagen-avatar" class="pl-2">
                                                                         Tomar Foto
-                                                                        <small class="text-danger" style="font-size: 10px">
+                                                                        <small class="text-danger"
+                                                                            style="font-size: 10px">
                                                                             (Opcional)</small>
                                                                     </span>
                                                                 </h5>
@@ -482,33 +488,47 @@
                                     </div>
                                     <input type="hidden" id="snapshoot" readonly autocomplete="off" name="snap_foto">
                                 </div>
+                            </form>
+                        </div>
 
-                            </div>
 
-                            <div class="px-4 mt-4 mb-3 tab-pane fade" id="participantes" role="tabpanel"
-                                aria-labelledby="participantes-tab">
 
-                                <div class="row">
+
+                        <div class="px-4 mt-4 mb-3 tab-pane fade" id="participantes" role="tabpanel"
+                            aria-labelledby="participantes-tab">
+
+
+                            <div class="row">
+                                <form method="POST" action="{{ route('admin.empleados.storeResumen', [$empleado->id]) }}"
+                                    id="formResumen">
                                     <div class="form-group col-sm-12">
                                         <label for="resumen"><i class="fas fa-file-alt iconos-crear"></i>Resumen</label>
                                         <textarea class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}"
-                                            type="text" name="resumen" id="resumen">{{ old('resumen', '') }}</textarea>
+                                            type="text" name="resumen"
+                                            id="resumen">{{ old('resumen', $empleado->resumen) }}</textarea>
                                         @if ($errors->has('resumen'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('resumen') }}
                                             </div>
                                         @endif
                                     </div>
-                                </div>
+                                    <button id="btnGuardarResumen" class="btn btn-outline-primary">Guardar</button>
+                                </form>
+                            </div>
 
-                                <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                    <span style="font-size: 17px; font-weight: bold;">
-                                        Certificaciones</span>
-                                </div>
+                            <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                <span style="font-size: 17px; font-weight: bold;">
+                                    Certificaciones</span>
+                            </div>
 
+                            <form method="POST" action="{{ route('admin.empleados.storeCertificaciones', [$empleado->id]) }}"
+                                id="formCertificaciones" enctype="multipart/form-data">
+
+                                <input type="hidden" name="empleado_id" value="{{ $empleado->id }}"/>
                                 <div class="row">
                                     <div class="form-group col-sm-12">
-                                        <label for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre</label>
+                                        <label for="nombre"><i
+                                                class="fas fa-file-signature iconos-crear"></i>Nombre</label>
                                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
                                             type="text" name="nombre" id="nombre_certificado"
                                             value="{{ old('nombre', '') }}">
@@ -530,7 +550,7 @@
                                     <div class="form-group col-sm-6">
                                         <label for="estatus"><i class="fas fa-street-view iconos-crear"></i>Estatus</label>
                                         <input class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}"
-                                            type="text" name="vencio_alta" id="vencio_alta"
+                                            type="text" name="estatus" id="vencio_alta"
                                             value="{{ old('estatus', '') }}" readonly>
                                         <span class="errors vencio_alta_error"></span>
                                     </div>
@@ -541,7 +561,8 @@
                                         <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Adjuntar
                                             Certificado</label>
                                         <div class="custom-file">
-                                            <input type="file" name="files[]" multiple class="form-control" id="evidencia">
+                                            <input type="file" name="documento" class="form-control"
+                                                id="evidencia">
 
                                         </div>
                                     </div>
@@ -558,353 +579,323 @@
                                     </button>
                                 </div>
 
-                                <div class="mt-3 col-12 w-100 datatable-fix">
-                                    <table class="table w-100" id="tbl-certificados" style="width:100% !important">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>Nombre</th>
-                                                <th>Vigencia</th>
-                                                <th>Estatus</th>
-                                                {{-- <th>Documento</th> --}}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                @foreach ($empleado->empleado_certificaciones as $certificaciones)
-                                                    <td>{{ $certificaciones->nombre }}</td>
-                                                    <td>{{ $certificaciones->estatus }}</td>
-                                                    <td>{{ $certificaciones->vigencia }}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                            </form>
+                            <div class="mt-3 col-12 w-100 datatable-fix">
+                                <table class="table w-100" id="tbl-certificados" style="width:100% !important">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Vigencia</th>
+                                            <th>Estatus</th>
+                                            <th>Documento</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                <input type="hidden" name="certificado" value="" id="certificado">
-
-
-                                <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                    <span style="font-size: 17px; font-weight: bold;">
-                                        Cursos / Diplomados</span>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-sm-12">
-                                        <label for="curso_diplomado"><i class="fas fa-street-view iconos-crear"></i>Nombre
-                                            del curso /
-                                            diplomado</label>
-                                        <input
-                                            class="form-control {{ $errors->has('curso_diplomado') ? 'is-invalid' : '' }}"
-                                            type="text" name="curso_diplomado" id="curso_diplomado"
-                                            value="{{ old('curso_diplomado', '') }}">
-                                        <span class="errors curso_diplomado_error"></span>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="tipo"><i class="fas fa-street-view iconos-crear"></i>Tipo</label>
-                                        <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
-                                            name="tipo" id="tipo">
-                                            <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
-                                                Selecciona una opción</option>
-                                            @foreach (App\Models\CursosDiplomasEmpleados::TipoSelect as $key => $label)
-                                                <option value="{{ $key }}"
-                                                    {{ old('tipo', '') === (string) $key ? 'selected' : '' }}>
-                                                    {{ $label }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <span class="errors tipo_error"></span>
-                                    </div>
-
-
-
-                                    <div class="form-group col-sm-3">
-                                        <label for="año"><i class="far fa-calendar-alt iconos-crear"></i>Año</label>
-                                        <input class="form-control {{ $errors->has('año') ? 'is-invalid' : '' }}"
-                                            type="date" name="año" id="año" value="{{ old('año', '') }}">
-                                        <span class="errors año_error"></span>
-                                    </div>
-
-
-                                    <div class="form-group col-sm-3">
-                                        <label for="duracion"><i class="fas fa-street-view iconos-crear"></i>Duración
-                                            (Hrs)</label>
-                                        <input class="form-control {{ $errors->has('duracion') ? 'is-invalid' : '' }}"
-                                            type="number" name="duracion" id="duracion"
-                                            value="{{ old('duracion', '') }}">
-                                        <span class="errors duracion_error"></span>
-                                    </div>
-                                </div>
-
-
-                                <div class="mb-5 col-12">
-                                    <button id="btn-suscribir-curso" type="submit"
-                                        class="mr-3 btn btn-sm btn-outline-success"
-                                        style="float: right; position: relative;">
-                                        <i class="mr-1 fas fa-plus-circle"></i>
-                                        Agregar Curso / Diplomado
-                                        {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
-                                    </button>
-                                </div>
-
-                                <div class="mt-3 col-12 w-100 datatable-fix">
-                                    <table class="table w-100" id="tbl-cursos">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>Nombre</th>
-                                                <th>Tipo</th>
-                                                <th>Año</th>
-                                                <th>Duración</th>
-                                            </tr>
-
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                @foreach ($empleado->empleado_cursos as $cursos)
-                                                    <td>{{ $cursos->curso_diploma }}</td>
-                                                    <td>{{ $cursos->tipo }}</td>
-                                                    <td>{{ $cursos->duracion }}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-
-
-                                <input type="hidden" name="curso" value="" id="curso">
-
-
-
-                                <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                    <span style="font-size: 17px; font-weight: bold;">
-                                        Experiencia Profesional</span>
-                                </div>
-
-                                <div class="row">
-
-                                    <div class="form-group col-sm-6">
-                                        <label for="empresa"><i class="fas fa-building iconos-crear"></i>Empresa</label>
-                                        <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}"
-                                            type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}">
-                                        <span class="errors empresa_error"></span>
-                                    </div>
-
-                                    <div class="form-group col-sm-6">
-                                        <label for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                        <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
-                                            type="text" name="puesto_trabajo" id="puesto_trabajo"
-                                            value="{{ old('puesto', '') }}">
-                                        <span class="errors puesto_trabajo_error"></span>
-                                    </div>
-
-                                </div>
-
-                                <div class="mt-1 form-group col-12">
-                                    <b>Periodo laboral:</b>
-                                </div>
-
-
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="inicio_mes"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
-                                        <input class="form-control {{ $errors->has('inicio_mes') ? 'is-invalid' : '' }}"
-                                            type="date" name="inicio_mes" id="inicio_mes"
-                                            value="{{ old('inicio_mes', '') }}">
-                                        <span class="errors inicio_mes_error"></span>
-                                    </div>
-
-
-
-                                    <div class="form-group col-sm-6">
-                                        <label for="fin_mes"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
-                                        <input class="form-control {{ $errors->has('fin_mes') ? 'is-invalid' : '' }}"
-                                            type="date" name="fin_mes" id="fin_mes" value="{{ old('fin_mes', '') }}">
-                                        <span class="errors fin_mes_error"></span>
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-sm-12">
-                                        <label for="descripcion"><i
-                                                class="fas fa-clipboard-list iconos-crear"></i>Descripción</label>
-                                        <textarea
-                                            class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                            type="text" name="descripcion"
-                                            id="descripcion"> {{ old('descripcion', '') }}</textarea>
-                                        <span class="errors descripcion_error"></span>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="mb-5 col-12">
-                                    <button id="btn-agregar-experiencia" type="submit"
-                                        class="mr-3 btn btn-sm btn-outline-success"
-                                        style="float: right; position: relative;">
-                                        <i class="mr-1 fas fa-plus-circle"></i>
-                                        Agregar Experiencia
-                                        {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
-                                    </button>
-                                </div>
-
-                                <div class="mt-3 col-12 w-100 datatable-fix">
-                                    <table class="table w-100" id="tbl-experiencia">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>Empresa</th>
-                                                <th>Puesto</th>
-                                                <th>Descripción</th>
-                                                <th>Inicio</th>
-                                                <th>Fin</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                @foreach ($empleado->empleado_experiencia as $experiencia)
-                                                    <td>{{ $experiencia->empresa }}</td>
-                                                    <td>{{ $experiencia->puesto }}</td>
-                                                    <td>{{ $experiencia->inicio_mes }}</td>
-                                                    <td>{{ $experiencia->fin_mes }}</td>
-                                                    <td>{{ $experiencia->descripcion}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <input type="hidden" name="experiencia" value="" id="experiencia">
-
-
-                                <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                    <span style="font-size: 17px; font-weight: bold;">
-                                        Educación</span>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="institucion"><i
-                                                class="fas fa-school iconos-crear"></i>Institución</label>
-                                        <input class="form-control {{ $errors->has('institucion') ? 'is-invalid' : '' }}"
-                                            type="text" name="institucion" id="institucion"
-                                            value="{{ old('institucion', '') }}">
-                                        <span class="errors institucion_error"></span>
-                                    </div>
-
-
-                                    <div class="form-group col-sm-6">
-                                        <label for="nivel"><i class="fas fa-street-view iconos-crear"></i>Nivel de
-                                            estudios</label>
-                                        <select class="form-control {{ $errors->has('nivel') ? 'is-invalid' : '' }}"
-                                            name="nivel" id="nivel">
-                                            <option value disabled {{ old('nivel', null) === null ? 'selected' : '' }}>
-                                                Selecciona una opción</option>
-                                            @foreach (App\Models\EducacionEmpleados::NivelSelect as $key => $label)
-                                                <option value="{{ $key }}"
-                                                    {{ old('nivel', '') === (string) $key ? 'selected' : '' }}>
-                                                    {{ $label }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <span class="errors nivel_error"></span>
-                                    </div>
-                                </div>
-
-
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="año_inicio"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
-                                        <input class="form-control {{ $errors->has('año_inicio') ? 'is-invalid' : '' }}"
-                                            type="date" name="año_inicio" id="año_inicio"
-                                            value="{{ old('año_inicio', '') }}">
-                                        <span class="errors año_inicio_error"></span>
-                                    </div>
-
-
-
-                                    <div class="form-group col-sm-6">
-                                        <label for="año_fin"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
-                                        <input class="form-control {{ $errors->has('año_fin') ? 'is-invalid' : '' }}"
-                                            type="date" name="año_fin" id="año_fin" value="{{ old('año_fin', '') }}">
-                                        <span class="errors año_fin_error"></span>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="mb-5 col-12">
-                                    <button id="btn-agregar-educacion" type="submit"
-                                        class="mr-3 btn btn-sm btn-outline-success"
-                                        style="float: right; position: relative;">
-                                        <i class="mr-1 fas fa-plus-circle"></i>
-                                        Agregar Educacion
-                                        {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
-                                    </button>
-                                </div>
-
-                                <div class="mt-3 col-12 w-100 datatable-fix">
-                                    <table class="table w-100" id="tbl-educacion">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>Institucion</th>
-                                                <th>Nivel</th>
-                                                <th>Inicio</th>
-                                                {{-- <th scope="col">Área</th> --}}
-                                                <th>Fin</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                @foreach ($empleado->empleado_educacion as $educacion)
-                                                    <td> {{ $educacion->institucion }}</td>
-                                                    <td>{{ $educacion->nivel}}</td>
-                                                    <td>{{ $educacion->año_inicio}}</td>
-                                                    <td>{{ $educacion->año_fin}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-
-
-                                <input type="hidden" name="educacion" value="" id="educacion">
-
-
-
-                                <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
-                                    <span style="font-size: 17px; font-weight: bold;">
-                                        Documentos</span>
-                                </div>
-
-                                <div class="mt-3 col-sm-12 form-group">
-                                    <label for="documentos"><i
-                                            class="fas fa-folder-open iconos-crear"></i>Documentos</label><i
-                                        class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
-                                    <div class="custom-file">
-                                        <input type="file" name="files[]" multiple class="form-control" id="documentos">
-
-                                    </div>
-                                </div>
-
-
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="text-right form-group col-12">
-                                <a href="{{ redirect()->getUrlGenerator()->previous() }}"
-                                    class="btn_cancelar">Cancelar</a>
-                                <button class="btn btn-danger" type="submit" id="btnGuardar">
-                                    {{ trans('global.save') }}
+
+                            <input type="hidden" name="certificado" value="" id="certificado">
+
+
+                            <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                <span style="font-size: 17px; font-weight: bold;">
+                                    Cursos / Diplomados</span>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="curso_diplomado"><i class="fas fa-street-view iconos-crear"></i>Nombre
+                                        del curso /
+                                        diplomado</label>
+                                    <input
+                                        class="form-control {{ $errors->has('curso_diplomado') ? 'is-invalid' : '' }}"
+                                        type="text" name="curso_diplomado" id="curso_diplomado"
+                                        value="{{ old('curso_diplomado', '') }}">
+                                    <span class="errors curso_diplomado_error"></span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="tipo"><i class="fas fa-street-view iconos-crear"></i>Tipo</label>
+                                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
+                                        name="tipo" id="tipo">
+                                        <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
+                                            Selecciona una opción</option>
+                                        @foreach (App\Models\CursosDiplomasEmpleados::TipoSelect as $key => $label)
+                                            <option value="{{ $key }}"
+                                                {{ old('tipo', '') === (string) $key ? 'selected' : '' }}>
+                                                {{ $label }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <span class="errors tipo_error"></span>
+                                </div>
+
+
+
+                                <div class="form-group col-sm-3">
+                                    <label for="año"><i class="far fa-calendar-alt iconos-crear"></i>Año</label>
+                                    <input class="form-control {{ $errors->has('año') ? 'is-invalid' : '' }}"
+                                        type="date" name="año" id="año" value="{{ old('año', '') }}">
+                                    <span class="errors año_error"></span>
+                                </div>
+
+
+                                <div class="form-group col-sm-3">
+                                    <label for="duracion"><i class="fas fa-street-view iconos-crear"></i>Duración
+                                        (Hrs)</label>
+                                    <input class="form-control {{ $errors->has('duracion') ? 'is-invalid' : '' }}"
+                                        type="number" name="duracion" id="duracion" value="{{ old('duracion', '') }}">
+                                    <span class="errors duracion_error"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="mb-5 col-12">
+                                <button id="btn-suscribir-curso" type="submit" class="mr-3 btn btn-sm btn-outline-success"
+                                    style="float: right; position: relative;">
+                                    <i class="mr-1 fas fa-plus-circle"></i>
+                                    Agregar Curso / Diplomado
+                                    {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
+                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
                                 </button>
                             </div>
+
+                            <div class="mt-3 col-12 w-100 datatable-fix">
+                                <table class="table w-100" id="tbl-cursos">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Tipo</th>
+                                            <th>Año</th>
+                                            <th>Duración</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <input type="hidden" name="curso" value="" id="curso">
+
+
+
+                            <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                <span style="font-size: 17px; font-weight: bold;">
+                                    Experiencia Profesional</span>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-sm-6">
+                                    <label for="empresa"><i class="fas fa-building iconos-crear"></i>Empresa</label>
+                                    <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}"
+                                        type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}">
+                                    <span class="errors empresa_error"></span>
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                                    <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
+                                        type="text" name="puesto_trabajo" id="puesto_trabajo"
+                                        value="{{ old('puesto', '') }}">
+                                    <span class="errors puesto_trabajo_error"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="mt-1 form-group col-12">
+                                <b>Periodo laboral:</b>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="inicio_mes"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
+                                    <input class="form-control {{ $errors->has('inicio_mes') ? 'is-invalid' : '' }}"
+                                        type="date" name="inicio_mes" id="inicio_mes"
+                                        value="{{ old('inicio_mes', '') }}">
+                                    <span class="errors inicio_mes_error"></span>
+                                </div>
+
+
+
+                                <div class="form-group col-sm-6">
+                                    <label for="fin_mes"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
+                                    <input class="form-control {{ $errors->has('fin_mes') ? 'is-invalid' : '' }}"
+                                        type="date" name="fin_mes" id="fin_mes" value="{{ old('fin_mes', '') }}">
+                                    <span class="errors fin_mes_error"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="descripcion"><i
+                                            class="fas fa-clipboard-list iconos-crear"></i>Descripción</label>
+                                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
+                                        type="text" name="descripcion"
+                                        id="descripcion"> {{ old('descripcion', '') }}</textarea>
+                                    <span class="errors descripcion_error"></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="mb-5 col-12">
+                                <button id="btn-agregar-experiencia" type="submit"
+                                    class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: relative;">
+                                    <i class="mr-1 fas fa-plus-circle"></i>
+                                    Agregar Experiencia
+                                    {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
+                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
+                                </button>
+                            </div>
+
+                            <div class="mt-3 col-12 w-100 datatable-fix">
+                                <table class="table w-100" id="tbl-experiencia">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Empresa</th>
+                                            <th>Puesto</th>
+                                            <th>Descripción</th>
+                                            <th>Inicio</th>
+                                            <th>Fin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <input type="hidden" name="experiencia" value="" id="experiencia">
+
+
+                            <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                <span style="font-size: 17px; font-weight: bold;">
+                                    Educación</span>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="institucion"><i class="fas fa-school iconos-crear"></i>Institución</label>
+                                    <input class="form-control {{ $errors->has('institucion') ? 'is-invalid' : '' }}"
+                                        type="text" name="institucion" id="institucion"
+                                        value="{{ old('institucion', '') }}">
+                                    <span class="errors institucion_error"></span>
+                                </div>
+
+
+                                <div class="form-group col-sm-6">
+                                    <label for="nivel"><i class="fas fa-street-view iconos-crear"></i>Nivel de
+                                        estudios</label>
+                                    <select class="form-control {{ $errors->has('nivel') ? 'is-invalid' : '' }}"
+                                        name="nivel" id="nivel">
+                                        <option value disabled {{ old('nivel', null) === null ? 'selected' : '' }}>
+                                            Selecciona una opción</option>
+                                        @foreach (App\Models\EducacionEmpleados::NivelSelect as $key => $label)
+                                            <option value="{{ $key }}"
+                                                {{ old('nivel', '') === (string) $key ? 'selected' : '' }}>
+                                                {{ $label }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <span class="errors nivel_error"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="año_inicio"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
+                                    <input class="form-control {{ $errors->has('año_inicio') ? 'is-invalid' : '' }}"
+                                        type="date" name="año_inicio" id="año_inicio"
+                                        value="{{ old('año_inicio', '') }}">
+                                    <span class="errors año_inicio_error"></span>
+                                </div>
+
+
+
+                                <div class="form-group col-sm-6">
+                                    <label for="año_fin"><i class="far fa-calendar-alt iconos-crear"></i>A</label>
+                                    <input class="form-control {{ $errors->has('año_fin') ? 'is-invalid' : '' }}"
+                                        type="date" name="año_fin" id="año_fin" value="{{ old('año_fin', '') }}">
+                                    <span class="errors año_fin_error"></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="mb-5 col-12">
+                                <button id="btn-agregar-educacion" type="submit"
+                                    class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: relative;">
+                                    <i class="mr-1 fas fa-plus-circle"></i>
+                                    Agregar Educacion
+                                    {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
+                                    style="position: absolute; top: 3px;left: 8px;"></i> --}}
+                                </button>
+                            </div>
+
+                            <div class="mt-3 col-12 w-100 datatable-fix">
+                                <table class="table w-100" id="tbl-educacion">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Institucion</th>
+                                            <th>Nivel</th>
+                                            <th>Inicio</th>
+                                            {{-- <th scope="col">Área</th> --}}
+                                            <th>Fin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <input type="hidden" name="educacion" value="" id="educacion">
+
+
+
+                            <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+                                <span style="font-size: 17px; font-weight: bold;">
+                                    Documentos</span>
+                            </div>
+
+                            <div class="mt-3 col-sm-12 form-group">
+                                <label for="documentos"><i class="fas fa-folder-open iconos-crear"></i>Documentos</label><i
+                                    class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
+                                <div class="custom-file">
+                                    <input type="file" name="files[]" multiple class="form-control" id="documentos">
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="text-right form-group col-12">
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                                class="btn_cancelar">Cancelar</a>
+                            <button class="btn btn-danger" type="submit" id="btnGuardar">
+                                {{ trans('global.save') }}
+                            </button>
                         </div>
                     </div>
                 </div>
+            </div>
+
+
+
+
+
 
         </div>
     </div>
@@ -1080,6 +1071,39 @@
 
     <script>
         $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            document.getElementById("btnGuardarResumen").addEventListener("click", function(e) {
+                e.preventDefault();
+                let url = $("#formResumen").attr("action");
+                console.log(url)
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    data: $("#formResumen").serialize(),
+                    beforeSend: function() {
+                        toastr.info("Guardando el resumen");
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success("Resumen guardado");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
+
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span.${indexInArray}_error`).text(valueOfElement[0]);
+
+                        });
+                    }
+                });
+            })
             window.tblExperiencia = $('#tbl-experiencia').DataTable({
                 buttons: []
             })
@@ -1392,49 +1416,78 @@
         }
 
         function suscribirCertificado() {
+
+            let url = $("#formCertificaciones").attr("action");
+                
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    data: new FormData(document.getElementById("formCertificaciones")),
+                    processData:false,
+                    contentType: false,
+                    beforeSend: function() {
+                        toastr.info("Guardando certificado");
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success("Certificado guardado");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.log(error)
+                        $.each(request.responseJSON.errors, function(indexInArray,
+
+                            valueOfElement) {
+                            console.log(valueOfElement, indexInArray);
+                            $(`span.${indexInArray}_error`).text(valueOfElement[0]);
+
+                        });
+                    }
+                });
+
             //form-participantes
 
-            let certificados = tblCertificado.rows().data().toArray();
-            let arrCertificado = [];
-            certificados.forEach(certificado => {
-                arrCertificado.push(certificado[0])
+            // let certificados = tblCertificado.rows().data().toArray();
+            // let arrCertificado = [];
+            // certificados.forEach(certificado => {
+            //     arrCertificado.push(certificado[0])
 
-            });
-            //no se puedan agregar datos que ya estan
-            let nombre_certificado = $("#nombre_certificado").val();
-            let vigencia = $("#vigencia").val();
-            let estatus = $("#vencio_alta").val();
+            // });
+            // //no se puedan agregar datos que ya estan
+            // let nombre_certificado = $("#nombre_certificado").val();
+            // let vigencia = $("#vigencia").val();
+            // let estatus = $("#vencio_alta").val();
 
 
-            if (nombre_certificado.trim() == '') {
-                document.querySelector('.nombre_certificado_error').innerHTML =
-                    "El campo nombre del certificado es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-            if (vigencia.trim() == '') {
-                document.querySelector('.vigencia_error').innerHTML = "El campo vigencia es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
-            if (estatus.trim() == '') {
-                document.querySelector('.estatus_error').innerHTML = "El campo estatus es requerido"
-                // limpiarCamposExperienciaPorId('empresa');
-            }
+            // if (nombre_certificado.trim() == '') {
+            //     document.querySelector('.nombre_certificado_error').innerHTML =
+            //         "El campo nombre del certificado es requerido"
+            //     // limpiarCamposExperienciaPorId('empresa');
+            // }
+            // if (vigencia.trim() == '') {
+            //     document.querySelector('.vigencia_error').innerHTML = "El campo vigencia es requerido"
+            //     // limpiarCamposExperienciaPorId('empresa');
+            // }
+            // if (estatus.trim() == '') {
+            //     document.querySelector('.estatus_error').innerHTML = "El campo estatus es requerido"
+            //     // limpiarCamposExperienciaPorId('empresa');
+            // }
 
-            if (nombre_certificado.trim() != '' && vigencia.trim() != '' && estatus.trim() != '') {
-                limpiarCamposCertificados();
+            // if (nombre_certificado.trim() != '' && vigencia.trim() != '' && estatus.trim() != '') {
+            //     limpiarCamposCertificados();
 
-                if (!arrCertificado.includes(nombre_certificado)) {
+            //     if (!arrCertificado.includes(nombre_certificado)) {
 
-                    tblCertificado.row.add([
-                        nombre_certificado,
-                        vigencia,
-                        estatus,
-                    ]).draw();
+            //         tblCertificado.row.add([
+            //             nombre_certificado,
+            //             vigencia,
+            //             estatus,
+            //         ]).draw();
 
-                } else {
-                    Swal.fire('Este registro ya ha sido agregado', '', 'error')
-                }
-            }
+            //     } else {
+            //         Swal.fire('Este registro ya ha sido agregado', '', 'error')
+            //     }
+            // }
         }
 
         function limpiarCamposCertificados() {

@@ -152,22 +152,15 @@ class EmpleadoController extends Controller
         $certificaciones = CertificacionesEmpleados::get();
         return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function onlyStore($request)
     {
 
-        // dd($request->all());
-        $experiencias = json_decode($request->experiencia);
-        $educacions = json_decode($request->educacion);
-        $cursos = json_decode($request->curso);
-        $certificados = json_decode($request->certificado);
+        // $experiencias = json_decode($request->experiencia);
+        // $educacions = json_decode($request->educacion);
+        // $cursos = json_decode($request->curso);
+        // $certificados = json_decode($request->certificado);
         // dd($cursos);
+
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $validateSupervisor = 'nullable|exists:empleados,id';
@@ -257,6 +250,27 @@ class EmpleadoController extends Controller
             'foto' => $image
         ]);
 
+        return $empleado;
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $empleado = $this->onlyStore($request);
+
+        return redirect()->route('admin.empleados.index')->with("success", 'Guardado con éxito');
+    }
+
+    public function storeWithCompetencia(Request $request)
+    {
+
+        $empleado = $this->onlyStore($request);
+
+        return redirect()->route('admin.empleados.edit', $empleado)->with("success", 'Guardado con éxito');
 
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -269,18 +283,8 @@ class EmpleadoController extends Controller
                 }
             }
         }
+        // dd($request->hasFile('files'));
 
-        if ($request->hasFile('files')) {
-            $files = $request->file('files');
-            foreach ($files as $file) {
-                if (Storage::putFileAs('public/certificados_empleados', $file, $file->getClientOriginalName())) {
-                    EvidenciasCertificadosEmpleados::create([
-                        'evidencia' => $file->getClientOriginalName(),
-                        'empleado_id' => $empleado->id,
-                    ]);
-                }
-            }
-        }
         foreach ($experiencias as $experiencia) {
             ExperienciaEmpleados::create([
                 'empleado_id' => $empleado->id,
@@ -316,19 +320,67 @@ class EmpleadoController extends Controller
                 'nombre' => $certificacion[0],
                 'estatus' => $certificacion[2],
                 'vigencia' => $certificacion[1],
+                'evidencia' => $certificacion[3],
             ]);
         }
-        // $gantt_path = 'storage/gantt/gantt_inicial.json';
-        // $path = public_path($gantt_path);
-
-        // $json_code = json_decode(file_get_contents($path), true);
-        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        // $write_empleados = $json_code;
-        // file_put_contents($path, json_encode($write_empleados));
-
-        return redirect()->route('admin.empleados.index')->with("success", 'Guardado con éxito');
+    }
+    public function storeResumen(Request $request, $empleado)
+    {
+        $request->validate([
+            "resumen" => "required|string|max:800"
+        ]);
+        if ($request->ajax()) {
+            $empleado = Empleado::find(intval($empleado));
+            $empleado->update([
+                "resumen" => $request->resumen
+            ]);
+            if ($empleado) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        }
     }
 
+    public function storeCertificaciones(Request $request, $empleado)
+    {
+        $request->validate([
+            "nombre" => "required|string|max:255",
+            "estatus" => "required|string|max:255",
+            "vigencia" => "required|date",
+            "empleado_id" => "required|exists:empleados,id"
+        ]);
+        // dd($request->all());
+        if ($request->ajax()) {
+            $empleado = Empleado::find(intval($empleado));
+            $certificado = CertificacionesEmpleados::create([
+                'empleado_id' => $empleado->id,
+                'nombre' => $request->nombre,
+                'estatus' =>  $request->estatus,
+                'vigencia' =>  $request->vigencia,
+            ]);
+            if ($request->hasFile('documento')) {
+                $filenameWithExt = $request->file('documento')->getClientOriginalName();
+                //Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Get just ext
+                $extension = $request->file('documento')->getClientOriginalExtension();
+                // Filename to store
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                // Upload Image
+                $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
+
+                $certificado->update([
+                    "documento" => $fileNameToStore
+                ]);
+            }
+            if ($empleado) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        }
+    }
     /**
      * Display the specified resource.
      *

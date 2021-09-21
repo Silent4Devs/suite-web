@@ -76,8 +76,6 @@ text-align:justify !important;
 
 
 
-
-
 </style>
 
     {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
@@ -426,7 +424,7 @@ text-align:justify !important;
                                 `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
                             let botones = `
                             <div class="btn-group">
-                                <a class="btn btn-sm" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i></a>
                                 ${row.planes ? `
                                     <div class="dropdown">
