@@ -182,7 +182,9 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         // Jenssegers\Date\DAteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Spatie\Geocoder\GeocoderServiceProvider::class
+        Spatie\Geocoder\GeocoderServiceProvider::class,
+        App\Providers\TenancyServiceProvider::class, // <-- here
+
 
     ],
 
