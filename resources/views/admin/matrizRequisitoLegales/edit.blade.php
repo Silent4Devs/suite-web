@@ -88,8 +88,7 @@
                             {{ $errors->first('fechaexpedicion') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
                 </div>
 
                 <div class="form-group col-sm-4">

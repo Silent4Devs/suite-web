@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
+use App\Models\DocumentoMaterialSgsi;
 
 class MaterialSgsiController extends Controller
 {
@@ -22,11 +24,14 @@ class MaterialSgsiController extends Controller
 
     public function index(Request $request)
     {
+        
         abort_if(Gate::denies('material_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        // dd(MaterialSgsi::with('arearesponsable', 'team','documentos_material')->get());
         if ($request->ajax()) {
-            $query = MaterialSgsi::with(['arearesponsable', 'team'])->select(sprintf('%s.*', (new MaterialSgsi)->table));
+           
+            $query = MaterialSgsi::with(['arearesponsable', 'team','documentos_material'])->select(sprintf('%s.*', (new MaterialSgsi)->table));
             $table = Datatables::of($query);
+            
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
@@ -63,13 +68,21 @@ class MaterialSgsiController extends Controller
                 return $row->tipoimparticion ? MaterialSgsi::TIPOIMPARTICION_SELECT[$row->tipoimparticion] : '';
             });
 
+            // $table->editColumn('archivo', function ($row) {
+            //     return $row->archivo ? '<a href="' . $row->archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            // });
+
             $table->editColumn('archivo', function ($row) {
-                return $row->archivo ? '<a href="' . $row->archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+                return $row->documentos_material ? $row->documentos_material:[];
             });
 
             $table->rawColumns(['actions', 'placeholder', 'arearesponsable', 'archivo']);
 
             return $table->make(true);
+
+            
+            // $materialSgsi = MaterialSgsi::with('team','documentos_material')->get();
+            // return datatables()->of($materialSgsi)->toJson();
         }
 
         $areas = Area::get();
@@ -83,17 +96,31 @@ class MaterialSgsiController extends Controller
         abort_if(Gate::denies('material_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $documentos = DocumentoMaterialSgsi::get();
 
-        return view('admin.materialSgsis.create', compact('arearesponsables'));
+        return view('admin.materialSgsis.create', compact('arearesponsables', 'documentos'));
+
+       
+        
     }
 
     public function store(Request $request)
     {
         $materialSgsi = MaterialSgsi::create($request->all());
-
-        if ($request->input('archivo', false)) {
-            $materialSgsi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('storage/documentos_material_sgsi', $file, $file->getClientOriginalName())) {
+                    DocumentoMaterialSgsi::create([
+                        'documento' => $file->getClientOriginalName(),
+                        'material_id' => $materialSgsi->id,
+                    ]);
+                }
+            }
         }
+        // if ($request->input('archivo', false)) {
+        //     $materialSgsi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+        // }
 
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $materialSgsi->id]);
@@ -107,26 +134,26 @@ class MaterialSgsiController extends Controller
         abort_if(Gate::denies('material_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        $documentos=DocumentoMaterialSgsi::get();
         $materialSgsi->load('arearesponsable', 'team');
 
-        return view('admin.materialSgsis.edit', compact('arearesponsables', 'materialSgsi'));
+        return view('admin.materialSgsis.edit', compact('arearesponsables', 'materialSgsi', 'documentos'));
     }
 
     public function update(UpdateMaterialSgsiRequest $request, MaterialSgsi $materialSgsi)
     {
         $materialSgsi->update($request->all());
-
-        if ($request->input('archivo', false)) {
-            if (!$materialSgsi->archivo || $request->input('archivo') !== $materialSgsi->archivo->file_name) {
-                if ($materialSgsi->archivo) {
-                    $materialSgsi->archivo->delete();
+        // $matrizRequisitoLegale->update($request->all());
+        $files = $request->file('files');
+        if ($request->hasFile('files')) {
+            foreach ($files as $file) {
+                if (Storage::putFileAs('storage/documentos_material_sgsi', $file, $file->getClientOriginalName())) {
+                    DocumentoMaterialSgsi::create([
+                        'documento' => $file->getClientOriginalName(),
+                        'material_id' => $materialSgsi->id,
+                    ]);
                 }
-
-                $materialSgsi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
             }
-        } elseif ($materialSgsi->archivo) {
-            $materialSgsi->archivo->delete();
         }
 
         return redirect()->route('admin.material-sgsis.index')->with("success", 'Editado con éxito');
