@@ -23,3 +23,5 @@ bootstrap/cache/
 storage/debugbar/
 
 storage/app/public/gantt/
+
+storage/logs/
