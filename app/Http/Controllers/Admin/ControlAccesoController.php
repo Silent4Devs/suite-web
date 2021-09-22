@@ -81,11 +81,12 @@ class ControlAccesoController extends Controller
 
     public function store(StoreControlAccesoRequest $request)
     {   
+        // dd($request->all());
         $controlAcceso = ControlAcceso::create($request->all());
         if ($request->hasFile('files')) {
             $files = $request->file('files');
             foreach ($files as $file) {
-                if (Storage::putFileAs('storage/documentos_control_accesos', $file, $file->getClientOriginalName())) {
+                if (Storage::putFileAs('public/documentos_control_accesos', $file, $file->getClientOriginalName())) {
                     DocumentoControlAcceso::create([
                         'documento' => $file->getClientOriginalName(),
                         'controlA_id' => $controlAcceso->id,
