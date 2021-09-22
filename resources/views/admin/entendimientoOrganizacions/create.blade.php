@@ -16,9 +16,6 @@
             @include('admin.entendimientoOrganizacions._form', [
             'btnText' => 'Guardar',
             ])
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>      </form>
-    </div>
-</div>
 
 <script src="{{ asset('js/dark_mode.js') }}"></script>
 @endsection

@@ -46,18 +46,21 @@
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.acciones_helper') }}</span>
             </div>
             <div class="form-group col-12">
-                <label for="responsable_id"><i class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.responsable') }}</label>
-                <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}" name="responsable_id" id="responsable_id">
-                    @foreach($responsables as $id => $responsable)
-                        <option value="{{ $id }}" {{ old('responsable_id') == $id ? 'selected' : '' }}>{{ $responsable }}</option>
+                <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                <select class="form-control {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="id_reviso" id="id_reviso">
+                    @foreach ($empleados as $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
+            
+                        {{ $empleado->name }}
+                    </option>
+            
                     @endforeach
                 </select>
-                @if($errors->has('responsable'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('responsable') }}
-                    </div>
+                @if ($errors->has('empleados'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('id_reviso') }}
+                </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.responsable_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
                 <label for="fechacompromiso"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.fechacompromiso') }}</label>

@@ -32,19 +32,24 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planificacionControl.fields.descripcion_helper') }}</span>
             </div>
-            <div class="form-group col-12">
-                <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.dueno') }}</label>
-                <select class="form-control select2 {{ $errors->has('dueno') ? 'is-invalid' : '' }}" name="dueno_id" id="dueno_id">
-                    @foreach($duenos as $id => $dueno)
-                        <option value="{{ $id }}" {{ (old('dueno_id') ? old('dueno_id') : $planificacionControl->dueno->id ?? '') == $id ? 'selected' : '' }}>{{ $dueno }}</option>
+            <div class="form-group col-md-4">
+                <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
+                <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="id_reviso"
+                    id="id_reviso">
+                    @foreach ($empleados as $id => $empleado)
+                        <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                            data-area="{{ $empleado->area->area }}"
+                            {{ old('id_reviso', $planificacionControl->id_reviso) == $empleado->id ? 'selected' : '' }}>
+
+                            {{ $empleado->name }}
+                        </option>
                     @endforeach
                 </select>
-                @if($errors->has('dueno'))
+                @if ($errors->has('empleados'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('dueno') }}
+                        {{ $errors->first('empleados') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.planificacionControl.fields.dueno_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
                 <label for="vulnerabilidad"><i class="fas fa-virus-slash iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.vulnerabilidad') }}</label>

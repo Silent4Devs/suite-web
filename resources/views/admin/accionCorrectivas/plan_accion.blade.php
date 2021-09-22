@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="card mt-4">
-        <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Acción Correctiva </h3>
+    <div class="mt-4 card">
+        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Acción Correctiva </h3>
         </div>
 
         <div class="card-body">
             <div class="container">
                 <div class="row">
 
-                    <div class="col-md-12 mt-5">
+                    <div class="mt-5 col-md-12">
                         <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap1()"
                            id="acollapseExample" href="" role="button" aria-expanded="false"
                            aria-controls="collapseExample">
@@ -133,7 +133,7 @@
                                         <span
                                             class="help-block">{{ trans('cruds.planaccionCorrectiva.fields.estatus_helper') }}</span>
                                     </div>
-                                    <div class="form-group col-12 text-right">
+                                    <div class="text-right form-group col-12">
 
                                         <a class="btn btn-danger" href="{{ route("admin.accion-correctivas.index") }}">Cancelar</a>
                                         <button class="btn btn-success " type="submit">

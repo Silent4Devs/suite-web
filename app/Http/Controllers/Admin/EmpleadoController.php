@@ -81,8 +81,8 @@ class EmpleadoController extends Controller
                 return $row->name ? $row->name : "";
             });
 
-            $table->editColumn('foto', function ($row) {
-                return $row->foto ? $row->foto : '';
+            $table->editColumn('avatar', function ($row) {
+                return $row->avatar ? $row->avatar : '';
             });
 
             $table->editColumn('area', function ($row) {
@@ -132,11 +132,32 @@ class EmpleadoController extends Controller
         return view('admin.empleados.index', compact('ceo_exists'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
+     public function getCertificaciones($empleado)
+     {
+        $certificaciones = CertificacionesEmpleados::where("empleado_id",intval($empleado))->get();
+        return datatables()->of($certificaciones)->toJson();
+     }
+
+     public function getEducacion($empleado)
+     {
+        $educacions = EducacionEmpleados::where("empleado_id",intval($empleado))->get();
+        return datatables()->of($educacions)->toJson();
+     }
+
+     public function getExperiencia($empleado)
+     {
+        $experiencias = ExperienciaEmpleados::where("empleado_id",intval($empleado))->get();
+        return datatables()->of($experiencias)->toJson();
+     }
+
+     public function getCursos($empleado)
+     {
+        $cursos = CursosDiplomasEmpleados::where("empleado_id",intval($empleado))->get();
+        return datatables()->of($cursos)->toJson();
+     }
+
     public function create()
     {
 
@@ -199,6 +220,8 @@ class EmpleadoController extends Controller
             "resumen" =>  $request->resumen,
             "cumpleaños" => $request->cumpleaños,
             "direccion" => $request->direccion,
+            "telefono_movil" => $request->telefono_movil,
+            "extension" => $request->extension,
         ]);
         $image = null;
         if ($request->snap_foto && $request->file('foto')) {
@@ -285,44 +308,6 @@ class EmpleadoController extends Controller
         }
         // dd($request->hasFile('files'));
 
-        foreach ($experiencias as $experiencia) {
-            ExperienciaEmpleados::create([
-                'empleado_id' => $empleado->id,
-                'empresa' => $experiencia[0],
-                'puesto' => $experiencia[1],
-                'inicio_mes' => $experiencia[3],
-                'fin_mes' => $experiencia[4],
-                'descripcion' => $experiencia[2],
-            ]);
-        }
-        // dd($experiencias);
-        foreach ($educacions as $educacion) {
-            EducacionEmpleados::create([
-                'empleado_id' => $empleado->id,
-                'institucion' => $educacion[0],
-                'nivel' => $educacion[3],
-                'año_inicio' => $educacion[2],
-                'año_fin' => $educacion[1],
-            ]);
-        }
-        foreach ($cursos as $curso) {
-            CursosDiplomasEmpleados::create([
-                'empleado_id' => $empleado->id,
-                'curso_diploma' => $curso[0],
-                'tipo' => $curso[1],
-                'año' => $curso[2],
-                'duracion' => $curso[3],
-            ]);
-        }
-        foreach ($certificados as $certificacion) {
-            CertificacionesEmpleados::create([
-                'empleado_id' => $empleado->id,
-                'nombre' => $certificacion[0],
-                'estatus' => $certificacion[2],
-                'vigencia' => $certificacion[1],
-                'evidencia' => $certificacion[3],
-            ]);
-        }
     }
     public function storeResumen(Request $request, $empleado)
     {
@@ -381,6 +366,96 @@ class EmpleadoController extends Controller
             }
         }
     }
+
+    public function storeCursos(Request $request, $empleado)
+    {
+        $request->validate([
+            "curso_diploma" => "required|string|max:255",
+            "tipo" => "required",
+            "año" => "required|date",
+            "duracion" => "required",
+            "empleado_id" => "required|exists:empleados,id"
+        ]);
+        // dd($request->all());
+        if ($request->ajax()) {
+            $empleado = Empleado::find(intval($empleado));
+            $curso = CursosDiplomasEmpleados::create([
+                'empleado_id' => $empleado->id,
+                'curso_diploma' => $request->curso_diploma,
+                'tipo' =>  $request->tipo,
+                'año' =>  $request->año,
+                'duracion' =>  $request->duracion,
+            ]);
+
+            if ($curso) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+
+        }
+    }
+
+    public function storeExperiencia(Request $request, $empleado)
+    {
+
+        $request->validate([
+            "empresa" => "required|string|max:255",
+            "puesto" => "required|string|max:255",
+            "inicio_mes" => "required|date",
+            "fin_mes" => "required|date",
+            "descripcion"=>"required",
+            "empleado_id" => "required|exists:empleados,id"
+
+        ]);
+        // dd($request->all());
+        if ($request->ajax()) {
+            $empleado = Empleado::find(intval($empleado));
+            $experiencia = ExperienciaEmpleados::create([
+                'empleado_id' => $empleado->id,
+                'empresa' => $request->empresa,
+                'puesto' =>  $request->puesto,
+                'inicio_mes' =>  $request->inicio_mes,
+                'fin_mes' =>  $request->fin_mes,
+                'descripcion' =>  $request->descripcion,
+            ]);
+            if ($experiencia) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        }
+    }
+
+    public function storeEducacion(Request $request, $empleado)
+    {
+
+        $request->validate([
+            "institucion" => "required|string|max:255",
+            "nivel" => "required",
+            "año_inicio" => "required|date",
+            "año_fin"=>"required|date",
+            "empleado_id" => "required|exists:empleados,id"
+
+        ]);
+        // dd($request->all());
+        if ($request->ajax()) {
+            $empleado = Empleado::find(intval($empleado));
+            $educacion = EducacionEmpleados::create([
+                'empleado_id' => $empleado->id,
+                'institucion' => $request->institucion,
+                'nivel' =>  $request->nivel,
+                'año_inicio' =>  $request->año_inicio,
+                'año_fin' =>  $request->año_fin,
+            ]);
+
+            if ($educacion) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        }
+    }
     /**
      * Display the specified resource.
      *
@@ -400,8 +475,10 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
+
         abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::findOrfail($id);
+        // dd($empleado);
         $empleados = Empleado::get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
@@ -457,7 +534,6 @@ class EmpleadoController extends Controller
 
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
-        $image = null;
         if ($request->snap_foto && $request->file('foto')) {
             if ($request->snap_foto) {
                 if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
@@ -533,7 +609,11 @@ class EmpleadoController extends Controller
             "n_empleado" =>  $request->n_empleado,
             "n_registro" =>  $request->n_empleado,
             'foto' => $image,
-            "sede_id" => $request->sede_id
+            "sede_id" => $request->sede_id,
+            "cumpleaños" => $request->cumpleaños,
+            "direccion" => $request->direccion,
+            "telefono_movil" => $request->telefono_movil,
+            "extension" => $request->extension,
         ]);
 
         // $gantt_path = 'storage/gantt/gantt_inicial.json';
@@ -558,6 +638,66 @@ class EmpleadoController extends Controller
         abort_if(Gate::denies('configuracion_empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado->delete();
         return back()->with('deleted', 'Registro eliminado con éxito');
+    }
+
+    public function deleteCertificaciones(Request $request, $certificacion)
+    {
+        if($request->ajax()){
+            $certificacion=CertificacionesEmpleados::find(intval($certificacion));
+            $u_certificacion=$certificacion->delete();
+            if($u_certificacion){
+                return response()->json(['success'=>true]);
+
+            }
+            else{
+                return response()->json(['error'=>true]);
+            }
+        }
+    }
+
+    public function deleteCursos(Request $request, $curso)
+    {
+        if($request->ajax()){
+            $curso=CursosDiplomasEmpleados::find(intval($curso));
+            $u_curso=$curso->delete();
+            if($u_curso){
+                return response()->json(['success'=>true]);
+
+            }
+            else{
+                return response()->json(['error'=>true]);
+            }
+        }
+    }
+
+    public function deleteEducacion(Request $request, $educacion)
+    {
+        if($request->ajax()){
+            $educacion=EducacionEmpleados::find(intval($educacion));
+            $u_educacion=$educacion->delete();
+            if($u_educacion){
+                return response()->json(['success'=>true]);
+
+            }
+            else{
+                return response()->json(['error'=>true]);
+            }
+        }
+    }
+
+    public function deleteExperiencia(Request $request, $experiencia)
+    {
+        if($request->ajax()){
+            $experiencia=ExperienciaEmpleados::find(intval($experiencia));
+            $u_experiencia=$experiencia->delete();
+            if($u_experiencia){
+                return response()->json(['success'=>true]);
+
+            }
+            else{
+                return response()->json(['error'=>true]);
+            }
+        }
     }
 
     public function getEmpleados(Request $request)

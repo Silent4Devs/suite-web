@@ -25,7 +25,7 @@
                         <th>
                             {{ trans('cruds.tratamientoRiesgo.fields.control') }}
                         </th>
-                        <th>
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.tratamientoRiesgo.fields.acciones') }}
                         </th>
                         <th>
@@ -253,8 +253,8 @@
                         name: 'acciones'
                     },
                     {
-                        data: 'responsable_name',
-                        name: 'responsable.name'
+                        data: 'id_reviso',
+                        name: 'id_reviso'
                     },
                     {
                         data: 'fechacompromiso',
