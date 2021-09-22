@@ -20,7 +20,7 @@
                             <th>
                                 {{ trans('cruds.controlAcceso.fields.id') }}
                             </th>
-                            <th>
+                            <th style="max-width: 400px;">
                                 {{ trans('cruds.controlAcceso.fields.descripcion') }}
                             </th>
                             <th>

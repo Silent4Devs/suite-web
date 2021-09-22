@@ -10,10 +10,7 @@
             <form method="POST" action="{{ route('admin.analisis-riesgos.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#1BB0B0">
-                <p class"text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
-                    Datos Generales</p>
-            </div>
+                <div class="form-group col-12 py-1 text-center" style="background-color:#1BB0B0; border-radius:100px; color: white;">DATOS GENERALES</div>
 
                 <div class="form-group">
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>

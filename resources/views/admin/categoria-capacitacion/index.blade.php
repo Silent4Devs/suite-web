@@ -13,14 +13,13 @@
             <table class="table table-bordered tbl-categorias w-100">
                 <thead class="thead-dark">
                     <tr>
-                        <th></th>
+                        <th style="max-width:50px;">No.</th>
                         <th>
-                            {{ trans('cruds.recurso.fields.id') }}
                         </th>
                         <th>
                             Nombre
                         </th>
-                        <th>
+                        <th style="max-width: 100px;">
                             Opciones
                         </th>
                     </tr>

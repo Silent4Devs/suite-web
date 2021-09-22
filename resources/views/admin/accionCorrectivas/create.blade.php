@@ -16,13 +16,13 @@
 
                     <div class="mt-5 col-md-12">
                         <button id="acollapseExample" data-toggle="collapse" onclick="closetabcollap1()"
-                            data-target="#collapseExample" class="btn btn-danger">Acción Correctiva</button>
+                            data-target="#collapseExample" class="btn btn_cancelar btn-danger">Acción Correctiva</button>
                         <button id="acollapseplan" data-toggle="collapse" onclick="closetabcollap2()"
-                            data-target="#collapseplan" class="btn btn-primary">Análisis de causa raíz</button>
+                            data-target="#collapseplan" class="btn btn_cancelar" style="width: 200px !important;">Análisis de causa raíz</button>
                         <button id="acollapseactividad" data-toggle="collapse" onclick="" data-target="#"
-                            class="btn btn-primary">Plan de acción</button>
+                            class="btn btn_cancelar">Plan de acción</button>
 
-                        <div class="collapse show" id="collapseExample">
+                        <div class="collapse show mt-3" id="collapseExample">
                             <div class="card card-body">
                                 <div id="test-nl-1" class="content">
                                     @include('admin.accionCorrectivas.createform1')
@@ -30,12 +30,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="collapse" id="collapseplan">
+                        <div class="collapse mt-3" id="collapseplan">
                             <div class="card card-body">
                                 @include('admin.accionCorrectivas.createform2')
                             </div>
                         </div>
-                        <div class="collapse" id="collapseactividad">
+                        <div class="collapse mt-3" id="collapseactividad">
                             <div class="card card-body">
 
 

@@ -22,7 +22,7 @@
                         <th>
                             {{ trans('cruds.planificacionControl.fields.activo') }}
                         </th>
-                        <th>
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.planificacionControl.fields.descripcion') }}
                         </th>
                         <th>
