@@ -11,7 +11,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.control-accesos.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
                 <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
                 @if($errors->has('descripcion'))
@@ -21,7 +21,14 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.controlAcceso.fields.descripcion_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
+
+
+            <div class="form-group col-12">
+                <label for="documento"><i class="fas fa-folder-open iconos-crear"></i>Archivo</label>
+                <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf" value="{{ old('files[]') }}">
+            </div>
+
+            {{-- <div class="form-group col-md-12">
                 <label for="archivo"><i class="far fa-file iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.archivo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
                 </div>
@@ -31,7 +38,9 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.controlAcceso.fields.archivo_helper') }}</span>
-            </div>
+            </div> --}}
+
+
             <div class="form-group col-12 text-right">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">

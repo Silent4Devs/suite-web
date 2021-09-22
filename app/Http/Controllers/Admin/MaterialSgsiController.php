@@ -143,7 +143,6 @@ class MaterialSgsiController extends Controller
     public function update(UpdateMaterialSgsiRequest $request, MaterialSgsi $materialSgsi)
     {
         $materialSgsi->update($request->all());
-        // $matrizRequisitoLegale->update($request->all());
         $files = $request->file('files');
         if ($request->hasFile('files')) {
             foreach ($files as $file) {

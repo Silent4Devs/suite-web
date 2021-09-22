@@ -88,7 +88,7 @@
 
 
             <div class="form-group col-12">
-                <label for="documento"><i class="fas fa-folder-open iconos-crear"></i>Material(Archivo PDF)</label>
+                <label for="documento"><i class="fas fa-file iconos-crear"></i>Material(Archivo PDF)</label>
                 <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf" value="{{ old('files[]') }}">
             </div>
 
