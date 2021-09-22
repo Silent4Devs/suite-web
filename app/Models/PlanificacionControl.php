@@ -30,6 +30,7 @@ class PlanificacionControl extends Model
         'activo',
         'descripcion',
         'dueno_id',
+        'id_reviso',
         'vulnerabilidad',
         'amenaza',
         'confidencialidad',
@@ -57,5 +58,10 @@ class PlanificacionControl extends Model
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reviso', 'id')->with('area');
     }
 }
