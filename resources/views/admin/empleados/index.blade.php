@@ -173,13 +173,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -208,7 +208,8 @@
                         data: 'foto',
                         name: 'foto',
                         render: function(data, type, row, meta) {
-                            return `<div class="text-center w-100"><img style="width:${data!=""?"50px":"35px"}" src="{{ asset('storage/empleados/imagenes/') }}/${data !=""?data:"user.png"}"></div>`;
+                            return `<div class="text-center"><img style="width: 50px;height: 50px;border-radius: 50%;" src="{{ asset('storage/empleados/imagenes/') }}/${data !=""?data:"user.png"}"></div>`;
+
                         }
                     },
                     {
