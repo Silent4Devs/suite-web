@@ -49,22 +49,22 @@
                             <th style="vertical-align: top">
                                 Área
                             </th>
-                            <th style="vertical-align: top">
+                            <th style="vertical-align: top; min-width: 500px;">
                                 {{ trans('cruds.accionCorrectiva.fields.tema') }}
                             </th>
                             <th style="vertical-align: top">
                                 Causa&nbsp;de&nbsp;origen
                             </th>
-                            <th style="vertical-align: top">
+                            <th style="vertical-align: top; min-width:500px;">
                                 Descripción&nbsp;de&nbsp;la&nbsp;desviación o&nbsp;problema&nbsp;real
                             </th>
                             {{-- <th style="vertical-align: top">
                                 Método&nbsp;utilizado&nbsp;para&nbsp;el análisis&nbsp;de&nbsp;causa&nbsp;raíz
                             </th>
-                            <th style="vertical-align: top">
+                            <th style="vertical-align: top; min-width:500px;">
                                 Descripción&nbsp;de&nbsp;la solución
                             </th>
-                            <th style="vertical-align: top">
+                            <th style="vertical-align: top; min-width:500px;">
                                 Descripción&nbsp;de&nbsp;la&nbsp;validación
                                 para&nbsp;el&nbsp;cierre&nbsp;de&nbsp;la&nbsp;acción
                             </th>

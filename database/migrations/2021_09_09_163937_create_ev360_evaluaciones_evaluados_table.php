@@ -14,12 +14,12 @@ class CreateEv360EvaluacionesEvaluadosTable extends Migration
     public function up()
     {
         Schema::create('ev360_evaluaciones_evaluados', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedInteger('evaluacion_id');
-            $table->unsignedInteger('evaluado_id');
+            $table->id();
+            $table->unsignedBigInteger('evaluacion_id');
+            $table->unsignedBigInteger('evaluado_id');
 
-            $table->foreign('evaluacion_id')->references('id')->on('ev360_evaluaciones')->onDelete('cascade')->onUpdate('cascade');;
-            $table->foreign('evaluado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreign('evaluacion_id')->references('id')->on('ev360_evaluaciones')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('evaluado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

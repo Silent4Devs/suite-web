@@ -30,19 +30,19 @@
                         <th style="vertical-align: top">
                             {{ trans('cruds.registromejora.fields.clasificacion') }}
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:500px;">
                             Descripción&nbsp;detallada
                         </th>
                         <th style="vertical-align: top">
                             Responsable&nbsp;implementación
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:500px;">
                             Particiantes&nbsp;de&nbsp;la mejora
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:500px;">
                             Recurso&nbsp;requeridos
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width:500px;">
                             Beneficios&nbsp;generados
                         </th>
                         <th style="vertical-align: top">

@@ -25,7 +25,7 @@
                         <th>
                             {{ trans('cruds.tratamientoRiesgo.fields.control') }}
                         </th>
-                        <th>
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.tratamientoRiesgo.fields.acciones') }}
                         </th>
                         <th>
