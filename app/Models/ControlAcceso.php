@@ -17,9 +17,9 @@ class ControlAcceso extends Model implements HasMedia
 
     public $table = 'control_accesos';
 
-    protected $appends = [
-        'archivo',
-    ];
+    // protected $appends = [
+    //     'archivo',
+    // ];
 
     protected $dates = [
         'created_at',
@@ -29,6 +29,7 @@ class ControlAcceso extends Model implements HasMedia
 
     protected $fillable = [
         'descripcion',
+        'controlA_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -55,4 +56,10 @@ class ControlAcceso extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function documentos_controlA()
+    {
+        return $this->hasMany(DocumentoControlAcceso::class, "controlA_id", "id");
+    }
+
 }

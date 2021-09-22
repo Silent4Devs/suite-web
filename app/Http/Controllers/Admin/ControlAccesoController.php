@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
+use App\Models\DocumentoControlAcceso;
+
 
 class ControlAccesoController extends Controller
 {
@@ -24,7 +27,7 @@ class ControlAccesoController extends Controller
         abort_if(Gate::denies('control_acceso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ControlAcceso::with(['team'])->select(sprintf('%s.*', (new ControlAcceso)->table));
+            $query = ControlAcceso::with(['team','documentos_controlA'])->select(sprintf('%s.*', (new ControlAcceso)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -51,8 +54,12 @@ class ControlAccesoController extends Controller
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
             });
+            // $table->editColumn('archivo', function ($row) {
+            //     return $row->archivo ? '<a href="' . $row->archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            // });
+
             $table->editColumn('archivo', function ($row) {
-                return $row->archivo ? '<a href="' . $row->archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+                return $row->documentos_controlA ? $row->documentos_controlA:[];
             });
 
             $table->rawColumns(['actions', 'placeholder', 'archivo']);
@@ -68,17 +75,29 @@ class ControlAccesoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('control_acceso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return view('admin.controlAccesos.create');
+        $documentos = DocumentoControlAcceso::get();
+        return view('admin.controlAccesos.create', compact('documentos'));
     }
 
     public function store(StoreControlAccesoRequest $request)
-    {
+    {   
         $controlAcceso = ControlAcceso::create($request->all());
-
-        if ($request->input('archivo', false)) {
-            $controlAcceso->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('storage/documentos_control_accesos', $file, $file->getClientOriginalName())) {
+                    DocumentoControlAcceso::create([
+                        'documento' => $file->getClientOriginalName(),
+                        'controlA_id' => $controlAcceso->id,
+                    ]);
+                }
+            }
         }
+
+
+        // if ($request->input('archivo', false)) {
+        //     $controlAcceso->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+        // }
 
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $controlAcceso->id]);
@@ -90,26 +109,25 @@ class ControlAccesoController extends Controller
     public function edit(ControlAcceso $controlAcceso)
     {
         abort_if(Gate::denies('control_acceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $documentos=DocumentoControlAcceso::get();
         $controlAcceso->load('team');
 
-        return view('admin.controlAccesos.edit', compact('controlAcceso'));
+        return view('admin.controlAccesos.edit', compact('controlAcceso', 'documentos'));
     }
 
     public function update(UpdateControlAccesoRequest $request, ControlAcceso $controlAcceso)
     {
         $controlAcceso->update($request->all());
-
-        if ($request->input('archivo', false)) {
-            if (!$controlAcceso->archivo || $request->input('archivo') !== $controlAcceso->archivo->file_name) {
-                if ($controlAcceso->archivo) {
-                    $controlAcceso->archivo->delete();
+        $files = $request->file('files');
+        if ($request->hasFile('files')) {
+            foreach ($files as $file) {
+                if (Storage::putFileAs('storage/documentos_control_accesos', $file, $file->getClientOriginalName())) {
+                    DocumentoControlAcceso::create([
+                        'documento' => $file->getClientOriginalName(),
+                        'controlA_id' => $controlAcceso->id,
+                    ]);
                 }
-
-                $controlAcceso->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
             }
-        } elseif ($controlAcceso->archivo) {
-            $controlAcceso->archivo->delete();
         }
 
         return redirect()->route('admin.control-accesos.index')->with("success", 'Editado con éxito');
