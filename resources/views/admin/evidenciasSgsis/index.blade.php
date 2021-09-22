@@ -3,26 +3,17 @@
 
 <style>
 
-    .table tr th:nth-child(2){
+    .table tr th:nth-child(3){
     min-width:600px !important;
     text-align:center !important;
     }
 
-    .table tr td:nth-child(2){
+    .table tr td:nth-child(3){
     text-align:justify !important;
     }
 
-    .table tr th:nth-child(3){
-    min-width:100px !important;
-    text-align:center !important;
-    }
-
-    .table tr td:nth-child(3){
-    text-align:center !important;
-    }
-
     .table tr th:nth-child(4){
-    min-width:80px !important;
+    min-width:100px !important;
     text-align:center !important;
     }
 
@@ -31,11 +22,20 @@
     }
 
     .table tr th:nth-child(5){
-    min-width:130px !important;
+    min-width:80px !important;
     text-align:center !important;
     }
 
     .table tr td:nth-child(5){
+    text-align:center !important;
+    }
+
+    .table tr th:nth-child(6){
+    min-width:130px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(6){
     text-align:center !important;
     }
     .carousel-control-next, .carousel-control-prev {
@@ -73,6 +73,9 @@
                     <tr>
                         <th>
                             {{ trans('cruds.evidenciasSgsi.fields.id') }}
+                        </th>
+                        <th>
+                            Nombre&nbsp;del&nbsp;documento
                         </th>
                         <th>
                             {{ trans('cruds.evidenciasSgsi.fields.objetivodocumento') }}
@@ -253,6 +256,10 @@
                         name: 'id'
                     },
                     {
+                        data: 'nombredocumento',
+                        name: 'nombredocumento'
+                    },
+                    {
                         data: 'objetivodocumento',
                         name: 'objetivodocumento'
                     },
@@ -299,7 +306,9 @@
                                     <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                                        <div class="modal-body">
+                                        <div class="modal-body">`;
+                                            if(archivos.length>0){
+                                                archivo+=`
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -325,8 +334,17 @@
 
                                             </div>
 
-                                            </div>
-                                        </div>
+                                            </div>`;
+                                        }
+                                            else{
+                                                archivo+=`
+                                                <div class="text-center">
+                                                    <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                    </div>
+                                                `
+                                            }
+                                            archivo+=`</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                             <a

@@ -45,7 +45,7 @@
                 </div>
 
 
-                <div class="form-group col-sm-12">
+                {{-- <div class="form-group col-sm-12">
                     <label for="clausala"><i class="far fa-file iconos-crear"></i> Cláusula(s)</label>
                     <select class="form-control {{ $errors->has('clausala') ? 'is-invalid' : '' }}" name="clausala"
                         id="clausala" class="select2" multiple>
@@ -55,6 +55,21 @@
                             <option value="{{ $id }}"
                                 {{ (old('clausala') ? old('clausala') : $clausula->clausala ?? '') == $id ? 'selected' : '' }}>
                                 {{ $clausula }} </option>
+                        @endforeach
+                    </select>
+                    <span class="errors tipo_error"></span>
+                </div> --}}
+
+
+                <div class="form-group col-sm-12">
+                    <label for="clausulas"><i class="far fa-file iconos-crear"></i> Cláusula(s)</label>
+                    <select class="form-control {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas[]"
+                        id="clausulas" multiple>
+                        <option value disabled >Selecciona una opción</option>
+                        @foreach ($clausulas as $clausula)
+                            <option value="{{ $clausula->id }}">
+                                {{ $clausula->nombre }} 
+                            </option>
                         @endforeach
                     </select>
                     <span class="errors tipo_error"></span>
@@ -78,6 +93,19 @@
 @endsection
 
 @section('scripts')
+
+
+<script type="text/javascript">
+    
+    
+    $(document).ready(function() {
+        $("#clausulas").select2({
+            theme: "bootstrap4",
+        });
+    });
+
+
+</script>
 
     <script>
         $(document).ready(function() {

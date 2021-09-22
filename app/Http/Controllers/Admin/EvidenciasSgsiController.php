@@ -53,6 +53,9 @@ class EvidenciasSgsiController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
+            $table->editColumn('nombredocumento', function ($row) {
+                return $row->nombredocumento ? $row->nombredocumento : "";
+            });
             $table->editColumn('objetivodocumento', function ($row) {
                 return $row->objetivodocumento ? $row->objetivodocumento : "";
             });

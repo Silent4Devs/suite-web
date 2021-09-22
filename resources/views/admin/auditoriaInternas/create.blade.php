@@ -37,7 +37,7 @@
                 <label for="clausulas"><i class="far fa-file iconos-crear"></i> Cláusula(s)</label>
                 <select class="form-control {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas[]"
                     id="clausulas" multiple>
-                    <!-- <option value disabled >Selecciona una opción</option> -->
+                    <option value disabled >Selecciona una opción</option>
                     @foreach ($clausulas as $clausula)
                         <option value="{{ $clausula->id }}">
                             {{ $clausula->nombre }} 

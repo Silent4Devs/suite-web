@@ -36,6 +36,7 @@ class TratamientoRiesgo extends Model
     protected $fillable = [
         'nivelriesgo',
         'control_id',
+        'id_reviso',
         'acciones',
         'responsable_id',
         'fechacompromiso',
@@ -78,5 +79,10 @@ class TratamientoRiesgo extends Model
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reviso', 'id')->with('area');
     }
 }

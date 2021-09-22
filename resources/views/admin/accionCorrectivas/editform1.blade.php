@@ -146,3 +146,5 @@
         @endif
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.descripcion_helper') }}</span>
     </div>
+
+</form>
