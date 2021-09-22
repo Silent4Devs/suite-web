@@ -205,8 +205,8 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'foto',
-                        name: 'foto',
+                        data: 'avatar',
+                        name: 'avatar',
                         render: function(data, type, row, meta) {
                             return `<div class="text-center"><img style="width: 50px;height: 50px;border-radius: 50%;" src="{{ asset('storage/empleados/imagenes/') }}/${data !=""?data:"user.png"}"></div>`;
 

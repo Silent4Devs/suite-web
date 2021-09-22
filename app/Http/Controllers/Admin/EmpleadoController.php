@@ -81,8 +81,8 @@ class EmpleadoController extends Controller
                 return $row->name ? $row->name : "";
             });
 
-            $table->editColumn('foto', function ($row) {
-                return $row->foto ? $row->foto : '';
+            $table->editColumn('avatar', function ($row) {
+                return $row->avatar ? $row->avatar : '';
             });
 
             $table->editColumn('area', function ($row) {
