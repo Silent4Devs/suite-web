@@ -253,8 +253,8 @@
                         name: 'acciones'
                     },
                     {
-                        data: 'responsable_name',
-                        name: 'responsable.name'
+                        data: 'id_reviso',
+                        name: 'id_reviso'
                     },
                     {
                         data: 'fechacompromiso',

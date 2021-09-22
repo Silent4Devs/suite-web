@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePlanificacionControlRequest;
 use App\Models\PlanificacionControl;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Empleado;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,8 +52,12 @@ class PlanificacionControlController extends Controller
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
             });
-            $table->addColumn('dueno_name', function ($row) {
-                return $row->dueno ? $row->dueno->name : '';
+            // $table->addColumn('dueno_name', function ($row) {
+            //     return $row->dueno ? $row->dueno->name : '';
+            // });
+
+            $table->addColumn('id_reviso', function ($row) {
+                return $row->empleado ? $row->empleado->name : '';
             });
 
             $table->editColumn('vulnerabilidad', function ($row) {
@@ -96,8 +101,9 @@ class PlanificacionControlController extends Controller
         abort_if(Gate::denies('planificacion_control_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $empleados = Empleado::with('area')->get();
 
-        return view('admin.planificacionControls.create', compact('duenos'));
+        return view('admin.planificacionControls.create', compact('duenos', 'empleados'));
     }
 
     public function store(StorePlanificacionControlRequest $request)
@@ -113,9 +119,11 @@ class PlanificacionControlController extends Controller
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $empleados = Empleado::with('area')->get();
+
         $planificacionControl->load('dueno', 'team');
 
-        return view('admin.planificacionControls.edit', compact('duenos', 'planificacionControl'));
+        return view('admin.planificacionControls.edit', compact('duenos', 'planificacionControl', 'empleados'));
     }
 
     public function update(UpdatePlanificacionControlRequest $request, PlanificacionControl $planificacionControl)
