@@ -312,6 +312,7 @@ text-align:justify !important;
                         render:function(data,type,row,meta){
                              let archivo="";
                              let archivos=row.evidencias_matriz;
+                             console.log(archivos)
                                archivo=` <div class="container">
 
                                     <div class="mb-4 row">
@@ -324,8 +325,10 @@ text-align:justify !important;
                                     <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                                        <div class="modal-body">
-                                            <!-- carousel -->
+                                        <div class="modal-body">`;
+                                            if(archivos.length>0){
+                                                archivo+=`
+                                                <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
                                                 class='carousel slide'
@@ -350,10 +353,20 @@ text-align:justify !important;
 
                                             </div>
 
-                                            </div>
-                                        </div>
+                                            </div>`;
+                                            }
+                                            else{
+                                                archivo+=`
+                                                <div class="text-center">
+                                                    <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                    </div>
+                                                `
+                                            }
+                                            archivo+=`</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                           ${archivos.length==0?`
                                             <a
                                                 class='carousel-control-prev'
                                                 href='#carouselExampleIndicators${row.id}'
@@ -376,7 +389,7 @@ text-align:justify !important;
                                                     aria-hidden='true'
                                                     ></span>
                                                 <span class='sr-only'>Next</span>
-                                            </a>
+                                            </a>`:""}
                                         </div>
                                         </div>
                                     </div>

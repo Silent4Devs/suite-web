@@ -27,11 +27,6 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('id_elaboracion', 'Elaboro:') !!}
-    <p>{{ $analisis->empleado->name }}</p>
-</div>
-
-<div class="form-group">
     {!! Form::label('estatus', 'Estatus:') !!}
     @if ($analisis->estatus == 1)
         <p>Válido</p>

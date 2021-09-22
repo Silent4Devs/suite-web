@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyRegistromejoraRequest;
-use App\Http\Requests\StoreRegistromejoraRequest;
-use App\Http\Requests\UpdateRegistromejoraRequest;
-use App\Models\Registromejora;
+use Gate;
 use App\Models\Team;
 use App\Models\User;
-use Gate;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Models\Registromejora;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\StoreRegistromejoraRequest;
+use App\Http\Requests\UpdateRegistromejoraRequest;
+use App\Http\Requests\MassDestroyRegistromejoraRequest;
 
 class RegistromejoraController extends Controller
 {
@@ -101,7 +102,9 @@ class RegistromejoraController extends Controller
 
         $validas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.registromejoras.create', compact('nombre_reportas', 'responsableimplementacions', 'validas'));
+        $empleados = Empleado::with('area')->get();
+
+        return view('admin.registromejoras.create', compact('nombre_reportas', 'responsableimplementacions', 'validas','empleados'));
     }
 
     public function store(StoreRegistromejoraRequest $request)
@@ -123,7 +126,9 @@ class RegistromejoraController extends Controller
 
         $registromejora->load('nombre_reporta', 'responsableimplementacion', 'valida', 'team');
 
-        return view('admin.registromejoras.edit', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'registromejora'));
+        $empleados = Empleado::with('area')->get();
+
+        return view('admin.registromejoras.edit', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'registromejora','empleados'));
     }
 
     public function update(UpdateRegistromejoraRequest $request, Registromejora $registromejora)
