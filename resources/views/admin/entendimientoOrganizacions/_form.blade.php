@@ -89,8 +89,9 @@
             @endif
         </div>
 
-        <div class="text-right form-group col-md-12">
+        <div class="form-group col-12 text-right"><br>
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
             <button class="btn btn-danger" type="submit">
-                {{ $btnText }}
+                {{ trans('global.save') }}
             </button>
         </div>
