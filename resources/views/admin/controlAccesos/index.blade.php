@@ -256,7 +256,8 @@
                         name: 'documento',
                         render:function(data,type,row,meta){
                              let archivo="";
-                             let archivos=row.documentos_controlA;
+                             console.log(row);
+                             let archivos=row.documentos_control_a;
                                archivo=` <div class="container">
 
                                     <div class="mb-4 row">

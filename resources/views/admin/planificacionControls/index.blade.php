@@ -246,8 +246,8 @@
                         name: 'descripcion'
                     },
                     {
-                        data: 'dueno_name',
-                        name: 'dueno.name'
+                        data: 'id_reviso',
+                        name: 'id_reviso'
                     },
                     {
                         data: 'vulnerabilidad',
