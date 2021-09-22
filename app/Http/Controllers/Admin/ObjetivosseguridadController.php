@@ -95,7 +95,7 @@ class ObjetivosseguridadController extends Controller
 
     public function store(Request $request)
     {
-
+        // dd($request);
         $objetivosseguridad = Objetivosseguridad::create($request->all());
         //return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
         return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with("success", 'Guardado con éxito');

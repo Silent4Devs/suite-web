@@ -47,7 +47,7 @@
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.personalobjetivo_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label for="arearesponsable_id"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.arearesponsable') }}</label>
+                <label for="arearesponsable_id"><i class="fas fa-street-view iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.arearesponsable') }}</label>
                 <select class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" name="arearesponsable_id" id="arearesponsable_id">
                     @foreach($arearesponsables as $id => $arearesponsable)
                         <option value="{{ $id }}" {{ old('arearesponsable_id') == $id ? 'selected' : '' }}>{{ $arearesponsable }}</option>
@@ -85,7 +85,14 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.fechacreacion_actualizacion_helper') }}</span>
             </div>
+
+
             <div class="form-group col-12">
+                <label for="documento"><i class="fas fa-file iconos-crear"></i>Material(Archivo PDF)</label>
+                <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf" value="{{ old('files[]') }}">
+            </div>
+
+            {{-- <div class="form-group col-12">
                 <label for="archivo"><i class="far fa-file iconos-crear"></i>Material(Archivo PDF)</label>
                 <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
                 </div>
@@ -95,7 +102,17 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.archivo_helper') }}</span>
-            </div>
+            </div> --}}
+
+            {{-- <div class="form-group col-md-12 col-sm-12">
+                <label for="archivo"><i class="fas fa-folder-open iconos-crear"></i>Material(Archivo PDF)</label>
+                <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf" value="{{ old('files[]') }}">
+            </div> --}}
+
+
+
+
+
             <div class="form-group col-12 text-right">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">

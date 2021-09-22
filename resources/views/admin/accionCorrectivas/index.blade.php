@@ -7,7 +7,7 @@
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Acciones Correctivas</strong></h3>
         </div>
-        
+
         <div class="container">
             <div class="row">
                 <div class="col-sm-2">
@@ -32,16 +32,22 @@
                                 Fecha&nbsp;de&nbsp;registro
                             </th>
                             <th style="vertical-align: top">
-                                Nombre&nbsp;de&nbsp;quien reporta
+                                Reportó
                             </th>
                             <th style="vertical-align: top">
-                                Puesto&nbsp;de&nbsp;quien reporta
+                                Puesto
                             </th>
                             <th style="vertical-align: top">
-                                Nombre&nbsp;de&nbsp;quien registra
+                                Área
                             </th>
                             <th style="vertical-align: top">
-                                Puesto&nbsp;de&nbsp;quien registra
+                                Registró
+                            </th>
+                            <th style="vertical-align: top">
+                                Puesto
+                            </th>
+                            <th style="vertical-align: top">
+                                Área
                             </th>
                             <th style="vertical-align: top; min-width: 500px;">
                                 {{ trans('cruds.accionCorrectiva.fields.tema') }}
@@ -230,7 +236,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [5, 20, 5, 20];
                         doc.styles.tableHeader.fontSize = 6.5;
-                        doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10 
+                        doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -287,13 +293,13 @@
                 var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -326,20 +332,28 @@
                         name: 'fecharegistro'
                     },
                     {
-                        data: 'nombrereporta_name',
-                        name: 'nombrereporta.name'
+                        data: 'reporto',
+                        name: 'reporto'
                     },
                     {
-                        data: 'puestoreporta_puesto',
-                        name: 'puestoreporta.puesto'
+                        data: 'reporto_puesto',
+                        name: 'reporto_puesto'
                     },
                     {
-                        data: 'nombreregistra_name',
-                        name: 'nombreregistra.name'
+                        data: 'reporto_area',
+                        name: 'reporto_area'
                     },
                     {
-                        data: 'puestoregistra_puesto',
-                        name: 'puestoregistra.puesto'
+                        data: 'registro',
+                        name: 'registro'
+                    },
+                    {
+                        data: 'registro_puesto',
+                        name: 'registro_puesto'
+                    },
+                    {
+                        data: 'registro_area',
+                        name: 'registro_area'
                     },
                     {
                         data: 'tema',

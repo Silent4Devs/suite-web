@@ -124,7 +124,18 @@ class inicioUsuarioController extends Controller
         $empleado = auth()->user()->empleado;
         $recursos = new Recurso;
         if ($usuario->empleado) {
-            $auditoria_internas = AuditoriaInterna::where('lider_id', auth()->user()->empleado->id)->get();
+            $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function($query)use($empleado){
+                $query->where('auditoria_interno_empleado.empleado_id',$empleado->id);
+            })->orWhere('lider_id', auth()->user()->empleado->id)->get();
+            $auditoria_internas_lider = AuditoriaInterna::where('lider_id', auth()->user()->empleado->id)->get();
+            $auditoria_internas = collect();
+            foreach ($auditoria_internas_lider as $auditoria) {
+                $auditoria_internas->push($auditoria);
+            }
+            foreach ($auditoria_internas_participante as $auditoria) {
+                $auditoria_internas->push($auditoria);
+            }
+            $auditoria_internas = $auditoria_internas->unique();
             $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);
             })->get();
@@ -147,7 +158,7 @@ class inicioUsuarioController extends Controller
         }
 
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos'));
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas'));
     }
 
     public function optenerTareas($tarea)
@@ -187,7 +198,7 @@ class inicioUsuarioController extends Controller
             'proceso_quejado' => $request->proceso_quejado,
             'externo_quejado' => $request->externo_quejado,
 
-            'titulo' => $request->descripcion,
+            'titulo' => $request->titulo,
             'fecha' => $request->fecha,
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,

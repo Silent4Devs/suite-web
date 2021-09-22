@@ -32,6 +32,7 @@ class CertificacionesEmpleados extends Model
         'nombre',
         'estatus',
         'vigencia',
+        'documento',
 
 	];
 

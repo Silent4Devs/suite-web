@@ -3,19 +3,17 @@
     @method('PUT')
     @csrf
 
-    <div class="form-group col-12">
-        <label for="fecharegistro"><i
-                class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.fecharegistro') }}</label>
-        <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="text"
-            name="fecharegistro" id="fecharegistro"
+    <div class="form-group col-sm-6">
+        <label for="fecharegistro"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+            registro</label>
+        <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}"
+            type="date" name="fecharegistro" id="fecharegistro"
             value="{{ old('fecharegistro', $accionCorrectiva->fecharegistro) }}">
-
         @if ($errors->has('fecharegistro'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecharegistro') }}
             </div>
         @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.fecharegistro_helper') }}</span>
     </div>
 
 

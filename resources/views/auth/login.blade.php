@@ -14,7 +14,7 @@
             <p class="bienvenidos"><strong>Bienvenidos al</strong> Sistema de Gestión Normativa</p>
         </div>
     </div>
-               
+
     @if(session('message'))
         <div class="alert alert-info" role="alert">
             {{ session('message') }}
@@ -57,11 +57,11 @@
             </div>
 
             <div class="form-group mt-5">
-                <a class="btn_registrate" href="{{ route('register') }}">¿Nuevo usuario? <strong>Registrate</strong></a> 
+                <a class="btn_registrate" href="{{ route('register') }}">¿Nuevo usuario? <strong>Registrate</strong></a>
             </div>
             <a class="" href="https://silent4business.com/aviso-de-privacidad/" target="_blank">Aviso de privacidad </a>
-        </form> 
-    </div> 
+        </form>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
@@ -73,7 +73,7 @@
 
 
 
-    {{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }}
+{{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }}
 
 @endsection
 

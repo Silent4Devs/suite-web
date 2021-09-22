@@ -1,9 +1,8 @@
-    <div class="row">
         <div class="form-group col-12">
             <label><i class="fas fa-list-ul iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.metodo_causa') }}
             </label>
             <select class="form-control {{ $errors->has('metodo_causa') ? 'is-invalid' : '' }}" name="metodo_causa"
-                    id="metodo_causa" required>
+                    id="metodo_causa" >
                 <option></option>
                 <option value
                         disabled {{ old('metodo_causa', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -19,12 +18,12 @@
             @endif
             <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.metodo_causa_helper') }}</span>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12 col-lg-12 col-sm-12">
             <label for="solucion"><i
-                    class="far fa-file-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.solucion') }}
+                    class="far fa-file-alt iconos-crear"></i>Descripción de la solución
             </label>
             <textarea class="form-control {{ $errors->has('solucion') ? 'is-invalid' : '' }}" name="solucion" id="solucion"
-                      required>{{ old('solucion') }}</textarea>
+                      >{{ old('solucion') }}</textarea>
             @if($errors->has('solucion'))
                 <div class="invalid-feedback">
                     {{ $errors->first('solucion') }}
@@ -32,12 +31,12 @@
             @endif
             <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.solucion_helper') }}</span>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12 col-lg-12 col-sm-12">
             <label for="cierre_accion"><i
                     class="far fa-file-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.cierre_accion') }}
             </label>
             <textarea class="form-control {{ $errors->has('cierre_accion') ? 'is-invalid' : '' }}" name="cierre_accion"
-                      id="cierre_accion" required>{{ old('cierre_accion') }}</textarea>
+                      id="cierre_accion">{{ old('cierre_accion') }}</textarea>
             @if($errors->has('cierre_accion'))
                 <div class="invalid-feedback">
                     {{ $errors->first('cierre_accion') }}
@@ -48,7 +47,7 @@
         <div class="form-group col-12">
             <label><i class="fas fa-signal iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.estatus') }}
             </label>
-            <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus" id="estatus" required>
+            <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus" id="estatus">
                 <option></option>
                 <option value
                         disabled {{ old('estatus', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -64,88 +63,131 @@
             @endif
             <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.estatus_helper') }}</span>
         </div>
-        <div class="form-group col-md-6">
-            <label for="fecha_compromiso"><i
-                    class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.fecha_compromiso') }}
-            </label>
-            <input class="form-control date {{ $errors->has('fecha_compromiso') ? 'is-invalid' : '' }}" type="text"
-                   name="fecha_compromiso" id="fecha_compromiso" value="{{ old('fecha_compromiso') }}" required>
+
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6">
+            <label for="fecha_compromiso"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha compromiso</label>
+            <input class="form-control date {{ $errors->has('fecha_compromiso') ? 'is-invalid' : '' }}" type="date" name="fecha_compromiso" id="fecha_compromiso" value="{{ old('fecha_compromiso') }}">
             @if($errors->has('fecha_compromiso'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('fecha_compromiso') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.fecha_compromiso_helper') }}</span>
-        </div>
-        <div class="form-group col-md-6">
-            <label for="fecha_verificacion"><i
-                    class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.fecha_verificacion') }}
-            </label>
-            <input class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}" type="text"
-                   name="fecha_verificacion" id="fecha_verificacion" value="{{ old('fecha_verificacion') }}" required>
-            @if($errors->has('fecha_verificacion'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('fecha_verificacion') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.fecha_verificacion_helper') }}</span>
-        </div>
-        <div class="form-group col-md-6">
-            <label for="responsable_accion_id"><i
-                    class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.responsable_accion') }}
-            </label>
-            <select class="form-control select2 {{ $errors->has('responsable_accion') ? 'is-invalid' : '' }}"
-                    name="responsable_accion_id" id="responsable_accion_id" required>
-                <option></option>
-                @foreach($responsable_accions as $id => $responsable_accion)
-                    <option
-                        value="{{ $id }}" {{ old('responsable_accion_id') == $id ? 'selected' : '' }}>{{ $responsable_accion }}</option>
-                @endforeach
-            </select>
-            @if($errors->has('responsable_accion'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('responsable_accion') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.responsable_accion_helper') }}</span>
-        </div>
-        <div class="form-group col-md-6">
-            <label for="nombre_autoriza_id"><i
-                    class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.nombre_autoriza') }}
-            </label>
-            <select class="form-control select2 {{ $errors->has('nombre_autoriza') ? 'is-invalid' : '' }}"
-                    name="nombre_autoriza_id" id="nombre_autoriza_id" required>
-                <option></option>
-                @foreach($nombre_autorizas as $id => $nombre_autoriza)
-                    <option
-                        value="{{ $id }}" {{ old('nombre_autoriza_id') == $id ? 'selected' : '' }}>{{ $nombre_autoriza }}</option>
-                @endforeach
-            </select>
-            @if($errors->has('nombre_autoriza'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('nombre_autoriza') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.nombre_autoriza_helper') }}</span>
-        </div>
-        <div class="form-group col-12">
-            <label for="documentometodo"><i
-                    class="far fa-file iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.documentometodo') }}
-            </label>
-            <div class="needsclick dropzone {{ $errors->has('documentometodo') ? 'is-invalid' : '' }}"
-                 id="documentometodo-dropzone">
+            <div class="invalid-feedback">
+                {{ $errors->first('fecha_compromiso') }}
             </div>
-            @if($errors->has('documentometodo'))
+            @endif
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6">
+            <label for="fecha_verificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de verificación</label>
+            <input class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}" type="date" name="fecha_verificacion" id="fecha_verificacion" value="{{ old('fecha_verificacion') }}">
+            @if($errors->has('fecha_verificacion'))
+            <div class="invalid-feedback">
+                {{ $errors->first('fecha_verificacion') }}
+            </div>
+            @endif
+        </div>
+
+
+
+        <div class="mt-1 form-group col-12">
+            <b>Responsable Atención AC</b>
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_atencion"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+            <select class="form-control  {{ $errors->has('id_atencion') ? 'is-invalid' : '' }}"
+                name="id_atencion" id="id_atencion">
+                <option selected value="" disabled>-- Selecciona un área --</option>
+                @foreach ($empleados as $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                        data-area="{{ $empleado->area->area }}">
+
+                        {{ $empleado->name }}
+                    </option>
+
+                @endforeach
+            </select>
+            @if ($errors->has('id_atencion'))
                 <div class="invalid-feedback">
-                    {{ $errors->first('documentometodo') }}
+                    {{ $errors->first('id_atencion') }}
                 </div>
             @endif
-            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.documentometodo_helper') }}</span>
         </div>
-        <div class="form-group col-12 text-right">
+
+
+        <div class="form-group col-md-4">
+            <label for="id_atencion_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+            <div class="form-control" id="atencion_puesto"></div>
+
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_atencion_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+            <div class="form-control" id="atencion_area"></div>
+
+        </div>
+
+        <div class="mt-1 form-group col-12">
+            <b>Responsable Autorización AC</b>
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_autorizo"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+            <select class="form-control  {{ $errors->has('id_autorizo') ? 'is-invalid' : '' }}"
+                name="id_autorizo" id="id_autorizo">
+                <option selected value="" disabled>-- Selecciona un área --</option>
+                @foreach ($empleados as $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                        data-area="{{ $empleado->area->area }}">
+
+                        {{ $empleado->name }}
+                    </option>
+
+                @endforeach
+            </select>
+            @if ($errors->has('id_autorizo'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('id_autorizo') }}
+                </div>
+            @endif
+        </div>
+
+
+        <div class="form-group col-md-4">
+            <label for="id_autorizo_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+            <div class="form-control" id="autorizo_puesto"></div>
+
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4">
+            <label for="id_autorizo_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+            <div class="form-control" id="autorizo_area"></div>
+
+        </div>
+
+
+
+            <div class="col-sm-12 col-md-12 col-lg-12 form-group">
+                <label for="documentometodo"><i
+                        class="fas fa-folder-open iconos-crear"></i>Adjuntar
+                    Documento</label>
+                <div class="custom-file">
+                    <input type="file" name="files[]" multiple class="form-control"
+                        id="documentometodo">
+
+                </div>
+            </div>
+
+
+
+        <div class="text-right form-group col-12">
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
             <button class="btn btn-danger" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>
-    </div>
+
 </form>

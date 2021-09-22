@@ -59,10 +59,6 @@ class AccionCorrectiva extends Model implements HasMedia
 
     protected $fillable = [
         'fecharegistro',
-        'nombrereporta_id',
-        'puestoreporta_id',
-        'nombreregistra_id',
-        'puestoregistra_id',
         'tema',
         'causaorigen',
         'descripcion',
@@ -74,6 +70,10 @@ class AccionCorrectiva extends Model implements HasMedia
         'fecha_verificacion',
         'responsable_accion_id',
         'nombre_autoriza_id',
+        'id_registro',
+        'id_reporto',
+        'id_responsable_accion',
+        'id_responsable_autorizacion',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -96,14 +96,19 @@ class AccionCorrectiva extends Model implements HasMedia
         return $this->hasMany(PlanaccionCorrectiva::class, 'accioncorrectiva_id', 'id');
     }
 
-    public function getFecharegistroAttribute($value)
+    public function getFechaRegistroAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
-    public function setFecharegistroAttribute($value)
+    public function getFechaCompromisoAttribute($value)
     {
-        $this->attributes['fecharegistro'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
+    public function getFechaVerificacionAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
     public function nombrereporta()
@@ -126,25 +131,6 @@ class AccionCorrectiva extends Model implements HasMedia
         return $this->belongsTo(Puesto::class, 'puestoregistra_id');
     }
 
-    public function getFechaCompromisoAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setFechaCompromisoAttribute($value)
-    {
-        $this->attributes['fecha_compromiso'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
-    public function getFechaVerificacionAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setFechaVerificacionAttribute($value)
-    {
-        $this->attributes['fecha_verificacion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
 
     public function responsable_accion()
     {
@@ -165,4 +151,10 @@ class AccionCorrectiva extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function empleados()
+	{
+        return $this->belongsTo(Empleado::class, 'id_registro', 'id')->with('area');
+
+	}
 }
