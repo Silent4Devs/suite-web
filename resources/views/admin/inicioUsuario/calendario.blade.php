@@ -344,15 +344,15 @@
 
             @endforeach
 
-             @foreach($auditorias_anual as $it_auditorias_anual)
+             @foreach($auditoria_internas as $it_auditoria_internas)
                 {
-                    id: 'auditoria{{$it_auditorias_anual->id}}',
+                    id: 'auditoria{{$it_auditoria_internas->id}}',
                     calendarId: '3',
-                    title: 'Tipo: {{$it_auditorias_anual->tipo}}',
+                    title: 'Alcance: {{$it_auditoria_internas->alcance}}',
                     category: 'allday',
                     dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_auditorias_anual->fechainicio)->format("Y-m-d") }}',
-                    end: '',
+                    start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->format("Y-m-d") }}',
+                    end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->format("Y-m-d") }}',
                     isReadOnly : true, 
                 },
             @endforeach
