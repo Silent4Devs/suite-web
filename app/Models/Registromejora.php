@@ -31,13 +31,10 @@ class Registromejora extends Model
     ];
 
     protected $fillable = [
-        'nombre_reporta_id',
         'nombre',
         'prioridad',
         'clasificacion',
         'descripcion',
-        'responsableimplementacion_id',
-        'participantes',
         'recursos',
         'beneficios',
         'valida_id',
@@ -45,6 +42,9 @@ class Registromejora extends Model
         'updated_at',
         'deleted_at',
         'team_id',
+        'id_reporta',
+        'id_responsable',
+        'id_participantes',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -80,5 +80,10 @@ class Registromejora extends Model
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reporta');
     }
 }

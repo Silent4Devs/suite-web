@@ -79,6 +79,8 @@ class Empleado extends Model
         'estatus',
         'email',
         'telefono',
+        'extension',
+        'telefono_movil',
         'genero',
         'n_empleado',
         'supervisor_id',

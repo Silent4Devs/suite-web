@@ -398,16 +398,16 @@
                                                 @endif
                                             </div>
                                             <div class="form-group col-sm-6">
-                                                <label for="telefono"><i
+                                                <label for="telefono_movil"><i
                                                         class="fas fa-mobile-alt iconos-crear"></i></i>Teléfono
                                                     móvil</label>
                                                 <input
-                                                    class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
-                                                    type="text" name="telefono" id="telefono"
-                                                    value="{{ old('telefono', '') }}">
-                                                @if ($errors->has('telefono'))
+                                                    class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}"
+                                                    type="text" name="telefono_movil" id="telefono_movil"
+                                                    value="{{ old('telefono_movil', '') }}">
+                                                @if ($errors->has('telefono_movil'))
                                                     <div class="invalid-feedback">
-                                                        {{ $errors->first('telefono') }}
+                                                        {{ $errors->first('telefono_movil') }}
                                                     </div>
                                                 @endif
                                             </div>
@@ -425,15 +425,15 @@
                                                 @endif
                                             </div>
                                             <div class="form-group col-sm-2">
-                                                <label for="telefono"><i
+                                                <label for="extension"><i
                                                         class="fas fa-phone-volume iconos-crear"></i>Ext.</label>
                                                 <input
-                                                    class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
-                                                    type="text" name="telefono" id="telefono"
-                                                    value="{{ old('telefono', '') }}">
-                                                @if ($errors->has('telefono'))
+                                                    class="form-control {{ $errors->has('extension') ? 'is-invalid' : '' }}"
+                                                    type="text" name="extension" id="extension"
+                                                    value="{{ old('extension', '') }}">
+                                                @if ($errors->has('extension'))
                                                     <div class="invalid-feedback">
-                                                        {{ $errors->first('telefono') }}
+                                                        {{ $errors->first('extension') }}
                                                     </div>
                                                 @endif
                                             </div>
@@ -465,7 +465,7 @@
                                                 <label for="direccion"><i
                                                         class="fas fa-map iconos-crear"></i>Direccion</label>
                                                 <input
-                                                    class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
+                                                    class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}"
                                                     type="text" name="direccion" id="direccion"
                                                     value="{{ old('direccion', '') }}">
                                                 @if ($errors->has('direccion'))
@@ -1065,7 +1065,7 @@
             }
         }
 
-        function limpiarCamposCursos() {
+        function limpiarCamposCurso() {
             $("#curso_diplomado").val('');
             $("#tipo").val('');
             $("#año").val('');

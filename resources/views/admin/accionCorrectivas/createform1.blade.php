@@ -98,7 +98,7 @@
     <div class="form-group col-12">
         <label for="tema"><i class="far fa-file-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.tema') }}
         </label>
-        <textarea class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema" required>{{ old('tema') }}</textarea>
+        <textarea class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema">{{ old('tema') }}</textarea>
         @if($errors->has('tema'))
         <div class="invalid-feedback">
             {{ $errors->first('tema') }}
@@ -109,7 +109,7 @@
     <div class="form-group col-12">
         <label><i class="fas fa-project-diagram iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.causaorigen') }}
         </label>
-        <select class="form-control {{ $errors->has('causaorigen') ? 'is-invalid' : '' }}" name="causaorigen" id="causaorigen" required>
+        <select class="form-control {{ $errors->has('causaorigen') ? 'is-invalid' : '' }}" name="causaorigen" id="causaorigen">
             <option></option>
             <option value disabled {{ old('causaorigen', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
             @foreach(App\Models\AccionCorrectiva::CAUSAORIGEN_SELECT as $key => $label)
@@ -126,7 +126,7 @@
     <div class="form-group col-12">
         <label for="descripcion"><i class="far fa-file-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.descripcion') }}
         </label>
-        <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion" required>{{ old('descripcion') }}</textarea>
+        <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
         @if($errors->has('descripcion'))
         <div class="invalid-feedback">
             {{ $errors->first('descripcion') }}
@@ -142,5 +142,5 @@
     </div>
 
 
-   
+
 

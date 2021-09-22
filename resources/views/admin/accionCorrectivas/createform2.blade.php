@@ -1,9 +1,8 @@
-    <div class="row">
         <div class="form-group col-12">
             <label><i class="fas fa-list-ul iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.metodo_causa') }}
             </label>
             <select class="form-control {{ $errors->has('metodo_causa') ? 'is-invalid' : '' }}" name="metodo_causa"
-                    id="metodo_causa" required>
+                    id="metodo_causa" >
                 <option></option>
                 <option value
                         disabled {{ old('metodo_causa', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -24,7 +23,7 @@
                     class="far fa-file-alt iconos-crear"></i>Descripción de la solución
             </label>
             <textarea class="form-control {{ $errors->has('solucion') ? 'is-invalid' : '' }}" name="solucion" id="solucion"
-                      required>{{ old('solucion') }}</textarea>
+                      >{{ old('solucion') }}</textarea>
             @if($errors->has('solucion'))
                 <div class="invalid-feedback">
                     {{ $errors->first('solucion') }}
@@ -37,7 +36,7 @@
                     class="far fa-file-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.cierre_accion') }}
             </label>
             <textarea class="form-control {{ $errors->has('cierre_accion') ? 'is-invalid' : '' }}" name="cierre_accion"
-                      id="cierre_accion" required>{{ old('cierre_accion') }}</textarea>
+                      id="cierre_accion">{{ old('cierre_accion') }}</textarea>
             @if($errors->has('cierre_accion'))
                 <div class="invalid-feedback">
                     {{ $errors->first('cierre_accion') }}
@@ -48,7 +47,7 @@
         <div class="form-group col-12">
             <label><i class="fas fa-signal iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.estatus') }}
             </label>
-            <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus" id="estatus" required>
+            <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus" id="estatus">
                 <option></option>
                 <option value
                         disabled {{ old('estatus', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -190,5 +189,5 @@
                 {{ trans('global.save') }}
             </button>
         </div>
-    </div>
+
 </form>
