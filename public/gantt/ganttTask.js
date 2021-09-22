@@ -696,7 +696,7 @@ Task.prototype.isLocallyBlockedByDependencies = function () {
 //<%---------- TASK CHANGE STATUS BY PROGRESS ---------------------- --%>
 
 Task.prototype.changeStatusByProgress = function () {
-  if (this.end < Math.floor(Date.now())) {
+  if (this.end < Math.floor(Date.now())&&this.progress<=50) {
     this.status = "STATUS_FAILED";
   } else {
     if (Number(this.progress) == 100) {

@@ -58,7 +58,7 @@
                             <th style="vertical-align: top">
                                 Descripción&nbsp;de&nbsp;la&nbsp;desviación o&nbsp;problema&nbsp;real
                             </th>
-                            <th style="vertical-align: top">
+                            {{-- <th style="vertical-align: top">
                                 Método&nbsp;utilizado&nbsp;para&nbsp;el análisis&nbsp;de&nbsp;causa&nbsp;raíz
                             </th>
                             <th style="vertical-align: top">
@@ -76,16 +76,16 @@
                             </th>
                             <th style="vertical-align: top">
                                 {{ trans('cruds.accionCorrectiva.fields.fecha_verificacion') }}
-                            </th>
-                            <th style="vertical-align: top">
+                            </th> --}}
+                            {{-- <th style="vertical-align: top">
                                 {{ trans('cruds.accionCorrectiva.fields.responsable_accion') }}
                             </th>
                             <th style="vertical-align: top">
                                 Responsable autorización&nbsp;AC
-                            </th>
-                            <th style="vertical-align: top">
+                            </th> --}}
+                            {{-- <th style="vertical-align: top">
                                 {{ trans('cruds.accionCorrectiva.fields.documentometodo') }}
-                            </th>
+                            </th> --}}
                             <th style="vertical-align: top">
                                 Opciones
                             </th>
@@ -367,44 +367,44 @@
                         data: 'descripcion',
                         name: 'descripcion'
                     },
-                    {
-                        data: 'metodo_causa',
-                        name: 'metodo_causa'
-                    },
-                    {
-                        data: 'solucion',
-                        name: 'solucion'
-                    },
-                    {
-                        data: 'cierre_accion',
-                        name: 'cierre_accion'
-                    },
-                    {
-                        data: 'estatus',
-                        name: 'estatus'
-                    },
-                    {
-                        data: 'fecha_compromiso',
-                        name: 'fecha_compromiso'
-                    },
-                    {
-                        data: 'fecha_verificacion',
-                        name: 'fecha_verificacion'
-                    },
-                    {
-                        data: 'responsable_accion_name',
-                        name: 'responsable_accion.name'
-                    },
-                    {
-                        data: 'nombre_autoriza_name',
-                        name: 'nombre_autoriza.name'
-                    },
-                    {
-                        data: 'documentometodo',
-                        name: 'documentometodo',
-                        sortable: false,
-                        searchable: false
-                    },
+                    // {
+                    //     data: 'metodo_causa',
+                    //     name: 'metodo_causa'
+                    // },
+                    // {
+                    //     data: 'solucion',
+                    //     name: 'solucion'
+                    // },
+                    // {
+                    //     data: 'cierre_accion',
+                    //     name: 'cierre_accion'
+                    // },
+                    // {
+                    //     data: 'estatus',
+                    //     name: 'estatus'
+                    // },
+                    // {
+                    //     data: 'fecha_compromiso',
+                    //     name: 'fecha_compromiso'
+                    // },
+                    // {
+                    //     data: 'fecha_verificacion',
+                    //     name: 'fecha_verificacion'
+                    // },
+                    // {
+                    //     data: 'responsable_accion_name',
+                    //     name: 'responsable_accion.name'
+                    // },
+                    // {
+                    //     data: 'nombre_autoriza_name',
+                    //     name: 'nombre_autoriza.name'
+                    // },
+                    // {
+                    //     data: 'documentometodo',
+                    //     name: 'documentometodo',
+                    //     sortable: false,
+                    //     searchable: false
+                    // },
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
