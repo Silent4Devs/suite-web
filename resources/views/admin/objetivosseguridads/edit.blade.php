@@ -337,7 +337,7 @@
 
                             <div class="form-group col-sm-6">
 
-                                <div class="form-inline">
+                                <div class="form-inline mb-2">
                                     <div class="form-group mb-2">
                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail2"
                                             value="Añadir una variable:" disabled>
@@ -365,7 +365,7 @@
                         <div class="text-center form-group col-12" style="margin-left:15px;">
                             <a href="{{ redirect()->getUrlGenerator()->previous() }}"
                                 class="btn_cancelar">Cancelar</a>
-                            <button class="btn btn-info" type="submit">
+                            <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
                         </div>

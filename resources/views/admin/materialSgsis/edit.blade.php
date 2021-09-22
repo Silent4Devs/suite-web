@@ -76,12 +76,30 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.tipoimparticion_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
+            {{-- <div class="form-group col-md-6">
                 <label for="fechacreacion_actualizacion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha de creación</label>
-                <input type="datetime" name="fechacreacion_actualizacion" value="{{ \Carbon\Carbon::parse($materialSgsi->fechacreacion_actualizacion)->format('d/m/Y') }}" class="form-control">
-                <p></p>
+                <input type="date" name="fechacreacion_actualizacion" value="{{ old('fechacreacion_actualizacion',\Carbon\Carbon::parse($materialSgsi->fechacreacion_actualizacion)->format('d/m/Y') )}}">
+                @if ($errors->has('fechaexpedicion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fechaexpedicion') }}
+                    </div>
+                @endif
+                
+            </div> --}}
+
+            <div class="form-group col-sm-4">
+                <label for="fechacreacion_actualizacion"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de creación</label>
+                <input class="form-control date  {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}" type="date" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion"
+                    value="{{ old('fechacreacion_actualizacion',\Carbon\Carbon::parse($materialSgsi->fechacreacion_actualizacion))->format('Y-m-d') }}">
+                @if ($errors->has('fechacreacion_actualizacion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fechacreacion_actualizacion') }}
+                    </div>
+                @endif
             </div>
-           <div class="form-group col-12">
+
+
+           {{-- <div class="form-group col-12">
                 <label for="archivo"><i class="far fa-file iconos-crear"></i>Material(Archivo PDF)</label>
                 <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
                 </div>
@@ -91,13 +109,88 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.archivo_helper') }}</span>
+            </div> --}}
+
+
+            <div class="mb-3 col-sm-12">
+                <label for="archivo"><i class="fas fa-folder-open iconos-crear"></i>Material(Archivo PDF)</label>
+                <div class="custom-file">
+                    <input type="file" class="form-control" {{ $errors->has('archivo') ? 'is-invalid' : '' }}"
+                        multiple id="archivo" name="files[]"
+                        {{ old('archivo', $materialSgsi->material_id) }}>
+                    @if ($errors->has('archivo'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('archivo') }}
+                        </div>
+                    @endif
+                </div>
             </div>
+
+            <div class="mb-3 col-10 d-flex justify-content-right">
+                <span class="float-right" type="button" class="pl-0 ml-0 btn text-primary" data-toggle="modal"
+                    data-target="#largeModal">
+                    <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Descargar Documentos
+                </span>
+            </div>
+
             <div class="form-group col-12 text-right">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
             </div>
+
+
+
+
+            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- carousel -->
+                        <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
+                            <ol class='carousel-indicators'>
+                                @foreach($materialSgsi->documentos_material as $idx=>$material_id)
+                                 <li data-target=#carouselExampleIndicators data-slide-to= {{$idx}}></li>
+
+                                @endforeach
+
+                            </ol>
+                            <div class='carousel-inner'>
+                                @foreach($materialSgsi->documentos_material as $idx=>$material_id)
+                                <div class='carousel-item {{$idx==0?"active":""}}'>
+                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                        src="{{ asset('storage/documentos_material_sgsi') }}/{{$material_id->documento}}"></iframe>
+                                </div>
+                                @endforeach
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <a style="height: 50px; top: 50px;" class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
+                            data-slide='prev'>
+                            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                            <span class='sr-only'>Previous</span>
+                        </a>
+                        <a style="height: 50px; top: 50px;" class='carousel-control-next' href='#carouselExampleIndicators' role='button'
+                            data-slide='next'>
+                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                            <span class='sr-only'>Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
         </form>
     </div>
 </div>

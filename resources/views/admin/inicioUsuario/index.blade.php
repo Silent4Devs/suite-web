@@ -72,6 +72,10 @@
             margin-right: -5px;
             z-index: 1;
         }
+
+        .caja_botones_menu {
+                height: 36px !important;
+            }
     </style>
 
     @include('partials.flashMessages')

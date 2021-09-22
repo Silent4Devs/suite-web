@@ -88,8 +88,7 @@
                             {{ $errors->first('fechaexpedicion') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
                 </div>
 
                 <div class="form-group col-sm-4">
@@ -257,7 +256,7 @@
 
 
                 <div class="form-group col-md-4">
-                    <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Reviso</label>
+                    <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
                     <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="id_reviso"
                         id="id_reviso">
                         @foreach ($empleados as $id => $empleado)

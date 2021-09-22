@@ -148,26 +148,19 @@ class EmpleadoController extends Controller
         $experiencias = ExperienciaEmpleados::get();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
-        $documentos =EvidenciasDocumentosEmpleados::get();
-        $certificaciones =CertificacionesEmpleados::get();
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias','educacions','cursos','documentos','certificaciones'));
+        $documentos = EvidenciasDocumentosEmpleados::get();
+        $certificaciones = CertificacionesEmpleados::get();
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function onlyStore($request)
     {
 
-        // dd($request->all());
-        $experiencias = json_decode($request->experiencia);
-        $educacions = json_decode($request->educacion);
-        $cursos = json_decode($request->curso);
-        $certificados= json_decode($request->certificado);
+        // $experiencias = json_decode($request->experiencia);
+        // $educacions = json_decode($request->educacion);
+        // $cursos = json_decode($request->curso);
+        // $certificados = json_decode($request->certificado);
         // dd($cursos);
+
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $validateSupervisor = 'nullable|exists:empleados,id';
@@ -204,8 +197,8 @@ class EmpleadoController extends Controller
             "n_registro" =>  $request->n_registro,
             "sede_id" =>  $request->sede_id,
             "resumen" =>  $request->resumen,
-            "cumpleaños"=>$request->cumpleaños,
-            "direccion" =>$request->direccion,
+            "cumpleaños" => $request->cumpleaños,
+            "direccion" => $request->direccion,
         ]);
         $image = null;
         if ($request->snap_foto && $request->file('foto')) {
@@ -257,6 +250,27 @@ class EmpleadoController extends Controller
             'foto' => $image
         ]);
 
+        return $empleado;
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $empleado = $this->onlyStore($request);
+
+        return redirect()->route('admin.empleados.index')->with("success", 'Guardado con éxito');
+    }
+
+    public function storeWithCompetencia(Request $request)
+    {
+
+        $empleado = $this->onlyStore($request);
+
+        return redirect()->route('admin.empleados.edit', $empleado)->with("success", 'Guardado con éxito');
 
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -264,71 +278,109 @@ class EmpleadoController extends Controller
                 if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
                     EvidenciasDocumentosEmpleados::create([
                         'documentos' => $file->getClientOriginalName(),
-                        'empleado_id' => $empleado ->id,
+                        'empleado_id' => $empleado->id,
                     ]);
                 }
             }
         }
+        // dd($request->hasFile('files'));
 
-        if ($request->hasFile('files')) {
-            $files = $request->file('files');
-            foreach ($files as $file) {
-                if (Storage::putFileAs('public/certificados_empleados', $file, $file->getClientOriginalName())) {
-                    EvidenciasCertificadosEmpleados::create([
-                        'evidencia' => $file->getClientOriginalName(),
-                        'empleado_id' => $empleado ->id,
-                    ]);
-                }
-            }
-        }
-        foreach($experiencias as $experiencia){
-        ExperienciaEmpleados::create([
-            'empleado_id'=>$empleado->id,
-            'empresa'=> $experiencia[0],
-            'puesto'=> $experiencia[1],
-            'inicio_mes'=>$experiencia[3],
-            'fin_mes'=>$experiencia[4],
-            'descripcion'=>$experiencia[2],
-        ]);
+        foreach ($experiencias as $experiencia) {
+            ExperienciaEmpleados::create([
+                'empleado_id' => $empleado->id,
+                'empresa' => $experiencia[0],
+                'puesto' => $experiencia[1],
+                'inicio_mes' => $experiencia[3],
+                'fin_mes' => $experiencia[4],
+                'descripcion' => $experiencia[2],
+            ]);
         }
         // dd($experiencias);
-        foreach($educacions as $educacion){
-        EducacionEmpleados::create([
-            'empleado_id'=>$empleado->id,
-            'institucion'=> $educacion[0],
-            'nivel'=> $educacion[3],
-            'año_inicio'=>$educacion[2],
-            'año_fin'=>$educacion[1],
-        ]);
+        foreach ($educacions as $educacion) {
+            EducacionEmpleados::create([
+                'empleado_id' => $empleado->id,
+                'institucion' => $educacion[0],
+                'nivel' => $educacion[3],
+                'año_inicio' => $educacion[2],
+                'año_fin' => $educacion[1],
+            ]);
         }
-        foreach($cursos as $curso){
-        CursosDiplomasEmpleados::create([
-            'empleado_id'=>$empleado->id,
-            'curso_diploma'=> $curso[0],
-            'tipo'=> $curso[1],
-            'año'=>$curso[2],
-            'duracion'=>$curso[3],
-        ]);
+        foreach ($cursos as $curso) {
+            CursosDiplomasEmpleados::create([
+                'empleado_id' => $empleado->id,
+                'curso_diploma' => $curso[0],
+                'tipo' => $curso[1],
+                'año' => $curso[2],
+                'duracion' => $curso[3],
+            ]);
         }
-        foreach($certificados as $certificacion){
-        CertificacionesEmpleados::create([
-            'empleado_id'=>$empleado->id,
-            'nombre'=> $certificacion[0],
-            'estatus'=> $certificacion[2],
-            'vigencia'=>$certificacion[1],
-        ]);
+        foreach ($certificados as $certificacion) {
+            CertificacionesEmpleados::create([
+                'empleado_id' => $empleado->id,
+                'nombre' => $certificacion[0],
+                'estatus' => $certificacion[2],
+                'vigencia' => $certificacion[1],
+                'evidencia' => $certificacion[3],
+            ]);
         }
-        // $gantt_path = 'storage/gantt/gantt_inicial.json';
-        // $path = public_path($gantt_path);
-
-        // $json_code = json_decode(file_get_contents($path), true);
-        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        // $write_empleados = $json_code;
-        // file_put_contents($path, json_encode($write_empleados));
-
-        return redirect()->route('admin.empleados.index')->with("success", 'Guardado con éxito');
+    }
+    public function storeResumen(Request $request, $empleado)
+    {
+        $request->validate([
+            "resumen" => "required|string|max:800"
+        ]);
+        if ($request->ajax()) {
+            $empleado = Empleado::find(intval($empleado));
+            $empleado->update([
+                "resumen" => $request->resumen
+            ]);
+            if ($empleado) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        }
     }
 
+    public function storeCertificaciones(Request $request, $empleado)
+    {
+        $request->validate([
+            "nombre" => "required|string|max:255",
+            "estatus" => "required|string|max:255",
+            "vigencia" => "required|date",
+            "empleado_id" => "required|exists:empleados,id"
+        ]);
+        // dd($request->all());
+        if ($request->ajax()) {
+            $empleado = Empleado::find(intval($empleado));
+            $certificado = CertificacionesEmpleados::create([
+                'empleado_id' => $empleado->id,
+                'nombre' => $request->nombre,
+                'estatus' =>  $request->estatus,
+                'vigencia' =>  $request->vigencia,
+            ]);
+            if ($request->hasFile('documento')) {
+                $filenameWithExt = $request->file('documento')->getClientOriginalName();
+                //Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Get just ext
+                $extension = $request->file('documento')->getClientOriginalExtension();
+                // Filename to store
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                // Upload Image
+                $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
+
+                $certificado->update([
+                    "documento" => $fileNameToStore
+                ]);
+            }
+            if ($empleado) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        }
+    }
     /**
      * Display the specified resource.
      *
@@ -359,8 +411,8 @@ class EmpleadoController extends Controller
         $experiencias = ExperienciaEmpleados::get();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
-        $documentos =EvidenciasDocumentosEmpleados::get();
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes','experiencias','educacions','cursos','documentos'));
+        $documentos = EvidenciasDocumentosEmpleados::get();
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos'));
     }
 
     /**
@@ -461,7 +513,7 @@ class EmpleadoController extends Controller
                 if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
                     EvidenciasDocumentosEmpleados::create([
                         'documentos' => $file->getClientOriginalName(),
-                        'empleado_id' => $empleado ->id,
+                        'empleado_id' => $empleado->id,
                     ]);
                 }
             }
@@ -513,13 +565,25 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::with('area')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
+                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
                 $lista = "<ul class='list-group' id='empleados-lista'>";
                 foreach ($usuarios as $usuario) {
                     $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'><i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . "</button>";
                 }
                 $lista .= "</ul>";
                 return $lista;
+            }
+        }
+    }
+
+    public function getEmpleadosLista(Request $request)
+    {
+        if ($request->ajax()) {
+            $nombre = $request->nombre;
+            if ($nombre != null) {
+                $lista = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+                $empleados = json_encode($lista);
+                return $empleados;
             }
         }
     }

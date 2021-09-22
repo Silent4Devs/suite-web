@@ -30,11 +30,11 @@
         }
 
         .fa-edit {
-            color: blue;
+            color: rgb(4, 4, 4);
         }
 
         .fa-archive {
-            color: green;
+            color: #212529;
         }
 
     </style>

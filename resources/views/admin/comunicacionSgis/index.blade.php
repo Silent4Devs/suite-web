@@ -46,6 +46,11 @@
         width: 30px;
         height: 48px;
     }
+
+    .tamaño{
+    width:168px !important;
+    }       
+
 </style>
 
     {{ Breadcrumbs::render('admin.comunicacion-sgis.index') }}
@@ -245,7 +250,7 @@
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
-                                        <a href="#" class="btn btn-danger" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}">Ver archivo</a>
+                                        <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}">Ver archivo</a>
                                     </div>
                                     </div>
 
@@ -273,7 +278,7 @@
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
                                                     <div class='carousel-item ${idx==0?"active":""}'>
-                                                        <iframe seamless class='img-size' src='{{asset("storage/documento_comunicado_SGI")}}/${archivo.documento}'></iframe>
+                                                        <iframe seamless class='img-size' src='{{asset("tmp/uploads/")}}/${archivo.documento}'></iframe>
                                                     </div>`
                                                     })}
 

@@ -47,6 +47,15 @@
     <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css">
 
     <style type="text/css">
+       .select2-selection--multiple {
+            overflow: hidden !important;
+            height: auto !important;
+            padding: 0 5px 5px 5px !important;
+        }
+
+        .select2-container {
+            margin-top: 10px !important;
+        }
         /*TOASTR*/
         #toast-container > div{
             opacity: 1 !important;
@@ -289,11 +298,6 @@
         }
 
     </style>
-
-
-
-
-
     {{-- menu tabs --}}
     <style type="text/css">
         .caja_botones_menu {
@@ -398,9 +402,7 @@
             background: rgba(0, 0, 0, 0.5);
         }
     </style>
-
     {{-- Estilos Select 2 --}}
-
 <style>
     /* line 1, ../scss/core.scss */
     .select2-selection--multiple {
@@ -1062,7 +1064,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
-    </script>
+
     <script src="{{ asset('push/bin/push.min.js') }}"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
     </script> --}}
@@ -1453,19 +1455,12 @@
         });
     </script>
 
-
-
-
-
     <script type="text/javascript">
         $(".caja_botones_menu a").click(function() {
             $(".caja_botones_menu a").removeClass("btn_activo");
             $(".caja_botones_menu a:hover").addClass("btn_activo");
         });
     </script>
-
-
-
 
     {{-- menus tabs--}}
     <script type="text/javascript">
@@ -1486,6 +1481,7 @@
 
     @yield('scripts')
 
+    {{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }}
 
 </body>
 
