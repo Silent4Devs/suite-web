@@ -97,11 +97,11 @@
                 <th>Titulo</th>
                 <th>Sede</th>
                 <th>Ubicación</th>
-                <th>Descripción</th>
+                <th style="min-width: 500px;">Descripción</th>
                 <th>Areas, Afectadas</th>
                 <th>Procesos, Afectados</th>
                 <th>Activos, Afectados</th>
-                <th>Fecha</th>
+                <th style="min-width: 150px;">Fecha</th>
                 <th>Quién reporto</th>
                 <th>Correo</th>
                 <th>Teléfono</th>
@@ -111,9 +111,9 @@
                 <th>Impacto</th>
                 <th>Prioridad</th>
                 <th>Estatus</th>
-                <th>Fecha de cierre</th>
+                <th style="min-width: 150px;">Fecha de cierre</th>
                 <th>Asignado a</th>
-                <th>Comentarios</th>
+                <th style="min-width: 500px;">Comentarios</th>
                 <th>Opciones</th>
             </tr>
         </thead>

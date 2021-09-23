@@ -76,6 +76,12 @@
         .caja_botones_menu {
                 height: 36px !important;
             }
+
+        
+        .list-group{
+            max-height: 400px;
+            overflow-y: auto;
+        }
     </style>
 
     @include('partials.flashMessages')

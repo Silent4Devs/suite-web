@@ -19,8 +19,8 @@
                 <th>Tipo</th>
                 {{-- <th>Categoria</th> --}}
                 {{-- <th>Urgencia</th> --}}
-                <th>Fecha&nbsp;inicio</th>
-                <th>Fecha&nbsp;fin</th>
+                <th style="min-width:200px;">Fecha&nbsp;inicio</th>
+                <th style="min-width:200px;">Fecha&nbsp;fin</th>
                 <th>Compartida&nbsp;con</th>
                 {{-- <th>Asignada por</th> --}}
                 <th>Estatus</th>

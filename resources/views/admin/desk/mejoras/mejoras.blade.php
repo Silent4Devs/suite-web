@@ -56,12 +56,12 @@
        			<th>Nombre</th>
        			<th>Correo</th>
        			<th>Teléfono</th>
-                <th>Mejora</th>
+                <th style="min-width: 500px;">Mejora</th>
                 <th>Tipo de mejora</th>
                 <th>Área</th>
                 <th>Proceso</th>
-       			<th>Descripción</th>
-                <th>Beneficios</th>
+       			<th style="min-width: 500px;">Descripción</th>
+                <th style="min-width: 500px;">Beneficios</th>
        			<th>Opciones</th> 
    			</tr>
    		</thead>
