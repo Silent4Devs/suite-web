@@ -22,7 +22,7 @@ class StoreTratamientoRiesgoRequest extends FormRequest
                 'nullable',
             ],
             'fechacompromiso'     => [
-                'date_format:' . config('panel.date_format'),
+                'date:',
                 'nullable',
             ],
             'estatus'             => [
