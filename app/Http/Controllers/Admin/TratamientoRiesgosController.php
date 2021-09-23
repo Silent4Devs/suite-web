@@ -23,7 +23,7 @@ class TratamientoRiesgosController extends Controller
         abort_if(Gate::denies('tratamiento_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = TratamientoRiesgo::with(['control', 'responsable', 'team'])->select(sprintf('%s.*', (new TratamientoRiesgo)->table));
+            $query = TratamientoRiesgo::with(['control', 'responsable', 'team'])->select(sprintf('%s.*', (new TratamientoRiesgo)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -63,6 +63,10 @@ class TratamientoRiesgosController extends Controller
 
             $table->addColumn('id_reviso', function ($row) {
                 return $row->empleado ? $row->empleado->name : '';
+            });
+            
+            $table->addColumn('fechacompromiso', function ($row) {
+                return $row->fechacompromiso ? $row->fechacompromiso : '';
             });
 
             $table->editColumn('prioridad', function ($row) {
@@ -107,8 +111,9 @@ class TratamientoRiesgosController extends Controller
 
     public function store(StoreTratamientoRiesgoRequest $request)
     {
+        // dd($request);
         $tratamientoRiesgo = TratamientoRiesgo::create($request->all());
-
+        // dd($tratamientoRiesgo);
         return redirect()->route('admin.tratamiento-riesgos.index')->with("success", 'Guardado con éxito');
     }
 
