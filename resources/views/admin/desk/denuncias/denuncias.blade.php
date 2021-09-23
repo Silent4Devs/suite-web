@@ -64,7 +64,7 @@
                 <th>Nombre</th>
                 <th>Puesto</th>
                 <th>Área</th>
-                <th>Descripción</th>
+                <th style="min-width: 500px;">Descripción</th>
        			<th>Opciones</th> 
    			</tr>
    		</thead>

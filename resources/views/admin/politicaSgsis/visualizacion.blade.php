@@ -43,40 +43,46 @@
 			 
 			</div>
 		</div>
-		<div class="row" style="">
-			<div class="col-lg-9">
-				<p>
-					{!! $politicaSgsis->politicasgsi !!}
-				</p>
-			</div>
+		@if($politicaSgsis)
+			<div class="row" style="">
+				<div class="col-lg-9">
+					<p>
+						{!! $politicaSgsis->politicasgsi !!}
+					</p>
+				</div>
 
-			<div class="col-lg-3 mt-3">
-				<div class="form-group">
-					<label class="form-label"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de publicación</label>
-					<div class="form-control">{{ $politicaSgsis->fecha_publicacion }}</div>
+				<div class="col-lg-3 mt-3">
+					<div class="form-group">
+						<label class="form-label"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de publicación</label>
+						<div class="form-control">{{ $politicaSgsis->fecha_publicacion }}</div>
+					</div>
+					<div class="form-group">
+						<label class="form-label"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de entrada en vigor</label>
+						<div class="form-control">{{ $politicaSgsis->fecha_entrada }}</div>
+					</div>
+					<div class="form-group">
+						<label class="form-label"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de revisión</label>
+						<div class="form-control">{{ $politicaSgsis->fecha_revision }}</div>
+					</div>
 				</div>
-				<div class="form-group">
-					<label class="form-label"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de entrada en vigor</label>
-					<div class="form-control">{{ $politicaSgsis->fecha_entrada }}</div>
+				<strong class="col-12">Revisó:</strong><br/><br/>
+				<div class="form-group col-md-4">
+					<label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+					<div class="form-control">{{ $politicaSgsis->empleado->name }}</div>
 				</div>
-				<div class="form-group">
-					<label class="form-label"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de revisión</label>
-					<div class="form-control">{{ $politicaSgsis->fecha_revision }}</div>
+				<div class="form-group col-md-4">
+					<label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+					<div class="form-control">{{ $politicaSgsis->empleado->puesto }}</div>
+				</div>
+				<div class="form-group col-md-4">
+					<label class="form-label"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+					<div class="form-control">{{ $politicaSgsis->empleado->area->area }}</div>
 				</div>
 			</div>
-			<strong class="col-12">Revisó:</strong><br/><br/>
-			<div class="form-group col-md-4">
-				<label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-				<div class="form-control">{{ $politicaSgsis->empleado->name }}</div>
+		@else
+			<div class="row">
+				<h1>Sin registro</h1>
 			</div>
-			<div class="form-group col-md-4">
-				<label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-				<div class="form-control">{{ $politicaSgsis->empleado->puesto }}</div>
-			</div>
-			<div class="form-group col-md-4">
-				<label class="form-label"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-				<div class="form-control">{{ $politicaSgsis->empleado->area->area }}</div>
-			</div>
-		</div>
+		@endif
 	</div>
 @endsection
