@@ -145,7 +145,7 @@
                             </div>
 
                             <div class="mt-4 form-group col-12">
-                                <label class="form-label"><i class="fas fa-hand-paper iconos-crear"></i>Otro>
+                                <label class="form-label"><i class="fas fa-hand-paper iconos-crear"></i>Otro
                                     <input type="" name="tipo" class="form-control" value="{{ $denuncias->tipo }}">
                             </div>
 
@@ -221,7 +221,7 @@
                             </div>
                         </form>
                     </div>
-                    
+
                 </section>
 
                 <section id="analisis">
