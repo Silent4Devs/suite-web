@@ -67,7 +67,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.fecha_publicacion') }}</label>
-                <input class="form-control date {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}" type="text" name="fecha_publicacion" id="fecha_publicacion" value="{{ old('fecha_publicacion') }}">
+                <input class="form-control date {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}" type="date" name="fecha_publicacion" id="fecha_publicacion" value="{{ old('fecha_publicacion') }}">
                 @if($errors->has('fecha_publicacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecha_publicacion') }}
@@ -76,15 +76,8 @@
                 <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.fecha_publicacion_helper') }}</span>
             </div>
             <div class="form-group col-12">
-                <label for="archivo"><i class="far fa-file iconos-crear"></i>Archivo PDF o JPEG</label>
-                <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
-                </div>
-                @if($errors->has('archivo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('archivo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.archivo_helper') }}</span>
+                <label for="documento"><i class="fas fa-folder-open iconos-crear"></i>Archivo</label>
+                <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf" value="{{ old('files[]') }}">
             </div>
             <div class="form-group col-12 text-right">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
