@@ -15,7 +15,7 @@
             border-left: 2px solid #00abb2;
             margin-top: 10px;
             padding: 10px;
-            width: 210px;
+            width: 350px;
             height: 80px;
             display: inline-block;
             overflow: hidden;
@@ -61,15 +61,20 @@
 
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Vista del documento:
-                    {{ $documento->nombre }}</strong></h3>
-            @can('documentos_download')
-                <embed src="{{ asset($path_documento . '/' . $documento->archivo) }}" class="mt-5 w-100" style="height: 800px"
-                    frameborder="0" id="pdf">
+
+            @if($documento->archivo)
+                <h3 class="mb-2 text-center text-white"><strong>Vista del documento:
+                        {{ $documento->nombre }}</strong></h3>
+                @can('documentos_download')
+                    <embed src="{{ asset($path_documento . '/' . $documento->archivo) }}" class="mt-5 w-100" style="height: 800px"
+                        frameborder="0" id="pdf">
+                @else
+                    <embed id="documento" src="{{ asset($path_documento . '/' . $documento->archivo) }}#toolbar=0&navpanes=0"
+                        class="mt-5 w-100" style="height: 800px" frameborder="0" id="pdf">
+                @endcan
             @else
-                <embed id="documento" src="{{ asset($path_documento . '/' . $documento->archivo) }}#toolbar=0&navpanes=0"
-                    class="mt-5 w-100" style="height: 800px" frameborder="0" id="pdf">
-            @endcan
+                <h1>Documento no cargado</h1>
+            @endif
         </div>
 
         <h2 style="padding: 20px">Documento visto por:</h2>
