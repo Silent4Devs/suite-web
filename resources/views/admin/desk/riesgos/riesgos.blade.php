@@ -53,15 +53,15 @@
                 <th>Fecha del indetificación</th>
                 <th>Fecha de recepción del reporte</th>
                 <th>Fecha de cierre</th>
-       			<th>Descripción</th>
-                <th>Comentarios</th>
+       			<th style="min-width: 500px;">Descripción</th>
+                <th style="min-width: 500px;">Comentarios</th>
                 <th>Estatus</th>
                 <th>Sede</th>
                 <th>Ubicación</th>
        			<th>Procesos afectados</th>
                 <th>Áreas afectadas</th>
                 <th>Activos afectados</th>
-       			<th>Fecha</th>
+       			<th style="min-width: 500px;">Fecha</th>
        			<th>Quién reportó</th>
        			<th>Correo</th>
        			<th>Teléfono</th>
