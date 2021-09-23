@@ -256,7 +256,7 @@
                         name: 'documento',
                         render:function(data,type,row,meta){
                              let archivo="";
-                             console.log(row);
+                            //  console.log(row);
                              let archivos=row.documentos_control_a;
                                archivo=` <div class="container">
 

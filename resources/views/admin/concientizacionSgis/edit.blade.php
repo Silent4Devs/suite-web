@@ -76,22 +76,75 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.fecha_publicacion_helper') }}</span>
             </div>
-           <div class="form-group col-12">
-                <label for="archivo"><i class="far fa-file iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.archivo') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
+
+            <div class="mb-3 col-sm-12">
+                <label for="archivo"><i class="fas fa-folder-open iconos-crear"></i>Material(Archivo PDF)</label>
+                <div class="custom-file">
+                    <input type="file" class="form-control" {{ $errors->has('archivo') ? 'is-invalid' : '' }}"
+                        multiple id="archivo" name="files[]"
+                        {{ old('archivo', $concientizacionSgi->concientSgsi_id) }}>
+                    @if ($errors->has('archivo'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('archivo') }}
+                        </div>
+                    @endif
                 </div>
-                @if($errors->has('archivo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('archivo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.archivo_helper') }}</span>
             </div>
+
+            <div class="mb-3 col-10 d-flex justify-content-right">
+                <span class="float-right" type="button" class="pl-0 ml-0 btn text-primary" data-toggle="modal"
+                    data-target="#largeModal">
+                    <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Descargar Documentos
+                </span>
+            </div>
+
             <div class="form-group col-12 text-right">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
+            </div>
+            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <!-- carousel -->
+                            <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
+                                <ol class='carousel-indicators'>
+                                    @foreach($concientizacionSgi->documentos_concientizacion as $idx=>$concientSgsi_id)
+                                    <li data-target=#carouselExampleIndicators data-slide-to= {{$idx}}></li>
+
+                                    @endforeach
+
+                                </ol>
+                                <div class='carousel-inner'>
+                                    @foreach($concientizacionSgi->documentos_concientizacion as $idx=>$concientSgsi_id)
+                                    <div class='carousel-item {{$idx==0?"active":""}}'>
+                                        <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                            src="{{ asset('storage/documentos_concientSgsi') }}/{{$concientSgsi_id->documento}}"></iframe>
+                                    </div>
+                                    @endforeach
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <a style="height: 50px; top: 50px;" class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
+                                data-slide='prev'>
+                                <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                <span class='sr-only'>Previous</span>
+                            </a>
+                            <a style="height: 50px; top: 50px;" class='carousel-control-next' href='#carouselExampleIndicators' role='button'
+                                data-slide='next'>
+                                <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                <span class='sr-only'>Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
