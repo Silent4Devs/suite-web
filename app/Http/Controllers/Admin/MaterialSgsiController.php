@@ -24,14 +24,14 @@ class MaterialSgsiController extends Controller
 
     public function index(Request $request)
     {
-        
+
         abort_if(Gate::denies('material_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd(MaterialSgsi::with('arearesponsable', 'team','documentos_material')->get());
         if ($request->ajax()) {
-           
+
             $query = MaterialSgsi::with(['arearesponsable', 'team','documentos_material'])->select(sprintf('%s.*', (new MaterialSgsi)->table));
             $table = Datatables::of($query);
-            
+
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
@@ -72,15 +72,15 @@ class MaterialSgsiController extends Controller
             //     return $row->archivo ? '<a href="' . $row->archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             // });
 
-            $table->editColumn('archivo', function ($row) {
-                return $row->documentos_material ? $row->documentos_material:[];
+            $table->editColumn('documento', function ($row) {
+                return $row->documentos_material ? $row->documentos_material : "";
             });
 
             $table->rawColumns(['actions', 'placeholder', 'arearesponsable', 'archivo']);
 
             return $table->make(true);
 
-            
+
             // $materialSgsi = MaterialSgsi::with('team','documentos_material')->get();
             // return datatables()->of($materialSgsi)->toJson();
         }
@@ -100,8 +100,8 @@ class MaterialSgsiController extends Controller
 
         return view('admin.materialSgsis.create', compact('arearesponsables', 'documentos'));
 
-       
-        
+
+
     }
 
     public function store(Request $request)
@@ -110,7 +110,7 @@ class MaterialSgsiController extends Controller
         if ($request->hasFile('files')) {
             $files = $request->file('files');
             foreach ($files as $file) {
-                if (Storage::putFileAs('storage/documentos_material_sgsi', $file, $file->getClientOriginalName())) {
+                if (Storage::putFileAs('public/documentos_material_sgsi', $file, $file->getClientOriginalName())) {
                     DocumentoMaterialSgsi::create([
                         'documento' => $file->getClientOriginalName(),
                         'material_id' => $materialSgsi->id,

@@ -66,7 +66,7 @@ class ConcientizacionSgiController extends Controller
             });
 
             $table->editColumn('fecha_publicacion', function ($row) {
-                return $row->fecha_publicacion ? $row->fecha_publicacion : "";
+                return $row->fecha_publicacion ? ConcientizacionSgi::MEDIO_ENVIO_SELECT[$row->medio_envio] : '';
             });
 
             $table->editColumn('archivo', function ($row) {

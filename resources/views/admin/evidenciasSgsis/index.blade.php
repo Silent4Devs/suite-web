@@ -26,7 +26,7 @@
     text-align:center !important;
     }
 
-    .table tr td:nth-child(5){
+    .table tr td:nth-child(5){concien
     text-align:center !important;
     }
 
