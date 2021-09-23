@@ -63,6 +63,10 @@ class ConcientizacionSgiController extends Controller
                 return $row->medio_envio ? ConcientizacionSgi::MEDIO_ENVIO_SELECT[$row->medio_envio] : '';
             });
 
+            $table->editColumn('fecha_publicacion', function ($row) {
+                return $row->fecha_publicacion ? ConcientizacionSgi::MEDIO_ENVIO_SELECT[$row->medio_envio] : '';
+            });
+
             $table->editColumn('archivo', function ($row) {
                 return $row->archivo ? '<a href="' . $row->archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });

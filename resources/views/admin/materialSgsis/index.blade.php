@@ -18,7 +18,7 @@
     .modal-body {
        padding: 0;
     }
-    
+
     .carousel-control-prev-icon {
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
         width: 30px;
@@ -29,50 +29,50 @@
         width: 30px;
         height: 48px;
     }
-    
+
     .carousel-control-next {
         top: 100px;
         height: 10px;
     }
-    
+
     .carousel-control-prev {
         height: 40px;
         top: 80px;
     }
-    
+
     .table tr td:nth-child(6){
-    
+
         max-width:415px !important;
         width:415px !important;
-    
+
     }
     /* se comento por que se descuadra la cabecera de la tabla y el registro */
     /* .table tr th:nth-child(6){
-    
+
         width:415px !important;
         max-width:415px !important;
     } */
-    
+
     .table tr td:nth-child(5){
-    
+
     text-align:justify !important;
-    
-    
+
+
     }
-    
+
     .table tr td:nth-child(10){
-    
+
         text-align: center;
-    
+
     }
-    
+
     .tamaño{
-    
+
         width:168px !important;
-    
+
     }
 </style>
-    
+
 
 
     {{ Breadcrumbs::render('admin.material-sgsis.index') }}
@@ -325,7 +325,7 @@
                         name: 'documento',
                         render:function(data,type,row,meta){
                              let archivo="";
-                             let archivos=row.documentos_material;
+                             let archivos= JSON.parse(data);
                                archivo=` <div class="container">
 
                                     <div class="mb-4 row">
@@ -338,7 +338,9 @@
                                     <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                                        <div class="modal-body">
+                                        <div class="modal-body">`;
+                                            if(archivos.length>0){
+                                                archivo+=`
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -362,7 +364,17 @@
 
                                             </div>
 
-                                            </div>
+                                            </div>`;
+                                        }
+                                            else{
+                                                archivo+=`
+                                                <div class="text-center">
+                                                    <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                    </div>
+                                                `
+                                            }
+                                            archivo+=`
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

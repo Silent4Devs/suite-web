@@ -178,7 +178,6 @@
                                                                 class="img-fluid " style="width:350px !important">
                                                         </div>
                                                     @endif
-                                                    <!-- carousel -->
 
                                                 </div>
                                                 <div class="modal-footer">

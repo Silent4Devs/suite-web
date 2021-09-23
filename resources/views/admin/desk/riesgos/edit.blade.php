@@ -118,6 +118,7 @@
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-body">
+                                                    @if (count($riesgos->evidencias_riesgos))
                                                     <!-- carousel -->
                                                     <div id='carouselExampleIndicators' class='carousel slide'
                                                         data-ride='carousel'>
@@ -152,6 +153,14 @@
                                                             <span class='sr-only'>Next</span>
                                                         </a>
                                                     </div>
+                                                    @else
+                                                        <div class="text-center">
+                                                            <h3 style="text-align:center" class="mt-3">Sin
+                                                                archivo agregado</h3>
+                                                            <img src="{{ asset('img/undrawn.png') }}"
+                                                                class="img-fluid " style="width:350px !important">
+                                                        </div>
+                                                    @endif
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default"
