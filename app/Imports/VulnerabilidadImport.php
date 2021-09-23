@@ -2,10 +2,10 @@
 
 namespace App\Imports;
 
-use App\Models\Amenaza;
+use App\Models\Vulnerabilidad;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class AmenazaImport implements ToModel
+class VulnerabilidadImport implements ToModel
 {
     /**
     * @param array $row
@@ -14,10 +14,9 @@ class AmenazaImport implements ToModel
     */
     public function model(array $row)
     {
-        return new Amenaza([
+        return new Vulnerabilidad([
             'nombre' => $row[0],
-            'categoria' => $row[1],
-            'descripcion'=> $row[2],
+            'descripcion' => $row[1],
         ]);
     }
 }

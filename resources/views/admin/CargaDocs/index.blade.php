@@ -31,21 +31,17 @@
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                    <i class="fas fa-shield-alt iconos-crear"></i>{!! Form::label('vulnerabilidades', 'Vulnerabilidades') !!}
+                    <i class="fas fa-shield-alt iconos-crear"></i>{!! Form::label('vulnerabilidad', 'Vulnerabilidad') !!}
                     <div>
-                        <input class="btn btn-primary btn-sm" type="file" name="file">
+                        {!! Form::open(['route' => 'carga-vulnerabilidad', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="vulnerabilidad" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
                         <button class="btn btn-secondary btn-sm">Decargar Formato</button>
+                        {!! Form::close() !!}
                     </div>
                 </div>
 
-                <!-- Descripcion Field -->
-                <div class="form-group col-sm-6">
-                    <i class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}
-                    <div>
-                        <input class="btn btn-primary btn-sm" type="file" name="file">
-                        <button class="btn btn-secondary btn-sm">Decargar Formato</button>
-                    </div>
-                </div>
+
 
                 <!-- Submit Field -->
                <div class="text-right form-group col-12">

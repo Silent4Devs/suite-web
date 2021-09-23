@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Imports\AmenazaImport;
+use App\Imports\VulnerabilidadImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SubidaExcel extends Controller
@@ -16,6 +17,12 @@ class SubidaExcel extends Controller
     public function Amenaza()
     {
         Excel::import(new AmenazaImport, request()->file('archivo'));
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
+    public function Vulnerabilidad()
+    {
+        Excel::import(new VulnerabilidadImport, request()->file('vulnerabilidad'));
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 

@@ -958,3 +958,4 @@ Route::view('post_register', 'auth.post_register');
 //Ruta CargaImagen
 Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
 Route::post('CargaAmenza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
+Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
