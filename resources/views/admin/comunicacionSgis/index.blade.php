@@ -49,7 +49,7 @@
 
     .tamaño{
     width:168px !important;
-    }       
+    }
 
 </style>
 
