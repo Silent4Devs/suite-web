@@ -137,7 +137,7 @@ class inicioUsuarioController extends Controller
             }
             $auditoria_internas = $auditoria_internas->unique();
             $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
-                $query->where('empleados.id', $empleado->id);
+                $query->where('empleados.id', $empleado->id)->where('archivado', '=', 0);
             })->get();
         }
         $contador_recursos = 0;
@@ -501,5 +501,14 @@ class inicioUsuarioController extends Controller
         }
 
         return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+    }
+
+
+    public function archivarCapacitacion(Request $request){
+        $int_empleado = intval($request->id_empleado);
+        $recurso = Recurso::find(intval($request->recurso_id));
+        $recurso->empleados()->syncWithoutDetaching([$int_empleado => ['archivado' => true]]);
+
+        return response()->json(['success'=>true]);
     }
 }

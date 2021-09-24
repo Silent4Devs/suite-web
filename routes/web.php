@@ -117,6 +117,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@riesgos')->name('reportes-riesgos');
     Route::post('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@storeRiesgos')->name('reportes-riesgos-store');
 
+    Route::post('inicioUsuario/capacitaciones/archivar', 'inicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
+
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
 
@@ -341,6 +343,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('objetivosseguridadsInsertar', 'ObjetivosseguridadController@ObjetivoInsert')->name('objetivos-seguridadsInsertar');
     Route::get('evaluaciones-objetivosInsertar', 'ObjetivosseguridadController@evaluacionesInsert')->name('evaluacionesobjetivosInsert');
     Route::get('evaluaciones-objetivosShow', 'ObjetivosseguridadController@evaluacionesShow')->name('evaluacionesobjetivosShow');
+
 
 
     Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
