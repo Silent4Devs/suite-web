@@ -1,6 +1,21 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+
+#tbl-participantes_paginate{
+    margin-left: 50px;
+    margin-top: 8px;
+    display: flex !important;
+    justify-content: space-between;
+}
+
+#tbl-participantes_paginate .paginate_button{
+    margin: 0 7px;
+}
+
+</style>
+
     {{ Breadcrumbs::render('admin.recursos.create') }}
 
     <div class="card">
@@ -194,6 +209,27 @@
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Participantes</span>
                                     </div>
+                                    <div class="px-1 py-2 mx-3 mb-4 col-12 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;margin-top: 15px;">
+                                        <div class="row w-100">
+                                            <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                                <div class="w-100">
+                                                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-11">
+                                                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                                <p class="m-0" style="font-size: 14px; color:#1E3A8A "><strong>Paso 1 </strong>
+                                                    Busque participante y haga clic en el botón suscribir participante.
+                                                </p>
+                                                <p class="m-0" style="font-size: 14px; color:#1E3A8A "><strong>Paso 2 </strong>
+                                                    Registre calificación y cargue certificado, haga clic en el botón calificar.
+                                                </p>
+                                                <p class="m-0" style="font-size: 14px; color:#1E3A8A "><strong>Paso 3 </strong>
+                                                    Al final del formulario haga clic en el botón actualizar.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <form method="POST" action="{{ route('admin.recursos.suscribir') }}"
                                         class="mt-3 row" id="form-participantes" enctype="multipart/form-data">
                                         <div class="pl-3 row w-100">
@@ -222,7 +258,7 @@
                                                     style="cursor: not-allowed" />
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div class="col-12" style="margin-bottom: 20px;">
                                             <button id="btn-suscribir-participante" type="submit"
                                                 class="mr-3 btn btn-sm btn-outline-success"
                                                 style="float: right; position: relative;">
@@ -232,7 +268,7 @@
                                                     style="position: absolute; top: 3px;left: 8px;"></i>
                                             </button>
                                         </div>
-                                    </form>
+                                     </form>
                                     <div class="mt-3 col-12 datatable-fix">
                                         <table class="table w-100" id="tbl-participantes">
                                             <thead class="thead-dark">
@@ -326,6 +362,7 @@
             let id_recurso = "{{ $recurso->id }}";
             if (!$.fn.dataTable.isDataTable('#tbl-participantes')) {
                 tbl_participantes = $('#tbl-participantes').DataTable({
+                    // "pageLength": 5,
                     buttons: [],
                     ajax: {
                         url: `/admin/recursos/${id_recurso}/participantes/`,

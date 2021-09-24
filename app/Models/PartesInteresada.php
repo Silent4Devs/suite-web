@@ -58,7 +58,7 @@ class PartesInteresada extends Model
     protected $fillable = [
         'parteinteresada',
         'requisitos',
-        'clausala',
+        'clausula',
         'created_at',
         'updated_at',
         'deleted_at',
