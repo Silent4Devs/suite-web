@@ -41,6 +41,30 @@
                     </div>
                 </div>
 
+                <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-user iconos-crear"></i>{!! Form::label('usuarios', 'Usuarios') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-vulnerabilidad', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="usuarios" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Decargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+                <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fa-fw fas fa-user-md iconos-crear"></i>{!! Form::label('puestos', 'Puestos') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-vulnerabilidad', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="puestos" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Decargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
 
 
                 <!-- Submit Field -->
