@@ -129,7 +129,8 @@
                     titleAttr: 'Exportar PDF',
                     orientation: 'portrait',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"compartido"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
