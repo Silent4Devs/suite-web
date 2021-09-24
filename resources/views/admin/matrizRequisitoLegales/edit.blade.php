@@ -41,7 +41,8 @@
                             {{ $errors->first('formacumple') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.formacumple_helper') }}</span>
+                    <span
+                        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.formacumple_helper') }}</span>
                 </div>
 
                 <div class="form-group col-sm-4">
@@ -82,13 +83,14 @@
                             class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion') }}</label>
                     <input class="form-control date {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}"
                         type="date" name="fechaexpedicion" id="fechaexpedicion"
-                        value="{{ old('fechaexpedicion',\Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion))->format('Y-m-d') }}">
+                        value="{{ old('fechaexpedicion', \Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion))->format('Y-m-d') }}">
                     @if ($errors->has('fechaexpedicion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechaexpedicion') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
+                    <span
+                        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span>
                 </div>
 
                 <div class="form-group col-sm-4">
@@ -96,13 +98,14 @@
                             class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
                     <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
                         name="fechavigor" id="fechavigor"
-                        value="{{ old('fechavigor',\Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor))->format('Y-m-d') }}">
+                        value="{{ old('fechavigor', \Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor))->format('Y-m-d') }}">
                     @if ($errors->has('fechavigor'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechavigor') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
+                    <span
+                        class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor_helper') }}</span>
                 </div>
 
                 <div class="form-group col-sm-4">
@@ -150,7 +153,7 @@
 
 
                 <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#1BB0B0">
-                    <p class ="text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
+                    <p class="text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
                         Verificación del Requisito</p>
                 </div>
 
@@ -327,8 +330,8 @@
                             </div>
                             <div class="modal-body"> --}}
 
-                                {{-- @dump(json_decode($activo->documentos_relacionados)) --}}
-                                {{-- @if (json_decode($matrizRequisitoLegale->evidencia))
+                {{-- @dump(json_decode($activo->documentos_relacionados)) --}}
+                {{-- @if (json_decode($matrizRequisitoLegale->evidencia))
                                     <div class="list-group">
                                         @foreach (json_decode($matrizRequisitoLegale->evidencia) as $documento)
 
@@ -362,41 +365,52 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <!-- carousel -->
-                                <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
-                                    <ol class='carousel-indicators'>
-                                        @foreach($matrizRequisitoLegale->evidencias_matriz as $idx=>$evidencia)
-                                         <li data-target=#carouselExampleIndicators data-slide-to= {{$idx}}></li>
+                                @if (count($matrizRequisitoLegale->evidencias_matriz))
 
-                                        @endforeach
+                                    <!-- carousel -->
+                                    <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
+                                        <ol class='carousel-indicators'>
+                                            @foreach ($matrizRequisitoLegale->evidencias_matriz as $idx => $evidencia)
+                                                <li data-target=#carouselExampleIndicators
+                                                    data-slide-to={{ $idx }}></li>
 
-                                    </ol>
-                                    <div class='carousel-inner'>
-                                        @foreach($matrizRequisitoLegale->evidencias_matriz as $idx=>$evidencia)
-                                        <div class='carousel-item {{$idx==0?"active":""}}'>
-                                            <iframe style="width:100%;height:300px;" seamless class='img-size'
-                                                src="{{ asset('storage/matriz_evidencias') }}/{{$evidencia->evidencia}}"></iframe>
+                                            @endforeach
+
+                                        </ol>
+                                        <div class='carousel-inner'>
+                                            @foreach ($matrizRequisitoLegale->evidencias_matriz as $idx => $evidencia)
+                                                <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                    <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                        src="{{ asset('storage/matriz_evidencias') }}/{{ $evidencia->evidencia }}"></iframe>
+                                                </div>
+                                            @endforeach
+
+
                                         </div>
-                                        @endforeach
-
-
+                                        <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
+                                            data-slide='prev'>
+                                            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                            <span class='sr-only'>Previous</span>
+                                        </a>
+                                        <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
+                                            data-slide='next'>
+                                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                            <span class='sr-only'>Next</span>
+                                        </a>
                                     </div>
-
-                                </div>
+                                @else
+                                    <div class="text-center">
+                                        <h3 style="text-align:center" class="mt-3">Sin
+                                            archivo agregado</h3>
+                                        <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
+                                            style="width:350px !important">
+                                    </div>
+                                @endif
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <a style="height: 50px; top: 50px;" class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
-                                    data-slide='prev'>
-                                    <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                                    <span class='sr-only'>Previous</span>
-                                </a>
-                                <a style="height: 50px; top: 50px;" class='carousel-control-next' href='#carouselExampleIndicators' role='button'
-                                    data-slide='next'>
-                                    <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                                    <span class='sr-only'>Next</span>
-                                </a>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
+
                         </div>
                     </div>
                 </div>

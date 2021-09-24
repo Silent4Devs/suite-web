@@ -32,19 +32,28 @@
                 <span class="help-block">{{ trans('cruds.planificacionControl.fields.descripcion_helper') }}</span>
             </div>
             <div class="form-group col-12">
-                <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.dueno') }}</label>
-                <select class="form-control select2 {{ $errors->has('dueno') ? 'is-invalid' : '' }}" name="dueno_id" id="dueno_id">
-                    @foreach($duenos as $id => $dueno)
-                        <option value="{{ $id }}" {{ old('dueno_id') == $id ? 'selected' : '' }}>{{ $dueno }}</option>
+                <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                <select class="form-control {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="id_reviso" id="id_reviso">
+                    @foreach ($empleados as $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
+            
+                        {{ $empleado->name }}
+                    </option>
+            
                     @endforeach
                 </select>
-                @if($errors->has('dueno'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('dueno') }}
-                    </div>
+                @if ($errors->has('empleados'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('id_reviso') }}
+                </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.planificacionControl.fields.dueno_helper') }}</span>
             </div>
+
+
+
+
+
+
             <div class="form-group col-md-6">
                 <label for="vulnerabilidad"><i class="fas fa-virus-slash iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.vulnerabilidad') }}</label>
                 <input class="form-control {{ $errors->has('vulnerabilidad') ? 'is-invalid' : '' }}" type="text" name="vulnerabilidad" id="vulnerabilidad" value="{{ old('vulnerabilidad', '') }}">

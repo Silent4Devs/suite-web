@@ -62,7 +62,8 @@
 
     <div class="row">
         <div class="form-group col-sm-8">
-            <label class="required" for="formula"><i class="fas fa-square-root-alt iconos-crear"></i></i>Formúla</label>
+            <label class="required" for="formula"><i
+                    class="fas fa-square-root-alt iconos-crear"></i></i>Formúla</label>
             <input class="form-control {{ $errors->has('formula') ? 'is-invalid' : '' }}" type="text" name="formula"
                 id="formula" value="{{ old('formula', $indicadoresSgsis->formula) }}" disabled>
             @if ($errors->has('formula'))
@@ -98,12 +99,11 @@
 </div>
 
 <script>
-    //listen render event receive id from product
-    var text1 = document.querySelector('.slugs-inputs');
-
-    Livewire.on('contentChanged', function(e) {
-        console.log("Evento1");
-        text1.value = '';
+    window.addEventListener('contentChanged', event => {
+         var inputArray = document.querySelectorAll('.slugs-inputs');
+        inputArray.forEach(function(input) {
+            input.value = "";
+        });
     });
 
     window.addEventListener('contentChanged', event => {

@@ -54,7 +54,7 @@ class MacroprocesoController extends Controller
                 return $row->nombre ? $row->nombre : "";
             });
             $table->editColumn('grupo', function ($row) {
-                return $row->grupo->nombre ? $row->grupo->nombre : "";
+                return $row->grupo ? $row->grupo->nombre : "";
             });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
@@ -90,16 +90,17 @@ class MacroprocesoController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate(
             [
                 'codigo' => 'required|string',
                 'nombre' => 'required|string',
                 'id_grupo' => 'required|integer',
                 'descripcion' => 'required|string'
-            ],
+            ]
         );
         $macroprocesos = Macroproceso::create($request->all());
-        Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
+        // Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
         return redirect()->route('admin.macroprocesos.index')->with("success", 'Guardado con éxito');
     }
 

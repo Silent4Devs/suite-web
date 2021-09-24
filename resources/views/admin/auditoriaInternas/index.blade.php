@@ -44,7 +44,7 @@
                         <th>
                             Equipo&nbsp;auditoría
                         </th>
-                        <th>
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.auditoriaInterna.fields.hallazgos') }}
                         </th>
                         <th>

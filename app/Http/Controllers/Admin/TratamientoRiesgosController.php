@@ -10,6 +10,7 @@ use App\Models\Controle;
 use App\Models\Team;
 use App\Models\TratamientoRiesgo;
 use App\Models\User;
+use App\Models\Empleado;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class TratamientoRiesgosController extends Controller
         abort_if(Gate::denies('tratamiento_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = TratamientoRiesgo::with(['control', 'responsable', 'team'])->select(sprintf('%s.*', (new TratamientoRiesgo)->table));
+            $query = TratamientoRiesgo::with(['control', 'responsable', 'team'])->select(sprintf('%s.*', (new TratamientoRiesgo)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -56,8 +57,16 @@ class TratamientoRiesgosController extends Controller
             $table->editColumn('acciones', function ($row) {
                 return $row->acciones ? $row->acciones : "";
             });
-            $table->addColumn('responsable_name', function ($row) {
-                return $row->responsable ? $row->responsable->name : '';
+            // $table->addColumn('responsable_name', function ($row) {
+            //     return $row->responsable ? $row->responsable->name : '';
+            // });
+
+            $table->addColumn('id_reviso', function ($row) {
+                return $row->empleado ? $row->empleado->name : '';
+            });
+            
+            $table->addColumn('fechacompromiso', function ($row) {
+                return $row->fechacompromiso ? $row->fechacompromiso : '';
             });
 
             $table->editColumn('prioridad', function ($row) {
@@ -95,14 +104,16 @@ class TratamientoRiesgosController extends Controller
         $controls = Controle::all()->pluck('control', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $empleados = Empleado::with('area')->get();
 
-        return view('admin.tratamientoRiesgos.create', compact('controls', 'responsables'));
+        return view('admin.tratamientoRiesgos.create', compact('controls', 'responsables', 'empleados'));
     }
 
     public function store(StoreTratamientoRiesgoRequest $request)
     {
+        // dd($request);
         $tratamientoRiesgo = TratamientoRiesgo::create($request->all());
-
+        // dd($tratamientoRiesgo);
         return redirect()->route('admin.tratamiento-riesgos.index')->with("success", 'Guardado con éxito');
     }
 
@@ -116,7 +127,9 @@ class TratamientoRiesgosController extends Controller
 
         $tratamientoRiesgo->load('control', 'responsable', 'team');
 
-        return view('admin.tratamientoRiesgos.edit', compact('controls', 'responsables', 'tratamientoRiesgo'));
+        $empleados = Empleado::with('area')->get();
+
+        return view('admin.tratamientoRiesgos.edit', compact('controls', 'responsables', 'tratamientoRiesgo', 'empleados'));
     }
 
     public function update(UpdateTratamientoRiesgoRequest $request, TratamientoRiesgo $tratamientoRiesgo)

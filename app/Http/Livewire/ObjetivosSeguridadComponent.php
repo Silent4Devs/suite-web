@@ -60,7 +60,6 @@ class ObjetivosSeguridadComponent extends Component
             'resultado' => $result,
             'id_objetivo' => $this->objetivos->id,
         ]);
-
         $this->default();
 
         $this->alert('success', 'Registro añadido!');
@@ -71,8 +70,6 @@ class ObjetivosSeguridadComponent extends Component
         $this->evaluacion = $evaluaciones->evaluacion;
         $this->fecha = $evaluaciones->fecha;
         //$this->resultado = $evaluaciones->resultado;
-        $this->dispatchBrowserEvent('contentChanged');
-        $this->emit('contentChanged');
         $this->view = 'edit';
         $this->id_evaluacion = $evaluaciones->id;
     }
@@ -117,7 +114,6 @@ class ObjetivosSeguridadComponent extends Component
         $this->fecha = "";
 
         $this->dispatchBrowserEvent('contentChanged');
-        $this->emit('contentChanged');
 
         $this->view = 'create';
     }

@@ -199,7 +199,8 @@
             </div>
         @endif
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.empleados.store') }}" enctype="multipart/form-data" id="formEmpleado">
+            <form method="POST" action="{{ route('admin.empleados.store') }}" enctype="multipart/form-data"
+                id="formEmpleado">
                 @csrf
                 <div class="row">
                     <div class="col-md-12">
@@ -224,9 +225,6 @@
                                 </a>
                             </li>
                         </ul> --}}
-
-
-
                         <div class="caja_botones_menu">
                             <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-file"
                                     style="font-size:30px;" style="text-decoration:none;"></i>Información General</a>
@@ -234,10 +232,6 @@
                                     style="font-size:30px;"></i>
                                 Competencias</a> --}}
                         </div>
-
-
-
-
                         <div class="caja_caja_secciones">
                             <div class="caja_secciones">
                                 <section id="contenido1" class="mt-4 caja_tab_reveldada">
@@ -455,9 +449,6 @@
                                                     </div>
                                                 @endif
                                             </div>
-
-
-
                                         </div>
 
                                         <div class="row">
@@ -572,10 +563,6 @@
                                         {{-- </div> --}}
                                     </div>
                                 </section>
-
-
-
-
                             </div>
                         </div>
 
@@ -593,9 +580,6 @@
                 </div>
         </div>
     </div>
-
-
-
 @endsection
 
 @section('scripts')
@@ -760,16 +744,16 @@
 
     <script>
         $(document).ready(function() {
-            document.getElementById('btnSiguiente').addEventListener('click', function(e){
+            document.getElementById('btnSiguiente').addEventListener('click', function(e) {
                 e.preventDefault();
                 $("#formEmpleado").removeAttr('action');
-                $("#formEmpleado").attr('action', '{{route("admin.empleados.storeWithCompetencia")}}');
+                $("#formEmpleado").attr('action', '{{ route('admin.empleados.storeWithCompetencia') }}');
                 document.getElementById('formEmpleado').submit();
             })
-            document.getElementById('btnGuardar').addEventListener('click', function(e){
+            document.getElementById('btnGuardar').addEventListener('click', function(e) {
                 e.preventDefault();
                 $("#formEmpleado").removeAttr('action');
-                $("#formEmpleado").attr('action', '{{route("admin.empleados.store")}}');
+                $("#formEmpleado").attr('action', '{{ route('admin.empleados.store') }}');
                 document.getElementById('formEmpleado').submit();
             })
             window.tblExperiencia = $('#tbl-experiencia').DataTable({
@@ -1100,12 +1084,12 @@
             console.log(evidenciafile.name);
 
             var file = evidenciafile;
-                    var fr = new FileReader();
-                    fr.onload = receivedText;
-                    //fr.readAsText(file);//fr.readAsBinaryString(file); //as bit work with base64 for example upload to server
-                    fr.readAsDataURL(file);
-                    console.log(fr);
-                    alert(fr);
+            var fr = new FileReader();
+            fr.onload = receivedText;
+            //fr.readAsText(file);//fr.readAsBinaryString(file); //as bit work with base64 for example upload to server
+            fr.readAsDataURL(file);
+            console.log(fr);
+            alert(fr);
 
             if (nombre_certificado.trim() == '') {
                 document.querySelector('.nombre_certificado_error').innerHTML =

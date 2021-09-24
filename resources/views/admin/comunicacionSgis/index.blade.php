@@ -2,6 +2,9 @@
 @section('content')
 
 <style>
+    .table tr th:nth-child(3){
+    text-align:center !important;
+    }
     .img-size {
         /*  padding: 0;
             margin: 0; */
@@ -49,7 +52,7 @@
 
     .tamaño{
     width:168px !important;
-    }       
+    }
 
 </style>
 
@@ -240,17 +243,13 @@
                         data: 'archivo',
                         name: 'archivo',
                          render:function(data,type,row,meta){
-                             let archivo="";
-                             if (data !=[]) {
-
-                                let archivos=JSON.parse(data);
-
-
+                            let archivo="";
+                             let archivos= JSON.parse(data);
                                archivo=` <div class="container">
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
-                                        <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}">Ver archivo</a>
+                                        <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
                                     </div>
                                     </div>
 
@@ -258,7 +257,9 @@
                                     <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                                        <div class="modal-body">
+                                        <div class="modal-body">`;
+                                                if(archivos.length>0){
+                                                archivo+=`
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -284,8 +285,17 @@
 
                                             </div>
 
-                                            </div>
-                                        </div>
+                                            </div>`;
+                                        }
+                                            else{
+                                                archivo+=`
+                                                <div class="text-center">
+                                                    <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:350px !important">
+                                                    </div>
+                                                `
+                                            }
+                                            archivo+=`</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                             <a
@@ -315,7 +325,7 @@
                                         </div>
                                     </div>
                                     </div>`
-                                }
+
                             return archivo;
                         }
                     },

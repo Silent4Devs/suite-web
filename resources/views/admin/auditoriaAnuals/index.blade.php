@@ -30,7 +30,7 @@
                         <th>
                             Auditor(a)&nbsp;líder
                         </th>
-                        <th>
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.auditoriaAnual.fields.observaciones') }}
                         </th>
                         <th>

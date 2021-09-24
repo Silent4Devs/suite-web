@@ -36,6 +36,7 @@ class TratamientoRiesgo extends Model
     protected $fillable = [
         'nivelriesgo',
         'control_id',
+        'id_reviso',
         'acciones',
         'responsable_id',
         'fechacompromiso',
@@ -67,16 +68,21 @@ class TratamientoRiesgo extends Model
 
     public function getFechacompromisoAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
-    public function setFechacompromisoAttribute($value)
-    {
-        $this->attributes['fechacompromiso'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
+    // public function setFechaCompromisoAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reviso', 'id')->with('area');
     }
 }

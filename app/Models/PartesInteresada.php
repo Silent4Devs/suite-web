@@ -58,7 +58,7 @@ class PartesInteresada extends Model
     protected $fillable = [
         'parteinteresada',
         'requisitos',
-        'clausala',
+        'clausula',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -73,5 +73,9 @@ class PartesInteresada extends Model
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+    public function clausulas()
+    {
+        return $this->belongsToMany(Clausula::class, 'partes_interesadas_clausula', 'partesint_id', 'clausula_id');
     }
 }

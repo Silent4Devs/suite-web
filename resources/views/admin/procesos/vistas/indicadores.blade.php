@@ -34,70 +34,68 @@
 
             <p class="ml-5">De click sobre una fila para desplegar información</p>
 
+            <div class="table-scroll">
 
-            <table class="table table-hover table-bordered tbl-categorias w-100">
+                <table class="table table-hover table-bordered tbl-categorias w-100">
 
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col" style="font-size:10pt">ID</th>
-                        <th class="text-center" scope="col" style="font-size:10pt">Nombre del indicador</th>
-                        <th scope="col" style="font-size:10pt">Descripción</th>
-                        <th class="text-center" scope="col" style="font-size:10pt">Formula de cálculo</th>
-                        <th scope="col">Resultado</th>
-                        <th scope="col">Meta</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach ($indicadores as $indicador)
-                        @php
-                            $i = 0;
-                            foreach ($indicador->evaluacion_indicadors as $value) {
-                                $i += $value->resultado;
-                            }
-                        @endphp
-                        <tr
-                            onclick='graficasclick(event, {{ $indicador->id }}, {{ $indicador->rojo }}, {{ $indicador->amarillo }}, {{ $indicador->verde }}, {{ $i }})'>
-                            <td>{{ $indicador->id }}</td>
-                            <td>{{ $indicador->nombre }}</td>
-                            <td>{{ $indicador->descripcion }}</td>
-                            <td>{{ $indicador->formula }}</td>
-                            <td>
-                                @if ($i >= $indicador->verde)
-                                    <span class="dotverde"></span>
-                                @elseif($i >= $indicador->amarillo && $i < $indicador->verde)
-                                        <span class="dotyellow"></span>
-                                    @else
-                                        <span class="dotred"></span>
-                                @endif
-                                {{ $i . $indicador->unidadmedida }}
-                            </td>
-                            <td>{{ $indicador->meta }}</td>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" style="font-size:10pt">ID</th>
+                            <th class="text-center" scope="col" style="font-size:10pt">Nombre del indicador</th>
+                            <th scope="col" style="font-size:10pt">Descripción</th>
+                            <th class="text-center" scope="col" style="font-size:10pt">Formula de cálculo</th>
+                            <th scope="col">Resultado</th>
+                            <th scope="col">Meta</th>
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody>
 
-                </tbody>
+                        @foreach ($indicadores as $indicador)
+                            @php
+                                $i = 0;
+                                foreach ($indicador->evaluacion_indicadors as $value) {
+                                    $i += $value->resultado;
+                                }
+                            @endphp
+                            <tr
+                                onclick='graficasclick(event, {{ $indicador->id }}, {{ $indicador->rojo }}, {{ $indicador->amarillo }}, {{ $indicador->verde }}, {{ $i }})'>
+                                <td>{{ $indicador->id }}</td>
+                                <td>{{ $indicador->nombre }}</td>
+                                <td>{{ $indicador->descripcion }}</td>
+                                <td>{{ $indicador->formula }}</td>
+                                <td>
+                                    @if ($i >= $indicador->verde)
+                                        <span class="dotverde"></span>
+                                    @elseif($i >= $indicador->amarillo && $i < $indicador->verde)
+                                            <span class="dotyellow"></span>
+                                        @else
+                                            <span class="dotred"></span>
+                                    @endif
+                                    {{ $i . $indicador->unidadmedida }}
+                                </td>
+                                <td>{{ $indicador->meta }}</td>
+                            </tr>
+                        @endforeach
 
-            </table>
+                    </tbody>
+
+                </table>
+
+            </div>
+
         </div>
     </div>
 
+    <div class="mt-5 col-sm-5">
 
-        <div class="mt-5 col-sm-5">
-
-            <div class="d-flex justify-content-center">
-                <div style="" id="resultado" style="width:100%;">
-
-                </div>
+        <div class="d-flex justify-content-center">
+            <div style="" id="resultado" style="width:100%;">
 
             </div>
 
         </div>
 
-
-
-
-
+    </div>
 
 </div>
 
@@ -107,6 +105,7 @@
         <canvas id="resultadobarra" style="width:100%; height:300px;"></canvas>
     </div>
 </div>
+
 
 <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -146,15 +145,17 @@
                 document.getElementById('contenedor_resultado').classList.remove("d-none");
                 $("#resultado").html(data);
                 $("#resultadobarra").html(data);
-                console.log(data);
+                //console.log("data" + data);
                 // document. getElementById("resultadobarra"). style. display = ""; //show.
-                let {datosbarra}=data;
+                let {
+                    datosbarra
+                } = data;
 
-                let datosGrafica=datosbarra.map(dato => {
+                let datosGrafica = datosbarra.map(dato => {
                     return dato.resultado
                 });
 
-                let datosFecha=datosbarra.map(dato => {
+                let datosFecha = datosbarra.map(dato => {
                     return dato.fecha
                 });
 
@@ -170,8 +171,8 @@
                     needleStartValue: 0,
                     needleUpdateSpeed: 1000,
                     arcColors: ["rgb(255,84,84)", "rgb(239,214,19)", "rgb(61,204,91)"],
-                    arcDelimiters: [data.datos.amarillo, data.datos.verde],
-                    rangeLabel: ['0', data.datos.verde],
+                    arcDelimiters: [30, 70],
+                    rangeLabel: ['0', '100'],
                     centralLabel: data.datos.resultado + data.unidad.unidadmedida,
                 }
 
@@ -223,7 +224,7 @@
                     options: {
                         responsive: false,
                         legend: {
-                            display:false
+                            display: false
                         },
                         scales: {
                             xAxes: [{
@@ -260,7 +261,7 @@
                 //console.log(data);
                 $("#resultado").html(
                     '<div class="spinner-border text-danger" role="status"><span class="sr-only">Intente de nuevo...</span></div>'
-                    );
+                );
             }
         });
 

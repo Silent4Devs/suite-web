@@ -5,8 +5,8 @@
                 <th>Nombre</th>
                 <th>Categoria</th>
                 <th>Instructor</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
+                <th style="min-width:200px;">Fecha Inicio</th>
+                <th style="min-width:200px;">Fecha Fin</th>
                 <th>Calificación</th>
                 <th>Estatus</th>
                 <th>Opciones</th>

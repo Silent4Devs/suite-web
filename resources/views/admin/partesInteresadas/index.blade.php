@@ -347,7 +347,17 @@ width:900px !important;
                     },
                     {
                         data: 'clausala',
-                        name: 'clausala'
+                        render: function(data, type, row, meta){
+                            let clausalas = JSON.parse(data);
+                            let html = '<ul>';
+                            clausalas.forEach(clausula=>{
+                                html += `
+                                    <li>${clausula.nombre}</li>
+                                `;
+                            })
+                            html += '</ul>';
+                            return html
+                        }
                     },
                     {
                         data: 'actions',

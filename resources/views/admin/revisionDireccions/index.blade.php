@@ -24,11 +24,11 @@
                             Cambios&nbsp;en&nbsp;aspectos&nbsp;internos&nbsp;y
                             externos&nbsp;que&nbsp;sean&nbsp;relevantes&nbsp;a&nbsp;SGSI
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width: 500px;">
                             Retroalimentación&nbsp;sobre&nbsp;el&nbsp;desempeño&nbsp;de&nbsp;la
                             seguridad&nbsp;de&nbsp;la&nbsp;información
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width: 500px;">
                             Retroalimentación&nbsp;de&nbsp;las partes&nbsp;interesadas
                         </th>
                         <th style="vertical-align: top">
@@ -39,7 +39,7 @@
                         <th style="vertical-align: top">
                             Oportunidades&nbsp;para&nbsp;la mejora&nbsp;continua
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top; min-width: 500px;">
                             Acuerdos&nbsp;relativos&nbsp;a&nbsp;la&nbsp;mejora&nbsp;continua&nbsp;del
                             SGSI&nbsp;y&nbsp;cambios&nbsp;requeridos&nbsp;por&nbsp;el&nbsp;sistema
                         </th>

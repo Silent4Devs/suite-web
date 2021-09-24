@@ -1,159 +1,116 @@
-<div class="row">
-    <div class="form-group col-12">
-        <label><i
-                class="fas fa-list-ul iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.metodo_causa') }}</label>
-        <select class="form-control {{ $errors->has('metodo_causa') ? 'is-invalid' : '' }}" name="metodo_causa"
-            id="metodo_causa">
-            <option value disabled {{ old('metodo_causa', null) === null ? 'selected' : '' }}>
-                {{ trans('global.pleaseSelect') }}</option>
-            @foreach (App\Models\AccionCorrectiva::METODO_CAUSA_SELECT as $key => $label)
-                <option value="{{ $key }}"
-                    {{ old('metodo_causa', $accionCorrectiva->metodo_causa) === (string) $key ? 'selected' : '' }}>
-                    {{ $label }}</option>
-            @endforeach
-        </select>
-        @if ($errors->has('metodo_causa'))
-            <div class="invalid-feedback">
-                {{ $errors->first('metodo_causa') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.metodo_causa_helper') }}</span>
-    </div>
-
-    <div class="form-group col-md-6">
-        <label for="solucion"><i
-                class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.solucion') }}</label>
-        <textarea class="form-control {{ $errors->has('solucion') ? 'is-invalid' : '' }}" name="solucion"
-            id="solucion">{{ old('solucion', $accionCorrectiva->solucion) }}</textarea>
-
-        @if ($errors->has('solucion'))
-            <div class="invalid-feedback">
-                {{ $errors->first('solucion') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.solucion_helper') }}</span>
-    </div>
-    <div class="form-group col-md-6">
-        <label for="cierre_accion"><i
-                class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.cierre_accion') }}</label>
-        <textarea class="form-control {{ $errors->has('cierre_accion') ? 'is-invalid' : '' }}" name="cierre_accion"
-            id="cierre_accion">{{ old('cierre_accion', $accionCorrectiva->cierre_accion) }}</textarea>
-
-        @if ($errors->has('cierre_accion'))
-            <div class="invalid-feedback">
-                {{ $errors->first('cierre_accion') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.cierre_accion_helper') }}</span>
-    </div>
-    <div class="form-group col-md-4">
-        <label><i class="fas fa-signal iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.estatus') }}</label>
-        <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus" id="estatus">
-
-            <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
-                {{ trans('global.pleaseSelect') }}</option>
-            @foreach (App\Models\AccionCorrectiva::ESTATUS_SELECT as $key => $label)
-                <option value="{{ $key }}"
-                    {{ old('estatus', $accionCorrectiva->estatus) === (string) $key ? 'selected' : '' }}>
-                    {{ $label }}</option>
-            @endforeach
-        </select>
-        @if ($errors->has('estatus'))
-            <div class="invalid-feedback">
-                {{ $errors->first('estatus') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.estatus_helper') }}</span>
-    </div>
-
-    <div class="form-group col-md-4">
-        <label for="fecha_compromiso"><i
-                class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.fecha_compromiso') }}</label>
-        <input class="form-control date {{ $errors->has('fecha_compromiso') ? 'is-invalid' : '' }}" type="text"
-            name="fecha_compromiso" id="fecha_compromiso"
-            value="{{ old('fecha_compromiso', $accionCorrectiva->fecha_compromiso) }}">
-
-        @if ($errors->has('fecha_compromiso'))
-            <div class="invalid-feedback">
-                {{ $errors->first('fecha_compromiso') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.fecha_compromiso_helper') }}</span>
-    </div>
-    <div class="form-group col-md-4">
-        <label for="fecha_verificacion"><i
-                class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.fecha_verificacion') }}</label>
-        <input class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}" type="text"
-            name="fecha_verificacion" id="fecha_verificacion"
-            value="{{ old('fecha_verificacion', $accionCorrectiva->fecha_verificacion) }}">
-
-        @if ($errors->has('fecha_verificacion'))
-            <div class="invalid-feedback">
-                {{ $errors->first('fecha_verificacion') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.fecha_verificacion_helper') }}</span>
-    </div>
-
-    <div class="form-group col-md-6">
-        <label for="responsable_accion_id"><i
-                class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.responsable_accion') }}</label>
-        <select class="form-control select2 {{ $errors->has('responsable_accion') ? 'is-invalid' : '' }}"
-            name="responsable_accion_id" id="responsable_accion_id">
-
-            @foreach ($responsable_accions as $id => $responsable_accion)
-                <option value="{{ $id }}"
-                    {{ (old('responsable_accion_id') ? old('responsable_accion_id') : $accionCorrectiva->responsable_accion->id ?? '') == $id ? 'selected' : '' }}>
-                    {{ $responsable_accion }}</option>
-            @endforeach
-        </select>
-        @if ($errors->has('responsable_accion'))
-            <div class="invalid-feedback">
-                {{ $errors->first('responsable_accion') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.responsable_accion_helper') }}</span>
-    </div>
-
-    <div class="form-group col-md-6">
-        <label for="nombre_autoriza_id"><i
-                class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.nombre_autoriza') }}</label>
-        <select class="form-control select2 {{ $errors->has('nombre_autoriza') ? 'is-invalid' : '' }}"
-            name="nombre_autoriza_id" id="nombre_autoriza_id">
-
-            @foreach ($nombre_autorizas as $id => $nombre_autoriza)
-                <option value="{{ $id }}"
-                    {{ (old('nombre_autoriza_id') ? old('nombre_autoriza_id') : $accionCorrectiva->nombre_autoriza->id ?? '') == $id ? 'selected' : '' }}>
-                    {{ $nombre_autoriza }}</option>
-            @endforeach
-        </select>
-        @if ($errors->has('nombre_autoriza'))
-            <div class="invalid-feedback">
-                {{ $errors->first('nombre_autoriza') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.nombre_autoriza_helper') }}</span>
-    </div>
-
-    <div class="form-group col-12">
-        <label for="documentometodo"><i
-                class="fas fa-file iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.documentometodo') }}</label>
-        <div class="needsclick dropzone {{ $errors->has('documentometodo') ? 'is-invalid' : '' }}"
-            id="documentometodo-dropzone">
-
+<div class="seccion_div">
+    <div class="row">
+        <div class="col-md-4">
+            Seleccione el metódo de análisis
         </div>
-        @if ($errors->has('documentometodo'))
-            <div class="invalid-feedback">
-                {{ $errors->first('documentometodo') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.documentometodo_helper') }}</span>
-    </div>
+        <div class="col-md-8">
+            <select id="select_metodos" class="form-control">
+                <option selected disabled>- -</option>
+                <option class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
+                </option>
+                <option class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
+                <option class="op_digrama" data-metodo="digrama">Diagrama causa efecto (Ishikawa)
+                </option>
+            </select>
+        </div>
 
-    <div class="text-right form-group col-12">
-        <button class="btn btn-danger" type="submit">
-            {{ trans('global.save') }}
-        </button>
+        <form method="POST" class="col-12"
+            action="{{ route('admin.desk.analisis_queja-update', $accionCorrectiva->id) }}">
+            @csrf
+
+            <div class="col-12" style="position: relative;">
+
+                <div id="ideas" class="caja_oculta_dinamica row">
+                    <div class="form-group col-12">
+                        <label>Ideas</label>
+                        <textarea class="form-control"
+                            name="ideas">{{ $accionCorrectiva->ideas }}</textarea>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <label>Causa Raíz</label>
+                        <textarea class="form-control"
+                            name="causa_ideas">{{ $accionCorrectiva->causa_ideas }}</textarea>
+                    </div>
+                </div>
+
+
+
+                <div id="porque" class="caja_oculta_dinamica row">
+                    <div class="form-group col-12">
+                        Problema: <textarea class="form-control"
+                            name="problema_porque">{{ $accionCorrectiva->problema_porque }}</textarea>
+                    </div>
+                    <div class="form-group col-12">
+                        <label>1er porqué:</label>
+                        <input name="porque_1" class="form-control"
+                            value="{{ $accionCorrectiva->porque_1 }}">
+                        <label>2do porqué:</label>
+                        <input name="porque_2" class="form-control"
+                            value="{{ $accionCorrectiva->porque_2 }}">
+                        <label>3er porqué:</label>
+                        <input name="porque_3" class="form-control"
+                            value="{{ $accionCorrectiva->porque_3 }}">
+                        <label>4to porqué:</label>
+                        <input name="porque_4" class="form-control"
+                            value="{{ $accionCorrectiva->porque_4 }}">
+                        <label>5to porqué:</label>
+                        <input name="porque_5" class="form-control"
+                            value="{{ $accionCorrectiva->porque_5 }}">
+                    </div>
+                    <div class="form-group col-12">
+                        Causa Raíz: <textarea class="form-control"
+                            name="causa_porque">{{ $accionCorrectiva->causa_porque }}</textarea>
+                    </div>
+                </div>
+
+
+
+                <div id="digrama" class="caja_oculta_dinamica">
+                    <div class="mt-5 col-12" style="overflow: auto;">
+                        <div style="width: 100%; min-width:540px; position: relative;">
+                            <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
+                                style="width:100%">
+
+                            <textarea name="control_a"
+                                class="politicas_txtarea">{{ $accionCorrectiva->control_a }}</textarea>
+                            <textarea name="control_b"
+                                class="politicas_txtarea txt_obj_secundarios_a">{{ $accionCorrectiva->control_b }}</textarea>
+
+                            <textarea name="proceso_a"
+                                class="procesos_txtarea">{{ $accionCorrectiva->proceso_a }}</textarea>
+                            <textarea name="proceso_b"
+                                class="procesos_txtarea txt_obj_secundarios_a">{{ $accionCorrectiva->proceso_b }}</textarea>
+
+                            <textarea name="personas_a"
+                                class="personas_txtarea">{{ $accionCorrectiva->personas_a }}</textarea>
+                            <textarea name="personas_b"
+                                class="personas_txtarea txt_obj_secundarios_a">{{ $accionCorrectiva->personas_b }}</textarea>
+
+                            <textarea name="tecnologia_a"
+                                class="tecnologia_txtarea txt_obj_secundarios_b">{{ $accionCorrectiva->tecnologia_a }}</textarea>
+                            <textarea name="tecnologia_b"
+                                class="tecnologia_txtarea ">{{ $accionCorrectiva->tecnologia_b }}</textarea>
+
+                            <textarea name="metodos_a"
+                                class="metodos_txtarea txt_obj_secundarios_b">{{ $accionCorrectiva->metodos_a }}</textarea>
+                            <textarea name="metodos_b"
+                                class="metodos_txtarea ">{{ $accionCorrectiva->metodos_b }}</textarea>
+
+                            <textarea name="ambiente_a"
+                                class="ambiente_txtarea txt_obj_secundarios_b">{{ $accionCorrectiva->ambiente_a }}</textarea>
+                            <textarea name="ambiente_b"
+                                class="ambiente_txtarea ">{{ $accionCorrectiva->ambiente_b }}</textarea>
+
+                            <textarea name="problema_diagrama"
+                                class="problemas_txtarea">{{ $accionCorrectiva->problema_diagrama }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="py-3 text-right col-12">
+                <input type="submit" class="btn btn-success">
+            </div>
+        </form>
     </div>
 </div>
-</form>
