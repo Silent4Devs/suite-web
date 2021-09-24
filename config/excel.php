@@ -21,7 +21,7 @@ return [
         | Pre-calculate formulas during export
         |--------------------------------------------------------------------------
         */
-        'pre_calculate_formulas' => false,
+        'pre_calculate_formulas' => true,
 
         /*
         |--------------------------------------------------------------------------
@@ -239,7 +239,7 @@ return [
         |
         */
         'batch'     => [
-            'memory_limit' => 60000,
+            'memory_limit' => 100000,
         ],
 
         /*
