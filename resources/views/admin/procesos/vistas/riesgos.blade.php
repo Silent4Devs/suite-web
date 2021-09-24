@@ -23,73 +23,51 @@
         display: inline-block;
     }
 
+    .table-scroll {
+        display: block;
+        height: 250px;
+        overflow-y: scroll;
+    }
+
 </style>
-
-
-
 
 <div class="row">
     <div class="col-sm-7">
         <div class="card-body datatable-fix">
-
             <p class="ml-5">De click sobre una fila para desplegar información</p>
-
             <div class="table-scroll">
-
-                <table class="table table-hover table-bordered tbl-categorias w-100">
-
+                <table class="table table-hover table-bordered tbl-categorias w-100" id="riesgos_table">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col" style="font-size:10pt">ID</th>
-                            <th class="text-center" scope="col" style="font-size:10pt">Nombre del indicador</th>
                             <th scope="col" style="font-size:10pt">Descripción</th>
-                            <th class="text-center" scope="col" style="font-size:10pt">Formula de cálculo</th>
-                            <th scope="col">Resultado</th>
-                            <th scope="col">Meta</th>
+                            <th class="text-center" scope="col" style="font-size:10pt">Nivel de riesgo</th>
+                            <th scope="col">Riesgo residual</th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        @foreach ($indicadores as $indicador)
-                            @php
-                                $i = 0;
-                                foreach ($indicador->evaluacion_indicadors as $value) {
-                                    $i += $value->resultado;
-                                }
-                            @endphp
-                            <tr
-                                onclick='graficasclick(event, {{ $indicador->id }}, {{ $indicador->rojo }}, {{ $indicador->amarillo }}, {{ $indicador->verde }}, {{ $i }})'>
-                                <td>{{ $indicador->id }}</td>
-                                <td>{{ $indicador->nombre }}</td>
-                                <td>{{ $indicador->descripcion }}</td>
-                                <td>{{ $indicador->formula }}</td>
-                                <td>
-                                    @if ($i >= $indicador->verde)
-                                        <span class="dotverde"></span>
-                                    @elseif($i >= $indicador->amarillo && $i < $indicador->verde)
-                                            <span class="dotyellow"></span>
-                                        @else
-                                            <span class="dotred"></span>
-                                    @endif
-                                    {{ $i . $indicador->unidadmedida }}
-                                </td>
-                                <td>{{ $indicador->meta }}</td>
+                        @foreach ($riesgos as $riesgo)
+                            <tr class="clickable-row sesioninicio"
+                                onclick='graficasclick_riesgo(event, {{ $riesgo->id }})'>
+                                <td>{{ $riesgo->id }}</td>
+                                <td>{{ $riesgo->descripcionriesgo }}</td>
+                                <td>{{ $riesgo->nivelriesgo }}</td>
+                                <td>{{ $riesgo->nivelriesgo_residual }}</td>
                             </tr>
                         @endforeach
 
                     </tbody>
 
                 </table>
-
             </div>
-
         </div>
     </div>
+
 
     <div class="mt-5 col-sm-5">
 
         <div class="d-flex justify-content-center">
-            <div style="" id="resultado" style="width:100%;">
+            <div style="" id="resultado_riesgos" style="width:100%;">
 
             </div>
 
@@ -100,16 +78,29 @@
 </div>
 
 
-<div id="contenedor_resultado" class="row d-none">
+<div id="contenedor_resultado_riesgos" class="row d-none">
     <div class="col-sm-12">
-        <canvas id="resultadobarra" style="width:100%; height:300px;"></canvas>
+        <canvas id="resultadobarra_riesgos" style="width:100%; height:300px;"></canvas>
     </div>
 </div>
 
 
-<script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
+    // $(document).ready(function() {
+    //     alert("ejecuto");
+    //     $('#riesgos_table').on('click', '.clickable-row', function(event) {
+    //         $(this).addClass('bg-info').siblings().removeClass('bg-info');
+    //     });
+    // });
+
+    // $(".sesioninicio").mouseenter(function(){
+    // 		$(".sesioninicio").css("color","#18CCA6");	
+    // 	});
+
+    // 	$(".sesioninicio").mouseleave(function(){
+    // 		$(".sesioninicio").css("color","#0099CD");	
+    // 	});
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -117,52 +108,36 @@
     });
 </script>
 <script>
-    function graficasclick(e, indicador_id, rojo, amarillo, verde, resultado) {
+    function graficasclick_riesgo(e, riesgos_id) {
         if (!e) var e = window.event; // Get the window event
         e.cancelBubble = true; // IE Stop propagation
         if (e.stopPropagation) e.stopPropagation(); // Other Broswers
-        console.log(indicador_id, rojo, amarillo, verde, resultado);
+        //console.log("RESULTADOS", riesgos_id);
         $.ajax({
             data: {
-                id: indicador_id,
-                rojo: rojo,
-                amarillo: amarillo,
-                verde: verde,
-                resultado: resultado,
+                id: riesgos_id,
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '{{ route('admin.selectIndicador') }}',
+            url: '{{ route('admin.selectRiesgos') }}',
             type: 'POST',
             beforeSend: function() {
-                document.getElementById('contenedor_resultado').classList.add("d-none");
-                $("#resultado").html(
+                document.getElementById('contenedor_resultado_riesgos').classList.add("d-none");
+                $("#resultado_riesgos").html(
                     '<div class="spinner-border text-success" role="status"><span class="sr-only">Loading...</span></div>'
                 );
             },
             success: function(data) {
-                document.getElementById('contenedor_resultado').classList.remove("d-none");
-                $("#resultado").html(data);
-                $("#resultadobarra").html(data);
-                //console.log("data" + data);
+                document.getElementById('contenedor_resultado_riesgos').classList.remove("d-none");
+                $("#resultado_riesgos").html(data);
+                $("#resultadobarra_riesgos").html(data);
+                console.log("data " + data.datos_riesgos.nivelriesgo);
                 // document. getElementById("resultadobarra"). style. display = ""; //show.
-                let {
-                    datosbarra
-                } = data;
-
-                let datosGrafica = datosbarra.map(dato => {
-                    return dato.resultado
-                });
-
-                let datosFecha = datosbarra.map(dato => {
-                    return dato.fecha
-                });
-
 
                 //speedometer
                 // Element inside which you want to see the chart
-                let element = document.querySelector('#resultado')
+                let element = document.querySelector('#resultado_riesgos')
 
                 // Properties of the gauge
                 let gaugeOptions = {
@@ -173,19 +148,19 @@
                     arcColors: ["rgb(255,84,84)", "rgb(239,214,19)", "rgb(61,204,91)"],
                     arcDelimiters: [30, 70],
                     rangeLabel: ['0', '100'],
-                    centralLabel: data.datos.resultado + data.unidad.unidadmedida,
+                    centralLabel: data.datos_riesgos.nivelriesgo,
                 }
 
                 // Drawing and updating the chart
                 GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(data.datos.resultado)
 
-                var ctx = document.getElementById("resultadobarra");
+                var ctx = document.getElementById("resultadobarra_riesgos");
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: datosFecha,
                         datasets: [{
-                            label: '# Indicadores',
+                            label: '# Riesgos',
                             data: datosGrafica,
 
                             backgroundColor: [
@@ -259,7 +234,7 @@
 
             error: function(data) {
                 //console.log(data);
-                $("#resultado").html(
+                $("#resultado_riesgos").html(
                     '<div class="spinner-border text-danger" role="status"><span class="sr-only">Intente de nuevo...</span></div>'
                 );
             }
@@ -313,12 +288,12 @@
 
 <script>
     function mostrar() {
-        div = document.getElementById('resultadobarra');
+        div = document.getElementById('resultadobarra_riesgos');
         div.style.display = '';
     }
 
     function cerrar() {
-        div = document.getElementById('resultadobarra');
+        div = document.getElementById('resultadobarra_riesgos');
         div.style.display = 'none';
     }
 </script>
