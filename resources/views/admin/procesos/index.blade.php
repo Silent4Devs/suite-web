@@ -15,19 +15,15 @@
                     <tr>
                         <th></th>
                         <th>
-
                         </th>
                         <th class="estilotd contratos-table">Codigo&nbsp;<?php for($i = 0; $i < 20; $i++): ?>&nbsp;<?php endfor; ?>
                         </th>
-
                         <th>
                             Nombre del proceso
                         </th>
 
                         <th class="estilotd contratos-table">Macroproceso&nbsp;<?php for($i = 0; $i < 60; $i++): ?>&nbsp;<?php endfor; ?>
                         </th>
-
-
                         {{-- <th>
                             Descripción
                         </th> --}}

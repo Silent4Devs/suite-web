@@ -374,7 +374,7 @@
                     <a href="#" data-tabs="documentos_relacionados">Documentos Relacionados</a>
                 </div>
 
-                <div class="caja_caja_secciones mt-4">
+                <div class="mt-4 caja_caja_secciones">
                     <div class="caja_secciones">
                         <section class="caja_tab_reveldada" id="vista_previa" style="color:black;">
                             
@@ -389,19 +389,15 @@
 
                         </section>
                         <section class="" id="riesgos">
-
-                                {{-- @include('admin.procesos.vistas.resumen') --}}
+                                @include('admin.procesos.vistas.riesgos')
                         </section>
                         <section class="" id="indicadores">
-
                                 @include('admin.procesos.vistas.indicadores')
                         </section>
                         <section class="" id="versiones">
-
                                 @include('admin.procesos.vistas.versiones')
                         </section>
                         <section class="" id="documentos_relacionados">
-
                                 @include('admin.procesos.vistas.documentos_relacionados')
                         </section>
                     </div>
