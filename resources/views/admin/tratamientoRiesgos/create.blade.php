@@ -62,9 +62,10 @@
                 </div>
                 @endif
             </div>
+
             <div class="form-group col-md-6">
                 <label for="fechacompromiso"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.fechacompromiso') }}</label>
-                <input class="form-control date {{ $errors->has('fechacompromiso') ? 'is-invalid' : '' }}" type="text" name="fechacompromiso" id="fechacompromiso" value="{{ old('fechacompromiso') }}">
+                <input class="form-control {{ $errors->has('fechacompromiso') ? 'is-invalid' : '' }}" type="date" name="fechacompromiso" id="fechacompromiso" value="{{ old('fechacompromiso') }}">
                 @if($errors->has('fechacompromiso'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechacompromiso') }}
@@ -72,6 +73,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.fechacompromiso_helper') }}</span>
             </div>
+            
             <div class="form-group col-md-6">
                 <label><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.prioridad') }}</label>
                 <select class="form-control {{ $errors->has('prioridad') ? 'is-invalid' : '' }}" name="prioridad" id="prioridad">

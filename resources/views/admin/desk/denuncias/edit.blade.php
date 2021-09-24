@@ -30,6 +30,26 @@
                         <form class="row" method="POST"
                             action="{{ route('admin.desk.denuncias-update', $denuncias) }}">
                             @csrf
+
+                            <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
+                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                <div class="row w-100">
+                                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                        <div class="w-100">
+                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-11">
+                                        <p class="m-0"
+                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
+                                            cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
+                                            de lo contrario la información capturada no será guardada.
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group col-12">
                                 Tipo de denuncia:
                                 @if ($denuncias->anonimo == 'no')
@@ -44,7 +64,8 @@
                             </div>
 
                             <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+                                <label class="form-label"><i
+                                        class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                 <div class="form-control">{{ $denuncias->folio }}</div>
                             </div>
 
@@ -62,20 +83,23 @@
                             </div>
 
                             <div class="mt-2 form-group col-4">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
+                                    hora
                                     de identificación</label>
                                 <input type="datetime" name="fecha" value="{{ $denuncias->fecha }}"
                                     class="form-control">
                             </div>
 
                             <div class="mt-2 form-group col-4">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
+                                    hora
                                     de recepción del reporte</label>
                                 <div class="form-control">{{ $denuncias->created_at }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-4">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
+                                    hora
                                     de cierre del ticket</label>
                                 <div class="form-control">{{ $denuncias->fecha_cierre }}</div>
                             </div>
@@ -94,7 +118,8 @@
                                 </div>
 
                                 <div class="mt-2 form-group col-4">
-                                    <label class="form-label"><i class="fas fa-user-tag iconos-crear"></i>Puesto</label>
+                                    <label class="form-label"><i
+                                            class="fas fa-user-tag iconos-crear"></i>Puesto</label>
                                     <div class="form-control">{{ $denuncias->denuncio->puesto }}</div>
                                 </div>
 
@@ -111,7 +136,8 @@
                                 </div>
 
                                 <div class="mt-2 form-group col-6">
-                                    <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
+                                    <label class="form-label"><i
+                                            class="fas fa-phone iconos-crear"></i>Teléfono</label>
                                     <div class="form-control">{{ $denuncias->denuncio->telefono }}</div>
                                 </div>
                             @endif
@@ -123,12 +149,14 @@
                             </div>
 
                             <div class="mt-4 form-group col-4">
-                                <label class="form-label"><i class="fas fa-user-times iconos-crear"></i>Nombre</label>
+                                <label class="form-label"><i
+                                        class="fas fa-user-times iconos-crear"></i>Nombre</label>
                                 <div class="form-control">{{ $denuncias->denunciado->name }}</div>
                             </div>
 
                             <div class="mt-4 form-group col-4">
-                                <label class="form-label"><i class="fas fa-user-tag iconos-crear"></i>Puesto </label>
+                                <label class="form-label"><i class="fas fa-user-tag iconos-crear"></i>Puesto
+                                </label>
                                 <div class="form-control">{{ $denuncias->denunciado->puesto }}</div>
                             </div>
 
@@ -145,7 +173,7 @@
                             </div>
 
                             <div class="mt-4 form-group col-12">
-                                <label class="form-label"><i class="fas fa-hand-paper iconos-crear"></i>Otro>
+                                <label class="form-label"><i class="fas fa-hand-paper iconos-crear"></i>Otro
                                     <input type="" name="tipo" class="form-control" value="{{ $denuncias->tipo }}">
                             </div>
 
@@ -170,6 +198,7 @@
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-body">
+                                                    @if (count($denuncias->evidencias_denuncias))
                                                     <!-- carousel -->
                                                     <div id='carouselExampleIndicators' class='carousel slide'
                                                         data-ride='carousel'>
@@ -204,6 +233,14 @@
                                                             <span class='sr-only'>Next</span>
                                                         </a>
                                                     </div>
+                                                    @else
+                                                    <div class="text-center">
+                                                        <h3 style="text-align:center" class="mt-3">Sin
+                                                            archivo agregado</h3>
+                                                        <img src="{{ asset('img/undrawn.png') }}"
+                                                            class="img-fluid " style="width:350px !important">
+                                                    </div>
+                                                    @endif
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default"
@@ -221,12 +258,31 @@
                             </div>
                         </form>
                     </div>
-                    
+
                 </section>
 
                 <section id="analisis">
                     <div class="seccion_div">
                         <div class="row">
+                            <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
+                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                <div class="row w-100">
+                                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                        <div class="w-100">
+                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-11">
+                                        <p class="m-0"
+                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
+                                            cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
+                                            de lo contrario la información capturada no será guardada.
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 Seleccione el metódo de análisis
                             </div>
@@ -236,7 +292,8 @@
                                     <option class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
                                     </option>
                                     <option class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
-                                    <option class="op_digrama" data-metodo="digrama">Diagrama causa efecto (Ishikawa)
+                                    <option class="op_digrama" data-metodo="digrama">Diagrama causa efecto
+                                        (Ishikawa)
                                     </option>
                                 </select>
                             </div>
@@ -345,8 +402,8 @@
 
                 <section id="plan">
                     <div class="seccion_div">
-                        <div class="" style="position: relative; ">
-                            <h5 style="position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
+                        <div class="" style=" position: relative; ">
+                            <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
                             <button style="position:absolute; right: 2px; top:2px;"
                                 class="btn btn-success btn_modal_form">Agregar actividad</button>
                             @if (count($denuncias->planes))
@@ -394,7 +451,8 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="form-label"><i
-                                                    class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio</label>
+                                                    class="fas fa-calendar-alt iconos-crear"></i>Fecha de
+                                                inicio</label>
                                             <input type="date" name="fecha_inicio" class="form-control"
                                                 id="fecha_inicio">
                                             <span class="text-danger error_fecha_inicio errors"></span>

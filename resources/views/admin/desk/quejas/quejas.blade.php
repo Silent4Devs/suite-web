@@ -69,7 +69,7 @@
                 <th>Sede</th>
                 <th>Ubicación</th>
                 <th>Externos</th>
-       			<th>Descripción</th>
+       			<th style="min-width: 500px;">Descripción</th>
        			<th>Opciones</th> 
             </tr>
    		</thead>

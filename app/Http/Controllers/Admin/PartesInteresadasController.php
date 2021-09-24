@@ -22,7 +22,7 @@ class PartesInteresadasController extends Controller
         abort_if(Gate::denies('partes_interesada_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PartesInteresada::with(['team','clausulas'])->select(sprintf('%s.*', (new PartesInteresada)->table));
+            $query = PartesInteresada::with(['team','clausulas'])->select(sprintf('%s.*', (new PartesInteresada)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -96,7 +96,7 @@ class PartesInteresadasController extends Controller
     public function update(UpdatePartesInteresadaRequest $request, PartesInteresada $partesInteresada)
     {
         $partesInteresada->update($request->all());
-
+        $clausulas = Clausula::all();
         return redirect()->route('admin.partes-interesadas.index')->with("success", 'Editado con éxito');
     }
 

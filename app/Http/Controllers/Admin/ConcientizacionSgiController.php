@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
+use App\Models\DocumentoConcientizacionSgis;
 
 class ConcientizacionSgiController extends Controller
 {
@@ -25,7 +27,7 @@ class ConcientizacionSgiController extends Controller
         abort_if(Gate::denies('concientizacion_sgi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ConcientizacionSgi::with(['arearesponsable', 'team'])->select(sprintf('%s.*', (new ConcientizacionSgi)->table));
+            $query = ConcientizacionSgi::with(['arearesponsable', 'team', 'documentos_concientizacion'])->select(sprintf('%s.*', (new ConcientizacionSgi)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -63,8 +65,12 @@ class ConcientizacionSgiController extends Controller
                 return $row->medio_envio ? ConcientizacionSgi::MEDIO_ENVIO_SELECT[$row->medio_envio] : '';
             });
 
+            $table->editColumn('fecha_publicacion', function ($row) {
+                return $row->fecha_publicacion ? ConcientizacionSgi::MEDIO_ENVIO_SELECT[$row->medio_envio] : '';
+            });
+
             $table->editColumn('archivo', function ($row) {
-                return $row->archivo ? '<a href="' . $row->archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+                return $row->documentos_concientizacion ? $row->documentos_concientizacion:[];
             });
 
             $table->rawColumns(['actions', 'placeholder', 'arearesponsable', 'archivo']);
@@ -83,16 +89,25 @@ class ConcientizacionSgiController extends Controller
         abort_if(Gate::denies('concientizacion_sgi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $documentos = DocumentoConcientizacionSgis::get();
 
-        return view('admin.concientizacionSgis.create', compact('arearesponsables'));
+        return view('admin.concientizacionSgis.create', compact('arearesponsables', 'documentos'));
     }
 
     public function store(StoreConcientizacionSgiRequest $request)
     {
         $concientizacionSgi = ConcientizacionSgi::create($request->all());
 
-        if ($request->input('archivo', false)) {
-            $concientizacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/documentos_concientSgsi', $file, $file->getClientOriginalName())) {
+                    DocumentoConcientizacionSgis::create([
+                        'documento' => $file->getClientOriginalName(),
+                        'concientSgsi_id' => $concientizacionSgi->id,
+                    ]);
+                }
+            }
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -107,27 +122,40 @@ class ConcientizacionSgiController extends Controller
         abort_if(Gate::denies('concientizacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        $documentos=DocumentoConcientizacionSgis::get();
         $concientizacionSgi->load('arearesponsable', 'team');
 
-        return view('admin.concientizacionSgis.edit', compact('arearesponsables', 'concientizacionSgi'));
+        return view('admin.concientizacionSgis.edit', compact('arearesponsables', 'concientizacionSgi','documentos'));
     }
 
     public function update(UpdateConcientizacionSgiRequest $request, ConcientizacionSgi $concientizacionSgi)
     {
         $concientizacionSgi->update($request->all());
 
-        if ($request->input('archivo', false)) {
-            if (!$concientizacionSgi->archivo || $request->input('archivo') !== $concientizacionSgi->archivo->file_name) {
-                if ($concientizacionSgi->archivo) {
-                    $concientizacionSgi->archivo->delete();
-                }
 
-                $concientizacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+        $files = $request->file('files');
+        if ($request->hasFile('files')) {
+            foreach ($files as $file) {
+                if (Storage::putFileAs('storage/documentos_concientSgsi', $file, $file->getClientOriginalName())) {
+                    DocumentoConcientizacionSgis::create([
+                        'documento' => $file->getClientOriginalName(),
+                        'concientSgsi_id' => $controlAcceso->id,
+                    ]);
+                }
             }
-        } elseif ($concientizacionSgi->archivo) {
-            $concientizacionSgi->archivo->delete();
         }
+
+        // if ($request->input('archivo', false)) {
+        //     if (!$concientizacionSgi->archivo || $request->input('archivo') !== $concientizacionSgi->archivo->file_name) {
+        //         if ($concientizacionSgi->archivo) {
+        //             $concientizacionSgi->archivo->delete();
+        //         }
+
+        //         $concientizacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+        //     }
+        // } elseif ($concientizacionSgi->archivo) {
+        //     $concientizacionSgi->archivo->delete();
+        // }
 
         return redirect()->route('admin.concientizacion-sgis.index')->with("success", 'Editado con éxito');
     }

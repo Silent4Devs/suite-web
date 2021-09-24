@@ -3,6 +3,19 @@
 
 <style>
 
+    .table tr th:nth-child(2){
+    min-width:600px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(2){
+    text-align:justify !important;
+    } 
+    
+    .table tr th:nth-child(3){
+    text-align:center !important;
+    }
+    wire:
     .img-size{
     /* 	padding: 0;
         margin: 0; */
@@ -256,8 +269,9 @@
                         name: 'documento',
                         render:function(data,type,row,meta){
                              let archivo="";
-                             console.log(row);
+                            //  console.log(row);
                              let archivos=row.documentos_control_a;
+                             console.log(archivos)
                                archivo=` <div class="container">
 
                                     <div class="mb-4 row">
@@ -270,7 +284,9 @@
                                     <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                                        <div class="modal-body">
+                                        <div class="modal-body">`;
+                                            if(archivos.length>0){
+                                                archivo+=`
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -293,10 +309,20 @@
                                                     })}
                                             </div>
 
-                                            </div>
-                                        </div>
+                                            </div>`;
+                                            }
+                                            else{
+                                                    archivo+=`
+                                                    <div class="text-center">
+                                                        <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                                                        <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                        </div>
+                                                    `
+                                            }
+                                            archivo+=`</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            ${archivos.length==0?`
                                             <a
                                                 class='carousel-control-prev'
                                                 href='#carouselExampleIndicators${row.id}'
@@ -319,7 +345,7 @@
                                                     aria-hidden='true'
                                                     ></span>
                                                 <span class='sr-only'>Next</span>
-                                            </a>
+                                            </a>`:""}
                                         </div>
                                         </div>
                                     </div>
