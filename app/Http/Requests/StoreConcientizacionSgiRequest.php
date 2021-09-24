@@ -22,7 +22,7 @@ class StoreConcientizacionSgiRequest extends FormRequest
                 'required',
             ],
             'fecha_publicacion'  => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
         ];

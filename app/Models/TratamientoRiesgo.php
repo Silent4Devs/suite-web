@@ -68,13 +68,13 @@ class TratamientoRiesgo extends Model
 
     public function getFechacompromisoAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
-    public function setFechacompromisoAttribute($value)
-    {
-        $this->attributes['fechacompromiso'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
+    // public function setFechaCompromisoAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
     public function team()
     {

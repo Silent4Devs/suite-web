@@ -30,7 +30,7 @@ class ComunicacionSgiController extends Controller
         abort_if(Gate::denies('comunicacion_sgi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ComunicacionSgi::with(['team','documentos_comunicacion','imagenes_comunicacion'])->select(sprintf('%s.*', (new ComunicacionSgi)->table));
+            $query = ComunicacionSgi::with(['team', 'documentos_comunicacion', 'imagenes_comunicacion'])->select(sprintf('%s.*', (new ComunicacionSgi)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -54,11 +54,11 @@ class ComunicacionSgiController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
-            $table->editColumn('descripcion', function ($row)  {
+            $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion  : "";
             });
             $table->editColumn('archivo', function ($row) {
-                return $row->documentos_comunicacion ? $row->documentos_comunicacion:[];
+                return $row->documentos_comunicacion ? $row->documentos_comunicacion : [];
             });
 
             $table->rawColumns(['actions', 'placeholder', 'archivo']);
@@ -74,30 +74,30 @@ class ComunicacionSgiController extends Controller
     public function create()
     {
         abort_if(Gate::denies('comunicacion_sgi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados=Empleado::get();
-        $documentos=DocumentoComunicacionSgis::get();
-        $imagenes=ImagenesComunicacionSgis::get();
+        $empleados = Empleado::get();
+        $documentos = DocumentoComunicacionSgis::get();
+        $imagenes = ImagenesComunicacionSgis::get();
 
 
-        return view('admin.comunicacionSgis.create',compact('empleados','documentos','imagenes'));
+        return view('admin.comunicacionSgis.create', compact('empleados', 'documentos', 'imagenes'));
     }
 
-    public function store (Request $request)
+    public function store(Request $request)
     {
 
-         $request->validate([
-            'descripcion'=>"required",
+        $request->validate([
+            'descripcion' => "required",
             'imagen' => 'required|mimetypes:image/jpeg,image/bmp,image/png',
-            'publicar_en'=>"required",
-            'link'=>"required",
-            'fecha_programable'=>'required',
+            'publicar_en' => "required",
+            'link' => "required",
+            'fecha_programable' => 'required',
         ]);
 
 
         $comunicacionSgi = ComunicacionSgi::create($request->all());
 
 
-        $image=null;
+        $image = null;
         if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
             $extension = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_EXTENSION);
             $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
@@ -111,18 +111,18 @@ class ComunicacionSgiController extends Controller
             })->save($route);
         }
 
-      /*  $comunicacionSgi->update([
+        /*  $comunicacionSgi->update([
         'imagen'=>$image
         ]);
 */
 
 
-         ImagenesComunicacionSgis::create([
-            "imagen"=>$image,
+        ImagenesComunicacionSgis::create([
+            "imagen" => $image,
             'comunicacion_id' => $comunicacionSgi->id,
-         ]);
+        ]);
 
-         $files = $request->file('files');
+        $files = $request->file('files');
         if ($request->hasFile('files')) {
             foreach ($files as $file) {
                 if (Storage::putFileAs('public/documento_comunicado_SGI', $file, $file->getClientOriginalName())) {
@@ -151,25 +151,25 @@ class ComunicacionSgiController extends Controller
     {
         abort_if(Gate::denies('comunicacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados=Empleado::get();
-        $documentos=DocumentoComunicacionSgis::get();
-        $imagenes=ImagenesComunicacionSgis::get();
+        $empleados = Empleado::get();
+        $documentos = DocumentoComunicacionSgis::get();
+        $imagenes = ImagenesComunicacionSgis::get();
 
-        return view('admin.comunicacionSgis.edit', compact('comunicacionSgi','documentos','imagenes','empleados'));
+        return view('admin.comunicacionSgis.edit', compact('comunicacionSgi', 'documentos', 'imagenes', 'empleados'));
     }
 
     public function update(UpdateComunicacionSgiRequest $request, ComunicacionSgi $comunicacionSgi)
     {
 
-         $request->validate([
-            'descripcion'=>"required",
-            'publicar_en'=>"required",
-            'link'=>"required",
-            'fecha_programable'=>'required',
+        $request->validate([
+            'descripcion' => "required",
+            'publicar_en' => "required",
+            'link' => "required",
+            'fecha_programable' => 'required',
         ]);
 
         $comunicacionSgi->update($request->all());
-        $image=null;
+        // $image = $comunicacionSgi->imagen;
         if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
             $extension = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_EXTENSION);
             $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
@@ -181,28 +181,29 @@ class ComunicacionSgiController extends Controller
             $img_intervention->resize(256, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($route);
+            $imagen_sgsi = $comunicacionSgi->imagenes_comunicacion->first();
+            if ($imagen_sgsi) {
+                $imagen_sgsi->update([
+                    "imagen" => $image,
+                    'comunicacion_id' => $comunicacionSgi->id,
+                ]);
+            } else {
+                ImagenesComunicacionSgis::create([
+                    "imagen" => $image,
+                    'comunicacion_id' => $comunicacionSgi->id,
+                ]);
+            }
         }
 
-      /*  $comunicacionSgi->update([
+        /*  $comunicacionSgi->update([
         'imagen'=>$image
         ]);
 */
 
-        $imagen_sgsi = ImagenesComunicacionSgis::where('comunicacion_id', $comunicacionSgi->id)->first();
-        if($imagen_sgsi){
-            $imagen_sgsi->update([     
-                "imagen"=>$image,
-                'comunicacion_id' => $comunicacionSgi->id,
-             ]);
-        } else{
-            ImagenesComunicacionSgis::create([     
-                "imagen"=>$image,
-                'comunicacion_id' => $comunicacionSgi->id,
-             ]);
-        }  
-       
 
-         $files = $request->file('files');
+
+
+        $files = $request->file('files');
         if ($request->hasFile('files')) {
             foreach ($files as $file) {
                 if (Storage::putFileAs('public/documento_comunicado_SGI', $file, $file->getClientOriginalName())) {
@@ -246,7 +247,7 @@ class ComunicacionSgiController extends Controller
 
         $comunicacionSgi->delete();
 
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyComunicacionSgiRequest $request)

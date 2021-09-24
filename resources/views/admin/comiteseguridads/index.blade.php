@@ -125,7 +125,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
+
                     }
                 },
                 {
@@ -135,7 +137,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
+
                     }
                 },
                 {
@@ -146,7 +150,8 @@
                     titleAttr: 'Exportar PDF',
                     orientation: 'portrait',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
@@ -161,7 +166,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
+
                     }
                 },
                 {
@@ -246,7 +253,10 @@
                     {
                         data: 'asignada',
                         name: 'asignada',
-                        render: function(data, type, row, config, meta) {
+                        render: function(data, type, row, meta) {
+                            if (type==="empleadoText") {
+                                return row.asignacion.name;
+                            }
                             let responsablereunion = "";
                             if (row.asignacion) {
                                 responsablereunion += `

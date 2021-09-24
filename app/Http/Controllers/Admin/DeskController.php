@@ -154,7 +154,6 @@ class DeskController extends Controller
     public function indexSeguridad()
     {
         $incidentes_seguridad = IncidentesSeguridad::with('asignado', 'reporto')->where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->get();
-
         return datatables()->of($incidentes_seguridad)->toJson();
     }
     public function editSeguridad(Request $request, $id_incidente)

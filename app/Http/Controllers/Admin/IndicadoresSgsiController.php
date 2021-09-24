@@ -57,10 +57,6 @@ class IndicadoresSgsiController extends Controller
                 return $row->ano ? $row->ano : "";
             });
 
-            /*$table->editColumn('proceso', function ($row) {
-                return $row->proceso->nombre ? $row->proceso->nombre : "";
-            });*/
-
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : "";
             });
@@ -77,11 +73,13 @@ class IndicadoresSgsiController extends Controller
                 return $row->frecuencia ? $row->frecuencia : "";
             });
 
+            $table->editColumn('enlace', function ($row) {
+                return $row->id ? $row->id : "";
+            });
+
             /*$table->editColumn('meta', function ($row) {
                 return $row->meta ? $row->meta : "";
             });
-
-            we
 
             $table->editColumn('responsable', function ($row) {
                 return $row->id_empleado ? $row->id_empleado : "";
@@ -143,7 +141,7 @@ class IndicadoresSgsiController extends Controller
 
         $indicadoresSgsi->delete();
 
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyIndicadoresSgsiRequest $request)
@@ -239,4 +237,5 @@ class IndicadoresSgsiController extends Controller
         return view('admin.indicadoresSgsis.evaluacion')
             ->with('indicadoresSgsis', $indicadoresSgsis);
     }
+
 }

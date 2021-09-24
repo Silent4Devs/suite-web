@@ -229,6 +229,12 @@
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <h6 style="font-weight:bold;"><i class="fas fa-folder-open iconos-crear"></i>Certificados</h6>
+                    <br>
+                    @foreach ($empleadoget->empleado_certificaciones as $certificaciones )
+                        <ul>
+                            <a href="{{ asset('storage/certificados_empleados/') . '/' . $certificaciones->documento }}"  style="text-decoration:none" target="_blank" alt=""><span><i class="fas fa-file iconos-crear"></i>{{$certificaciones->documento}}</span></a>
+                        </ul>
+                    @endforeach
                 </div>
                 <br>
             </div>

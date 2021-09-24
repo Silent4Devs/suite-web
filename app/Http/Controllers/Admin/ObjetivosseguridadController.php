@@ -20,7 +20,6 @@ class ObjetivosseguridadController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('objetivosseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $query = Objetivosseguridad::get();
         if ($request->ajax()) {
             $query = Objetivosseguridad::get();
             $table = Datatables::of($query);

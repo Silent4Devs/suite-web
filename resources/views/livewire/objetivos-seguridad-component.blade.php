@@ -79,13 +79,12 @@
 </div>
 
 <script>
-    //listen render event receive and clean
-    Livewire.on('contentChanged', event => {
+    window.addEventListener('contentChanged', event => {
         var inputArray = document.querySelectorAll('.slugs-inputs');
         inputArray.forEach(function(input) {
             input.value = "";
         });
-    })
+    });
 
     document.querySelectorAll("button.btnAñadir").forEach(function(elem) {
         elem.addEventListener('click', agregarTexto, false);
