@@ -7,7 +7,7 @@
             text-align: center !important;
         }
 
-        
+
 
 
     </style>
@@ -76,7 +76,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
                     }
                 },
                 {
@@ -86,7 +87,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
                     }
                 },
                 {
@@ -97,12 +99,13 @@
                     titleAttr: 'Exportar PDF',
                     orientation: 'landscape',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
-                        doc.styles.tableHeader.fontSize = 7.5;
-                        doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                        // doc.styles.tableHeader.fontSize = 7.5;
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -112,7 +115,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
                     }
                 },
                 {
@@ -200,7 +204,10 @@
                     {
                         data: 'responsable',
                         name: 'responsable',
-                        render: function(data, type, meta, config) {
+                        render: function(data, type,row, meta) {
+                            if (type==="empleadoText") {
+                                return data.name;
+                            }
                             let responsablereunion = "";
                             if (data) {
                                 responsablereunion += `
@@ -215,6 +222,15 @@
                         name: 'participantes',
                         render: function(data, type, row, meta) {
                             let participantes = data;
+                            if (type==="empleadoText") {
+                            let participantesTexto="";
+                            participantes.forEach(participante=>{
+                            participantesTexto+=`
+                            ${participante.name},
+                            `;
+                            });
+                            return participantesTexto.trim();
+                            }
                             let html = '';
                             participantes.forEach(participante => {
                                 html += `
