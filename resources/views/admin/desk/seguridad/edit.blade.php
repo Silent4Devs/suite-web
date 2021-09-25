@@ -109,9 +109,9 @@
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
-                                
-                                    <input class="form-control" value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
-                            
+
+                                    <input class="form-control"  name="fecha_cierre" value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
+
                             </div>
 
                             <div class="mt-2 form-group col-md-4">
