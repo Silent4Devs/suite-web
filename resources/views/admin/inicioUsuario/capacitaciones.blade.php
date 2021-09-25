@@ -8,7 +8,6 @@
                 <th style="min-width:200px;">Fecha Inicio</th>
                 <th style="min-width:200px;">Fecha Fin</th>
                 <th>Calificación</th>
-                <th>Estatus</th>
                 <th>Opciones</th>
             </tr>
         </thead>
@@ -22,16 +21,15 @@
                 <td>{{$recurso->fecha_fin}}</td>
                 <td>
                     @foreach ($recurso->empleados as $empleado) 
+                        @if($empleado->id == auth()->user()->empleado->id)
                         {{ $empleado->pivot->calificacion }}
-                    @endforeach
-                </td>
-                <td>
-                    @foreach ($recurso->empleados as $empleado) 
-                        {{ $empleado->estatus }}
+                        @endif
                     @endforeach
                 </td>
                 <td class="opciones_iconos">
-                    <i class="fas fa-trash-alt"></i>
+                    <button onclick="archivarCapacitacion('{{auth()->user()->empleado->id}}', '{{$recurso->id}}', '{{route('admin.inicio-Usuario.capacitaciones.archivar')}}')">
+                        <i class="fas fa-archive"></i>
+                    </button>
                     <i class="fas fa-file-alt"></i>
                 </td>
             </tr>
@@ -115,6 +113,85 @@
             $("#tabla_usuario_capacitaciones").DataTable({
                 buttons: dtButtons,
             });
+
+
+            window.archivarCapacitacion = function(id_empleado, recurso_id, url){
+                Swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: url,
+                        data: {
+                            id_empleado, recurso_id
+                        },
+                        dataType: "JSON",
+                        beforeSend: function() {
+                            let timerInterval
+                            Swal.fire({
+                                title: 'Archivando...',
+                                html: 'Estamos archivando su capacitacion',
+                                timer: 4000,
+                                timerProgressBar: true,
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                    timerInterval = setInterval(() => {
+                                        const content = Swal
+                                            .getHtmlContainer()
+                                        if (content) {
+                                            const b = content
+                                                .querySelector('b')
+                                            if (b) {
+                                                b.textContent = Swal
+                                                    .getTimerLeft()
+                                            }
+                                        }
+                                    }, 100)
+                                },
+                                willClose: () => {
+                                    clearInterval(timerInterval)
+                                }
+                            });
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire(
+                                    '¡Archivado!',
+                                    'Su revisión ha sido archivada',
+                                    'success'
+                                )
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1000);
+                            } else {
+                                Swal.fire(
+                                    'Erro al archivar!',
+                                    'Ocurrió un error',
+                                    'error'
+                                )
+                            }
+                        },
+                        error: function(err) {
+                            Swal.fire(
+                                'Error!',
+                                `${err}`,
+                                'error'
+                            )
+                        }
+                    });
+                  }
+                });
+            }
         });
     </script>
 @endsection

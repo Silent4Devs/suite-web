@@ -56,7 +56,7 @@
         .caja_botones_secciones a{
             position: relative;
         }
-        .caja_botones_secciones a span{
+        .caja_botones_secciones a span:not(.dt-button-collection.dropdown-menu span){
             position: absolute;
             right: 0;
             top: 0;

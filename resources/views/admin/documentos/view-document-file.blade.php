@@ -16,7 +16,7 @@
             margin-top: 10px;
             padding: 10px;
             width: 350px;
-            height: 80px;
+            min-height: 80px;
             display: inline-block;
             overflow: hidden;
             margin: 10px;
@@ -29,6 +29,7 @@
             font-size: 12pt;
             text-align: left;
             font-weight: bold;
+            text-align: center;
         }
         .img_nuevo{
             width: 50px;
@@ -42,9 +43,10 @@
             clip-path: circle(25px at 50% 50%);
         }
         .datos_nuevo{
-            width: 100%;
+            width: calc(100% - 50px);
             position: absolute;
-            bottom: 0;
+            bottom:5px;
+            left: 50px;
         }
         .datos_nuevo h6{
             margin: 0;
@@ -77,33 +79,36 @@
             @endif
         </div>
 
-        <h2 style="padding: 20px">Documento visto por:</h2>
-        <div class="caja_nuevo">
-
-            @forelse($empleados_vistas as $vista)
-                <div class="nuevo">
-                    <div class="img_nuevo">
-                        @if(is_null($vista->empleados->foto))
-                            <img src="{{asset('storage/empleados/imagenes/usuario_no_cargado.png')}}" class="img_empleado">
-                        @else
-                                <img src="{{asset('storage/empleados/imagenes/'.$vista->empleados->foto)}}" class="img_empleado">
-                        @endif
-                    </div>
-                    <h5 class="nombre_nuevo">{{$vista->empleados->name}}</h5>
-                    <div class="datos_nuevo">
-                        <p>{{$vista->empleados->puesto}} &nbsp;&nbsp;|&nbsp;&nbsp;
-                            @if(is_null($vista->empleados->area->area))
-                                No hay Area
+        @if($documento->archivo)
+            <h2 style="padding: 20px">Documento visto por:</h2>
+            <div class="caja_nuevo">
+                
+                @forelse($empleados_vistas as $vista)
+                    <div class="nuevo">
+                        <div class="img_nuevo">
+                            @if(is_null($vista->empleados->foto))
+                                <img src="{{asset('storage/empleados/imagenes/usuario_no_cargado.png')}}" class="img_empleado">
                             @else
-                                {{$vista->empleados->area->area}}
+                                    <img src="{{asset('storage/empleados/imagenes/'.$vista->empleados->foto)}}" class="img_empleado">
                             @endif
-                        </p>
+                        </div>
+                        <h5 class="nombre_nuevo">{{$vista->empleados->name}}</h5>
+                        <div class="datos_nuevo">
+                            <p>{{$vista->empleados->puesto}} &nbsp;&nbsp;|&nbsp;&nbsp;
+                                @if(is_null($vista->empleados->area->area))
+                                    No hay Area
+                                @else
+                                    {{$vista->empleados->area->area}}
+                                @endif
+                            </p>
+                        </div>
                     </div>
-                </div>
-                @empty
-                <div class="nuevo">Este documento no tiene vistas</div>
-            @endforelse
-        </div>
+                    @empty
+                    <div class="nuevo">Este documento no tiene vistas</div>
+                @endforelse
+                
+            </div>
+        @endif
     </div>
 
     
