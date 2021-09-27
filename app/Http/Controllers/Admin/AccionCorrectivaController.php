@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Gate;
 use Flash;
+use App\Models\Area;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Puesto;
+use App\Models\Proceso;
 use App\Models\Empleado;
+use App\Models\Tipoactivo;
 use Illuminate\Http\Request;
 use App\Functions\GeneratePdf;
 use App\Models\AccionCorrectiva;
@@ -171,7 +174,13 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas','empleados'));
+        $areas = Area::get();
+
+        $procesos=Proceso::get();
+
+        $activos=Tipoactivo::get();
+
+        return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas','empleados', 'areas', 'procesos', 'activos'));
     }
 
     public function store(StoreAccionCorrectivaRequest $request)
@@ -193,7 +202,7 @@ class AccionCorrectivaController extends Controller
 
         Flash::success("Registro guardado exitosamente");
         // return redirect('admin/plan-correctiva?param=' . $accionCorrectiva->id);
-        return redirect()->route('admin.accion-correctivas.index');
+        return redirect()->route('admin.accion-correctivas.edit',$accionCorrectiva);
 
 
 
