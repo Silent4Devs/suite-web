@@ -210,6 +210,15 @@
                 </a>
             </li>
         @endcan
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('cargadocs') }}"
+                    class="c-sidebar-nav-link {{ request()->is('CargaDocs') || request()->is('CargaDocs/*') ? 'active' : '' }}">
+                    <i class="fas fa-file-upload iconos_menu letra_blanca"></i>
+
+                    <font class="letra_blanca">Carga de Documentos</font>
+                </a>
+            </li>
+
         {{-- <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.planTrabajoBase.index') }}"
                 class="c-sidebar-nav-link {{989 request()->is('admin/planTrabajoBase') || request()->is('admin/planTrabajoBase/*') ? 'active' : '' }}">
