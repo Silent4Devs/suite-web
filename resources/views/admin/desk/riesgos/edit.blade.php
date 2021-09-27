@@ -60,13 +60,18 @@
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
-                                    <option>{{ $riesgos->estatus }}</option>
-                                    <option value="nuevo">Nuevo</option>
-                                    <option value="en curso">En curso</option>
-                                    <option value="en espera">En espera</option>
-                                    <option value="cerrado">Cerrado</option>
-                                    <option value="cancelado">Cancelado</option>
+                                <select name="estatus" class="form-control" id="opciones"
+                                    onchange='cambioOpciones();'>
+                                    <option {{ old('estatus', $riesgos->estatus) == 'nuevo' ? 'selected' : '' }}
+                                        value="nuevo">Nuevo</option>
+                                    <option {{ old('estatus', $riesgos->estatus) == 'en curso' ? 'selected' : '' }}
+                                        value="en curso">En curso</option>
+                                    <option {{ old('estatus', $riesgos->estatus) == 'en espera' ? 'selected' : '' }}
+                                        value="en espera">En espera</option>
+                                    <option {{ old('estatus', $riesgos->estatus) == 'cerrado' ? 'selected' : '' }}
+                                        value="cerrado">Cerrado</option>
+                                    <option {{ old('estatus', $riesgos->estatus) == 'cancelado' ? 'selected' : '' }}
+                                        value="cancelado">Cancelado</option>
                                 </select>
                             </div>
                             <div class="mt-2 form-group col-4">
@@ -86,8 +91,8 @@
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
-                                <input class="form-control" name="fecha_cierre" {{ $riesgos->fecha_cierre }}
-                                    id="solucion">
+                                <input class="form-control" name="fecha_cierre" value={{ $riesgos->fecha_cierre }}
+                                    id="solucion" type="datetime">
                             </div>
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i>
@@ -523,6 +528,25 @@
 @section('scripts')
 
 <script type="text/javascript">
+
+    const formatDate = (current_datetime) => {
+        let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+            current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+            ":" + current_datetime.getSeconds();
+        return formatted_date;
+    }
+
+    function cambioOpciones() {
+        var combo = document.getElementById('opciones');
+        var opcion = combo.value;
+        if (opcion == "cerrado") {
+            var fecha = new Date();
+            document.getElementById('solucion').value = formatDate(fecha);
+        } else {
+            document.getElementById('solucion').value = "";
+        }
+    }
+
     $(document).on('change', '#select_metodos', function(event) {
         $(".caja_oculta_dinamica").removeClass("d-block");
         var metodo_v = $("#select_metodos option:selected").attr('data-metodo');
@@ -530,17 +554,6 @@
     });
 </script>
 <script type="text/javascript">
-    function cambioOpciones() {
-        var combo = document.getElementById('opciones');
-        var opcion = combo.value;
-        if (opcion == "cerrado") {
-            var fecha = new Date();
-            document.getElementById('solucion').value = fecha.toISOString();
-        } else {
-            document.getElementById('solucion').value = "";
-        }
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
         let select_activos = document.querySelector('.areas_multiselect #activos');
         select_activos.addEventListener('change', function(e) {
