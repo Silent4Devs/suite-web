@@ -67,7 +67,7 @@
                     <label for="id_reviso_alcance"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
                     <select class="form-control select2 {{ $errors->has('reviso_alcance') ? 'is-invalid' : '' }}" name="id_reviso_alcance" id="id_reviso_alcance">
                         @foreach ($empleados as $empleado)
-                        <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}" {{ old('id_reviso_politica')==$empleado->id ? ' selected="selected"' : '' }}>
+                        <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}" {{ old('id_reviso_alcance')==$empleado->id ? ' selected="selected"' : '' }}>
 
                             {{ $empleado->name }}
                         </option>
@@ -173,6 +173,7 @@
 </script>
 
 <script>
+
     document.addEventListener('DOMContentLoaded', function(e) {
 
         let reviso_alcance = document.querySelector('#id_reviso_alcance');
@@ -181,15 +182,16 @@
 
         document.getElementById('puesto_reviso').innerHTML = puesto_init;
         document.getElementById('area_reviso').innerHTML = area_init;
-        reviso_politica.addEventListener('change', function(e) {
+        reviso_alcance.addEventListener('change', function(e) {
             e.preventDefault();
             let area = this.options[this.selectedIndex].getAttribute('data-area');
             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
             document.getElementById('puesto_reviso').innerHTML = puesto;
             document.getElementById('area_reviso').innerHTML = area;
-        })
+        })   
 
     })
+
 </script>
 
 
