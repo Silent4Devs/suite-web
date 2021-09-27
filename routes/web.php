@@ -324,9 +324,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('politica-sgsis', 'PoliticaSgsiController');
 
-
-
-
     // Roles Responsabilidades
     Route::delete('roles-responsabilidades/destroy', 'RolesResponsabilidadesController@massDestroy')->name('roles-responsabilidades.massDestroy');
     Route::resource('roles-responsabilidades', 'm');
@@ -341,7 +338,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('objetivosseguridadsInsertar', 'ObjetivosseguridadController@ObjetivoInsert')->name('objetivos-seguridadsInsertar');
     Route::get('evaluaciones-objetivosInsertar', 'ObjetivosseguridadController@evaluacionesInsert')->name('evaluacionesobjetivosInsert');
     Route::get('evaluaciones-objetivosShow', 'ObjetivosseguridadController@evaluacionesShow')->name('evaluacionesobjetivosShow');
-
 
     Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
 
@@ -489,7 +485,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('grupoarea/process-csv-import', 'GrupoAreaController@processCsvImport')->name('grupoarea.processCsvImport');
     Route::resource('grupoarea', 'GrupoAreaController');
 
-
     // Indicadores Sgsis
     Route::get('evaluaciones-sgsisInsertar', 'IndicadoresSgsiController@evaluacionesInsert')->name('evaluacionesInsert');
     Route::delete('indicadores-sgsis/destroy', 'IndicadoresSgsiController@massDestroy')->name('indicadores-sgsis.massDestroy');
@@ -518,7 +513,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('accion-correctivas/editarplan', 'PlanaccionCorrectivaController@update');
     Route::post('plan-correctivas-storeedit', 'PlanaccionCorrectivaController@storeEdit');
     Route::post('planaccion-storered', 'PlanaccionCorrectivaController@storeRedirect')->name('storered');
-
 
     // Ajax
     //Route::post('AjaxAccionCorrectivaCrear', 'AccionCorrectiva@store');
@@ -952,6 +946,5 @@ Route::view('sitemap', 'admin.sitemap.index');
 //Route::view('admin/gantt', 'admin.gantt.grap');
 
 //URL::forceScheme('https');
-
 
 Route::view('post_register', 'auth.post_register');
