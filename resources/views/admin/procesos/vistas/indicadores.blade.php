@@ -58,7 +58,7 @@
                                 }
                             @endphp
                             <tr
-                                onclick='graficasclick(event, {{ $indicador->id }}, {{ $indicador->rojo }}, {{ $indicador->amarillo }}, {{ $indicador->verde }}, {{ $i }})'>
+                                onclick='graficasclick(event, {{ $indicador->id }}, {{ $indicador->rojo }}, {{ $indicador->amarillo }}, {{ $indicador->verde }}, {{ $i }}, {{ $indicador->meta}})'>
                                 <td>{{ $indicador->id }}</td>
                                 <td>{{ $indicador->nombre }}</td>
                                 <td>{{ $indicador->descripcion }}</td>
@@ -117,11 +117,11 @@
     });
 </script>
 <script>
-    function graficasclick(e, indicador_id, rojo, amarillo, verde, resultado) {
+    function graficasclick(e, indicador_id, rojo, amarillo, verde, resultado, meta) {
         if (!e) var e = window.event; // Get the window event
         e.cancelBubble = true; // IE Stop propagation
         if (e.stopPropagation) e.stopPropagation(); // Other Broswers
-        console.log(indicador_id, rojo, amarillo, verde, resultado);
+        console.log(indicador_id, rojo, amarillo, verde, resultado, meta);
         $.ajax({
             data: {
                 id: indicador_id,
@@ -129,6 +129,7 @@
                 amarillo: amarillo,
                 verde: verde,
                 resultado: resultado,
+                meta:meta,
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -145,7 +146,7 @@
                 document.getElementById('contenedor_resultado').classList.remove("d-none");
                 $("#resultado").html(data);
                 $("#resultadobarra").html(data);
-                //console.log("data" + data);
+                console.log("data" + data);
                 // document. getElementById("resultadobarra"). style. display = ""; //show.
                 let {
                     datosbarra
@@ -163,7 +164,7 @@
                 //speedometer
                 // Element inside which you want to see the chart
                 let element = document.querySelector('#resultado')
-
+                // console.log(element);
                 // Properties of the gauge
                 let gaugeOptions = {
                     hasNeedle: true,
@@ -173,12 +174,12 @@
                     arcColors: ["rgb(255,84,84)", "rgb(239,214,19)", "rgb(61,204,91)"],
                     arcDelimiters: [30, 70],
                     rangeLabel: ['0', '100'],
-                    centralLabel: data.datos.resultado + data.unidad.unidadmedida,
+                    centralLabel: data.porcentaje,
                 }
 
-                // Drawing and updating the chart
-                GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(data.datos.resultado)
-
+                    GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(data.porcentaje);
+                
+                console.log(data.datos.resultado);
                 var ctx = document.getElementById("resultadobarra");
                 var myChart = new Chart(ctx, {
                     type: 'bar',
