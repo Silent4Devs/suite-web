@@ -48,7 +48,7 @@
                             <th scope="col">Meta</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="tbody_click">
 
                         @foreach ($indicadores as $indicador)
                             @php

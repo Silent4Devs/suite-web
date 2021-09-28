@@ -477,6 +477,14 @@
 
 @section('scripts')
 
+
+    <script type="text/javascript">
+        
+        $(".tbody_click tr").click(function(){
+            $(".tbody_click tr:hover").css("background-color", "#ccc !important");
+        });
+    </script>
+
     
 
     <script>
@@ -503,5 +511,8 @@
         $(tab.parentElement).addClass('active');
         $('#myTab a[href="' + hash + '"]').tab('show');
     </script>
+
+
+   
 
 @endsection
