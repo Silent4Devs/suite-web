@@ -3,11 +3,48 @@
     @method('PUT')
     @csrf
 
-    <div class="form-group col-sm-6">
-        <label for="fecharegistro"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
-            registro</label>
-        <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}"
-            type="date" name="fecharegistro" id="fecharegistro"
+    <div class=" form-group col-lg-2 col-md-2 col-sm-12">
+        <label class="form-label"><i
+                class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+        <div class="form-control">{{ $accionCorrectiva->folio }}</div>
+    </div>
+
+    <div class="form-group col-md-6 col-lg-6 col-sm-12">
+        <label for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto del incidente
+        </label>
+        <input class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema"
+            value="{{ old('tema', $accionCorrectiva->tema) }}">
+        @if ($errors->has('tema'))
+            <div class="invalid-feedback">
+                {{ $errors->first('tema') }}
+            </div>
+        @endif
+        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.tema_helper') }}</span>
+    </div>
+
+    <div class="form-group col-4">
+        <label class="form-label"><i
+                class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+        <select name="estatus" class="form-control" id="opciones"
+            onchange='cambioOpciones();'>
+            <option {{ old('estatus', $accionCorrectiva->estatus) == 'nuevo' ? 'selected' : '' }}
+                value="nuevo">Nuevo</option>
+            <option {{ old('estatus', $accionCorrectiva->estatus) == 'en curso' ? 'selected' : '' }}
+                value="en curso">En curso</option>
+            <option {{ old('estatus', $accionCorrectiva->estatus) == 'en espera' ? 'selected' : '' }}
+                value="en espera">En espera</option>
+            <option {{ old('estatus', $accionCorrectiva->estatus) == 'cerrado' ? 'selected' : '' }}
+                value="cerrado">Cerrado</option>
+            <option {{ old('estatus', $accionCorrectiva->estatus) == 'cancelado' ? 'selected' : '' }}
+                value="cancelado">Cancelado</option>
+        </select>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4 col-lg-4 ">
+        <label for="fecharegistro"><i class="far fa-calendar-alt iconos-crear"></i>Fecha y hora de
+            registro de la AC</label>
+        <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="datetime-local"
+            name="fecharegistro" id="fecharegistro"
             value="{{ old('fecharegistro', $accionCorrectiva->fecharegistro) }}">
         @if ($errors->has('fecharegistro'))
             <div class="invalid-feedback">
@@ -17,113 +54,113 @@
     </div>
 
 
-    <div class="form-group col-md-6">
-        <label for="nombrereporta_id"><i
-                class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.nombrereporta') }}</label>
-        <select class="form-control select2 {{ $errors->has('nombrereporta') ? 'is-invalid' : '' }}"
-            name="nombrereporta_id" id="nombrereporta_id">
+    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+        <label for="fecha_verificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha y hora de recepción de la AC</label>
+        <input class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}" type="datetime-local"
+            name="fecha_verificacion" id="fecha_verificacion" value="{{ old('fecha_verificacion', $accionCorrectiva->fecha_verificacion) }}">
+        @if ($errors->has('fecha_verificacion'))
+            <div class="invalid-feedback">
+                {{ $errors->first('fecha_verificacion') }}
+            </div>
+        @endif
+    </div>
 
-            @foreach ($nombrereportas as $id => $nombrereporta)
-                <option value="{{ $id }}"
-                    {{ (old('nombrereporta_id') ? old('nombrereporta_id') : $accionCorrectiva->nombrereporta->id ?? '') == $id ? 'selected' : '' }}>
-                    {{ $nombrereporta }}</option>
+    <div class="form-group col-4">
+        <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
+            hora
+            de cierre del ticket</label>
+        <input class="form-control" name="fecha_cierre" value="{{ $accionCorrectiva->fecha_cierre }}"
+            id="solucion" type="datetime">
+    </div>
+
+
+    <div class="mt-1 form-group col-12">
+        <b>Reportó Acción Correctiva:</b>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+        <label for="id_reporto"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+        <select class="form-control {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
+            id="id_reporto">
+            @foreach ($empleados as $id => $empleado)
+                <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                    data-area="{{ $empleado->area->area }}"
+                    {{ old('id_reporto', $accionCorrectiva->id_reporto) == $empleado->id ? 'selected' : '' }}>
+
+                    {{ $empleado->name }}
+                </option>
             @endforeach
         </select>
-        @if ($errors->has('nombrereporta'))
+        @if ($errors->has('id_reporto'))
             <div class="invalid-feedback">
-                {{ $errors->first('nombrereporta') }}
+                {{ $errors->first('id_reporto') }}
             </div>
         @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.nombrereporta_helper') }}</span>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="id_reporto_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+        <div class="form-control" id="reporto_puesto"></div>
     </div>
 
 
-    <div class="form-group col-md-6">
-        <label for="puestoreporta_id"><i
-                class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.puestoreporta') }}</label>
-        <select class="form-control select2 {{ $errors->has('puestoreporta') ? 'is-invalid' : '' }}"
-            name="puestoreporta_id" id="puestoreporta_id">
+    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+        <label for="id_reporto_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+        <div class="form-control" id="reporto_area"></div>
+    </div>
 
-            @foreach ($puestoreportas as $id => $puestoreporta)
-                <option value="{{ $id }}"
-                    {{ (old('puestoreporta_id') ? old('puestoreporta_id') : $accionCorrectiva->puestoreporta->id ?? '') == $id ? 'selected' : '' }}>
-                    {{ $puestoreporta }}</option>
+
+    <div class="mt-1 form-group col-12">
+        <b>Registró Acción Correctiva:</b>
+    </div>
+
+
+
+    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+        <label for="id_registro"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+        <select class="form-control {{ $errors->has('id_registro') ? 'is-invalid' : '' }}" name="id_registro"
+            id="id_registro">
+            @foreach ($empleados as $id => $empleado)
+                <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                    data-area="{{ $empleado->area->area }}"
+                    {{ old('id_reviso', $accionCorrectiva->id_registro) == $empleado->id ? 'selected' : '' }}>
+
+                    {{ $empleado->name }}
+                </option>
             @endforeach
         </select>
-        @if ($errors->has('puestoreporta'))
+        @if ($errors->has('id_registro'))
             <div class="invalid-feedback">
-                {{ $errors->first('puestoreporta') }}
+                {{ $errors->first('id_registro') }}
             </div>
         @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.puestoreporta_helper') }}</span>
+        <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
     </div>
 
 
-    <div class="form-group col-md-6">
-        <label for="nombreregistra_id"><i
-                class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.nombreregistra') }}</label>
-        <select class="form-control select2 {{ $errors->has('nombreregistra') ? 'is-invalid' : '' }}"
-            name="nombreregistra_id" id="nombreregistra_id">
-
-            @foreach ($nombreregistras as $id => $nombreregistra)
-                <option value="{{ $id }}"
-                    {{ (old('nombreregistra_id') ? old('nombreregistra_id') : $accionCorrectiva->nombreregistra->id ?? '') == $id ? 'selected' : '' }}>
-                    {{ $nombreregistra }}</option>
-            @endforeach
-        </select>
-        @if ($errors->has('nombreregistra'))
-            <div class="invalid-feedback">
-                {{ $errors->first('nombreregistra') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.nombreregistra_helper') }}</span>
+    <div class="form-group col-md-4">
+        <label for="id_registro_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+        <div class="form-control" id="registro_puesto"></div>
     </div>
 
-    <div class="form-group col-md-6">
-        <label for="puestoregistra_id"><i
-                class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.puestoregistra') }}</label>
-        <select class="form-control select2 {{ $errors->has('puestoregistra') ? 'is-invalid' : '' }}"
-            name="puestoregistra_id" id="puestoregistra_id">
 
-            @foreach ($puestoregistras as $id => $puestoregistra)
-                <option value="{{ $id }}"
-                    {{ (old('puestoregistra_id') ? old('puestoregistra_id') : $accionCorrectiva->puestoregistra->id ?? '') == $id ? 'selected' : '' }}>
-                    {{ $puestoregistra }}</option>
-            @endforeach
-        </select>
-        @if ($errors->has('puestoregistra'))
-            <div class="invalid-feedback">
-                {{ $errors->first('puestoregistra') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.puestoregistra_helper') }}</span>
+    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+        <label for="id_registro_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+        <div class="form-control" id="registro_area"></div>
     </div>
 
-    <div class="form-group col-12">
-        <label for="tema"><i
-                class="far fa-file-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.tema') }}</label>
-        <textarea class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema"
-            id="tema">{{ old('tema', $accionCorrectiva->tema) }}</textarea>
-
-        @if ($errors->has('tema'))
-            <div class="invalid-feedback">
-                {{ $errors->first('tema') }}
-            </div>
-        @endif
-        <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.tema_helper') }}</span>
-    </div>
     <div class="form-group col-12">
         <label><i
-                class="fas fa-project-diagram iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.causaorigen') }}</label>
+                class="fas fa-project-diagram iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.causaorigen') }}
+        </label>
         <select class="form-control {{ $errors->has('causaorigen') ? 'is-invalid' : '' }}" name="causaorigen"
             id="causaorigen">
-
+            <option></option>
             <option value disabled {{ old('causaorigen', null) === null ? 'selected' : '' }}>
                 {{ trans('global.pleaseSelect') }}</option>
             @foreach (App\Models\AccionCorrectiva::CAUSAORIGEN_SELECT as $key => $label)
                 <option value="{{ $key }}"
-                    {{ old('causaorigen', $accionCorrectiva->causaorigen) === (string) $key ? 'selected' : '' }}>
-                    {{ $label }}</option>
+                    {{ old('causaorigen',$accionCorrectiva->causaorigen) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
             @endforeach
         </select>
         @if ($errors->has('causaorigen'))
@@ -133,12 +170,14 @@
         @endif
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.causaorigen_helper') }}</span>
     </div>
+
+
     <div class="form-group col-12">
         <label for="descripcion"><i
-                class="far fa-file-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.descripcion') }}</label>
+                class="far fa-file-alt iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.descripcion') }}
+        </label>
         <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
             id="descripcion">{{ old('descripcion', $accionCorrectiva->descripcion) }}</textarea>
-
         @if ($errors->has('descripcion'))
             <div class="invalid-feedback">
                 {{ $errors->first('descripcion') }}
@@ -147,4 +186,64 @@
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.descripcion_helper') }}</span>
     </div>
 
+
+    <div class="mt-2 form-group col-md-4 areas_multiselect">
+        <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área(s)
+            afectada(s)</label>
+        <select class="form-control" id="activos">
+            <option disabled selected>Seleccionar áreas</option>
+            @foreach ($areas as $area)
+                <option value="{{ $area->area }}">{{ $area->area }}
+                </option>
+            @endforeach
+        </select>
+        <textarea name="areas" class="form-control" id="texto_activos"
+            required>{{ $accionCorrectiva->areas }}</textarea>
+    </div>
+
+    <div class="mt-2 form-group col-md-4 procesos_multiselect">
+        <label class="form-label"><i class="fas fa-dice-d20 iconos-crear"></i>Proceso(s)
+            afectado(s)</label>
+        <select class="form-control" id="activos">
+            <option disabled selected>Seleccionar procesos</option>
+            @foreach ($procesos as $proceso)
+                <option value="{{ $proceso->nombre }}">{{ $proceso->nombre }}
+                </option>
+            @endforeach
+        </select>
+        <textarea name="procesos" class="form-control" id="texto_activos"
+            required>{{ $accionCorrectiva->procesos }}</textarea>
+    </div>
+
+    <div class="mt-2 form-group col-md-4 activos_multiselect">
+        <label class="form-label"><i class="fa-fw fas fa-laptop iconos-crear"></i>Activo(s)
+            afectado(s)</label>
+        <select class="form-control" id="activos">
+            <option disabled selected>Seleccionar afectados</option>
+            @foreach ($activos as $activo)
+                <option value="{{ $activo->nombreactivo }}">{{ $activo->nombreactivo }}
+                </option>
+            @endforeach
+        </select>
+        <textarea name="activos" class="form-control" id="texto_activos"
+            required>{{ $accionCorrectiva->activos }}</textarea>
+    </div>
+
+    <div class="mt-2 form-group col-md-12">
+        <label class="form-label"><i
+                class="fas fa-comment-dots iconos-crear"></i>Comentarios</label>
+        <textarea name="comentarios"
+            class="form-control">{{ $accionCorrectiva->comentarios }}</textarea>
+    </div>
+
+    <div class="text-right form-group col-12">
+        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+        <button class="btn btn-danger" type="submit" id="btnGuardar">
+            {{ trans('global.save') }}
+        </button>
+        {{-- <button id="form-siguienteaccion" data-toggle="collapse" onclick="closetabcollanext2()" data-target="#collapseplan" class="btn btn-danger">Siguiente</button> --}}
+    </div>
+    
 </form>
+
+

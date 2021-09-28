@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Gate;
 use Flash;
+use App\Models\Area;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Puesto;
+use App\Models\Proceso;
 use App\Models\Empleado;
+use App\Models\Tipoactivo;
 use Illuminate\Http\Request;
 use App\Functions\GeneratePdf;
 use App\Models\AccionCorrectiva;
@@ -20,6 +23,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\UpdateAccionCorrectivaRequest;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
+use App\Models\AnalisisAccionCorrectiva;
 
 class AccionCorrectivaController extends Controller
 {
@@ -171,11 +175,18 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas','empleados'));
+        $areas = Area::get();
+
+        $procesos=Proceso::get();
+
+        $activos=Tipoactivo::get();
+
+        return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas','empleados', 'areas', 'procesos', 'activos'));
     }
 
-    public function store(StoreAccionCorrectivaRequest $request)
+    public function store(Request $request)
     {
+
 
         $accionCorrectiva = AccionCorrectiva::create($request->all());;
         //dd($request['pdf-value']);
@@ -193,7 +204,7 @@ class AccionCorrectivaController extends Controller
 
         Flash::success("Registro guardado exitosamente");
         // return redirect('admin/plan-correctiva?param=' . $accionCorrectiva->id);
-        return redirect()->route('admin.accion-correctivas.index');
+        return redirect()->route('admin.accion-correctivas.edit',$accionCorrectiva);
 
 
 
@@ -219,17 +230,24 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
+        $areas = Area::get();
+
+        $procesos=Proceso::get();
+
+        $activos=Tipoactivo::get();
+
         $id = $accionCorrectiva->id;
 
-        $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name','empleados')
-            ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
-            ->join('users', 'planaccion_correctivas.responsable_id', '=', 'users.id')
-            ->where('planaccion_correctivas.accioncorrectiva_id', '=', $id)
-            ->get();
-        $Count = $PlanAccion->count();
-        $users = User::all("id", "name");
+        // $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name','empleados')
+        //     ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
+        //     ->join('users', 'planaccion_correctivas.responsable_id', '=', 'users.id')
+        //     ->where('planaccion_correctivas.accioncorrectiva_id', '=', $id)
+        //     ->get();
+        // $Count = $PlanAccion->count();
+        // dd($accionCorrectiva);
 
-        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'PlanAccion', 'id', 'Count', 'users'));
+
+        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas','procesos','activos'));
     }
 
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
@@ -293,5 +311,10 @@ class AccionCorrectivaController extends Controller
     public function test()
     {
         dd("Test");
+    }
+
+    public function storeAnalisis(Request $request, $accion)
+    {
+        $analisis=AnalisisAccionCorrectiva::create($request->all());
     }
 }

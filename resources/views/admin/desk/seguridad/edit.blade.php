@@ -110,7 +110,7 @@
                                     hora
                                     de cierre del ticket</label>
 
-                                    <input class="form-control"  name="fecha_cierre" value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
 
                             </div>
 

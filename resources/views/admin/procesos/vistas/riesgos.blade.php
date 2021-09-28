@@ -29,6 +29,11 @@
         overflow-y: scroll;
     }
 
+    .fila_activa{
+        background-color:#ccc !important;
+
+    }
+
 </style>
 
 <div class="row">
@@ -49,7 +54,7 @@
                         @foreach ($riesgos as $riesgo)
                             <tr class="clickable-row sesioninicio"
                                 onclick='graficasclick_riesgo(event, {{ $riesgo->id }})'>
-                                <td>{{ $riesgo->id }}</td>
+                                <td class="fila_activa">{{ $riesgo->id }}</td>
                                 <td>{{ $riesgo->descripcionriesgo }}</td>
                                 <td>{{ $riesgo->nivelriesgo }}</td>
                                 <td>{{ $riesgo->nivelriesgo_residual }}</td>
@@ -94,11 +99,11 @@
     // });
 
     // $(".sesioninicio").mouseenter(function(){
-    // 		$(".sesioninicio").css("color","#18CCA6");	
+    // 		$(".sesioninicio").css("color","#18CCA6");
     // 	});
 
     // 	$(".sesioninicio").mouseleave(function(){
-    // 		$(".sesioninicio").css("color","#0099CD");	
+    // 		$(".sesioninicio").css("color","#0099CD");
     // 	});
 
     $.ajaxSetup({
@@ -107,6 +112,7 @@
         }
     });
 </script>
+
 <script>
     function graficasclick_riesgo(e, riesgos_id) {
         if (!e) var e = window.event; // Get the window event

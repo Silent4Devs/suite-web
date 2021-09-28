@@ -68,15 +68,15 @@
 				<strong class="col-12">Revisó:</strong><br/><br/>
 				<div class="form-group col-md-4">
 					<label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-					<div class="form-control">{{ $politicaSgsis->empleado->name }}</div>
+					<div class="form-control">{{ $politicaSgsis->reviso->name }}</div>
 				</div>
 				<div class="form-group col-md-4">
 					<label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-					<div class="form-control">{{ $politicaSgsis->empleado->puesto }}</div>
+					<div class="form-control">{{ $politicaSgsis->reviso->puesto }}</div>
 				</div>
 				<div class="form-group col-md-4">
 					<label class="form-label"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-					<div class="form-control">{{ $politicaSgsis->empleado->area->area }}</div>
+					<div class="form-control">{{ $politicaSgsis->reviso->area->area }}</div>
 				</div>
 			</div>
 		@else

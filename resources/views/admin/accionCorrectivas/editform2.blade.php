@@ -4,7 +4,7 @@
             Seleccione el metódo de análisis
         </div>
         <div class="col-md-8">
-            <select id="select_metodos" class="form-control">
+            <select id="select_metodos" class="form-control" name="metodo">
                 <option selected disabled>- -</option>
                 <option class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
                 </option>
@@ -15,7 +15,7 @@
         </div>
 
         <form method="POST" class="col-12"
-            action="{{ route('admin.desk.analisis_queja-update', $accionCorrectiva->id) }}">
+            action="{{ route('admin.accion-correctivas.storeAnalisis', $accionCorrectiva->id) }}">
             @csrf
 
             <div class="col-12" style="position: relative;">

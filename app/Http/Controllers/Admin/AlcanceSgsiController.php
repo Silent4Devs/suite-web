@@ -84,7 +84,7 @@ class AlcanceSgsiController extends Controller
         abort_if(Gate::denies('alcance_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::with('area')->get();
-
+        
         return view('admin.alcanceSgsis.create', compact('empleados'));
     }
 

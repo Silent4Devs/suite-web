@@ -181,6 +181,7 @@
 </script>
 
 <script>
+
     document.addEventListener('DOMContentLoaded', function(e) {
 
         let reviso_politica = document.querySelector('#id_reviso_politica');
