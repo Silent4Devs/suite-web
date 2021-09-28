@@ -348,6 +348,16 @@
             }
         }
 
+
+
+
+
+
+    .fila_activa{
+        background-color:rgba(0, 255, 246, 0.15) !important;
+
+    }
+
     </style>
 
 
@@ -481,7 +491,8 @@
     <script type="text/javascript">
         
         $(".tbody_click tr td").click(function(){
-            $(".tbody_click tr td").css("background-color", "#ccc !important");
+            $(".tbody_click tr").removeClass("fila_activa");
+            $(".tbody_click tr:hover").addClass("fila_activa");
         });
     </script>
 
