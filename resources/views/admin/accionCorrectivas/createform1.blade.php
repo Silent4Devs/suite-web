@@ -19,7 +19,7 @@
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.tema_helper') }}</span>
     </div>
 
-    <div class="form-group col-md-4 col-lg-4 col-sm-12">
+    {{-- <div class="form-group col-md-4 col-lg-4 col-sm-12">
         <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
         <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
             <option {{ old('estatus') == 'nuevo' ? 'selected' : '' }} value="nuevo">Nuevo</option>
@@ -28,11 +28,11 @@
             <option {{ old('estatus') == 'cerrado' ? 'selected' : '' }} value="cerrado">Cerrado</option>
             <option {{ old('estatus') == 'cancelado' ? 'selected' : '' }} value="cancelado">Cancelado</option>
         </select>
-    </div>
+    </div> --}}
 
     <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="fecharegistro"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de registro de la AC</label>
-        <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="date"
+        <label for="fecharegistro"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha y hora de registro de la AC</label>
+        <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="datetime-local"
             name="fecharegistro" id="fecharegistro" value="{{ old('fecharegistro') }}">
         @if ($errors->has('fecharegistro'))
             <div class="invalid-feedback">
@@ -41,28 +41,22 @@
         @endif
     </div>
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+    {{-- <div class="form-group col-sm-12 col-md-6 col-lg-6">
         <label for="fecha_verificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de recepción de la AC</label>
-        <input class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}" type="date"
+        <input class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}" type="datetime-local"
             name="fecha_verificacion" id="fecha_verificacion" value="{{ old('fecha_verificacion') }}">
         @if ($errors->has('fecha_verificacion'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecha_verificacion') }}
             </div>
         @endif
-    </div>
+    </div> --}}
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
+    {{-- <div class="form-group col-sm-12 col-md-4 col-lg-4">
         <label for="fecha_cierre"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha y
             hora de cierre del ticket</label>
-        <input class="form-control date {{ $errors->has('fecha_cierre') ? 'is-invalid' : '' }}" type="date"
-            name="fecha_cierre" id="fecha_cierre" value="{{ old('fecha_cierre') }}">
-        @if ($errors->has('fecha_cierre'))
-            <div class="invalid-feedback">
-                {{ $errors->first('fecha_cierre') }}
-            </div>
-        @endif
-    </div>
+        <input class="form-control" id="solucion" name="fecha_cierre">
+    </div> --}}
 
     <div class="mt-1 form-group col-12">
         <b>Reportó Acción Correctiva:</b>
@@ -188,7 +182,7 @@
                 </option>
             @endforeach
         </select>
-        <textarea name="areas_afectados" class="form-control" id="texto_activos"
+        <textarea name="areas" class="form-control" id="texto_activos"
             required></textarea>
     </div>
 
@@ -202,7 +196,7 @@
                 </option>
             @endforeach
         </select>
-        <textarea name="proceso_id" class="form-control" id="texto_activos"
+        <textarea name="procesos" class="form-control" id="texto_activos"
             required></textarea>
     </div>
 
@@ -216,7 +210,7 @@
                 </option>
             @endforeach
         </select>
-        <textarea name="activo_id" class="form-control" id="texto_activos"
+        <textarea name="activos" class="form-control" id="texto_activos"
             required></textarea>
     </div>
 

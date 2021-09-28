@@ -91,7 +91,7 @@
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
-                                <input class="form-control" name="fecha_cierre" value={{ $riesgos->fecha_cierre }}
+                                <input class="form-control" name="fecha_cierre" value="{{ $riesgos->fecha_cierre }}"
                                     id="solucion" type="datetime">
                             </div>
                             <div class="mt-2 form-group col-4">

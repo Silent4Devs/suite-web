@@ -3,200 +3,376 @@
 
     {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
 
-    <div class="mt-4 card">
-        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Acción Correctiva </h3>
-        </div>
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
+@endsection
 
-        @include('layouts.errors')
-        @include('flash::message')
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Acción Correctiva </h3>
+    </div>
+    @include('layouts.errors')
+    @include('flash::message')
+    <div class="card-body">
 
-        <div class="card-body">
-            <div class="container">
-                <div class="row">
+        <div class="container">
+            <div class="row">
 
-                    <div class="mt-5 col-md-12">
-                        <a class="btn btn-danger" data-toggle="collapse" onclick="closetabcollap1()" id="acollapseExample"
-                            href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            Acción Correctiva
-                        </a>
-                        <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap2()" id="acollapseplan"
-                            href="#collapseplan" role="button" aria-expanded="false" aria-controls="collapseplan">
-                            Análisis de causa raíz
-                        </a>
-                        <a class="btn btn-primary show" data-toggle="collapse" onclick="closetabcollap3()"
-                            id="acollapseactividad" href="#collapseactividad" role="button" aria-expanded="false"
-                            aria-controls="collapseactividad">
-                            Plan de acción
-                        </a>
-                        @if (empty($tab))
-                            <div class="collapse show" id="collapseExample">
-                                <div class="card card-body">
-                                    <div id="test-nl-1" class="content">
-                                        @include('admin.accionCorrectivas.editform1')
+                <div class="caja_botones_menu">
+                    <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-diagnoses"
+                            style="font-size:30px;" style="text-decoration:none;"></i>Acción Correctiva</a>
+                    <a href="#" data-tabs="contenido2"><i class="mr-2 fab fa-medapps" style="font-size:30px;"
+                            style="text-decoration:none;"></i> Ánalisis de causa raíz</a>
+                    <a href="#" data-tabs="contenido3"><i class="mr-2 fas fa-file-alt" style="font-size:30px;"
+                            style="text-decoration:none;"></i>Plan de acción</a>
+                </div>
 
-                                        <a class="btn btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
-                                            role="button">
-                                            Siguiente
-                                        </a>
-                                    </div>
+
+                {{-- <button id="acollapseExample" data-toggle="collapse" onclick="closetabcollap1()"
+                            data-target="#collapseExample" class="btn btn-danger">Acción Correctiva</button>
+                        <button id="acollapseplan" data-toggle="collapse" onclick="closetabcollap2()"
+                            data-target="#collapseplan" class="btn btn-primary">Análisis de causa raíz</button>
+                        <button id="acollapseactividad" data-toggle="collapse" onclick="" data-target="#"
+                            class="btn btn-primary">Plan de acción</button> --}}
+                <div class="caja_caja_secciones">
+                    <div class="caja_secciones">
+
+                        <section id="contenido1" class="caja_tab_reveldada">
+                            <div>
+
+                                <div id="test-nl-1" class="mt-5 content">
+                                    @include('admin.accionCorrectivas.editform1')
+
+                                </div>
+
+                            </div>
+                        </section>
+
+                        <section id="contenido2">
+                            <div>
+                                <div class="mt-5 ml-2">
+                                    @include('admin.accionCorrectivas.editform2')
                                 </div>
                             </div>
-                        @else
-                            <div class="collapse show" id="collapseExample">
-                                <div class="card card-body">
-                                    <div id="test-nl-1" class="content">
-                                        @include('admin.accionCorrectivas.editform1')
+                        </section>
 
-                                        <a class="btn btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
-                                            role="button">
-                                            Siguiente
-                                        </a>
-                                    </div>
-                                </div>
+                        <section id="contenido3">
+                            <div>
+                                @include('admin.accionCorrectivas.editform3')
                             </div>
-                        @endif
-                        <div class="collapse" id="collapseplan">
-                            <div class="card card-body">
-                                @include('admin.accionCorrectivas.editform2')
-                            </div>
-                        </div>
-                        @if (empty($tab))
-                            <div class="collapse" id="collapseactividad">
-                                <div class="card card-body">
-                                    @include('admin.accionCorrectivas.edit_planaccion')
-                                </div>
-                            @else
-                                <div class="collapse show" id="collapseactividad">
-                                    <div class="card card-body">
-                                        @include('admin.accionCorrectivas.edit_planaccion')
-                                    </div>
-                                </div>
-                        @endif
+                        </section>
+
                     </div>
                 </div>
 
 
             </div>
-        </div>
 
-
-    </div>
-
-@endsection
-
-
-@section('scripts')
-    <script>
-        $("#acollapseExample").click(function() {
-
-            $("#acollapseExample").removeClass('btn btn-primary').addClass("btn btn-danger");
-            $("#acollapseplan").removeClass('btn btn-danger').addClass("btn btn-primary");
-            $("#acollapseactividad").removeClass('btn-danger').addClass("btn-primary");
-        });
-
-        $("#acollapseplan").click(function() {
-            $("#acollapseExample").removeClass('btn btn-danger').addClass("btn btn-primary");
-            $(this).toggleClass("btn btn-danger");
-            $("#acollapseplan").removeClass('btn btn-primary').addClass("btn btn-danger");
-            $("#acollapseactividad").removeClass('btn-danger').addClass("btn-primary");
-        });
-        $("#nextcollapseForm1").click(function() {
-            $("#acollapseExample").removeClass('btn btn-danger').addClass("btn btn-primary");
-            $("#acollapseplan").removeClass('btn btn-primary').addClass("btn btn-danger");
-            $("#acollapseactividad").removeClass('btn-danger').addClass("btn-primary");
-
-        });
-
-        $("#acollapseactividad").click(function() {
-            $("#acollapseExample").removeClass('btn-danger').addClass("btn-primary");
-            $("#acollapseplan").removeClass('btn-danger').addClass("btn-primary");
-            $("#acollapseactividad").removeClass('btn-primary').addClass("btn-danger");
-        });
+        @endsection
 
 
 
-        function closetabcollap1() {
-            $('#collapseExample').collapse('show');
-            $('#collapseplan').collapse('hide');
-            $('#collapseactividad').collapse('hide');
-        }
-
-        function closetabcollap1next() {
-            $('#collapseExample').collapse('hide');
-            $('#collapseplan').collapse('show');
-            $('#collapseactividad').collapse('hide');
-        }
-
-        function closetabcollap2() {
-            $('#collapseExample').collapse('hide');
-            $('#collapseplan').collapse('show');
-            $('#collapseactividad').collapse('hide');
-        }
-
-        function closetabcollap3() {
-            $('#collapseExample').collapse('hide');
-            $('#collapseplan').collapse('hide');
-            $('#collapseactividad').collapse('show');
-        }
-
-    </script>
-    <script>
-        var uploadedDocumentomeToDoMap = {}
-        Dropzone.options.documentometodoDropzone = {
-            url: "{{ route('admin.accion-correctivas.storeMedia') }}",
-            maxFilesize: 4, // MB
-            maxFiles: 1,
-            addRemoveLinks: true,
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            params: {
-                size: 4
-            },
-            success: function(file, response) {
-                $('form').append('<input type="hidden" name="documentometodo[]" value="' + response.name + '">')
-                uploadedDocumentomeToDoMap[file.name] = response.name
-            },
-            removedfile: function(file) {
-                file.previewElement.remove()
-                var name = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
-                } else {
-                    name = uploadedDocumentomeToDoMap[file.name]
+        @section('scripts')
+            <script type="text/javascript">
+                const formatDate = (current_datetime) => {
+                    let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+                        current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+                        ":" + current_datetime.getSeconds();
+                    return formatted_date;
                 }
-                $('form').find('input[name="documentometodo[]"][value="' + name + '"]').remove()
-            },
-            init: function() {
-                @if (isset($accionCorrectiva) && $accionCorrectiva->documentometodo)
-                    var files =
-                    {!! json_encode($accionCorrectiva->documentometodo) !!}
-                    for (var i in files) {
-                    var file = files[i]
-                    this.options.addedfile.call(this, file)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form').append('<input type="hidden" name="documentometodo[]" value="' + file.file_name + '">')
+
+                function cambioOpciones() {
+                    var combo = document.getElementById('opciones');
+                    var opcion = combo.value;
+                    if (opcion == "cerrado") {
+                        var fecha = new Date();
+                        document.getElementById('solucion').value = formatDate(fecha);
+                    } else {
+                        document.getElementById('solucion').value = "";
                     }
-                @endif
-            },
-            error: function(file, response) {
-                if ($.type(response) === 'string') {
-                    var message = response //dropzone sends it's own error messages in string
-                } else {
-                    var message = response.errors.file
-                }
-                file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
-                    _results.push(node.textContent = message)
                 }
 
-                return _results
-            }
-        }
+                function cambioOpciones() {
+                    var combo = document.getElementById('opciones');
+                    var opcion = combo.value;
+                    if (opcion == "cerrado") {
+                        var fecha = new Date();
+                        document.getElementById('solucion').value = fecha.toISOString();
+                    } else {
+                        document.getElementById('solucion').value = "";
+                    }
+                }
 
-    </script>
-@endsection
+                document.addEventListener('DOMContentLoaded', function() {
+                    let select_activos = document.querySelector('.areas_multiselect #activos');
+                    select_activos.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let texto_activos = document.querySelector('.areas_multiselect #texto_activos');
+
+                        texto_activos.value += `${this.value}, `;
+
+                    });
+                });
+                document.addEventListener('DOMContentLoaded', function() {
+                    let select_activos = document.querySelector('.procesos_multiselect #activos');
+                    select_activos.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let texto_activos = document.querySelector(
+                            '.procesos_multiselect #texto_activos');
+
+                        texto_activos.value += `${this.value}, `;
+
+                    });
+                });
+                document.addEventListener('DOMContentLoaded', function() {
+                    let select_activos = document.querySelector('.activos_multiselect #activos');
+                    select_activos.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let texto_activos = document.querySelector(
+                            '.activos_multiselect #texto_activos');
+
+                        texto_activos.value += `${this.value}, `;
+
+                    });
+                });
+            </script>
+            <script type="text/javascript">
+                $(document).on('change', '#select_metodos', function(event) {
+                    $(".caja_oculta_dinamica").removeClass("d-block");
+                    var metodo_v = $("#select_metodos option:selected").attr('data-metodo');
+                    $(document.getElementById(metodo_v)).addClass("d-block");
+                });
+            </script>
+
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    window.tbl_plan = $("#tabla_plan_accion").DataTable({
+                        ajax: "{{ route('admin.desk-seguridad-actividades.index', $accionCorrectiva->id) }}",
+                        buttons: [],
+                        columns: [{
+                                data: 'id'
+                            },
+                            {
+                                data: 'actividad'
+                            },
+                            {
+                                data: 'fecha_inicio'
+                            },
+                            {
+                                data: 'fecha_fin'
+                            },
+                            {
+                                data: 'prioridad'
+                            },
+                            {
+                                data: 'tipo'
+                            },
+                            {
+                                data: 'id',
+                                render: function(data, type, row, meta) {
+                                    let lista = '<ul>';
+                                    row.responsables.forEach(responsable => {
+                                        lista += `<li>${responsable.name}</li>`;
+                                    })
+                                    lista += '</ul>';
+
+                                    return lista;
+                                }
+                            },
+                            {
+                                data: 'comentarios'
+                            },
+                        ]
+                    });
+                });
+            </script>
+
+            <script type="text/javascript">
+                $(".btn_modal_form").click(function() {
+                    $(".modal_form_plan").addClass("modal_vista_plan");
+                    $(".select2").select2({
+                        theme: 'bootstrap4'
+                    });
+                });
+                $(".modal_form_plan .btn.btn_cancelar").click(function() {
+                    $(".modal_form_plan").removeClass("modal_vista_plan");
+                });
+
+                $(".fondo_modal").click(function() {
+                    $(".modal_form_plan").removeClass("modal_vista_plan");
+                });
+
+                $(".btn_enviar_form_modal").click(function(e) {
+                    e.preventDefault();
+                    let datos = $('#form_plan_accion').serialize();
+                    let url = document.getElementById('form_plan_accion').getAttribute('action')
+
+                    $.ajax({
+                        type: "post",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: url,
+                        data: datos,
+                        beforeSend: function() {
+                            toastr.info('Validando y Guardando');
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $(".modal_form_plan").removeClass("modal_vista_plan");
+                                tbl_plan.ajax.reload();
+                                limpiarCampos();
+                                Swal.fire('Actividad Creada', 'La actividad ha sido creada con éxito',
+                                    'success');
+                            }
+                        },
+                        error: function(request, status, error) {
+                            document.querySelectorAll('.errors').forEach(error => {
+                                error.innerHTML = "";
+                            });
+                            $.each(request.responseJSON.errors, function(indexInArray, valueOfElement) {
+                                console.log(valueOfElement, indexInArray);
+                                $(`span.error_${indexInArray}`).text(valueOfElement[0]);
+
+                            });
+                        }
+                    });
+                });
+
+
+                function limpiarCampos() {
+
+                    document.getElementById('actividad').value = "";
+                    document.getElementById('fecha_inicio').value = "";
+                    document.getElementById('fecha_fin').value = "";
+                    document.getElementById('prioridad').value = "";
+                    document.getElementById('tipo').value = "";
+                    document.getElementById('responsables').value = "";
+                    document.getElementById('comentarios').value = "";
+
+                }
+            </script>
+
+            <script type="text/javascript">
+                $(document).on('change', '#select_categoria', function(event) {
+                    $("#select_subcategorias option").addClass("d-none");
+                    var categoria_selected = $("#select_categoria option:selected").attr('id');
+                    $(document.getElementsByClassName(categoria_selected)).removeClass("d-none");
+                });
+            </script>
+
+            <script type="text/javascript">
+                var prioridad = 0;
+                var impacto = 0;
+                var urgencia = 0;
+                var prioridad_nombre = '';
+
+                urgencia = new Number($('#select_urgencia option:selected').attr('data-urgencia'));
+                impacto = new Number($('#select_impacto option:selected').attr('data-impacto'));
+                prioridad = urgencia + impacto;
+                if (prioridad <= 2) {
+                    prioridad_nombre = 'Baja';
+                }
+                if (prioridad >= 3) {
+                    prioridad_nombre = 'Media';
+                }
+                if (prioridad >= 5) {
+                    prioridad_nombre = 'Alta';
+                }
+                $("#prioridad").html(prioridad_nombre);
+
+
+
+                $(document).on('change', '#select_urgencia', function(event) {
+                    urgencia = new Number($('#select_urgencia option:selected').attr('data-urgencia'));
+
+                    prioridad = urgencia + impacto;
+
+
+
+                    if (prioridad <= 2) {
+                        prioridad_nombre = 'Baja';
+                    }
+                    if (prioridad >= 3) {
+                        prioridad_nombre = 'Media';
+                    }
+                    if (prioridad >= 5) {
+                        prioridad_nombre = 'Alta';
+                    }
+
+                    $("#prioridad").html(prioridad_nombre);
+                });
+                $(document).on('change', '#select_impacto', function(event) {
+                    impacto = new Number($('#select_impacto option:selected').attr('data-impacto'));
+
+                    prioridad = urgencia + impacto;
+
+                    if (prioridad <= 2) {
+                        prioridad_nombre = 'Baja';
+                    }
+                    if (prioridad >= 3) {
+                        prioridad_nombre = 'Media';
+                    }
+                    if (prioridad >= 5) {
+                        prioridad_nombre = 'Alta';
+                    }
+
+                    $("#prioridad").html(prioridad_nombre);
+                });
+            </script>
+
+            <script>
+                const formatDate = (current_datetime) => {
+                    let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+                        current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+                        ":" + current_datetime.getSeconds();
+                    return formatted_date;
+                }
+
+                function cambioOpciones() {
+                    var combo = document.getElementById('opciones');
+                    var opcion = combo.value;
+                    if (opcion == "cerrado") {
+                        var fecha = new Date();
+                        document.getElementById('solucion').value = formatDate(fecha);
+                    } else {
+                        document.getElementById('solucion').value = "";
+                    }
+                }
+            </script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function(e) {
+
+                    let reporto = document.querySelector('#id_reporto');
+                    let area_init = reporto.options[reporto.selectedIndex].getAttribute('data-area');
+                    let puesto_init = reporto.options[reporto.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('reporto_puesto').innerHTML = puesto_init
+                    document.getElementById('reporto_area').innerHTML = area_init
+
+                    let registro = document.querySelector('#id_registro');
+                    let area = registro.options[registro.selectedIndex].getAttribute('data-area');
+                    let puesto = registro.options[registro.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('registro_puesto').innerHTML = puesto
+                    document.getElementById('registro_area').innerHTML = area
+
+
+                    reporto.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let area = this.options[this.selectedIndex].getAttribute('data-area');
+                        let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                        document.getElementById('reporto_puesto').innerHTML = puesto
+                        document.getElementById('reporto_area').innerHTML = area
+                    })
+                    registro.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let area = this.options[this.selectedIndex].getAttribute('data-area');
+                        let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                        document.getElementById('registro_puesto').innerHTML = puesto
+                        document.getElementById('registro_area').innerHTML = area
+                    })
+
+                });
+            </script>
+
+        @endsection

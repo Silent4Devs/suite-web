@@ -17,10 +17,10 @@
                     <div class="caja_botones_menu">
                         <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-diagnoses"
                                 style="font-size:30px;" style="text-decoration:none;"></i>Acción Correctiva</a>
-                        <a href="#" data-tabs="contenido2"><i class="mr-2 fab fa-medapps" style="font-size:30px;"
+                        {{-- <a href="#" data-tabs="contenido2"><i class="mr-2 fab fa-medapps" style="font-size:30px;"
                                 style="text-decoration:none;"></i> Ánalisis de causa raíz</a>
                         <a href="#" data-tabs="contenido3"><i class="mr-2 fas fa-file-alt" style="font-size:30px;"
-                                style="text-decoration:none;"></i>Plan de acción</a>
+                                style="text-decoration:none;"></i>Plan de acción</a> --}}
                     </div>
 
 
