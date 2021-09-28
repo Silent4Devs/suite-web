@@ -29,12 +29,13 @@
                 </td>
                 <td>
                     <button wire:click="edit({{ $evaluacion->id }})" class="btn btn-info">
-                        <i class="fas fa-pencil-alt"></i>
+                        {{-- <i class="fas fa-pencil-alt"></i> --}}
+                        <i class="fas fa-edit"></i>
                     </button>
 
                 </td>
                 <td>
-                    <button wire:click="delete({{ $evaluacion->id }})" class="btn btn-danger">
+                    <button wire:click="delete({{ $evaluacion->id }})" class="btn" style="background-color:red; color:white; opacity:0.8;">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </td>

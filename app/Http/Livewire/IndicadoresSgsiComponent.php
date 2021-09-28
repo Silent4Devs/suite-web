@@ -78,7 +78,7 @@ class IndicadoresSgsiComponent extends Component
         $this->evaluacion = $evaluaciones->evaluacion;
         $this->fecha = $evaluaciones->fecha;
         //$this->resultado = $evaluaciones->resultado;
-        $this->default();
+        // $this->default();
         $this->view = 'edit';
 
         $this->id_evaluacion = $evaluaciones->id;
