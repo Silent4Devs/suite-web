@@ -377,11 +377,11 @@
                 <div class="mt-4 caja_caja_secciones">
                     <div class="caja_secciones">
                         <section class="caja_tab_reveldada" id="vista_previa" style="color:black;">
-                            
+
 
                                 @include('admin.procesos.vistas.vista_previa')
 
-                            
+
                         </section>
                         <section class="" id="resumen">
 
@@ -403,7 +403,7 @@
                     </div>
                 </div>
 
-            
+
 
                 {{-- <div class="mb-3 ml-5 row caja_btn_a ">
                     <a href="#vista-previa" class="btn_a_seleccionado" style="text-decoration:none;">
@@ -477,7 +477,7 @@
 
 @section('scripts')
 
-    
+
 
     <script>
         $('#myTab a').click(function(e) {
@@ -503,5 +503,13 @@
         $(tab.parentElement).addClass('active');
         $('#myTab a[href="' + hash + '"]').tab('show');
     </script>
+
+<script>
+    $("#riesgos_table").click(function(){
+        // $("#riesgos_table").removeClass("fila_activa");
+        $("#riesgos_table").addclass("fila_activa");
+    });
+
+</script>
 
 @endsection

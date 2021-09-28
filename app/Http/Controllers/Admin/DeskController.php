@@ -283,6 +283,7 @@ class DeskController extends Controller
     }
     public function updateRiesgos(Request $request, $id_riesgos)
     {
+       
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
         $riesgos->update([
             'titulo' => $request->titulo,
