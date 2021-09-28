@@ -3,7 +3,13 @@
     @method('PUT')
     @csrf
 
-    <div class="form-group col-md-8 col-lg-8 col-sm-12">
+    <div class=" form-group col-lg-2 col-md-2 col-sm-12">
+        <label class="form-label"><i
+                class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+        <div class="form-control">{{ $accionCorrectiva->folio }}</div>
+    </div>
+
+    <div class="form-group col-md-6 col-lg-6 col-sm-12">
         <label for="tema"><i class="fas fa-text-width iconos-crear"></i>Título corto del incidente
         </label>
         <input class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" name="tema" id="tema"
@@ -16,21 +22,28 @@
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.tema_helper') }}</span>
     </div>
 
-    <div class="form-group col-md-4 col-lg-4 col-sm-12">
-        <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-        <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
-            <option {{ old('estatus') == 'nuevo' ? 'selected' : '' }} value="nuevo">Nuevo</option>
-            <option {{ old('estatus') == 'en curso' ? 'selected' : '' }} value="en curso">En curso</option>
-            <option {{ old('estatus') == 'en espera' ? 'selected' : '' }} value="en espera">En espera</option>
-            <option {{ old('estatus') == 'cerrado' ? 'selected' : '' }} value="cerrado">Cerrado</option>
-            <option {{ old('estatus') == 'cancelado' ? 'selected' : '' }} value="cancelado">Cancelado</option>
+    <div class="form-group col-4">
+        <label class="form-label"><i
+                class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+        <select name="estatus" class="form-control" id="opciones"
+            onchange='cambioOpciones();'>
+            <option {{ old('estatus', $accionCorrectiva->estatus) == 'nuevo' ? 'selected' : '' }}
+                value="nuevo">Nuevo</option>
+            <option {{ old('estatus', $accionCorrectiva->estatus) == 'en curso' ? 'selected' : '' }}
+                value="en curso">En curso</option>
+            <option {{ old('estatus', $accionCorrectiva->estatus) == 'en espera' ? 'selected' : '' }}
+                value="en espera">En espera</option>
+            <option {{ old('estatus', $accionCorrectiva->estatus) == 'cerrado' ? 'selected' : '' }}
+                value="cerrado">Cerrado</option>
+            <option {{ old('estatus', $accionCorrectiva->estatus) == 'cancelado' ? 'selected' : '' }}
+                value="cancelado">Cancelado</option>
         </select>
     </div>
 
-    <div class="form-group col-sm-6">
-        <label for="fecharegistro"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+    <div class="form-group col-sm-12 col-md-4 col-lg-4 ">
+        <label for="fecharegistro"><i class="far fa-calendar-alt iconos-crear"></i>Fecha y hora de
             registro de la AC</label>
-        <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="date"
+        <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="datetime-local"
             name="fecharegistro" id="fecharegistro"
             value="{{ old('fecharegistro', $accionCorrectiva->fecharegistro) }}">
         @if ($errors->has('fecharegistro'))
@@ -42,8 +55,8 @@
 
 
     <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="fecha_verificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de recepción de la AC</label>
-        <input class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}" type="date"
+        <label for="fecha_verificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha y hora de recepción de la AC</label>
+        <input class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}" type="datetime-local"
             name="fecha_verificacion" id="fecha_verificacion" value="{{ old('fecha_verificacion', $accionCorrectiva->fecha_verificacion) }}">
         @if ($errors->has('fecha_verificacion'))
             <div class="invalid-feedback">
@@ -52,16 +65,12 @@
         @endif
     </div>
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-        <label for="fecha_cierre"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha y
-            hora de cierre del ticket</label>
-        <input class="form-control date {{ $errors->has('fecha_cierre') ? 'is-invalid' : '' }}" type="date"
-            name="fecha_cierre" id="fecha_cierre" value="{{ old('fecha_cierre', $accionCorrectiva->fecha_cierre) }}">
-        @if ($errors->has('fecha_cierre'))
-            <div class="invalid-feedback">
-                {{ $errors->first('fecha_cierre') }}
-            </div>
-        @endif
+    <div class="form-group col-4">
+        <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
+            hora
+            de cierre del ticket</label>
+        <input class="form-control" name="fecha_cierre" value="{{ $accionCorrectiva->fecha_cierre }}"
+            id="solucion" type="datetime">
     </div>
 
 
@@ -76,7 +85,7 @@
             @foreach ($empleados as $id => $empleado)
                 <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                     data-area="{{ $empleado->area->area }}"
-                    {{ old('id_reviso', $$accionCorrectiva->id_reporto) == $empleado->id ? 'selected' : '' }}>
+                    {{ old('id_reporto', $accionCorrectiva->id_reporto) == $empleado->id ? 'selected' : '' }}>
 
                     {{ $empleado->name }}
                 </option>
@@ -188,8 +197,8 @@
                 </option>
             @endforeach
         </select>
-        <textarea name="areas_afectados" class="form-control" id="texto_activos"
-            required>{{ $incidentesSeguridad->areas_afectados }}</textarea>
+        <textarea name="areas" class="form-control" id="texto_activos"
+            required>{{ $accionCorrectiva->areas }}</textarea>
     </div>
 
     <div class="mt-2 form-group col-md-4 procesos_multiselect">
@@ -202,8 +211,8 @@
                 </option>
             @endforeach
         </select>
-        <textarea name="procesos_afectados" class="form-control" id="texto_activos"
-            required>{{ $incidentesSeguridad->procesos_afectados }}</textarea>
+        <textarea name="procesos" class="form-control" id="texto_activos"
+            required>{{ $accionCorrectiva->procesos }}</textarea>
     </div>
 
     <div class="mt-2 form-group col-md-4 activos_multiselect">
@@ -216,18 +225,25 @@
                 </option>
             @endforeach
         </select>
-        <textarea name="activos_afectados" class="form-control" id="texto_activos"
-            required>{{ $incidentesSeguridad->activos_afectados }}</textarea>
+        <textarea name="activos" class="form-control" id="texto_activos"
+            required>{{ $accionCorrectiva->activos }}</textarea>
     </div>
 
     <div class="mt-2 form-group col-md-12">
         <label class="form-label"><i
                 class="fas fa-comment-dots iconos-crear"></i>Comentarios</label>
         <textarea name="comentarios"
-            class="form-control">{{ $incidentesSeguridad->comentarios }}</textarea>
+            class="form-control">{{ $accionCorrectiva->comentarios }}</textarea>
     </div>
 
-
+    <div class="text-right form-group col-12">
+        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+        <button class="btn btn-danger" type="submit" id="btnGuardar">
+            {{ trans('global.save') }}
+        </button>
+        {{-- <button id="form-siguienteaccion" data-toggle="collapse" onclick="closetabcollanext2()" data-target="#collapseplan" class="btn btn-danger">Siguiente</button> --}}
+    </div>
+    
 </form>
 
 

@@ -76,9 +76,10 @@ class AccionCorrectiva extends Model implements HasMedia
         'id_reporto',
         'id_responsable_accion',
         'id_responsable_autorizacion',
-        'area_id',
-        'proceso_id',
-        'activo_id',
+        'areas',
+        'procesos',
+        'activos',
+        'comentarios',
         'fecha_cierre',
         'created_at',
         'updated_at',
@@ -86,11 +87,11 @@ class AccionCorrectiva extends Model implements HasMedia
         'team_id',
     ];
 
-    
+
 
     public function getFolioAttribute()
     {
-        return  sprintf('QUE-%04d', $this->id);
+        return  sprintf('AC-%04d', $this->id);
     }
 
     protected function serializeDate(DateTimeInterface $date)
@@ -186,4 +187,7 @@ class AccionCorrectiva extends Model implements HasMedia
     {
         return $this->belongsTo(Tipoactivo::class, 'activo_id', 'id');
     }
+
+
+
 }

@@ -516,6 +516,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('accion-correctivas/destroy', 'AccionCorrectivaController@massDestroy')->name('accion-correctivas.massDestroy');
     Route::post('accion-correctivas/media', 'AccionCorrectivaController@storeMedia')->name('accion-correctivas.storeMedia');
     Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
+    Route::post('accion-correctivas/{accion}/analisis/store', 'AccionCorrectivaController@storeAnalisis')->name('accion-correctivas.storeAnalisis');
     Route::resource('accion-correctivas', 'AccionCorrectivaController');
     Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
     Route::post('accion-correctivas/editarplan', 'PlanaccionCorrectivaController@update');
