@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use App\Http\Controllers\Frontend\OrganizacionController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 /*
@@ -27,5 +28,13 @@ Route::middleware([
     Route::get('/', function () {
         return view('frontend.home');
     });
-    Route::view('sitemap', 'admin.sitemap.index');
+
+    Route::resource('organizacions', OrganizacionController::class);
+    Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
+    Route::resource('portal-comunicacion', 'PortalComunicacionController');
+    // Organizacions
+    /*Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
+    Route::post('organizacions/media', 'OrganizacionController@storeMedia')->name('organizacions.storeMedia');
+    Route::post('organizacions/ckmedia', 'OrganizacionController@storeCKEditorImages')->name('organizacions.storeCKEditorImages');
+    Route::resource('organizacions', 'OrganizacionController');*/
 });

@@ -873,498 +873,186 @@
 </head>
 
 <body>
-    <div id="app">
-        <nav class="bg-white shadow-sm navbar navbar-expand-md navbar-light">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    @include('partials.menutenant')
+    <div class=" c-wrapper">
+        <header class="px-3 c-header c-header-fixed" style="border: none;">
+            <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
+                data-class="c-sidebar-show">
+                <i class="fas fa-fw fa-bars iconos_cabecera"></i>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="mr-auto navbar-nav">
-                        @guest
-                        @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('frontend.home') }}">
-                                    {{ __('Dashboard') }}
-                                </a>
-                            </li>
-                        @endguest
-                    </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="ml-auto navbar-nav">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="body"
+                data-class="c-sidebar-lg-show" responsive="true">
+                <i id="btnMenu" class="fas fa-fw fa-bars" style=""></i>
+            </button>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                                    <a class="dropdown-item"
-                                        href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
+            <form class="form-inline col-sm-3" style="position: relative;">
 
-                                    @can('organizacion_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.organizacions.index') }}">
-                                            {{ trans('cruds.organizacion.title') }}
-                                        </a>
-                                    @endcan
-                                    {{-- @can('dashboard_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.dashboards.index') }}">
-                                            {{ trans('cruds.dashboard.title') }}
-                                        </a>
-                                    @endcan --}}
-                                    {{-- @can('implementacion_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.implementacions.index') }}">
-                                            {{ trans('cruds.implementacion.title') }}
-                                        </a>
-                                    @endcan --}}
-                                    @can('documentacion_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.documentacion.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('carpetum_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.carpeta.index') }}">
-                                            {{ trans('cruds.carpetum.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('archivo_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.archivos.index') }}">
-                                            {{ trans('cruds.archivo.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('glosario_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.glosarios.index') }}">
-                                            {{ trans('cruds.glosario.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('isoveinticieteuno_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.isoveinticieteuno.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('contexto_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.contexto.title') }}
-                                        </a>
-                                    @endcan
-                                    {{-- @can('entendimiento_organizacion_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.entendimiento-organizacions.index') }}">
-                                            {{ trans('cruds.entendimientoOrganizacion.title') }}
-                                        </a>
-                                    @endcan --}}
-                                    @can('partes_interesada_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.partes-interesadas.index') }}">
-                                            {{ trans('cruds.partesInteresada.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('matriz_requisito_legale_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.matriz-requisito-legales.index') }}">
-                                            {{ trans('cruds.matrizRequisitoLegale.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('alcance_sgsi_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.alcance-sgsis.index') }}">
-                                            {{ trans('cruds.alcanceSgsi.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('liderazgo_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.liderazgo.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('comiteseguridad_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.comiteseguridads.index') }}">
-                                            {{ trans('cruds.comiteseguridad.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('minutasaltadireccion_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.minutasaltadireccions.index') }}">
-                                            {{ trans('cruds.minutasaltadireccion.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('evidencias_sgsi_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.evidencias-sgsis.index') }}">
-                                            {{ trans('cruds.evidenciasSgsi.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('politica_sgsi_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.politica-sgsis.index') }}">
-                                            {{ trans('cruds.politicaSgsi.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('roles_responsabilidade_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.roles-responsabilidades.index') }}">
-                                            {{ trans('cruds.rolesResponsabilidade.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('planificacion_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.planificacion.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('riesgosoportunidade_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.riesgosoportunidades.index') }}">
-                                            {{ trans('cruds.riesgosoportunidade.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('objetivosseguridad_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.objetivosseguridads.index') }}">
-                                            {{ trans('cruds.objetivosseguridad.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('soporte_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.soporte.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('recurso_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.recursos.index') }}">
-                                            {{ trans('cruds.recurso.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('competencium_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.competencia.index') }}">
-                                            {{ trans('cruds.competencium.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('concientizacion_sgi_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.concientizacion-sgis.index') }}">
-                                            {{ trans('cruds.concientizacionSgi.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('material_sgsi_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.material-sgsis.index') }}">
-                                            {{ trans('cruds.materialSgsi.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('material_iso_veinticiente_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.material-iso-veinticientes.index') }}">
-                                            {{ trans('cruds.materialIsoVeinticiente.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('comunicacion_sgi_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.comunicacion-sgis.index') }}">
-                                            {{ trans('cruds.comunicacionSgi.title') }}
-                                        </a>
-                                    @endcan
-                                    {{-- @can('politica_del_sgsi_soporte_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.politica-del-sgsi-soportes.index') }}">
-                                            {{ trans('cruds.politicaDelSgsiSoporte.title') }}
-                                        </a>
-                                    @endcan --}}
-                                    @can('control_acceso_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.control-accesos.index') }}">
-                                            {{ trans('cruds.controlAcceso.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('informacion_documetada_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.informacion-documetadas.index') }}">
-                                            {{ trans('cruds.informacionDocumetada.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('operacion_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.operacion.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('planificacion_control_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.planificacion-controls.index') }}">
-                                            {{ trans('cruds.planificacionControl.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('activo_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.activos.index') }}">
-                                            {{ trans('cruds.activo.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('tratamiento_riesgo_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.tratamiento-riesgos.index') }}">
-                                            {{ trans('cruds.tratamientoRiesgo.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('evaluacion_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.evaluacion.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('indicadores_sgsi_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.indicadores-sgsis.index') }}">
-                                            {{ trans('cruds.indicadoresSgsi.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('incidentes_de_seguridad_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.incidentes-de-seguridads.index') }}">
-                                            {{ trans('cruds.incidentesDeSeguridad.title') }}
-                                        </a>
-                                    @endcan
-                                    {{-- @can('indicadorincidentessi_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.indicadorincidentessis.index') }}">
-                                            {{ trans('cruds.indicadorincidentessi.title') }}
-                                        </a>
-                                    @endcan --}}
-                                    @can('auditoria_anual_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.auditoria-anuals.index') }}">
-                                            {{ trans('cruds.auditoriaAnual.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('plan_auditorium_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.plan-auditoria.index') }}">
-                                            {{ trans('cruds.planAuditorium.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('auditoria_interna_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.auditoria-internas.index') }}">
-                                            {{ trans('cruds.auditoriaInterna.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('revision_direccion_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.revision-direccions.index') }}">
-                                            {{ trans('cruds.revisionDireccion.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('mejora_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.mejora.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('accion_correctiva_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.accion-correctivas.index') }}">
-                                            {{ trans('cruds.accionCorrectiva.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('planaccion_correctiva_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.planaccion-correctivas.index') }}">
-                                            {{ trans('cruds.planaccionCorrectiva.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('registromejora_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.registromejoras.index') }}">
-                                            {{ trans('cruds.registromejora.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('dmaic_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.dmaics.index') }}">
-                                            {{ trans('cruds.dmaic.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('plan_mejora_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.plan-mejoras.index') }}">
-                                            {{ trans('cruds.planMejora.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('isoveintidostresuno_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.isoveintidostresuno.title') }}
-                                        </a>
-                                    @endcan
-                                    {{-- @can('adquirirveintidostrecientosuno_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.adquirirveintidostrecientosunos.index') }}">
-                                            {{ trans('cruds.adquirirveintidostrecientosuno.title') }}
-                                        </a>
-                                    @endcan --}}
-                                    @can('isotreintaunmil_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.isotreintaunmil.title') }}
-                                        </a>
-                                    @endcan
-                                    {{-- @can('adquirirtreintaunmil_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.adquirirtreintaunmils.index') }}">
-                                            {{ trans('cruds.adquirirtreintaunmil.title') }}
-                                        </a>
-                                    @endcan --}}
-                                    @can('user_management_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.userManagement.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('permission_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.permissions.index') }}">
-                                            {{ trans('cruds.permission.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('role_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.roles.index') }}">
-                                            {{ trans('cruds.role.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('user_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.users.index') }}">
-                                            {{ trans('cruds.user.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('controle_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.controles.index') }}">
-                                            {{ trans('cruds.controle.title') }}
-                                        </a>
-                                    @endcan
-                                    {{-- @can('audit_log_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.audit-logs.index') }}">
-                                            {{ trans('cruds.auditLog.title') }}
-                                        </a>
-                                    @endcan --}}
-                                    @can('area_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.areas.index') }}">
-                                            {{ trans('cruds.area.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('organizacione_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.organizaciones.index') }}">
-                                            {{ trans('cruds.organizacione.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('tipoactivo_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.tipoactivos.index') }}">
-                                            {{ trans('cruds.tipoactivo.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('puesto_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.puestos.index') }}">
-                                            {{ trans('cruds.puesto.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('user_alert_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.user-alerts.index') }}">
-                                            {{ trans('cruds.userAlert.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('sede_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.sedes.index') }}">
-                                            {{ trans('cruds.sede.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('enlaces_ejecutar_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.enlaces-ejecutars.index') }}">
-                                            {{ trans('cruds.enlacesEjecutar.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('team_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.teams.index') }}">
-                                            {{ trans('cruds.team.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('estado_incidente_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.estado-incidentes.index') }}">
-                                            {{ trans('cruds.estadoIncidente.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('estatus_plan_trabajo_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.estatus-plan-trabajos.index') }}">
-                                            {{ trans('cruds.estatusPlanTrabajo.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('estado_documento_access')
-                                        <a class="ml-3 dropdown-item"
-                                            href="{{ route('frontend.estado-documentos.index') }}">
-                                            {{ trans('cruds.estadoDocumento.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('plan_base_actividade_access')
-                                        <a class="dropdown-item"
-                                            href="{{ route('frontend.plan-base-actividades.index') }}">
-                                            {{ trans('cruds.planBaseActividade.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('faq_management_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.faqManagement.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('faq_category_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.faq-categories.index') }}">
-                                            {{ trans('cruds.faqCategory.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('faq_question_access')
-                                        <a class="ml-3 dropdown-item" href="{{ route('frontend.faq-questions.index') }}">
-                                            {{ trans('cruds.faqQuestion.title') }}
-                                        </a>
-                                    @endcan
-
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+                {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
+                <input class="form-control buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
+                    autocomplete="off" />
+                <i class="fas fa-spinner fa-pulse d-none" id="buscando" style="margin-left:-45px"></i>
+                <div id="resultados_sugeridos"
+                    style="background-color: #fff; width:150%; position: absolute;top:50px;left:0">
                 </div>
-            </div>
-        </nav>
+            </form>
 
-        <main class="py-4">
-            @if (session('message'))
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+            <ul class="ml-auto c-header-nav">
+                @if (count(config('panel.available_languages', [])) > 1)
+                    <li class="c-header-nav-item dropdown d-md-down-none">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                            aria-expanded="false">
+                            {{ strtoupper(app()->getLocale()) }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            @foreach (config('panel.available_languages') as $langLocale => $langName)
+                                <a class="dropdown-item"
+                                    href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
+                                    ({{ $langName }})</a>
+                            @endforeach
                         </div>
-                    </div>
-                </div>
-            @endif
-            @if ($errors->count() > 0)
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger">
-                                <ul class="mb-0 list-unstyled">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                    </li>
+                @endif
+
+                {{-- @livewire('campana-notificaciones-component')
+                    @livewire('tareas-notificaciones-component')
+                    <ul class="ml-auto c-header-nav">
+                        <li class="px-2 c-header-nav-item c-d-legacy-none">
+                            <div id="btnDark">
+                                <i class="fas fa-moon iconos_cabecera"></i>
+                                </i>
+
+                            </div>
+                        </li>
+                    </ul>
+                    <script>
+                        const btnDark = document.querySelector('#btnDark');
+
+                        btnDark.addEventListener('click', () => {
+                            document.body.classList.toggle('c-dark-theme');
+
+                            if (document.body.classList.contains('c-dark-theme')) {
+                                localStorage.setItem('dark-mode', 'true');
+                            } else {
+                                localStorage.setItem('dark-mode', 'false');
+                            }
+                        });
+
+                        if (localStorage.getItem('dark-mode') === 'true') {
+                            document.body.classList.add('c-dark-theme');
+                        } else {
+                            document.body.classList.remove('c-dark-theme');
+                        }
+                    </script> --}}
+
+
+                <ul class="ml-auto c-header-nav">
+
+                    <li class="c-header-nav-item dropdown show"><a class="c-header-nav-link" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <div class="c-avatar">
+                                <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                {{-- @if (auth()->user()->empleado)
+                                    <img class="rounded-circle" style="height: 37px;clip-path: circle(18px at 50% 50%);"
+                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                        alt="{{ auth()->user()->empleado->name }}">
+                                @else
+                                    <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                @endif --}}
+                            </div>
+                        </a>
+                        <div class="pt-0 mt-3 text-center dropdown-menu dropdown-menu-right hide" style="width:300px;">
+                            <div class="p-2">
+                                <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                {{-- @if (auth()->user()->empleado)
+                                    <img class="shadow rounded-circle"
+                                        style="height: 90px;clip-path: circle(43px at 50% 50%);"
+                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                        alt="" srcset="">
+                                @else
+                                    <i class="fas fa-user-circle iconos_cabecera" style="font-size: 33px;"></i>
+                                @endif --}}
+                            </div>
+                            <div>
+                                {{-- @if (auth()->user()->empleado)
+                                        <p class="m-0" style="font-weight: 600">
+                                            {{ auth()->user()->empleado->name }}
+                                        </p>
+                                        @foreach (auth()->user()->roles as $rol)
+                                            <span class="badge badge-dark"
+                                                style="font-size:13px;">{{ $rol->title }}</span>
+                                        @endforeach
+
+                                    @else
+                                        {{ auth()->user()->name }}
+                                        <span>{{ auth()->user()->empleado->name }}</span>
+                                    @endif --}}
+                            </div>
+                            {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
+                            <div class="px-3 mt-3 d-flex justify-content-between">
+                                @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                                    @can('profile_password_edit')
+
+                                        <a class="btn btn-sm shadow-xs border p-2 rounded {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                                            href="{{ route('profile.password.edit') }}">
+                                            <i class="mr-1 fas fa-user-cog">
+                                            </i>
+                                            Conf. Perfil
+                                        </a>
+
+                                    @endcan
+                                @endif
+                                <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
+                                    <i class="mr-1 fas fa-fw fa-lock">
+                                    </i> Bloquear
+                                </a>
+                                <a class="p-2 border rounded shadow-xs btn btn-sm"
+                                    onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                                    <i class="mr-1 fas fa-sign-out-alt">
+                                    </i> Salir
+                                </a>
                             </div>
                         </div>
-                    </div>
+                    </li>
+
+                </ul>
+            </ul>
+        </header>
+
+        <div class="c-body">
+            <main class="c-main">
+                <div class="container-fluid" id="app">
+                    @if (session('message'))
+                        <div class="mb-2 row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+                            </div>
+                        </div>
+                    @endif
+                    @if ($errors->count() > 0)
+                        <div class="alert alert-danger">
+                            <ul class="list-unstyled">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @yield('content')
+
                 </div>
-            @endif
-            @yield('content')
-        </main>
+            </main>
+            <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
+        </div>
+        <!-- incluir de footer -->
+        {{-- @include('partials.footer') --}}
     </div>
 </body>
+
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -1374,7 +1062,6 @@ integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="ano
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
 </script>
-
 <script src="{{ asset('push/bin/push.min.js') }}"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
     </script> --}}

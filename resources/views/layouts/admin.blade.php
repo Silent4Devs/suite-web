@@ -1021,8 +1021,6 @@
 
     <div class="c-body">
         <main class="c-main">
-
-
             <div class="container-fluid" id="app">
                 @if (session('message'))
                     <div class="mb-2 row">
