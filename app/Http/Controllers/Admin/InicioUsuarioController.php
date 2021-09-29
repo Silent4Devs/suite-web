@@ -140,6 +140,7 @@ class inicioUsuarioController extends Controller
                 $query->where('empleados.id', $empleado->id)->where('archivado', '=', 0);
             })->get();
         }
+
         $contador_recursos = 0;
         if ($usuario->empleado) {
             $contador_recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
