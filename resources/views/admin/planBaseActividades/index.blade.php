@@ -18,43 +18,43 @@
             <table class="table table-bordered w-100 datatable-PlanBaseActividade">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        <th style="max-width: 50px;">
                             {{ trans('cruds.planBaseActividade.fields.id') }}
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Actividad
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Actividad&nbsp;Principal
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Ejecutar
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Guia
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Estatus
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Responsable
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Colaborador
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Fecha&nbsp;inicio
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Fecha&nbsp;fin
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Fecha&nbsp;compromiso
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Fecha&nbsp;real
                         </th>
-                        <th>
+                        <th style="max-width: 150px;">
                             Opciones
                         </th>
                     </tr>
