@@ -69,7 +69,7 @@
                                 <div class="form-control">{{ $denuncias->folio }}</div>
                             </div>
 
-                            <div class="mt-2 form-group col-md-4">
+                            <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                                 <select name="estatus" class="form-control" id="opciones"
@@ -107,8 +107,7 @@
                                     hora
                                     de cierre del ticket</label>
 
-                                <input class="form-control" name="fecha_cierre"
-                                    value="{{ $denuncias->fecha_cierre }}" id="solucion" type="datetime">
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $denuncias->fecha_cierre }}" id="solucion">
 
                             </div>
 
@@ -534,13 +533,20 @@
 
 @section('scripts')
 <script type="text/javascript">
-    function cambioOpciones() {
+        const formatDate = (current_datetime) => {
+        let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+            current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+            ":" + current_datetime.getSeconds();
+        return formatted_date;
+    }
+    function cambioOpciones()
+    {
         var combo = document.getElementById('opciones');
         var opcion = combo.value;
-        if (opcion == "cerrado") {
+        if(opcion == "cerrado"){
             var fecha = new Date();
-            document.getElementById('solucion').value = fecha.toISOString();
-        } else {
+            document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
+        }else{
             document.getElementById('solucion').value = "";
         }
     }

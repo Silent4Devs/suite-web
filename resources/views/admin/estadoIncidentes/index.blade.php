@@ -11,13 +11,13 @@
             <table class="table table-responsive-sm table-sm w-100 datatable-EstadoIncidente">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        <th style="max-width: 50px;">
                             {{ trans('cruds.estadoIncidente.fields.id') }}
                         </th>
                         <th>
                             {{ trans('cruds.estadoIncidente.fields.estado') }}
                         </th>
-                        <th>
+                        <th style="max-width: 100px;">
                             Opciones
                         </th>
                     </tr>

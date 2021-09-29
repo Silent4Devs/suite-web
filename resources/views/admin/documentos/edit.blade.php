@@ -93,9 +93,9 @@
                 @csrf
                 @include('admin.documentos._form')
                 <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
-                <input type="submit" class="btn btn-primary" value="Actualizar">
+                <input type="submit" class="btn btn-danger" value="Actualizar">
                 @can('documentos_publish')
-                    <button id="publicar" class="btn btn-primary">Publicar</button>
+                    <button id="publicar" class="btn btn-danger">Publicar</button>
                 @endcan
             </form>
 

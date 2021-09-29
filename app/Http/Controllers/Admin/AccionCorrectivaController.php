@@ -238,6 +238,9 @@ class AccionCorrectivaController extends Controller
 
         $id = $accionCorrectiva->id;
 
+        $analisis=AnalisisAccionCorrectiva::where('accion_correctiva_id',$accionCorrectiva->id)->first();
+
+
         // $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name','empleados')
         //     ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
         //     ->join('users', 'planaccion_correctivas.responsable_id', '=', 'users.id')
@@ -247,7 +250,7 @@ class AccionCorrectivaController extends Controller
         // dd($accionCorrectiva);
 
 
-        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas','procesos','activos'));
+        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas','procesos','activos','analisis'));
     }
 
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
@@ -315,6 +318,15 @@ class AccionCorrectivaController extends Controller
 
     public function storeAnalisis(Request $request, $accion)
     {
-        $analisis=AnalisisAccionCorrectiva::create($request->all());
+        $exist_accion_id=AnalisisAccionCorrectiva::where('accion_correctiva_id',$accion)->exists();
+        if($exist_accion_id){
+            $analisis=AnalisisAccionCorrectiva::where('accion_correctiva_id',$accion)->first();
+            $analisis->update($request->all());
+        }
+        else{
+            $analisis=AnalisisAccionCorrectiva::create(array_merge($request->all(),['accion_correctiva_id'=>$accion]));
+        }
+        return redirect()->route('admin.accion-correctivas.edit',$accion);
+
     }
 }
