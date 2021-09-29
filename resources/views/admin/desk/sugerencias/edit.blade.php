@@ -62,16 +62,17 @@
                             </div>
 
                             <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Titulo
+                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
                                     corto de
                                     la sugerencia</label>
                                 <input name="titulo" value="{{ $sugerencias->titulo }}" class="form-control">
                             </div>
 
-                            <div class="mt-2 form-group col-4">
+                            <div class="mt-2 form-group col-lg-4 col-sm-12 col-md-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control">
+                                <select name="estatus" class="form-control" id="opciones"
+                                onchange='cambioOpciones();'>
                                     <option {{ old('estatus', $sugerencias->estatus) == 'nuevo' ? 'selected' : '' }}
                                         value="nuevo">Nuevo</option>
                                     <option
@@ -88,18 +89,20 @@
                                 </select>
                             </div>
 
-                            <div class="mt-2 form-group col-6">
+                            <div class="mt-2 form-group col-sm-12 col-lg-6 col-md-6">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de recepción del reporte</label>
                                 <div class="form-control">{{ $sugerencias->created_at }}</div>
                             </div>
 
-                            <div class="mt-2 form-group col-6">
+                            <div class="mt-2 form-group col-sm-12 col-lg-6 col-md-6">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
-                                <div class="form-control">{{ $sugerencias->fecha_cierre }}</div>
+
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $sugerencias->fecha_cierre }}" id="solucion">
+
                             </div>
 
 
@@ -190,25 +193,25 @@
                     <div class="seccion_div">
                         <div class="row">
 
-                        <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
-                            style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
-                            <div class="row w-100">
-                                <div class="text-center col-1 align-items-center d-flex justify-content-center">
-                                    <div class="w-100">
-                                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                            <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
+                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                <div class="row w-100">
+                                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                        <div class="w-100">
+                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-11">
+                                        <p class="m-0"
+                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
+                                            cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
+                                            de lo contrario la información capturada no será guardada.
+                                        </p>
+
                                     </div>
                                 </div>
-                                <div class="col-11">
-                                    <p class="m-0"
-                                        style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
-                                        cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
-                                        de lo contrario la información capturada no será guardada.
-                                    </p>
-
-                                </div>
                             </div>
-                        </div>
 
                             <div class="col-md-4">
                                 Seleccione el metódo de análisis
@@ -449,6 +452,24 @@
 
 @section('scripts')
 <script type="text/javascript">
+    const formatDate = (current_datetime) => {
+        let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+            current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+            ":" + current_datetime.getSeconds();
+        return formatted_date;
+    }
+
+    function cambioOpciones() {
+        var combo = document.getElementById('opciones');
+        var opcion = combo.value;
+        if (opcion == "cerrado") {
+            var fecha = new Date();
+            document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
+        } else {
+            document.getElementById('solucion').value = "";
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         let select_activos = document.querySelector('.multiselect_areas select');
         select_activos.addEventListener('change', function(e) {

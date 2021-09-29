@@ -87,12 +87,13 @@
                                     de recepción del reporte</label>
                                 <div class="form-control">{{ $riesgos->created_at }}</div>
                             </div>
-                            <div class="mt-2 form-group col-4">
+                            <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
-                                <input class="form-control" name="fecha_cierre" value="{{ $riesgos->fecha_cierre }}"
-                                    id="solucion" type="datetime">
+
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $riesgos->fecha_cierre }}" id="solucion">
+
                             </div>
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i>
@@ -541,7 +542,7 @@
         var opcion = combo.value;
         if (opcion == "cerrado") {
             var fecha = new Date();
-            document.getElementById('solucion').value = formatDate(fecha);
+            document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
         } else {
             document.getElementById('solucion').value = "";
         }

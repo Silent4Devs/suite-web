@@ -65,20 +65,15 @@
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                                 <select name="estatus" class="form-control" id="opciones"
                                     onchange='cambioOpciones();'>
-                                    <option
-                                        {{ old('estatus', $quejas->estatus) == 'nuevo' ? 'selected' : '' }}
+                                    <option {{ old('estatus', $quejas->estatus) == 'nuevo' ? 'selected' : '' }}
                                         value="nuevo">Nuevo</option>
-                                    <option
-                                        {{ old('estatus', $quejas->estatus) == 'en curso' ? 'selected' : '' }}
+                                    <option {{ old('estatus', $quejas->estatus) == 'en curso' ? 'selected' : '' }}
                                         value="en curso">En curso</option>
-                                    <option
-                                        {{ old('estatus', $quejas->estatus) == 'en espera' ? 'selected' : '' }}
+                                    <option {{ old('estatus', $quejas->estatus) == 'en espera' ? 'selected' : '' }}
                                         value="en espera">En espera</option>
-                                    <option
-                                        {{ old('estatus', $quejas->estatus) == 'cerrado' ? 'selected' : '' }}
+                                    <option {{ old('estatus', $quejas->estatus) == 'cerrado' ? 'selected' : '' }}
                                         value="cerrado">Cerrado</option>
-                                    <option
-                                        {{ old('estatus', $quejas->estatus) == 'cancelado' ? 'selected' : '' }}
+                                    <option {{ old('estatus', $quejas->estatus) == 'cancelado' ? 'selected' : '' }}
                                         value="cancelado">Cancelado</option>
                                 </select>
                             </div>
@@ -102,7 +97,7 @@
                                     hora
                                     de cierre del ticket</label>
 
-                                    <input class="form-control"  name="fecha_cierre" value="{{ $quejas->fecha_cierre }}" id="solucion">
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $quejas->fecha_cierre }}" id="solucion">
 
                             </div>
 
@@ -591,8 +586,6 @@
 @section('scripts')
 
 <script type="text/javascript">
-
-
     const formatDate = (current_datetime) => {
         let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
             current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +

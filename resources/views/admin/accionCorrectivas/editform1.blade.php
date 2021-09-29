@@ -40,12 +40,13 @@
         </select>
     </div>
 
+
     <div class="form-group col-sm-12 col-md-4 col-lg-4 ">
         <label for="fecharegistro"><i class="far fa-calendar-alt iconos-crear"></i>Fecha y hora de
             registro de la AC</label>
         <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="datetime-local"
             name="fecharegistro" id="fecharegistro"
-            value="{{ old('fecharegistro', $accionCorrectiva->fecharegistro) }}">
+            value="{{ old('fecharegistro',\Carbon\Carbon::parse($accionCorrectiva->fecharegistro)->format('Y-m-d\TH:i')) }}">
         @if ($errors->has('fecharegistro'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecharegistro') }}
@@ -57,7 +58,7 @@
     <div class="form-group col-sm-12 col-md-4 col-lg-4">
         <label for="fecha_verificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha y hora de recepción de la AC</label>
         <input class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}" type="datetime-local"
-            name="fecha_verificacion" id="fecha_verificacion" value="{{ old('fecha_verificacion', $accionCorrectiva->fecha_verificacion) }}">
+            name="fecha_verificacion" id="fecha_verificacion"  value="{{ old('fecha_verificacion',\Carbon\Carbon::parse($accionCorrectiva->fecha_verificacion)->format('Y-m-d\TH:i')) }}">
         @if ($errors->has('fecha_verificacion'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecha_verificacion') }}
@@ -243,7 +244,7 @@
         </button>
         {{-- <button id="form-siguienteaccion" data-toggle="collapse" onclick="closetabcollanext2()" data-target="#collapseplan" class="btn btn-danger">Siguiente</button> --}}
     </div>
-    
+
 </form>
 
 

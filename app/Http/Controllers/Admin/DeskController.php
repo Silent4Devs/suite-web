@@ -283,7 +283,7 @@ class DeskController extends Controller
     }
     public function updateRiesgos(Request $request, $id_riesgos)
     {
-       
+
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
         $riesgos->update([
             'titulo' => $request->titulo,
@@ -371,6 +371,7 @@ class DeskController extends Controller
             'procesos_quejado' => $request->procesos_quejado,
             'externo_quejado' => $request->externo_quejado,
             'comentarios' => $request->comentarios,
+            'fecha_cierre'=>$request->fecha_cierre
         ]);
 
 
@@ -437,6 +438,7 @@ class DeskController extends Controller
             'area_denunciado' => $request->area_denunciado,
             'tipo' => $request->tipo,
             'estatus' => $request->estatus,
+            'fecha_cierre'=>$request->fecha_cierre
         ]);
 
 
