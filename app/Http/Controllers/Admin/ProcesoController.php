@@ -188,7 +188,7 @@ class ProcesoController extends Controller
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
         $indicadores = IndicadoresSgsi::get();
         $riesgos = MatrizRiesgo::get();
-        //dd($indicadores::getResultado());
+        // dd($indicadores::getResultado());
 
         return view('admin.procesos.vistas', compact('documento', 'revisiones', 'documentos_relacionados', 'versiones', 'indicadores', 'riesgos'));
     }
@@ -210,7 +210,7 @@ class ProcesoController extends Controller
 
         $porcentaje = number_format(($input['resultado']*100)/$input['meta'] , 2);
 
-        return response()->json(["gauge" => $res, "barraschart" => $barras, "datosbarra" => $evaluaciones, 'datos' => $input, 'unidad' => $unidad, 'porcentaje' => $porcentaje], 200);
+        return response()->json(["gauge" => $res, "barraschart" => $barras, "datosbarra" => $evaluaciones,'datos' => $input, 'unidad' => $unidad, 'porcentaje' => $porcentaje], 200);
     }
 
     public function AjaxRequestRiesgos(Request $request)

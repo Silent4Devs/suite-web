@@ -71,7 +71,7 @@
                                         @else
                                             <span class="dotred"></span>
                                     @endif
-                                    {{ $i . $indicador->unidadmedida }}
+                                    {{ $i }}
                                 </td>
                                 <td>{{ $indicador->meta }}</td>
                             </tr>
@@ -164,7 +164,11 @@
                 //speedometer
                 // Element inside which you want to see the chart
                 let element = document.querySelector('#resultado')
-                // console.log(element);
+                let limiteInf = parseInt(data.datos.amarillo);
+                console.log(limiteInf);
+                let limiteSup = parseInt(data.datos.verde);
+                console.log(limiteSup);
+
                 // Properties of the gauge
                 let gaugeOptions = {
                     hasNeedle: true,
@@ -172,12 +176,12 @@
                     needleStartValue: 0,
                     needleUpdateSpeed: 1000,
                     arcColors: ["rgb(255,84,84)", "rgb(239,214,19)", "rgb(61,204,91)"],
-                    arcDelimiters: [30, 70],
-                    rangeLabel: ['0', '100'],
-                    centralLabel: data.porcentaje,
+                    arcDelimiters: [limiteInf, limiteSup],
+                    rangeLabel: ['0', data.datos.meta],
+                    centralLabel: data.datos.resultado,
                 }
 
-                    GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(data.porcentaje);
+                    GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(data.datos.resultado);
                 
                 console.log(data.datos.resultado);
                 var ctx = document.getElementById("resultadobarra");
