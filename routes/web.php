@@ -513,6 +513,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('plan-auditoria', 'PlanAuditoriaController');
 
     // Accion Correctivas
+    Route::get('accion-correctiva-actividades/{accion_correctiva_id}', 'ActividadAccionCorrectivaController@index')->name('accion-correctiva-actividades.index');
+    Route::resource('accion-correctiva-actividades', 'ActividadAccionCorrectivaController')->except(['index']);
     Route::delete('accion-correctivas/destroy', 'AccionCorrectivaController@massDestroy')->name('accion-correctivas.massDestroy');
     Route::post('accion-correctivas/media', 'AccionCorrectivaController@storeMedia')->name('accion-correctivas.storeMedia');
     Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
@@ -522,6 +524,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('accion-correctivas/editarplan', 'PlanaccionCorrectivaController@update');
     Route::post('plan-correctivas-storeedit', 'PlanaccionCorrectivaController@storeEdit');
     Route::post('planaccion-storered', 'PlanaccionCorrectivaController@storeRedirect')->name('storered');
+
 
 
     // Ajax
