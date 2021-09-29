@@ -94,7 +94,7 @@
             <tr>
                 {{-- <th>ID</th> --}}
                 <th>Folio</th>
-                <th>Titulo</th>
+                <th>Título</th>
                 <th>Sede</th>
                 <th>Ubicación</th>
                 <th style="min-width: 500px;">Descripción</th>
@@ -127,8 +127,8 @@
 	       			<td>{{ $incidentes->activos_afectados }}</td>
 	       			<td>{{ $incidentes->fecha }}</td>
 	       			<td>{{ $incidentes->reporto->name }}</td>
-	       			<td>{{ $incidentes->reporto->email }}</td> 
-	       			<td>{{ $incidentes->reporto->telefono }}</td> 
+	       			<td>{{ $incidentes->reporto->email }}</td>
+	       			<td>{{ $incidentes->reporto->telefono }}</td>
 	       			<td>{{ $incidentes->categoria }}</td>
 	       			<td>{{ $incidentes->clacificacion }}</td>
 	       			<td>{{ $incidentes->prioridad }}</td>
@@ -189,7 +189,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -392,7 +392,7 @@
 
                     //     url: url,
 
-                    //     data: { 
+                    //     data: {
                     //     	_token: '{{ csrf_token() }}'
                     //     },
 

@@ -193,7 +193,7 @@
                         </div>
                         <div class="modal-footer">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                            <button type="button" id="finalizarPublicacion" class="btn btn-primary">Enviar</button>
+                            <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
                         </div>
                     </div>
                 </div>

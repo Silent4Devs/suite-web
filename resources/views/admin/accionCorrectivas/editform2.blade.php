@@ -6,8 +6,12 @@
             action="{{ route('admin.accion-correctivas.storeAnalisis', $accionCorrectiva->id) }}">
             @csrf
 
+            <div class="mb-1 text-primary ">
+              <strong style="font-size:13pt;">Folio: {{ $accionCorrectiva->folio }}</strong>
+            </div>
+
             <div class="row">
-                <div class="col-md-4">
+                <div class="mt-3 col-md-4">
                     Seleccione el metódo de análisis
                 </div>
                 <div class="col-md-8">

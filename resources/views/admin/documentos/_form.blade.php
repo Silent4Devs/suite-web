@@ -165,7 +165,7 @@
     </div>
     <div class="col-sm-12 col-lg-2">
         <div class="form-group">
-            <label for="version">Version:</label>
+            <label for="version">Versión:</label>
             <p class="m-0"
                 style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669">
                 {{ $documentoActual->version == null ? '1' : intval($documentoActual->version) }}</p>
