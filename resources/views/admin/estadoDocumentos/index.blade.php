@@ -11,16 +11,16 @@
             <table class="table table-bordered w-100 datatable-EstadoDocumento">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        <th style="max-width: 50px;">
                             {{ trans('cruds.estadoDocumento.fields.id') }}
                         </th>
-                        <th>
+                        <th style="min-width: 250px;">
                             {{ trans('cruds.estadoDocumento.fields.estado') }}
                         </th>
-                        <th>
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.estadoDocumento.fields.descripcion') }}
                         </th>
-                        <th>
+                        <th style="max-width: 150px;">
                             Opciones
                         </th>
                     </tr>
