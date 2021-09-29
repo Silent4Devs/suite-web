@@ -12,16 +12,16 @@
             <table class="table table-bordered w-100 datatable-EstatusPlanTrabajo">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        <th style="max-width: 50px;">
                             {{ trans('cruds.estatusPlanTrabajo.fields.id') }}
                         </th>
-                        <th>
+                        <th style="min-width: 250px;">
                             {{ trans('cruds.estatusPlanTrabajo.fields.estado') }}
                         </th>
-                        <th>
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.estatusPlanTrabajo.fields.descripcion') }}
                         </th>
-                        <th>
+                        <th style="max-width: 150px;">
                             Opciones
                         </th>
                     </tr>
