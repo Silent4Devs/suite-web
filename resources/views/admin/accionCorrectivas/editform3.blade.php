@@ -1,3 +1,37 @@
+
+
+                        <div class="seccion_div">
+                            <div class="" style=" position: relative; ">
+                                <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
+                                <button style="position:absolute; right: 2px; top:2px;"
+                                    class="btn btn-success btn_modal_form">Agregar actividad</button>
+                                {{-- @if (count($accionCorrectiva->planes))
+                                    <a style="position:absolute; right: 170px; top:2px;"
+                                        href="{{ route('admin.planes-de-accion.show', $accionCorrectiva->planes->first()->id) }}"
+                                        class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
+                                        Acción</a>
+                                @endif --}}
+                            </div>
+                            <div class="mt-4 datatable-fix" style="width: 100%;">
+                                <table id="tabla_plan_accion" class="table w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Actividad</th>
+                                            <th>Fecha&nbsp;de&nbsp;inicio</th>
+                                            <th>Fecha&nbsp;de&nbsp;fin</th>
+                                            <th>Prioridad</th>
+                                            <th>Tipo</th>
+                                            <th>Responsable(s)</th>
+                                            <th>Comentarios</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
                         <div class="modal_form_plan">
                             <div class="fondo_modal"></div>
                             <form class="card" id="form_plan_accion" method="POST"
