@@ -58,10 +58,6 @@
             --}}
             <div class="form-group">
                 <label class="required" for="roles"><i class="fas fa-briefcase iconos-crear"></i>{{ trans('cruds.user.fields.roles') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
                 <select class="form-control select2 {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="roles[]" id="roles" multiple required>
                     @foreach($roles as $id => $roles)
                         <option value="{{ $id }}" {{ (in_array($id, old('roles', [])) || $user->roles->contains($id)) ? 'selected' : '' }}>{{ $roles }}</option>
@@ -74,65 +70,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
             </div>
-            {{--
-            <div class="form-group">
-                <label for="organizacion_id">{{ trans('cruds.user.fields.organizacion') }}</label>
-                <select class="form-control select2 {{ $errors->has('organizacion') ? 'is-invalid' : '' }}" name="organizacion_id" id="organizacion_id">
-                    @foreach($organizacions as $id => $organizacion)
-                        <option value="{{ $id }}" {{ (old('organizacion_id') ? old('organizacion_id') : $user->organizacion->id ?? '') == $id ? 'selected' : '' }}>{{ $organizacion }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('organizacion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('organizacion') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.organizacion_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="area_id">{{ trans('cruds.user.fields.area') }}</label>
-                <select class="form-control select2 {{ $errors->has('area') ? 'is-invalid' : '' }}" name="area_id" id="area_id">
-                    @foreach($areas as $id => $area)
-                        <option value="{{ $id }}" {{ (old('area_id') ? old('area_id') : $user->area->id ?? '') == $id ? 'selected' : '' }}>{{ $area }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('area'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('area') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.area_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="puesto_id">{{ trans('cruds.user.fields.puesto') }}</label>
-                <select class="form-control select2 {{ $errors->has('puesto') ? 'is-invalid' : '' }}" name="puesto_id" id="puesto_id">
-                    @foreach($puestos as $id => $puesto)
-                        <option value="{{ $id }}" {{ (old('puesto_id') ? old('puesto_id') : $user->puesto->id ?? '') == $id ? 'selected' : '' }}>{{ $puesto }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('puesto'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('puesto') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.puesto_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="team_id">{{ trans('cruds.user.fields.team') }}</label>
-                <select class="form-control select2 {{ $errors->has('team') ? 'is-invalid' : '' }}" name="team_id" id="team_id">
-                    @foreach($teams as $id => $team)
-                        <option value="{{ $id }}" {{ (old('team_id') ? old('team_id') : $user->team->id ?? '') == $id ? 'selected' : '' }}>{{ $team }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('team'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('team') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.team_helper') }}</span>
-            </div>
 
-            --}}
             <div class="form-group">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
@@ -143,6 +81,19 @@
     </div>
 </div>
 
+
+
+@endsection
+
+@section('scripts')
+
+    <script>
+        $(document).ready(function() {
+            $("#roles").select2({
+                theme: "bootstrap4",
+            });
+        });
+    </script>
 
 
 @endsection
