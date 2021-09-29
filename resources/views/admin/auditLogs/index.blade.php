@@ -13,22 +13,22 @@
                         <th>
                             {{ trans('cruds.auditLog.fields.id') }}
                         </th>
-                        <th>
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.auditLog.fields.description') }}
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             {{ trans('cruds.auditLog.fields.subject_id') }}
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             {{ trans('cruds.auditLog.fields.subject_type') }}
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             {{ trans('cruds.auditLog.fields.user_id') }}
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             {{ trans('cruds.auditLog.fields.host') }}
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             {{ trans('cruds.auditLog.fields.created_at') }}
                         </th>
                         <th>

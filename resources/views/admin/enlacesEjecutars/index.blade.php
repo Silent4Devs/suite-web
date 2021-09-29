@@ -13,13 +13,13 @@
                         <th>
                             {{ trans('cruds.enlacesEjecutar.fields.id') }}
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             {{ trans('cruds.enlacesEjecutar.fields.ejecutar') }}
                         </th>
-                        <th>
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.enlacesEjecutar.fields.descripcion') }}
                         </th>
-                        <th>
+                        <th style="min-width: 250px;">
                             {{ trans('cruds.enlacesEjecutar.fields.enlace') }}
                         </th>
                         <th>

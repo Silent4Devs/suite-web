@@ -14,7 +14,7 @@
         <tbody>
             @foreach($recursos as $recurso)
             <tr>
-                <td>{{$recurso->cursoscapacitaciones}}</td>
+                <td>{{$recurso->cursoscapacitaciones->nombre}}</td>
                 <td>{{$recurso->categoria_capacitacion_id}}</td>
                 <td>{{$recurso->instructor}}</td>
                 <td>{{$recurso->fecha_curso}}</td>

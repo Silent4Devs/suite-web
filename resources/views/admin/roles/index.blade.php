@@ -13,7 +13,7 @@
             <table class="table table-bordered w-100 datatable datatable-Role">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        <th style="max-width: 50px;">
                             {{ trans('cruds.role.fields.id') }}
                         </th>
                         <th>
@@ -22,7 +22,7 @@
                         {{-- <th>
                             {{ trans('cruds.role.fields.permissions') }}
                         </th> --}}
-                        <th>
+                        <th style="max-width: 100px;">
                             Opciones
                         </th>
                     </tr>
