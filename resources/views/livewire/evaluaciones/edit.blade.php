@@ -11,7 +11,7 @@
                     <span wire:loading.remove wire:target="update">Actualizar</span>
                     {{-- <span wire:loading wire:target="update">Actualizando</span> --}}
                 </button>
-                <button  wire:click="default" class="btn btn-danger rounded">
+                <button  wire:click="default" class="btn btn_cancelar">
                     Cancelar
                 </button>
             </div>

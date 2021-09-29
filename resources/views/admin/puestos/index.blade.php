@@ -28,7 +28,7 @@
                         <th>
                             {{ trans('cruds.puesto.fields.puesto') }}
                         </th>
-                        <th>
+                        <th style="min-width: 500px;">
                             {{ trans('cruds.puesto.fields.descripcion') }}
                         </th>
                         <th>

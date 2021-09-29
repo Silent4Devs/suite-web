@@ -188,7 +188,7 @@ class ProcesoController extends Controller
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
         $indicadores = IndicadoresSgsi::get();
         $riesgos = MatrizRiesgo::get();
-        //dd($indicadores::getResultado());
+        // dd($indicadores::getResultado());
 
         return view('admin.procesos.vistas', compact('documento', 'revisiones', 'documentos_relacionados', 'versiones', 'indicadores', 'riesgos'));
     }
@@ -208,14 +208,17 @@ class ProcesoController extends Controller
             $evaluacion->fecha = Carbon::parse($evaluacion->fecha)->format('d-m-Y');
         }
 
-        return response()->json(["gauge" => $res, "barraschart" => $barras, "datosbarra" => $evaluaciones, 'datos' => $input, 'unidad' => $unidad], 200);
+        $porcentaje = number_format(($input['resultado']*100)/$input['meta'] , 2);
+
+        return response()->json(["gauge" => $res, "barraschart" => $barras, "datosbarra" => $evaluaciones,'datos' => $input, 'unidad' => $unidad, 'porcentaje' => $porcentaje], 200);
     }
 
     public function AjaxRequestRiesgos(Request $request)
     {
         $input = $request->all();
+        
 
-        $data = MatrizRiesgo::select('id', 'descripcionriesgo', 'nivelriesgo', 'nivelriesgo_residual')->where('id', $input['id'])->first();
+        $data = MatrizRiesgo::select('id', 'descripcionriesgo', 'nivelriesgo', 'nivelriesgo_residual', 'meta')->where('id', $input['id'])->first();
 
         $res = '<div id="resultado_riesgos" width="900" height="750"></div>';
 
@@ -226,6 +229,8 @@ class ProcesoController extends Controller
             $evaluacion->fecha = Carbon::parse($evaluacion->fecha)->format('d-m-Y');
         }*/
 
-        return response()->json(["gauge_riesgos" => $res, "barraschart_riesgos" => $barras, "datosbarra_riesgos" => $data, 'datos_riesgos' => $data], 200);
+        return response()->json(["gauge_riesgos" => $res, "barraschart_riesgos" => $barras, "datosbarra_riesgos" => $data, 'datos_riesgos' => $data, "meta_riesgos" => $request->meta ], 200);
+
+
     }
 }

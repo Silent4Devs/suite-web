@@ -26,16 +26,16 @@
             <table class="table table-bordered w-100 datatable-Controle">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        <th style="max-width: 50px;">
                             {{ trans('cruds.controle.fields.id') }}
                         </th>
-                        <th>
+                        <th style="max-width: 50px;">
                             {{ trans('cruds.controle.fields.numero') }}
                         </th>
                         <th>
                             {{ trans('cruds.controle.fields.control') }}
                         </th>
-                        <th>
+                        <th style="max-width: 100px;">
                             Opciones
                         </th>
                     </tr>

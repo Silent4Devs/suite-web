@@ -10,19 +10,19 @@
             <table class="table table-bordered w-100 datatable-FaqQuestion">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        <th style="max-width: 150px;">
                             {{ trans('cruds.faqQuestion.fields.id') }}
                         </th>
-                        <th>
+                        <th style="min-width: 250px;">
                             Categoría
                         </th>
-                        <th>
+                        <th style="min-width: 250px;">
                             Pregunta
                         </th>
-                        <th>
+                        <th style="min-width: 250px;">
                             Respuesta
                         </th>
-                        <th>
+                        <th style="max-width: 150px;">
                             Opciones
                         </th>
                     </tr>
