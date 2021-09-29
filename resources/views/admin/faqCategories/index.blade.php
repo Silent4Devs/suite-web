@@ -12,13 +12,13 @@
             <table class="table table-bordered w-100 datatable-FaqCategory">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
+                        <th style="max-width: 100px;">
                             {{ trans('cruds.faqCategory.fields.id') }}
                         </th>
-                        <th>
+                        <th style="min-width: 400px;">
                             Categoría
                         </th>
-                        <th>
+                        <th style="max-width: 150px;">
                             Opciones
                         </th>
                     </tr>

@@ -29,10 +29,7 @@
         overflow-y: scroll;
     }
 
-    .fila_activa{
-        background-color:#ccc !important;
-
-    }
+    
 
 </style>
 
@@ -50,11 +47,11 @@
                             <th scope="col">Riesgo residual</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="tbody_click">
                         @foreach ($riesgos as $riesgo)
                             <tr class="clickable-row sesioninicio"
                                 onclick='graficasclick_riesgo(event, {{ $riesgo->id }})'>
-                                <td class="fila_activa">{{ $riesgo->id }}</td>
+                                <td>{{ $riesgo->id }}</td>
                                 <td>{{ $riesgo->descripcionriesgo }}</td>
                                 <td>{{ $riesgo->nivelriesgo }}</td>
                                 <td>{{ $riesgo->nivelriesgo_residual }}</td>

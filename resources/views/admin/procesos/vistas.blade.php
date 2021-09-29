@@ -348,6 +348,16 @@
             }
         }
 
+
+
+
+
+
+    .fila_activa{
+        background-color:rgba(0, 255, 246, 0.15) !important;
+
+    }
+
     </style>
 
 
@@ -478,6 +488,13 @@
 @section('scripts')
 
 
+    <script type="text/javascript">
+        
+        $(".tbody_click tr td").click(function(){
+            $(".tbody_click tr").removeClass("fila_activa");
+            $(".tbody_click tr:hover").addClass("fila_activa");
+        });
+    </script>
 
     <script>
         $('#myTab a').click(function(e) {
@@ -504,12 +521,7 @@
         $('#myTab a[href="' + hash + '"]').tab('show');
     </script>
 
-<script>
-    $("#riesgos_table").click(function(){
-        // $("#riesgos_table").removeClass("fila_activa");
-        $("#riesgos_table").addclass("fila_activa");
-    });
 
-</script>
+
 
 @endsection

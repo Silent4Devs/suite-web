@@ -41,37 +41,7 @@
     top: 80px;
 }
 
-.table tr td:nth-child(6){
 
-    max-width:415px !important;
-    width:415px !important;
-
-}
-
-.table tr th:nth-child(6){
-
-    width:415px !important;
-    max-width:415px !important;
-}
-
-.table tr td:nth-child(5){
-
-text-align:justify !important;
-
-
-}
-
-.table tr td:nth-child(10){
-
-    text-align: center;
-
-}
-
-.tamaño{
-
-    width:168px !important;
-
-}
 
 
 
@@ -99,19 +69,19 @@ text-align:justify !important;
                         <th>
                             Tipo&nbsp;de&nbsp;requisito
                         </th>
-                        <th>
+                        <th style="min-width: 250px;">
                             Fundamento
                         </th>
-                        <th>
-                            Apartado&nbsp;@for ($i = 0; $i < 70; $i++)&nbsp;@endfor
+                        <th style="min-width: 250px;">
+                            Apartado&nbsp;
                         </th>
-                        <th>
-                            Requisito(s)&nbsp;a&nbsp;cumplir&nbsp;@for ($i = 0; $i < 80; $i++)&nbsp;@endfor
+                        <th style="min-width: 600px;">
+                            Requisito(s)&nbsp;a&nbsp;cumplir&nbsp;
                         </th>
                         <th>
                             Alcance&nbsp;y&nbsp;grado&nbsp;de&nbsp;aplicabilidad
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Medio&nbsp;de&nbsp;publicación
                         </th>
                         <th>
