@@ -965,3 +965,13 @@ Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
 Route::post('CargaAmenza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
 Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
 Route::post('CargaUsuario', 'SubidaExcel@Usuario')->name('carga-usuario');
+Route::post('CargaPuesto', 'SubidaExcel@Puesto')->name('carga-puesto');
+Route::post('CargaControl', 'SubidaExcel@Control')->name('carga-control');
+Route::post('CargaEjecutarenlace', 'SubidaExcel@Ejecutarenlace')->name('carga-ejecutarenlace');
+Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
+Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
+Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
+Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
+
+
+
