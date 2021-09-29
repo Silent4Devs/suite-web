@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Titulo
+                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
                                     corto de
                                     la mejora</label>
                                 <input type="" name="titulo" value="{{ $mejoras->titulo }}" class="form-control">
@@ -69,7 +69,7 @@
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control">
+                                <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
                                     <option {{ old('estatus', $mejoras->estatus) == 'nuevo' ? 'selected' : '' }}
                                         value="nuevo">Nuevo</option>
                                     <option {{ old('estatus', $mejoras->estatus) == 'en curso' ? 'selected' : '' }}
@@ -83,23 +83,25 @@
                                 </select>
                             </div>
 
-                            <div class="mt-2 form-group col-6">
+                            <div class="mt-2 form-group col-md-6 col-lg-6 col-sm-12">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de recepción del reporte</label>
                                 <div class="form-control">{{ $mejoras->created_at }}</div>
                             </div>
 
-                            <div class="mt-2 form-group col-6">
+                            <div class="mt-2 form-group col-md-6 col-lg-6 col-sm-12">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
-                                <div class="form-control">{{ $mejoras->fecha_cierre }}</div>
+
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $mejoras->fecha_cierre }}" id="solucion">
+
                             </div>
 
 
                             <div class="mt-4 form-group col-12">
-                                <b>Identifico mejora:</b>
+                                <b>Identificó mejora:</b>
                             </div>
 
                             <div class="mt-2 form-group col-4">
@@ -472,6 +474,23 @@
 
 @section('scripts')
 <script type="text/javascript">
+    const formatDate = (current_datetime) => {
+        let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+            current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+            ":" + current_datetime.getSeconds();
+        return formatted_date;
+    }
+
+    function cambioOpciones() {
+        var combo = document.getElementById('opciones');
+        var opcion = combo.value;
+        if (opcion == "cerrado") {
+            var fecha = new Date();
+            document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
+        } else {
+            document.getElementById('solucion').value = "";
+        }
+    }
     $(document).on('change', '#select_metodos', function(event) {
         $(".caja_oculta_dinamica").removeClass("d-block");
         var metodo_v = $("#select_metodos option:selected").attr('data-metodo');

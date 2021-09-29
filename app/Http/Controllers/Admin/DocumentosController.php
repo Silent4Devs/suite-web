@@ -218,6 +218,7 @@ class DocumentosController extends Controller
 
     public function updateDocument(Request $request, Documento $documento, $estatus)
     {
+
         $this->validateRequestUpdate($request, $documento);
         $this->createDocumentosEnAprobacionIfNotExists();
         $path_documentos_aprobacion = $this->pathDocumentsWhenUpdate($request->tipo);
@@ -258,11 +259,11 @@ class DocumentosController extends Controller
             $aprobador = $request->aprobo_id;
         }
 
-        $revisor = $documento->revisor_id;
+        $revisor = $documento->reviso_id;
         if (!$documento->revisor) {
-            $revisor = $request->revisor_id;
+            $revisor = $request->reviso_id;
         }
-
+        // dd($revisor);
         $responsable = $documento->responsable_id;
         if (!$documento->responsable) {
             $responsable = $request->responsable_id;

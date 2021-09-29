@@ -4,16 +4,16 @@
             <th>
                 ID
             </th>
-            <th>
+            <th style="min-width: 200px;">
                 Nombre
             </th>
-            <th>
+            <th style="min-width: 200px;">
                 Amenaza
             </th>
-            <th>
+            <th style="min-width: 500px;">
                 Descripción
             </th>
-            <th>
+            <th style="min-width: 150px;">
                 Opciones
             </th>
         </tr>

@@ -488,9 +488,8 @@
             <form method="POST" action="{{ route('admin.matriz-riesgos.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
-                    <p class="text-center text-light" style="font-size:11pt; margin-left:500px; color:#ffffff;">DATOS
-                        GENERALES</p>
+                <div class="form-group text-center" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                    DATOS GENERALES
                 </div>
 
                 <div class="form-group">
@@ -658,10 +657,10 @@
                     <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
                 </div>
                 <hr>
-                <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
-                    <p class="text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
-                        riesgo inicial</p>
+                <div class="form-group text-center" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                    EVALUACIÓN DE RIESGO INICIAL
                 </div>
+
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
 
@@ -898,10 +897,10 @@
 <!-- hasta aqui -->
                 </div>
                 <hr>
-                <div class="form-group" style="margin-top:15px; width:1135px; height:25px; background-color:#1BB0B0">
-                    <p class="text-center text-light" style="font-size:11pt; margin-left:470px; color:#ffffff;">Evaluación de
-                        riesgo residual</p>
+                <div class="form-group text-center" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                    EVALUACIÓN DEL RIESGO RESIDUAL
                 </div>
+
                 <p class="font-weight-bold" style="font-size:11pt;">Riesgo Residual</p>
                 <div class="row">
 

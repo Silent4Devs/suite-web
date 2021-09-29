@@ -99,18 +99,18 @@ class DeskController extends Controller
 
         return view('admin.desk.index', compact(
             'incidentes_seguridad',
-            'riesgos_identificados', 
-            'quejas', 
-            'denuncias', 
-            'mejoras', 
+            'riesgos_identificados',
+            'quejas',
+            'denuncias',
+            'mejoras',
             'sugerencias',
 
-            'total_seguridad', 
-            'nuevos_seguridad', 
-            'en_curso_seguridad', 
-            'en_espera_seguridad', 
-            'cerrados_seguridad', 
-            'cancelados_seguridad', 
+            'total_seguridad',
+            'nuevos_seguridad',
+            'en_curso_seguridad',
+            'en_espera_seguridad',
+            'cerrados_seguridad',
+            'cancelados_seguridad',
 
             'total_riesgos',
             'nuevos_riesgos',
@@ -149,7 +149,7 @@ class DeskController extends Controller
         ));
     }
 
-    
+
 
     public function indexSeguridad()
     {
@@ -194,7 +194,7 @@ class DeskController extends Controller
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
-
+            'fecha_cierre'=>$request->fecha_cierre,
             'areas_afectados' => $request->areas_afectados,
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
@@ -283,6 +283,7 @@ class DeskController extends Controller
     }
     public function updateRiesgos(Request $request, $id_riesgos)
     {
+
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
         $riesgos->update([
             'titulo' => $request->titulo,
@@ -370,6 +371,7 @@ class DeskController extends Controller
             'procesos_quejado' => $request->procesos_quejado,
             'externo_quejado' => $request->externo_quejado,
             'comentarios' => $request->comentarios,
+            'fecha_cierre'=>$request->fecha_cierre
         ]);
 
 
@@ -401,6 +403,7 @@ class DeskController extends Controller
             'metodos_b' => $request->metodos_b,
             'ambiente_a' => $request->ambiente_a,
             'ambiente_b' => $request->ambiente_b,
+            'fecha_cierre'=>$request->fecha_cierre
         ]);
 
 
@@ -435,6 +438,7 @@ class DeskController extends Controller
             'area_denunciado' => $request->area_denunciado,
             'tipo' => $request->tipo,
             'estatus' => $request->estatus,
+            'fecha_cierre'=>$request->fecha_cierre
         ]);
 
 
@@ -565,7 +569,7 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'sugerencia')->where("sugerencias_id", intval($id_sugerencias))->first();
 
-        
+
 
         return view('admin.desk.sugerencias.edit', compact('sugerencias', 'activos', 'empleados', 'areas', 'procesos', 'analisis'));
     }

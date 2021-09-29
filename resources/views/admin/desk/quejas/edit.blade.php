@@ -60,16 +60,21 @@
                                     la queja</label>
                                 <input class="form-control" name="titulo" value="{{ $quejas->titulo }}">
                             </div>
-                            <div class="mt-2 form-group col-4">
+                            <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control">
-                                    <option>{{ $quejas->estatus }}</option>
-                                    <option value="nuevo">Nuevo</option>
-                                    <option value="en curso">En curso</option>
-                                    <option value="en espera">En espera</option>
-                                    <option value="cerrado">Cerrado</option>
-                                    <option value="cancelado">Cancelado</option>
+                                <select name="estatus" class="form-control" id="opciones"
+                                    onchange='cambioOpciones();'>
+                                    <option {{ old('estatus', $quejas->estatus) == 'nuevo' ? 'selected' : '' }}
+                                        value="nuevo">Nuevo</option>
+                                    <option {{ old('estatus', $quejas->estatus) == 'en curso' ? 'selected' : '' }}
+                                        value="en curso">En curso</option>
+                                    <option {{ old('estatus', $quejas->estatus) == 'en espera' ? 'selected' : '' }}
+                                        value="en espera">En espera</option>
+                                    <option {{ old('estatus', $quejas->estatus) == 'cerrado' ? 'selected' : '' }}
+                                        value="cerrado">Cerrado</option>
+                                    <option {{ old('estatus', $quejas->estatus) == 'cancelado' ? 'selected' : '' }}
+                                        value="cancelado">Cancelado</option>
                                 </select>
                             </div>
                             <div class="mt-2 form-group col-4">
@@ -87,11 +92,13 @@
                                 <div class="form-control">{{ $quejas->created_at }}</div>
                             </div>
 
-                            <div class="mt-2 form-group col-4">
+                            <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
-                                <div class="form-control">{{ $quejas->fecha_cierre }}</div>
+
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $quejas->fecha_cierre }}" id="solucion">
+
                             </div>
 
                             <div class="mt-2 form-group col-4">
@@ -134,42 +141,42 @@
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     @if (count($quejas->evidencias_quejas))
-                                                    <div id='carouselExampleIndicators' class='carousel slide'
-                                                    data-ride='carousel'>
-                                                    <ol class='carousel-indicators'>
-                                                        @foreach ($quejas->evidencias_quejas as $idx => $evidencia)
-                                                            <li data-target='#carouselExampleIndicators'
-                                                                data-slide-to='{{ $idx }}'
-                                                                class='{{ $idx == 0 ? 'active' : '' }}'></li>
-                                                        @endforeach
-                                                    </ol>
-                                                    <div class='carousel-inner'>
-                                                        @foreach ($quejas->evidencias_quejas as $idx => $evidencia)
-                                                            <div
-                                                                class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                                <iframe class='img-size'
-                                                                    src='{{ asset('storage/evidencias_quejas' . '/' . $evidencia->evidencia) }}'></iframe>
+                                                        <div id='carouselExampleIndicators' class='carousel slide'
+                                                            data-ride='carousel'>
+                                                            <ol class='carousel-indicators'>
+                                                                @foreach ($quejas->evidencias_quejas as $idx => $evidencia)
+                                                                    <li data-target='#carouselExampleIndicators'
+                                                                        data-slide-to='{{ $idx }}'
+                                                                        class='{{ $idx == 0 ? 'active' : '' }}'></li>
+                                                                @endforeach
+                                                            </ol>
+                                                            <div class='carousel-inner'>
+                                                                @foreach ($quejas->evidencias_quejas as $idx => $evidencia)
+                                                                    <div
+                                                                        class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                                        <iframe class='img-size'
+                                                                            src='{{ asset('storage/evidencias_quejas' . '/' . $evidencia->evidencia) }}'></iframe>
+                                                                    </div>
+
+
+
+                                                                @endforeach
                                                             </div>
-
-
-
-                                                        @endforeach
-                                                    </div>
-                                                    <a class='carousel-control-prev'
-                                                        href='#carouselExampleIndicators' role='button'
-                                                        data-slide='prev'>
-                                                        <span class='carousel-control-prev-icon'
-                                                            aria-hidden='true'></span>
-                                                        <span class='sr-only'>Previous</span>
-                                                    </a>
-                                                    <a class='carousel-control-next'
-                                                        href='#carouselExampleIndicators' role='button'
-                                                        data-slide='next'>
-                                                        <span class='carousel-control-next-icon'
-                                                            aria-hidden='true'></span>
-                                                        <span class='sr-only'>Next</span>
-                                                    </a>
-                                                </div>
+                                                            <a class='carousel-control-prev'
+                                                                href='#carouselExampleIndicators' role='button'
+                                                                data-slide='prev'>
+                                                                <span class='carousel-control-prev-icon'
+                                                                    aria-hidden='true'></span>
+                                                                <span class='sr-only'>Previous</span>
+                                                            </a>
+                                                            <a class='carousel-control-next'
+                                                                href='#carouselExampleIndicators' role='button'
+                                                                data-slide='next'>
+                                                                <span class='carousel-control-next-icon'
+                                                                    aria-hidden='true'></span>
+                                                                <span class='sr-only'>Next</span>
+                                                            </a>
+                                                        </div>
                                                     @else
                                                         <div class="text-center">
                                                             <h3 style="text-align:center" class="mt-3">Sin
@@ -579,6 +586,24 @@
 @section('scripts')
 
 <script type="text/javascript">
+    const formatDate = (current_datetime) => {
+        let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+            current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+            ":" + current_datetime.getSeconds();
+        return formatted_date;
+    }
+
+    function cambioOpciones() {
+        var combo = document.getElementById('opciones');
+        var opcion = combo.value;
+        if (opcion == "cerrado") {
+            var fecha = new Date();
+            document.getElementById('solucion').value = formatDate(fecha);
+        } else {
+            document.getElementById('solucion').value = "";
+        }
+    }
+
     $(document).ready(function() {
         window.tbl_plan = $("#tabla_plan_accion_quejas").DataTable({
             ajax: "{{ route('admin.desk-quejas-actividades.index', $quejas->id) }}",

@@ -117,6 +117,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@riesgos')->name('reportes-riesgos');
     Route::post('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@storeRiesgos')->name('reportes-riesgos-store');
 
+    Route::post('inicioUsuario/capacitaciones/archivar', 'inicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
+
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
 
@@ -508,6 +510,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('accion-correctivas/destroy', 'AccionCorrectivaController@massDestroy')->name('accion-correctivas.massDestroy');
     Route::post('accion-correctivas/media', 'AccionCorrectivaController@storeMedia')->name('accion-correctivas.storeMedia');
     Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
+    Route::post('accion-correctivas/{accion}/analisis/store', 'AccionCorrectivaController@storeAnalisis')->name('accion-correctivas.storeAnalisis');
     Route::resource('accion-correctivas', 'AccionCorrectivaController');
     Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
     Route::post('accion-correctivas/editarplan', 'PlanaccionCorrectivaController@update');
@@ -948,3 +951,19 @@ Route::view('sitemap', 'admin.sitemap.index');
 //URL::forceScheme('https');
 
 Route::view('post_register', 'auth.post_register');
+
+//Ruta CargaImagen
+Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
+Route::post('CargaAmenza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
+Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
+Route::post('CargaUsuario', 'SubidaExcel@Usuario')->name('carga-usuario');
+Route::post('CargaPuesto', 'SubidaExcel@Puesto')->name('carga-puesto');
+Route::post('CargaControl', 'SubidaExcel@Control')->name('carga-control');
+Route::post('CargaEjecutarenlace', 'SubidaExcel@Ejecutarenlace')->name('carga-ejecutarenlace');
+Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
+Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
+Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
+Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
+
+
+

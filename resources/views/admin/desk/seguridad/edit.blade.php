@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
-                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Titulo
+                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
                                     corto
                                     del incidente</label>
                                 <input type="" name="titulo" value="{{ $incidentesSeguridad->titulo }}"
@@ -109,9 +109,9 @@
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
-                                
-                                    <input class="form-control" value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
-                            
+
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
+
                             </div>
 
                             <div class="mt-2 form-group col-md-4">
@@ -648,13 +648,19 @@
 @section('scripts')
 @parent
 <script type="text/javascript">
+        const formatDate = (current_datetime) => {
+        let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+            current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+            ":" + current_datetime.getSeconds();
+        return formatted_date;
+    }
     function cambioOpciones()
     {
         var combo = document.getElementById('opciones');
         var opcion = combo.value;
         if(opcion == "cerrado"){
             var fecha = new Date();
-            document.getElementById('solucion').value = fecha.toISOString();
+            document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
         }else{
             document.getElementById('solucion').value = "";
         }

@@ -69,16 +69,21 @@
                                 <div class="form-control">{{ $denuncias->folio }}</div>
                             </div>
 
-                            <div class="mt-2 form-group col-6">
+                            <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control">
-                                    <option>{{ $denuncias->estatus }}</option>
-                                    <option value="nuevo">Nuevo</option>
-                                    <option value="en curso">En curso</option>
-                                    <option value="en espera">En espera</option>
-                                    <option value="cerrado">Cerrado</option>
-                                    <option value="cancelado">Cancelado</option>
+                                <select name="estatus" class="form-control" id="opciones"
+                                    onchange='cambioOpciones();'>
+                                    <option {{ old('estatus', $denuncias->estatus) == 'nuevo' ? 'selected' : '' }}
+                                        value="nuevo">Nuevo</option>
+                                    <option {{ old('estatus', $denuncias->estatus) == 'en curso' ? 'selected' : '' }}
+                                        value="en curso">En curso</option>
+                                    <option {{ old('estatus', $denuncias->estatus) == 'en espera' ? 'selected' : '' }}
+                                        value="en espera">En espera</option>
+                                    <option {{ old('estatus', $denuncias->estatus) == 'cerrado' ? 'selected' : '' }}
+                                        value="cerrado">Cerrado</option>
+                                    <option {{ old('estatus', $denuncias->estatus) == 'cancelado' ? 'selected' : '' }}
+                                        value="cancelado">Cancelado</option>
                                 </select>
                             </div>
 
@@ -97,11 +102,13 @@
                                 <div class="form-control">{{ $denuncias->created_at }}</div>
                             </div>
 
-                            <div class="mt-2 form-group col-4">
+                            <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
-                                <div class="form-control">{{ $denuncias->fecha_cierre }}</div>
+
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $denuncias->fecha_cierre }}" id="solucion">
+
                             </div>
 
                             @if ($denuncias->anonimo == 'no')
@@ -199,47 +206,47 @@
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     @if (count($denuncias->evidencias_denuncias))
-                                                    <!-- carousel -->
-                                                    <div id='carouselExampleIndicators' class='carousel slide'
-                                                        data-ride='carousel'>
-                                                        <ol class='carousel-indicators'>
-                                                            @foreach ($denuncias->evidencias_denuncias as $idx => $evidencia)
-                                                                <li data-target='#carouselExampleIndicators'
-                                                                    data-slide-to='{{ $idx }}'
-                                                                    class='{{ $idx == 0 ? 'active' : '' }}'></li>
-                                                            @endforeach
-                                                        </ol>
-                                                        <div class='carousel-inner'>
-                                                            @foreach ($denuncias->evidencias_denuncias as $idx => $evidencia)
-                                                                <div
-                                                                    class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                                    <iframe class='img-size'
-                                                                        src='{{ asset('storage/evidencias_denuncias' . '/' . $evidencia->evidencia) }}'></iframe>
-                                                                </div>
-                                                            @endforeach
+                                                        <!-- carousel -->
+                                                        <div id='carouselExampleIndicators' class='carousel slide'
+                                                            data-ride='carousel'>
+                                                            <ol class='carousel-indicators'>
+                                                                @foreach ($denuncias->evidencias_denuncias as $idx => $evidencia)
+                                                                    <li data-target='#carouselExampleIndicators'
+                                                                        data-slide-to='{{ $idx }}'
+                                                                        class='{{ $idx == 0 ? 'active' : '' }}'></li>
+                                                                @endforeach
+                                                            </ol>
+                                                            <div class='carousel-inner'>
+                                                                @foreach ($denuncias->evidencias_denuncias as $idx => $evidencia)
+                                                                    <div
+                                                                        class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                                        <iframe class='img-size'
+                                                                            src='{{ asset('storage/evidencias_denuncias' . '/' . $evidencia->evidencia) }}'></iframe>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                            <a class='carousel-control-prev'
+                                                                href='#carouselExampleIndicators' role='button'
+                                                                data-slide='prev'>
+                                                                <span class='carousel-control-prev-icon'
+                                                                    aria-hidden='true'></span>
+                                                                <span class='sr-only'>Previous</span>
+                                                            </a>
+                                                            <a class='carousel-control-next'
+                                                                href='#carouselExampleIndicators' role='button'
+                                                                data-slide='next'>
+                                                                <span class='carousel-control-next-icon'
+                                                                    aria-hidden='true'></span>
+                                                                <span class='sr-only'>Next</span>
+                                                            </a>
                                                         </div>
-                                                        <a class='carousel-control-prev'
-                                                            href='#carouselExampleIndicators' role='button'
-                                                            data-slide='prev'>
-                                                            <span class='carousel-control-prev-icon'
-                                                                aria-hidden='true'></span>
-                                                            <span class='sr-only'>Previous</span>
-                                                        </a>
-                                                        <a class='carousel-control-next'
-                                                            href='#carouselExampleIndicators' role='button'
-                                                            data-slide='next'>
-                                                            <span class='carousel-control-next-icon'
-                                                                aria-hidden='true'></span>
-                                                            <span class='sr-only'>Next</span>
-                                                        </a>
-                                                    </div>
                                                     @else
-                                                    <div class="text-center">
-                                                        <h3 style="text-align:center" class="mt-3">Sin
-                                                            archivo agregado</h3>
-                                                        <img src="{{ asset('img/undrawn.png') }}"
-                                                            class="img-fluid " style="width:350px !important">
-                                                    </div>
+                                                        <div class="text-center">
+                                                            <h3 style="text-align:center" class="mt-3">Sin
+                                                                archivo agregado</h3>
+                                                            <img src="{{ asset('img/undrawn.png') }}"
+                                                                class="img-fluid " style="width:350px !important">
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="modal-footer">
@@ -526,6 +533,35 @@
 
 @section('scripts')
 <script type="text/javascript">
+        const formatDate = (current_datetime) => {
+        let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+            current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+            ":" + current_datetime.getSeconds();
+        return formatted_date;
+    }
+    function cambioOpciones()
+    {
+        var combo = document.getElementById('opciones');
+        var opcion = combo.value;
+        if(opcion == "cerrado"){
+            var fecha = new Date();
+            document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
+        }else{
+            document.getElementById('solucion').value = "";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let select_activos = document.querySelector('.areas_multiselect #activos');
+        select_activos.addEventListener('change', function(e) {
+            e.preventDefault();
+            let texto_activos = document.querySelector('.areas_multiselect #texto_activos');
+
+            texto_activos.value += `${this.value}, `;
+
+        });
+    });
+
     $(document).ready(function() {
         window.tbl_plan = $("#tabla_plan_accion_denuncias").DataTable({
             ajax: "{{ route('admin.desk-denuncias-actividades.index', $denuncias->id) }}",

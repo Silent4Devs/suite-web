@@ -20,6 +20,7 @@ class AccionCorrectiva extends Model implements HasMedia
 
     protected $appends = [
         'documentometodo',
+        'folio'
     ];
 
     public static $searchable = [
@@ -43,6 +44,7 @@ class AccionCorrectiva extends Model implements HasMedia
         'fecharegistro',
         'fecha_compromiso',
         'fecha_verificacion',
+        'fecha_cierre',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -74,16 +76,29 @@ class AccionCorrectiva extends Model implements HasMedia
         'id_reporto',
         'id_responsable_accion',
         'id_responsable_autorizacion',
+        'areas',
+        'procesos',
+        'activos',
+        'comentarios',
+        'fecha_cierre',
         'created_at',
         'updated_at',
         'deleted_at',
         'team_id',
     ];
 
+
+
+    public function getFolioAttribute()
+    {
+        return  sprintf('AC-%04d', $this->id);
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }
+
 
     public function registerMediaConversions(Media $media = null): void
     {
@@ -157,4 +172,22 @@ class AccionCorrectiva extends Model implements HasMedia
         return $this->belongsTo(Empleado::class, 'id_registro', 'id')->with('area');
 
 	}
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_id', 'id');
+    }
+
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'proceso_id', 'id');
+    }
+
+    public function activo()
+    {
+        return $this->belongsTo(Tipoactivo::class, 'activo_id', 'id');
+    }
+
+
+
 }
