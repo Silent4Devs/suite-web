@@ -28,7 +28,7 @@
                     @endforeach
                 </td>
                 <td class="opciones_iconos">
-                    <button onclick="archivarCapacitacion('{{auth()->user()->empleado->id}}', '{{$recurso->id}}', '{{route('admin.inicio-Usuario.capacitaciones.archivar')}}')">
+                    <button onclick="archivarCapacitacion('{{auth()->user()->empleado->id}}', '{{$recurso->id}}', '{{route('admin.inicio-Usuario.capacitaciones.archivar')}}')" class="">
                         <i class="fas fa-archive"></i>
                     </button>
                     <i class="fas fa-file-alt"></i>
