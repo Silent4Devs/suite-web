@@ -50,15 +50,15 @@
    			<tr>
        			<th>Folio</th>
                 <th>Estatus</th>
-                <th>Fecha de recepción</th>
-                <th>Fecha de cierre</th>
-       			<th>Nombre</th>
-       			<th>Correo</th>
-       			<th>Teléfono</th>
-       			<th>Sugerencia</th>
-                <th>Área</th>
-                <th>Proceso</th>
-                <th>Descripción</th>
+                <th style="min-width: 200px;">Fecha de recepción</th>
+                <th style="min-width: 200px;">Fecha de cierre</th>
+       			<th style="min-width: 200px;">Nombre</th>
+       			<th style="min-width: 200px;">Correo</th>
+       			<th style="min-width: 200px;">Teléfono</th>
+       			<th style="min-width: 200px;">Sugerencia</th>
+                <th style="min-width: 200px;">Área</th>
+                <th style="min-width: 200px;">Proceso</th>
+                <th style="min-width: 500px;">Descripción</th>
        			<th>Opciones</th> 
    			</tr>
    		</thead>
