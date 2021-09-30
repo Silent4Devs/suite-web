@@ -25,6 +25,33 @@
                             Nombre
                         </th>
                         <th style="vertical-align: top">
+                            Estatus
+                        </th>
+                        <th style="vertical-align: top">
+                            Autoevaluación
+                        </th>
+                        <th style="vertical-align: top">
+                            Jefe&nbsp;Inmediato
+                        </th>
+                        <th style="vertical-align: top">
+                            Equipo&nbsp;a&nbsp;Cargo
+                        </th>
+                        <th style="vertical-align: top">
+                            Misma&nbsp;Área
+                        </th>
+                        <th style="vertical-align: top">
+                            Fecha&nbsp;Inicio
+                        </th>
+                        <th style="vertical-align: top">
+                            Fecha&nbsp;Fin
+                        </th>
+                        <th style="vertical-align: top">
+                            Incluye&nbsp;Competencias
+                        </th>
+                        <th style="vertical-align: top">
+                            Incluye&nbsp;Objetivos
+                        </th>
+                        <th style="vertical-align: top">
                             Opciones
                         </th>
                     </tr>
@@ -134,9 +161,14 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Construir evaluacion',
+                url: "{{ route('admin.ev360-evaluaciones.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
-                    $('#evaluacionModal').modal('show');
+                    // $('#evaluacionModal').modal('show');
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
             };
             dtButtons.push(btnAgregar);
@@ -158,6 +190,42 @@
                         name: 'nombre'
                     },
                     {
+                        data: 'estatus_formateado',
+                        name: 'estatus_formateado'
+                    },
+                    {
+                        data: 'autoevaluacion',
+                        name: 'autoevaluacion'
+                    },
+                    {
+                        data: 'evaluado_por_jefe',
+                        name: 'evaluado_por_jefe'
+                    },
+                    {
+                        data: 'evaluado_por_equipo_a_cargo',
+                        name: 'evaluado_por_equipo_a_cargo'
+                    },
+                    {
+                        data: 'evaluado_por_misma_area',
+                        name: 'evaluado_por_misma_area'
+                    },
+                    {
+                        data: 'fecha_inicio',
+                        name: 'fecha_inicio'
+                    },
+                    {
+                        data: 'fecha_fin',
+                        name: 'fecha_fin'
+                    },
+                    {
+                        data: 'include_competencias',
+                        name: 'include_competencias'
+                    },
+                    {
+                        data: 'include_objetivos',
+                        name: 'include_objetivos'
+                    },
+                    {
                         data: 'id',
                         render: function(data, type, row, meta) {
                             let urlShow = `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}`;
@@ -167,11 +235,17 @@
                                 `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}`;
                             let urlEvaluacion =
                                 `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
+                            let urlResumen = `
+                                /admin/recursos-humanos/evaluacion-360/evaluacion/${data}/resumen
+                                `;
                             let html = `
-                                <a href="${urlEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
-                                <a href="${urlEvaluacion}" class="btn btn-sm" title="Evaluación"><i class="fas fa-cogs"></i></a>
-                                <button onclick="Delete('${urlEdit}',${row})" class="btn btn-sm text-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                                <div class="btn-group">
+                                    <a href="${urlEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
+                                    <a href="${urlEvaluacion}" class="btn btn-sm" title="Evaluación"><i class="fas fa-cogs"></i></a>
+                                    <a href="${urlResumen}" class="btn btn-sm" title="Evaluación"><i class="fas fa-chart-bar"></i></a>
+                                    <button onclick="Delete('${urlEdit}',${row})" class="btn btn-sm text-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                                </div>
                             `;
 
                             return html;
@@ -200,6 +274,22 @@
                     url: url,
                     data: datos,
                     dataType: "JSON",
+                    xhr: function() {
+                        var xhr = $.ajaxSettings.xhr();
+                        xhr.onprogress = function e() {
+                            // For downloads
+                            if (e.lengthComputable) {
+                                console.log(e.loaded / e.total);
+                            }
+                        };
+                        xhr.upload.onprogress = function(e) {
+                            // For uploads
+                            if (e.lengthComputable) {
+                                console.log(e.loaded / e.total);
+                            }
+                        };
+                        return xhr;
+                    },
                     beforeSend: function() {
                         document.getElementById("evaluacionModal").style.pointerEvents = "none";
                         toastr.info(

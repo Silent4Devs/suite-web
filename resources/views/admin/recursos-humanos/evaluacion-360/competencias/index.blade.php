@@ -105,7 +105,7 @@
             ];
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar conducta',
+                titleAttr: 'Agregar competencia',
                 url: "{{ route('admin.ev360-competencias.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
@@ -139,17 +139,17 @@
                         render: function(data, type, row, meta) {
                             let urlBtnEditar =
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}/edit`;
-                            let urlBtnEvaluacionEstatus =
-                                `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
+                            // let urlBtnEvaluacionEstatus =
+                            //     `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
                             let urlBtnVisualizar =
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
                             let urlBtnEliminar =
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
+                            //<a style="color: white;background: #4a57ff;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
                             let botones = `
-                                <a style="color: white;background: #4a57ff;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
-                                <a style="color: white;background: #44baaf;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-editar" title="Visualizar" href="${urlBtnVisualizar}"><i class="fas fa-eye"></i></a>
-                                <a style="color: white;background: #ff8b28;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-editar" title="Configuración de la evaluación" href="${urlBtnEvaluacionEstatus}"><i class="fas fa-cogs"></i></a>
-                                <button style="color: white;background: #ff4a4a;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-eliminar" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                                <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm btn-editar" title="Visualizar" href="${urlBtnVisualizar}"><i class="fas fa-eye"></i></a>
+                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
                             `;
                             return botones;
                         }

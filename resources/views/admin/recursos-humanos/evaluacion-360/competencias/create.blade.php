@@ -15,10 +15,6 @@
                 <div class="d-flex justify-content-end w-100">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button type="submit" class="btn btn-danger">Guardar</button>
-                    <button type="submit"
-                        onclick="event.preventDefault();Conductas('{{ route('admin.ev360-competencias.conductas') }}')"
-                        class="btn btn-danger">Conductas<i class="ml-1 fas fa-arrow-right"></i></button>
-
                 </div>
             </form>
         </div>

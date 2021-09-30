@@ -18,8 +18,10 @@ class Evaluacion extends Model
     const ACTIVE = '2';
     const CLOSED = '3';
 
-    const GRUPO_DINAMICO = '0';
-    const SELECCION_MANUAL = '1';
+    const TODA_LA_EMPRESA = '0';
+    const GRUPO_DINAMICO = '3';
+    const POR_AREA = '1';
+    const SELECCION_MANUAL = '2';
 
     public function getEstatusFormateadoAttribute()
     {
@@ -75,6 +77,7 @@ class Evaluacion extends Model
         }
     }
 
+
     public function evaluados()
     {
         return $this->belongsToMany('App\Models\Empleado', 'ev360_evaluaciones_evaluados', 'evaluacion_id', 'evaluado_id');
@@ -83,6 +86,11 @@ class Evaluacion extends Model
     public function competencias()
     {
         return $this->belongsToMany('App\Models\RH\Competencia', 'ev360_competencia_evaluacion', 'evaluacion_id', 'competencia_id');
+    }
+
+    public function objetivos()
+    {
+        return $this->belongsToMany('App\Models\RH\Objetivo', 'ev360_evaluacion_objetivos', 'evaluacion_id', 'objetivo_id');
     }
 
     public function autor()
