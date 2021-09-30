@@ -1,16 +1,17 @@
-
-
+                        <div class="mb-1 text-primary ">
+                            <strong style="font-size:13pt;">Folio: {{ $accionCorrectiva->folio }}</strong>
+                        </div>
                         <div class="seccion_div">
-                            <div class="" style=" position: relative; ">
-                                <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
+                            <div class="mt-2" style=" position: relative; ">
+                                <h5 style=" position: ;"><b>Acciones para la Atención de Acciones Correctivas</b></h5>
                                 <button style="position:absolute; right: 2px; top:2px;"
                                     class="btn btn-success btn_modal_form">Agregar actividad</button>
-                                {{-- @if (count($accionCorrectiva->planes))
+                                @if (count($accionCorrectiva->planes))
                                     <a style="position:absolute; right: 170px; top:2px;"
                                         href="{{ route('admin.planes-de-accion.show', $accionCorrectiva->planes->first()->id) }}"
                                         class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
                                         Acción</a>
-                                @endif --}}
+                                @endif
                             </div>
                             <div class="mt-4 datatable-fix" style="width: 100%;">
                                 <table id="tabla_plan_accion" class="table w-100">
@@ -35,8 +36,8 @@
                         <div class="modal_form_plan">
                             <div class="fondo_modal"></div>
                             <form class="card" id="form_plan_accion" method="POST"
-                                action="{{ route('admin.desk-seguridad-actividades.store') }}">
-                                <input type="hidden" name="seguridad_id" value="{{ $accionCorrectiva->id }}">
+                                action="{{ route('admin.accion-correctiva-actividades.store') }}">
+                                <input type="hidden" name="accion_correctiva_id" value="{{ $accionCorrectiva->id }}">
                                 <div class="text-center card-header" style="background-color: #00abb2;">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear: Plan de Acción</strong>
@@ -66,7 +67,7 @@
                                         <div class="form-group col-md-6">
                                             <label class="form-label"><i
                                                     class="fas fa-flag iconos-crear"></i>Prioridad</label>
-                                            <select class="form-control" name="prioridad" id="prioridad">
+                                            <select class="form-control" name="prioridad" id="prioridad_ju">
                                                 <option value="Alta">Alta</option>
                                                 <option value="Media">Media</option>
                                                 <option value="Baja">Baja</option>

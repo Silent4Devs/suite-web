@@ -188,6 +188,14 @@ class AccionCorrectiva extends Model implements HasMedia
         return $this->belongsTo(Tipoactivo::class, 'activo_id', 'id');
     }
 
+    public function planes()
+    {
+        return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
+    }
 
+    public function actividades()
+    {
+        return $this->hasMany(ActividadAccionCorrectiva::class, 'accion_correctiva_id', 'id');
+    }
 
 }

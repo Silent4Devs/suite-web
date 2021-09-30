@@ -3,35 +3,36 @@
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Categoria</th>
+                <th>Categoría</th>
                 <th>Instructor</th>
                 <th style="min-width:200px;">Fecha Inicio</th>
                 <th style="min-width:200px;">Fecha Fin</th>
                 <th>Calificación</th>
-                <th>Opciones</th>
+                {{-- <th>Opciones</th> --}}
             </tr>
         </thead>
         <tbody>
             @foreach($recursos as $recurso)
             <tr>
-                <td>{{$recurso->cursoscapacitaciones->nombre}}</td>
-                <td>{{$recurso->categoria_capacitacion_id}}</td>
+
+                <td>{{$recurso->cursoscapacitaciones}}</td>
+                <td>{{$recurso->categoria_capacitacion->nombre}}</td>
                 <td>{{$recurso->instructor}}</td>
                 <td>{{$recurso->fecha_curso}}</td>
                 <td>{{$recurso->fecha_fin}}</td>
                 <td>
-                    @foreach ($recurso->empleados as $empleado) 
+                    @foreach ($recurso->empleados as $empleado)
                         @if($empleado->id == auth()->user()->empleado->id)
                         {{ $empleado->pivot->calificacion }}
                         @endif
                     @endforeach
                 </td>
-                <td class="opciones_iconos">
-                    <button onclick="archivarCapacitacion('{{auth()->user()->empleado->id}}', '{{$recurso->id}}', '{{route('admin.inicio-Usuario.capacitaciones.archivar')}}')">
+                {{-- <td class="opciones_iconos">
+                    <button onclick="archivarCapacitacion('{{auth()->user()->empleado->id}}', '{{$recurso->id}}', '{{route('admin.inicio-Usuario.capacitaciones.archivar')}}')" class="">
                         <i class="fas fa-archive"></i>
                     </button>
                     <i class="fas fa-file-alt"></i>
-                </td>
+                </td> --}}
             </tr>
             @endforeach
         </tbody>
@@ -76,7 +77,7 @@
                         customize: function(doc) {
                             doc.pageMargins = [20, 60, 20, 30];
                             // doc.styles.tableHeader.fontSize = 7.5;
-                            // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                            // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                         }
                     },
                     {

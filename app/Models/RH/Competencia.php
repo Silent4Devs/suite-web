@@ -21,4 +21,11 @@ class Competencia extends Model
     {
         return $this->hasMany('App\Models\RH\Conducta', 'competencia_id', 'id');
     }
+
+    public static function search($search)
+    {
+        return empty($search) ? static::query() : static::where('id', 'ILIKE', '%' . $search . '%')
+            ->orWhere('nombre', 'ILIKE', '%' . $search . '%')
+            ->orWhere('descripcion', 'ILIKE', '%' . $search . '%');
+    }
 }

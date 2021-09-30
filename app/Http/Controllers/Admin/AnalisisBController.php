@@ -21,7 +21,7 @@ class AnalisisBController extends Controller
     public function index()
     {
         abort_if(Gate::denies('analisis_brechas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gapuno = GapUno::get();
+        $gapuno = GapUno::orderBy('id', 'DESC')->get();
         $gaptresVerif = GapTre::get()->where('estado', '=', 'verificar');
         $gaptresAct = GapTre::get()->where('estado', '=', 'actuar');
         $gapa5 = GapDo::get()->where('control-uno', '=', 'A5');
