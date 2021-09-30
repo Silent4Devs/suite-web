@@ -1,10 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/menu.css') }}">
 
-
-
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style=" border: none;">
-
     <div class="bg-transparent c-sidebar-brand d-md-down-none caja_caja_img_logo">
 
         <!-- <div class="text-center dark_mode1" style="padding-top: 20px;">-->
@@ -210,14 +207,14 @@
                 </a>
             </li>
         @endcan
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route('cargadocs') }}"
-                    class="c-sidebar-nav-link {{ request()->is('CargaDocs') || request()->is('CargaDocs/*') ? 'active' : '' }}">
-                    <i class="fas fa-file-upload iconos_menu letra_blanca"></i>
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('cargadocs') }}"
+                class="c-sidebar-nav-link {{ request()->is('CargaDocs') || request()->is('CargaDocs/*') ? 'active' : '' }}">
+                <i class="fas fa-file-upload iconos_menu letra_blanca"></i>
 
-                    <font class="letra_blanca">Carga de Documentos</font>
-                </a>
-            </li>
+                <font class="letra_blanca">Carga de Documentos</font>
+            </a>
+        </li>
 
         {{-- <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.planTrabajoBase.index') }}"

@@ -26,38 +26,39 @@ class OrganizacionController extends Controller
     public function index(Request $request)
     {
         $organizacions = Organizacion::first();
-        /*$logotipo_organizacion = $organizacions->logotipo;
+        $logotipo_organizacion = $organizacions->logotipo;
         $logotipo = 'img/logotipo-tabantaj.png';
         if ($logotipo_organizacion) {
             $logotipo = 'images/' . $logotipo_organizacion;
-        }*/
+        }
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
             $empty = FALSE;
-            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty);
+            return view('frontend.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty);
         } else {
             $empty = TRUE;
             $count = Organizacion::get()->count();
-            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo);
+            return view('frontend.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo);
         }
     }
 
     public function create()
     {
+
         $count = Organizacion::get()->count();
         if ($count == 0) {
             abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            return view('admin.organizacions.create');
+            return view('frontend.organizacions.create');
         } else {
             Flash::warning("<h5 align='center'>Ya existe un registro en la base de datos</h5>");
-            return redirect()->route('admin.organizacions.index');
+            return redirect()->route('frontend.organizacions.index');
         }
     }
 
     public function store(StoreOrganizacionRequest $request)
     {
-        abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacion::create([
             "empresa" => $request->empresa,
             "direccion" => $request->direccion,
@@ -96,19 +97,20 @@ class OrganizacionController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $organizacions->id]);
         }
 
-        return redirect()->route('admin.organizacions.index')->with("success", 'Guardado con éxito');
+        dd("terminado");
+        return redirect()->route('organizacions.index')->with("success", 'Guardado con éxito');
     }
 
     public function edit(Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->load('team');
-        return view('admin.organizacions.edit', compact('organizacion'));
+        return view('frontend.organizacions.edit', compact('organizacion'));
     }
 
-    public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
+    public function update(Request $request, Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->update($request->all());
 
         if ($request->hasFile('logotipo')) {
@@ -124,33 +126,33 @@ class OrganizacionController extends Controller
             $organizacions->logotipo = $nombre;
             $organizacions->save();
         }
-        return redirect()->route('admin.organizacions.index')->with("success", 'Editado con éxito');
+        return redirect()->route('organizacions.index')->with("success", 'Editado con éxito');
     }
 
     public function show(Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->load('team');
-        return view('admin.organizacions.show', compact('organizacion'));
+        return view('frontend.organizacions.show', compact('organizacion'));
     }
 
     public function destroy(Organizacion $organizacion)
     {
-        abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->delete();
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyOrganizacionRequest $request)
     {
-        abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         Organizacion::whereIn('id', request('ids'))->delete();
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('organizacion_create') && Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('organizacion_create') && Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Organizacion();
         $model->id = $request->input('crud_id', 0);
