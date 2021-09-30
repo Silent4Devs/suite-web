@@ -3,6 +3,26 @@
 
     {{ Breadcrumbs::render('admin.accion-correctivas.index') }}
 
+    <style>
+        .table tr th:nth-child(1) {
+            min-width: 80px !important;
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(2) {
+            min-width: 150px !important;
+            text-align: center !important;
+        }
+
+        .table tr td:nth-child(15) {
+            text-align: justify !important;
+        }
+        .table tr td:nth-child(14) {
+            text-align: justify !important;
+        }
+
+    </style>
+
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Acciones Correctivas</strong></h3>
@@ -25,9 +45,9 @@
                 <table class="table table-bordered w-100 datatable-AccionCorrectiva">
                     <thead class="thead-dark">
                         <tr>
-                            <th style="vertical-align: top">
+                            {{-- <th style="vertical-align: top">
                                 {{ trans('cruds.accionCorrectiva.fields.id') }}
-                            </th>
+                            </th> --}}
                             <th style="vertical-align: top">
                                 Folio
                             </th>
@@ -338,10 +358,15 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.accion-correctivas.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
+                columnDefs: [{
+                    targets: [3, 4, 5, 14],
+                    visible: false
+                }],
+                columns: [
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
                     {
                         data: 'folio',
                         name: 'folio'
@@ -464,6 +489,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection
