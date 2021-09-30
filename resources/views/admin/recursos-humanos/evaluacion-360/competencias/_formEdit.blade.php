@@ -13,9 +13,6 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="vertical-align: top">
-                            ID
-                        </th>
-                        <th style="vertical-align: top">
                             Nivel
                         </th>
                         <th style="vertical-align: top">
