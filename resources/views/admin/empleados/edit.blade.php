@@ -288,15 +288,29 @@
                                                 @endif
                                             </div>
                                             <div class="form-group col-sm-6">
-                                                <label class="required" for="puesto"><i
+                                                <label class="required" for="puesto_id"><i
                                                         class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
-                                                    type="text" name="puesto" id="puesto"
-                                                    value="{{ old('puesto', $empleado->puesto) }}" required>
-                                                @if ($errors->has('puesto'))
+                                                <select
+                                                    class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
+                                                    name="puesto_id" id="puesto_id" value="{{ old('puesto_id', '') }}"
+                                                    required>
+                                                    <option value="" selected disabled>
+                                                        -- Selecciona un puesto --
+                                                    </option>
+                                                    @foreach ($puestos as $puesto)
+                                                        <option
+                                                            {{ old('puesto_id', $empleado->puesto_id) == $puesto->id ? 'selected' : '' }}
+                                                            value="{{ $puesto->id }}">{{ $puesto->puesto }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                {{-- <input
+                                                    class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
+                                                    type="text" name="puesto_id" id="puesto_id"
+                                                    value="{{ old('puesto_id', '') }}" required> --}}
+                                                @if ($errors->has('puesto_id'))
                                                     <div class="invalid-feedback">
-                                                        {{ $errors->first('puesto') }}
+                                                        {{ $errors->first('puesto_id') }}
                                                     </div>
                                                 @endif
                                             </div>
@@ -384,7 +398,8 @@
                                                 @endif
                                             </div>
                                             <div class="form-group col-sm-6">
-                                                <label for="telefono_movil"><i class="fas fa-phone iconos-crear"></i>Teléfono
+                                                <label for="telefono_movil"><i
+                                                        class="fas fa-phone iconos-crear"></i>Teléfono
                                                     móvil</label>
                                                 <input
                                                     class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
@@ -420,7 +435,7 @@
                                                 <input
                                                     class="form-control {{ $errors->has('extension') ? 'is-invalid' : '' }}"
                                                     type="text" name="extension" id="extension"
-                                                    value="{{ old('extension',  $empleado->extension) }}">
+                                                    value="{{ old('extension', $empleado->extension) }}">
                                                 @if ($errors->has('extension'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('extension') }}
