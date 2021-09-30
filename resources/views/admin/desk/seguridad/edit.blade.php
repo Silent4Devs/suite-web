@@ -344,10 +344,9 @@
                                 <label class="form-label"><i
                                         class="fas fa-chart-line iconos-crear"></i>Urgencia</label>
                                 <select class="form-control" name="urgencia" id="select_urgencia">
-                                    <option disabled selected>{{ $incidentesSeguridad->urgencia }}</option>
-                                    <option data-urgencia="3">Alta</option>
-                                    <option data-urgencia="2">Media</option>
-                                    <option data-urgencia="1">Baja</option>
+                                    <option data-urgencia="3" {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Alta' ? 'selected' : '' }}>Alta</option>
+                                    <option data-urgencia="2" {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Media' ? 'selected' : '' }}>Media</option>
+                                    <option data-urgencia="1" {{ old('urgencia', $incidentesSeguridad->urgencia) == 'Baja' ? 'selected' : '' }}>Baja</option>
                                 </select>
                             </div>
 
@@ -355,10 +354,9 @@
                                 <label class="form-label"><i
                                         class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
                                 <select class="form-control" name="impacto" id="select_impacto">
-                                    <option disabled selected>{{ $incidentesSeguridad->impacto }}</option>
-                                    <option data-impacto="3">Alta</option>
-                                    <option data-impacto="2">Media</option>
-                                    <option data-impacto="1">Baja</option>
+                                    <option data-impacto="3" {{ old('impacto', $incidentesSeguridad->impacto) == 'Alta' ? 'selected' : '' }}>Alta</option>
+                                    <option data-impacto="2" {{ old('impacto', $incidentesSeguridad->impacto) == 'Media' ? 'selected' : '' }}>Media</option>
+                                    <option data-impacto="1" {{ old('impacto', $incidentesSeguridad->impacto) == 'Baja' ? 'selected' : '' }}>Baja</option>
                                 </select>
                             </div>
 
@@ -407,6 +405,9 @@
 
                                     </div>
                                 </div>
+                            </div>
+                            <div class="mb-3 col-sm-12 col-lg-12 col-md-12 text-primary ">
+                                <strong style="font-size:13pt;">Folio: {{ $incidentesSeguridad->folio }}</strong>
                             </div>
                             <div class="col-md-4">
                                 Seleccione el metódo de análisis
@@ -526,6 +527,11 @@
                 </section>
                 <section id="plan">
                     <div class="seccion_div">
+                        <div class="row">
+                            <div class="mb-3 col-sm-12 col-lg-12 col-md-12 text-primary ">
+                                <strong style="font-size:13pt;">Folio: {{ $incidentesSeguridad->folio }}</strong>
+                            </div>
+                        </div>
                         <div class="" style=" position: relative; ">
                             <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
                             <button style="position:absolute; right: 2px; top:2px;"

@@ -72,9 +72,10 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permissions = Permission::all();
+        $role = Role::all();
 
 
-        return view('admin.roles.create', compact('permissions'));
+        return view('admin.roles.create', compact('permissions', 'role'));
     }
 
     public function validateRol(Request $request)
@@ -87,7 +88,7 @@ class RolesController extends Controller
     }
 
     public function store(Request $request)
-    {   
+    {
         if ($request->ajax()) {
             // $this->validateRol($request);
             $nombre_rol = $request->nombre_rol;

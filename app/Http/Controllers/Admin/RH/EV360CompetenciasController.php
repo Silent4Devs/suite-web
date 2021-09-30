@@ -123,14 +123,7 @@ class EV360CompetenciasController extends Controller
                 ->where('evaluador_id', $request->evaluador_id)
                 ->where('calificacion', '>', 0)->count();
             $progreso = $progreso = floatval(number_format((($contestadas / $total_preguntas) * 100)));
-            if ($progreso == 100) {
-                $evaluacion_especifica = EvaluadoEvaluador::where('evaluado_id', $request->evaluado_id)
-                    ->where('evaluador_id', $request->evaluador_id)
-                    ->where('evaluacion_id', $request->evaluacion_id)->first();
-                $evaluacion_especifica->update([
-                    'evaluado' => true
-                ]);
-            }
+
             if ($repuesta_u) {
                 return response()->json(['success' => true, 'progreso' => $progreso, 'contestadas' => $contestadas, 'sin_contestar' => $sin_contestar]);
             } else {

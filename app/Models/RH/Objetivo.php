@@ -12,6 +12,16 @@ class Objetivo extends Model
     protected $table = 'ev360_objetivos';
     protected $guarded = ['id'];
 
+    public function metrica()
+    {
+        return $this->belongsTo('App\Models\RH\MetricasObjetivo', 'metrica_id', 'id');
+    }
+
+    public function tipo()
+    {
+        return $this->belongsTo('App\Models\RH\TipoObjetivo', 'tipo_id', 'id');
+    }
+
     public function calificacion()
     {
         return $this->belongsTo('App\Models\RH\ObjetivoCalificacion', 'objetivo_id', 'id');

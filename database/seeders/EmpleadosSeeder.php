@@ -18,7 +18,7 @@ class EmpleadosSeeder extends Seeder
         foreach ($empleados as $idx => $empleado) {
             if ($idx != 0) {
                 $empleado->update([
-                    'supervisor_id' => Empleado::all()->random()->id,
+                    'supervisor_id' => Empleado::where('id', '!=', $empleado->id)->random()->id,
                 ]);
             }
         }

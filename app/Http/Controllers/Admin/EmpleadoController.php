@@ -176,10 +176,11 @@ class EmpleadoController extends Controller
     public function onlyStore($request)
     {
 
-        // $experiencias = json_decode($request->experiencia);
-        // $educacions = json_decode($request->educacion);
-        // $cursos = json_decode($request->curso);
-        // $certificados = json_decode($request->certificado);
+        // dd($request->all());
+        $experiencias = json_decode($request->experiencia);
+        $educacions = json_decode($request->educacion);
+        $cursos = json_decode($request->curso);
+        $certificados = json_decode($request->certificado);
         // dd($cursos);
 
 
@@ -222,6 +223,8 @@ class EmpleadoController extends Controller
             "direccion" => $request->direccion,
             "telefono_movil" => $request->telefono_movil,
             "extension" => $request->extension,
+            "cumpleaños" => $request->cumpleaños,
+            "direccion" => $request->direccion,
         ]);
         $image = null;
         if ($request->snap_foto && $request->file('foto')) {
@@ -308,152 +311,53 @@ class EmpleadoController extends Controller
         }
         // dd($request->hasFile('files'));
 
-    }
-    public function storeResumen(Request $request, $empleado)
-    {
-        $request->validate([
-            "resumen" => "required|string|max:800"
-        ]);
-        if ($request->ajax()) {
-            $empleado = Empleado::find(intval($empleado));
-            $empleado->update([
-                "resumen" => $request->resumen
-            ]);
-            if ($empleado) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => true]);
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/certificados_empleados', $file, $file->getClientOriginalName())) {
+                    EvidenciasCertificadosEmpleados::create([
+                        'evidencia' => $file->getClientOriginalName(),
+                        'empleado_id' => $empleado->id,
+                    ]);
+                }
             }
         }
-    }
-
-    public function storeCertificaciones(Request $request, $empleado)
-    {
-        $request->validate([
-            "nombre" => "required|string|max:255",
-            "estatus" => "required|string|max:255",
-            "vigencia" => "required|date",
-            "empleado_id" => "required|exists:empleados,id"
-        ]);
-        // dd($request->all());
-        if ($request->ajax()) {
-            $empleado = Empleado::find(intval($empleado));
-            $certificado = CertificacionesEmpleados::create([
+        foreach ($experiencias as $experiencia) {
+            ExperienciaEmpleados::create([
                 'empleado_id' => $empleado->id,
-                'nombre' => $request->nombre,
-                'estatus' =>  $request->estatus,
-                'vigencia' =>  $request->vigencia,
+                'empresa' => $experiencia[0],
+                'puesto' => $experiencia[1],
+                'inicio_mes' => $experiencia[3],
+                'fin_mes' => $experiencia[4],
+                'descripcion' => $experiencia[2],
             ]);
-            if ($request->hasFile('documento')) {
-                $filenameWithExt = $request->file('documento')->getClientOriginalName();
-                //Get just filename
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                // Get just ext
-                $extension = $request->file('documento')->getClientOriginalExtension();
-                // Filename to store
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                // Upload Image
-                $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
-
-                $certificado->update([
-                    "documento" => $fileNameToStore
-                ]);
-            }
-            if ($empleado) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => true]);
-            }
         }
-    }
-
-    public function storeCursos(Request $request, $empleado)
-    {
-        $request->validate([
-            "curso_diploma" => "required|string|max:255",
-            "tipo" => "required",
-            "año" => "required|date",
-            "duracion" => "required",
-            "empleado_id" => "required|exists:empleados,id"
-        ]);
-        // dd($request->all());
-        if ($request->ajax()) {
-            $empleado = Empleado::find(intval($empleado));
-            $curso = CursosDiplomasEmpleados::create([
+        // dd($experiencias);
+        foreach ($educacions as $educacion) {
+            EducacionEmpleados::create([
                 'empleado_id' => $empleado->id,
-                'curso_diploma' => $request->curso_diploma,
-                'tipo' =>  $request->tipo,
-                'año' =>  $request->año,
-                'duracion' =>  $request->duracion,
+                'institucion' => $educacion[0],
+                'nivel' => $educacion[3],
+                'año_inicio' => $educacion[2],
+                'año_fin' => $educacion[1],
             ]);
-
-            if ($curso) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => true]);
-            }
-
         }
-    }
-
-    public function storeExperiencia(Request $request, $empleado)
-    {
-
-        $request->validate([
-            "empresa" => "required|string|max:255",
-            "puesto" => "required|string|max:255",
-            "inicio_mes" => "required|date",
-            "fin_mes" => "required|date",
-            "descripcion"=>"required",
-            "empleado_id" => "required|exists:empleados,id"
-
-        ]);
-        // dd($request->all());
-        if ($request->ajax()) {
-            $empleado = Empleado::find(intval($empleado));
-            $experiencia = ExperienciaEmpleados::create([
+        foreach ($cursos as $curso) {
+            CursosDiplomasEmpleados::create([
                 'empleado_id' => $empleado->id,
-                'empresa' => $request->empresa,
-                'puesto' =>  $request->puesto,
-                'inicio_mes' =>  $request->inicio_mes,
-                'fin_mes' =>  $request->fin_mes,
-                'descripcion' =>  $request->descripcion,
+                'curso_diploma' => $curso[0],
+                'tipo' => $curso[1],
+                'año' => $curso[2],
+                'duracion' => $curso[3],
             ]);
-            if ($experiencia) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => true]);
-            }
         }
-    }
-
-    public function storeEducacion(Request $request, $empleado)
-    {
-
-        $request->validate([
-            "institucion" => "required|string|max:255",
-            "nivel" => "required",
-            "año_inicio" => "required|date",
-            "año_fin"=>"required|date",
-            "empleado_id" => "required|exists:empleados,id"
-
-        ]);
-        // dd($request->all());
-        if ($request->ajax()) {
-            $empleado = Empleado::find(intval($empleado));
-            $educacion = EducacionEmpleados::create([
+        foreach ($certificados as $certificacion) {
+            CertificacionesEmpleados::create([
                 'empleado_id' => $empleado->id,
-                'institucion' => $request->institucion,
-                'nivel' =>  $request->nivel,
-                'año_inicio' =>  $request->año_inicio,
-                'año_fin' =>  $request->año_fin,
+                'nombre' => $certificacion[0],
+                'estatus' => $certificacion[2],
+                'vigencia' => $certificacion[1],
             ]);
-
-            if ($educacion) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => true]);
-            }
         }
     }
     /**
@@ -716,15 +620,11 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function getEmpleadosLista(Request $request)
+    public function getAllEmpleados(Request $request)
     {
         if ($request->ajax()) {
-            $nombre = $request->nombre;
-            if ($nombre != null) {
-                $lista = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
-                $empleados = json_encode($lista);
-                return $empleados;
-            }
+            $empleados = Empleado::select('id', 'name')->get();
+            return json_encode($empleados);
         }
     }
 }

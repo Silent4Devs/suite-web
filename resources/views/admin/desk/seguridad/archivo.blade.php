@@ -1,18 +1,18 @@
 @extends('layouts.admin')
 @section('content')
-	<div class="mt-5 card pl-4 pr-4">
+	<div class="pl-4 pr-4 mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Archivo Incidentes de Seguridad</strong></h3>
         </div>
 
 	<div class="datatable-fix" style="width: 100%;">
-		
+
 	  	<table class="table tabla_incidentes_seguridad">
 	   		<thead>
 	   			<tr>
 	       			<th>ID</th>
 	       			<th>Folio</th>
-	       			<th>Titulo</th>
+	       			<th>Título</th>
 	       			<th>Descripción</th>
 	       			<th>Activos, Afectados</th>
 	       			<th>Fecha</th>
@@ -94,7 +94,7 @@
                         customize: function(doc) {
                             doc.pageMargins = [20, 60, 20, 30];
                             // doc.styles.tableHeader.fontSize = 7.5;
-                            // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                            // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                         }
                     },
                     {
