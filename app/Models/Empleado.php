@@ -68,8 +68,8 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar', 'resourceId', 'jefe_inmediato', 'empleados_misma_area'];
-
+    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado'];
+    //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
         'n_registro',
@@ -99,6 +99,17 @@ class Empleado extends Model
     public function getResourceIdAttribute()
     {
         return $this->id;
+    }
+
+    public function getGeneroFormateadoAttribute()
+    {
+        if ($this->genero == 'H') {
+            return "Masculino";
+        } elseif ($this->genero == 'M') {
+            return "Femenino";
+        } else {
+            return "Otro Género";
+        }
     }
 
     public function getAvatarAttribute()
@@ -200,15 +211,6 @@ class Empleado extends Model
     {
         return $this->hasMany(Documento::class);
     }
-    // public static function getAllEmpleados($empleado, $empleados = null)
-    // {
-    //     if ($empleados == null) {
-    //         $empleados = collect();
-    //     }
-    //     $empleados = $empleados->merge($empleado->supervisor);
-    //     foreach ($empleado->children as $child) {
-    //         $empleados = self::getAllEmpleados($child, $empleados);
-    //     }
 
     public function archivos()
     {
@@ -267,16 +269,21 @@ class Empleado extends Model
         return $this->hasMany(Organizacion::class);
     }
 
+    public function objetivos()
+    {
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id');
+    }
+
     // Recursos Humanos
     public function evaluadores()
     {
         return $this->belongsToMany('App\Models\Empleado', 'ev360_evaluado_evaluador', 'evaluador_id', 'id');
     }
 
-    public function getJefeInmediatoAttribute()
-    {
-        return $this->supervisor;
-    }
+    // public function getJefeInmediatoAttribute()
+    // {
+    //     return $this->supervisor ? $this->supervisor->id : $this->id;
+    // }
 
     public function getEmpleadosMismaAreaAttribute()
     {

@@ -35,6 +35,9 @@ use App\Models\Activo;
 use App\Models\Documento;
 use App\Models\PlanImplementacion;
 use App\Models\RevisionDocumento;
+use App\Models\RH\Evaluacion;
+use App\Models\RH\EvaluadoEvaluador;
+use App\Models\RH\ObjetivoCalificacion;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -47,25 +50,11 @@ class inicioUsuarioController extends Controller
         abort_if(Gate::denies('mi_perfil_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $usuario = auth()->user();
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
-        //$gantt_path = 'storage/gantt/gantt_inicial.json';
         $actividades = [];
-        // if (file_exists($gantt_path)) {
-        //     $file_gantt = json_decode(file_get_contents($gantt_path), true);
-        //     $actividades = array_filter($file_gantt['tasks'], function ($tarea) use ($empleado_id) {
-        //         $assigs = $tarea['assigs'];
-        //         foreach ($assigs as $assig) {
-        //             if ($assig['resourceId'] == $empleado_id) {
-        //                 return $tarea;
-        //             }
-        //         }
-        //     });
-        // }
         $implementaciones = PlanImplementacion::get();
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {
-
-
                 $tasks = $implementacion->tasks;
                 foreach ($tasks as $task) {
                     $task->parent_id = $implementacion->id;
@@ -156,10 +145,47 @@ class inicioUsuarioController extends Controller
 
             $contador_revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->where('estatus', Documento::SOLICITUD_REVISION)->count();
             $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $usuario->empleado->id)->get();
+            //Evaluaciones
+            $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) {
+                $q->where('estatus', Evaluacion::ACTIVE)
+                    ->where('fecha_inicio', '<=', Carbon::now())
+                    ->where('fecha_fin', '>', Carbon::now());
+            })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)->get();
+            $mis_evaluaciones = EvaluadoEvaluador::with('evaluacion', 'empleado_evaluado', 'evaluador')->where('evaluado_id', auth()->user()->empleado->id)->get();
+            //Objetivos
+            $mis_objetivos_evaluaciones_actual = Empleado::with(['objetivos' => function ($q) {
+                $q->with(['objetivo' => function ($query) {
+                    $query->with(['calificacion']);
+                }]);
+            }])->find($usuario->empleado->id);
+
+            $mis_objetivos = $usuario->empleado->objetivos ? $usuario->empleado->objetivos : collect();
+
+            // SECCION MIS DATOS
+            $equipo_a_cargo = $this->obtenerEquipoACargo($usuario->empleado->children);
+            $equipo_a_cargo = Empleado::find($equipo_a_cargo);
+            $supervisor = $usuario->empleado->supervisor;
+        } else {
+            $equipo_a_cargo = collect();
+            $supervisor = null;
+            $mis_objetivos = collect();
+        }
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos'));
+    }
+
+    public function obtenerEquipoACargo($childrens)
+    {
+        $equipo_a_cargo = collect();
+
+        foreach ($childrens as $evaluador) {
+            $equipo_a_cargo->push($evaluador->id);
+
+            if (count($evaluador->children)) {
+                $equipo_a_cargo->push($this->obtenerEquipoACargo($evaluador->children));
+            }
         }
 
-
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas'));
+        return $equipo_a_cargo->flatten(1)->toArray();
     }
 
     public function optenerTareas($tarea)
