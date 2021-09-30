@@ -68,7 +68,7 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado'];
+    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto'];
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
@@ -89,7 +89,9 @@ class Empleado extends Model
         'direccion',
         'cumpleaños',
         'resumen',
+        'puesto_id'
     ];
+
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -99,6 +101,11 @@ class Empleado extends Model
     public function getResourceIdAttribute()
     {
         return $this->id;
+    }
+
+    public function getPuestoAttribute()
+    {
+        return $this->puestoRelacionado ? $this->puestoRelacionado->puesto : 'Sin puesto';
     }
 
     public function getGeneroFormateadoAttribute()
@@ -156,6 +163,11 @@ class Empleado extends Model
         return $this->belongsToMany(Recurso::class)
             ->withPivot('id', 'calificacion', 'certificado')
             ->withTimestamps();
+    }
+
+    public function puestoRelacionado()
+    {
+        return $this->belongsTo('App\Models\Puesto', 'puesto_id', 'id');
     }
 
     public function empleados()
