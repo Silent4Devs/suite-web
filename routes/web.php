@@ -991,3 +991,8 @@ Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
 Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
 Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
 Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
+Route::post('CargaCategoriaCapacitacion', 'SubidaExcel@CategoriaCapacitacion')->name('carga-categoriacapacitacion');
+Route::post('CargaRevisionDireccion', 'SubidaExcel@RevisionDireccion')->name('carga-revisiondireccion');
+Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
+Route::post('CargaFaqCategoria', 'SubidaExcel@FaqCategoria')->name('carga-faqcategoria');
+Route::post('CargaFaqPregunta', 'SubidaExcel@FaqPregunta')->name('carga-faqpregunta');
