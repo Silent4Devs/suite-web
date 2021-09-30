@@ -570,6 +570,7 @@
                                     }) : lista +=
                                     '<li class="list-group-item list-group-item-action">Sin coincidencias encontradas</li>';
                                 lista += `</ul>`;
+                                console.log(lista);
                                 sugeridos.innerHTML = lista;
                                 $("#participantes_search").css("background", "#FFF");
                             }
