@@ -20,6 +20,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\EvidenciasDocumentosEmpleados;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\EvidenciasCertificadosEmpleados;
+use App\Models\Puesto;
 
 class EmpleadoController extends Controller
 {
@@ -134,29 +135,29 @@ class EmpleadoController extends Controller
 
 
 
-     public function getCertificaciones($empleado)
-     {
-        $certificaciones = CertificacionesEmpleados::where("empleado_id",intval($empleado))->get();
+    public function getCertificaciones($empleado)
+    {
+        $certificaciones = CertificacionesEmpleados::where("empleado_id", intval($empleado))->get();
         return datatables()->of($certificaciones)->toJson();
-     }
+    }
 
-     public function getEducacion($empleado)
-     {
-        $educacions = EducacionEmpleados::where("empleado_id",intval($empleado))->get();
+    public function getEducacion($empleado)
+    {
+        $educacions = EducacionEmpleados::where("empleado_id", intval($empleado))->get();
         return datatables()->of($educacions)->toJson();
-     }
+    }
 
-     public function getExperiencia($empleado)
-     {
-        $experiencias = ExperienciaEmpleados::where("empleado_id",intval($empleado))->get();
+    public function getExperiencia($empleado)
+    {
+        $experiencias = ExperienciaEmpleados::where("empleado_id", intval($empleado))->get();
         return datatables()->of($experiencias)->toJson();
-     }
+    }
 
-     public function getCursos($empleado)
-     {
-        $cursos = CursosDiplomasEmpleados::where("empleado_id",intval($empleado))->get();
+    public function getCursos($empleado)
+    {
+        $cursos = CursosDiplomasEmpleados::where("empleado_id", intval($empleado))->get();
         return datatables()->of($cursos)->toJson();
-     }
+    }
 
     public function create()
     {
@@ -171,7 +172,8 @@ class EmpleadoController extends Controller
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
         $certificaciones = CertificacionesEmpleados::get();
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones'));
+        $puestos = Puesto::all();
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos'));
     }
     public function onlyStore($request)
     {
@@ -195,7 +197,7 @@ class EmpleadoController extends Controller
             'n_empleado' => 'required|unique:empleados',
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
-            'puesto' => 'required|string',
+            'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
             'estatus' => 'required',
             'email' => 'required|email',
@@ -208,7 +210,7 @@ class EmpleadoController extends Controller
         $empleado = Empleado::create([
             "name" => $request->name,
             "area_id" =>  $request->area_id,
-            "puesto" =>  $request->puesto,
+            "puesto_id" =>  $request->puesto_id,
             "supervisor_id" =>  $request->supervisor_id,
             "antiguedad" =>  $request->antiguedad,
             "estatus" =>  $request->estatus,
@@ -322,43 +324,43 @@ class EmpleadoController extends Controller
                 }
             }
         }
-        foreach ($experiencias as $experiencia) {
-            ExperienciaEmpleados::create([
-                'empleado_id' => $empleado->id,
-                'empresa' => $experiencia[0],
-                'puesto' => $experiencia[1],
-                'inicio_mes' => $experiencia[3],
-                'fin_mes' => $experiencia[4],
-                'descripcion' => $experiencia[2],
-            ]);
-        }
-        // dd($experiencias);
-        foreach ($educacions as $educacion) {
-            EducacionEmpleados::create([
-                'empleado_id' => $empleado->id,
-                'institucion' => $educacion[0],
-                'nivel' => $educacion[3],
-                'año_inicio' => $educacion[2],
-                'año_fin' => $educacion[1],
-            ]);
-        }
-        foreach ($cursos as $curso) {
-            CursosDiplomasEmpleados::create([
-                'empleado_id' => $empleado->id,
-                'curso_diploma' => $curso[0],
-                'tipo' => $curso[1],
-                'año' => $curso[2],
-                'duracion' => $curso[3],
-            ]);
-        }
-        foreach ($certificados as $certificacion) {
-            CertificacionesEmpleados::create([
-                'empleado_id' => $empleado->id,
-                'nombre' => $certificacion[0],
-                'estatus' => $certificacion[2],
-                'vigencia' => $certificacion[1],
-            ]);
-        }
+        // foreach ($experiencias as $experiencia) {
+        //     ExperienciaEmpleados::create([
+        //         'empleado_id' => $empleado->id,
+        //         'empresa' => $experiencia[0],
+        //         'puesto' => $experiencia[1],
+        //         'inicio_mes' => $experiencia[3],
+        //         'fin_mes' => $experiencia[4],
+        //         'descripcion' => $experiencia[2],
+        //     ]);
+        // }
+        // // dd($experiencias);
+        // foreach ($educacions as $educacion) {
+        //     EducacionEmpleados::create([
+        //         'empleado_id' => $empleado->id,
+        //         'institucion' => $educacion[0],
+        //         'nivel' => $educacion[3],
+        //         'año_inicio' => $educacion[2],
+        //         'año_fin' => $educacion[1],
+        //     ]);
+        // }
+        // foreach ($cursos as $curso) {
+        //     CursosDiplomasEmpleados::create([
+        //         'empleado_id' => $empleado->id,
+        //         'curso_diploma' => $curso[0],
+        //         'tipo' => $curso[1],
+        //         'año' => $curso[2],
+        //         'duracion' => $curso[3],
+        //     ]);
+        // }
+        // foreach ($certificados as $certificacion) {
+        //     CertificacionesEmpleados::create([
+        //         'empleado_id' => $empleado->id,
+        //         'nombre' => $certificacion[0],
+        //         'estatus' => $certificacion[2],
+        //         'vigencia' => $certificacion[1],
+        //     ]);
+        // }
     }
     /**
      * Display the specified resource.
@@ -393,7 +395,8 @@ class EmpleadoController extends Controller
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos'));
+        $puestos = Puesto::all();
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos'));
     }
 
     /**
@@ -424,7 +427,7 @@ class EmpleadoController extends Controller
             'n_empleado' => 'unique:empleados,n_empleado,' . $id,
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
-            'puesto' => 'required|string',
+            'puesto_id' => 'required|exists:puestos,id',
             'antiguedad' => 'required',
             'estatus' => 'required',
             'email' => 'required|email',
@@ -503,7 +506,7 @@ class EmpleadoController extends Controller
 
             'name' => $request->name,
             "area_id" =>  $request->area_id,
-            "puesto" =>  $request->puesto,
+            "puesto_id" =>  $request->puesto_id,
             "supervisor_id" =>  $request->supervisor_id,
             "antiguedad" =>  $request->antiguedad,
             "estatus" =>  $request->estatus,
@@ -546,60 +549,52 @@ class EmpleadoController extends Controller
 
     public function deleteCertificaciones(Request $request, $certificacion)
     {
-        if($request->ajax()){
-            $certificacion=CertificacionesEmpleados::find(intval($certificacion));
-            $u_certificacion=$certificacion->delete();
-            if($u_certificacion){
-                return response()->json(['success'=>true]);
-
-            }
-            else{
-                return response()->json(['error'=>true]);
+        if ($request->ajax()) {
+            $certificacion = CertificacionesEmpleados::find(intval($certificacion));
+            $u_certificacion = $certificacion->delete();
+            if ($u_certificacion) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
             }
         }
     }
 
     public function deleteCursos(Request $request, $curso)
     {
-        if($request->ajax()){
-            $curso=CursosDiplomasEmpleados::find(intval($curso));
-            $u_curso=$curso->delete();
-            if($u_curso){
-                return response()->json(['success'=>true]);
-
-            }
-            else{
-                return response()->json(['error'=>true]);
+        if ($request->ajax()) {
+            $curso = CursosDiplomasEmpleados::find(intval($curso));
+            $u_curso = $curso->delete();
+            if ($u_curso) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
             }
         }
     }
 
     public function deleteEducacion(Request $request, $educacion)
     {
-        if($request->ajax()){
-            $educacion=EducacionEmpleados::find(intval($educacion));
-            $u_educacion=$educacion->delete();
-            if($u_educacion){
-                return response()->json(['success'=>true]);
-
-            }
-            else{
-                return response()->json(['error'=>true]);
+        if ($request->ajax()) {
+            $educacion = EducacionEmpleados::find(intval($educacion));
+            $u_educacion = $educacion->delete();
+            if ($u_educacion) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
             }
         }
     }
 
     public function deleteExperiencia(Request $request, $experiencia)
     {
-        if($request->ajax()){
-            $experiencia=ExperienciaEmpleados::find(intval($experiencia));
-            $u_experiencia=$experiencia->delete();
-            if($u_experiencia){
-                return response()->json(['success'=>true]);
-
-            }
-            else{
-                return response()->json(['error'=>true]);
+        if ($request->ajax()) {
+            $experiencia = ExperienciaEmpleados::find(intval($experiencia));
+            $u_experiencia = $experiencia->delete();
+            if ($u_experiencia) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true]);
             }
         }
     }
@@ -620,8 +615,21 @@ class EmpleadoController extends Controller
         }
     }
 
+    public function getListaEmpleados(Request $request)
+    {
+        if ($request->ajax()) {
+            $nombre = $request->nombre;
+            if ($nombre != null) {
+                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+                return json_encode($usuarios);
+            }
+        }
+    }
+
     public function getAllEmpleados(Request $request)
     {
+        $empleados = Empleado::select('id', 'name')->get();
+        return json_encode($empleados);
         if ($request->ajax()) {
             $empleados = Empleado::select('id', 'name')->get();
             return json_encode($empleados);
