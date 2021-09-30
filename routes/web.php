@@ -235,21 +235,22 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
     // Empleados
-    Route::post('empleados/store/{empleado}/competencias-resumen','EmpleadoController@storeResumen')->name('empleados.storeResumen');
-    Route::post('empleados/store/{empleado}/competencias-certificaciones','EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
-    Route::delete('empleados/delete/{certificacion}/competencias-certificaciones','EmpleadoController@deleteCertificaciones')->name('empleados.deleteCertificaciones');
-    Route::post('empleados/store/{empleado}/competencias-cursos','EmpleadoController@storeCursos')->name('empleados.storeCursos');
-    Route::delete('empleados/delete/{curso}/competencias-cursos','EmpleadoController@deleteCursos')->name('empleados.deleteCursos');
-    Route::post('empleados/store/{empleado}/competencias-experiencia','EmpleadoController@storeExperiencia')->name('empleados.storeExperiencia');
-    Route::delete('empleados/delete/{educacion}/competencias-educacion','EmpleadoController@deleteEducacion')->name('empleados.deleteEducacion');
-    Route::post('empleados/store/{empleado}/competencias-educacion','EmpleadoController@storeEducacion')->name('empleados.storeEducacion');
-    Route::delete('empleados/delete/{experiencia}/competencias-experiencia','EmpleadoController@deleteExperiencia')->name('empleados.deleteExperiencia');
-    Route::get('empleados/store/{empleado}/competencias-certificaciones','EmpleadoController@getCertificaciones')->name('empleados.getCertificaciones');
-    Route::get('empleados/store/{empleado}/competencias-educacion','EmpleadoController@getEducacion')->name('empleados.getEducacion');
-    Route::get('empleados/store/{empleado}/competencias-experiencia','EmpleadoController@getExperiencia')->name('empleados.getExperiencia');
-    Route::get('empleados/store/{empleado}/competencias-cursos','EmpleadoController@getCursos')->name('empleados.getCursos');
-    Route::post('empleados/store/competencias','EmpleadoController@storeWithCompetencia')->name('empleados.storeWithCompetencia');
+    Route::post('empleados/store/{empleado}/competencias-resumen', 'EmpleadoController@storeResumen')->name('empleados.storeResumen');
+    Route::post('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
+    Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', 'EmpleadoController@deleteCertificaciones')->name('empleados.deleteCertificaciones');
+    Route::post('empleados/store/{empleado}/competencias-cursos', 'EmpleadoController@storeCursos')->name('empleados.storeCursos');
+    Route::delete('empleados/delete/{curso}/competencias-cursos', 'EmpleadoController@deleteCursos')->name('empleados.deleteCursos');
+    Route::post('empleados/store/{empleado}/competencias-experiencia', 'EmpleadoController@storeExperiencia')->name('empleados.storeExperiencia');
+    Route::delete('empleados/delete/{educacion}/competencias-educacion', 'EmpleadoController@deleteEducacion')->name('empleados.deleteEducacion');
+    Route::post('empleados/store/{empleado}/competencias-educacion', 'EmpleadoController@storeEducacion')->name('empleados.storeEducacion');
+    Route::delete('empleados/delete/{experiencia}/competencias-experiencia', 'EmpleadoController@deleteExperiencia')->name('empleados.deleteExperiencia');
+    Route::get('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@getCertificaciones')->name('empleados.getCertificaciones');
+    Route::get('empleados/store/{empleado}/competencias-educacion', 'EmpleadoController@getEducacion')->name('empleados.getEducacion');
+    Route::get('empleados/store/{empleado}/competencias-experiencia', 'EmpleadoController@getExperiencia')->name('empleados.getExperiencia');
+    Route::get('empleados/store/{empleado}/competencias-cursos', 'EmpleadoController@getCursos')->name('empleados.getCursos');
+    Route::post('empleados/store/competencias', 'EmpleadoController@storeWithCompetencia')->name('empleados.storeWithCompetencia');
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
+    Route::post('empleados/get-lista', 'EmpleadoController@getListaEmpleados')->name('empleados.lista');
     Route::get('empleados/get-all', 'EmpleadoController@getAllEmpleados')->name('empleados.getAll');
     Route::resource('empleados', 'EmpleadoController');
 
@@ -990,6 +991,8 @@ Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
 Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
 Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
 Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
-
-
-
+Route::post('CargaCategoriaCapacitacion', 'SubidaExcel@CategoriaCapacitacion')->name('carga-categoriacapacitacion');
+Route::post('CargaRevisionDireccion', 'SubidaExcel@RevisionDireccion')->name('carga-revisiondireccion');
+Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
+Route::post('CargaFaqCategoria', 'SubidaExcel@FaqCategoria')->name('carga-faqcategoria');
+Route::post('CargaFaqPregunta', 'SubidaExcel@FaqPregunta')->name('carga-faqpregunta');

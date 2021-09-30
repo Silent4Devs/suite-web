@@ -24,7 +24,7 @@
             <div class="row">
                 <!-- Nombre Field -->
                 <div class="form-group col-sm-6">
-                    <i class="fas fa-fire iconos-crear"></i>{!! Form::label('amenaza', 'Amenaza:') !!}
+                    <i class="fas fa-fire iconos-crear"></i>{!! Form::label('amenaza', 'Amenaza') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-amenaza', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-primary btn-sm" type="file" name="archivo" required>
@@ -84,10 +84,46 @@
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                    <i class="fas fa-chess-knight iconos-crear"></i>{!! Form::label('competencia', 'Capacitaciones') !!}
+                    <i class="fas fa-chess-knight iconos-crear"></i>{!! Form::label('categoriacapacitacion', 'Capacitaciones') !!}
                     <div>
-                        {!! Form::open(['route' => 'carga-competencia', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="competencia" required>
+                        {!! Form::open(['route' => 'carga-categoriacapacitacion', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="categoriacapacitacion" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <span class="mb-1 text-center text-">Evaluaciones</span>
+                    </div>
+                </div>
+
+                <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-chess-knight iconos-crear"></i>{!! Form::label('revisiondireccion', 'Revisión por Dirección') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-revisiondireccion', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="revisiondireccion" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <span class="mb-1 text-center text-">Activos</span>
+                    </div>
+                </div>
+
+                <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-chess-knight iconos-crear"></i>{!! Form::label('categoria', 'Categoría') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-categoria', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="categoria" required>
                         {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
@@ -175,17 +211,35 @@
                     </div>
                 </div>
 
+                <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <span class="mb-1 text-center text-">Preguntas Frecuentes</span>
+                    </div>
+                </div>
 
+                <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fa-fw fas fa-briefcase iconos-crear"></i>{!! Form::label('faqcategoria', 'Categoria') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-faqcategoria', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="faqcategoria" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
 
-                <!-- Submit Field -->
-               <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-
-
+                <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('faqpregunta', 'Preguntas') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-faqpregunta', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="faqpregunta" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
         </div>
     </div>
 @endsection
