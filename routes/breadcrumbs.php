@@ -478,6 +478,16 @@ Breadcrumbs::for('EV360-Evaluaciones', function ($trail) {
     $trail->push('Evaluaciones', route('admin.ev360-evaluaciones.index'));
 });
 
+Breadcrumbs::for('EV360-Evaluaciones-Create', function ($trail) {
+    $trail->parent('EV360-Evaluaciones');
+    $trail->push('Crear Evaluación', route('admin.ev360-evaluaciones.create'));
+});
+
+Breadcrumbs::for('EV360-Evaluaciones-Evaluacion', function ($trail) {
+    $trail->parent('EV360-Evaluaciones');
+    $trail->push('Evaluación', '/recursos-humanos/evaluacion-360/evaluaciones/*/evaluacion');
+});
+
 Breadcrumbs::for('EV360-Competencias', function ($trail) {
     $trail->parent('Evaluacion360');
     $trail->push('Competencias', route('admin.ev360-competencias.index'));
@@ -486,10 +496,10 @@ Breadcrumbs::for('EV360-Competencias-Create', function ($trail) {
     $trail->parent('EV360-Competencias');
     $trail->push('Crear Competencia', route('admin.ev360-competencias.create'));
 });
-// Breadcrumbs::for('EV360-Competencias-Edit', function ($trail) {
-//     $trail->parent('EV360-Competencias');
-//     $trail->push('Editar Competencia', route('admin.ev360-competencias.edit'));
-// });
+Breadcrumbs::for('EV360-Competencias-Edit', function ($trail) {
+    $trail->parent('EV360-Competencias');
+    $trail->push('Editar Competencia', '/recursos-humanos/evaluacion-360/evaluaciones/*/evaluacion');
+});
 
 Breadcrumbs::for('EV360-Objetivos', function ($trail) {
     $trail->parent('Evaluacion360');
@@ -498,6 +508,10 @@ Breadcrumbs::for('EV360-Objetivos', function ($trail) {
 Breadcrumbs::for('EV360-Objetivos-Create', function ($trail) {
     $trail->parent('EV360-Objetivos');
     $trail->push('Crear Objetivo', route('admin.ev360-objetivos.create'));
+});
+Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
+    $trail->parent('EV360-Objetivos');
+    $trail->push('Editar Objetivo', '/recursos-humanos/evaluacion-360/objetivos/*/edit');
 });
 // Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
 //     $trail->parent('EV360-Objetivos');
