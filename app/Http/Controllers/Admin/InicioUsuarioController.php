@@ -113,8 +113,8 @@ class inicioUsuarioController extends Controller
         $empleado = auth()->user()->empleado;
         $recursos = new Recurso;
         if ($usuario->empleado) {
-            $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function($query)use($empleado){
-                $query->where('auditoria_interno_empleado.empleado_id',$empleado->id);
+            $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
+                $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);
             })->orWhere('lider_id', auth()->user()->empleado->id)->get();
             $auditoria_internas_lider = AuditoriaInterna::where('lider_id', auth()->user()->empleado->id)->get();
             $auditoria_internas = collect();
@@ -140,6 +140,8 @@ class inicioUsuarioController extends Controller
         $revisiones = [];
         $mis_documentos = [];
         $contador_revisiones = 0;
+        $evaluaciones = new EvaluadoEvaluador;
+        $mis_evaluaciones = new EvaluadoEvaluador;
         if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
 
@@ -531,11 +533,12 @@ class inicioUsuarioController extends Controller
     }
 
 
-    public function archivarCapacitacion(Request $request){
+    public function archivarCapacitacion(Request $request)
+    {
         $int_empleado = intval($request->id_empleado);
         $recurso = Recurso::find(intval($request->recurso_id));
         $recurso->empleados()->syncWithoutDetaching([$int_empleado => ['archivado' => true]]);
 
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 }
