@@ -40,7 +40,7 @@
                         <section id="contenido1" class="caja_tab_reveldada">
                             <div>
 
-                                <div id="test-nl-1" class="mt-5 content">
+                                <div id="test-nl-1" class="mt-3 content">
                                     @include('admin.accionCorrectivas.editform1')
 
                                 </div>

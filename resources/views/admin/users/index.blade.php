@@ -136,7 +136,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [5, 20, 5, 20];
                         // doc.styles.tableHeader.fontSize = 6.5;
-                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -193,13 +193,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -288,9 +288,9 @@
                                     <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm" onclick="AbrirModal('${data}');">
                                         <i class="fas fa-user-tag"></i>
                                     </button>
-                                    <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>                                
+                                    <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                                     <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>                                
+                                    <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>
                                 </div>
 
 
@@ -306,11 +306,11 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <select name="n_empleado" id="n_empleado" class="select2">
+                                                <select name="n_empleado" id="n_empleado${data}" class="select2">
                                                     @foreach ($empleados as $empleado)
                                                         <option value="{{ $empleado->n_empleado }}">{{ $empleado->name }}</option>
                                                     @endforeach
-                                                </select>                                               
+                                                </select>
                                                 <span class="text-sm n_empleado_error errores text-danger"></span>
                                             </div>
                                             <div class="modal-footer">
@@ -387,12 +387,13 @@
                 });
                 $(`#vincularEmpleado${user_id}`).modal('show');
                 $('.select2').select2({
-                    'theme': 'bootstrap4'
+                    'theme': 'bootstrap4',
+                    'dropdownParent': $(`#vincularEmpleado${user_id}`)
                 });
             }
 
             window.VincularEmpleado = function(nombre, user_id) {
-                let n_empleado = $("#n_empleado").val();
+                let n_empleado = $(`#n_empleado${user_id}`).val()
                 console.log(n_empleado);
                 $.ajax({
                     type: "POST",

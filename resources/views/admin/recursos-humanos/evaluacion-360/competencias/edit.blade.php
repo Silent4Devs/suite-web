@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/menu-secciones.css') }}">
-    {{ Breadcrumbs::render('EV360-Competencias') }}
+    {{ Breadcrumbs::render('EV360-Competencias-Edit') }}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -74,8 +74,6 @@
                 retrieve: true,
                 ajax: "{{ route('admin.ev360-competencias.obtenerConductas', $competencia->id) }}",
                 columns: [{
-                    data: 'ponderacion'
-                }, {
                     data: 'ponderacion'
                 }, {
                     data: 'definicion_h',

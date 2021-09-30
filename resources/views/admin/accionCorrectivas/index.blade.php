@@ -29,7 +29,22 @@
                                 {{ trans('cruds.accionCorrectiva.fields.id') }}
                             </th>
                             <th style="vertical-align: top">
+                                Folio
+                            </th>
+                            <th style="vertical-align: top">
+                                Título
+                            </th>
+                            <th style="vertical-align: top">
                                 Fecha&nbsp;de&nbsp;registro
+                            </th>
+                            <th style="vertical-align: top">
+                                Fecha&nbsp;de&nbsp;recepción
+                            </th>
+                            <th style="vertical-align: top">
+                                Estatus
+                            </th>
+                            <th style="vertical-align: top">
+                                Fecha&nbsp;de&nbsp;cierre&nbsp;de&nbsp;ticket
                             </th>
                             <th style="vertical-align: top">
                                 Reportó
@@ -49,14 +64,14 @@
                             <th style="vertical-align: top">
                                 Área
                             </th>
-                            <th style="vertical-align: top; min-width: 500px;">
-                                {{ trans('cruds.accionCorrectiva.fields.tema') }}
-                            </th>
                             <th style="vertical-align: top">
                                 Causa&nbsp;de&nbsp;origen
                             </th>
                             <th style="vertical-align: top; min-width:500px;">
-                                Descripción&nbsp;de&nbsp;la&nbsp;desviación o&nbsp;problema&nbsp;real
+                                Descripción
+                            </th>
+                            <th style="vertical-align: top; min-width:500px;">
+                                Comentarios
                             </th>
                             {{-- <th style="vertical-align: top">
                                 Método&nbsp;utilizado&nbsp;para&nbsp;el análisis&nbsp;de&nbsp;causa&nbsp;raíz
@@ -328,8 +343,28 @@
                         name: 'id'
                     },
                     {
+                        data: 'folio',
+                        name: 'folio'
+                    },
+                    {
+                        data: 'tema',
+                        name: 'tema'
+                    },
+                    {
                         data: 'fecharegistro',
                         name: 'fecharegistro'
+                    },
+                    {
+                        data: 'fecha_verificacion',
+                        name: 'fecha_verificacion'
+                    },
+                    {
+                        data: 'estatus',
+                        name: 'estatus'
+                    },
+                    {
+                        data: 'fecha_cierre',
+                        name: 'fecha_cierre'
                     },
                     {
                         data: 'reporto',
@@ -356,16 +391,16 @@
                         name: 'registro_area'
                     },
                     {
-                        data: 'tema',
-                        name: 'tema'
-                    },
-                    {
                         data: 'causaorigen',
                         name: 'causaorigen'
                     },
                     {
                         data: 'descripcion',
                         name: 'descripcion'
+                    },
+                    {
+                        data: 'comentarios',
+                        name: 'comentarios'
                     },
                     // {
                     //     data: 'metodo_causa',

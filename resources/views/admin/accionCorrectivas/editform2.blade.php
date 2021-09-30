@@ -5,9 +5,27 @@
         <form method="POST" class="col-12"
             action="{{ route('admin.accion-correctivas.storeAnalisis', $accionCorrectiva->id) }}">
             @csrf
+            <div class="px-1 py-2 mx-3 mt-3 mb-4 rounded shadow"
+                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                            Instrucciones</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
+                            cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
+                            de lo contrario la información capturada no será guardada.
+                        </p>
 
+                    </div>
+                </div>
+            </div>
             <div class="mb-1 text-primary ">
-              <strong style="font-size:13pt;">Folio: {{ $accionCorrectiva->folio }}</strong>
+                <strong style="font-size:13pt;">Folio: {{ $accionCorrectiva->folio }}</strong>
             </div>
 
             <div class="row">
@@ -17,10 +35,13 @@
                 <div class="col-md-8">
                     <select id="select_metodos" class="form-control" name="metodo">
                         <option selected disabled>- -</option>
-                        <option {{$analisis->metodo=="Lluvia de ideas (Brainstorming)"?'selected':''}} class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
+                        <option {{ $analisis->metodo == 'Lluvia de ideas (Brainstorming)' ? 'selected' : '' }}
+                            class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
                         </option>
-                        <option {{$analisis->metodo=="5 Porqués (5 Why)"?'selected':''}} class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
-                        <option {{$analisis->metodo=="Diagrama causa efecto (Ishikawa)"?'selected':''}} class="op_digrama" data-metodo="digrama">Diagrama causa efecto (Ishikawa)
+                        <option {{ $analisis->metodo == '5 Porqués (5 Why)' ? 'selected' : '' }} class="op_porque"
+                            data-metodo="porque">5 Porqués (5 Why)</option>
+                        <option {{ $analisis->metodo == 'Diagrama causa efecto (Ishikawa)' ? 'selected' : '' }}
+                            class="op_digrama" data-metodo="digrama">Diagrama causa efecto (Ishikawa)
                         </option>
                     </select>
                 </div>

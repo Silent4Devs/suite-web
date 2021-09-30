@@ -344,6 +344,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-3 col-sm-12 col-lg-12 col-md-12 text-primary ">
+                                <strong style="font-size:13pt;">Folio: {{ $quejas->folio }}</strong>
+                            </div>
                             <div class="col-md-4">
                                 Seleccione el metódo de análisis
                             </div>
@@ -462,6 +465,11 @@
                 </section>
                 <section id="plan">
                     <div class="seccion_div">
+                        <div class="row">
+                            <div class="mb-3 col-sm-12 col-lg-12 col-md-12 text-primary ">
+                                <strong style="font-size:13pt;">Folio: {{ $quejas->folio }}</strong>
+                            </div>
+                        </div>
                         <div class="" style=" position: relative; ">
                             <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
                             <button style="position:absolute; right: 2px; top:2px;"
