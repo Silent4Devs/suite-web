@@ -324,7 +324,7 @@
                                 </select>
                             </div>
 
-                            {{-- <form method="POST" class="col-12" action="{{ route('admin.desk.analisis_riesgo-update', $analisis) }}">
+                            <form method="POST" class="col-12" action="{{ route('admin.desk.analisis_riesgo-update', $analisis) }}">
                                     @csrf
 
                                     <div class="col-12" style="position: relative;">
@@ -397,7 +397,7 @@
                                     <div class="py-3 text-right col-12">
                                         <input type="submit" class="btn btn-success">
                                     </div>
-                                </form> --}}
+                                </form>
                         </div>
                     </div>
                 </section>
@@ -556,6 +556,9 @@
         }
     }
 
+
+</script>
+<script type="text/javascript">
     $(document).on('change', '#select_metodos', function(event) {
         $(".caja_oculta_dinamica").removeClass("d-block");
         var metodo_v = $("#select_metodos option:selected").attr('data-metodo');
