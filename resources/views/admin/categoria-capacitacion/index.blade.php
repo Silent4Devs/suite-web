@@ -2,6 +2,14 @@
 @section('content')
     @can('recurso_create')
 
+
+    <style>
+
+        
+    </style>
+
+    {{ Breadcrumbs::render('admin.recursos.index') }}
+
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Capacitaciones</strong></h3>
@@ -11,14 +19,14 @@
             <table class="table table-bordered tbl-categorias w-100">
                 <thead class="thead-dark">
                     <tr>
-                        <th></th>
+                        <th style="max-width:50px;">No.</th>
                         <th>
-                            {{ trans('cruds.recurso.fields.id') }}
+                            ID
                         </th>
                         <th>
                             Nombre
                         </th>
-                        <th>
+                        <th style="max-width: 100px;">
                             Opciones
                         </th>
                     </tr>
@@ -65,7 +73,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {

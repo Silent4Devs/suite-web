@@ -1,6 +1,52 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+
+
+    .table tr th:nth-child(2){
+
+
+    min-width:80px !important;
+    text-align:center !important;
+    }
+    .table tr th:nth-child(3){
+
+
+    min-width:80px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(3){
+
+    text-align:center !important;
+    }
+    .table tr th:nth-child(4){
+
+    min-width:130px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(4){
+
+    text-align:center !important;
+    }
+    .table tr th:nth-child(5){
+
+
+    min-width:900px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(5){
+
+    text-align:justify !important;
+    }
+
+
+
+</style>
+
     {{ Breadcrumbs::render('admin.comiteseguridads.index') }}
 
     @can('comiteseguridad_create')
@@ -79,7 +125,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
+
                     }
                 },
                 {
@@ -89,7 +137,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
+
                     }
                 },
                 {
@@ -100,7 +150,8 @@
                     titleAttr: 'Exportar PDF',
                     orientation: 'portrait',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
@@ -115,7 +166,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
+
                     }
                 },
                 {
@@ -199,7 +252,19 @@
                     },
                     {
                         data: 'asignada',
-                        name: 'asignada'
+                        name: 'asignada',
+                        render: function(data, type, row, meta) {
+                            if (type==="empleadoText") {
+                                return row.asignacion.name;
+                            }
+                            let responsablereunion = "";
+                            if (row.asignacion) {
+                                responsablereunion += `
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${row.asignacion.avatar}" title="${row.asignacion.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            `;
+                            }
+                            return responsablereunion;
+                        }
                     },
                     {
                         data: 'fechavigor',
@@ -207,7 +272,8 @@
                     },
                     {
                         data: 'responsabilidades',
-                        name: 'responsabilidades'
+                        name: 'responsabilidades',
+
                     },
                     {
                         data: 'actions',

@@ -27,20 +27,41 @@
 
                 <section id="registro" class="caja_tab_reveldada">
                     <div class="seccion_div">
-                        <form class="row" method="POST" action="{{ route('admin.desk.mejoras-update', $mejoras) }}">
+                        <form class="row" method="POST"
+                            action="{{ route('admin.desk.mejoras-update', $mejoras) }}">
                             @csrf
+                            <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
+                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                <div class="row w-100">
+                                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                        <div class="w-100">
+                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-11">
+                                        <p class="m-0"
+                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
+                                            cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
+                                            de lo contrario la información capturada no será guardada.
+                                        </p>
 
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mt-4 form-group col-12">
                                 <b>Datos generales:</b>
                             </div>
 
                             <div class="mt-2 form-group col-2">
-                                <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+                                <label class="form-label"><i
+                                        class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                 <div class="form-control" id="input_folio">{{ $mejoras->folio }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Titulo corto de
+                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
+                                    corto de
                                     la mejora</label>
                                 <input type="" name="titulo" value="{{ $mejoras->titulo }}" class="form-control">
                             </div>
@@ -48,7 +69,7 @@
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control">
+                                <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
                                     <option {{ old('estatus', $mejoras->estatus) == 'nuevo' ? 'selected' : '' }}
                                         value="nuevo">Nuevo</option>
                                     <option {{ old('estatus', $mejoras->estatus) == 'en curso' ? 'selected' : '' }}
@@ -62,21 +83,25 @@
                                 </select>
                             </div>
 
-                            <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora
+                            <div class="mt-2 form-group col-md-6 col-lg-6 col-sm-12">
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
+                                    hora
                                     de recepción del reporte</label>
                                 <div class="form-control">{{ $mejoras->created_at }}</div>
                             </div>
 
-                            <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora
+                            <div class="mt-2 form-group col-md-6 col-lg-6 col-sm-12">
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
+                                    hora
                                     de cierre del ticket</label>
-                                <div class="form-control">{{ $mejoras->fecha_cierre }}</div>
+
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $mejoras->fecha_cierre }}" id="solucion">
+
                             </div>
 
 
                             <div class="mt-4 form-group col-12">
-                                <b>Identifico mejora:</b>
+                                <b>Identificó mejora:</b>
                             </div>
 
                             <div class="mt-2 form-group col-4">
@@ -128,7 +153,8 @@
                             </div>
 
                             <div class="mt-4 form-group col-6 multiselect_procesos">
-                                <label class="form-label"><i class="fas fa-dice-d20 iconos-crear"></i>Proceso(s)</label>
+                                <label class="form-label"><i
+                                        class="fas fa-dice-d20 iconos-crear"></i>Proceso(s)</label>
                                 <select class="form-control" name="">
                                     <option disabled selected>Seleccionar proceso</option>
                                     @foreach ($procesos as $proceso)
@@ -146,7 +172,8 @@
                             </div>
 
                             <div class="mt-2 form-group col-5 select_tipo">
-                                <label class="form-label"><i class="fas fa-rocket iconos-crear"></i>Propuesta de mejora
+                                <label class="form-label"><i class="fas fa-rocket iconos-crear"></i>Propuesta de
+                                    mejora
                                     para un: </label>
                                 <select name="tipo" class="form-control">
                                     <option selected>{{ $mejoras->tipo }}</option>
@@ -164,14 +191,16 @@
                             </div>
 
                             <div class="mt-4 form-group col-12">
-                                <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción de la
+                                <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción de
+                                    la
                                     mejora</label>
                                 <textarea name="descripcion"
                                     class="form-control">{{ $mejoras->descripcion }}</textarea>
                             </div>
 
                             <div class="mt-4 form-group col-12">
-                                <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Beneficios de la
+                                <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Beneficios de
+                                    la
                                     mejora</label>
                                 <textarea name="beneficios"
                                     class="form-control">{{ $mejoras->beneficios }}</textarea>
@@ -187,6 +216,25 @@
                 <section id="analisis">
                     <div class="seccion_div">
                         <div class="row">
+                            <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
+                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                <div class="row w-100">
+                                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                        <div class="w-100">
+                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-11">
+                                        <p class="m-0"
+                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
+                                            cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
+                                            de lo contrario la información capturada no será guardada.
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 Seleccione el metódo de análisis
                             </div>
@@ -196,7 +244,8 @@
                                     <option class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
                                     </option>
                                     <option class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
-                                    <option class="op_digrama" data-metodo="digrama">Diagrama causa efecto (Ishikawa)
+                                    <option class="op_digrama" data-metodo="digrama">Diagrama causa efecto
+                                        (Ishikawa)
                                     </option>
                                 </select>
                             </div>
@@ -304,8 +353,8 @@
                 </section>
                 <section id="plan">
                     <div class="seccion_div">
-                        <div class="" style="position: relative; ">
-                            <h5 style="position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
+                        <div class="" style=" position: relative; ">
+                            <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
                             <button style="position:absolute; right: 2px; top:2px;"
                                 class="btn btn-success btn_modal_form">Agregar actividad</button>
                             @if (count($mejoras->planes))
@@ -354,7 +403,8 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="form-label"><i
-                                                    class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio</label>
+                                                    class="fas fa-calendar-alt iconos-crear"></i>Fecha de
+                                                inicio</label>
                                             <input type="date" name="fecha_inicio" class="form-control"
                                                 id="fecha_inicio">
                                             <span class="text-danger error_fecha_inicio errors"></span>
@@ -424,6 +474,23 @@
 
 @section('scripts')
 <script type="text/javascript">
+    const formatDate = (current_datetime) => {
+        let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+            current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+            ":" + current_datetime.getSeconds();
+        return formatted_date;
+    }
+
+    function cambioOpciones() {
+        var combo = document.getElementById('opciones');
+        var opcion = combo.value;
+        if (opcion == "cerrado") {
+            var fecha = new Date();
+            document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
+        } else {
+            document.getElementById('solucion').value = "";
+        }
+    }
     $(document).on('change', '#select_metodos', function(event) {
         $(".caja_oculta_dinamica").removeClass("d-block");
         var metodo_v = $("#select_metodos option:selected").attr('data-metodo');

@@ -45,16 +45,6 @@ class IndicadoresSgsiComponent extends Component
         ]);
     }
 
-    public function default()
-    {
-        $this->evaluacion = "";
-        $this->fecha = "";
-        $this->dispatchBrowserEvent('contentChanged');
-        $this->emit('contentChanged');
-
-        $this->view = 'create';
-    }
-
     public function store()
     {
         $variables = array();
@@ -82,20 +72,20 @@ class IndicadoresSgsiComponent extends Component
         $this->alert('success', 'Registro añadido!');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $evaluaciones = EvaluacionIndicador::find($id);
         $this->evaluacion = $evaluaciones->evaluacion;
         $this->fecha = $evaluaciones->fecha;
         //$this->resultado = $evaluaciones->resultado;
-        $this->dispatchBrowserEvent('contentChanged');
-        $this->emit('contentChanged');
+        // $this->default();
         $this->view = 'edit';
 
         $this->id_evaluacion = $evaluaciones->id;
-
     }
 
-    public function update(){
+    public function update()
+    {
         $evaluaciones = EvaluacionIndicador::find($this->id_evaluacion);
 
         $variables = array();
@@ -117,12 +107,8 @@ class IndicadoresSgsiComponent extends Component
             'resultado' => $result,
         ]);
 
-        $this->emit('contentChanged');
         $this->default();
-        $this->dispatchBrowserEvent('contentChanged');
-
         $this->alert('success', 'Registro actualizado!');
-
     }
 
     public function delete($id)
@@ -132,4 +118,12 @@ class IndicadoresSgsiComponent extends Component
         $this->alert('success', 'Registro eliminado!');
     }
 
+    public function default()
+    {
+        $this->evaluacion = "";
+        $this->fecha = "";
+        $this->dispatchBrowserEvent('contentChanged');
+
+        $this->view = 'create';
+    }
 }

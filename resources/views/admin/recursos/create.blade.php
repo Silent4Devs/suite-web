@@ -10,7 +10,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <ul class="nav nav-pills nav-fill nav-tabs" id="tab-recursos" role="tablist">
+                    {{-- <ul class="nav nav-pills nav-fill nav-tabs" id="tab-recursos" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab"
                                 aria-controls="general" aria-selected="true">
@@ -19,7 +19,7 @@
                                     Información General
                                 </font>
                             </a>
-                        </li>
+                        </li> --}}
                         {{-- <li class="nav-item">
                             <a class="nav-link" id="participantes-tab" data-toggle="tab" href="#participantes" role="tab"
                                 aria-controls="participantes" aria-selected="false" onclick="participantesDataTable()">
@@ -29,7 +29,7 @@
                                 </font>
                             </a>
                         </li> --}}
-                    </ul>
+                    {{-- </ul> --}}
                     <div class="tab-content card" id="myTabContentJust">
                         <div class="px-4 mt-4 tab-pane fade show active" id="general" role="tabpanel"
                             aria-labelledby="general-tab">
@@ -113,7 +113,7 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-md-12 col-lg-6">
                                         <label for=""> <i class="fas fa-map-marker-alt iconos-crear"></i>
-                                         <font id="font_modalidad_seleccionada"> Ubicación</font> </font></label> 
+                                         <font id="font_modalidad_seleccionada"> Ubicación</font> </font></label>
                                          <input type="" name="ubicacion" class="form-control">
                                     </div>
                                 </div>
@@ -166,18 +166,10 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                                    {{-- <button class="mt-4 btnNext btn btn-primary" style="float: right">
-                                        Siguiente
-                                        <i class="ml-1 fas fa-arrow-right"></i>
-                                    </button> --}}
-                                    <button id="btn-general" class="btn btn-success" type="submit"
-                                        style="position: relative; float: right;">
-                                        Guardar y salir
-                                        {{-- <i class="ml-1 fas fa-check-circle"></i>
-                                        <i id="guardando_capacitacion" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 7px;right: 12px;"></i> --}}
+                                <div class="text-right form-group col-12">
+                                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                                    <button class="btn btn-danger" type="submit">
+                                        {{ trans('global.save') }}
                                     </button>
                                 </div>
                             </form>
@@ -380,7 +372,7 @@
                 }else{
                     texto_activos.innerHTML = ` Link `;
                 }
-                
+
 
             });
         });

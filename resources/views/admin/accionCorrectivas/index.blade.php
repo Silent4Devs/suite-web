@@ -7,7 +7,7 @@
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Acciones Correctivas</strong></h3>
         </div>
-        
+
         <div class="container">
             <div class="row">
                 <div class="col-sm-2">
@@ -32,33 +32,39 @@
                                 Fecha&nbsp;de&nbsp;registro
                             </th>
                             <th style="vertical-align: top">
-                                Nombre&nbsp;de&nbsp;quien reporta
+                                Reportó
                             </th>
                             <th style="vertical-align: top">
-                                Puesto&nbsp;de&nbsp;quien reporta
+                                Puesto
                             </th>
                             <th style="vertical-align: top">
-                                Nombre&nbsp;de&nbsp;quien registra
+                                Área
                             </th>
                             <th style="vertical-align: top">
-                                Puesto&nbsp;de&nbsp;quien registra
+                                Registró
                             </th>
                             <th style="vertical-align: top">
+                                Puesto
+                            </th>
+                            <th style="vertical-align: top">
+                                Área
+                            </th>
+                            <th style="vertical-align: top; min-width: 500px;">
                                 {{ trans('cruds.accionCorrectiva.fields.tema') }}
                             </th>
                             <th style="vertical-align: top">
                                 Causa&nbsp;de&nbsp;origen
                             </th>
-                            <th style="vertical-align: top">
+                            <th style="vertical-align: top; min-width:500px;">
                                 Descripción&nbsp;de&nbsp;la&nbsp;desviación o&nbsp;problema&nbsp;real
                             </th>
-                            <th style="vertical-align: top">
+                            {{-- <th style="vertical-align: top">
                                 Método&nbsp;utilizado&nbsp;para&nbsp;el análisis&nbsp;de&nbsp;causa&nbsp;raíz
                             </th>
-                            <th style="vertical-align: top">
+                            <th style="vertical-align: top; min-width:500px;">
                                 Descripción&nbsp;de&nbsp;la solución
                             </th>
-                            <th style="vertical-align: top">
+                            <th style="vertical-align: top; min-width:500px;">
                                 Descripción&nbsp;de&nbsp;la&nbsp;validación
                                 para&nbsp;el&nbsp;cierre&nbsp;de&nbsp;la&nbsp;acción
                             </th>
@@ -70,16 +76,16 @@
                             </th>
                             <th style="vertical-align: top">
                                 {{ trans('cruds.accionCorrectiva.fields.fecha_verificacion') }}
-                            </th>
-                            <th style="vertical-align: top">
+                            </th> --}}
+                            {{-- <th style="vertical-align: top">
                                 {{ trans('cruds.accionCorrectiva.fields.responsable_accion') }}
                             </th>
                             <th style="vertical-align: top">
                                 Responsable autorización&nbsp;AC
-                            </th>
-                            <th style="vertical-align: top">
+                            </th> --}}
+                            {{-- <th style="vertical-align: top">
                                 {{ trans('cruds.accionCorrectiva.fields.documentometodo') }}
-                            </th>
+                            </th> --}}
                             <th style="vertical-align: top">
                                 Opciones
                             </th>
@@ -230,7 +236,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [5, 20, 5, 20];
                         doc.styles.tableHeader.fontSize = 6.5;
-                        doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10 
+                        doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -287,13 +293,13 @@
                 var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -326,20 +332,28 @@
                         name: 'fecharegistro'
                     },
                     {
-                        data: 'nombrereporta_name',
-                        name: 'nombrereporta.name'
+                        data: 'reporto',
+                        name: 'reporto'
                     },
                     {
-                        data: 'puestoreporta_puesto',
-                        name: 'puestoreporta.puesto'
+                        data: 'reporto_puesto',
+                        name: 'reporto_puesto'
                     },
                     {
-                        data: 'nombreregistra_name',
-                        name: 'nombreregistra.name'
+                        data: 'reporto_area',
+                        name: 'reporto_area'
                     },
                     {
-                        data: 'puestoregistra_puesto',
-                        name: 'puestoregistra.puesto'
+                        data: 'registro',
+                        name: 'registro'
+                    },
+                    {
+                        data: 'registro_puesto',
+                        name: 'registro_puesto'
+                    },
+                    {
+                        data: 'registro_area',
+                        name: 'registro_area'
                     },
                     {
                         data: 'tema',
@@ -353,44 +367,44 @@
                         data: 'descripcion',
                         name: 'descripcion'
                     },
-                    {
-                        data: 'metodo_causa',
-                        name: 'metodo_causa'
-                    },
-                    {
-                        data: 'solucion',
-                        name: 'solucion'
-                    },
-                    {
-                        data: 'cierre_accion',
-                        name: 'cierre_accion'
-                    },
-                    {
-                        data: 'estatus',
-                        name: 'estatus'
-                    },
-                    {
-                        data: 'fecha_compromiso',
-                        name: 'fecha_compromiso'
-                    },
-                    {
-                        data: 'fecha_verificacion',
-                        name: 'fecha_verificacion'
-                    },
-                    {
-                        data: 'responsable_accion_name',
-                        name: 'responsable_accion.name'
-                    },
-                    {
-                        data: 'nombre_autoriza_name',
-                        name: 'nombre_autoriza.name'
-                    },
-                    {
-                        data: 'documentometodo',
-                        name: 'documentometodo',
-                        sortable: false,
-                        searchable: false
-                    },
+                    // {
+                    //     data: 'metodo_causa',
+                    //     name: 'metodo_causa'
+                    // },
+                    // {
+                    //     data: 'solucion',
+                    //     name: 'solucion'
+                    // },
+                    // {
+                    //     data: 'cierre_accion',
+                    //     name: 'cierre_accion'
+                    // },
+                    // {
+                    //     data: 'estatus',
+                    //     name: 'estatus'
+                    // },
+                    // {
+                    //     data: 'fecha_compromiso',
+                    //     name: 'fecha_compromiso'
+                    // },
+                    // {
+                    //     data: 'fecha_verificacion',
+                    //     name: 'fecha_verificacion'
+                    // },
+                    // {
+                    //     data: 'responsable_accion_name',
+                    //     name: 'responsable_accion.name'
+                    // },
+                    // {
+                    //     data: 'nombre_autoriza_name',
+                    //     name: 'nombre_autoriza.name'
+                    // },
+                    // {
+                    //     data: 'documentometodo',
+                    //     name: 'documentometodo',
+                    //     sortable: false,
+                    //     searchable: false
+                    // },
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'

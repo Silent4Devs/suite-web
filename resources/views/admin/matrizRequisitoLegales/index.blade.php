@@ -41,38 +41,6 @@
     top: 80px;
 }
 
-.table tr td:nth-child(6){
-
-    max-width:415px !important;
-    width:415px !important;
-
-}
-
-.table tr th:nth-child(6){
-
-    width:415px !important;
-    max-width:415px !important;
-}
-
-.table tr td:nth-child(5){
-
-text-align:justify !important;
-
-
-}
-
-.table tr td:nth-child(10){
-
-    text-align: center;
-
-}
-
-.tamaño{
-
-    width:168px !important;
-
-}
-
 
 
 
@@ -101,19 +69,19 @@ text-align:justify !important;
                         <th>
                             Tipo&nbsp;de&nbsp;requisito
                         </th>
-                        <th>
+                        <th style="min-width: 250px;">
                             Fundamento
                         </th>
-                        <th>
-                            Apartado&nbsp;@for ($i = 0; $i < 70; $i++)&nbsp;@endfor
+                        <th style="min-width: 250px;">
+                            Apartado&nbsp;
                         </th>
-                        <th>
-                            Requisito(s)&nbsp;a&nbsp;cumplir&nbsp;@for ($i = 0; $i < 80; $i++)&nbsp;@endfor
+                        <th style="min-width: 600px;">
+                            Requisito(s)&nbsp;a&nbsp;cumplir&nbsp;
                         </th>
                         <th>
                             Alcance&nbsp;y&nbsp;grado&nbsp;de&nbsp;aplicabilidad
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             Medio&nbsp;de&nbsp;publicación
                         </th>
                         <th>
@@ -314,6 +282,7 @@ text-align:justify !important;
                         render:function(data,type,row,meta){
                              let archivo="";
                              let archivos=row.evidencias_matriz;
+                             console.log(archivos)
                                archivo=` <div class="container">
 
                                     <div class="mb-4 row">
@@ -326,8 +295,10 @@ text-align:justify !important;
                                     <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                                        <div class="modal-body">
-                                            <!-- carousel -->
+                                        <div class="modal-body">`;
+                                            if(archivos.length>0){
+                                                archivo+=`
+                                                <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
                                                 class='carousel slide'
@@ -352,10 +323,20 @@ text-align:justify !important;
 
                                             </div>
 
-                                            </div>
-                                        </div>
+                                            </div>`;
+                                            }
+                                            else{
+                                                archivo+=`
+                                                <div class="text-center">
+                                                    <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                    </div>
+                                                `
+                                            }
+                                            archivo+=`</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                           ${archivos.length==0?`
                                             <a
                                                 class='carousel-control-prev'
                                                 href='#carouselExampleIndicators${row.id}'
@@ -378,7 +359,7 @@ text-align:justify !important;
                                                     aria-hidden='true'
                                                     ></span>
                                                 <span class='sr-only'>Next</span>
-                                            </a>
+                                            </a>`:""}
                                         </div>
                                         </div>
                                     </div>
@@ -426,7 +407,7 @@ text-align:justify !important;
                                 `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
                             let botones = `
                             <div class="btn-group">
-                                <a class="btn btn-sm" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm" href="${urlVerMatrizRequisitoLegal}" title="Visualizar Matríz de Requisito Legal"><i class="fas fa-eye"></i></a>
                                 ${row.planes ? `
                                     <div class="dropdown">

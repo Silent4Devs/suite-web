@@ -24,7 +24,7 @@
                 <th style="vertical-align: top">
                     Versión
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top; min-width:200px;">
                     Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
                 <th style="vertical-align: top">
@@ -166,7 +166,7 @@
                 <th>Versión</th>
                 <th>Tipo</th>
                 <th>Solicitante</th>
-                <th>Fecha&nbsp;de&nbsp;Solicitud</th>
+                <th style="min-width:200px;">Fecha&nbsp;de&nbsp;Solicitud</th>
                 <th>Estatus</th>
                 <th>Opciones</th>
             </tr>

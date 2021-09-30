@@ -358,7 +358,7 @@
             // $.ajax({
             // 	type: "get",
             // 	url: url,
-            // 	success: function (response) {			
+            // 	success: function (response) {
             // 		renderTable(response);
             // 	}
             // });
@@ -430,9 +430,9 @@
                 if (Number(task.level) == 1) {
                     contador++;
                     html += `
-					</table>										
+					</table>
 					<table class="tabla_gantt_fase">
-						<thead class="${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'th_activo' : '' : contador == 1 ? 'th_activo' : ''}">							
+						<thead class="${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'th_activo' : '' : contador == 1 ? 'th_activo' : ''}">
 							<tr data-id=${task.id} data-level=${task.level}>
 								<th style="width:10px;"><span><i class="fas ${id_tbody != null ? id_tbody == contador + '_contenedor' ? 'fa-minus-circle' : 'fa-plus-circle' : contador == 1 ? 'fa-minus-circle' : 'fa-plus-circle'}"></i></span></th>
 								<th>${task.name} (${Math.ceil(task.progress)} %)</th>
@@ -441,7 +441,7 @@
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Progreso</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Fecha Inicio</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Fecha Fin</th>
-								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Duración</th>								
+								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}" style="width:10%;">Duración</th>
 								<th class="tr_secundario ${id_tbody != null ? id_tbody == contador + '_contenedor' ? '' : 'd-none' : contador == 1 ? '' : 'd-none'}">Dependencia</th>
 							</tr>
 						</thead>
@@ -451,7 +451,7 @@
 
                 } else if (Number(task.level) > 1) {
                     html += `
-					
+
 						<tr id="${task.id}" data-level=${task.level} numero-registro="${contador_registros}">
 							<td>${contador_registros}</td>
 							<td style="padding-left: ${task.level * 15}px;">
@@ -517,15 +517,15 @@
 								<div class="status-note-wrapper"><div class="status-print-color" style="/* background-color: rgb(226, 68, 92); *//* border-bottom-color: rgb(206, 48, 72); */"><div class="add-status-note"></div><i class="fa fa-plus menu-dog-ear-color" style="color: rgb(226, 68, 92);"></i></div></div>
 								<select class="estatus_select">
 
-									<option class="STATUS_ACTIVE" value="STATUS_ACTIVE" 
+									<option class="STATUS_ACTIVE" value="STATUS_ACTIVE"
 										${task.status == 'STATUS_ACTIVE' ? 'selected':''}><span>En proceso</span></option>
-									<option class="STATUS_DONE" value="STATUS_DONE" 
+									<option class="STATUS_DONE" value="STATUS_DONE"
 										${task.status == 'STATUS_DONE' ? 'selected':''}><span>Completado</span></option>
-									<option class="STATUS_FAILED" value="STATUS_FAILED" 
+									<option class="STATUS_FAILED" value="STATUS_FAILED"
 										${task.status == 'STATUS_FAILED' ? 'selected':''}><span>Retraso</span></option>
-									<option class="STATUS_SUSPENDED" value="STATUS_SUSPENDED" 
+									<option class="STATUS_SUSPENDED" value="STATUS_SUSPENDED"
 										${task.status == 'STATUS_SUSPENDED' ? 'selected':''}><span>Suspendida</span></option>
-									<option class="STATUS_UNDEFINED" value="STATUS_UNDEFINED" 
+									<option class="STATUS_UNDEFINED" value="STATUS_UNDEFINED"
 										${task.status == 'STATUS_UNDEFINED' ? 'selected':''}><span>Sin iniciar</span></option>
 
 								</select>
@@ -549,7 +549,7 @@
 										<span>Días</span>
 									</div>
 								</div>
-							</td>							
+							</td>
 							<td class="td_secundario" style="width:10%;">${/*task.depends != "" ? response.tasks[Number(task.depends)-1].name.substr(0,20)+'...':''*/ task.depends != undefined ? task.depends : ''}</td>
 						</tr>
 					`;
@@ -767,7 +767,7 @@
                 });
             });
 
-            //Evento Fecha Inicio 
+            //Evento Fecha Inicio
             let duracion_inputs = document.querySelectorAll('.input_duracion');
             duracion_inputs.forEach(duracion_input => {
                 duracion_input.addEventListener('change', function() {
@@ -876,7 +876,7 @@
 									<ul class="list-group">
 										<div class="contenedor_lista">
 											${renderResources(response,tarea_correspondiente)}
-										</div>								
+										</div>
 									</ul>
 								</div>
 								<div class="modal-footer">
@@ -1038,7 +1038,7 @@
         }
 
         function changeStatusByProgress(task) {
-            if (task.end < Math.floor(Date.now())) {
+            if (task.end < Math.floor(Date.now())&&task.progress<=50) {
                 task.status = "STATUS_FAILED";
             } else {
                 if (Number(task.progress) == 100) {

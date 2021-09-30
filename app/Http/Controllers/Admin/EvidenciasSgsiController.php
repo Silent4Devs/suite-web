@@ -29,7 +29,7 @@ class EvidenciasSgsiController extends Controller
         abort_if(Gate::denies('evidencias_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = EvidenciasSgsi::with(['responsable', 'team', 'empleado', 'area_responsable', 'evidencia_sgsi'])->select(sprintf('%s.*', (new EvidenciasSgsi)->table));
+            $query = EvidenciasSgsi::with(['responsable', 'team', 'empleado', 'area', 'evidencia_sgsi'])->select(sprintf('%s.*', (new EvidenciasSgsi)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -53,15 +53,18 @@ class EvidenciasSgsiController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
+            $table->editColumn('nombredocumento', function ($row) {
+                return $row->nombredocumento ? $row->nombredocumento : "";
+            });
             $table->editColumn('objetivodocumento', function ($row) {
                 return $row->objetivodocumento ? $row->objetivodocumento : "";
             });
             $table->addColumn('responsable_name', function ($row) {
-                return $row->empleado ? $row->empleado->name : '';
+                return $row->empleado ? $row->empleado : '';
             });
 
-            $table->editColumn('arearesponsable', function ($row) {
-                return $row->arearesponsable ? $row->arearesponsable : "";
+            $table->editColumn('area', function ($row) {
+                return $row->area ? $row->area : "";
             });
 
             $table->editColumn('fecha_documento', function ($row) {
@@ -123,7 +126,7 @@ class EvidenciasSgsiController extends Controller
         return redirect()->route('admin.evidencias-sgsis.index')->with("success", 'Guardado con éxito');
 
 
-        
+
     }
 
     public function edit(EvidenciasSgsi $evidenciasSgsi)

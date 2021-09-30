@@ -132,6 +132,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@riesgos')->name('reportes-riesgos');
     Route::post('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@storeRiesgos')->name('reportes-riesgos-store');
 
+    Route::post('inicioUsuario/capacitaciones/archivar', 'inicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
+
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
 
@@ -221,6 +223,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('procesos/{documento}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
     Route::resource('procesos', 'ProcesoController');
     Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
+    Route::post('selectRiesgos', 'ProcesoController@AjaxRequestRiesgos')->name('selectRiesgos');
 
     //macroprocesos
     Route::resource('macroprocesos', 'MacroprocesoController');
@@ -232,9 +235,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
     // Empleados
+    Route::post('empleados/store/{empleado}/competencias-resumen','EmpleadoController@storeResumen')->name('empleados.storeResumen');
+    Route::post('empleados/store/{empleado}/competencias-certificaciones','EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
+    Route::delete('empleados/delete/{certificacion}/competencias-certificaciones','EmpleadoController@deleteCertificaciones')->name('empleados.deleteCertificaciones');
+    Route::post('empleados/store/{empleado}/competencias-cursos','EmpleadoController@storeCursos')->name('empleados.storeCursos');
+    Route::delete('empleados/delete/{curso}/competencias-cursos','EmpleadoController@deleteCursos')->name('empleados.deleteCursos');
+    Route::post('empleados/store/{empleado}/competencias-experiencia','EmpleadoController@storeExperiencia')->name('empleados.storeExperiencia');
+    Route::delete('empleados/delete/{educacion}/competencias-educacion','EmpleadoController@deleteEducacion')->name('empleados.deleteEducacion');
+    Route::post('empleados/store/{empleado}/competencias-educacion','EmpleadoController@storeEducacion')->name('empleados.storeEducacion');
+    Route::delete('empleados/delete/{experiencia}/competencias-experiencia','EmpleadoController@deleteExperiencia')->name('empleados.deleteExperiencia');
+    Route::get('empleados/store/{empleado}/competencias-certificaciones','EmpleadoController@getCertificaciones')->name('empleados.getCertificaciones');
+    Route::get('empleados/store/{empleado}/competencias-educacion','EmpleadoController@getEducacion')->name('empleados.getEducacion');
+    Route::get('empleados/store/{empleado}/competencias-experiencia','EmpleadoController@getExperiencia')->name('empleados.getExperiencia');
+    Route::get('empleados/store/{empleado}/competencias-cursos','EmpleadoController@getCursos')->name('empleados.getCursos');
+    Route::post('empleados/store/competencias','EmpleadoController@storeWithCompetencia')->name('empleados.storeWithCompetencia');
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
     Route::get('empleados/get-all', 'EmpleadoController@getAllEmpleados')->name('empleados.getAll');
     Route::resource('empleados', 'EmpleadoController');
+
 
     // Organizacions
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
@@ -340,6 +358,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('objetivosseguridadsInsertar', 'ObjetivosseguridadController@ObjetivoInsert')->name('objetivos-seguridadsInsertar');
     Route::get('evaluaciones-objetivosInsertar', 'ObjetivosseguridadController@evaluacionesInsert')->name('evaluacionesobjetivosInsert');
     Route::get('evaluaciones-objetivosShow', 'ObjetivosseguridadController@evaluacionesShow')->name('evaluacionesobjetivosShow');
+
 
 
     Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
@@ -509,14 +528,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('plan-auditoria', 'PlanAuditoriaController');
 
     // Accion Correctivas
+    Route::get('accion-correctiva-actividades/{accion_correctiva_id}', 'ActividadAccionCorrectivaController@index')->name('accion-correctiva-actividades.index');
+    Route::resource('accion-correctiva-actividades', 'ActividadAccionCorrectivaController')->except(['index']);
     Route::delete('accion-correctivas/destroy', 'AccionCorrectivaController@massDestroy')->name('accion-correctivas.massDestroy');
     Route::post('accion-correctivas/media', 'AccionCorrectivaController@storeMedia')->name('accion-correctivas.storeMedia');
     Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
+    Route::post('accion-correctivas/{accion}/analisis/store', 'AccionCorrectivaController@storeAnalisis')->name('accion-correctivas.storeAnalisis');
     Route::resource('accion-correctivas', 'AccionCorrectivaController');
     Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
     Route::post('accion-correctivas/editarplan', 'PlanaccionCorrectivaController@update');
     Route::post('plan-correctivas-storeedit', 'PlanaccionCorrectivaController@storeEdit');
     Route::post('planaccion-storered', 'PlanaccionCorrectivaController@storeRedirect')->name('storered');
+
 
 
     // Ajax
@@ -954,3 +977,19 @@ Route::view('sitemap', 'admin.sitemap.index');
 
 
 Route::view('post_register', 'auth.post_register');
+
+//Ruta CargaImagen
+Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
+Route::post('CargaAmenza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
+Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
+Route::post('CargaUsuario', 'SubidaExcel@Usuario')->name('carga-usuario');
+Route::post('CargaPuesto', 'SubidaExcel@Puesto')->name('carga-puesto');
+Route::post('CargaControl', 'SubidaExcel@Control')->name('carga-control');
+Route::post('CargaEjecutarenlace', 'SubidaExcel@Ejecutarenlace')->name('carga-ejecutarenlace');
+Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
+Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
+Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
+Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
+
+
+

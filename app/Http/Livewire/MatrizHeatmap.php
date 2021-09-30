@@ -162,64 +162,64 @@ class MatrizHeatmap extends Component
                 case 0:
                     switch ($value->impacto) {
                         case 0:
-                            $this->nula_bajo ++;
+                            $this->nula_bajo++;
                             break;
                         case 3:
-                            $this->nula_medio ++;
+                            $this->nula_medio++;
                             break;
                         case 6:
-                            $this->nula_alto ++;
+                            $this->nula_alto++;
                             break;
                         case 9:
-                            $this->nula_muyalto ++;
+                            $this->nula_muyalto++;
                             break;
                     }
                     break;
                 case 3:
                     switch ($value->impacto) {
                         case 0:
-                            $this->baja_bajo ++;
+                            $this->baja_bajo++;
                             break;
                         case 3:
-                            $this->baja_medio ++;
+                            $this->baja_medio++;
                             break;
                         case 6:
-                            $this->baja_alto ++;
+                            $this->baja_alto++;
                             break;
                         case 9:
-                            $this->baja_muyalto ++;
+                            $this->baja_muyalto++;
                             break;
                     }
                     break;
                 case 6:
                     switch ($value->impacto) {
                         case 0:
-                            $this->media_bajo ++;
+                            $this->media_bajo++;
                             break;
                         case 3:
-                            $this->media_medio ++;
+                            $this->media_medio++;
                             break;
                         case 6:
-                            $this->media_alto ++;
+                            $this->media_alto++;
                             break;
                         case 9:
-                            $this->media_muyalto ++;
+                            $this->media_muyalto++;
                             break;
                     }
                     break;
                 case 9:
                     switch ($value->impacto) {
                         case 0:
-                            $this->alta_bajo ++;
+                            $this->alta_bajo++;
                             break;
                         case 3:
-                            $this->alta_medio ++;
+                            $this->alta_medio++;
                             break;
                         case 6:
-                            $this->alta_alto ++;
+                            $this->alta_alto++;
                             break;
                         case 9:
-                            $this->alta_muyalto ++;
+                            $this->alta_muyalto++;
                             break;
                     }
                     break;
@@ -231,70 +231,69 @@ class MatrizHeatmap extends Component
                 case 0:
                     switch ($value_r->impacto_residual) {
                         case 0:
-                            $this->nula_bajo_r ++;
+                            $this->nula_bajo_r++;
                             break;
                         case 3:
-                            $this->nula_medio_r ++;
+                            $this->nula_medio_r++;
                             break;
                         case 6:
-                            $this->nula_alto_r ++;
+                            $this->nula_alto_r++;
                             break;
                         case 9:
-                            $this->nula_muyalto_r ++;
+                            $this->nula_muyalto_r++;
                             break;
                     }
                     break;
                 case 3:
                     switch ($value->impacto_residual) {
                         case 0:
-                            $this->baja_bajo_r ++;
+                            $this->baja_bajo_r++;
                             break;
                         case 3:
-                            $this->baja_medio_r ++;
+                            $this->baja_medio_r++;
                             break;
                         case 6:
-                            $this->baja_alto_r ++;
+                            $this->baja_alto_r++;
                             break;
                         case 9:
-                            $this->baja_muyalto_r ++;
+                            $this->baja_muyalto_r++;
                             break;
                     }
                     break;
                 case 6:
                     switch ($value->impacto_residual) {
                         case 0:
-                            $this->media_bajo_r ++;
+                            $this->media_bajo_r++;
                             break;
                         case 3:
-                            $this->media_medio_r ++;
+                            $this->media_medio_r++;
                             break;
                         case 6:
-                            $this->media_alto_r ++;
+                            $this->media_alto_r++;
                             break;
                         case 9:
-                            $this->media_muyalto_r ++;
+                            $this->media_muyalto_r++;
                             break;
                     }
                     break;
                 case 9:
                     switch ($value->impacto_residual) {
                         case 0:
-                            $this->alta_bajo_r ++;
+                            $this->alta_bajo_r++;
                             break;
                         case 3:
-                            $this->alta_medio_r ++;
+                            $this->alta_medio_r++;
                             break;
                         case 6:
-                            $this->alta_alto_r ++;
+                            $this->alta_alto_r++;
                             break;
                         case 9:
-                            $this->alta_muyalto_r ++;
+                            $this->alta_muyalto_r++;
                             break;
                     }
                     break;
             }
         }
-
 
         return view('livewire.matriz-heatmap', [
             'sedes' => $sedes,
@@ -371,6 +370,8 @@ class MatrizHeatmap extends Component
             $this->changer = '';
             $this->listados = $matriz_riesgos->get();
             $this->changer = $valor;
+            $this->cleanData();
+
         }
     }
 
@@ -379,10 +380,13 @@ class MatrizHeatmap extends Component
         $matriz_riesgos_residual = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad_residual', 'impacto_residual', 'nivelriesgo_residual')->with(['controles'])->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', $id)->get();
         if ($matriz_riesgos_residual->count() == 0) {
             $this->callAlert('warning', 'No se encontro registro con este nivel de riesgo residual', false, 'Por favor ingrese un nuevo valor');
+
         } else {
             $this->changer_residual = '';
             $this->listados_residual = $matriz_riesgos_residual;
             $this->changer_residual = $valor;
+            $this->cleanData();
+
         }
     }
 
@@ -398,5 +402,42 @@ class MatrizHeatmap extends Component
             'showCancelButton' =>  false,
             'showConfirmButton' =>  $bool,
         ]);
+        $this->cleanData();
+    }
+
+    public function cleanData()
+    {
+        $this->nula_muyalto = 0;
+        $this->nula_alto = 0;
+        $this->nula_medio = 0;
+        $this->nula_bajo = 0;
+        $this->baja_bajo = 0;
+        $this->baja_medio = 0;
+        $this->baja_alto = 0;
+        $this->baja_muyalto = 0;
+        $this->media_bajo = 0;
+        $this->media_medio = 0;
+        $this->media_alto = 0;
+        $this->media_muyalto = 0;
+        $this->alta_bajo = 0;
+        $this->alta_medio = 0;
+        $this->alta_alto = 0;
+        $this->alta_muyalto = 0;
+        $this->nula_muyalto_r = 0;
+        $this->nula_alto_r = 0;
+        $this->nula_medio_r = 0;
+        $this->nula_bajo_r = 0;
+        $this->baja_bajo_r = 0;
+        $this->baja_medio_r = 0;
+        $this->baja_alto_r = 0;
+        $this->baja_muyalto_r = 0;
+        $this->media_bajo_r = 0;
+        $this->media_medio_r = 0;
+        $this->media_alto_r = 0;
+        $this->media_muyalto_r = 0;
+        $this->alta_bajo_r = 0;
+        $this->alta_medio_r = 0;
+        $this->alta_alto_r = 0;
+        $this->alta_muyalto_r = 0;
     }
 }

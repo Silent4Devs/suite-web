@@ -348,6 +348,16 @@
             }
         }
 
+
+
+
+
+
+    .fila_activa{
+        background-color:rgba(0, 255, 246, 0.15) !important;
+
+    }
+
     </style>
 
 
@@ -374,14 +384,14 @@
                     <a href="#" data-tabs="documentos_relacionados">Documentos Relacionados</a>
                 </div>
 
-                <div class="caja_caja_secciones mt-4">
+                <div class="mt-4 caja_caja_secciones">
                     <div class="caja_secciones">
                         <section class="caja_tab_reveldada" id="vista_previa" style="color:black;">
-                            
+
 
                                 @include('admin.procesos.vistas.vista_previa')
 
-                            
+
                         </section>
                         <section class="" id="resumen">
 
@@ -389,25 +399,21 @@
 
                         </section>
                         <section class="" id="riesgos">
-
-                                {{-- @include('admin.procesos.vistas.resumen') --}}
+                                @include('admin.procesos.vistas.riesgos')
                         </section>
                         <section class="" id="indicadores">
-
                                 @include('admin.procesos.vistas.indicadores')
                         </section>
                         <section class="" id="versiones">
-
                                 @include('admin.procesos.vistas.versiones')
                         </section>
                         <section class="" id="documentos_relacionados">
-
                                 @include('admin.procesos.vistas.documentos_relacionados')
                         </section>
                     </div>
                 </div>
 
-            
+
 
                 {{-- <div class="mb-3 ml-5 row caja_btn_a ">
                     <a href="#vista-previa" class="btn_a_seleccionado" style="text-decoration:none;">
@@ -481,7 +487,14 @@
 
 @section('scripts')
 
-    
+
+    <script type="text/javascript">
+        
+        $(".tbody_click tr td").click(function(){
+            $(".tbody_click tr").removeClass("fila_activa");
+            $(".tbody_click tr:hover").addClass("fila_activa");
+        });
+    </script>
 
     <script>
         $('#myTab a').click(function(e) {
@@ -507,5 +520,8 @@
         $(tab.parentElement).addClass('active');
         $('#myTab a[href="' + hash + '"]').tab('show');
     </script>
+
+
+
 
 @endsection

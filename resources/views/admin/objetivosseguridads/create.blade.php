@@ -157,8 +157,7 @@
 
                         </div>
                         <div class="form-group">
-                            <label for="objetivoseguridad"><i
-                                    class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
+                            <label for="objetivoseguridad"><i class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
                             <textarea class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}"
                                 name="objetivoseguridad" id="objetivoseguridad">{{ old('objetivoseguridad') }}</textarea>
                             @if ($errors->has('objetivoseguridad'))
@@ -332,7 +331,7 @@
 
                             <div class="form-group col-sm-6">
 
-                                <div class="form-inline">
+                                <div class="form-inline mb-2">
                                     <div class="form-group mb-2">
                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail2"
                                             value="Añadir una variable:" disabled>
@@ -360,7 +359,7 @@
                         <div class="text-center form-group col-12" style="margin-left:15px;">
                             <a href="{{ redirect()->getUrlGenerator()->previous() }}"
                                 class="btn_cancelar">Cancelar</a>
-                            <button class="btn btn-info" type="submit">
+                            <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
                         </div>
@@ -421,7 +420,7 @@
                     '<td><button type="button" name="usar" id="' + i +
                     '" class="btn btn-info btnAñadir" value="' + variable + '">Usar</button></td>' +
                     '<td><button type="button" name="remove" id="' + i +
-                    '" class="btn btn-danger btn_remove">Quitar</button></td>' +
+                    '" class="btn btn-info btn_remove">Quitar</button></td>' +
                     '</tr>'; //esto seria lo que contendria la fila
 
                 $('#mytable tr:first').after(fila);

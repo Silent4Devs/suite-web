@@ -22,7 +22,7 @@ class IncidentesSeguridad extends Model implements HasMedia
     protected $table = 'incidentes_seguridad';
 
     protected $dates = [
-        'fecha'
+        'fecha' => 'format:d-m-Y'
     ];
 
     protected $guarded = [
@@ -30,6 +30,11 @@ class IncidentesSeguridad extends Model implements HasMedia
     ];
 
     protected $appends = ['folio', 'archivo'];
+
+    // public function getFechaAttribute()
+    // {
+    //     return $this->fecha ? Carbon::parse($this->fecha)->format('d-m-Y'):'';
+    // }
 
     public function getFolioAttribute()
     {

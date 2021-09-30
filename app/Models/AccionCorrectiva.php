@@ -20,6 +20,7 @@ class AccionCorrectiva extends Model implements HasMedia
 
     protected $appends = [
         'documentometodo',
+        'folio'
     ];
 
     public static $searchable = [
@@ -43,6 +44,7 @@ class AccionCorrectiva extends Model implements HasMedia
         'fecharegistro',
         'fecha_compromiso',
         'fecha_verificacion',
+        'fecha_cierre',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -59,10 +61,6 @@ class AccionCorrectiva extends Model implements HasMedia
 
     protected $fillable = [
         'fecharegistro',
-        'nombrereporta_id',
-        'puestoreporta_id',
-        'nombreregistra_id',
-        'puestoregistra_id',
         'tema',
         'causaorigen',
         'descripcion',
@@ -74,16 +72,33 @@ class AccionCorrectiva extends Model implements HasMedia
         'fecha_verificacion',
         'responsable_accion_id',
         'nombre_autoriza_id',
+        'id_registro',
+        'id_reporto',
+        'id_responsable_accion',
+        'id_responsable_autorizacion',
+        'areas',
+        'procesos',
+        'activos',
+        'comentarios',
+        'fecha_cierre',
         'created_at',
         'updated_at',
         'deleted_at',
         'team_id',
     ];
 
+
+
+    public function getFolioAttribute()
+    {
+        return  sprintf('AC-%04d', $this->id);
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }
+
 
     public function registerMediaConversions(Media $media = null): void
     {
@@ -96,14 +111,19 @@ class AccionCorrectiva extends Model implements HasMedia
         return $this->hasMany(PlanaccionCorrectiva::class, 'accioncorrectiva_id', 'id');
     }
 
-    public function getFecharegistroAttribute($value)
+    public function getFechaRegistroAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
-    public function setFecharegistroAttribute($value)
+    public function getFechaCompromisoAttribute($value)
     {
-        $this->attributes['fecharegistro'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
+
+    public function getFechaVerificacionAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
     public function nombrereporta()
@@ -126,25 +146,6 @@ class AccionCorrectiva extends Model implements HasMedia
         return $this->belongsTo(Puesto::class, 'puestoregistra_id');
     }
 
-    public function getFechaCompromisoAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setFechaCompromisoAttribute($value)
-    {
-        $this->attributes['fecha_compromiso'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
-    public function getFechaVerificacionAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setFechaVerificacionAttribute($value)
-    {
-        $this->attributes['fecha_verificacion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
 
     public function responsable_accion()
     {
@@ -165,4 +166,36 @@ class AccionCorrectiva extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function empleados()
+	{
+        return $this->belongsTo(Empleado::class, 'id_registro', 'id')->with('area');
+
+	}
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_id', 'id');
+    }
+
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'proceso_id', 'id');
+    }
+
+    public function activo()
+    {
+        return $this->belongsTo(Tipoactivo::class, 'activo_id', 'id');
+    }
+
+    public function planes()
+    {
+        return $this->morphToMany(PlanImplementacion::class, 'plan_implementacionable');
+    }
+
+    public function actividades()
+    {
+        return $this->hasMany(ActividadAccionCorrectiva::class, 'accion_correctiva_id', 'id');
+    }
+
 }

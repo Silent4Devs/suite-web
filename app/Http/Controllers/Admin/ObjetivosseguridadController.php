@@ -20,7 +20,6 @@ class ObjetivosseguridadController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('objetivosseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $query = Objetivosseguridad::get();
         if ($request->ajax()) {
             $query = Objetivosseguridad::get();
             $table = Datatables::of($query);
@@ -95,7 +94,7 @@ class ObjetivosseguridadController extends Controller
 
     public function store(Request $request)
     {
-
+        // dd($request);
         $objetivosseguridad = Objetivosseguridad::create($request->all());
         //return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
         return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with("success", 'Guardado con éxito');

@@ -18,9 +18,9 @@ class MaterialSgsi extends Model implements HasMedia
 
     public $table = 'material_sgsis';
 
-    protected $appends = [
-        'archivo',
-    ];
+    // protected $appends = [
+    //     'archivo',
+    // ];
 
     public static $searchable = [
         'objetivo',
@@ -41,6 +41,7 @@ class MaterialSgsi extends Model implements HasMedia
     protected $fillable = [
         'objetivo',
         'nombre',
+        'material_id',
         'personalobjetivo',
         'arearesponsable_id',
         'tipoimparticion',
@@ -74,10 +75,6 @@ class MaterialSgsi extends Model implements HasMedia
         return $this->belongsTo(Area::class, 'arearesponsable_id');
     }
 
-    
-
-   
-
     public function getArchivoAttribute()
     {
         return $this->getMedia('archivo')->last();
@@ -87,4 +84,17 @@ class MaterialSgsi extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function documentos_material()
+    {
+        return $this->hasMany(DocumentoMaterialSgsi::class, "material_id", "id");
+    }
+
+    public function getFechacreacionactualizacionAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null; 
+    }
+
+    
+
 }

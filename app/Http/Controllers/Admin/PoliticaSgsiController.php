@@ -22,7 +22,7 @@ class PoliticaSgsiController extends Controller
         abort_if(Gate::denies('politica_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PoliticaSgsi::with(['team','empleado'])->select(sprintf('%s.*', (new PoliticaSgsi)->table));
+            $query = PoliticaSgsi::with(['team','reviso'])->select(sprintf('%s.*', (new PoliticaSgsi)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -47,26 +47,23 @@ class PoliticaSgsiController extends Controller
                 $table->editColumn('id', function ($row) {
                     return $row->id ? $row->id : "";
                 });
-
                 $table->editColumn('politicasgsi', function ($row) {
                     return $row->politicasgsi ? strip_tags($row->politicasgsi) : "";
                 });
-
                 $table->editColumn('fecha_publicacion', function ($row) {
                     return $row->fecha_publicacion ? $row->fecha_publicacion : "";
                 });
-
                 $table->editColumn('fecha_entrada', function ($row) {
                     return $row->fecha_entrada ? $row->fecha_entrada : "";
                 });
-                $table->editColumn('reviso_politica', function ($row) {
-                    return $row->empleado ? $row->empleado->name : "";
+                $table->addColumn('reviso_politica', function ($row) {
+                    return $row->reviso ? $row->reviso : '';
                 });
                 $table->editColumn('puesto_reviso', function ($row) {
-                    return $row->empleado ? $row->empleado->puesto : "";
+                    return $row->reviso ? $row->reviso->puesto : "";
                 });
                 $table->editColumn('area_reviso', function ($row) {
-                    return $row->empleado ? $row->empleado->area->area : "";
+                    return $row->reviso ? $row->reviso->area->area : "";
                 });
                 $table->editColumn('fecha_revision', function ($row) {
                     return $row->fecha_revision ? $row->fecha_revision : "";

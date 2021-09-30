@@ -41,6 +41,9 @@
                         <th>
                             Frecuencia
                         </th>
+                        <th>
+                            Indicadores
+                        </th>
                         {{--<th>
                             Meta
                         </th>
@@ -310,6 +313,13 @@
                     {
                         data: 'frecuencia',
                         name: 'frecuencia'
+                    },
+                    {
+                        data: 'enlace',
+                        name: 'enlace',
+                        render: function(data, type, row, meta) {
+                            return `<div class="text-center w-100"><a href="evaluaciones-sgsisInsertar/?id=${data}" target="_blank"><i class="fas fa-table fa-2x text-info"></i></a></div>`;
+                        }
                     },
                     /*{
                         data: 'meta',

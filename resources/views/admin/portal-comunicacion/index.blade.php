@@ -391,7 +391,9 @@
                             @forelse($comunicacionSgis_carrusel as $idx=>$carrusel)
                                 @php
                                     if(($carrusel->first()->count())){
-                                        $imagen= 'storage/imagen_comunicado_SGI/'.$carrusel->imagenes_comunicacion->first()->imagen;
+                                        if($carrusel->imagenes_comunicacion->first()){
+                                            $imagen= 'storage/imagen_comunicado_SGI/'.$carrusel->imagenes_comunicacion->first()->imagen;
+                                        }
                                     }
                                     else{
                                         $imagen= 'img/tabantaj_fondo_blanco.png';
@@ -446,8 +448,10 @@
                     @forelse($comunicacionSgis as $comunicacionSgi)
                         <div class="comunicado" style="position:relative;">
                             @php
-                            if(($carrusel->first()->count())){
-                                $imagen= 'storage/imagen_comunicado_SGI/'.$carrusel->imagenes_comunicacion->first()->imagen;
+                            if(($comunicacionSgi->first()->count())){
+                                if($carrusel->imagenes_comunicacion->first()){
+                                    $imagen= 'storage/imagen_comunicado_SGI/'.$comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                                }        
                             }
                             else{
                                 $imagen= 'img/portal_404.png';

@@ -9,16 +9,17 @@ use App\Models\Empleado;
 use App\Models\Documento;
 use Laracasts\Flash\Flash;
 use App\Models\Macroproceso;
+use App\Models\MatrizRiesgo;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\IndicadoresSgsi;
 use App\Models\RevisionDocumento;
 use Illuminate\Support\Facades\DB;
 use App\Models\EvaluacionIndicador;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\HistorialVersionesDocumento;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate;
 
 class ProcesoController extends Controller
 {
@@ -186,9 +187,10 @@ class ProcesoController extends Controller
         // dd($revisiones);
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
         $indicadores = IndicadoresSgsi::get();
-        //dd($indicadores::getResultado());
+        $riesgos = MatrizRiesgo::get();
+        // dd($indicadores::getResultado());
 
-        return view('admin.procesos.vistas', compact('documento', 'revisiones', 'documentos_relacionados', 'versiones', 'indicadores'));
+        return view('admin.procesos.vistas', compact('documento', 'revisiones', 'documentos_relacionados', 'versiones', 'indicadores', 'riesgos'));
     }
 
     public function AjaxRequestIndicador(Request $request)
@@ -206,6 +208,29 @@ class ProcesoController extends Controller
             $evaluacion->fecha = Carbon::parse($evaluacion->fecha)->format('d-m-Y');
         }
 
-        return response()->json(["gauge" => $res, "barraschart" => $barras, "datosbarra" => $evaluaciones, 'datos' => $input, 'unidad' => $unidad], 200);
+        $porcentaje = number_format(($input['resultado']*100)/$input['meta'] , 2);
+
+        return response()->json(["gauge" => $res, "barraschart" => $barras, "datosbarra" => $evaluaciones,'datos' => $input, 'unidad' => $unidad, 'porcentaje' => $porcentaje], 200);
+    }
+
+    public function AjaxRequestRiesgos(Request $request)
+    {
+        $input = $request->all();
+        
+
+        $data = MatrizRiesgo::select('id', 'descripcionriesgo', 'nivelriesgo', 'nivelriesgo_residual', 'meta')->where('id', $input['id'])->first();
+
+        $res = '<div id="resultado_riesgos" width="900" height="750"></div>';
+
+        $barras = '<canvas id="resultadobarra_riesgos" width="900" height="750"></canvas>';
+
+        /*$evaluaciones = EvaluacionIndicador::select('fecha', 'resultado')->where('id_indicador', $input['id'])->get();
+        foreach ($evaluaciones as $evaluacion) {
+            $evaluacion->fecha = Carbon::parse($evaluacion->fecha)->format('d-m-Y');
+        }*/
+
+        return response()->json(["gauge_riesgos" => $res, "barraschart_riesgos" => $barras, "datosbarra_riesgos" => $data, 'datos_riesgos' => $data, "meta_riesgos" => $request->meta ], 200);
+
+
     }
 }

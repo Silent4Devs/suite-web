@@ -81,8 +81,8 @@ class EmpleadoController extends Controller
                 return $row->name ? $row->name : "";
             });
 
-            $table->editColumn('foto', function ($row) {
-                return $row->foto ? $row->foto : '';
+            $table->editColumn('avatar', function ($row) {
+                return $row->avatar ? $row->avatar : '';
             });
 
             $table->editColumn('area', function ($row) {
@@ -132,11 +132,32 @@ class EmpleadoController extends Controller
         return view('admin.empleados.index', compact('ceo_exists'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
+     public function getCertificaciones($empleado)
+     {
+        $certificaciones = CertificacionesEmpleados::where("empleado_id",intval($empleado))->get();
+        return datatables()->of($certificaciones)->toJson();
+     }
+
+     public function getEducacion($empleado)
+     {
+        $educacions = EducacionEmpleados::where("empleado_id",intval($empleado))->get();
+        return datatables()->of($educacions)->toJson();
+     }
+
+     public function getExperiencia($empleado)
+     {
+        $experiencias = ExperienciaEmpleados::where("empleado_id",intval($empleado))->get();
+        return datatables()->of($experiencias)->toJson();
+     }
+
+     public function getCursos($empleado)
+     {
+        $cursos = CursosDiplomasEmpleados::where("empleado_id",intval($empleado))->get();
+        return datatables()->of($cursos)->toJson();
+     }
+
     public function create()
     {
 
@@ -152,14 +173,7 @@ class EmpleadoController extends Controller
         $certificaciones = CertificacionesEmpleados::get();
         return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function onlyStore($request)
     {
 
         // dd($request->all());
@@ -168,6 +182,7 @@ class EmpleadoController extends Controller
         $cursos = json_decode($request->curso);
         $certificados = json_decode($request->certificado);
         // dd($cursos);
+
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $validateSupervisor = 'nullable|exists:empleados,id';
@@ -204,6 +219,10 @@ class EmpleadoController extends Controller
             "n_registro" =>  $request->n_registro,
             "sede_id" =>  $request->sede_id,
             "resumen" =>  $request->resumen,
+            "cumpleaños" => $request->cumpleaños,
+            "direccion" => $request->direccion,
+            "telefono_movil" => $request->telefono_movil,
+            "extension" => $request->extension,
             "cumpleaños" => $request->cumpleaños,
             "direccion" => $request->direccion,
         ]);
@@ -257,6 +276,27 @@ class EmpleadoController extends Controller
             'foto' => $image
         ]);
 
+        return $empleado;
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $empleado = $this->onlyStore($request);
+
+        return redirect()->route('admin.empleados.index')->with("success", 'Guardado con éxito');
+    }
+
+    public function storeWithCompetencia(Request $request)
+    {
+
+        $empleado = $this->onlyStore($request);
+
+        return redirect()->route('admin.empleados.edit', $empleado)->with("success", 'Guardado con éxito');
 
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -269,6 +309,7 @@ class EmpleadoController extends Controller
                 }
             }
         }
+        // dd($request->hasFile('files'));
 
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -318,17 +359,7 @@ class EmpleadoController extends Controller
                 'vigencia' => $certificacion[1],
             ]);
         }
-        // $gantt_path = 'storage/gantt/gantt_inicial.json';
-        // $path = public_path($gantt_path);
-
-        // $json_code = json_decode(file_get_contents($path), true);
-        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        // $write_empleados = $json_code;
-        // file_put_contents($path, json_encode($write_empleados));
-
-        return redirect()->route('admin.empleados.index')->with("success", 'Guardado con éxito');
     }
-
     /**
      * Display the specified resource.
      *
@@ -348,8 +379,10 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
+
         abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::findOrfail($id);
+        // dd($empleado);
         $empleados = Empleado::get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
@@ -405,7 +438,6 @@ class EmpleadoController extends Controller
 
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
-        $image = null;
         if ($request->snap_foto && $request->file('foto')) {
             if ($request->snap_foto) {
                 if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
@@ -481,7 +513,11 @@ class EmpleadoController extends Controller
             "n_empleado" =>  $request->n_empleado,
             "n_registro" =>  $request->n_empleado,
             'foto' => $image,
-            "sede_id" => $request->sede_id
+            "sede_id" => $request->sede_id,
+            "cumpleaños" => $request->cumpleaños,
+            "direccion" => $request->direccion,
+            "telefono_movil" => $request->telefono_movil,
+            "extension" => $request->extension,
         ]);
 
         // $gantt_path = 'storage/gantt/gantt_inicial.json';
@@ -508,12 +544,72 @@ class EmpleadoController extends Controller
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
+    public function deleteCertificaciones(Request $request, $certificacion)
+    {
+        if($request->ajax()){
+            $certificacion=CertificacionesEmpleados::find(intval($certificacion));
+            $u_certificacion=$certificacion->delete();
+            if($u_certificacion){
+                return response()->json(['success'=>true]);
+
+            }
+            else{
+                return response()->json(['error'=>true]);
+            }
+        }
+    }
+
+    public function deleteCursos(Request $request, $curso)
+    {
+        if($request->ajax()){
+            $curso=CursosDiplomasEmpleados::find(intval($curso));
+            $u_curso=$curso->delete();
+            if($u_curso){
+                return response()->json(['success'=>true]);
+
+            }
+            else{
+                return response()->json(['error'=>true]);
+            }
+        }
+    }
+
+    public function deleteEducacion(Request $request, $educacion)
+    {
+        if($request->ajax()){
+            $educacion=EducacionEmpleados::find(intval($educacion));
+            $u_educacion=$educacion->delete();
+            if($u_educacion){
+                return response()->json(['success'=>true]);
+
+            }
+            else{
+                return response()->json(['error'=>true]);
+            }
+        }
+    }
+
+    public function deleteExperiencia(Request $request, $experiencia)
+    {
+        if($request->ajax()){
+            $experiencia=ExperienciaEmpleados::find(intval($experiencia));
+            $u_experiencia=$experiencia->delete();
+            if($u_experiencia){
+                return response()->json(['success'=>true]);
+
+            }
+            else{
+                return response()->json(['error'=>true]);
+            }
+        }
+    }
+
     public function getEmpleados(Request $request)
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::with('area')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
+                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
                 $lista = "<ul class='list-group' id='empleados-lista'>";
                 foreach ($usuarios as $usuario) {
                     $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'><i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . "</button>";

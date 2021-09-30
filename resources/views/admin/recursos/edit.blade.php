@@ -1,17 +1,32 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+
+#tbl-participantes_paginate{
+    margin-left: 50px;
+    margin-top: 8px;
+    display: flex !important;
+    justify-content: space-between;
+}
+
+#tbl-participantes_paginate .paginate_button{
+    margin: 0 7px;
+}
+
+</style>
+
     {{ Breadcrumbs::render('admin.recursos.create') }}
-    
+
     <div class="card">
-        <div class="card-header">
-            {{ trans('global.edit') }} Capacitación
+        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Capacitación </h3>
         </div>
         <div id="errores_alert"></div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <ul class="nav nav-pills nav-fill nav-tabs" id="tab-recursos" role="tablist">
+                    {{-- <ul class="nav nav-pills nav-fill nav-tabs" id="tab-recursos" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab"
                                 aria-controls="general" aria-selected="true">
@@ -30,243 +45,306 @@
                                 </font>
                             </a>
                         </li>
-                    </ul>
-                    <div class="tab-content card" id="myTabContentJust">
-                        <div class="px-4 mt-4 tab-pane fade show active" id="general" role="tabpanel"
-                            aria-labelledby="general-tab">
-                            <div class="w-100" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold;">
-                                    Información general de la capacitación</span>
-                            </div>
-                            <form id="form-informacion-general" class="mt-3 row" method="POST"
-                                action="{{ route('admin.recursos.update', [$recurso->id]) }}"
-                                enctype="multipart/form-data">
-                                @method('PUT')
-                                @csrf
-                                <div class="pl-3 row w-100">
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                                        <label for="cursoscapacitaciones">
-                                            <i class="fab fa-discourse iconos-crear"></i> Título
-                                        </label>
-                                        <input
-                                            class="form-control {{ $errors->has('cursoscapacitaciones') ? 'is-invalid' : '' }}"
-                                            type="text" name="cursoscapacitaciones" id="cursoscapacitaciones"
-                                            value="{{ old('cursoscapacitaciones', $recurso->cursoscapacitaciones) }}"
-                                            autocomplete="off">
-                                        <span class="text-danger error_text cursoscapacitaciones_error"></span>
+                    </ul> --}}
+
+                    <div class="caja_botones_menu">
+                        <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-file"
+                                style="font-size:30px;" style="text-decoration:none;"></i>Información General</a>
+                        <a href="#" data-tabs="contenido2"><i class="mr-2 fas fa-users" style="font-size:30px;"></i>
+                            Participantes</a>
+                    </div>
+
+
+                    <div class="caja_caja_secciones">
+                        <div class="caja_secciones">
+
+                            <section id="contenido1" class="mt-4 caja_tab_reveldada">
+                                <div>
+                                    <div class="w-100" style="border-bottom: solid 2px #0CA193;">
+                                        <span style="font-size: 17px; font-weight: bold;">
+                                            Información general de la capacitación</span>
                                     </div>
-                                </div>
-                                <div class="pl-3 row w-100">
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                        <label for="categoria_capacitacion_id"><i class="fab fa-discourse iconos-crear"></i>
-                                            Categoría</label>
-                                        <select name="categoria_capacitacion_id" id="categoria_capacitacion_id"
-                                            class="form-control">
-                                            <option value="" selected disabled>-- Selecciona una categoría --</option>
-                                            @foreach ($categorias as $categoria)
-                                                <option value="{{ $categoria->id }}"
-                                                    {{ old('categoria_capacitacion_id', $categoria->nombre) == $categoria->nombre ? 'selected' : '' }}>
-                                                    {{ $categoria->nombre }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('categoria_capacitacion_id'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('categoria_capacitacion_id') }}
+                                    <form id="form-informacion-general" class="mt-3 row" method="POST"
+                                        action="{{ route('admin.recursos.update', [$recurso->id]) }}"
+                                        enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
+                                        <div class="pl-3 row w-100">
+                                            <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                                                <label for="cursoscapacitaciones">
+                                                    <i class="fab fa-discourse iconos-crear"></i> Título
+                                                </label>
+                                                <input
+                                                    class="form-control {{ $errors->has('cursoscapacitaciones') ? 'is-invalid' : '' }}"
+                                                    type="text" name="cursoscapacitaciones" id="cursoscapacitaciones"
+                                                    value="{{ old('cursoscapacitaciones', $recurso->cursoscapacitaciones) }}"
+                                                    autocomplete="off">
+                                                <span class="text-danger error_text cursoscapacitaciones_error"></span>
                                             </div>
-                                        @endif
-                                        <span
-                                            class="help-block">{{ trans('cruds.recurso.fields.cursoscapacitaciones_helper') }}</span>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                        <label for="tipo"><i class="fab fa-discourse iconos-crear"></i> Tipo</label>
-                                        <select name="tipo" id="tipo" class="form-control">
-                                            <option value="" {{ old('tipo', $recurso->tipo) == null ? 'selected' : '' }}
-                                                disabled>
-                                                -- Selecciona una opción --</option>
-                                            <option value="curso"
-                                                {{ old('tipo', $recurso->tipo) == 'curso' ? 'selected' : '' }}> Curso
-                                            </option>
-                                            <option value="diplomado"
-                                                {{ old('tipo', $recurso->tipo) == 'diplomado' ? 'selected' : '' }}>
-                                                Diplomado</option>
-                                            <option value="certificacion"
-                                                {{ old('tipo', $recurso->tipo) == 'certificacion' ? 'selected' : '' }}>
-                                                Certificación
-                                            </option>
-                                        </select>
-                                        <span class="text-danger error_text tipo_error"></span>
-                                    </div>
-                                </div>
-                                <div class="pl-3 row w-100">
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                        <label for=""> <i class="fas fa-laptop iconos-crear"></i>Modalidad</label>
-                                        <select name="modalidad" class="form-control" id="select_modalidad">
-                                            <option {{ old('presencial', $recurso->modalidad) == 'presencial' ? 'selected' : '' }} value="presencial">Presencial</option>
-                                            <option {{ old('presencial', $recurso->modalidad) == 'linea' ? 'selected' : '' }} value="linea">En linea</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                        <label for="">
-                                          <i class="fas fa-map-marker-alt iconos-crear"></i>
-                                         <font id="font_modalidad_seleccionada"> {{ $recurso->modalidad == 'presencial' ? 'Ubicación' : 'Link' }} </font></label> 
-                                         <input type="" name="ubicacion" class="form-control" value="{{  old('ubicacion', $recurso->ubicacion)  }}">
-                                    </div>
-                                </div>
-                                <div class="pl-3 row w-100">
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                        <label for="fecha_curso"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
-                                            Inicio</label>
-                                        <input class="form-control" type="datetime-local" id="fecha_curso"
-                                            name="fecha_curso"
-                                            value="{{ old('fecha_curso', \Carbon\Carbon::parse($recurso->fecha_curso)->format('Y-m-d\TH:i')) }}">
-                                        <span class="text-danger error_text fecha_curso_error"></span>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                        <label for="fecha_fin"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
-                                            Finalización</label>
-                                        <input class="form-control" type="datetime-local" id="fecha_fin" name="fecha_fin"
-                                            value="{{ old('fecha_fin', \Carbon\Carbon::parse($recurso->fecha_fin)->format('Y-m-d\TH:i')) }}">
-                                        <span class="text-danger error_text fecha_inicio_error"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="instructor"><i
-                                            class="fas fa-user iconos-crear"></i>{{ trans('cruds.recurso.fields.instructor') }}</label>
-                                    <input class="form-control {{ $errors->has('instructor') ? 'is-invalid' : '' }}"
-                                        type="text" name="instructor" id="instructor"
-                                        value="{{ old('instructor', $recurso->instructor) }}">
-                                    <span class="text-danger error_text instructor_error"></span>
-                                </div>
-                                <div class="form-group col-md-6 col-sm-6 col-12 col-lg-12">
-                                    <label for="descripcion"> <i class="fas fa-lightbulb iconos-crear"></i>
-                                        Descripción</label>
-                                    <textarea
-                                        class="form-control descripcion {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                        name="descripcion"
-                                        id="descripcion">{{ old('descripcion', $recurso->descripcion) }}</textarea>
-                                    <span class="text-danger error_text descripcion_error"></span>
-                                </div>
-                                <div class="form-group col-12 text-right">
-                                    <button class="btn btn-danger" style="position: relative">
-                                        Actualizar y salir
-                                    </button>
-                                    <button class="btnNext btn btn-primary" style="border-radius:100px;">
-                                        Siguiente
-                                        <i class="ml-1 fas fa-arrow-right"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="px-4 mt-4 mb-3 tab-pane fade" id="participantes" role="tabpanel"
-                            aria-labelledby="participantes-tab">
-                            <div class="w-100" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold;">
-                                    Participantes</span>
-                            </div>
-                            <form method="POST" action="{{ route('admin.recursos.suscribir') }}" class="mt-3 row"
-                                id="form-participantes" enctype="multipart/form-data">
-                                <div class="pl-3 row w-100">
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                        <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
-                                            participante</label>
-                                        <input type="hidden" id="id_empleado">
-                                        <input class="form-control" type="text" id="participantes_search"
-                                            placeholder="Busca un empleado" style="position: relative" autocomplete="off" />
-                                        <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 43px; right: 25px;"></i>
-                                        <div id="participantes_sugeridos"></div>
-                                        @if ($errors->has('participantes'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('participantes') }}
-                                            </div>
-                                        @endif
-                                        <span
-                                            class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                        <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
-                                        <input class="form-control" type="text" id="email"
-                                            placeholder="Correo del participante" readonly style="cursor: not-allowed" />
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button id="btn-suscribir-participante" type="submit"
-                                        class="mr-3 btn btn-sm btn-outline-success"
-                                        style="float: right; position: relative;">
-                                        <i class="mr-1 fas fa-plus-circle"></i>
-                                        Suscribir Participante
-                                        <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
-                                            style="position: absolute; top: 3px;left: 8px;"></i>
-                                    </button>
-                                </div>
-                            </form>
-                            <div class="mt-3 col-12 datatable-fix">
-                                <table class="table w-100" id="tbl-participantes">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th scope="col">No.</th>
-                                            <th scope="col">No. Empleado</th>
-                                            <th scope="col">Participante</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Calificación</th>
-                                            <th scope="col">Certificado</th>
-                                            <th scope="col">Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                            <div class="mt-4 w-100" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold;">
-                                    Registrar calificación</span>
-                                <span id="participante_seleccionado"></span>
-                            </div>
-                            <div class="mt-3 form-group col-12">
-                                <form id="form_calificar_participantes" action="{{ route('admin.recursos.calificar') }}"
-                                    method="POST" enctype="multipart/form-data">
-                                    <div class="row">
-                                        <input type="hidden" id="id_empleado_calificacion" name="id_empleado">
-                                        <input type="hidden" id="id_recurso_calificacion" name="id_recurso">
-                                        <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                            <label for="text"><i class="fas fa-edit iconos-crear"></i>Calificación</label>
-                                            <input class="form-control" type="number" id="calificacion" name="calificacion"
-                                                placeholder="Calificación" />
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                            <label for="text"><i class="fas fa-image iconos-crear"></i>Certificado</label>
-                                            <input class="form-control" type="file" id="certificado" name="certificado"
-                                                placeholder="Certificado" accept=".jpg, .png, .gif" />
-                                            <span class="text-xs text-muted">Solo formatos <i class="fas fa-image"></i> JPG,
-                                                PNG, GIF</span>
-                                            <div class="text-center col-12" id="c_img_certificado">
-                                                <img src="" alt="" width="80px" id="img_certificado">
+                                        <div class="pl-3 row w-100">
+                                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                <label for="categoria_capacitacion_id"><i
+                                                        class="fab fa-discourse iconos-crear"></i>
+                                                    Categoría</label>
+                                                <select name="categoria_capacitacion_id" id="categoria_capacitacion_id"
+                                                    class="form-control">
+                                                    <option value="" selected disabled>-- Selecciona una categoría --
+                                                    </option>
+                                                    @foreach ($categorias as $categoria)
+                                                        <option value="{{ $categoria->id }}"
+                                                            {{ old('categoria_capacitacion_id', $categoria->nombre) == $categoria->nombre ? 'selected' : '' }}>
+                                                            {{ $categoria->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('categoria_capacitacion_id'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('categoria_capacitacion_id') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.recurso.fields.cursoscapacitaciones_helper') }}</span>
+                                            </div>
+                                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                <label for="tipo"><i class="fab fa-discourse iconos-crear"></i> Tipo</label>
+                                                <select name="tipo" id="tipo" class="form-control">
+                                                    <option value=""
+                                                        {{ old('tipo', $recurso->tipo) == null ? 'selected' : '' }}
+                                                        disabled>
+                                                        -- Selecciona una opción --</option>
+                                                    <option value="curso"
+                                                        {{ old('tipo', $recurso->tipo) == 'curso' ? 'selected' : '' }}>
+                                                        Curso
+                                                    </option>
+                                                    <option value="diplomado"
+                                                        {{ old('tipo', $recurso->tipo) == 'diplomado' ? 'selected' : '' }}>
+                                                        Diplomado</option>
+                                                    <option value="certificacion"
+                                                        {{ old('tipo', $recurso->tipo) == 'certificacion' ? 'selected' : '' }}>
+                                                        Certificación
+                                                    </option>
+                                                </select>
+                                                <span class="text-danger error_text tipo_error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="pl-3 row w-100">
+                                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                <label for=""> <i class="fas fa-laptop iconos-crear"></i>Modalidad</label>
+                                                <select name="modalidad" class="form-control" id="select_modalidad">
+                                                    <option
+                                                        {{ old('presencial', $recurso->modalidad) == 'presencial' ? 'selected' : '' }}
+                                                        value="presencial">Presencial</option>
+                                                    <option
+                                                        {{ old('presencial', $recurso->modalidad) == 'linea' ? 'selected' : '' }}
+                                                        value="linea">En linea</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                <label for="">
+                                                    <i class="fas fa-map-marker-alt iconos-crear"></i>
+                                                    <font id="font_modalidad_seleccionada">
+                                                        {{ $recurso->modalidad == 'presencial' ? 'Ubicación' : 'Link' }}
+                                                    </font>
+                                                </label>
+                                                <input type="" name="ubicacion" class="form-control"
+                                                    value="{{ old('ubicacion', $recurso->ubicacion) }}">
+                                            </div>
+                                        </div>
+                                        <div class="pl-3 row w-100">
+                                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                <label for="fecha_curso"> <i class="fas fa-calendar-alt iconos-crear"></i>
+                                                    Fecha
+                                                    Inicio</label>
+                                                <input class="form-control" type="datetime-local" id="fecha_curso"
+                                                    name="fecha_curso"
+                                                    value="{{ old('fecha_curso', \Carbon\Carbon::parse($recurso->fecha_curso)->format('Y-m-d\TH:i')) }}">
+                                                <span class="text-danger error_text fecha_curso_error"></span>
+                                            </div>
+                                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                <label for="fecha_fin"> <i class="fas fa-calendar-alt iconos-crear"></i>
+                                                    Fecha
+                                                    Finalización</label>
+                                                <input class="form-control" type="datetime-local" id="fecha_fin"
+                                                    name="fecha_fin"
+                                                    value="{{ old('fecha_fin', \Carbon\Carbon::parse($recurso->fecha_fin)->format('Y-m-d\TH:i')) }}">
+                                                <span class="text-danger error_text fecha_inicio_error"></span>
                                             </div>
                                         </div>
                                         <div class="form-group col-12">
-                                            <button id="btn_calificar_empleado" type="submit"
-                                                class="btn btn-sm btn-outline-success" style="float: right">
-                                                <i class="mr-1 fas fa-edit "></i>Calificar</button>
+                                            <label for="instructor"><i
+                                                    class="fas fa-user iconos-crear"></i>{{ trans('cruds.recurso.fields.instructor') }}</label>
+                                            <input
+                                                class="form-control {{ $errors->has('instructor') ? 'is-invalid' : '' }}"
+                                                type="text" name="instructor" id="instructor"
+                                                value="{{ old('instructor', $recurso->instructor) }}">
+                                            <span class="text-danger error_text instructor_error"></span>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-12 col-lg-12">
+                                            <label for="descripcion"> <i class="fas fa-lightbulb iconos-crear"></i>
+                                                Descripción</label>
+                                            <textarea
+                                                class="form-control descripcion {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
+                                                name="descripcion"
+                                                id="descripcion">{{ old('descripcion', $recurso->descripcion) }}</textarea>
+                                            <span class="text-danger error_text descripcion_error"></span>
+                                        </div>
+                                        <div class="text-right form-group col-12">
+                                            {{-- <button class="btn btn-danger" style="position: relative">
+                                                Actualizar y salir
+                                            </button>
+                                            <button class="btnNext btn btn-primary" style="border-radius:100px;">
+                                                Siguiente
+                                                <i class="ml-1 fas fa-arrow-right"></i>
+                                            </button> --}}
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+
+
+                            <section id="contenido2" class="mt-4 ml-2">
+                                <div>
+                                    <div class="w-100" style="border-bottom: solid 2px #0CA193;">
+                                        <span style="font-size: 17px; font-weight: bold;">
+                                            Participantes</span>
+                                    </div>
+                                    <div class="px-1 py-2 mx-3 mb-4 col-12 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;margin-top: 15px;">
+                                        <div class="row w-100">
+                                            <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                                <div class="w-100">
+                                                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-11">
+                                                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                                <p class="m-0" style="font-size: 14px; color:#1E3A8A "><strong>Paso 1 </strong>
+                                                    Busque participante y haga clic en el botón suscribir participante.
+                                                </p>
+                                                <p class="m-0" style="font-size: 14px; color:#1E3A8A "><strong>Paso 2 </strong>
+                                                    Registre calificación y cargue certificado, haga clic en el botón calificar.
+                                                </p>
+                                                <p class="m-0" style="font-size: 14px; color:#1E3A8A "><strong>Paso 3 </strong>
+                                                    Al final del formulario haga clic en el botón actualizar.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-
-                            <div class="mt-3 form-group col-12 text-right">
-                                    
-                                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                                <button class="btnPrevious btn btn-primary" style="border-radius:100px;">
-                                    <i class="ml-1 fas fa-arrow-left"></i>
-                                    Anterior
-                                </button>
-                                <button id="btn-general" class="btn btn-success btn-general" style="position: relative">
-                                    Actualizar
-                                    <i class="ml-1 fas fa-check-circle"></i>
-                                    <i id="guardando_capacitacion" class="fas fa-cog fa-spin text-muted" style="position: absolute; top: 7px;right: 12px;"></i>
-                                </button>
-                            </div>
+                                    <form method="POST" action="{{ route('admin.recursos.suscribir') }}"
+                                        class="mt-3 row" id="form-participantes" enctype="multipart/form-data">
+                                        <div class="pl-3 row w-100">
+                                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
+                                                    participante</label>
+                                                <input type="hidden" id="id_empleado">
+                                                <input class="form-control" type="text" id="participantes_search"
+                                                    placeholder="Busca un empleado" style="position: relative"
+                                                    autocomplete="off" />
+                                                <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
+                                                    style="position: absolute; top: 43px; right: 25px;"></i>
+                                                <div id="participantes_sugeridos"></div>
+                                                @if ($errors->has('participantes'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('participantes') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.recurso.fields.participantes_helper') }}</span>
+                                            </div>
+                                            <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                <label for="email"><i class="fas fa-at iconos-crear"></i>Email</label>
+                                                <input class="form-control" type="text" id="email"
+                                                    placeholder="Correo del participante" readonly
+                                                    style="cursor: not-allowed" />
+                                            </div>
+                                        </div>
+                                        <div class="col-12" style="margin-bottom: 20px;">
+                                            <button id="btn-suscribir-participante" type="submit"
+                                                class="mr-3 btn btn-sm btn-outline-success"
+                                                style="float: right; position: relative;">
+                                                <i class="mr-1 fas fa-plus-circle"></i>
+                                                Suscribir Participante
+                                                <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
+                                                    style="position: absolute; top: 3px;left: 8px;"></i>
+                                            </button>
+                                        </div>
+                                     </form>
+                                    <div class="mt-3 col-12 datatable-fix">
+                                        <table class="table w-100" id="tbl-participantes">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">No.</th>
+                                                    <th scope="col">No. Empleado</th>
+                                                    <th scope="col">Participante</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Calificación</th>
+                                                    <th scope="col">Certificado</th>
+                                                    <th scope="col">Opciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mt-4 w-100" style="border-bottom: solid 2px #0CA193;">
+                                        <span style="font-size: 17px; font-weight: bold;">
+                                            Registrar calificación</span>
+                                        <span id="participante_seleccionado"></span>
+                                    </div>
+                                    <div class="mt-3 form-group col-12">
+                                        <form id="form_calificar_participantes"
+                                            action="{{ route('admin.recursos.calificar') }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            <div class="row">
+                                                <input type="hidden" id="id_empleado_calificacion" name="id_empleado">
+                                                <input type="hidden" id="id_recurso_calificacion" name="id_recurso">
+                                                <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                    <label for="text"><i
+                                                            class="fas fa-edit iconos-crear"></i>Calificación</label>
+                                                    <input class="form-control" type="number" id="calificacion"
+                                                        name="calificacion" placeholder="Calificación" />
+                                                </div>
+                                                <div class="form-group col-sm-12 col-md-12 col-lg-6">
+                                                    <label for="text"><i
+                                                            class="fas fa-image iconos-crear"></i>Certificado</label>
+                                                    <input class="form-control" type="file" id="certificado"
+                                                        name="certificado" placeholder="Certificado"
+                                                        accept=".jpg, .png, .gif" />
+                                                    <span class="text-xs text-muted">Solo formatos <i
+                                                            class="fas fa-image"></i>
+                                                        JPG,
+                                                        PNG, GIF</span>
+                                                    <div class="text-center col-12" id="c_img_certificado">
+                                                        <img src="" alt="" width="80px" id="img_certificado">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-12">
+                                                    <button id="btn_calificar_empleado" type="submit"
+                                                        class="btn btn-sm btn-outline-success" style="float: right">
+                                                        <i class="mr-1 fas fa-edit "></i>Calificar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
+                    <div class="mt-3 text-right form-group col-12">
+
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                        {{-- <button class="btnPrevious btn btn-primary" style="border-radius:100px;">
+                            <i class="ml-1 fas fa-arrow-left"></i>
+                            Anterior
+                        </button> --}}
+                        <button id="btn-general" class="btn btn-success btn-general" style="position: relative">
+                            Actualizar
+                            <i class="ml-1 fas fa-check-circle"></i>
+                            <i id="guardando_capacitacion" class="fas fa-cog fa-spin text-muted"
+                                style="position: absolute; top: 7px;right: 12px;"></i>
+                        </button>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -274,14 +352,17 @@
 
 
 
+
 @endsection
 
 @section('scripts')
     <script>
+        participantesDataTable();
         function participantesDataTable() {
             let id_recurso = "{{ $recurso->id }}";
             if (!$.fn.dataTable.isDataTable('#tbl-participantes')) {
                 tbl_participantes = $('#tbl-participantes').DataTable({
+                    // "pageLength": 5,
                     buttons: [],
                     ajax: {
                         url: `/admin/recursos/${id_recurso}/participantes/`,
@@ -297,14 +378,14 @@
                         {
                             data: "name",
                             render: function(data, type, row, meta) {
-                                let foto = row.foto != null ? row.foto : "no-photo.png";
+                                let foto = row.avatar;
                                 let html = `<div class="row align-items-center">
                                 <div class="col-4">
                                     <img src="{{ asset('storage/empleados/imagenes') }}/${foto}" width="35px" class="mr-2 rounded-circle" />
                                 </div>
                                 <div class="col-8">
                                     <p class="p-0 m-0"><strong>${data}</strong></p>
-                                    <p class="p-0 m-0"><span class="badge badge-primary">${row.area}</span></p>
+                                    <p class="p-0 m-0"><span class="badge badge-primary"></span></p>
                                 </div>
                             </div>`;
                                 return html;
@@ -634,22 +715,21 @@
             $("#email").val(user.email);
             $("#participantes_sugeridos").hide();
         }
-
     </script>
 
 
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
             let select_activos = document.querySelector('#select_modalidad');
             select_activos.addEventListener('change', function(e) {
                 e.preventDefault();
                 let texto_activos = document.querySelector('#font_modalidad_seleccionada');
-                if(this.value == 'presencial'){
+                if (this.value == 'presencial') {
                     texto_activos.innerHTML = ` Ubicación `;
-                }else{
+                } else {
                     texto_activos.innerHTML = ` Link `;
                 }
-                
+
 
             });
         });

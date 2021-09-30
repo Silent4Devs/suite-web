@@ -49,22 +49,22 @@
    		<thead>
             <tr>
        			<th>Folio</th>
-       			<th>Título</th>
-                <th>Fecha del indetificación</th>
-                <th>Fecha de recepción del reporte</th>
-                <th>Fecha de cierre</th>
-       			<th>Descripción</th>
-                <th>Comentarios</th>
-                <th>Estatus</th>
-                <th>Sede</th>
-                <th>Ubicación</th>
-       			<th>Procesos afectados</th>
-                <th>Áreas afectadas</th>
-                <th>Activos afectados</th>
-       			<th>Fecha</th>
-       			<th>Quién reportó</th>
-       			<th>Correo</th>
-       			<th>Teléfono</th>
+       			<th style="min-width:200px;">Título</th>
+                <th style="min-width:200px;">Fecha del indetificación</th>
+                <th style="min-width:200px;">Fecha de recepción del reporte</th>
+                <th style="min-width:200px;">Fecha de cierre</th>
+       			<th style="min-width: 500px;">Descripción</th>
+                <th style="min-width: 500px;">Comentarios</th>
+                <th style="min-width:200px;">Estatus</th>
+                <th style="min-width:200px;">Sede</th>
+                <th style="min-width:200px;">Ubicación</th>
+       			<th style="min-width:200px;">Procesos afectados</th>
+                <th style="min-width:200px;">Áreas afectadas</th>
+                <th style="min-width:200px;">Activos afectados</th>
+       			<th style="min-width: 500px;">Fecha</th>
+       			<th style="min-width:200px;">Quién reportó</th>
+       			<th style="min-width:200px;">Correo</th>
+       			<th style="min-width:200px;">Teléfono</th>
        			<th>Opciones</th> 
             </tr>
    		</thead>

@@ -16,11 +16,11 @@ class ConcientizacionSgi extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
 
-    protected $appends = [
-        'archivo',
-    ];
-
     public $table = 'concientizacion_sgis';
+
+    // protected $appends = [
+    //     'archivo',
+    // ];
 
     public static $searchable = [
         'objetivocomunicado',
@@ -46,6 +46,7 @@ class ConcientizacionSgi extends Model implements HasMedia
         'arearesponsable_id',
         'medio_envio',
         'fecha_publicacion',
+        'concientSgsi_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -75,14 +76,19 @@ class ConcientizacionSgi extends Model implements HasMedia
         return $this->belongsTo(Area::class, 'arearesponsable_id');
     }
 
+    // public function getFechaPublicacionAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    // }
+
+    // public function setFechaPublicacionAttribute($value)
+    // {
+    //     $this->attributes['fecha_publicacion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    // }
+
     public function getFechaPublicacionAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setFechaPublicacionAttribute($value)
-    {
-        $this->attributes['fecha_publicacion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
     public function getArchivoAttribute()
@@ -94,4 +100,10 @@ class ConcientizacionSgi extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+    public function documentos_concientizacion()
+    {
+        return $this->hasMany(DocumentoConcientizacionSgis::class, "concientSgsi_id", "id");
+    }
+
+
 }

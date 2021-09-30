@@ -24,49 +24,81 @@
 
                 <section id="registro" class="caja_tab_reveldada">
                     <div class="seccion_div">
-                        <form class="row" method="POST" action="{{ route('admin.desk.quejas-update', $quejas) }}"
-                            enctype="multipart/form-data">
+                        <form class="row" method="POST"
+                            action="{{ route('admin.desk.quejas-update', $quejas) }}" enctype="multipart/form-data">
                             @csrf
+                            <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
+                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                <div class="row w-100">
+                                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                        <div class="w-100">
+                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-11">
+                                        <p class="m-0"
+                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
+                                            cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
+                                            de lo contrario la información capturada no será guardada.
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mt-1 form-group col-12">
                                 <b>Datos generales:</b>
                             </div>
                             <div class="mt-2 form-group col-2">
-                                <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+                                <label class="form-label"><i
+                                        class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                 <div class="form-control">{{ $quejas->folio }}</div>
                             </div>
                             <div class="mt-2 form-group col-6">
-                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto de
+                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto
+                                    de
                                     la queja</label>
                                 <input class="form-control" name="titulo" value="{{ $quejas->titulo }}">
                             </div>
-                            <div class="mt-2 form-group col-4">
+                            <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control">
-                                    <option>{{ $quejas->estatus }}</option>
-                                    <option value="nuevo">Nuevo</option>
-                                    <option value="en curso">En curso</option>
-                                    <option value="en espera">En espera</option>
-                                    <option value="cerrado">Cerrado</option>
-                                    <option value="cancelado">Cancelado</option>
+                                <select name="estatus" class="form-control" id="opciones"
+                                    onchange='cambioOpciones();'>
+                                    <option {{ old('estatus', $quejas->estatus) == 'nuevo' ? 'selected' : '' }}
+                                        value="nuevo">Nuevo</option>
+                                    <option {{ old('estatus', $quejas->estatus) == 'en curso' ? 'selected' : '' }}
+                                        value="en curso">En curso</option>
+                                    <option {{ old('estatus', $quejas->estatus) == 'en espera' ? 'selected' : '' }}
+                                        value="en espera">En espera</option>
+                                    <option {{ old('estatus', $quejas->estatus) == 'cerrado' ? 'selected' : '' }}
+                                        value="cerrado">Cerrado</option>
+                                    <option {{ old('estatus', $quejas->estatus) == 'cancelado' ? 'selected' : '' }}
+                                        value="cancelado">Cancelado</option>
                                 </select>
                             </div>
                             <div class="mt-2 form-group col-4">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
+                                    hora
                                     de identificación</label>
-                                <input type="datetime" name="fecha" value="{{ $quejas->fecha }}" class="form-control">
+                                <input type="datetime" name="fecha" value="{{ $quejas->fecha }}"
+                                    class="form-control">
                             </div>
 
                             <div class="mt-2 form-group col-4">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
+                                    hora
                                     de recepción del reporte</label>
                                 <div class="form-control">{{ $quejas->created_at }}</div>
                             </div>
 
-                            <div class="mt-2 form-group col-4">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora
+                            <div class="mt-2 form-group col-md-4">
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
+                                    hora
                                     de cierre del ticket</label>
-                                <div class="form-control">{{ $quejas->fecha_cierre }}</div>
+
+                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $quejas->fecha_cierre }}" id="solucion">
+
                             </div>
 
                             <div class="mt-2 form-group col-4">
@@ -88,7 +120,8 @@
                             </div>
 
                             <div class="mt-2 form-group col-12">
-                                <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción del
+                                <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción
+                                    del
                                     riesgo identificado</label>
                                 <textarea name="descripcion"
                                     class="form-control">{{ $quejas->descripcion }}</textarea>
@@ -107,40 +140,52 @@
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-body">
-                                                    <!-- carousel -->
-                                                    <div id='carouselExampleIndicators' class='carousel slide'
-                                                        data-ride='carousel'>
-                                                        <ol class='carousel-indicators'>
-                                                            @foreach ($quejas->evidencias_quejas as $idx => $evidencia)
-                                                                <li data-target='#carouselExampleIndicators'
-                                                                    data-slide-to='{{ $idx }}'
-                                                                    class='{{ $idx == 0 ? 'active' : '' }}'></li>
-                                                            @endforeach
-                                                        </ol>
-                                                        <div class='carousel-inner'>
-                                                            @foreach ($quejas->evidencias_quejas as $idx => $evidencia)
-                                                                <div
-                                                                    class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                                    <iframe class='img-size'
-                                                                        src='{{ asset('storage/evidencias_quejas' . '/' . $evidencia->evidencia) }}'></iframe>
-                                                                </div>
-                                                            @endforeach
+                                                    @if (count($quejas->evidencias_quejas))
+                                                        <div id='carouselExampleIndicators' class='carousel slide'
+                                                            data-ride='carousel'>
+                                                            <ol class='carousel-indicators'>
+                                                                @foreach ($quejas->evidencias_quejas as $idx => $evidencia)
+                                                                    <li data-target='#carouselExampleIndicators'
+                                                                        data-slide-to='{{ $idx }}'
+                                                                        class='{{ $idx == 0 ? 'active' : '' }}'></li>
+                                                                @endforeach
+                                                            </ol>
+                                                            <div class='carousel-inner'>
+                                                                @foreach ($quejas->evidencias_quejas as $idx => $evidencia)
+                                                                    <div
+                                                                        class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                                        <iframe class='img-size'
+                                                                            src='{{ asset('storage/evidencias_quejas' . '/' . $evidencia->evidencia) }}'></iframe>
+                                                                    </div>
+
+
+
+                                                                @endforeach
+                                                            </div>
+                                                            <a class='carousel-control-prev'
+                                                                href='#carouselExampleIndicators' role='button'
+                                                                data-slide='prev'>
+                                                                <span class='carousel-control-prev-icon'
+                                                                    aria-hidden='true'></span>
+                                                                <span class='sr-only'>Previous</span>
+                                                            </a>
+                                                            <a class='carousel-control-next'
+                                                                href='#carouselExampleIndicators' role='button'
+                                                                data-slide='next'>
+                                                                <span class='carousel-control-next-icon'
+                                                                    aria-hidden='true'></span>
+                                                                <span class='sr-only'>Next</span>
+                                                            </a>
                                                         </div>
-                                                        <a class='carousel-control-prev'
-                                                            href='#carouselExampleIndicators' role='button'
-                                                            data-slide='prev'>
-                                                            <span class='carousel-control-prev-icon'
-                                                                aria-hidden='true'></span>
-                                                            <span class='sr-only'>Previous</span>
-                                                        </a>
-                                                        <a class='carousel-control-next'
-                                                            href='#carouselExampleIndicators' role='button'
-                                                            data-slide='next'>
-                                                            <span class='carousel-control-next-icon'
-                                                                aria-hidden='true'></span>
-                                                            <span class='sr-only'>Next</span>
-                                                        </a>
-                                                    </div>
+                                                    @else
+                                                        <div class="text-center">
+                                                            <h3 style="text-align:center" class="mt-3">Sin
+                                                                archivo agregado</h3>
+                                                            <img src="{{ asset('img/undrawn.png') }}"
+                                                                class="img-fluid " style="width:350px !important">
+                                                        </div>
+                                                    @endif
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default"
@@ -211,7 +256,8 @@
                             </div>
 
                             <div class="mt-2 form-group col-12">
-                                <label class="form-label"><i class="fas fa-comment-dots iconos-crear"></i>Comentarios
+                                <label class="form-label"><i
+                                        class="fas fa-comment-dots iconos-crear"></i>Comentarios
                                     del receptor</label>
                                 <textarea name="comentarios"
                                     class="form-control">{{ $quejas->comentarios }}</textarea>
@@ -237,7 +283,8 @@
                                 </div>
 
                                 <div class="mt-2 form-group col-4">
-                                    <label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
+                                    <label class="form-label"><i
+                                            class="fas fa-user iconos-crear"></i>Nombre</label>
                                     <div class="form-control">{{ $quejas->quejo->name }}</div>
                                 </div>
 
@@ -248,7 +295,8 @@
                                 </div>
 
                                 <div class="mt-2 form-group col-4">
-                                    <label class="form-label"><i class="fas fa-user-tag iconos-crear"></i>Puesto</label>
+                                    <label class="form-label"><i
+                                            class="fas fa-user-tag iconos-crear"></i>Puesto</label>
                                     <div class="form-control">{{ $quejas->quejo->puesto }}</div>
                                 </div>
 
@@ -259,7 +307,8 @@
                                 </div>
 
                                 <div class="mt-2 form-group col-6">
-                                    <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
+                                    <label class="form-label"><i
+                                            class="fas fa-phone iconos-crear"></i>Teléfono</label>
                                     <div class="form-control">{{ $quejas->quejo->telefono }}</div>
                                 </div>
                             @endif
@@ -276,6 +325,25 @@
                 <section id="analisis">
                     <div class="seccion_div">
                         <div class="row">
+                            <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
+                                style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                <div class="row w-100">
+                                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                        <div class="w-100">
+                                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-11">
+                                        <p class="m-0"
+                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
+                                            cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
+                                            de lo contrario la información capturada no será guardada.
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 Seleccione el metódo de análisis
                             </div>
@@ -285,7 +353,8 @@
                                     <option class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
                                     </option>
                                     <option class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
-                                    <option class="op_digrama" data-metodo="digrama">Diagrama causa efecto (Ishikawa)
+                                    <option class="op_digrama" data-metodo="digrama">Diagrama causa efecto
+                                        (Ishikawa)
                                     </option>
                                 </select>
                             </div>
@@ -393,8 +462,8 @@
                 </section>
                 <section id="plan">
                     <div class="seccion_div">
-                        <div class="" style="position: relative; ">
-                            <h5 style="position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
+                        <div class="" style=" position: relative; ">
+                            <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
                             <button style="position:absolute; right: 2px; top:2px;"
                                 class="btn btn-success btn_modal_form">Agregar actividad</button>
                             @if (count($quejas->planes))
@@ -444,7 +513,8 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="form-label"><i
-                                                    class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio</label>
+                                                    class="fas fa-calendar-alt iconos-crear"></i>Fecha de
+                                                inicio</label>
                                             <input type="date" name="fecha_inicio" class="form-control"
                                                 id="fecha_inicio">
                                             <span class="text-danger error_fecha_inicio errors"></span>
@@ -516,6 +586,24 @@
 @section('scripts')
 
 <script type="text/javascript">
+    const formatDate = (current_datetime) => {
+        let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+            current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+            ":" + current_datetime.getSeconds();
+        return formatted_date;
+    }
+
+    function cambioOpciones() {
+        var combo = document.getElementById('opciones');
+        var opcion = combo.value;
+        if (opcion == "cerrado") {
+            var fecha = new Date();
+            document.getElementById('solucion').value = formatDate(fecha);
+        } else {
+            document.getElementById('solucion').value = "";
+        }
+    }
+
     $(document).ready(function() {
         window.tbl_plan = $("#tabla_plan_accion_quejas").DataTable({
             ajax: "{{ route('admin.desk-quejas-actividades.index', $quejas->id) }}",

@@ -278,12 +278,12 @@
                                                 Política SGSI
                                             </div>
                                         </a></li>
-                                    <li><a href="{{ route('admin.roles-responsabilidades.index') }}">
+                                    {{-- <li><a href="{{ route('admin.roles-responsabilidades.index') }}">
                                             <div>
                                                 <i class="fas fa-user-tag"></i>
                                                 Roles y responsabilidades
                                             </div>
-                                        </a></li>
+                                        </a></li> --}}
                                 </ul>
                             </div>
                         </section>
@@ -563,12 +563,19 @@
                                                 Acción Correctiva
                                             </div>
                                         </a></li>
-                                    <li><a href="{{ route('admin.registromejoras.index') }}">
+                                    <li>
+                                        {{-- <a href="{{ route('admin.registromejoras.index') }}">
                                             <div>
                                                 <i class="far fa-thumbs-up"></i>
                                                 Registro Mejora
                                             </div>
-                                        </a></li>
+                                        </a> --}}
+                                        <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
+                                            <div>
+                                            <i class="fas fa-rocket"></i> Registro Mejora
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </section>

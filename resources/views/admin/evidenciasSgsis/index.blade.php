@@ -2,20 +2,56 @@
 @section('content')
 
 <style>
-.carousel-control-next, .carousel-control-prev {
-    width: 50px;
-    height: 50px;
-    margin-top: 100px;
-}
 
-.img-size{
-    margin-left:calc(50% - 141px);
-}
+    .table tr th:nth-child(3){
+    min-width:600px !important;
+    text-align:center !important;
+    }
 
-.carousel-control-prev-icon, .carousel-control-next-icon{
-    background-color: #000;
-    filter: invert(100%);
-}
+    .table tr td:nth-child(3){
+    text-align:justify !important;
+    }
+
+    .table tr th:nth-child(4){
+    min-width:100px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(4){
+    text-align:center !important;
+    }
+
+    .table tr th:nth-child(5){
+    min-width:80px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(5){concien
+    text-align:center !important;
+    }
+
+    .table tr th:nth-child(6){
+    min-width:130px !important;
+    text-align:center !important;
+    }
+
+    .table tr td:nth-child(6){
+    text-align:center !important;
+    }
+    .carousel-control-next, .carousel-control-prev {
+        width: 50px;
+        height: 50px;
+        margin-top: 100px;
+    }
+
+    .img-size{
+        margin-left:calc(50% - 141px);
+    }
+
+    .carousel-control-prev-icon, .carousel-control-next-icon{
+        background-color: #000;
+        filter: invert(100%);
+    }
 
 
 </style>
@@ -37,6 +73,9 @@
                     <tr>
                         <th>
                             {{ trans('cruds.evidenciasSgsi.fields.id') }}
+                        </th>
+                        <th>
+                            Nombre&nbsp;del&nbsp;documento
                         </th>
                         <th>
                             {{ trans('cruds.evidenciasSgsi.fields.objetivodocumento') }}
@@ -103,7 +142,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
                     }
                 },
                 {
@@ -113,7 +153,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
                     }
                 },
                 {
@@ -124,7 +165,8 @@
                     titleAttr: 'Exportar PDF',
                     orientation: 'landscape',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
@@ -139,7 +181,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal:"empleadoText"
                     }
                 },
                 {
@@ -217,16 +260,36 @@
                         name: 'id'
                     },
                     {
+                        data: 'nombredocumento',
+                        name: 'nombredocumento'
+                    },
+                    {
                         data: 'objetivodocumento',
                         name: 'objetivodocumento'
                     },
                     {
                         data: 'responsable_name',
-                        name: 'responsable_name'
+                        name: 'responsable_name',
+                        render: function(data, type, row, meta) {
+                            if (type==="empleadoText") {
+                                return row.empleado.name;
+                            }
+                            let responsablereunion = "";
+                            if (row.empleado) {
+                                responsablereunion += `
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${row.empleado.avatar}" title="${row.empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            `;
+                            }
+                            return responsablereunion;
+                        }
                     },
                     {
-                        data: 'arearesponsable',
-                        name: 'arearesponsable'
+                        data: 'area',
+                        render: function(data, type, row, meta) {
+                            console.log(row)
+                            return JSON.parse(row.area).area;
+                        }
+
                     },
                     {
                         data: 'fecha_documento',
@@ -250,7 +313,9 @@
                                     <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                                        <div class="modal-body">
+                                        <div class="modal-body">`;
+                                            if(archivos.length>0){
+                                                archivo+=`
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -276,8 +341,17 @@
 
                                             </div>
 
-                                            </div>
-                                        </div>
+                                            </div>`;
+                                        }
+                                            else{
+                                                archivo+=`
+                                                <div class="text-center">
+                                                    <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                    </div>
+                                                `
+                                            }
+                                            archivo+=`</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                             <a

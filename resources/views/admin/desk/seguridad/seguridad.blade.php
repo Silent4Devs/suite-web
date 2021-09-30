@@ -94,14 +94,14 @@
             <tr>
                 {{-- <th>ID</th> --}}
                 <th>Folio</th>
-                <th>Titulo</th>
+                <th>Título</th>
                 <th>Sede</th>
                 <th>Ubicación</th>
-                <th>Descripción</th>
+                <th style="min-width: 500px;">Descripción</th>
                 <th>Areas, Afectadas</th>
                 <th>Procesos, Afectados</th>
                 <th>Activos, Afectados</th>
-                <th>Fecha</th>
+                <th style="min-width: 150px;">Fecha</th>
                 <th>Quién reporto</th>
                 <th>Correo</th>
                 <th>Teléfono</th>
@@ -111,9 +111,9 @@
                 <th>Impacto</th>
                 <th>Prioridad</th>
                 <th>Estatus</th>
-                <th>Fecha de cierre</th>
+                <th style="min-width: 150px;">Fecha de cierre</th>
                 <th>Asignado a</th>
-                <th>Comentarios</th>
+                <th style="min-width: 500px;">Comentarios</th>
                 <th>Opciones</th>
             </tr>
         </thead>
@@ -127,8 +127,8 @@
 	       			<td>{{ $incidentes->activos_afectados }}</td>
 	       			<td>{{ $incidentes->fecha }}</td>
 	       			<td>{{ $incidentes->reporto->name }}</td>
-	       			<td>{{ $incidentes->reporto->email }}</td> 
-	       			<td>{{ $incidentes->reporto->telefono }}</td> 
+	       			<td>{{ $incidentes->reporto->email }}</td>
+	       			<td>{{ $incidentes->reporto->telefono }}</td>
 	       			<td>{{ $incidentes->categoria }}</td>
 	       			<td>{{ $incidentes->clacificacion }}</td>
 	       			<td>{{ $incidentes->prioridad }}</td>
@@ -189,7 +189,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -392,7 +392,7 @@
 
                     //     url: url,
 
-                    //     data: { 
+                    //     data: {
                     //     	_token: '{{ csrf_token() }}'
                     //     },
 

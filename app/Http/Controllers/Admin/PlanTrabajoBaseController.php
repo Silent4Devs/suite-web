@@ -83,7 +83,7 @@ class PlanTrabajoBaseController extends Controller
 
     public function loadProyect()
     {
-        $implementacion = PlanImplementacion::first();
+        $implementacion = PlanImplementacion::find(1);
         $tasks = $implementacion->tasks;
         foreach ($tasks as $task) {
             $task->end = intval($task->end);

@@ -54,17 +54,17 @@
    			<tr>
        			<th>Folio</th>
        			<th>Anónimo</th>
-                <th>Estatus</th>
-                <th>Fecha de identificación</th>
-                <th>Fecha de recepción</th>
-                <th>Fecha de cierre</th>
-                <th>Nombre</th>
-                <th>Puesto</th>
-                <th>Área</th>
-                <th>Nombre</th>
-                <th>Puesto</th>
-                <th>Área</th>
-                <th>Descripción</th>
+                <th style="min-width:200px;">Estatus</th>
+                <th style="min-width:200px;">Fecha de identificación</th>
+                <th style="min-width:200px;">Fecha de recepción</th>
+                <th style="min-width:200px;">Fecha de cierre</th>
+                <th style="min-width:200px;">Nombre</th>
+                <th style="min-width:200px;">Puesto</th>
+                <th style="min-width:200px;">Área</th>
+                <th style="min-width:200px;">Nombre</th>
+                <th style="min-width:200px;">Puesto</th>
+                <th style="min-width:200px;">Área</th>
+                <th style="min-width: 500px;">Descripción</th>
        			<th>Opciones</th> 
    			</tr>
    		</thead>

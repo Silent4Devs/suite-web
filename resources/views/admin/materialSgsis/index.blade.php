@@ -1,6 +1,80 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+
+    .img-size{
+    /* 	padding: 0;
+        margin: 0; */
+        height: 450px;
+        width: 700px;
+        background-size: cover;
+        overflow: hidden;
+    }
+    .modal-content {
+       width: 700px;
+      border:none;
+    }
+    .modal-body {
+       padding: 0;
+    }
+
+    .carousel-control-prev-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+        width: 30px;
+        height: 48px;
+    }
+    .carousel-control-next-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+        width: 30px;
+        height: 48px;
+    }
+
+    .carousel-control-next {
+        top: 100px;
+        height: 10px;
+    }
+
+    .carousel-control-prev {
+        height: 40px;
+        top: 80px;
+    }
+
+    .table tr td:nth-child(6){
+
+        max-width:415px !important;
+        width:415px !important;
+
+    }
+    /* se comento por que se descuadra la cabecera de la tabla y el registro */
+    /* .table tr th:nth-child(6){
+
+        width:415px !important;
+        max-width:415px !important;
+    } */
+
+    .table tr td:nth-child(5){
+
+    text-align:justify !important;
+
+
+    }
+
+    .table tr td:nth-child(10){
+
+        text-align: center;
+
+    }
+
+    .tamaño{
+
+        width:168px !important;
+
+    }
+</style>
+
+
+
     {{ Breadcrumbs::render('admin.material-sgsis.index') }}
 
     @can('material_sgsi_create')
@@ -247,10 +321,92 @@
                         name: 'fechacreacion_actualizacion'
                     },
                     {
-                        data: 'archivo',
-                        name: 'archivo',
-                        sortable: false,
-                        searchable: false
+                        data: 'documento',
+                        name: 'documento',
+                        render:function(data,type,row,meta){
+                             let archivo="";
+                             let archivos= JSON.parse(data);
+                               archivo=` <div class="container">
+
+                                    <div class="mb-4 row">
+                                    <div class="text-center col">
+                                        <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                    </div>
+                                    </div>
+
+                                    <!-- modal -->
+                                    <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                        <div class="modal-body">`;
+                                            if(archivos.length>0){
+                                                archivo+=`
+                                            <!-- carousel -->
+                                            <div
+                                                id='carouselExampleIndicators${row.id}'
+                                                class='carousel slide'
+                                                data-ride='carousel'
+                                                >
+                                            <ol class='carousel-indicators'>
+                                                    ${archivos?.map((archivo,idx)=>{
+                                                        return `
+                                                    <li
+                                                    data-target='#carouselExampleIndicators${row.id}'
+                                                    data-slide-to='${idx}'></li>`})}
+                                            </ol>
+                                            <div class='carousel-inner'>
+                                                    ${archivos?.map((archivo,idx)=>{
+                                                        return `
+                                                    <div class='carousel-item ${idx==0?"active":""}'>
+                                                        <iframe seamless class='img-size' src='{{asset("storage/documentos_material_sgsi")}}/${archivo.documento}'></iframe>
+                                                    </div>`
+                                                    })}
+
+                                            </div>
+
+                                            </div>`;
+                                        }
+                                            else{
+                                                archivo+=`
+                                                <div class="text-center">
+                                                    <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                    </div>
+                                                `
+                                            }
+                                            archivo+=`
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <a
+                                                class='carousel-control-prev'
+                                                href='#carouselExampleIndicators${row.id}'
+                                                role='button'
+                                                data-slide='prev'
+                                                >
+                                                <span class='carousel-control-prev-icon'
+                                                    aria-hidden='true'
+                                                    ></span>
+                                                <span class='sr-only'>Previous</span>
+                                            </a>
+                                            <a
+                                                class='carousel-control-next'
+                                                href='#carouselExampleIndicators${row.id}'
+                                                role='button'
+                                                data-slide='next'
+                                                >
+                                                <span
+                                                    class='carousel-control-next-icon'
+                                                    aria-hidden='true'
+                                                    ></span>
+                                                <span class='sr-only'>Next</span>
+                                            </a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>`
+                            return archivo;
+                        }
                     },
                     {
                         data: 'actions',

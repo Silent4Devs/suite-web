@@ -15,8 +15,8 @@
             border-left: 2px solid #00abb2;
             margin-top: 10px;
             padding: 10px;
-            width: 210px;
-            height: 80px;
+            width: 350px;
+            min-height: 80px;
             display: inline-block;
             overflow: hidden;
             margin: 10px;
@@ -29,6 +29,7 @@
             font-size: 12pt;
             text-align: left;
             font-weight: bold;
+            text-align: center;
         }
         .img_nuevo{
             width: 50px;
@@ -42,9 +43,10 @@
             clip-path: circle(25px at 50% 50%);
         }
         .datos_nuevo{
-            width: 100%;
+            width: calc(100% - 50px);
             position: absolute;
-            bottom: 0;
+            bottom:5px;
+            left: 50px;
         }
         .datos_nuevo h6{
             margin: 0;
@@ -61,44 +63,52 @@
 
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Vista del documento:
-                    {{ $documento->nombre }}</strong></h3>
-            @can('documentos_download')
-                <embed src="{{ asset($path_documento . '/' . $documento->archivo) }}" class="mt-5 w-100" style="height: 800px"
-                    frameborder="0" id="pdf">
+
+            @if($documento->archivo)
+                <h3 class="mb-2 text-center text-white"><strong>Vista del documento:
+                        {{ $documento->nombre }}</strong></h3>
+                @can('documentos_download')
+                    <embed src="{{ asset($path_documento . '/' . $documento->archivo) }}" class="mt-5 w-100" style="height: 800px"
+                        frameborder="0" id="pdf">
+                @else
+                    <embed id="documento" src="{{ asset($path_documento . '/' . $documento->archivo) }}#toolbar=0&navpanes=0"
+                        class="mt-5 w-100" style="height: 800px" frameborder="0" id="pdf">
+                @endcan
             @else
-                <embed id="documento" src="{{ asset($path_documento . '/' . $documento->archivo) }}#toolbar=0&navpanes=0"
-                    class="mt-5 w-100" style="height: 800px" frameborder="0" id="pdf">
-            @endcan
+                <h1>Documento no cargado</h1>
+            @endif
         </div>
 
-        <h2 style="padding: 20px">Documento visto por:</h2>
-        <div class="caja_nuevo">
-
-            @forelse($empleados_vistas as $vista)
-                <div class="nuevo">
-                    <div class="img_nuevo">
-                        @if(is_null($vista->empleados->foto))
-                            <img src="{{asset('storage/empleados/imagenes/usuario_no_cargado.png')}}" class="img_empleado">
-                        @else
-                                <img src="{{asset('storage/empleados/imagenes/'.$vista->empleados->foto)}}" class="img_empleado">
-                        @endif
-                    </div>
-                    <h5 class="nombre_nuevo">{{$vista->empleados->name}}</h5>
-                    <div class="datos_nuevo">
-                        <p>{{$vista->empleados->puesto}} &nbsp;&nbsp;|&nbsp;&nbsp;
-                            @if(is_null($vista->empleados->area->area))
-                                No hay Area
+        @if($documento->archivo)
+            <h2 style="padding: 20px">Documento visto por:</h2>
+            <div class="caja_nuevo">
+                
+                @forelse($empleados_vistas as $vista)
+                    <div class="nuevo">
+                        <div class="img_nuevo">
+                            @if(is_null($vista->empleados->foto))
+                                <img src="{{asset('storage/empleados/imagenes/usuario_no_cargado.png')}}" class="img_empleado">
                             @else
-                                {{$vista->empleados->area->area}}
+                                    <img src="{{asset('storage/empleados/imagenes/'.$vista->empleados->foto)}}" class="img_empleado">
                             @endif
-                        </p>
+                        </div>
+                        <h5 class="nombre_nuevo">{{$vista->empleados->name}}</h5>
+                        <div class="datos_nuevo">
+                            <p>{{$vista->empleados->puesto}} &nbsp;&nbsp;|&nbsp;&nbsp;
+                                @if(is_null($vista->empleados->area->area))
+                                    No hay Area
+                                @else
+                                    {{$vista->empleados->area->area}}
+                                @endif
+                            </p>
+                        </div>
                     </div>
-                </div>
-                @empty
-                <div class="nuevo">Este documento no tiene vistas</div>
-            @endforelse
-        </div>
+                    @empty
+                    <div class="nuevo">Este documento no tiene vistas</div>
+                @endforelse
+                
+            </div>
+        @endif
     </div>
 
     
