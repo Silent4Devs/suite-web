@@ -53,10 +53,12 @@
         .dataTables_filter {
             overflow: hidden;
         }
-        .caja_botones_secciones a{
+
+        .caja_botones_secciones a {
             position: relative;
         }
-        .caja_botones_secciones a span{
+
+        .caja_botones_secciones a span {
             position: absolute;
             right: 0;
             top: 0;
@@ -72,12 +74,13 @@
             margin-right: -5px;
             z-index: 1;
         }
+
     </style>
 
     @include('partials.flashMessages')
 
     <div id="inicio_usuario" class="mb-5 row" style="">
-        <div class="col-lg-3 info-personal">
+        {{-- <div class="col-lg-3 info-personal">
             <div class="text-center" style="border:1px solid #ccc; border-radius:5px;">
                 <div style="width: 100%; height: 85px; background-color: #00abb2;"></div>
                 <div class="caja_img_perfil">
@@ -99,8 +102,7 @@
                         <i class="mr-1 fas fa-file-pdf text-danger"></i>
                         {{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
                         <div>
-                            <span class="badge badge-dark"
-                                style="text-transform: capitalize">{{ $documento->tipo }}</span>
+                            <span class="badge badge-dark" style="text-transform: capitalize">{{ $documento->tipo }}</span>
                             @if ($documento->macroproceso_id)
                                 <span class="badge badge-primary"
                                     style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
@@ -113,25 +115,34 @@
                     </a>
                 @endforeach
             </ul>
-        </div>
-        <div class="col-lg-9 row caja_botones_secciones">
+        </div> --}}
+        <div class="col-lg-12 row caja_botones_secciones">
             @if ($usuario->empleado)
                 <div class="col-12 caja_botones_menu">
-                    <a href="#" data-tabs="calendario" class="btn_activo"><i class="fas fa-calendar-alt"></i> Calendario</a>
+                    <a href="#" data-tabs="mis-datos" class="btn_activo"><i class="fas fa-user-circle"></i>
+                        Mis Datos</a>
+                    <a href="#" data-tabs="calendario"><i class="fas fa-calendar-alt"></i>
+                        Calendario</a>
                     <a href="#" data-tabs="actividades">
-                        @if($contador_actividades)
+                        @if ($contador_actividades)
                             <span>{{ $contador_actividades }}</span>
                         @endif
                         <i class="fas fa-stopwatch"></i>Actividades
                     </a>
                     <a href="#" data-tabs="aprobaciones">
-                        @if( $contador_revisiones )
+                        @if ($contador_revisiones)
                             <span>{{ $contador_revisiones }}</span>
                         @endif
                         <i class="fas fa-check"></i>Aprobaciones
                     </a>
+                    {{-- <a href="#" data-tabs="evaluaciones">
+                        @if ($contador_revisiones)
+                            <span>{{ $contador_revisiones }}</span>
+                        @endif
+                        <i class="fas fa-check"></i>Evaluaciones
+                    </a> --}}
                     <a href="#" data-tabs="capacitaciones">
-                        @if($contador_recursos )
+                        @if ($contador_recursos)
                             <span>{{ $contador_recursos }}</span>
                         @endif
                         <i class="fas fa-chalkboard-teacher"></i>Capacitaciones
@@ -139,11 +150,13 @@
                     <a href="#" data-tabs="reportes"><i class="fas fa-clipboard-list"></i>Reportes</a>
                 </div>
             @endif
-
             <div class="caja_caja_secciones">
                 @if ($usuario->empleado)
                     <div class="caja_secciones">
-                        <section id="calendario" class="caja_tab_reveldada">
+                        <section id="misDatos" class="caja_tab_reveldada">
+                            @include('admin.inicioUsuario.mis-datos')
+                        </section>
+                        <section id="calendario">
                             @include('admin.inicioUsuario.calendario')
                         </section>
                         <section id="actividades">
@@ -152,6 +165,9 @@
                         <section id="aprobaciones">
                             @include('admin.inicioUsuario.aprobaciones')
                         </section>
+                        {{-- <section id="evaluaciones">
+                            @include('admin.inicioUsuario.evaluaciones')
+                        </section> --}}
                         <section id="capacitaciones">
                             @include('admin.inicioUsuario.capacitaciones')
                         </section>
