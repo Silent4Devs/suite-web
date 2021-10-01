@@ -166,7 +166,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card-body datatable-fix">
-            @livewire('matriz-heatmap', ['id_analisis' => 2])
+            @livewire('matriz-heatmap', ['id_analisis' => $primer_analisis, 'mapas'=>$analisis_collect])
             {{-- <p class="ml-5">De click sobre una fila para desplegar información</p>
             <div class="table-scroll">
                 <table class="table table-hover table-bordered tbl-categorias w-100" id="riesgos_table">
