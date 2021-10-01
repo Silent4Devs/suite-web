@@ -238,7 +238,7 @@
                                 @else
                                     <div class="row" style="margin-left: -10px">
                                         <div class="mb-3 col-12">
-                                            <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                                            <img src="{{ asset('img/not_access.svg') }}" width="400px" style="margin-left: calc(50% - 200px);" />
                                         </div>
                                         <div class="col-12">
                                             <strong style="font-size:12pt">
@@ -291,7 +291,7 @@
                                 @else
                                     <div class="mt-5 row" style="margin-left: -10px">
                                         <div class="mb-3 col-12">
-                                            <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                                            <img src="{{ asset('img/not_access.svg') }}" width="400px" style="margin-left: calc(50% - 200px);" />
                                         </div>
                                         <div class="col-12">
                                             <strong style="font-size:12pt">
@@ -362,7 +362,7 @@
                                 @else
                                     <div class="mt-5 row" style="margin-left: -10px">
                                         <div class="mb-3 col-12">
-                                            <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                                            <img src="{{ asset('img/not_access.svg') }}" width="400px" style="margin-left: calc(50% - 200px);" />
                                         </div>
                                         <div class="col-12">
                                             <strong style="font-size:12pt">
@@ -451,7 +451,7 @@
                                 @else
                                     <div class="mt-5 row" style="margin-left: -10px">
                                         <div class="mb-3 col-12">
-                                            <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                                            <img src="{{ asset('img/not_access.svg') }}" width="400px" style="margin-left: calc(50% - 200px);" />
                                         </div>
                                         <div class="col-12">
                                             <strong style="font-size:12pt">
@@ -486,7 +486,7 @@
                                  @else
                                     <div class="mt-5 row" style="margin-left: -10px">
                                         <div class="mb-3 col-12">
-                                            <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                                            <img src="{{ asset('img/not_access.svg') }}" width="400px" style="margin-left: calc(50% - 200px);" />
                                         </div>
                                         <div class="col-12">
                                             <strong style="font-size:12pt">
@@ -551,7 +551,7 @@
                                 @else
                                     <div class="mt-5 row" style="margin-left: -10px">
                                         <div class="mb-3 col-12">
-                                            <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                                            <img src="{{ asset('img/not_access.svg') }}" width="400px" style="margin-left: calc(50% - 200px);" />
                                         </div>
                                         <div class="col-12">
                                             <strong style="font-size:12pt">
@@ -593,7 +593,7 @@
                                  @else
                                     <div class="mt-5 row" style="margin-left: -10px">
                                         <div class="mb-3 col-12">
-                                            <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                                            <img src="{{ asset('img/not_access.svg') }}" width="400px" style="margin-left: calc(50% - 200px);" />
                                         </div>
                                         <div class="col-12">
                                             <strong style="font-size:12pt">
