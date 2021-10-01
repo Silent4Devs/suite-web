@@ -92,4 +92,16 @@ class Activo extends Model
         return $this->belongsTo(Empleado::class, 'id_responsable', 'id');
 
 	}
+
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class, 'marca', 'id');
+
+    }
+
+    public function modelo()
+    {
+        return $this->belongsTo(Modelo::class, 'modelo', 'id');
+
+    }
 }

@@ -248,7 +248,11 @@ class ActivosController extends Controller
 
         $modelos = Modelo::get();
 
-        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'activo', 'empleados', 'area', 'marcas', 'modelos'));
+        $marca_seleccionada = Marca::select('id','nombre')->find($activo->marca);
+
+        $modelo_seleccionado = Modelo::select('id','nombre')->find($activo->modelo);
+
+        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'activo', 'empleados', 'area', 'marcas', 'modelos','marca_seleccionada','modelo_seleccionado'));
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)

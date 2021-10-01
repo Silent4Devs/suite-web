@@ -35,12 +35,15 @@
                 <div class="col-md-8">
                     <select id="select_metodos" class="form-control" name="metodo">
                         <option selected disabled>- -</option>
-                        <option {{ $analisis->metodo == 'Lluvia de ideas (Brainstorming)' ? 'selected' : '' }}
+                        <option
+                            {{ old('Lluvia de ideas (Brainstorming)', $analisis?$analisis->metodo:'') == 'Lluvia de ideas (Brainstorming)' ? 'selected' : '' }}
                             class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
                         </option>
-                        <option {{ $analisis->metodo == '5 Porqués (5 Why)' ? 'selected' : '' }} class="op_porque"
-                            data-metodo="porque">5 Porqués (5 Why)</option>
-                        <option {{ $analisis->metodo == 'Diagrama causa efecto (Ishikawa)' ? 'selected' : '' }}
+                        <option
+                        {{ old('5 Porqués (5 Why)', $analisis?$analisis->metodo:'') == '5 Porqués (5 Why)' ? 'selected' : '' }}
+                             class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
+                        <option
+                            {{ old('Diagrama causa efecto (Ishikawa)', $analisis?$analisis->metodo:'') == 'Diagrama causa efecto (Ishikawa)' ? 'selected' : '' }}
                             class="op_digrama" data-metodo="digrama">Diagrama causa efecto (Ishikawa)
                         </option>
                     </select>
@@ -52,12 +55,12 @@
                 <div id="ideas" class="caja_oculta_dinamica row">
                     <div class="form-group col-12">
                         <label>Ideas</label>
-                        <textarea class="form-control" name="ideas">{{ $analisis->ideas }}</textarea>
+                        <textarea class="form-control" name="ideas">{{$analisis?$analisis->idea:''}}</textarea>
                     </div>
 
                     <div class="form-group col-12">
                         <label>Causa Raíz</label>
-                        <textarea class="form-control" name="causa_ideas">{{ $analisis->causa_ideas }}</textarea>
+                        <textarea class="form-control" name="causa_ideas">{{$analisis?$analisis->causa_ideas:''}}</textarea>
                     </div>
                 </div>
 
@@ -66,23 +69,23 @@
                 <div id="porque" class="caja_oculta_dinamica row">
                     <div class="form-group col-12">
                         Problema: <textarea class="form-control"
-                            name="problema_porque">{{ $analisis->problema_porque }}</textarea>
+                            name="problema_porque">{{$analisis?$analisis->problema_porque:''}}</textarea>
                     </div>
                     <div class="form-group col-12">
                         <label>1er porqué:</label>
-                        <input name="porque_1" class="form-control" value="{{ $analisis->porque_1 }}">
+                        <input name="porque_1" class="form-control" value="{{ $analisis?$analisis->porque_1:'' }}">
                         <label>2do porqué:</label>
-                        <input name="porque_2" class="form-control" value="{{ $analisis->porque_2 }}">
+                        <input name="porque_2" class="form-control" value="{{ $analisis?$analisis->porque_2:'' }}">
                         <label>3er porqué:</label>
-                        <input name="porque_3" class="form-control" value="{{ $analisis->porque_3 }}">
+                        <input name="porque_3" class="form-control" value="{{ $analisis?$analisis->porque_3:'' }}">
                         <label>4to porqué:</label>
-                        <input name="porque_4" class="form-control" value="{{ $analisis->porque_4 }}">
+                        <input name="porque_4" class="form-control" value="{{ $analisis?$analisis->porque_4:'' }}">
                         <label>5to porqué:</label>
-                        <input name="porque_5" class="form-control" value="{{ $analisis->porque_5 }}">
+                        <input name="porque_5" class="form-control" value="{{ $analisis?$analisis->porque_5:'' }}">
                     </div>
                     <div class="form-group col-12">
                         Causa Raíz: <textarea class="form-control"
-                            name="causa_porque">{{ $analisis->causa_porque }}</textarea>
+                            name="causa_porque">{{ $analisis?$analisis->causa_porque:'' }}</textarea>
                     </div>
                 </div>
 
@@ -94,35 +97,35 @@
                             <img src="{{ asset('img/diagrama_causa_raiz.png') }}" style="width:100%">
 
                             <textarea name="control_a"
-                                class="politicas_txtarea">{{ $analisis->control_a }}</textarea>
+                                class="politicas_txtarea">{{ $analisis?$analisis->control_a:'' }}</textarea>
                             <textarea name="control_b"
-                                class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea>
+                                class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis?$analisis->control_b:'' }}</textarea>
 
-                            <textarea name="proceso_a" class="procesos_txtarea">{{ $analisis->proceso_a }}</textarea>
+                            <textarea name="proceso_a" class="procesos_txtarea">{{ $analisis?$analisis->proceso_a:'' }}</textarea>
                             <textarea name="proceso_b"
-                                class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea>
+                                class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis?$analisis->proceso_b:'' }}</textarea>
 
                             <textarea name="personas_a"
-                                class="personas_txtarea">{{ $analisis->personas_a }}</textarea>
+                                class="personas_txtarea">{{ $analisis?$analisis->personas_a:'' }}</textarea>
                             <textarea name="personas_b"
-                                class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea>
+                                class="personas_txtarea txt_obj_secundarios_a">{{ $analisis?$analisis->personas_b:'' }}</textarea>
 
                             <textarea name="tecnologia_a"
-                                class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
+                                class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis?$analisis->tecnologia_a:'' }}</textarea>
                             <textarea name="tecnologia_b"
-                                class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea>
+                                class="tecnologia_txtarea ">{{ $analisis?$analisis->tecnologia_b:'' }}</textarea>
 
                             <textarea name="metodos_a"
-                                class="metodos_txtarea txt_obj_secundarios_b">{{ $analisis->metodos_a }}</textarea>
-                            <textarea name="metodos_b" class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea>
+                                class="metodos_txtarea txt_obj_secundarios_b">{{ $analisis?$analisis->metodos_a:'' }}</textarea>
+                            <textarea name="metodos_b" class="metodos_txtarea ">{{ $analisis?$analisis->metodos_b:'' }}</textarea>
 
                             <textarea name="ambiente_a"
-                                class="ambiente_txtarea txt_obj_secundarios_b">{{ $analisis->ambiente_a }}</textarea>
+                                class="ambiente_txtarea txt_obj_secundarios_b">{{ $analisis?$analisis->ambiente_a:'' }}</textarea>
                             <textarea name="ambiente_b"
-                                class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea>
+                                class="ambiente_txtarea ">{{ $analisis?$analisis->ambiente_b:'' }}</textarea>
 
                             <textarea name="problema_diagrama"
-                                class="problemas_txtarea">{{ $analisis->problema_diagrama }}</textarea>
+                                class="problemas_txtarea">{{ $analisis?$analisis->problema_diagrama:'' }}</textarea>
                         </div>
                     </div>
                 </div>

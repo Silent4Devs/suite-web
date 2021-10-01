@@ -93,7 +93,7 @@
     <div class="pb-4 row">
         <div class="col-md-4">
             <p class="text-xl text-gray-700">Sede:</p>
-            <select class="form-control" wire:model="sede_id">
+            <select class="form-control" wire:model.debounce.500ms="sede_id">
                 <option value="" selected disabled>Seleccione una sede</option>
                 @foreach ($sedes as $sede)
                     <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
@@ -102,7 +102,7 @@
         </div>
         <div class="col-md-4">
             <p class="text-xl text-gray-700">Area:</p>
-            <select class="form-control" wire:model="area_id">
+            <select class="form-control" wire:model.debounce.500ms="area_id">
                 <option value="" selected disabled>Seleccione un área</option>
                 @foreach ($areas as $area)
                     <option value="{{ $area->id }}">{{ $area->area }}</option>

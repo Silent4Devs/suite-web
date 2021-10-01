@@ -34,7 +34,7 @@ class AccionCorrectivaController extends Controller
         abort_if(Gate::denies('accion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table));
+            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -59,8 +59,28 @@ class AccionCorrectivaController extends Controller
                 return $row->id ? $row->id : "";
             });
 
+            $table->addColumn('folio', function ($row) {
+                return $row->folio ? $row->folio : "";
+            });
+
+            $table->addColumn('tema', function ($row) {
+                return $row->tema ? $row->tema : "";
+            });
+
             $table->addColumn('fecharegistro', function ($row) {
                 return $row->fecharegistro ? $row->fecharegistro : "";
+            });
+
+            $table->addColumn('fecha_verificacion', function ($row) {
+                return $row->fecha_verificacion ? $row->fecha_verificacion : "";
+            });
+
+            $table->addColumn('estatus', function ($row) {
+                return $row->estatus ? $row->estatus : '';
+            });
+
+            $table->addColumn('fecha_cierre', function ($row) {
+                return $row->fecha_cierre ? $row->fecha_cierre : "";
             });
 
             $table->addColumn('reporto', function ($row) {
@@ -71,7 +91,7 @@ class AccionCorrectivaController extends Controller
                 return $row->empleados ? $row->empleados->puesto : '';
             });
             $table->addColumn('reporto_area', function ($row) {
-                return $row->empleados ? $row->empleados->area : '';
+                return $row->empleados ? $row->empleados->area->area : '';
             });
 
             $table->addColumn('registro', function ($row) {
@@ -82,64 +102,18 @@ class AccionCorrectivaController extends Controller
                 return $row->empleados ? $row->empleados->puesto : '';
             });
             $table->addColumn('registro_area', function ($row) {
-                return $row->empleados ? $row->empleados->area : '';
+                return $row->empleados ? $row->empleados->area->area  : '';
+            });
+            $table->addColumn('causaorigen', function ($row) {
+                return $row->causaorigen ? $row->causaorigen : '';
+            });
+            $table->addColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : '';
+            });
+            $table->addColumn('comentarios', function ($row) {
+                return $row->comentarios ? $row->comentarios : '';
             });
 
-            // $table->addColumn('responsable_accion', function ($row) {
-            //     return $row->empleados ? $row->empleados->name : '';
-            // });
-
-            // $table->addColumn('responsable_accion_puesto', function ($row) {
-            //     return $row->empleados ? $row->empleados->puesto : '';
-            // });
-            // $table->addColumn('responsable_accion_area', function ($row) {
-            //     return $row->empleados ? $row->empleados->area : '';
-            // });
-
-            // $table->addColumn('registro', function ($row) {
-            //     return $row->empleados ? $row->empleados->name : '';
-            // });
-
-            // $table->addColumn('registro_puesto', function ($row) {
-            //     return $row->empleados ? $row->empleados->puesto : '';
-            // });
-            // $table->addColumn('registro_area', function ($row) {
-            //     return $row->empleados ? $row->empleados->area : '';
-            // });
-
-            $table->editColumn('tema', function ($row) {
-                return $row->tema ? $row->tema : "";
-            });
-            $table->editColumn('causaorigen', function ($row) {
-                return $row->causaorigen ? AccionCorrectiva::CAUSAORIGEN_SELECT[$row->causaorigen] : '';
-            });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
-            });
-            // $table->editColumn('metodo_causa', function ($row) {
-            //     return $row->metodo_causa ? AccionCorrectiva::METODO_CAUSA_SELECT[$row->metodo_causa] : '';
-            // });
-            // $table->editColumn('solucion', function ($row) {
-            //     return $row->solucion ? $row->solucion : "";
-            // });
-            // $table->editColumn('cierre_accion', function ($row) {
-            //     return $row->cierre_accion ? $row->cierre_accion : "";
-            // });
-            // $table->editColumn('estatus', function ($row) {
-            //     return $row->estatus ? AccionCorrectiva::ESTATUS_SELECT[$row->estatus] : '';
-            // });
-
-            // $table->addColumn('responsable_accion_name', function ($row) {
-            //     return $row->responsable_accion ? $row->responsable_accion->name : '';
-            // });
-
-            // $table->addColumn('nombre_autoriza_name', function ($row) {
-            //     return $row->nombre_autoriza ? $row->nombre_autoriza->name : '';
-            // });
-
-            // $table->editColumn('documentometodo', function ($row) {
-            //     return $row->documentometodo ? '<a href="' . $row->documentometodo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            // });
 
             $table->rawColumns(['actions', 'placeholder', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'documentometodo']);
 

@@ -118,10 +118,11 @@
                                 <label class="form-label"><i class="fas fa-user-plus iconos-crear"></i>Asignado
                                     a</label>
                                 <select name="empleado_asignado_id" class="form-control">
-                                    <option value="" disabled selected></option>
+                                    <option value="" disabled selected>
+                                        {{-- {{ old('empleado_asignado_id', $incidentesSeguridad->asignado->name) }} --}}
+                                    </option>
                                     @foreach ($empleados as $empleado)
                                         <option
-                                            {{ old('empleado_asignado_id', $incidentesSeguridad->empleado_asignado_id) ? 'selected' : '' }}
                                             value="{{ $empleado->id }}">{{ $empleado->name }}</option>
                                     @endforeach
                                 </select>
