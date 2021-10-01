@@ -28,7 +28,7 @@ class DocumentosController extends Controller
     public function index()
     {
         abort_if(Gate::denies('documentos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones', 'proceso', 'macroproceso')->get();
+        $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones', 'proceso', 'macroproceso')->orderByDesc('id')->get();
 
         return view('admin.documentos.index', compact('documentos'));
     }

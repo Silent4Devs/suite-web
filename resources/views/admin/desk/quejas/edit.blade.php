@@ -104,7 +104,7 @@
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i>
                                     Sede</label>
-                                <select class="form-control">
+                                <select class="form-control" name="sede">
                                     <option>{{ $quejas->sede }}</option>
                                     @foreach ($sedes as $sede)
                                         <option value="{{ $sede->sede }}">{{ $sede->sede }}</option>

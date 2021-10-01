@@ -159,7 +159,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function destroy(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-        abort_if(Gate::denies('area_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('entendimiento_organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $entendimientoOrganizacion->delete();
 

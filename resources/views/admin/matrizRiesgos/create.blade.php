@@ -757,10 +757,10 @@
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                     </div>
 
-                    <div class="form-group col-sm-4">
+                    <div class="form-group col-sm-4" >
                         <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
                         </label>
-                        <div class="mb-3 input-group">
+                        <div class="mb-3 input-group" style="pointer-events: none;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text text-dark mayus" id="nivelriesgo_pre"></span>
                             </div>
@@ -852,14 +852,14 @@
                             <option selected value="">Seleccione una opción</option>&gt;
                             <option value="1">Aceptar</option>&gt;
                             <option value="0">Mitigar</option>&gt;
-                            <option value="2">Transferir</option>&gt;   
+                            <option value="2">Transferir</option>&gt;
                         </select>
-                            <!-- Note, I changed hidden to text so you can see it<br/> --> 
+                            <!-- Note, I changed hidden to text so you can see it<br/> -->
                     </div>
-                    <div class="form-group col-sm-12"> 
+                    <div class="form-group col-sm-12">
                         <!-- <label for="" style="margin-left: 15px; margin-bottom:5px;"> <i class="fas fa-lightbulb iconos-crea"></i> Justificación</label> -->
                         <textarea class="form-control" type="text" for="aceptar_transferir" name="aceptar_transferir" id="ver1" value="1" placeholder="Justificación" rows="3" style="display: none;"></textarea>
-                    </div>                   
+                    </div>
                     <div class="form-group col-sm-12" id="modulo_planaccion" style="display: none;">
 
                         {{-- <label for="plan_de_accion"><i class="fas fa-lightbulb iconos-crear"></i>Plan de acción</label>
@@ -951,7 +951,7 @@
                     <div class="form-group col-sm-4">
                         <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
                         </label>
-                        <div class="mb-3 input-group">
+                        <div class="mb-3 input-group" style="pointer-events: none;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text text-dark mayus" id="nivelriesgo_residual_pre"></span>
                             </div>

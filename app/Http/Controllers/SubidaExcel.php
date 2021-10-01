@@ -13,6 +13,11 @@ use App\Imports\TeamImport;
 use App\Imports\EstadoIncidenteImport;
 use App\Imports\CompetenciaImport;
 use App\Imports\EvaluacionImport;
+use App\Imports\CategoriaCapacitacionImport;
+use App\Imports\RevisionDIreccionImport;
+use App\Imports\CategoriaActivoImport;
+use App\Imports\FaqCategoriaImport;
+use App\Imports\FaqPreguntaImport;
 use App\Imports\FodaImport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -74,6 +79,32 @@ class SubidaExcel extends Controller
     public function Evaluacion()
     {
         Excel::import(new EvaluacionImport, request()->file('evaluacion'));
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+    public function CategoriaCapacitacion()
+    {
+        Excel::import(new CategoriaCapacitacionImport, request()->file('categoriacapacitacion'));
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
+    public function RevisionDireccion()
+    {
+        Excel::import(new RevisionDIreccionImport, request()->file('revisiondireccion'));
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+    public function CategoriaActivo()
+    {
+        Excel::import(new CategoriaActivoImport, request()->file('categoria'));
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+    public function FaqCategoria()
+    {
+        Excel::import(new FaqCategoriaImport, request()->file('faqcategoria'));
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+    public function FaqPregunta()
+    {
+        Excel::import(new FaqPreguntaImport, request()->file('faqpregunta'));
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
