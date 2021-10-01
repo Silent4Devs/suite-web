@@ -1,42 +1,173 @@
 <style>
-    .dotverde {
-        height: 15px;
-        width: 15px;
-        background-color: #38c172;
-        border-radius: 50%;
-        display: inline-block;
+    .cursor-pointer {
+        cursor: pointer;
     }
 
-    .dotyellow {
-        height: 15px;
-        width: 15px;
-        background-color: orange;
-        border-radius: 50%;
-        display: inline-block;
+    .calor {
+        width: 100%;
+        margin-top: 30px;
+        float: left;
     }
 
-    .dotred {
-        height: 15px;
-        width: 15px;
-        background-color: red;
-        border-radius: 50%;
-        display: inline-block;
+    .datosCalor {
+        width: 40%;
+        float: left;
     }
 
-    .table-scroll {
-        display: block;
-        height: 250px;
-        overflow-y: scroll;
+    .datosColor label {
+        font-family: maven regular;
     }
 
-    
+    .barra1 {
+        width: 100%;
+        height: 25px;
+        float: left;
+        box-shadow: -3px 3px 3px 0px #999;
+        border-radius: 50px;
+        font-family: maven regular;
+        text-align: center;
+        padding-top: 5px;
+        color: #fff;
+    }
+
+    #s_baja {
+        background-color: #18a827;
+        display: none;
+    }
+
+    #s_media {
+        background-color: #eef100;
+        display: none;
+        color: #000;
+    }
+
+    #s_alta {
+        background-color: #ff9600;
+        display: none;
+    }
+
+    #s_muyAlta {
+        background-color: #cb0000;
+        display: none;
+    }
+
+    .barra2 {
+        width: 100%;
+        height: 25px;
+        float: left;
+        box-shadow: -3px 3px 3px 0px #999;
+        border-radius: 50px;
+        font-family: maven regular;
+        text-align: center;
+        padding-top: 5px;
+        color: #fff;
+    }
+
+    #p_baja {
+        background-color: #18a827;
+        display: none;
+    }
+
+    #p_media {
+        background-color: #eef100;
+        display: none;
+        color: #000;
+    }
+
+    #p_alta {
+        background-color: #ff9600;
+        display: none;
+    }
+
+    #p_muyAlta {
+        background-color: #cb0000;
+        display: none;
+    }
+
+    .barra3 {
+        width: 100%;
+        height: 25px;
+        float: left;
+        box-shadow: -3px 3px 3px 0px #999;
+        border-radius: 50px;
+        font-family: maven regular;
+        text-align: center;
+        padding-top: 5px;
+        color: #fff;
+    }
+
+    #r_baja {
+        background-color: #18a827;
+        display: none;
+    }
+
+    #r_media {
+        background-color: #eef100;
+        display: none;
+        color: #000;
+    }
+
+    #r_alta {
+        background-color: #ff9600;
+        display: none;
+    }
+
+    #r_muyAlta {
+        background-color: #cb0000;
+        display: none;
+    }
+
+    .mapaCalor {
+        width: 60%;
+        float: right;
+        display: flex;
+        justify-content: center;
+
+    }
+
+    .mapaCalor table {
+        font-family: maven regular;
+        margin-top: 50px;
+    }
+
+    .mapaCalor td {
+        width: 100px;
+        height: 50px;
+        text-align: center;
+    }
+
+    .mapaCalor td:hover {
+        filter: saturate(500%);
+    }
+
+    .verde {
+        background-color: #18a827;
+        cursor: pointer;
+    }
+
+    .amarillo {
+        background-color: #eef100;
+        cursor: pointer;
+    }
+
+    .naranja {
+        background-color: #ff9600;
+        cursor: pointer;
+    }
+
+    .rojo {
+        background-color: #cb0000;
+        cursor: pointer;
+    }
 
 </style>
 
+
 <div class="row">
-    <div class="col-sm-7">
+    <div class="col-12">
         <div class="card-body datatable-fix">
-            <p class="ml-5">De click sobre una fila para desplegar información</p>
+            @livewire('matriz-heatmap', ['id_analisis' => 2])
+            {{-- <p class="ml-5">De click sobre una fila para desplegar información</p>
             <div class="table-scroll">
                 <table class="table table-hover table-bordered tbl-categorias w-100" id="riesgos_table">
                     <thead class="thead-dark">
@@ -61,7 +192,7 @@
                     </tbody>
 
                 </table>
-            </div>
+            </div> --}}
         </div>
     </div>
 
