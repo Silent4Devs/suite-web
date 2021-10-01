@@ -2,20 +2,22 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h6 align="center">GAP 03:  MONITOREO Y MEJORA CONTINUA ({{$porcentajeGap3['porcentaje']}}%)
-                </h6>
-                <div class="progress">
-                    <div
-                        class="progress-bar progress-bar-striped progress-bar-animated"
-                        role="progressbar" aria-valuenow="{{(number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30}}"
-                        aria-valuemin="0" aria-valuemax="100"
-                        style="width: {{(number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30}}%">{{$porcentajeGap3['porcentaje']}} %</div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <p>Monitoreo y mejoramiento continuo. Tiene un peso del 30% del total del componente: 20% - Actividades de seguimiento, medicion, analisis y evaluacion. 10% - Revision e Implementacion de Acciones de Mejora.
+                <div id="barraGap3">
+                    <h6 align="center">GAP 03:  MONITOREO Y MEJORA CONTINUA ({{$porcentajeGap3['porcentaje']}}%)
+                    </h6>
+                    <div class="progress">
+                        <div
+                            class="progress-bar progress-bar-striped progress-bar-animated"
+                            role="progressbar" aria-valuenow="{{(number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30}}"
+                            aria-valuemin="0" aria-valuemax="100"
+                            style="width: {{(number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30}}%">{{$porcentajeGap3['porcentaje']}} %</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <p>Monitoreo y mejoramiento continuo. Tiene un peso del 30% del total del componente: 20% - Actividades de seguimiento, medicion, analisis y evaluacion. 10% - Revision e Implementacion de Acciones de Mejora.
 
-                        </p>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <p><strong>INSTRUCCIONES: </strong>Por favor, conteste
@@ -215,6 +217,8 @@
                 }
             ],
             success: function(response, newValue) {
+                $("#barraGap3").empty();
+                $("#barraGap3").load(location.href + " #barraGap3>*", "");
                 console.log('Actualizado, response')
             }
         });

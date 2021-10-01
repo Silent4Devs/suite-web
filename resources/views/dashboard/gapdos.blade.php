@@ -2,14 +2,16 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h6 align="center">GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN ({{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%)
-                </h6>
-                <div class="progress">
-                    <div
-                        class="progress-bar progress-bar-striped progress-bar-animated"
-                        role="progressbar" aria-valuenow="40"
-                        aria-valuemin="0" aria-valuemax="100"
-                        style="width: {{number_format($porcentajeGap2['Porcentaje'], 2, '.', '')}}%">{{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%
+                <div id="barraGap2">
+                    <h6 align="center">GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN ({{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%)
+                    </h6>
+                    <div class="progress">
+                        <div
+                            class="progress-bar progress-bar-striped progress-bar-animated"
+                            role="progressbar" aria-valuenow="40"
+                            aria-valuemin="0" aria-valuemax="100"
+                            style="width: {{number_format($porcentajeGap2['Porcentaje'], 2, '.', '')}}%">{{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%
+                        </div>
                     </div>
                 </div>
                 <div class="card">
