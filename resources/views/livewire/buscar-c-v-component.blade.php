@@ -27,7 +27,7 @@
     <div class="row" style="margin-bottom:30px;">
         <div class="col-sm-12 col-md-6">
             <label class="required" for="tipoactivo_id"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-            <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" wire:model="area_id">
+            <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" wire:model.debounce.800ms="area_id">
                 <option value="">Seleccione el área</option>
                 @foreach ($areas as $area)
                     <option value="{{ $area->id }}">
@@ -38,7 +38,7 @@
 
         <div class="col-sm-12 col-md-6">
             <label class="required" for="tipoactivo_id"><i class="fas fa-user-tie iconos-crear"></i>Empleado</label>
-            <select class="form-control {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}" wire:model="empleado_id"
+            <select class="form-control {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}" wire:model.debounce.800ms="empleado_id"
                 id="tipoactivo_id">
                 <option value="">Seleccione el nombre del empleado</option>
                 @foreach ($empleados as $empleado)
