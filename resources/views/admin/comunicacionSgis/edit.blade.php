@@ -233,7 +233,7 @@
                                         <div class='carousel-inner'>
                                             @foreach ($comunicacionSgi->imagenes_comunicacion as $idx => $imagen)
                                                 <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                    <img style="width:100%;height:300px;" class='img-size'
+                                                    <img style="width:80%; margin-left: 10%;" class='img-size'
                                                         src="{{ asset('storage/imagen_comunicado_SGI') }}/{{ $imagen->imagen }}" />
                                                 </div>
                                             @endforeach
