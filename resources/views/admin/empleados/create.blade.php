@@ -308,15 +308,27 @@
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-6">
-                                                <label class="required" for="puesto"><i
+                                                <label class="required" for="puesto_id"><i
                                                         class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
-                                                    type="text" name="puesto" id="puesto" value="{{ old('puesto', '') }}"
+                                                <select
+                                                    class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
+                                                    name="puesto_id" id="puesto_id" value="{{ old('puesto_id', '') }}"
                                                     required>
-                                                @if ($errors->has('puesto'))
+                                                    <option value="" selected disabled>
+                                                        -- Selecciona un puesto --
+                                                    </option>
+                                                    @foreach ($puestos as $puesto)
+                                                        <option value="{{ $puesto->id }}">{{ $puesto->puesto }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                {{-- <input
+                                                    class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
+                                                    type="text" name="puesto_id" id="puesto_id"
+                                                    value="{{ old('puesto_id', '') }}" required> --}}
+                                                @if ($errors->has('puesto_id'))
                                                     <div class="invalid-feedback">
-                                                        {{ $errors->first('puesto') }}
+                                                        {{ $errors->first('puesto_id') }}
                                                     </div>
                                                 @endif
                                             </div>
