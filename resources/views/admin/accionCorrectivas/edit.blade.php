@@ -86,18 +86,7 @@
                     var opcion = combo.value;
                     if (opcion == "cerrado") {
                         var fecha = new Date();
-                        document.getElementById('solucion').value = formatDate(fecha);
-                    } else {
-                        document.getElementById('solucion').value = "";
-                    }
-                }
-
-                function cambioOpciones() {
-                    var combo = document.getElementById('opciones');
-                    var opcion = combo.value;
-                    if (opcion == "cerrado") {
-                        var fecha = new Date();
-                        document.getElementById('solucion').value = fecha.toISOString();
+                        document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
                     } else {
                         document.getElementById('solucion').value = "";
                     }

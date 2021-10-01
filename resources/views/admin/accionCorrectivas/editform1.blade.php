@@ -60,7 +60,7 @@
         <label for="fecharegistro"><i class="far fa-calendar-alt iconos-crear"></i>Fecha y hora de
             registro de la AC</label>
         <input class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}"
-            type="datetime-local" name="fecharegistro" id="fecharegistro"
+            type="datetime-local" disabled name="fecharegistro" id="fecharegistro"
             value="{{ old('fecharegistro', \Carbon\Carbon::parse($accionCorrectiva->fecharegistro)->format('Y-m-d\TH:i')) }}">
         @if ($errors->has('fecharegistro'))
             <div class="invalid-feedback">
@@ -87,7 +87,7 @@
         <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
             hora
             de cierre del ticket</label>
-        <input class="form-control" name="fecha_cierre" value="{{ $accionCorrectiva->fecha_cierre }}" id="solucion"
+        <input class="form-control" name="fecha_cierre" readonly value="{{ $accionCorrectiva->fecha_cierre }}" id="solucion"
             type="datetime">
     </div>
 
@@ -124,7 +124,7 @@
 
     <div class="form-group col-sm-12 col-md-4 col-lg-4">
         <label for="id_reporto_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-        <div class="form-control" id="reporto_area"></div>
+        <div class="form-control"  id="reporto_area"></div>
     </div>
 
 

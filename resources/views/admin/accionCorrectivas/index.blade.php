@@ -14,10 +14,12 @@
             text-align: center !important;
         }
 
-        .table tr td:nth-child(15) {
+        .descripcion{
             text-align: justify !important;
         }
-        .table tr td:nth-child(14) {
+
+
+        .comentarios{
             text-align: justify !important;
         }
 
@@ -55,16 +57,16 @@
                                 Título
                             </th>
                             <th style="vertical-align: top">
-                                Fecha&nbsp;de&nbsp;registro
+                                Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;registro
                             </th>
                             <th style="vertical-align: top">
-                                Fecha&nbsp;de&nbsp;recepción
+                                Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;recepción
                             </th>
                             <th style="vertical-align: top">
                                 Estatus
                             </th>
                             <th style="vertical-align: top">
-                                Fecha&nbsp;de&nbsp;cierre&nbsp;de&nbsp;ticket
+                                Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;cierre&nbsp;de&nbsp;ticket
                             </th>
                             <th style="vertical-align: top">
                                 Reportó
@@ -417,15 +419,17 @@
                     },
                     {
                         data: 'causaorigen',
-                        name: 'causaorigen'
+                        name: 'causaorigen',
                     },
                     {
                         data: 'descripcion',
-                        name: 'descripcion'
+                        name: 'descripcion',
+                        className:'descripcion'
                     },
                     {
                         data: 'comentarios',
-                        name: 'comentarios'
+                        name: 'comentarios',
+                        className:'comentarios'
                     },
                     // {
                     //     data: 'metodo_causa',
