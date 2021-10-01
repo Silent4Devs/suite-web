@@ -27,7 +27,7 @@ class EmpleadoFactory extends Factory
         $gender = $this->faker->randomElement(['H', 'M']);
         return [
             'name' => $this->faker->name($gender),
-            'foto' => $this->faker->image('public/storage/empleados/imagenes', 640, 480, 'people', false),
+            'foto' => $this->faker->image(storage_path('app/public/empleados/imagenes'), 640, 480, 'people', false),
             'puesto' => $this->faker->jobTitle,
             'antiguedad' => $this->faker->dateTime('now', null),
             'estatus' => 'alta',
