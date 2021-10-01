@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Area;
 use App\Models\Sede;
 use App\Models\Proceso;
+use App\Models\AnalisisDeRiesgo;
 use Livewire\Component;
 use App\Models\MatrizRiesgo;
 
@@ -85,6 +86,7 @@ class MatrizHeatmap extends Component
         $sedes = Sede::select('id', 'sede')->get();
         $areas = Area::select('id', 'area')->get();
         $procesos = Proceso::select('id', 'nombre')->get();
+        $mapas = AnalisisDeRiesgo::select('id', 'nombre')->get();
 
         $muy_alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('54', '81'));
         $alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('27', '36'));
@@ -299,6 +301,7 @@ class MatrizHeatmap extends Component
             'sedes' => $sedes,
             'areas' => $areas,
             'procesos' => $procesos,
+            'mapas' => $mapas,
             'muy_altos' => $muy_alto->count(),
             'altos' => $alto->count(),
             'medios' => $medio->count(),
