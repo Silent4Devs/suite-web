@@ -996,3 +996,4 @@ Route::post('CargaRevisionDireccion', 'SubidaExcel@RevisionDireccion')->name('ca
 Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
 Route::post('CargaFaqCategoria', 'SubidaExcel@FaqCategoria')->name('carga-faqcategoria');
 Route::post('CargaFaqPregunta', 'SubidaExcel@FaqPregunta')->name('carga-faqpregunta');
+Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');

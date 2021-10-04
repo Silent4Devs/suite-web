@@ -2,6 +2,7 @@
 
 @section('content')
 
+@include('partials.flashMessages')
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -17,7 +18,7 @@
 
             <div class="col-md-12 col-sm-12">
                 <div class="card vrd-agua">
-                    <span class="mb-1 text-center text-">Analisis de Riesgos</span>
+                    <span class="mb-1 text-center text-">Análisis de Riesgos</span>
                 </div>
             </div>
 
@@ -47,14 +48,26 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 col-sm-12">
-                    <div class="card vrd-agua">
-                        <span class="mb-1 text-center text-">Evaluacion 360 Grados</span>
+                <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-shield-alt iconos-crear"></i>{!! Form::label('analisis_riego', 'Analisis Riego') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-analisis_riego', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="analisis_riego" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
                     </div>
                 </div>
 
+                {{-- <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <span class="mb-1 text-center text-">Evaluación 360 Grados</span>
+                    </div>
+                </div> --}}
+
                 <!-- Categoria Field -->
-                <div class="form-group col-sm-6">
+                {{-- <div class="form-group col-sm-6">
                     <i class="fas fa-chess-knight iconos-crear"></i>{!! Form::label('competencia', 'Competencias') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-competencia', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
@@ -63,10 +76,10 @@
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
 
                   <!-- Categoria Field -->
-                  <div class="form-group col-sm-6">
+                {{-- <div class="form-group col-sm-6">
                     <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('evaluacion', 'Evaluaciones') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-evaluacion', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
@@ -75,7 +88,8 @@
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
+
                 <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">
                         <span class="mb-1 text-center text-">Soporte</span>
@@ -219,7 +233,7 @@
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                    <i class="fa-fw fas fa-briefcase iconos-crear"></i>{!! Form::label('faqcategoria', 'Categoria') !!}
+                    <i class="fa-fw fas fa-briefcase iconos-crear"></i>{!! Form::label('faqcategoria', 'Categoría') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-faqcategoria', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-primary btn-sm" type="file" name="faqcategoria" required>
