@@ -62,7 +62,7 @@
                             % Implementacion
                         </th>
                         <th>
-                            Elaboro
+                            Elaboró
                         </th>
                         <th>
                             Estatus
