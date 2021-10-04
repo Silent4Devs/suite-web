@@ -32,7 +32,8 @@ class AccionCorrectivaController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('accion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
+        // dd($query);
         if ($request->ajax()) {
             $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id');
             $table = Datatables::of($query);
@@ -84,14 +85,14 @@ class AccionCorrectivaController extends Controller
             });
 
             $table->addColumn('reporto', function ($row) {
-                return $row->empleados ? $row->empleados->name : '';
+                return $row->reporto ? $row->reporto->name : '';
             });
 
             $table->addColumn('reporto_puesto', function ($row) {
-                return $row->empleados ? $row->empleados->puesto : '';
+                return $row->reporto ? $row->reporto->puesto : '';
             });
             $table->addColumn('reporto_area', function ($row) {
-                return $row->empleados ? $row->empleados->area->area : '';
+                return $row->reporto ? $row->reporto->area->area : '';
             });
 
             $table->addColumn('registro', function ($row) {
@@ -160,9 +161,20 @@ class AccionCorrectivaController extends Controller
 
     public function store(Request $request)
     {
+        $accionCorrectiva = AccionCorrectiva::create([
+        'tema' => $request->tema,
+        'fecharegistro' => $request->fecharegistro,
+        'id_reporto' => $request->id_reporto,
+        'id_registro' => $request->id_registro,
+        'causaorigen' => $request->causaorigen,
+        'descripcion' => $request->descripcion,
+        'areas' => $request->areas,
+        'procesos' => $request->procesos,
+        'activos' => $request->activos,
+        'estatus'=> 'Nuevo'
+    ]);
 
-
-        $accionCorrectiva = AccionCorrectiva::create($request->all());;
+        // $accionCorrectiva = AccionCorrectiva::create($request->all());;
         //dd($request['pdf-value']);
 
         /*     if ($request->input('documentometodo', false)) {

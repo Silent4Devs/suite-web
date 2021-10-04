@@ -306,7 +306,9 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
+                                                <span><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</span>
                                                 <select name="n_empleado" id="n_empleado${data}" class="select2">
+                                                    <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>
                                                     @foreach ($empleados as $empleado)
                                                         <option value="{{ $empleado->n_empleado }}">{{ $empleado->name }}</option>
                                                     @endforeach
