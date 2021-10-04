@@ -1625,6 +1625,40 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'puede crear, editar y eliminar archivos en las carpetas del repositorio documental',
                 'title' => 'documentador',
             ],
+
+
+
+
+
+
+
+
+
+            //Vistas generdas no asignadas
+            [
+                'name' => 'Acceder a portal de comunicación',
+                'title' => 'portal_comunicacion_acces',
+            ],
+            [
+                'name' => 'Acceder a Evaluación 360 grados',
+                'title' => 'evaluacion_360_grados_acces',
+            ],
+            [
+                'name' => 'Acceder a Planes de accion',
+                'title' => 'planes_accion_acces',
+            ],
+            [
+                'name' => 'Acceder a Análisis de Riesgos',
+                'title' => 'analisi_riesgos_acces',
+            ],
+            [
+                'name' => 'Acceder a Capacitaciones',
+                'title' => 'capacitaciones_acces',
+            ],
+            [
+                'name' => 'Acceder a Capacitaciones',
+                'title' => 'capacitaciones_acces',
+            ],
         ];
 
         Permission::insert($permissions);
