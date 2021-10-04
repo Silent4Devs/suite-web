@@ -54,6 +54,11 @@ class MatrizHeatmap extends Component
     public $alta_medio_r = 0;
     public $alta_alto_r = 0;
     public $alta_muyalto_r = 0;
+    public $mapas = [];
+
+    public function mount($mapas = []){
+        $this->mapas=$mapas;
+    }
 
     public function clean()
     {
@@ -86,7 +91,9 @@ class MatrizHeatmap extends Component
         $sedes = Sede::select('id', 'sede')->get();
         $areas = Area::select('id', 'area')->get();
         $procesos = Proceso::select('id', 'nombre')->get();
-        $mapas = AnalisisDeRiesgo::select('id', 'nombre')->get();
+        // $mapas = AnalisisDeRiesgo::select('id', 'nombre')->get();
+        // dd($this->mapas);
+
 
         $muy_alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('54', '81'));
         $alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('27', '36'));
@@ -301,7 +308,7 @@ class MatrizHeatmap extends Component
             'sedes' => $sedes,
             'areas' => $areas,
             'procesos' => $procesos,
-            'mapas' => $mapas,
+            'mapas' => $this->mapas,
             'muy_altos' => $muy_alto->count(),
             'altos' => $alto->count(),
             'medios' => $medio->count(),

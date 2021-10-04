@@ -32,7 +32,7 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $incidentes_seguridad = IncidentesSeguridad::where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->get();
-        $riesgos_identificados = RiesgoIdentificado::get();
+        $riesgos_identificados = RiesgoIdentificado::orderByDesc('id')->get();
         $quejas = Quejas::get();
         $denuncias = Denuncias::get();
         $mejoras = Mejoras::get();
