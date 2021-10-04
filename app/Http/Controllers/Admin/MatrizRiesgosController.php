@@ -16,6 +16,7 @@ use App\Models\Tipoactivo;
 use App\Functions\Mriesgos;
 use App\Models\MatrizRiesgo;
 use App\Models\Organizacion;
+use App\Models\AnalisisDeRiesgo;
 use Illuminate\Http\Request;
 use App\Models\Vulnerabilidad;
 //use Illuminate\Support\Facades\Request;
@@ -106,6 +107,7 @@ class MatrizRiesgosController extends Controller
         $responsables = Empleado::get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
+
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice' ,'anexo_politica')->get();
 

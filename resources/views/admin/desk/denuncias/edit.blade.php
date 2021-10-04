@@ -108,7 +108,7 @@
                                     de cierre del ticket</label>
 
                                 <input class="form-control" name="fecha_cierre" type="datetime"
-                                    value="{{ $denuncias->fecha_cierre }}" id="solucion">
+                                    value="{{ $denuncias->fecha_cierre }}" id="solucion" readonly>
 
                             </div>
 
