@@ -2,15 +2,16 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE
-                    SEGURIDAD
-                    Y PRIVACIDAD DE LA ORGANIZACIÓN ({{number_format($porcentajeGap1, 2, '.', '')}}%)</h6>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                         aria-valuenow="{{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}" aria-valuemin="0"
-                         aria-valuemax="100"
-                         style="width: {{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}%">{{number_format($porcentajeGap1, 2, '.', '')}}
-                        %
+                <div id="barraGap1">
+                    <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE SEGURIDAD Y PRIVACIDAD DE LA ORGANIZACIÓN ({{number_format($porcentajeGap1, 2, '.', '')}}%)</h6>
+
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                            aria-valuenow="{{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}" aria-valuemin="0"
+                            aria-valuemax="100"
+                            style="width: {{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}%">{{number_format($porcentajeGap1, 2, '.', '')}}
+                            %
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -178,6 +179,8 @@
                 }
             ],
             success: function (response, newValue) {
+                $("#barraGap1").empty();
+                $("#barraGap1").load(location.href + " #barraGap1>*", "");
                 console.log('Actualizado, response')
             }
         });
@@ -201,6 +204,8 @@
                 }
             ],
             success: function (response, newValue) {
+                $("#barraGap2").empty();
+                $("#barraGap2").load(location.href + " #barraGap2>*", "");
                 console.log('Actualizado, response')
             }
         });
