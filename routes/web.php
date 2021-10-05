@@ -1020,3 +1020,6 @@ Route::post('CargaFaqCategoria', 'SubidaExcel@FaqCategoria')->name('carga-faqcat
 Route::post('CargaFaqPregunta', 'SubidaExcel@FaqPregunta')->name('carga-faqpregunta');
 Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');
 Route::post('CargaPartesInteresadas', 'SubidaExcel@PartesInteresadas')->name('carga-partes_interesadas');
+Route::post('CargaMatrizRequisitosLegales', 'SubidaExcel@MatrizRequisitosLegales')->name('carga-matriz_requisitos_legales');
+Route::post('CargaFoda', 'SubidaExcel@Foda')->name('carga-foda');
+Route::post('CargaDeterminacionAlcance', 'SubidaExcel@DeterminacionAlcance')->name('carga-determinacion_alcance');

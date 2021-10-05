@@ -120,5 +120,22 @@ class SubidaExcel extends Controller
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
+    public function MatrizRequisitosLegales()
+    {
+        Excel::import(new MatrizRequisitoLegaleImport, request()->file('matriz_requisitos_legales'));
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
+    public function Foda()
+    {
+        Excel::import(new EntendimientoOrganizacionImport, request()->file('foda'));
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
+    public function DeterminacionAlcance()
+    {
+        Excel::import(new AlcanceSgsiImport, request()->file('determinacion_alcance'));
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
 
 }
