@@ -131,4 +131,13 @@ class EV360CompetenciasController extends Controller
             }
         }
     }
+
+    public function obtenerNiveles(Request $request)
+    {
+        if ($request->ajax()) {
+            $competencia = Competencia::find(intval($request->competencia_id));
+            $niveles = $competencia->opciones;
+            return json_encode($niveles);
+        }
+    }
 }

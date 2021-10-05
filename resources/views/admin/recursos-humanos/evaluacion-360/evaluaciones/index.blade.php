@@ -51,11 +51,12 @@
                         <th style="vertical-align: top">
                             Incluye&nbsp;Objetivos
                         </th>
-                        <th style="vertical-align: top">
+                        <th style="vertical-align: top;">
                             Opciones
                         </th>
                     </tr>
                 </thead>
+                <tbody></tbody>
             </table>
         </div>
     </div>
@@ -183,7 +184,6 @@
                 columns: [{
                         data: 'id',
                         name: 'id',
-
                     },
                     {
                         data: 'nombre',
@@ -239,7 +239,7 @@
                                 /admin/recursos-humanos/evaluacion-360/evaluacion/${data}/resumen
                                 `;
                             let html = `
-                                <div class="btn-group">
+                                <div class="btn-group" style="background: white;">
                                     <a href="${urlEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
                                     <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                                     <a href="${urlEvaluacion}" class="btn btn-sm" title="Evaluación"><i class="fas fa-cogs"></i></a>
@@ -255,7 +255,15 @@
                 orderCellsTop: true,
                 order: [
                     [1, 'desc']
-                ]
+                ],
+                // fixedColumns: true,
+                // scrollX: true,
+                // scrollCollapse: true,
+                // paging: false,
+                // fixedColumns: {
+                //     left: 0,
+                //     right: 1
+                // }
             };
             window.table = $('.tblEvaluaciones').DataTable(dtOverrideGlobals);
         });

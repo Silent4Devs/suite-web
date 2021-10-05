@@ -9,20 +9,20 @@
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 tblCompetencias">
+            <table class="table table-bordered w-100 tblCompetenciasPorPuesto">
                 <thead class="thead-dark">
                     <tr>
                         <th style="vertical-align: top">
                             ID
                         </th>
                         <th style="vertical-align: top">
-                            Nombre
+                            Puesto
                         </th>
                         <th style="vertical-align: top">
-                            Tipo
+                            Cantidad de competencias
                         </th>
                         <th style="vertical-align: top">
-                            Opciones
+                            Asignar
                         </th>
                     </tr>
 
@@ -103,19 +103,6 @@
                 }
 
             ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar competencia',
-                url: "{{ route('admin.ev360-competencias.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            dtButtons.push(btnAgregar);
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -123,33 +110,26 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.ev360-competencias.index') }}",
+                ajax: "{{ route('admin.ev360-competencias-por-puesto.index') }}",
                 columns: [{
                         data: 'id'
                     }, {
-                        data: 'nombre'
+                        data: 'puesto'
                     }, {
-                        data: 'tipo',
+                        data: 'competencias',
                         render: function(data, type, row, meta) {
-                            return data.nombre;
+                            return data.length > 0 ?
+                                `<span class="badge badge-success">${data.length} competencia(s) asignada(s)</span>` :
+                                '<span class="badge badge-primary">Sin competencias asignadas</span>';
                         }
                     },
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                            let urlBtnEditar =
-                                `/admin/recursos-humanos/evaluacion-360/competencias/${data}/edit`;
-                            // let urlBtnEvaluacionEstatus =
-                            //     `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
-                            let urlBtnVisualizar =
-                                `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
-                            let urlBtnEliminar =
-                                `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
-
+                            let urlBtnAsignarCompetencias =
+                                `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
                             let botones = `
-                                <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
-                                <a class="btn btn-sm btn-editar" title="Visualizar" href="${urlBtnVisualizar}"><i class="fas fa-eye"></i></a>
-                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                                <a class="btn btn-sm btn-editar" title="Asignar competencias" href="${urlBtnAsignarCompetencias}"><i class="fas fa-sync-alt"></i></a>
                             `;
                             return botones;
                         }
@@ -157,10 +137,11 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
-                ]
+                    [0, 'desc']
+                ],
+
             };
-            let table = $('.tblCompetencias').DataTable(dtOverrideGlobals);
+            let table = $('.tblCompetenciasPorPuesto').DataTable(dtOverrideGlobals);
         });
     </script>
 @endsection
