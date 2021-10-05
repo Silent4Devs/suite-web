@@ -1019,3 +1019,4 @@ Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-catego
 Route::post('CargaFaqCategoria', 'SubidaExcel@FaqCategoria')->name('carga-faqcategoria');
 Route::post('CargaFaqPregunta', 'SubidaExcel@FaqPregunta')->name('carga-faqpregunta');
 Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');
+Route::post('CargaPartesInteresadas', 'SubidaExcel@PartesInteresadas')->name('carga-partes_interesadas');
