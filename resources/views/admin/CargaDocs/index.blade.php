@@ -90,6 +90,60 @@
                     </div>
                 </div> --}}
 
+
+                <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <span class="mb-1 text-center text-">ISO 27001 | Contexto</span>
+                    </div>
+                </div>
+
+                <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-chess-knight iconos-crear"></i>{!! Form::label('partes_interesadas', 'Partes Interesadas') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-partes_interesadas', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="partes_interesadas" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+                  <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('matriz_requisitos_legales', 'Matriz de Requisitos Legales') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-matriz_requisitos_legales', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="matriz_requisitos_legales" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('foda', 'Foda') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-foda', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="foda" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('determinacion_alcance', 'Determinación Alcance') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-determinacion_alcance', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="determinacion_alcance" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+
                 <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">
                         <span class="mb-1 text-center text-">Soporte</span>
@@ -143,9 +197,6 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-
-
-
 
                 <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">

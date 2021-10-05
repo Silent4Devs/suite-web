@@ -4,8 +4,9 @@
         .container-check {
             display: block;
             position: relative;
-            padding-left: 18px;
-            margin-bottom: 6px;
+            padding-left: 24px;
+            padding-top: 2px;
+            margin-bottom: 0px;
             cursor: pointer;
             font-size: 11px;
             -webkit-user-select: none;
@@ -28,8 +29,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            height: 15px;
-            width: 15px;
+            height: 20px;
+            width: 20px;
             background-color: #f9f9f9;
             border: 1px solid #00abb2;
         }
@@ -58,10 +59,10 @@
 
         /* Style the checkmark/indicator */
         .container-check .checkmark:after {
-            left: 4px;
-            top: 2px;
-            width: 5px;
-            height: 8px;
+            left: 6px;
+            top: 1px;
+            width: 7px;
+            height: 13px;
             border: solid white;
             border-width: 0 3px 3px 0;
             -webkit-transform: rotate(45deg);
@@ -152,7 +153,6 @@
     </style>
     <style>
         .card {
-            z-index: 0;
             border: none;
             position: relative
         }
@@ -224,7 +224,7 @@
             position: absolute;
             left: 0;
             top: 25px;
-            z-index: -1
+            z-index: 0;
         }
 
         #progressbar li.active:before,
@@ -292,7 +292,7 @@
                                                 <i class="mr-1 fas fa-user-circle iconos-evaluacion"></i> Nombre <span
                                                     class="text-danger">*</span>
                                             </label>
-                                            <input type="text" wire:model.prevent="nombre"
+                                            <input type="text" wire:model.defer="nombre"
                                                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
                                                 id="nombre" aria-describedby="nombreHelp" name="nombre"
                                                 value="{{ old('nombre') }}">
@@ -313,7 +313,7 @@
                                             </label>
                                             <textarea
                                                 class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                                name="descripcion" id="" cols="1" wire:model.prevent="descripcion"
+                                                name="descripcion" id="" cols="1" wire:model.defer="descripcion"
                                                 rows="1">{{ old('descripcion') }}</textarea>
                                             <small id="descripcionHelp" class="form-text text-muted">Ingresa la
                                                 Descripción
@@ -336,15 +336,18 @@
                                             </label>
                                             <br>
                                             <div class="d-flex">
-                                                <label class="mr-2 container-check">Competencias
+                                                <label class="mr-4 container-check">Competencias
                                                     @if ($errors->has('includeCompetencias'))
                                                         <small class="text-danger">
                                                             ({{ $errors->first('includeCompetencias') }})
                                                         </small>
                                                     @endif
-                                                    <input type="checkbox" type="checkbox"
+                                                    {{-- <input type="checkbox" type="checkbox"
                                                         wire:change="$set('showContentTable',{{ !$showContentTable }})"
-                                                        wire:model="includeCompetencias">
+                                                        wire:model="includeCompetencias"> --}}
+                                                    <input type="checkbox" type="checkbox"
+                                                        wire:model="includeCompetencias"
+                                                        wire:change.prevent="$set('showPesoGeneralCompetencias',{{ !$showPesoGeneralCompetencias }})">
                                                     <span class="checkmark"></span>
                                                 </label>
                                                 <label class="container-check">Objetivos
@@ -354,14 +357,36 @@
                                                         </small>
                                                     @endif
                                                     <input type="checkbox" wire:model="includeObjetivos"
-                                                        class="form-check-input" type="checkbox">
+                                                        class="form-check-input" type="checkbox"
+                                                        wire:change.prevent="$set('showPesoGeneralObjetivos',{{ !$showPesoGeneralObjetivos }})">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
-
+                                            <div class="mt-3 row">
+                                                <div
+                                                    class="col-6 {{ $showPesoGeneralCompetencias ? '' : 'd-none' }}">
+                                                    <label for="pesoGeneralCompetencias">Peso General
+                                                        Competencias<span class="text-danger">*</span></label>
+                                                    <input wire:model.defer="pesoGeneralCompetencias"
+                                                        id="pesoGeneralCompetencias" class="form-control"
+                                                        type="number" min="0" max="100">
+                                                </div>
+                                                <div class="col-6 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+                                                    <label for="pesoGeneralOnjetivos">Peso General Objetivos<span
+                                                            class="text-danger">*</span></label>
+                                                    <input wire:model.defer="pesoGeneralObjetivos"
+                                                        id="pesoGeneralOnjetivos" class="form-control" type="number"
+                                                        min="0" max="100">
+                                                </div>
+                                            </div>
                                         </div>
+                                        @if ($errors->has('sumaTotalPesoGeneral'))
+                                            <p style="font-size:12px;" class="m-0 text-center text-danger">
+                                                {{ $errors->first('sumaTotalPesoGeneral') }}
+                                            </p>
+                                        @endif
                                     </div>
-                                    @if ($showContentTable)
+                                    {{-- @if ($showContentTable)
                                         <div class="col-sm-12 col-lg-12 col-md-12 col-12">
                                             <label for="descripcion">
                                                 <i class="mr-2 fab fa-discourse iconos-evaluacion"></i>
@@ -421,7 +446,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    @endif
+                                    @endif --}}
 
                                 </div>
                             </div>
@@ -477,7 +502,7 @@
                                             @if ($habilitarSelectAreas)
                                                 <select
                                                     class="mt-3 form-control {{ $errors->has('by_area') ? 'is-invalid' : '' }}"
-                                                    id="by_area" wire:model="by_area">
+                                                    id="by_area" wire:model.defer="by_area">
                                                     <option value="" selected>-- Seleciona una opción --</option>
                                                     @foreach ($areas as $area)
                                                         <option value="{{ $area->id }}">{{ $area->area }}
@@ -493,7 +518,7 @@
                                             @if ($habilitarSelectManual)
                                                 <select
                                                     class="mt-3 form-control {{ $errors->has('by_manual') ? 'is-invalid' : '' }}"
-                                                    multiple id="by_manual" wire:model="by_manual">
+                                                    multiple id="by_manual" wire:model.defer="by_manual">
                                                     @foreach ($empleados as $empleado)
                                                         <option value="{{ $empleado->id }}">{{ $empleado->name }}
                                                         </option>
@@ -710,13 +735,13 @@
                                         <div class="pl-0 col-3">
                                             <p class="m-0 text-muted">Fecha Inicio</p>
                                             <input class="form-control" type="date"
-                                                wire:model="periodos.{{ $idx }}.fecha_inicio"
+                                                wire:model.defer="periodos.{{ $idx }}.fecha_inicio"
                                                 value="{{ $periodo['fecha_inicio'] }}">
                                         </div>
                                         <div class="pl-0 col-3">
                                             <p class="m-0 text-muted">Fecha Finalización</p>
                                             <input class="form-control" type="date"
-                                                wire:model="periodos.{{ $idx }}.fecha_fin"
+                                                wire:model.defer="periodos.{{ $idx }}.fecha_fin"
                                                 value="{{ $periodo['fecha_fin'] }}">
                                         </div>
                                         <div class="col-2">

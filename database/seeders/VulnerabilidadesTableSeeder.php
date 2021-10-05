@@ -126,6 +126,7 @@ class VulnerabilidadesTableSeeder extends Seeder
             [
                 'id' => 29,
                 'nombre' => 'Falta de procedimientos para eliminar los derechos de acceso a la terminación del empleo '
+            ],
             [
                 'id' => 30,
                 'nombre' => 'Desprotección en equipos móviles'
@@ -178,7 +179,7 @@ class VulnerabilidadesTableSeeder extends Seeder
                 'id' => 42,
                 'nombre' => 'Los derechos del usuario no se revisan regularmente'
             ]
-            
+
         ];
 
         Vulnerabilidad::insert($vulnerabilidades);

@@ -15,7 +15,7 @@ class AnalisisDeRiesgoImport implements ToModel
     */
     public function model(array $row)
     {
-        
+
         return new AnalisisDeRiesgo([
             'nombre' => $row[0],
             'tipo' => $row[1],

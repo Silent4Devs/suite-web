@@ -57,6 +57,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/remover', 'RH\EvaluadoEvaluadorController@remover')->name('ev360-evaluaciones.evaluadores.remover');
     Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/agregar', 'RH\EvaluadoEvaluadorController@agregar')->name('ev360-evaluaciones.evaluadores.agregar');
 
+    Route::get(
+        'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/create',
+        'RH\CompetenciasPorPuestoController@create'
+    )->name('ev360-competencias-por-puesto.create');
+    Route::get(
+        'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/obtener',
+        'RH\CompetenciasPorPuestoController@indexCompetenciasPorPuesto'
+    )->name('ev360-competencias-por-puesto.indexCompetenciasPorPuesto');
+    Route::post(
+        'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}',
+        'RH\CompetenciasPorPuestoController@store'
+    )->name('ev360-competencias-por-puesto.store');
+    Route::resource('recursos-humanos/evaluacion-360/competencias-por-puesto', 'RH\CompetenciasPorPuestoController')->names([
+        'index' => 'ev360-competencias-por-puesto.index',
+        'show' => 'ev360-competencias-por-puesto.show',
+        'edit' => 'ev360-competencias-por-puesto.edit',
+        'update' => 'ev360-competencias-por-puesto.update',
+        'destroy' => 'ev360-competencias-por-puesto.destroy',
+    ])->except('create', 'store');
+
+
+    Route::post('recursos-humanos/evaluacion-360/competencias/obtener-niveles', 'RH\EV360CompetenciasController@obtenerNiveles')->name('ev360-competencias.obtenerNiveles');
     Route::post('recursos-humanos/evaluacion-360/competencias/store-redirect', 'RH\EV360CompetenciasController@storeAndRedirect')->name('ev360-competencias.conductas');
     Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/conductas', 'RH\EV360CompetenciasController@conductas')->name('ev360-competencias.obtenerConductas');
     Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/informacion', 'RH\EV360CompetenciasController@informacionCompetencia')->name('ev360-competencias.informacionCompetencia');
@@ -997,3 +1019,7 @@ Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-catego
 Route::post('CargaFaqCategoria', 'SubidaExcel@FaqCategoria')->name('carga-faqcategoria');
 Route::post('CargaFaqPregunta', 'SubidaExcel@FaqPregunta')->name('carga-faqpregunta');
 Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');
+Route::post('CargaPartesInteresadas', 'SubidaExcel@PartesInteresadas')->name('carga-partes_interesadas');
+Route::post('CargaMatrizRequisitosLegales', 'SubidaExcel@MatrizRequisitosLegales')->name('carga-matriz_requisitos_legales');
+Route::post('CargaFoda', 'SubidaExcel@Foda')->name('carga-foda');
+Route::post('CargaDeterminacionAlcance', 'SubidaExcel@DeterminacionAlcance')->name('carga-determinacion_alcance');
