@@ -111,7 +111,7 @@ class MatrizRequisitoLegalesController extends Controller
             // $table->rawColumns(['actions', 'placeholder']);
 
             // return $table->make(true);
-            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado')->get();
+            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado')->orderBy('id')->get();
             return datatables()->of($matrizRequisitoLegales)->toJson();
         }
 

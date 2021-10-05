@@ -176,11 +176,11 @@
 
         .carousel-item{
             text-align: center;
-            background-color: #666;
+            background-color: #f1f1f1;
         }
         .img_carrusel{
             height: 300px !important;
-            opacity: 0.9;
+            opacity: 0.8;
 
             background-size: cover;
             background-position: center;

@@ -31,12 +31,12 @@ class DeskController extends Controller
     public function index()
     {
         abort_if(Gate::denies('centro_atencion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $incidentes_seguridad = IncidentesSeguridad::where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->get();
-        $riesgos_identificados = RiesgoIdentificado::get();
-        $quejas = Quejas::get();
-        $denuncias = Denuncias::get();
-        $mejoras = Mejoras::get();
-        $sugerencias = Sugerencias::get();
+        $incidentes_seguridad = IncidentesSeguridad::where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->orderBy('id')->get();
+        $riesgos_identificados = RiesgoIdentificado::orderBy('id')->get();
+        $quejas = Quejas::orderBy('id')->get();
+        $denuncias = Denuncias::orderBy('id')->get();
+        $mejoras = Mejoras::orderBy('id')->get();
+        $sugerencias = Sugerencias::orderBy('id')->get();
 
         $total_seguridad = IncidentesSeguridad::get()->count();
         $nuevos_seguridad = IncidentesSeguridad::where('estatus', 'nuevo')->get()->count();
@@ -265,9 +265,9 @@ class DeskController extends Controller
     public function editRiesgos(Request $request, $id_riesgos)
     {
 
-        $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos));
+        $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos');
 
-        // $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->findOrfail(intval($id_riesgos));
+        $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->where("riesgos_id", intval($id_riesgos))->first();
 
         $procesos = Proceso::get();
 
@@ -279,7 +279,7 @@ class DeskController extends Controller
 
         $empleados = Empleado::get();
 
-        return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes'));
+        return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes','analisis'));
     }
     public function updateRiesgos(Request $request, $id_riesgos)
     {
@@ -331,7 +331,7 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.riesgos-edit', $id_riesgos)->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.riesgos-edit',$analisis_seguridad->riesgos_id)->with('success', 'Reporte actualizado');
     }
 
 
@@ -375,7 +375,7 @@ class DeskController extends Controller
         ]);
 
 
-        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
     }
     public function updateAnalisisQuejas(Request $request, $id_quejas)
     {
@@ -514,7 +514,7 @@ class DeskController extends Controller
             'otro' => $request->otro,
         ]);
 
-        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.mejoras-edit', $id_mejoras)->with('success', 'Reporte actualizado');
     }
     public function updateAnalisisMejoras(Request $request, $id_mejoras)
     {
@@ -588,7 +588,7 @@ class DeskController extends Controller
             'fecha_cierre' => $request->fecha_cierre,
         ]);
 
-        return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
+        return redirect()->route('admin.desk.sugerencias-edit', $id_sugerencias)->with('success', 'Reporte actualizado');
     }
     public function updateAnalisisSugerencias(Request $request, $id_sugerencias)
     {

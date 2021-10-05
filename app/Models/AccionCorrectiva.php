@@ -111,20 +111,20 @@ class AccionCorrectiva extends Model implements HasMedia
         return $this->hasMany(PlanaccionCorrectiva::class, 'accioncorrectiva_id', 'id');
     }
 
-    public function getFechaRegistroAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
+    // public function getFechaRegistroAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
-    public function getFechaCompromisoAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
+    // public function getFechaCompromisoAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
-    public function getFechaVerificacionAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
+    // public function getFechaVerificacionAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
     public function nombrereporta()
     {
@@ -170,6 +170,12 @@ class AccionCorrectiva extends Model implements HasMedia
     public function empleados()
 	{
         return $this->belongsTo(Empleado::class, 'id_registro', 'id')->with('area');
+
+	}
+
+    public function reporto()
+	{
+        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
 
 	}
 

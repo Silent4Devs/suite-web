@@ -1,9 +1,6 @@
 @extends('layouts.admin_glosario')
 @section('content')
-
-    @can('glosario_create')
-
-        <style type="text/css">
+<style type="text/css">
             table {
                 width: 100%;
             }
@@ -77,6 +74,9 @@
             }
 
         </style>
+    @can('glosario_create')
+
+        
 
 
         <!--

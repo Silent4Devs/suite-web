@@ -41,6 +41,7 @@
                 <label for="id_asignada"><i class="fas fa-user-tie iconos-crear"></i>Colaborador(a) asignado</label>
                 <select class="form-control {{ $errors->has('id_asignada') ? 'is-invalid' : '' }}" name="id_asignada"
                     id="id_asignada">
+                    <option value="">Seleccione una opción</option>
                     @foreach ($empleados as $id => $empleado)
                         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                             data-area="{{ $empleado->area->area }}"
