@@ -22,7 +22,7 @@ class PoliticaSgsiController extends Controller
         abort_if(Gate::denies('politica_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PoliticaSgsi::with(['team','reviso'])->select(sprintf('%s.*', (new PoliticaSgsi)->table));
+            $query = PoliticaSgsi::with(['team','reviso'])->select(sprintf('%s.*', (new PoliticaSgsi)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

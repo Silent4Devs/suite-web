@@ -33,7 +33,7 @@ class AmenazaController extends AppBaseController
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Amenaza::get();
+            $query = Amenaza::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

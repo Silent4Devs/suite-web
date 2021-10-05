@@ -35,7 +35,9 @@
                         <span style="font-size:20px;"><i class="mr-2 fas fa-file"></i>Evaluación:
                             {{ $evaluacion->nombre }}</span>
                         <p class="m-0">Evaluado: {{ $evaluado->name }}</p>
+                        <p class="m-0">Puesto: {{ $evaluado->puesto }}</p>
                         <p class="m-0">Evaluador: {{ $evaluador->name }}</p>
+                        <p class="m-0">Puesto: {{ $evaluador->puesto }}</p>
                         @if ($evaluado->id == $evaluador->id)
                             <span class="badge badge-info">Autoevaluación</span>
                         @endif
@@ -121,6 +123,35 @@
                                                 comparación con sus compañeros:
                                             @endif
                                         </p>
+                                        {{-- <div class="mt-2">
+                                            <div x-data="{ show: true }">
+                                                <h6>Niveles esperados
+                                                    <span @click='show = !show' :aria-expanded="show ? 'true' : 'false'"
+                                                        class="btn btn-sm">
+                                                        <i class="fas fa-minus-circle"
+                                                            :class="{ 'fa-minus-circle': show,'fa-plus-circle': !show }"></i>
+                                                    </span>
+                                                    <small>(Consulta los niveles esperados por puesto <strong
+                                                            class="text-danger">*</strong>)</small>
+                                                </h6>
+                                                <div x-show="show" class="col-8">
+                                                    <div class="border row" style="background: #005c60;color: white">
+                                                        <div class="text-center col-6">Competencia</div>
+                                                        <div class="text-center col-6">Nivel Esperado</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        @forelse ($competencias_por_puesto_nivel_esperado as $nivel_competencia)
+                                                            <div class="text-center border col-6">
+                                                                {{ $nivel_competencia->competencia->nombre }}</div>
+                                                            <div class="text-center border col-6">
+                                                                {{ $nivel_competencia->nivel_esperado }}</div>
+                                                        @empty
+                                                            <div>Sin resultados encontrados...</div>
+                                                        @endforelse
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> --}}
                                         <span class="badge badge-primary">{{ $total_preguntas }}
                                             pregunta{{ $total_preguntas > 1 ? 's' : '' }}
                                             en total</span>
@@ -135,6 +166,21 @@
                                                 aria-valuemin="0" aria-valuemax="100">
                                                 {{ $progreso }}%</div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-4">Competencia</div>
+                                            @if ($evaluacion->autoevaluacion)
+                                                @if ($evaluado->supervisor)
+                                                    @if ($evaluado->supervisor->id == $evaluador->id)
+                                                        <div class="col-2">Autoevaluación</div>
+                                                    @endif
+                                                @endif
+                                            @endif
+                                            <div class="col-2">Nivel esperado</div>
+                                            <div
+                                                class="col-{{ $evaluacion->autoevaluacion ? ($evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->id ? '4' : '6') : '6') : '6' }} justify-content-between">
+                                                Nivel Obtenido
+                                            </div>
+                                        </div>
                                         @foreach ($preguntas as $idx => $competencia)
                                             <div class="px-0 py-3 col-12" style="border-bottom: 1px dashed #bcbcbc;">
                                                 <div class="row">
@@ -148,18 +194,23 @@
                                                     @if ($evaluacion->autoevaluacion)
                                                         @if ($evaluado->supervisor)
                                                             @if ($evaluado->supervisor->id == $evaluador->id)
-                                                                <div class="col-4" id="autoev{{ $idx }}">
+                                                                <div class="col-2" id="autoev{{ $idx }}">
                                                                     <div style="background: aliceblue;"
                                                                         class="form-control">
                                                                         <i class="mr-1 fas fa-circle-notch fa-spin"></i>
-                                                                        Cargando autoevaluacion...
+                                                                        Obteniendo...
                                                                     </div>
                                                                 </div>
                                                             @endif
                                                         @endif
                                                     @endif
+                                                    <div class="col-2" id="esperado{{ $idx }}">
+                                                        <div style="background: aliceblue;" class="form-control">
+                                                            {{ $competencia->competencia->competencia_puesto->first()->nivel_esperado }}
+                                                        </div>
+                                                    </div>
                                                     <div
-                                                        class="col-{{ $evaluacion->autoevaluacion ? ($evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->id ? '4' : '8') : '8') : '8' }} justify-content-between">
+                                                        class="col-{{ $evaluacion->autoevaluacion ? ($evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->id ? '4' : '6') : '6') : '6' }} justify-content-between">
                                                         <select class="form-control" name="respuesta"
                                                             onchange="event.preventDefault();GuardarRepuesta(this,'{{ route('admin.ev360-competencias.guardarRespuestaCompetencia', $competencia->competencia->id) }}')">
                                                             <option value="" disabled selected>
@@ -366,7 +417,7 @@
                             </div>
                             <p class="m-0 text-muted">
                                 <strong>Políticas de la evaluación:</strong>
-                                Al firmar la evaluación ambas partes quedan de conformes en que lo establecido en la
+                                Al firmar la evaluación ambas partes quedan conformes en que lo establecido en la
                                 evaluación es un reflejo del desempeño del colaborador evaluado.
                             </p>
                         </div>
