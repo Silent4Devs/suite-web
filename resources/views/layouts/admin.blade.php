@@ -867,6 +867,12 @@
         padding: 6px;
     }
 
+
+
+    .table td{
+        text-align: justify !important;
+    }
+
 </style>
 
     @yield('styles')

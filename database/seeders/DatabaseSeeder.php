@@ -38,6 +38,8 @@ class DatabaseSeeder extends Seeder
             CategoriaIncidenteSeeder::class,
             SubcategoriaIncidenteSeeder::class,
             ClausulasSeeder::class,
+            VulnerabilidadesTableSeeder::class,
+            AmenazasTableSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }
