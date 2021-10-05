@@ -1,11 +1,11 @@
 <div>
-    <button id="btnModalOpen" wire:click="openModal()" class="btn btn-sm btn-primary"><i
+    <button id="btnModalOpen" wire:click.prevent="openModal()" class="btn btn-sm btn-primary"><i
             class="mr-2 fas fa-plus-circle"></i>
         Crear Grupo
     </button>
     <div wire:ignore.self class="modal fade" id="grupoModal" tabindex="-1" aria-labelledby="grupoModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="grupoModalLabel"><i class="mr-2 fas fa-cogs"></i>Agregar
@@ -62,6 +62,7 @@
             });
             window.livewire.on('grupoEvaluadosSaved', () => {
                 $('#grupoModal').modal('hide');
+                toastr.success('Grupo creado con éxito');
             });
         })
     </script>
