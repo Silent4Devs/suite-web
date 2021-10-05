@@ -21,7 +21,7 @@ class AlcanceSgsiController extends Controller
         abort_if(Gate::denies('alcance_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AlcanceSgsi::with(['team','empleado'])->select(sprintf('%s.*', (new AlcanceSgsi)->table));
+            $query = AlcanceSgsi::with(['team','empleado'])->select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -84,14 +84,14 @@ class AlcanceSgsiController extends Controller
         abort_if(Gate::denies('alcance_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::with('area')->get();
-        
+
         return view('admin.alcanceSgsis.create', compact('empleados'));
     }
 
     public function store(StoreAlcanceSgsiRequest $request)
     {
         $alcanceSgsi = AlcanceSgsi::create($request->all());
-        
+
 
         return redirect()->route('admin.alcance-sgsis.index')->with("success", 'Guardado con éxito');
     }

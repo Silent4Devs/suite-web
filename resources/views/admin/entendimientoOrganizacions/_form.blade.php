@@ -24,19 +24,23 @@
 
 
 
-        <div class="form-group col-sm-12 col-md-6 col-lg-6">
-            <label for="id_elabora"><i class="fas fa-users iconos-crear"></i>Elabora</label>
-            <select class="form-control select2 {{ $errors->has('elaboro') ? 'is-invalid' : '' }}" name="id_elabora" id="id_elabora">
-                @foreach ($empleados as $empleado)
-                        <option value="{{ $empleado->id }}"{{old('id_elabora',$entendimientoOrganizacion->id_elabora)?'selected':''}}>
-                            {{ $empleado->name }}
-                        </option>
 
-                    @endforeach
+
+        <div class="form-group col-md-6 col-sm-6 col-12">
+            <label for="id_elabora"><i class="fas fa-user-tie iconos-crear"></i>Elabora</label>
+            <select class="form-control {{ $errors->has('id_elabora') ? 'is-invalid' : '' }}" name="id_elabora"
+                id="id_elabora">
+                <option value="">Seleccione una opción</option>
+                @foreach ($empleados as $id => $empleado)
+                    <option value="{{ $empleado->id }}"
+                        {{ old('id_elabora', $entendimientoOrganizacion->id_elabora) == $empleado->id ? 'selected' : '' }}>
+                        {{ $empleado->name }}
+                    </option>
+                @endforeach
             </select>
-            @if($errors->has('empleados'))
+            @if ($errors->has('empleados'))
                 <div class="invalid-feedback">
-                    {{ $errors->first('area') }}
+                    {{ $errors->first('empleados') }}
                 </div>
             @endif
         </div>
@@ -89,7 +93,7 @@
             @endif
         </div>
 
-        <div class="form-group col-12 text-right"><br>
+        <div class="text-right form-group col-12"><br>
             <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
             <button class="btn btn-danger" type="submit">
                 {{ trans('global.save') }}
