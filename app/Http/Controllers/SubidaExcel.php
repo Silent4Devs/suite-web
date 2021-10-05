@@ -19,6 +19,7 @@ use App\Imports\CategoriaActivoImport;
 use App\Imports\FaqCategoriaImport;
 use App\Imports\FaqPreguntaImport;
 use App\Imports\AnalisisDeRiesgoImport;
+use App\Imports\PartesInteresadaImport;
 use App\Imports\FodaImport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -113,5 +114,11 @@ class SubidaExcel extends Controller
         Excel::import(new AnalisisDeRiesgoImport, request()->file('analisis_riego'));
         return redirect('CargaDocs')->with('success', 'All good!');
     }
+    public function PartesInteresadas()
+    {
+        Excel::import(new PartesInteresadaImport, request()->file('partes_interesadas'));
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
 
 }
