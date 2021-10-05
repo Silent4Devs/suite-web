@@ -8,7 +8,7 @@
                 Nombre
             </th>
             <th style="min-width: 200px;">
-                Categoria
+                Categoría
             </th>
             <th style="min-width: 500px;">
                 Descripción

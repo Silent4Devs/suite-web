@@ -76,22 +76,25 @@
 
 
             <div class="row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-4 col-lg-4 col-sm-12">
                     <label for="id_reviso_alcance"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                    <select class="form-control select2 {{ $errors->has('reviso_alcance') ? 'is-invalid' : '' }}" name="id_reviso_alcance" id="id_reviso_alcance">
-                        @foreach ($empleados as $empleado)
-                        <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}" {{ old('id_reviso_politica')==$empleado->id ? ' selected="selected"' : '' }}>
-
-                            {{ $empleado->name }}
-                        </option>
-
+                    <select class="form-control {{ $errors->has('id_reviso_alcance') ? 'is-invalid' : '' }}"
+                        name="id_reviso_alcance" id="id_reviso_alcance">
+                        <option value="">Seleccione una opción</option>
+                        @foreach ($empleados as $id => $empleado)
+                            <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                                data-area="{{ $empleado->area->area }}"
+                                {{ old('id_reviso_alcance', $alcanceSgsi->id_reviso_alcance) == $empleado->id ? 'selected' : '' }}>
+                                {{ $empleado->name }}
+                            </option>
                         @endforeach
                     </select>
-                    @if ($errors->has('id_reviso_alcance'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id_reviso_alcance') }}
-                    </div>
+                    @if ($errors->has('empleados'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('empleados') }}
+                        </div>
                     @endif
+                    <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
                 </div>
 
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">

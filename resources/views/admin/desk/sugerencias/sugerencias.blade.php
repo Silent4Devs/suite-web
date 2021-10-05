@@ -59,7 +59,7 @@
                 <th style="min-width: 200px;">Área</th>
                 <th style="min-width: 200px;">Proceso</th>
                 <th style="min-width: 500px;">Descripción</th>
-       			<th>Opciones</th> 
+       			<th>Opciones</th>
    			</tr>
    		</thead>
    		<tbody>
@@ -70,11 +70,11 @@
                     <td>{{ $sugerencia->created_at }}</td>
                     <td>{{ $sugerencia->fecha_cierre }}</td>
 	       			<td>{{ $sugerencia->sugirio->name }}</td>
-	       			<td>{{ $sugerencia->sugirio->email }}</td> 
+	       			<td>{{ $sugerencia->sugirio->email }}</td>
 	       			<td>{{ $sugerencia->sugirio->telefono }}</td>
                     <td>{{ $sugerencia->titulo }}</td>
-                    <td>{{ $sugerencia->area_sugerencias }}</td> 
-                    <td>{{ $sugerencia->proceso_sugerencias }}</td> 
+                    <td>{{ $sugerencia->area_sugerencias }}</td>
+                    <td>{{ $sugerencia->proceso_sugerencias }}</td>
 	       			<td>{{ $sugerencia->descripcion }}</td>
 	       			<td>
 	       				<a href="{{ route('admin.desk.sugerencias-edit', $sugerencia->id) }}"><i class="fas fa-edit"></i></a>
@@ -170,10 +170,13 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            
+
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
+                order:[
+                            [0,'desc']
+                        ]
             };
             let table = $('.tabla_sugerencias').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {

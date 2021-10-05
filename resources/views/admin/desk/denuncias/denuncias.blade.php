@@ -65,7 +65,7 @@
                 <th style="min-width:200px;">Puesto</th>
                 <th style="min-width:200px;">Área</th>
                 <th style="min-width: 500px;">Descripción</th>
-       			<th>Opciones</th> 
+       			<th>Opciones</th>
    			</tr>
    		</thead>
    		<tbody>
@@ -182,10 +182,13 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            
+
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
+                order:[
+                            [0,'desc']
+                        ]
             };
             let table = $('.tabla_denuncias').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
