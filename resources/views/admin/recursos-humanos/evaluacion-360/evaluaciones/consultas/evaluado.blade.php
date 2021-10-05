@@ -2,7 +2,12 @@
 @section('content')
 
     {{ Breadcrumbs::render('EV360-Evaluaciones-Create') }}
+    <style>
+        .fs-consulta {
+            font-size: 11px;
+        }
 
+    </style>
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Evaluación </h3>
@@ -30,7 +35,7 @@
                             <p class="m-0 text-white">Calificación Final</p>
                         </div>
                         <div class="border col-6">
-                            <p class="m-0">100%</p>
+                            <p class="m-0">{{ $calificacion_final }}%</p>
                         </div>
                     </div>
                 </div>
@@ -52,7 +57,7 @@
                             <p class="m-0 text-white">Competencias</p>
                         </div>
                         <div class="border col-6">
-                            <p class="m-0">40%</p>
+                            <p class="m-0">{{ $promedio_general_competencias }}%</p>
                         </div>
                     </div>
                 </div>
@@ -74,7 +79,8 @@
                             <p class="m-0 text-white">Objetivos</p>
                         </div>
                         <div class="border col-6">
-                            <p class="m-0">64%</p>
+                            <p class="m-0">{{ $promedio_general_objetivos }}%
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -84,44 +90,54 @@
                     <h6 class="m-0 text-white">Evaluación de competencias</h6>
                 </div>
             </div>
-            @foreach ($evaluadores_competencias as $evaluador)
-                <div class="row">
-                    <div class="col-12">
-                        <div class="mt-2 row">
-                            <div class="col-6">
-                                Evaluación realizada por:
-                                <strong> {{ $evaluador['nombre'] }}</strong>
-                                <span class="badge badge-primary">{{ $evaluador['tipo'] }}</span>
-                            </div>
-                            <div class="text-center col-2"><small>Alcanzado</small></div>
-                            <div class="text-center col-1"><small>Meta</small></div>
-                            <div class="text-center col-2"><small>Calificación</small></div>
-                            <div class="text-center col-1"><small>Peso</small></div>
-                        </div>
+
+            <div class="mt-2">
+                <span>{{ $lista_autoevaluacion->first()['tipo'] }}</span>
+                <span>{{ $lista_autoevaluacion->first()['peso_general'] }}%</span>
+                @forelse ($lista_autoevaluacion->first()['evaluaciones'] as $evaluador)
+                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template')
+                @empty
+                    <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
+                        para la evaluación
                     </div>
-                    <div class="col-12">
-                        @foreach ($evaluador['competencias'] as $idx => $competencia)
-                            <div class="row">
-                                <div class="text-white col-6" style="background: #3e3e3e; border: 1px solid #fff">
-                                    {{ $idx + 1 }}.- {{ $competencia['competencia'] }}
-                                </div>
-                                <div class="text-center border col-2">
-                                    {{ $competencia['calificacion'] }}
-                                </div>
-                                <div class="text-center border col-1">
-                                    {{ $competencia['meta'] }}
-                                </div>
-                                <div class="text-center border col-2">
-                                    {{ $competencia['porcentaje'] }}
-                                </div>
-                                <div class="text-center border col-1">
-                                    {{ $competencia['peso'] }} %
-                                </div>
-                            </div>
-                        @endforeach
+                @endforelse
+            </div>
+
+            <div class="mt-2">
+                <span>{{ $lista_jefe_inmediato->first()['tipo'] }}</span>
+                <span>{{ $lista_jefe_inmediato->first()['peso_general'] }}%</span>
+                @forelse ($lista_jefe_inmediato->first()['evaluaciones'] as $evaluador)
+                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template')
+                @empty
+                    <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
+                        para la evaluación
                     </div>
-                </div>
-            @endforeach
+                @endforelse
+            </div>
+
+            <div class="mt-2">
+                <span>{{ $lista_equipo_a_cargo->first()['tipo'] }}</span>
+                <span>{{ $lista_equipo_a_cargo->first()['peso_general'] }}%</span>
+                @forelse ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluador)
+                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template')
+                @empty
+                    <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
+                        para la evaluación
+                    </div>
+                @endforelse
+            </div>
+
+            <div class="mt-2">
+                <span>{{ $lista_misma_area->first()['tipo'] }}</span>
+                <span>{{ $lista_misma_area->first()['peso_general'] }}%</span>
+                @forelse ($lista_misma_area->first()['evaluaciones'] as $evaluador)
+                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template')
+                @empty
+                    <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
+                        para la evaluación
+                    </div>
+                @endforelse
+            </div>
             <div class="mt-3 row">
                 <div class="col-8"></div>
                 <div class="col-4">
@@ -130,11 +146,11 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="border col-6">Promedio</div>
-                            <div class="border col-6">0</div>
+                            <div class="border col-6">{{ $promedio_competencias }}</div>
                         </div>
                         <div class="row">
                             <div class="border col-6">% Participación</div>
-                            <div class="border col-6">0%</div>
+                            <div class="border col-6">{{ $promedio_competencias * 100 }}%</div>
                         </div>
                     </div>
                 </div>
@@ -214,11 +230,11 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="border col-6">Promedio</div>
-                            <div class="border col-6">0</div>
+                            <div class="border col-6">{{ $promedio_objetivos }}</div>
                         </div>
                         <div class="row">
                             <div class="border col-6">% Participación</div>
-                            <div class="border col-6">0%</div>
+                            <div class="border col-6">{{ $promedio_objetivos * 100 }}%</div>
                         </div>
                     </div>
                 </div>

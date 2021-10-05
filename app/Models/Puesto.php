@@ -38,4 +38,9 @@ class Puesto extends Model
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function competencias()
+    {
+        return $this->hasMany('App\Models\RH\CompetenciaPuesto', 'puesto_id', 'id');
+    }
 }

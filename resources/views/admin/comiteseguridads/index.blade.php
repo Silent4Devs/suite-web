@@ -282,8 +282,8 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [4, 'desc']
-                ]
+                    [1, 'desc']
+                ],
             };
             let table = $('.datatable-Comiteseguridad').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {

@@ -33,10 +33,10 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $incidentes_seguridad = IncidentesSeguridad::where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->orderBy('id')->get();
         $riesgos_identificados = RiesgoIdentificado::orderBy('id')->get();
-        $quejas = Quejas::get();
-        $denuncias = Denuncias::get();
-        $mejoras = Mejoras::get();
-        $sugerencias = Sugerencias::get();
+        $quejas = Quejas::orderBy('id')->get();
+        $denuncias = Denuncias::orderBy('id')->get();
+        $mejoras = Mejoras::orderBy('id')->get();
+        $sugerencias = Sugerencias::orderBy('id')->get();
 
         $total_seguridad = IncidentesSeguridad::get()->count();
         $nuevos_seguridad = IncidentesSeguridad::where('estatus', 'nuevo')->get()->count();
