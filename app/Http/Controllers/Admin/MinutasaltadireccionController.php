@@ -37,7 +37,7 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('minutasaltadireccion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = Minutasaltadireccion::with(['responsable', 'team', 'participantes', 'planes'])->get();
+            $query = Minutasaltadireccion::with(['responsable', 'team', 'participantes', 'planes'])->orderByDesc('id')->get();
             // $table = Datatables::of($query);
 
             // $table->addColumn('placeholder', '&nbsp;');

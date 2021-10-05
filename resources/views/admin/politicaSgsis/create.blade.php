@@ -70,12 +70,12 @@
                 <div class="form-group col-md-4">
                     <label for="id_reviso_politica"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
                     <select class="form-control select2 {{ $errors->has('reviso_politica') ? 'is-invalid' : '' }}" name="id_reviso_politica" id="id_reviso_politica">
+                        <option value="">Seleccione una opción</option>
                         @foreach ($empleados as $empleado)
                         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}" {{ old('id_reviso_politica')==$empleado->id ? ' selected="selected"' : '' }}>
 
                             {{ $empleado->name }}
                         </option>
-
                         @endforeach
                     </select>
                     @if ($errors->has('id_reviso_politica'))
@@ -88,14 +88,14 @@
 
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                    <div class="form-control" id="puesto_reviso"></div>
+                    <div class="form-control" id="puesto_reviso" readonly></div>
 
                 </div>
 
 
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="id_area_reviso"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                    <div class="form-control" id="area_reviso"></div>
+                    <div class="form-control" id="area_reviso" readonly></div>
 
                 </div>
 

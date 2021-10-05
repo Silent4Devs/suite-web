@@ -66,12 +66,11 @@
                 <div class="form-group col-md-4">
                     <label for="id_reviso_alcance"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
                     <select class="form-control select2 {{ $errors->has('reviso_alcance') ? 'is-invalid' : '' }}" name="id_reviso_alcance" id="id_reviso_alcance">
+                        <option disabled selected>Seleccionar colaborador</option>
                         @foreach ($empleados as $empleado)
                         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}" {{ old('id_reviso_alcance')==$empleado->id ? ' selected="selected"' : '' }}>
-
                             {{ $empleado->name }}
                         </option>
-
                         @endforeach
                     </select>
                     @if ($errors->has('id_reviso_alcance'))
@@ -188,7 +187,7 @@
             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
             document.getElementById('puesto_reviso').innerHTML = puesto;
             document.getElementById('area_reviso').innerHTML = area;
-        })   
+        })
 
     })
 
