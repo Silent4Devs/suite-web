@@ -195,7 +195,10 @@ class ProcesoController extends Controller
            $analisis_collect->push(['id'=>$riesgo->analisis_de_riesgo->id, 'nombre'=>$riesgo->analisis_de_riesgo->nombre]);
         }
         $analisis_collect = $analisis_collect->unique('id');
-        $primer_analisis = $analisis_collect->first()['id'];
+        $primer_analisis=array();
+        if(count($analisis_collect)){
+            $primer_analisis = $analisis_collect->first()['id'];
+        }
         // dd($primer_analisis['id']);
         // dd($indicadores::getResultado());
 
@@ -225,7 +228,7 @@ class ProcesoController extends Controller
     public function AjaxRequestRiesgos(Request $request)
     {
         $input = $request->all();
-        
+
 
         $data = MatrizRiesgo::select('id', 'descripcionriesgo', 'nivelriesgo', 'nivelriesgo_residual', 'meta')->where('id', $input['id'])->first();
 

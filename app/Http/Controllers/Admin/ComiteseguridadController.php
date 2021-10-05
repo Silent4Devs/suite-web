@@ -25,7 +25,7 @@ class ComiteseguridadController extends Controller
         abort_if(Gate::denies('comiteseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Comiteseguridad::with(['personaasignada', 'team','asignacion'])->select(sprintf('%s.*', (new Comiteseguridad)->table));
+            $query = Comiteseguridad::with(['personaasignada', 'team','asignacion'])->select(sprintf('%s.*', (new Comiteseguridad)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
