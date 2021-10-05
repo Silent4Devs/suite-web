@@ -29,7 +29,7 @@ class MaterialSgsiController extends Controller
         // dd(MaterialSgsi::with('arearesponsable', 'team','documentos_material')->get());
         if ($request->ajax()) {
 
-            $query = MaterialSgsi::with(['arearesponsable', 'team','documentos_material'])->select(sprintf('%s.*', (new MaterialSgsi)->table));
+            $query = MaterialSgsi::with(['arearesponsable', 'team','documentos_material'])->select(sprintf('%s.*', (new MaterialSgsi)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
 

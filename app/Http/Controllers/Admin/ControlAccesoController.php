@@ -27,7 +27,7 @@ class ControlAccesoController extends Controller
         abort_if(Gate::denies('control_acceso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ControlAcceso::with(['team','documentos_controlA'])->select(sprintf('%s.*', (new ControlAcceso)->table));
+            $query = ControlAcceso::with(['team','documentos_controlA'])->select(sprintf('%s.*', (new ControlAcceso)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -80,7 +80,7 @@ class ControlAccesoController extends Controller
     }
 
     public function store(StoreControlAccesoRequest $request)
-    {   
+    {
         // dd($request->all());
         $controlAcceso = ControlAcceso::create($request->all());
         if ($request->hasFile('files')) {
