@@ -16,151 +16,151 @@ class AmenazasTableSeeder extends Seeder
         $amenazas = [
             [
                 'id'    => 1,
-                'Nombre' => 'Acceso a la red o al sistema de información por personas no autorizadas',
+                'nombre' => 'Acceso a la red o al sistema de información por personas no autorizadas',
             ],
             [
                 'id'    => 2,
-                'Nombre' => 'Amenaza o ataque con bomba',
+                'nombre' => 'Amenaza o ataque con bomba',
             ],
             [
                 'id'    => 3,
-                'Nombre' => 'Incumplimiento de relaciones contractuales',
+                'nombre' => 'Incumplimiento de relaciones contractuales',
             ],
             [
                 'id'    => 4,
-                'Nombre' => 'Infracción legal',
+                'nombre' => 'Infracción legal',
             ],
             [
                 'id'    => 5,
-                'Nombre' => 'Comprometer información confidencial',
+                'nombre' => 'Comprometer información confidencial',
             ],
             [
                 'id'    => 6,
-                'Nombre' => 'Ocultar la identidad de un usuario',
+                'nombre' => 'Ocultar la identidad de un usuario',
             ],
             [
                 'id'    => 7,
-                'Nombre' => 'Daño causado por un tercero',
+                'nombre' => 'Daño causado por un tercero',
             ],
             [
                 'id'    => 8,
-                'Nombre' => 'Daños resultantes de las pruebas de penetración',
+                'nombre' => 'Daños resultantes de las pruebas de penetración',
             ],
             [
                 'id'    => 9,
-                'Nombre' => 'Destrucción de registros',
+                'nombre' => 'Destrucción de registros',
             ],
             [
                 'id'    => 10,
-                'Nombre' => 'Desastre generado por causas humanas',
+                'nombre' => 'Desastre generado por causas humanas',
             ],
             [
                 'id'    => 11,
-                'Nombre' => 'Desastre natural, incendio, inundación, rayo',
+                'nombre' => 'Desastre natural, incendio, inundación, rayo',
             ],
             [
                 'id'    => 12,
-                'Nombre' => 'Revelación de información',
+                'nombre' => 'Revelación de información',
             ],
             [
                 'id'    => 14,
-                'Nombre' => 'Divulgación de contraseñas',
+                'nombre' => 'Divulgación de contraseñas',
             ],
             [
                 'id'    => 15,
-                'Nombre' => 'Malversación y fraude',
+                'nombre' => 'Malversación y fraude',
             ],
             [
                 'id'    => 16,
-                'Nombre' => 'Errores en mantenimiento',
+                'nombre' => 'Errores en mantenimiento',
             ],
             [
                 'id'    => 17,
-                'Nombre' => 'Fallo de los enlaces de comunicación',
+                'nombre' => 'Fallo de los enlaces de comunicación',
             ],
             [
                 'id'    => 18,
-                'Nombre' => 'Falsificación de registros',
+                'nombre' => 'Falsificación de registros',
             ],
             [
                 'id'    => 19,
-                'Nombre' => 'Espionaje industrial',
+                'nombre' => 'Espionaje industrial',
             ],
             [
                 'id'    => 20,
-                'Nombre' => 'Fuga de información',
+                'nombre' => 'Fuga de información',
             ],
             [
                 'id'    => 21,
-                'Nombre' => 'Interrupción de procesos de negocio',
+                'nombre' => 'Interrupción de procesos de negocio',
             ],
             [
                 'id'    => 22,
-                'Nombre' => 'Pérdida de electricidad',
+                'nombre' => 'Pérdida de electricidad',
             ],
             [
                 'id'    => 23,
-                'Nombre' => 'Pérdida de servicios de apoyo',
+                'nombre' => 'Pérdida de servicios de apoyo',
             ],
             [
                 'id'    => 24,
-                'Nombre' => 'Mal funcionamiento del equipo',
+                'nombre' => 'Mal funcionamiento del equipo',
             ],
             [
                 'id'    => 25,
-                'Nombre' => 'Código malicioso',
+                'nombre' => 'Código malicioso',
             ],
             [
                 'id'    => 26,
-                'Nombre' => 'Uso indebido de los sistemas de información',
+                'nombre' => 'Uso indebido de los sistemas de información',
             ],
             [
                 'id'    => 27,
-                'Nombre' => 'Uso indebido de las herramientas de auditoría',
+                'nombre' => 'Uso indebido de las herramientas de auditoría',
             ],
             [
                 'id'    => 28,
-                'Nombre' => 'Contaminación',
+                'nombre' => 'Contaminación',
             ],
             [
                 'id'    => 29,
-                'Nombre' => 'Errores de software',
+                'nombre' => 'Errores de software',
             ],
             [
                 'id'    => 30,
-                'Nombre' => 'Huelgas o paros',
+                'nombre' => 'Huelgas o paros',
             ],
             [
                 'id'    => 31,
-                'Nombre' => 'Hurtos o vandalismo',
+                'nombre' => 'Hurtos o vandalismo',
             ],
             [
                 'id'    => 32,
-                'Nombre' => 'Cambio involuntario de datos en un sistema de información',
+                'nombre' => 'Cambio involuntario de datos en un sistema de información',
             ],
             [
                 'id'    => 33,
-                'Nombre' => 'Cambios no autorizados de registros',
+                'nombre' => 'Cambios no autorizados de registros',
             ],
             [
                 'id'    => 34,
-                'Nombre' => 'Instalación no autorizada de software',
+                'nombre' => 'Instalación no autorizada de software',
             ],
             [
                 'id'    => 35,
-                'Nombre' => 'Acceso físico no autorizado',
+                'nombre' => 'Acceso físico no autorizado',
             ],
             [
                 'id'    => 36,
-                'Nombre' => 'Uso no autorizado de material con copyright',
+                'nombre' => 'Uso no autorizado de material con copyright',
             ],
             [
                 'id'    => 37,
-                'Nombre' => 'Uso no autorizado de software',
+                'nombre' => 'Uso no autorizado de software',
             ],
             [
                 'id'    => 38,
-                'Nombre' => 'Error de usuario',
+                'nombre' => 'Error de usuario',
             ],
         ];
 
