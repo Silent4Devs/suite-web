@@ -23,7 +23,7 @@ class AnalisisdeRiesgosController extends Controller
     {
         if ($request->ajax()) {
             //Esta es el error , activo_id no lo encuentra, hay que modificar la relacion en el modelo de matrizriesgo
-            $query = AnalisisDeRiesgo::get();
+            $query = AnalisisDeRiesgo::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -56,7 +56,7 @@ class AnalisisdeRiesgosController extends Controller
             });
 
             $table->editColumn('fecha', function ($row) {
-                return $row->fecha ? $row->fecha : "";
+                return $row->fecha ?  \Carbon\Carbon::parse($row->fecha)->format("d-m-Y"): "";
             });
 
             $table->editColumn('porcentaje_implementacion', function ($row) {

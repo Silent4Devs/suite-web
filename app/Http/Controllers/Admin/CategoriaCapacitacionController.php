@@ -17,7 +17,7 @@ class CategoriaCapacitacionController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = CategoriaCapacitacion::get();
+            $query = CategoriaCapacitacion::orderByDesc('id')->get();
             $table = DataTables::of($query);
 
             $table->addColumn('actions', '&nbsp;');
