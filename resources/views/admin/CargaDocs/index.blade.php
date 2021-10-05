@@ -144,9 +144,6 @@
                     </div>
                 </div>
 
-
-
-
                 <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">
                         <span class="mb-1 text-center text-">Ajustes de Usuario</span>
