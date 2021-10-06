@@ -2,7 +2,7 @@
 @section('content')
 
 <style type="text/css">
-    
+
     .select2-selection--multiple {
         overflow: hidden !important;
         height: auto !important;
@@ -40,13 +40,13 @@
                     <option value disabled >Selecciona una opción</option>
                     @foreach ($clausulas as $clausula)
                         <option value="{{ $clausula->id }}">
-                            {{ $clausula->nombre }} 
+                            {{ $clausula->nombre }}
                         </option>
                     @endforeach
                 </select>
                 <span class="errors tipo_error"></span>
             </div>
-            
+
             <div class="form-group col-md-6">
                 <label for="fecha_inicio"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
                     Inicio</label>
@@ -69,7 +69,7 @@
                     </div>
                 @endif
             </div>
-  
+
 
 
             <div class="form-group col-md-6">
@@ -219,8 +219,8 @@
 @section('scripts')
 
 <script type="text/javascript">
-    
-    
+
+
     $(document).ready(function() {
         $("#clausulas").select2({
             theme: "bootstrap4",
@@ -231,7 +231,7 @@
 </script>
 
 <script type="text/javascript">
-    
+
     $(document).ready(function() {
         $("#equipoauditoria_id").select2({
             theme: "bootstrap4",

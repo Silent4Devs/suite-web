@@ -60,14 +60,14 @@
 
             <div class="form-group col-md-4">
                 <label for="id_puesto_asignada"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                <div class="form-control" id="puesto_asignada"></div>
+                <div class="form-control" id="puesto_asignada" readonly></div>
 
             </div>
 
 
             <div class="form-group col-sm-12 col-md-4 col-lg-4">
                 <label for="id_area_asignada"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                <div class="form-control" id="area_asignada"></div>
+                <div class="form-control" id="area_asignada" readonly></div>
 
             </div>
 

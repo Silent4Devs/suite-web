@@ -22,7 +22,7 @@ class IndicadoresSgsiController extends Controller
         abort_if(Gate::denies('indicadores_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = IndicadoresSgsi::get();
+            $query = IndicadoresSgsi::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

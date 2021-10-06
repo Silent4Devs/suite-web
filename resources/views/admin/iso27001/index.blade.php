@@ -251,8 +251,8 @@
                                 @endcan
                             </div>
                         </section>
-                    
-                    
+
+
                         <section id="s2" data-id="liderazgo" class="caja">
                             <div class="mt-5">
                                 @can('liderazgo_access')
@@ -304,8 +304,8 @@
                                 @endcan
                             </div>
                         </section>
-                    
-                    
+
+
                         <section id="s3" data-id="planificacion" class="caja">
                             <div class="mt-5">
                                 @can('planificacion_access')
@@ -346,12 +346,12 @@
                                                     Declaración de aplicabilidad
                                                 </div>
                                             </a></li>
-                                        <li><a href="{{ route('admin.riesgosoportunidades.index') }}">
+                                        {{-- <li><a href="{{ route('admin.riesgosoportunidades.index') }}">
                                                 <div>
                                                     <i class="fas fa-asterisk"></i>
                                                     Riesgos y oportunidades
                                                 </div>
-                                            </a></li>
+                                            </a></li> --}}
                                         <li><a href="{{ route('admin.objetivosseguridads.index') }}">
                                                 <div>
                                                     <i class="fas fa-lock"></i>
@@ -375,8 +375,8 @@
                                 @endcan
                             </div>
                         </section>
-                    
-                    
+
+
                         <section id="s4" data-id="soporte" class="caja">
                             <div class="mt-5">
                                 @can('soporte_access')
@@ -464,8 +464,8 @@
                                 @endcan
                             </div>
                         </section>
-                    
-                    
+
+
                         <section id="s5" data-id="operacion" class="caja">
                             <div class="mt-5">
                                 @can('operacion_access')
@@ -499,8 +499,8 @@
                                 @endcan
                             </div>
                         </section>
-                    
-                    
+
+
                         <section id="s6" data-id="evaluacion" class="caja">
                             <div class="mt-5">
                                 @can('evaluacion_access')
@@ -564,8 +564,8 @@
                                 @endcan
                             </div>
                         </section>
-                    
-                    
+
+
                         <section id="s7" data-id="mejora" class="caja">
                             <div class="mt-5">
                                 @can('mejoras_access')
@@ -606,7 +606,7 @@
                                 @endcan
                             </div>
                         </section>
-                   
+
                     {{-- <section id="s8" data-id="controles" class="caja">
                         <div class="mt-5">
                             <ul>

@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-    
+
     {{ Breadcrumbs::render('admin.auditoria-anuals.create') }}
 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Programa Anual de Auditoría </h3>
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Programa Anual de Auditoría </h3>
     </div>
 
     <div class="card-body">
@@ -26,26 +26,26 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.tipo_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
-                <label for="fechainicio"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.fechainicio') }}</label>
-                <input class="form-control date {{ $errors->has('fechainicio') ? 'is-invalid' : '' }}" type="text" name="fechainicio" id="fechainicio" value="{{ old('fechainicio') }}">
+            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="fechainicio"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de inicio</label>
+                <input class="form-control {{ $errors->has('fechainicio') ? 'is-invalid' : '' }}" type="datetime-local" name="fechainicio" id="fechainicio" value="{{ old('fechainicio') }}">
                 @if($errors->has('fechainicio'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fechainicio') }}
-                    </div>
+                <div class="invalid-feedback">
+                    {{ $errors->first('fechainicio') }}
+                </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.fechainicio_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
-                <label for="dias"><i class="far fa-calendar-minus iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.dias') }}</label>
-                <input class="form-control {{ $errors->has('dias') ? 'is-invalid' : '' }}" type="number" name="dias" id="dias" value="{{ old('dias', '') }}" step="0.01" min="1" max="100">
-                @if($errors->has('dias'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('dias') }}
-                    </div>
+
+            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <label for="fechafin"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha fin</label>
+                <input class="form-control {{ $errors->has('fechafin') ? 'is-invalid' : '' }}" type="datetime-local" name="fechafin" id="fechafin" value="{{ old('fechafin') }}">
+                @if($errors->has('fechafin'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('fechafin') }}
+                </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.dias_helper') }}</span>
             </div>
+
             <div class="form-group col-md-6">
                 <label for="auditorlider_id"><i class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.auditorlider') }}</label>
                 <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}" name="auditorlider_id" id="auditorlider_id">
@@ -70,7 +70,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.observaciones_helper') }}</span>
             </div>
-            <div class="form-group col-12 text-right">
+            <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

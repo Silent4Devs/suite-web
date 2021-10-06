@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\AlcanceSgsiImport;
 use App\Imports\AmenazaImport;
 use App\Imports\AnalisisDeRiesgoImport;
 use App\Imports\CategoriaActivoImport;
@@ -9,15 +10,13 @@ use App\Imports\CategoriaCapacitacionImport;
 use App\Imports\CompetenciaImport;
 use App\Imports\ControlImport;
 use App\Imports\EjecutarenlaceImport;
+use App\Imports\EntendimientoOrganizacionImport;
 use App\Imports\EstadoIncidenteImport;
 use App\Imports\EvaluacionImport;
 use App\Imports\FaqCategoriaImport;
 use App\Imports\FaqPreguntaImport;
-use App\Imports\PartesInteresadaImport;
-use App\Imports\FodaImport;
 use App\Imports\MatrizRequisitoLegaleImport;
-use App\Imports\EntendimientoOrganizacionImport;
-use App\Imports\AlcanceSgsiImport;
+use App\Imports\PartesInteresadaImport;
 use App\Imports\PuestoImport;
 use App\Imports\RevisionDIreccionImport;
 use App\Imports\TeamImport;
