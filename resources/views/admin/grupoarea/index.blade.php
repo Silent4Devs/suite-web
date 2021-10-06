@@ -161,13 +161,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -223,7 +223,7 @@
                             @can('configuracion_grupoarea_delete')
                                 <button onclick="Eliminar('/admin/grupoarea/${data}','${data}')" class="btn btn-sm text-danger"><i class="fas fa-trash"
                                         title="Eliminar"></i></button>
-                            @endcan                        
+                            @endcan
                             `;
                             return opciones;
                         }
@@ -231,7 +231,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'asc']
+                    [4, 'desc']
                 ]
             };
             let table = $('.datatable-GrupoArea').DataTable(dtOverrideGlobals);

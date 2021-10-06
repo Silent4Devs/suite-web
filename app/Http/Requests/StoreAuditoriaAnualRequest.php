@@ -19,8 +19,7 @@ class StoreAuditoriaAnualRequest extends FormRequest
                 'required',
             ],
             'fechainicio' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
+                'required',
             ],
             'dias'        => [
                 'numeric',

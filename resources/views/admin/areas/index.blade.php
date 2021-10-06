@@ -219,7 +219,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [3, 'desc']
                 ]
             };
             let table = $('.datatable-Area').DataTable(dtOverrideGlobals);
