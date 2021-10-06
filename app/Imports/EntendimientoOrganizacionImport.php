@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\Models\EntendimientoOrganizacion;
 use App\Models\Empleado;
+use App\Models\EntendimientoOrganizacion;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class EntendimientoOrganizacionImport implements ToModel
@@ -25,6 +25,7 @@ class EntendimientoOrganizacionImport implements ToModel
             'amenazas'=> $row[6],
         ]);
     }
+
     public function rules(): array
     {
         return [
@@ -36,9 +37,11 @@ class EntendimientoOrganizacionImport implements ToModel
             'amenazas' => 'required|string|min:1|max:255',
         ];
     }
+
     public function obtenerEmpleadoPorNombre($nombre)
     {
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+
         return $empleado_bd->id;
     }
 }
