@@ -170,4 +170,28 @@ class SubidaExcel extends Controller
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
+    public function ComiteSeguridad()
+    {
+        Excel::import(new ComiteseguridadImport, request()->file('comite_seguridad'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+    public function ComiteSeguridad()
+    {
+        Excel::import(new MinutasaltadireccionImport, request()->file('alta_direccion'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+    public function EvidenciaRecursos()
+    {
+        Excel::import(new EvidenciasSgsiImport, request()->file('evidencia_recursos'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+    public function PoliticaSgsi()
+    {
+        Excel::import(new PoliticaSgsiImport, request()->file('politica_sgi'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
 }
