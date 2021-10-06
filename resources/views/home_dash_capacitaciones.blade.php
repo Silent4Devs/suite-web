@@ -185,7 +185,7 @@
                 <div class="col-md-12 card_texto">
                     <div class="p-3 mb-3 bg-white rounded row shadow-propia">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-                            <div class="text-center" style="font-size: 24pt">
+                            <div class="text-center icono_oculto_print" style="font-size: 24pt">
                                 <i class="p-3 text-white rounded fas fa-chalkboard-teacher bg-success"></i>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                 <div class="col-md-12 card_texto">
                     <div class="p-3 mb-3 bg-white rounded row shadow-propia">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-                            <div class="text-center" style="font-size: 24pt">
+                            <div class="text-center icono_oculto_print" style="font-size: 24pt">
                                 <i class="p-3 text-white rounded fas fa-calendar-week bg-primary"></i>
                             </div>
                         </div>

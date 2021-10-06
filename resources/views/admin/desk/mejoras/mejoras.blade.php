@@ -44,6 +44,9 @@
 </div>
 
 <div class="datatable-fix" style="width: 100%;">
+    <div class="text-right mb-3">
+        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/mejoras')}}">Crear reporte</a>
+    </div>
 
    <table class="table tabla_mejoras">
    		<thead>
