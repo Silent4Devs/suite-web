@@ -3,18 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\organizacion;
-use App\Models\Documento;
-use App\Models\VistaDocumento;
-use App\Models\Empleado;
-use App\Models\Area;
 use App\Models\ComunicacionSgi;
-use App\Models\ImagenesComunicacionSgis;
+use App\Models\Documento;
+use App\Models\Empleado;
+use App\Models\organizacion;
 use Carbon\Carbon;
-
-
-
+use Illuminate\Http\Request;
 
 class PortalComunicacionController extends Controller
 {
@@ -25,7 +19,6 @@ class PortalComunicacionController extends Controller
      */
     public function index()
     {
-
         $hoy = Carbon::now();
         $hoy->toDateString();
         $nuevos = Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
@@ -35,7 +28,6 @@ class PortalComunicacionController extends Controller
         $aniversarios = Empleado::whereMonth('antiguedad', '=', $hoy->format('m'))->get();
 
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
-
 
         $comunicacionSgis = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Blog')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
         // dd($comunicacionSgis);
@@ -111,7 +103,6 @@ class PortalComunicacionController extends Controller
     {
         //
     }
-
 
     public function reportes()
     {

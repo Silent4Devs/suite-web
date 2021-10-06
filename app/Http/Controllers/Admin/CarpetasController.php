@@ -35,9 +35,9 @@ class CarpetasController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'carpetum_show';
-                $editGate      = 'carpetum_edit';
-                $deleteGate    = 'carpetum_delete';
+                $viewGate = 'carpetum_show';
+                $editGate = 'carpetum_edit';
+                $deleteGate = 'carpetum_delete';
                 $crudRoutePart = 'carpeta';
 
                 return view('partials.datatablesActions', compact(
@@ -50,10 +50,10 @@ class CarpetasController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : "";
+                return $row->nombre ? $row->nombre : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

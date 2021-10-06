@@ -22,14 +22,13 @@ class HistoralRevisionMinuta extends Model
     protected $appends = ['fecha_dmy'];
 
     protected $dates = [
-        'fecha'
+        'fecha',
     ];
 
     public function getFechaDMYAttribute()
     {
         return Carbon::parse($this->fecha)->format('d-m-Y');
     }
-
 
     public function minuta()
     {

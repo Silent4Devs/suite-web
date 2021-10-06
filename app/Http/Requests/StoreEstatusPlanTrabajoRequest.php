@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\EstatusPlanTrabajo;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StoreEstatusPlanTrabajoRequest extends FormRequest
 {

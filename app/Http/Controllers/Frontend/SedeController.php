@@ -11,7 +11,6 @@ use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SedeController extends Controller
@@ -20,7 +19,6 @@ class SedeController extends Controller
 
     public function index()
     {
-        
         abort_if(Gate::denies('sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sedes = Sede::all();

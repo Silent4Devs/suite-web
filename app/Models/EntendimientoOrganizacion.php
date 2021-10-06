@@ -11,7 +11,7 @@ class EntendimientoOrganizacion extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = "entendimiento_organizacions";
+    protected $table = 'entendimiento_organizacions';
     protected $fillable = [
         'fortalezas',
         'oportunidades',
@@ -24,8 +24,7 @@ class EntendimientoOrganizacion extends Model
     ];
 
     public function empleado()
-	{
+    {
         return $this->belongsTo(Empleado::class, 'id_elabora', 'id');
-
-	}
+    }
 }

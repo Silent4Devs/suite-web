@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-
 use App\Models\SubcategoriaIncidente;
-
+use Illuminate\Database\Seeder;
 
 class SubcategoriaIncidenteSeeder extends Seeder
 {
@@ -105,6 +103,6 @@ class SubcategoriaIncidenteSeeder extends Seeder
             ],
         ];
 
-        SubcategoriaIncidente::insert($subcategorias);    
+        SubcategoriaIncidente::insert($subcategorias);
     }
 }

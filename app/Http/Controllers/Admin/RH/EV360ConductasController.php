@@ -10,7 +10,6 @@ class EV360ConductasController extends Controller
 {
     public function store(Request $request)
     {
-
         $request->validate([
             'definicion' => 'required|string|max:1000',
         ]);
@@ -23,7 +22,7 @@ class EV360ConductasController extends Controller
             $conducta = Conducta::create([
                 'definicion' => $request->definicion,
                 'ponderacion' => $ponderacion,
-                'competencia_id' => intval($request->competencia_id)
+                'competencia_id' => intval($request->competencia_id),
             ]);
         }
         // $this->resetCounter(intval($request->competencia_id));
@@ -60,12 +59,12 @@ class EV360ConductasController extends Controller
             ]);
             // $this->resetCounter(intval($conducta->competencia_id));
         }
+
         return response()->json(['success' => true]);
     }
 
     public function destroy(Request $request, $conducta)
     {
-
         if ($request->ajax()) {
             $conducta = Conducta::find(intval($conducta));
             $competencia = $conducta->competencia_id;

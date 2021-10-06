@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Clausula;
+use Illuminate\Database\Seeder;
 
 class ClausulasSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class ClausulasSeeder extends Seeder
      */
     public function run()
     {
-    	$clausulas = [
+        $clausulas = [
         ['nombre' => '4.1 Comprensión de la organización y de su contexto'],
         ['nombre' => '4.2 Comprensión de las necesidades y expectativas de las partes interesadas'],
         ['nombre' => '4.3 Determinación del alcance del SGSI'],

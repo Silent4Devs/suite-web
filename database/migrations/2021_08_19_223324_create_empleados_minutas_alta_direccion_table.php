@@ -18,10 +18,8 @@ class CreateEmpleadosMinutasAltaDireccionTable extends Migration
             $table->unsignedInteger('minuta_id');
             $table->unsignedBigInteger('empleado_id');
             $table->timestamps();
-
         });
         Schema::table('empleados_minutas_alta_direccion', function (Blueprint $table) {
-
             $table->foreign('minuta_id')->references('id')->on('minutasaltadireccions');
             $table->foreign('empleado_id')->references('id')->on('empleados');
         });

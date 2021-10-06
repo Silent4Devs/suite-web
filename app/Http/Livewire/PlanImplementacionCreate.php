@@ -7,8 +7,12 @@ use Livewire\Component;
 
 class PlanImplementacionCreate extends Component
 {
-    public $parent, $norma, $modulo_origen, $objetivo, $referencia;
-    public $matriz_id = "";
+    public $parent;
+    public $norma;
+    public $modulo_origen;
+    public $objetivo;
+    public $referencia;
+    public $matriz_id = '';
 
     protected $rules = [
         'parent' => 'required|string',
@@ -61,7 +65,6 @@ class PlanImplementacionCreate extends Component
         $this->emit('planStore');
         $this->emit('render-select');
     }
-
 
     public function render()
     {

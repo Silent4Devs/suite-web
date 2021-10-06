@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPlanificacionControlRequest;
 use App\Http\Requests\StorePlanificacionControlRequest;
 use App\Http\Requests\UpdatePlanificacionControlRequest;
+use App\Models\Empleado;
 use App\Models\PlanificacionControl;
 use App\Models\Team;
 use App\Models\User;
-use App\Models\Empleado;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,9 +29,9 @@ class PlanificacionControlController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'planificacion_control_show';
-                $editGate      = 'planificacion_control_edit';
-                $deleteGate    = 'planificacion_control_delete';
+                $viewGate = 'planificacion_control_show';
+                $editGate = 'planificacion_control_edit';
+                $deleteGate = 'planificacion_control_delete';
                 $crudRoutePart = 'planificacion-controls';
 
                 return view('partials.datatablesActions', compact(
@@ -44,13 +44,13 @@ class PlanificacionControlController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('activo', function ($row) {
-                return $row->activo ? $row->activo : "";
+                return $row->activo ? $row->activo : '';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
             // $table->addColumn('dueno_name', function ($row) {
             //     return $row->dueno ? $row->dueno->name : '';
@@ -61,28 +61,28 @@ class PlanificacionControlController extends Controller
             });
 
             $table->editColumn('vulnerabilidad', function ($row) {
-                return $row->vulnerabilidad ? $row->vulnerabilidad : "";
+                return $row->vulnerabilidad ? $row->vulnerabilidad : '';
             });
             $table->editColumn('amenaza', function ($row) {
-                return $row->amenaza ? $row->amenaza : "";
+                return $row->amenaza ? $row->amenaza : '';
             });
             $table->editColumn('confidencialidad', function ($row) {
-                return $row->confidencialidad ? $row->confidencialidad : "";
+                return $row->confidencialidad ? $row->confidencialidad : '';
             });
             $table->editColumn('integridad', function ($row) {
-                return $row->integridad ? $row->integridad : "";
+                return $row->integridad ? $row->integridad : '';
             });
             $table->editColumn('disponibilidad', function ($row) {
-                return $row->disponibilidad ? $row->disponibilidad : "";
+                return $row->disponibilidad ? $row->disponibilidad : '';
             });
             $table->editColumn('probabilidad', function ($row) {
-                return $row->probabilidad ? $row->probabilidad : "";
+                return $row->probabilidad ? $row->probabilidad : '';
             });
             $table->editColumn('impacto', function ($row) {
-                return $row->impacto ? $row->impacto : "";
+                return $row->impacto ? $row->impacto : '';
             });
             $table->editColumn('nivelriesgo', function ($row) {
-                return $row->nivelriesgo ? $row->nivelriesgo : "";
+                return $row->nivelriesgo ? $row->nivelriesgo : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'dueno']);
@@ -110,7 +110,7 @@ class PlanificacionControlController extends Controller
     {
         $planificacionControl = PlanificacionControl::create($request->all());
 
-        return redirect()->route('admin.planificacion-controls.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.planificacion-controls.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(PlanificacionControl $planificacionControl)
@@ -130,7 +130,7 @@ class PlanificacionControlController extends Controller
     {
         $planificacionControl->update($request->all());
 
-        return redirect()->route('admin.planificacion-controls.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.planificacion-controls.index')->with('success', 'Editado con éxito');
     }
 
     public function show(PlanificacionControl $planificacionControl)
@@ -148,7 +148,7 @@ class PlanificacionControlController extends Controller
 
         $planificacionControl->delete();
 
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyPlanificacionControlRequest $request)

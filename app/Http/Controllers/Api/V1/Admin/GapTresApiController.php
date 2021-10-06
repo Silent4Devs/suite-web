@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateGapTreRequest;
 use App\Http\Resources\Admin\GapTreResource;
 use App\Models\GapTre;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GapTresApiController extends Controller

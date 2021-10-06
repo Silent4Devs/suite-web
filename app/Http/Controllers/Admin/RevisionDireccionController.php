@@ -27,9 +27,9 @@ class RevisionDireccionController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'revision_direccion_show';
-                $editGate      = 'revision_direccion_edit';
-                $deleteGate    = 'revision_direccion_delete';
+                $viewGate = 'revision_direccion_show';
+                $editGate = 'revision_direccion_edit';
+                $deleteGate = 'revision_direccion_delete';
                 $crudRoutePart = 'revision-direccions';
 
                 return view('partials.datatablesActions', compact(
@@ -42,28 +42,28 @@ class RevisionDireccionController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('estadorevisionesprevias', function ($row) {
-                return $row->estadorevisionesprevias ? $row->estadorevisionesprevias : "";
+                return $row->estadorevisionesprevias ? $row->estadorevisionesprevias : '';
             });
             $table->editColumn('cambiosinternosexternos', function ($row) {
-                return $row->cambiosinternosexternos ? $row->cambiosinternosexternos : "";
+                return $row->cambiosinternosexternos ? $row->cambiosinternosexternos : '';
             });
             $table->editColumn('retroalimentaciondesempeno', function ($row) {
-                return $row->retroalimentaciondesempeno ? $row->retroalimentaciondesempeno : "";
+                return $row->retroalimentaciondesempeno ? $row->retroalimentaciondesempeno : '';
             });
             $table->editColumn('retroalimentacionpartesinteresadas', function ($row) {
-                return $row->retroalimentacionpartesinteresadas ? $row->retroalimentacionpartesinteresadas : "";
+                return $row->retroalimentacionpartesinteresadas ? $row->retroalimentacionpartesinteresadas : '';
             });
             $table->editColumn('resultadosriesgos', function ($row) {
-                return $row->resultadosriesgos ? $row->resultadosriesgos : "";
+                return $row->resultadosriesgos ? $row->resultadosriesgos : '';
             });
             $table->editColumn('oportunidadesmejoracontinua', function ($row) {
-                return $row->oportunidadesmejoracontinua ? $row->oportunidadesmejoracontinua : "";
+                return $row->oportunidadesmejoracontinua ? $row->oportunidadesmejoracontinua : '';
             });
             $table->editColumn('acuerdoscambios', function ($row) {
-                return $row->acuerdoscambios ? $row->acuerdoscambios : "";
+                return $row->acuerdoscambios ? $row->acuerdoscambios : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

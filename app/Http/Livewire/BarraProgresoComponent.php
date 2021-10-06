@@ -7,7 +7,7 @@ use Livewire\Component;
 class BarraProgresoComponent extends Component
 {
     protected $listeners = [
-        'actualizarProgreso'
+        'actualizarProgreso',
     ];
     public $progreso;
 

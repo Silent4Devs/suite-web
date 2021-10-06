@@ -33,9 +33,9 @@ class InformacionDocumetadaController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'informacion_documetada_show';
-                $editGate      = 'informacion_documetada_edit';
-                $deleteGate    = 'informacion_documetada_delete';
+                $viewGate = 'informacion_documetada_show';
+                $editGate = 'informacion_documetada_edit';
+                $deleteGate = 'informacion_documetada_delete';
                 $crudRoutePart = 'informacion-documetadas';
 
                 return view('partials.datatablesActions', compact(
@@ -48,19 +48,19 @@ class InformacionDocumetadaController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('titulodocumento', function ($row) {
-                return $row->titulodocumento ? $row->titulodocumento : "";
+                return $row->titulodocumento ? $row->titulodocumento : '';
             });
             $table->editColumn('tipodocumento', function ($row) {
                 return $row->tipodocumento ? InformacionDocumetada::TIPODOCUMENTO_SELECT[$row->tipodocumento] : '';
             });
             $table->editColumn('identificador', function ($row) {
-                return $row->identificador ? $row->identificador : "";
+                return $row->identificador ? $row->identificador : '';
             });
             $table->editColumn('version', function ($row) {
-                return $row->version ? $row->version : "";
+                return $row->version ? $row->version : '';
             });
             $table->editColumn('politicas', function ($row) {
                 $labels = [];
@@ -72,7 +72,7 @@ class InformacionDocumetadaController extends Controller
                 return implode(' ', $labels);
             });
             $table->editColumn('contenido', function ($row) {
-                return $row->contenido ? $row->contenido : "";
+                return $row->contenido ? $row->contenido : '';
             });
             $table->addColumn('elaboro_name', function ($row) {
                 return $row->elaboro ? $row->elaboro->name : '';
@@ -104,10 +104,10 @@ class InformacionDocumetadaController extends Controller
         }
 
         $politica_sgsis = PoliticaSgsi::get();
-        $users          = User::get();
-        $users          = User::get();
-        $users          = User::get();
-        $teams          = Team::get();
+        $users = User::get();
+        $users = User::get();
+        $users = User::get();
+        $teams = Team::get();
 
         return view('admin.informacionDocumetadas.index', compact('politica_sgsis', 'users', 'users', 'users', 'teams'));
     }
@@ -140,7 +140,7 @@ class InformacionDocumetadaController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $informacionDocumetada->id]);
         }
 
-        return redirect()->route('admin.informacion-documetadas.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.informacion-documetadas.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(InformacionDocumetada $informacionDocumetada)
@@ -177,7 +177,7 @@ class InformacionDocumetadaController extends Controller
             $informacionDocumetada->logotipo->delete();
         }
 
-        return redirect()->route('admin.informacion-documetadas.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.informacion-documetadas.index')->with('success', 'Editado con éxito');
     }
 
     public function show(InformacionDocumetada $informacionDocumetada)
@@ -195,7 +195,7 @@ class InformacionDocumetadaController extends Controller
 
         $informacionDocumetada->delete();
 
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyInformacionDocumetadaRequest $request)
@@ -209,10 +209,10 @@ class InformacionDocumetadaController extends Controller
     {
         abort_if(Gate::denies('informacion_documetada_create') && Gate::denies('informacion_documetada_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new InformacionDocumetada();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new InformacionDocumetada();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

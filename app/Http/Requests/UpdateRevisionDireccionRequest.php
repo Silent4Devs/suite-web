@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\RevisionDireccion;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class UpdateRevisionDireccionRequest extends FormRequest
 {

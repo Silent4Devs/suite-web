@@ -14,6 +14,6 @@ class LockedPlanTrabajo extends Model
     protected $fillable = [
         'locked_to',
         'blocked',
-        'locked_by'
+        'locked_by',
     ];
 }

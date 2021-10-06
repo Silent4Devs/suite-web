@@ -21,7 +21,7 @@ class CreateSubcategoriasIncidentesTable extends Migration
             $table->unsignedBigInteger('categoria_id')->nullable();
             $table->foreign('categoria_id')->references('id')->on('categorias_incidentes');
 
-            $table->longText('descripcion');            
+            $table->longText('descripcion');
 
             $table->timestamps();
         });

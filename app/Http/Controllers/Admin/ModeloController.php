@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Marca;
 use App\Models\Modelo;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ModeloController extends Controller
 {
@@ -20,45 +20,43 @@ class ModeloController extends Controller
             $query = Marca::get();
             $table = DataTables::of($query);
 
-        $table->addColumn('actions', '&nbsp;');
-        $table->addIndexColumn();
-        $table->editColumn('actions', function ($row) {
-            $viewGate      = 'modelo_show';
-            $editGate      = 'modelo_edit';
-            $deleteGate    = 'modelo_delete';
-            $crudRoutePart = 'modelo';
+            $table->addColumn('actions', '&nbsp;');
+            $table->addIndexColumn();
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'modelo_show';
+                $editGate = 'modelo_edit';
+                $deleteGate = 'modelo_delete';
+                $crudRoutePart = 'modelo';
 
-            return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-        });
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
 
-        $table->editColumn('id', function ($row) {
-            return $row->id ? $row->id : "";
-        });
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
 
-        $table->editColumn('nombre', function ($row) {
-            return $row->id ? $row->nombre : "";
-        });
+            $table->editColumn('nombre', function ($row) {
+                return $row->id ? $row->nombre : '';
+            });
 
-        $table->editColumn('marca', function ($row) {
-            return $row->id ? $row->marca->marca : "";
-        });
+            $table->editColumn('marca', function ($row) {
+                return $row->id ? $row->marca->marca : '';
+            });
 
-        $table->rawColumns(['actions']);
+            $table->rawColumns(['actions']);
 
-        return $table->make(true);
+            return $table->make(true);
+        }
 
-    }
+        $marca = Marca::get();
 
-    $marca = Marca::get();
-
-    return view('admin.modelo.index', compact('marca'));
-
+        return view('admin.modelo.index', compact('marca'));
     }
 
     /**
@@ -71,7 +69,6 @@ class ModeloController extends Controller
         $marca = Marca::get();
 
         return view('admin.modelo.create', compact('marca'));
-
     }
 
     /**
@@ -82,26 +79,22 @@ class ModeloController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $request->validate([
-                'nombre'=>'required|string|unique:modelo,nombre'
+                'nombre'=>'required|string|unique:modelo,nombre',
             ]);
-            $nombre=$request->nombre;
+            $nombre = $request->nombre;
             // dd($request->all());
-        $modelo=Modelo::create([
-                "nombre"=>$nombre
+            $modelo = Modelo::create([
+                'nombre'=>$nombre,
             ]);
             if ($modelo) {
                 return response()->json(['success'=>true]);
-            }
-            else{
+            } else {
                 return response()->json(['success'=>false]);
-
             }
         }
     }
-
-
 
     /**
      * Display the specified resource.
@@ -122,11 +115,9 @@ class ModeloController extends Controller
      */
     public function edit(Modelo $modelo)
     {
-
         $marca = Marca::get();
 
         return view('admin.modelo.edit', compact('tipoactivos'));
-
     }
 
     /**
@@ -138,22 +129,19 @@ class ModeloController extends Controller
      */
     public function update(Request $request, Modelo $modelo)
     {
-
-        if($request->ajax()){
+        if ($request->ajax()) {
             $request->validate([
-                'nombre'=>'required|string|unique:modelo,nombre'
+                'nombre'=>'required|string|unique:modelo,nombre',
             ]);
-            $nombre=$request->nombre;
+            $nombre = $request->nombre;
             // dd($request->all());
-        $modelo=Modelo::create([
-                "nombre"=>$nombre
+            $modelo = Modelo::create([
+                'nombre'=>$nombre,
             ]);
             if ($modelo) {
                 return response()->json(['success'=>true]);
-            }
-            else{
+            } else {
                 return response()->json(['success'=>false]);
-
             }
         }
     }
@@ -167,36 +155,33 @@ class ModeloController extends Controller
     public function destroy(Modelo $modelo)
     {
         return back()->with('deleted', 'Registro eliminado con éxito');
-
     }
 
     public function massDestroy(MassDestroyModeloRequest $request)
     {
-
     }
 
-    public function getModelos(Request $request,$id=null)
+    public function getModelos(Request $request, $id = null)
     {
-        if($request->ajax()){
-            $modelo_seleccionado=Modelo::find($id);
-            $modelos_arr=array();
-            $modelos=Modelo::get();
+        if ($request->ajax()) {
+            $modelo_seleccionado = Modelo::find($id);
+            $modelos_arr = [];
+            $modelos = Modelo::get();
             // dd($marcas);
-        foreach ($modelos as $modelo) {
-            if($modelo_seleccionado){
-            if ($modelo->id==$modelo_seleccionado->id) {
-
-                $modelos_arr[]=array('id'=>$modelo->id,'text'=>$modelo->nombre,'selected'=>true);
+            foreach ($modelos as $modelo) {
+                if ($modelo_seleccionado) {
+                    if ($modelo->id == $modelo_seleccionado->id) {
+                        $modelos_arr[] = ['id'=>$modelo->id, 'text'=>$modelo->nombre, 'selected'=>true];
+                    }
+                }
+                $modelos_arr[] = ['id'=>$modelo->id, 'text'=>$modelo->nombre];
             }
-            }
-            $modelos_arr[]=array('id'=>$modelo->id,'text'=>$modelo->nombre);
 
-        }
+            $array_m = [];
+            $array_m['results'] = $modelos_arr;
+            $array_m['pagination'] = ['more'=>false];
 
-        $array_m=[];
-        $array_m['results']=$modelos_arr;
-        $array_m['pagination']=['more'=>false];
-        return $array_m;
+            return $array_m;
         }
     }
 }

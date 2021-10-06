@@ -10,13 +10,14 @@ use Illuminate\Http\Request;
 
 class EV360ObjetivosController extends Controller
 {
-
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $objetivos = Objetivo::with(['metrica', 'tipo'])->get();
+
             return datatables()->of($objetivos)->toJson();
         }
+
         return view('admin.recursos-humanos.evaluacion-360.objetivos.index');
     }
 
@@ -25,6 +26,7 @@ class EV360ObjetivosController extends Controller
         $objetivo = new Objetivo;
         $tipo_seleccionado = null;
         $metrica_seleccionada = null;
+
         return view('admin.recursos-humanos.evaluacion-360.objetivos.create', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada'));
     }
 
@@ -39,13 +41,15 @@ class EV360ObjetivosController extends Controller
         }]);
 
         if ($request->ajax()) {
-            $objetivos = $empleado->objetivos ?  $empleado->objetivos : collect();
+            $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+
             return datatables()->of($objetivos)->toJson();
         }
         $tipo_seleccionado = null;
         $metrica_seleccionada = null;
         if ($request->ajax()) {
         }
+
         return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado'));
     }
 
@@ -73,9 +77,9 @@ class EV360ObjetivosController extends Controller
             }
         }
     }
+
     public function store(Request $request)
     {
-
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
@@ -97,12 +101,12 @@ class EV360ObjetivosController extends Controller
         $objetivo = Objetivo::find($objetivo);
         $tipo_seleccionado = $objetivo->tipo_id;
         $metrica_seleccionada = $objetivo->metrica_id;
+
         return view('admin.recursos-humanos.evaluacion-360.objetivos.edit', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada'));
     }
 
     public function update(Request $request, $objetivo)
     {
-
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',

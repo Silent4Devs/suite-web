@@ -17,7 +17,6 @@ class AddColumnAlcanceToMatrizRequisitoLegalesTable extends Migration
             $table->string('alcance')->after('requisitoacumplir')->nullable();
             $table->string('metodo')->after('fechaverificacion')->nullable();
             $table->string('comentarios')->after('id_reviso')->nullable();
-
         });
     }
 

@@ -5,8 +5,6 @@ namespace App\Events;
 use App\Models\AccionCorrectiva;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -19,6 +17,7 @@ class AccionCorrectivaEvent implements ShouldBroadcast
     public $tipo_consulta;
     public $tabla;
     public $slug;
+
     /**
      * Create a new notification instance.
      *
@@ -31,6 +30,7 @@ class AccionCorrectivaEvent implements ShouldBroadcast
         $this->tabla = $tabla;
         $this->slug = $slug;
     }
+
     /**
      * Get the channels the event should broadcast on.
      *

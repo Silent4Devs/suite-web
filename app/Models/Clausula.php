@@ -11,6 +11,4 @@ class Clausula extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['nombre'];
-
 }
-

@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateGapDoRequest;
 use App\Http\Resources\Admin\GapDoResource;
 use App\Models\GapDo;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GapDosApiController extends Controller

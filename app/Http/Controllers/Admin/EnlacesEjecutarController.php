@@ -27,9 +27,9 @@ class EnlacesEjecutarController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'enlaces_ejecutar_show';
-                $editGate      = 'enlaces_ejecutar_edit';
-                $deleteGate    = 'enlaces_ejecutar_delete';
+                $viewGate = 'enlaces_ejecutar_show';
+                $editGate = 'enlaces_ejecutar_edit';
+                $deleteGate = 'enlaces_ejecutar_delete';
                 $crudRoutePart = 'enlaces-ejecutars';
 
                 return view('partials.datatablesActions', compact(
@@ -42,16 +42,16 @@ class EnlacesEjecutarController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('ejecutar', function ($row) {
-                return $row->ejecutar ? $row->ejecutar : "";
+                return $row->ejecutar ? $row->ejecutar : '';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
             $table->editColumn('enlace', function ($row) {
-                return $row->enlace ? $row->enlace : "";
+                return $row->enlace ? $row->enlace : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

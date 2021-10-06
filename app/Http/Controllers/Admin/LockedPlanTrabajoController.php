@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class LockedPlanTrabajoController extends Controller
 {
-
     public function getLockedToPlanTrabajo(Request $request)
     {
         if ($request->ajax()) {
@@ -43,7 +42,7 @@ class LockedPlanTrabajoController extends Controller
             $bloqueo = LockedPlanTrabajo::first();
             if (intval($bloqueo->blocked) == 0) {
                 $bloqueo->update([
-                    'locked_by' => intval($request->user_id)
+                    'locked_by' => intval($request->user_id),
                 ]);
             }
             if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == auth()->user()->id) {
@@ -70,6 +69,7 @@ class LockedPlanTrabajoController extends Controller
                     'locked_by' => auth()->user()->id,
                 ]);
             }
+
             return response()->json(['success' => 'Bloqueo']);
         }
     }
@@ -82,7 +82,7 @@ class LockedPlanTrabajoController extends Controller
                 $bloqueo = LockedPlanTrabajo::first();
                 if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == auth()->user()->id) {
                     return response()->json(['blocked_by_self' => true]);
-                } else if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) != auth()->user()->id) {
+                } elseif (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) != auth()->user()->id) {
                     return response()->json(['blocked' => true]);
                 } else {
                     return response()->json(['blocked' => false]);
@@ -103,6 +103,7 @@ class LockedPlanTrabajoController extends Controller
                     'locked_by' => 0,
                 ]);
             }
+
             return response()->json(['success' => 'Removido']);
         }
     }

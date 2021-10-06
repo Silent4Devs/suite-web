@@ -6,7 +6,6 @@ use App\Models\HistoralRevisionMinuta;
 use App\Models\Minutasaltadireccion;
 use App\Models\RevisionMinuta;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -19,10 +18,10 @@ class SolicitudDeAprobacion extends Mailable
      *
      * @return void
      */
-
     public $minuta;
     public $revision;
     public $historialRevisionMinuta;
+
     public function __construct(Minutasaltadireccion $minuta, RevisionMinuta $revision, HistoralRevisionMinuta $historialRevisionMinuta)
     {
         $minuta->load('planes', 'participantes', 'responsable');

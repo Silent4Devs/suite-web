@@ -27,7 +27,7 @@ class AddColumAreaToEvidenciasSgsisTable extends Migration
     public function down()
     {
         Schema::table('evidencias_sgsis', function (Blueprint $table) {
-        //
+            //
         });
     }
 }

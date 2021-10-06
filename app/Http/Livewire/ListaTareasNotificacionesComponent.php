@@ -10,8 +10,8 @@ class ListaTareasNotificacionesComponent extends Component
     public $notificaciones_sin_leer;
 
     protected $listeners = [
-        "render-task-list" => 'render',
-        'TaskMarkedAsReadList' => 'render'
+        'render-task-list' => 'render',
+        'TaskMarkedAsReadList' => 'render',
     ];
 
     public function mount($notificaciones_sin_leer)
@@ -22,8 +22,9 @@ class ListaTareasNotificacionesComponent extends Component
     public function render()
     {
         $last_unread_notifications = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->latest()->take(5)->get();
+
         return view('livewire.lista-tareas-notificaciones-component', [
-            'last_unread_notifications' => $last_unread_notifications
+            'last_unread_notifications' => $last_unread_notifications,
         ]);
     }
 }
