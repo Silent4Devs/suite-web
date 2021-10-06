@@ -25,7 +25,7 @@ class SedeController extends Controller
         abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //dd( Sede::with(['organizacion', 'team'])->get());
         if ($request->ajax()) {
-            $query = Sede::with(['organizacion', 'team'])->get();
+            $query = Sede::with(['organizacion', 'team'])->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
