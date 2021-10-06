@@ -50,7 +50,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "php ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --config php-cs-fixer.php",
+            "pre-commit": "vendor/bin/php-cs-fixer fix --config php-cs-fixer.php && php ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --config php-cs-fixer.php",
             "pre-push": "php artisan test"
         }
     }
