@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateIncidentesDeSeguridadRequest;
 use App\Http\Resources\Admin\IncidentesDeSeguridadResource;
 use App\Models\IncidentesDeSeguridad;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class IncidentesDeSeguridadApiController extends Controller

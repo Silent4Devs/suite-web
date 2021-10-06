@@ -9,7 +9,6 @@ use App\Http\Requests\UpdatePoliticaSgsiRequest;
 use App\Models\PoliticaSgsi;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PoliticaSgsiController extends Controller

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Laracasts\Flash\Flash;
-use App\Models\Macroproceso;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Macroproceso;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Laracasts\Flash\Flash;
 use Yajra\DataTables\Facades\DataTables;
 
 class MacroprocesoController extends Controller
@@ -30,9 +29,9 @@ class MacroprocesoController extends Controller
             $table->addColumn('actions', '&nbsp;');
             $table->addIndexColumn();
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'recurso_show';
-                $editGate      = 'recurso_edit';
-                $deleteGate    = 'recurso_delete';
+                $viewGate = 'recurso_show';
+                $editGate = 'recurso_edit';
+                $deleteGate = 'recurso_delete';
                 $crudRoutePart = 'macroprocesos';
 
                 return view('partials.datatablesActions', compact(
@@ -45,19 +44,19 @@ class MacroprocesoController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('codigo', function ($row) {
-                return $row->codigo ? $row->codigo : "";
+                return $row->codigo ? $row->codigo : '';
             });
             $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : "";
+                return $row->nombre ? $row->nombre : '';
             });
             $table->editColumn('grupo', function ($row) {
-                return $row->grupo ? $row->grupo->nombre : "";
+                return $row->grupo ? $row->grupo->nombre : '';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
 
             $table->rawColumns(['actions']);
@@ -90,23 +89,23 @@ class MacroprocesoController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate(
             [
                 'codigo' => 'required|string',
                 'nombre' => 'required|string',
                 'id_grupo' => 'required|integer',
-                'descripcion' => 'required|string'
+                'descripcion' => 'required|string',
             ]
         );
         $macroprocesos = Macroproceso::create($request->all());
         // Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
-        return redirect()->route('admin.macroprocesos.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.macroprocesos.index')->with('success', 'Guardado con éxito');
     }
 
     public function show(Macroproceso $macroproceso)
     {
         abort_if(Gate::denies('configuracion_macroproceso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.macroprocesos.show', compact('macroproceso'));
     }
 
@@ -125,17 +124,19 @@ class MacroprocesoController extends Controller
                 'codigo' => 'required|string',
                 'nombre' => 'required|string',
                 'id_grupo' => 'required|integer',
-                'descripcion' => 'required|string'
+                'descripcion' => 'required|string',
             ],
         );
         $macroproceso->update($request->all());
-        return redirect()->route('admin.macroprocesos.index')->with("success", 'Editado con éxito');
+
+        return redirect()->route('admin.macroprocesos.index')->with('success', 'Editado con éxito');
     }
 
     public function destroy(Macroproceso $macroproceso)
     {
         abort_if(Gate::denies('configuracion_macroproceso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso->delete();
+
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 }

@@ -2,35 +2,31 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use Gate;
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Team;
-use App\Models\Activo;
-use App\Models\Amenaza;
-use App\Models\Proceso;
-use App\Models\Controle;
-use App\Models\Empleado;
-use App\Models\Tipoactivo;
 use App\Functions\Mriesgos;
-use App\Models\MatrizRiesgo;
-use App\Models\Organizacion;
-use App\Models\AnalisisDeRiesgo;
-use Illuminate\Http\Request;
-use App\Models\Vulnerabilidad;
-//use Illuminate\Support\Facades\Request;
-use App\Models\PlanImplementacion;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Route;
-use App\Models\DeclaracionAplicabilidad;
-use Yajra\DataTables\Facades\DataTables;
-use App\Models\MatrizRiesgosControlesPivot;
-
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\MassDestroyMatrizRiesgoRequest;
 use App\Http\Requests\StoreMatrizRiesgoRequest;
 use App\Http\Requests\UpdateMatrizRiesgoRequest;
-use App\Http\Requests\MassDestroyMatrizRiesgoRequest;
+use App\Models\Activo;
+use App\Models\Amenaza;
+use App\Models\Area;
+use App\Models\Controle;
+use App\Models\DeclaracionAplicabilidad;
+use App\Models\Empleado;
+use App\Models\MatrizRiesgo;
+use App\Models\MatrizRiesgosControlesPivot;
+use App\Models\Organizacion;
+use App\Models\PlanImplementacion;
+//use Illuminate\Support\Facades\Request;
+use App\Models\Proceso;
+use App\Models\Sede;
+use App\Models\Team;
+use App\Models\Tipoactivo;
+use App\Models\Vulnerabilidad;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class MatrizRiesgosController extends Controller
 {
@@ -109,7 +105,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
 
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice' ,'anexo_politica')->get();
+        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
         return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
@@ -133,12 +129,11 @@ class MatrizRiesgosController extends Controller
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
 
-        return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with('success', 'Guardado con éxito');
     }
 
     public function edit(MatrizRiesgo $matrizRiesgo)
     {
-
         $organizacions = Organizacion::all();
         $teams = Team::get();
         $activos = Activo::get();
@@ -174,12 +169,12 @@ class MatrizRiesgosController extends Controller
             // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
-        return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with("success", 'Actualizado con éxito');
+
+        return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
     }
 
     public function show(MatrizRiesgo $matrizRiesgo)
     {
-
         abort_if(Gate::denies('matriz_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         /*if (!is_null($matrizRiesgo->activo_id)) {
             $matrizRiesgo->load('activo_id', 'controles');
@@ -220,9 +215,9 @@ class MatrizRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'configuracion_sede_show';
-                $editGate      = 'configuracion_sede_edit';
-                $deleteGate    = 'configuracion_sede_delete';
+                $viewGate = 'configuracion_sede_show';
+                $editGate = 'configuracion_sede_edit';
+                $deleteGate = 'configuracion_sede_delete';
                 $crudRoutePart = 'matriz-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -235,28 +230,28 @@ class MatrizRiesgosController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('id_sede', function ($row) {
-                return $row->sede ? $row->sede->sede : "";
+                return $row->sede ? $row->sede->sede : '';
             });
             $table->editColumn('id_proceso', function ($row) {
-                return $row->proceso ? $row->proceso->nombre : "";
+                return $row->proceso ? $row->proceso->nombre : '';
             });
             $table->editColumn('id_responsable', function ($row) {
-                return $row->empleado ? $row->empleado->name : "";
+                return $row->empleado ? $row->empleado->name : '';
             });
             $table->editColumn('activo_id', function ($row) {
-                return $row->activo ? $row->activo->nombreactivo : "";
+                return $row->activo ? $row->activo->nombreactivo : '';
             });
             $table->editColumn('id_amenaza', function ($row) {
-                return $row->amenaza ? $row->amenaza->nombre : "";
+                return $row->amenaza ? $row->amenaza->nombre : '';
             });
             $table->editColumn('id_vulnerabilidad', function ($row) {
-                return $row->vulnerabilidad ? $row->vulnerabilidad->nombre : "";
+                return $row->vulnerabilidad ? $row->vulnerabilidad->nombre : '';
             });
             $table->editColumn('descripcionriesgo', function ($row) {
-                return $row->descripcionriesgo ? $row->descripcionriesgo : "";
+                return $row->descripcionriesgo ? $row->descripcionriesgo : '';
             });
             $table->editColumn('confidencialidad', function ($row) {
                 if ($row->confidencialidad) {
@@ -280,7 +275,7 @@ class MatrizRiesgosController extends Controller
                 }
             });
             $table->editColumn('resultadoponderacion', function ($row) {
-                return $row->resultadoponderacion ? $row->resultadoponderacion : "";
+                return $row->resultadoponderacion ? $row->resultadoponderacion : '';
             });
             $table->editColumn('probabilidad', function ($row) {
                 //return $row->probabilidad ? $row->probabilidad : "";
@@ -322,19 +317,19 @@ class MatrizRiesgosController extends Controller
             });
             $table->editColumn('nivelriesgo', function ($row) {
                 if (is_null($row->nivelriesgo)) {
-                    return null ? $row->nivelriesgo : "";
+                    return null ? $row->nivelriesgo : '';
                 } else {
-                    return $row->nivelriesgo ? $row->nivelriesgo : "";
+                    return $row->nivelriesgo ? $row->nivelriesgo : '';
                 }
             });
             /*$table->editColumn('riesgototal', function ($row) {
                 return $row->riesgototal ? $row->riesgototal : "";
             });*/
             $table->editColumn('control', function ($row) {
-                return $row->matriz_riesgos_controles_pivots ? $row->matriz_riesgos_controles_pivots : "";
+                return $row->matriz_riesgos_controles_pivots ? $row->matriz_riesgos_controles_pivots : '';
             });
             $table->editColumn('plan_de_accion', function ($row) {
-                return $row->planes ? $row->planes : "";
+                return $row->planes ? $row->planes : '';
             });
             $table->editColumn('confidencialidad_cid', function ($row) {
                 if ($row->confidencialidad_cid) {
@@ -396,10 +391,10 @@ class MatrizRiesgosController extends Controller
                 }
             });
             $table->editColumn('nivelriesgo_residual', function ($row) {
-                return $row->nivelriesgo_residual ? $row->nivelriesgo_residual : "";
+                return $row->nivelriesgo_residual ? $row->nivelriesgo_residual : '';
             });
             $table->editColumn('riesto_total_residual', function ($row) {
-                return $row->riesto_total_residual ? $row->riesto_total_residual : "";
+                return $row->riesto_total_residual ? $row->riesto_total_residual : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -428,11 +423,12 @@ class MatrizRiesgosController extends Controller
 
     public function createPlanAccion(MatrizRiesgo $id)
     {
-        $planImplementacion  = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion();
         $modulo = $id;
         $modulo_name = 'Matríz de Riegos';
         $referencia = $modulo->nombrerequisito;
         $urlStore = route('admin.matriz-requisito-legales.storePlanAccion', $id);
+
         return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
 
@@ -457,7 +453,7 @@ class MatrizRiesgosController extends Controller
         $planImplementacion->canWriteOnParent = true;
         $planImplementacion->changesReasonWhy = false;
         $planImplementacion->selectedRow = 0;
-        $planImplementacion->zoom = "3d";
+        $planImplementacion->zoom = '3d';
         $planImplementacion->parent = $request->parent;
         $planImplementacion->norma = $request->norma;
         $planImplementacion->modulo_origen = $request->modulo_origen;

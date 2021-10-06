@@ -7,7 +7,7 @@
 
     <!-- Categoria Field -->
     <div class="form-group col-sm-6">
-        <i class="fas fa-th-list iconos-crear"></i>{!! Form::label('categoria', 'Categoria:') !!}
+        <i class="fas fa-th-list iconos-crear"></i>{!! Form::label('categoria', 'Categoría:') !!}
         {!! Form::text('categoria', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
     </div>
 

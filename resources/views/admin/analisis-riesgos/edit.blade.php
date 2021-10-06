@@ -18,7 +18,8 @@
                 @method('PUT')
                 @csrf
 
-                <div class="form-group col-12 py-1 text-center" style="background-color:#1BB0B0; border-radius:100px; color: white;">DATOS GENERALES</div>
+                <div class="py-1 text-center form-group col-12"
+                    style="background-color:#1BB0B0; border-radius:100px; color: white;">DATOS GENERALES</div>
 
 
                 <div class="form-group">
@@ -70,47 +71,41 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
+
+
+                    <div class="form-group col-md-4">
+                        <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
                         <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
                             name="id_elaboro" id="id_elaboro">
-                            <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
-                                Selecciona una opción</option>
-                            @foreach ($empleados as $key => $label)
-                                <option value="{{ $label->id }}"
-                                    {{ $label->id == $analisis->id_elaboro ? 'selected' : '' }}>
-                                    {{ $label->name }}
+                            <option value="">Seleccione una opción</option>
+                            @foreach ($empleados as $id => $empleado)
+                                <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
+                                    data-area="{{ $empleado->area->area }}"
+                                    {{ old('id_elaboro', $analisis->id_elaboro) == $empleado->id ? 'selected' : '' }}>
+
+                                    {{ $empleado->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @if ($errors->has('id_elaboro'))
+                        @if ($errors->has('empleados'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('id_elaboro') }}
+                                {{ $errors->first('empleados') }}
                             </div>
                         @endif
+                        <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto </label>
-                        <input class="form-control {{ $errors->has('id_puesto') ? 'is-invalid' : '' }}" type="text"
-                            id="id_puesto" value="" disabled>
-                        @if ($errors->has('id_puesto'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_puesto') }}
-                            </div>
-                        @endif
+
+                    <div class="form-group col-md-4 col-sm-12 col-lg-4">
+                        <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="id_puesto" readonly></div>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-12 col-lg-4">
+                        <label for="id_area"><i class="fas fa-street-viewa iconos-crear"></i>Área</label>
+                        <div class="form-control" id="id_area" readonly></div>
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área </label>
-                        <input class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}" type="text"
-                            id="id_area" value="" disabled>
-                        @if ($errors->has('id_area'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_area') }}
-                            </div>
-                        @endif
-                    </div>
+
                 </div>
 
                 <div class="row">
@@ -148,9 +143,9 @@
                 </div>
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                            <button class="btn btn-danger" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
+                    <button class="btn btn-danger" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
                 </div>
             </form>
         </div>
@@ -182,6 +177,24 @@
                 $("#id_puesto").empty();
                 $("#id_area").empty();
             }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let elaboro = document.querySelector('#id_elaboro');
+            let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
+            let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');
+
+            document.getElementById('id_puesto').innerHTML = puesto_init;
+            document.getElementById('id_area').innerHTML = area_init;
+            elaboro.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('id_puesto').innerHTML = puesto;
+                document.getElementById('id_area').innerHTML = area;
+            })
         });
     </script>
 @endsection

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGapTreRequest;
 use App\Http\Requests\StoreGapTreRequest;
-use App\Http\Requests\UpdateGapTreRequest;
 use App\Models\GapTre;
 use App\Models\Team;
 use Gate;
@@ -27,9 +26,9 @@ class GapTresController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'gap_tre_show';
-                $editGate      = 'gap_tre_edit';
-                $deleteGate    = 'gap_tre_delete';
+                $viewGate = 'gap_tre_show';
+                $editGate = 'gap_tre_edit';
+                $deleteGate = 'gap_tre_delete';
                 $crudRoutePart = 'gap-tres';
 
                 return view('partials.datatablesActions', compact(
@@ -42,19 +41,19 @@ class GapTresController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('pregunta', function ($row) {
-                return $row->pregunta ? $row->pregunta : "";
+                return $row->pregunta ? $row->pregunta : '';
             });
             $table->editColumn('valoracion', function ($row) {
                 return $row->valoracion ? GapTre::VALORACION_SELECT[$row->valoracion] : '';
             });
             $table->editColumn('evidencia', function ($row) {
-                return $row->evidencia ? $row->evidencia : "";
+                return $row->evidencia ? $row->evidencia : '';
             });
             $table->editColumn('recomendacion', function ($row) {
-                return $row->recomendacion ? $row->recomendacion : "";
+                return $row->recomendacion ? $row->recomendacion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -98,18 +97,21 @@ class GapTresController extends Controller
                     $gapun = GapTre::findOrFail($id);
                     $gapun->evidencia = $request->value;
                     $gapun->save();
+
                     return response()->json(['success' => true]);
                     break;
                 case 'recomendacion':
                     $gapun = GapTre::findOrFail($id);
                     $gapun->recomendacion = $request->value;
                     $gapun->save();
+
                     return response()->json(['success' => true]);
                     break;
                 case 'valoracion':
                     $gapun = GapTre::findOrFail($id);
                     $gapun->valoracion = $request->value;
                     $gapun->save();
+
                     return response()->json(['success' => true]);
                     break;
             }

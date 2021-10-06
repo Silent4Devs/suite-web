@@ -2,9 +2,7 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -19,7 +17,6 @@ class TaskRecursosEvent implements ShouldBroadcast
     public $mensaje;
     public $user;
     public $tipo_notificacion;
-
 
     public function __construct($tabla, $slug, $mensaje, $user, $tipo_notificacion)
     {

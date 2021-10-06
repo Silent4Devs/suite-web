@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Spatie\Url\Url;
 
 class GlobalStructureSearchController extends Controller
@@ -186,7 +183,6 @@ class GlobalStructureSearchController extends Controller
             }
         });
 
-
         $rutas = collect($rutas_filtradas)->map(function ($route) {
             return '/' . $route;
         })->unique();
@@ -204,19 +200,19 @@ class GlobalStructureSearchController extends Controller
             $title = str_replace('-', ' ', $url->getHost()) . $clean_text;
             $title = str_replace('iso27001 ', 'ISO 27001', $title);
             if ($title == 'entendimiento organizacions ') {
-                $title = "Análisis FODA";
+                $title = 'Análisis FODA';
             }
             if ($title == 'minutasaltadireccions ') {
-                $title = "Minutas de Sesiones con Alta Dirección";
+                $title = 'Minutas de Sesiones con Alta Dirección';
             }
             if ($title == 'politica del sgsi soportes ') {
-                $title = "Politica del SGSI Soporte";
+                $title = 'Politica del SGSI Soporte';
             }
             if ($title == 'buscarCV ') {
-                $title = "Competencias";
+                $title = 'Competencias';
             }
             if ($title == 'recursos ') {
-                $title = "Capacitaciones";
+                $title = 'Capacitaciones';
             }
             $title = str_replace('inicioUsuario', 'Mi Perfil', $title);
             $title = str_replace('organizacions', 'Mi Organización', $title);
@@ -226,28 +222,28 @@ class GlobalStructureSearchController extends Controller
             $title = str_replace('areas', 'Areas', $title);
             $title = str_replace('sgsis', 'SGSI', $title);
             if ($title == 'carpeta ') {
-                $title = "Gestor Documental";
+                $title = 'Gestor Documental';
             }
             if ($title == 'system calendar ') {
-                $title = "Agenda";
+                $title = 'Agenda';
             }
             if ($title == 'desk ') {
-                $title = "Centro de Atención";
+                $title = 'Centro de Atención';
             }
             if ($title == 'matriz requisito legales ') {
-                $title = "Matríz de Requisitos Legales";
+                $title = 'Matríz de Requisitos Legales';
             }
             if ($title == 'matriz riesgos ') {
-                $title = "Matríz de Riesgos";
+                $title = 'Matríz de Riesgos';
             }
             if ($title == 'matriz seguridad ') {
-                $title = "Matríz de Seguridad";
+                $title = 'Matríz de Seguridad';
             }
             if ($title == 'matriz seguridadMapa ') {
-                $title = "Mapa de Matríz de Seguridad";
+                $title = 'Mapa de Matríz de Seguridad';
             }
             if ($title == 'activos ') {
-                $title = "Activos (Inventario)";
+                $title = 'Activos (Inventario)';
             }
             $title = str_replace('desk', '(Centro de Atención)', $title);
             $title = str_replace('seguridads', ' Seguridad', $title);
@@ -268,19 +264,18 @@ class GlobalStructureSearchController extends Controller
             $rutas_arr[Str::title($title)] = $ruta;
         }
 
-
         if ($term != null) {
             $filtered = array_filter($rutas_arr, function ($key) use ($term) {
                 return Str::contains(Str::lower($key), Str::lower($term));
             }, ARRAY_FILTER_USE_KEY);
 
-
             if (count($filtered) > 10) {
                 $filtered = array_slice($filtered, 0, 10);
             }
+
             return $filtered;
         } else {
-            return "Sin Datos";
+            return 'Sin Datos';
         }
     }
 }

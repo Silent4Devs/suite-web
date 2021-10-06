@@ -20,11 +20,11 @@ class EmpleadosExport implements FromCollection, WithMapping, WithHeadings
 
     public function map($empleado): array
     {
-        $supervisor = "Sin Supervisor";
+        $supervisor = 'Sin Supervisor';
         if (!is_null($empleado->supervisor)) {
             $supervisor = $empleado->supervisor->name;
         }
-        $antiguedad = "";
+        $antiguedad = '';
         if (Carbon::parse($empleado->antiguedad)->diff()->y == 0) {
             if (Carbon::parse($empleado->antiguedad)->diff()->m == 0) {
                 $antiguedad = Carbon::parse($empleado->antiguedad)->diff()->d . ' días';

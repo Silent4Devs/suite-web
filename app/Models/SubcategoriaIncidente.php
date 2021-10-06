@@ -9,13 +9,14 @@ class SubcategoriaIncidente extends Model
 {
     use HasFactory;
 
-    protected $table='subcategorias_incidentes';
+    protected $table = 'subcategorias_incidentes';
 
-    protected $guarded=[
-        'id'
+    protected $guarded = [
+        'id',
     ];
 
-    public function categoria(){
+    public function categoria()
+    {
         return $this->belongsTo(CategoriaIncidente::class, 'categoria_id', 'id');
     }
 }

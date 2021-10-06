@@ -5,8 +5,6 @@ namespace App\Events;
 use App\Models\AuditoriaAnual;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -35,7 +33,8 @@ class AuditoriaAnualEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        \Log::debug("retorno notificacion");
+        \Log::debug('retorno notificacion');
+
         return new Channel('notificaciones-campana');
     }
 }

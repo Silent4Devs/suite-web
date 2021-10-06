@@ -2,24 +2,35 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Proceso;
 use App\Models\AnalisisDeRiesgo;
-use Livewire\Component;
+use App\Models\Area;
 use App\Models\MatrizRiesgo;
+use App\Models\Proceso;
+use App\Models\Sede;
+use Livewire\Component;
 
 class MatrizHeatmap extends Component
 {
-    public $id_analisis, $control, $matriz, $valor_riesgo;
-    public $sede_id = "";
-    public $area_id = "";
-    public $proceso_id = "";
+    public $id_analisis;
+    public $control;
+    public $matriz;
+    public $valor_riesgo;
+    public $sede_id = '';
+    public $area_id = '';
+    public $proceso_id = '';
     public $listados = [];
     public $listados_residual = [];
     public $mensaje = '';
-    public $changer, $changer_residual;
-    public $muy_alto, $alto, $medio, $bajo, $muy_alto_residual, $alto_residual, $medio_residual, $bajo_residual;
+    public $changer;
+    public $changer_residual;
+    public $muy_alto;
+    public $alto;
+    public $medio;
+    public $bajo;
+    public $muy_alto_residual;
+    public $alto_residual;
+    public $medio_residual;
+    public $bajo_residual;
     //var conta
     public $nula_muyalto = 0;
     public $nula_alto = 0;
@@ -56,15 +67,16 @@ class MatrizHeatmap extends Component
     public $alta_muyalto_r = 0;
     public $mapas = [];
 
-    public function mount($mapas = []){
-        $this->mapas=$mapas;
+    public function mount($mapas = [])
+    {
+        $this->mapas = $mapas;
     }
 
     public function clean()
     {
-        $this->sede_id = "";
-        $this->area_id = "";
-        $this->proceso_id = "";
+        $this->sede_id = '';
+        $this->area_id = '';
+        $this->proceso_id = '';
         $this->changer = '';
         $this->listados = [];
         //$this->conteo = '';
@@ -94,20 +106,19 @@ class MatrizHeatmap extends Component
         // $mapas = AnalisisDeRiesgo::select('id', 'nombre')->get();
         // dd($this->mapas);
 
-
-        $muy_alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('54', '81'));
-        $alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('27', '36'));
+        $muy_alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['54', '81']);
+        $alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['27', '36']);
         $medio = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '9');
         $bajo = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
-        $muy_alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('54', '81'));
-        $alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', array('27', '36'));
+        $muy_alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['54', '81']);
+        $alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['27', '36']);
         $medio_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '9');
         $bajo_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '0');
         //querys contador en grafica
         $matriz_query = MatrizRiesgo::select('probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis);
         $matriz_query_r = MatrizRiesgo::select('probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis);
 
-        if ($this->sede_id != "") {
+        if ($this->sede_id != '') {
             if (MatrizRiesgo::select('id')->Where('id_sede', '=', $this->sede_id)->count() > 0) {
                 $muy_alto->Where('id_sede', '=', $this->sede_id);
                 $alto->Where('id_sede', '=', $this->sede_id);
@@ -122,11 +133,11 @@ class MatrizHeatmap extends Component
                 $this->callAlert('success', 'La información se actualizo correctamente', true);
             } else {
                 $this->callAlert('warning', 'No se encontro registro con esta sede', false, 'El dashboard volvio a sus valores originales sin sede');
-                $this->sede_id = "";
+                $this->sede_id = '';
             }
         }
 
-        if ($this->area_id != "") {
+        if ($this->area_id != '') {
             if (MatrizRiesgo::select('id')->Where('id_area', '=', $this->area_id)->count() > 0) {
                 $muy_alto->Where('id_area', '=', $this->area_id);
                 $alto->Where('id_area', '=', $this->area_id);
@@ -141,11 +152,11 @@ class MatrizHeatmap extends Component
                 $this->callAlert('success', 'La información se actualizo correctamente', true);
             } else {
                 $this->callAlert('warning', 'No se encontro registro con esta área', false, 'El dashboard volvio a sus valores originales sin área');
-                $this->area_id = "";
+                $this->area_id = '';
             }
         }
 
-        if ($this->proceso_id != "") {
+        if ($this->proceso_id != '') {
             if (MatrizRiesgo::select('id')->Where('id_proceso', '=', $this->proceso_id)->count() > 0) {
                 $muy_alto->Where('id_proceso', '=', $this->proceso_id);
                 $alto->Where('id_proceso', '=', $this->proceso_id);
@@ -160,7 +171,7 @@ class MatrizHeatmap extends Component
                 $this->callAlert('success', 'La información se actualizo correctamente', true);
             } else {
                 $this->callAlert('warning', 'No se encontro registro con este proceso', false, 'El dashboard volvio a sus valores originales sin proceso');
-                $this->proceso_id = "";
+                $this->proceso_id = '';
             }
         }
 
@@ -358,15 +369,15 @@ class MatrizHeatmap extends Component
     {
         $matriz_riesgos = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', $id);
 
-        if ($this->sede_id != "") {
+        if ($this->sede_id != '') {
             $matriz_riesgos->Where('id_sede', '=', $this->sede_id);
         }
 
-        if ($this->area_id != "") {
+        if ($this->area_id != '') {
             $matriz_riesgos->Where('id_area', '=', $this->area_id);
         }
 
-        if ($this->proceso_id != "") {
+        if ($this->proceso_id != '') {
             $matriz_riesgos->Where('id_proceso', '=', $this->proceso_id);
         }
 
@@ -381,7 +392,6 @@ class MatrizHeatmap extends Component
             $this->listados = $matriz_riesgos->get();
             $this->changer = $valor;
             $this->cleanData();
-
         }
     }
 
@@ -390,17 +400,15 @@ class MatrizHeatmap extends Component
         $matriz_riesgos_residual = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad_residual', 'impacto_residual', 'nivelriesgo_residual')->with(['controles'])->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', $id)->get();
         if ($matriz_riesgos_residual->count() == 0) {
             $this->callAlert('warning', 'No se encontro registro con este nivel de riesgo residual', false, 'Por favor ingrese un nuevo valor');
-
         } else {
             $this->changer_residual = '';
             $this->listados_residual = $matriz_riesgos_residual;
             $this->changer_residual = $valor;
             $this->cleanData();
-
         }
     }
 
-    public function callAlert($tipo, $mensaje, $bool, $test = "")
+    public function callAlert($tipo, $mensaje, $bool, $test = '')
     {
         $this->alert($tipo, $mensaje, [
             'position' =>  'top-end',

@@ -34,10 +34,7 @@ class CreateAnalisisSeguridadTable extends Migration
             $table->unsignedBigInteger('sugerencias_id')->nullable();
             $table->foreign('sugerencias_id')->references('id')->on('sugerencias');
 
-
-
             $table->string('formulario')->nullable();
-
 
             $table->longText('causa_ideas')->nullable();
             $table->longText('ideas')->nullable();

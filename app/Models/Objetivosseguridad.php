@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Objetivosseguridad
+ * Class Objetivosseguridad.
  *
  * @property int $id
  * @property character varying $objetivoseguridad
@@ -31,8 +31,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Empleado|null $empleado
  * @property Collection|VariablesObjetivosseguridad[] $variables_objetivosseguridads
  * @property Collection|EvaluacionObjetivo[] $evaluacion_objetivos
- *
- * @package App\Models
  */
 class Objetivosseguridad extends Model
 {
@@ -56,7 +54,7 @@ class Objetivosseguridad extends Model
         'unidadmedida' => 'string',
         'meta' => 'string',
         'frecuencia' => 'string',
-        'revisiones' => 'string'
+        'revisiones' => 'string',
     ];
 
     protected $fillable = [
@@ -72,26 +70,26 @@ class Objetivosseguridad extends Model
         'meta',
         'frecuencia',
         'revisiones',
-        'ano'
+        'ano',
     ];
 
-	public function team()
-	{
-		return $this->belongsTo(Team::class);
-	}
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'responsable_id');
-	}
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'responsable_id');
+    }
 
-	public function variables_objetivosseguridads()
-	{
-		return $this->hasMany(VariablesObjetivosseguridad::class, 'id_objetivo');
-	}
+    public function variables_objetivosseguridads()
+    {
+        return $this->hasMany(VariablesObjetivosseguridad::class, 'id_objetivo');
+    }
 
-	public function evaluacion_objetivos()
-	{
-		return $this->hasMany(EvaluacionObjetivo::class, 'id_objetivo');
-	}
+    public function evaluacion_objetivos()
+    {
+        return $this->hasMany(EvaluacionObjetivo::class, 'id_objetivo');
+    }
 }

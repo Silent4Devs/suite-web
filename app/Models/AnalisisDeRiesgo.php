@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class AnalisisDeRiesgo
+ * Class AnalisisDeRiesgo.
  *
  * @property int $id
  * @property string $nombre
@@ -23,8 +23,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property Empleado|null $empleado
  * @property Collection|MatrizRiesgo[] $matriz_riesgos
- *
- * @package App\Models
  */
 class AnalisisDeRiesgo extends Model
 {
@@ -33,11 +31,11 @@ class AnalisisDeRiesgo extends Model
 
     protected $casts = [
         'id_elaboro' => 'int',
-        'estatus' => 'int'
+        'estatus' => 'int',
     ];
 
     protected $dates = [
-        'fecha'
+        'fecha',
     ];
 
     protected $fillable = [
@@ -46,7 +44,7 @@ class AnalisisDeRiesgo extends Model
         'fecha',
         'porcentaje_implementacion',
         'id_elaboro',
-        'estatus'
+        'estatus',
     ];
 
     const TipoSelect = [

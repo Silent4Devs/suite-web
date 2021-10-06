@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\EstadoIncidente;
+use Illuminate\Database\Seeder;
 
 class EstadoincidentesTableSeeder extends Seeder
 {
@@ -19,32 +19,27 @@ class EstadoincidentesTableSeeder extends Seeder
             [
                 'id'                 => 1,
                 'estado'               => 'Cerrado',
-               
-           
+
             ],
             [
                 'id'                 => 2,
                 'estado'               => 'En curso',
-               
-           
+
             ],
             [
                 'id'                 => 3,
                 'estado'               => 'Pendiente',
-             
-           
+
             ],
             [
                 'id'                 => 4,
                 'estado'               => 'Asignado',
-               
-           
+
             ],
             [
                 'id'                 => 5,
                 'estado'               => 'Cancelado',
-            
-           
+
             ],
         ];
         EstadoIncidente::insert($estadoincide);

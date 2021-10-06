@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Organizacion;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class UpdateOrganizacionRequest extends FormRequest
 {
@@ -28,7 +26,7 @@ class UpdateOrganizacionRequest extends FormRequest
                 'nullable',
                 'string',
                 'min:10',
-                'max:10'
+                'max:10',
             ],
             'pagina_web' => [
                 'string',

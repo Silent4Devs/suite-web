@@ -12,7 +12,7 @@ class CompetenciaPuesto extends Model
     protected $fillable = [
         'competencia_id',
         'puesto_id',
-        'nivel_esperado'
+        'nivel_esperado',
     ];
 
     public function competencia()

@@ -1,14 +1,11 @@
 <?php
 
-
 namespace App\Functions;
 
-use App\Models\PartesInteresada;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Laracasts\Flash\Flash;
-use Illuminate\Support\Facades\DB;
 
 class GeneratePdf
 {
@@ -18,16 +15,16 @@ class GeneratePdf
             case 'PartesInt':
                 $cabeceras = ['Parte Interesada', 'Requisitos', 'Cláusula'];
                 $file = 'PartesInteresadas-' . $datavalues->id . '-' . $datavalues->created_at->format('d-m-Y') . '.pdf';
-                $pdf = PDF::loadView('PDF.PDF', compact('cabeceras', 'datavalues', 'pdfvalue'))->save("data/" . $file);
+                $pdf = PDF::loadView('PDF.PDF', compact('cabeceras', 'datavalues', 'pdfvalue'))->save('data/' . $file);
                 Storage::disk('Iso27001')->put('Planeación/Partes Interesadas/' . $file, $pdf->output());
-                unlink("data/" . $file);
+                unlink('data/' . $file);
                 Flash::success('Información añadida con éxito');
                 break;
             case 'accioncorrectiva':
                 $file = 'AccionCorrectiva-' . $datavalues->id . '-' . $datavalues->created_at->format('d-m-Y') . '.pdf';
-                $pdf = PDF::loadView('PDF.accion_correctiva.F_SGI_016_accion_correctiva_v1', compact('pdfvalue', 'datavalues'))->save("data/" . $file);
+                $pdf = PDF::loadView('PDF.accion_correctiva.F_SGI_016_accion_correctiva_v1', compact('pdfvalue', 'datavalues'))->save('data/' . $file);
                 Storage::disk('Iso27001')->put('Mejora continua/Acciones Correctivas/' . $file, $pdf->output());
-                unlink("data/" . $file);
+                unlink('data/' . $file);
                 Flash::success('Información añadida con éxito');
                 break;
             case 'planAuditoria':

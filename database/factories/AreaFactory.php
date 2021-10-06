@@ -23,6 +23,7 @@ class AreaFactory extends Factory
     public function definition()
     {
         static $numero = 1;
+
         return [
             'area' => 'Area ' . $numero++,
             'id_grupo' => Grupo::all()->random()->id,

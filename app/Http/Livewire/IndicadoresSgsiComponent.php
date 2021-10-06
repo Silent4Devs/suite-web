@@ -2,20 +2,36 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Proceso;
-use Livewire\Component;
 use App\Models\Empleado;
-use App\Models\Indicador;
-use App\Models\VariablesIndicador;
 use App\Models\EvaluacionIndicador;
-use softDeletes;
+use App\Models\Proceso;
+use App\Models\VariablesIndicador;
+use Livewire\Component;
 
 class IndicadoresSgsiComponent extends Component
 {
-    public $nombre, $description, $formula, $frecuencia, $unidadmedida, $meta, $no_revisiones, $resultado, $id_empleado, $id_proceso, $indicadoresSgsis;
+    public $nombre;
+    public $description;
+    public $formula;
+    public $frecuencia;
+    public $unidadmedida;
+    public $meta;
+    public $no_revisiones;
+    public $resultado;
+    public $id_empleado;
+    public $id_proceso;
+    public $indicadoresSgsis;
     public $view = 'create';
-    public $formSlugs, $customFields, $fecha, $id_evaluacion;
-    public $variable, $valor, $formula_calcular, $value, $remplazo_formula, $evaluacion;
+    public $formSlugs;
+    public $customFields;
+    public $fecha;
+    public $id_evaluacion;
+    public $variable;
+    public $valor;
+    public $formula_calcular;
+    public $value;
+    public $remplazo_formula;
+    public $evaluacion;
 
     public function mount($indicadoresSgsis)
     {
@@ -47,8 +63,8 @@ class IndicadoresSgsiComponent extends Component
 
     public function store()
     {
-        $variables = array();
-        $valores = array();
+        $variables = [];
+        $valores = [];
         $formula_sustitucion = $this->indicadoresSgsis->formula;
 
         foreach ($this->formSlugs as $key => $v1) {
@@ -88,8 +104,8 @@ class IndicadoresSgsiComponent extends Component
     {
         $evaluaciones = EvaluacionIndicador::find($this->id_evaluacion);
 
-        $variables = array();
-        $valores = array();
+        $variables = [];
+        $valores = [];
         $formula_sustitucion = $this->indicadoresSgsis->formula;
 
         foreach ($this->formSlugs as $key => $v1) {
@@ -120,8 +136,8 @@ class IndicadoresSgsiComponent extends Component
 
     public function default()
     {
-        $this->evaluacion = "";
-        $this->fecha = "";
+        $this->evaluacion = '';
+        $this->fecha = '';
         $this->dispatchBrowserEvent('contentChanged');
 
         $this->view = 'create';

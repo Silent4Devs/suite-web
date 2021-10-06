@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Vulnerabilidad;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateVulnerabilidadRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +25,7 @@ class UpdateVulnerabilidadRequest extends FormRequest
     public function rules()
     {
         $rules = Vulnerabilidad::$rules;
-        
+
         return $rules;
     }
 }

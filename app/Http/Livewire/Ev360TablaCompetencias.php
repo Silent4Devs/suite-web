@@ -11,17 +11,15 @@ class Ev360TablaCompetencias extends Component
 {
     use WithPagination;
     public $showTable = false;
-    public $search = "";
+    public $search = '';
     public $perPage = 10;
     public $filter = 1;
     public $selected = [];
-
 
     public function mount($showTable)
     {
         $this->showTable = $showTable;
     }
-
 
     public function render()
     {
@@ -30,6 +28,7 @@ class Ev360TablaCompetencias extends Component
             $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);
         }
         $tipos = TipoCompetencia::select('id', 'nombre')->get();
+
         return view('livewire.ev360-tabla-competencias', ['competencias' => $competencias, 'tipos' => $tipos]);
     }
 }

@@ -1,28 +1,24 @@
 @section('scripts')
-    <script type=text/javascript>
-        $('#id_responsable').change(function() {
-            var elaboroID = $(this).val();
-            if (elaboroID) {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ url('admin/getEmployeeData') }}?id=" + elaboroID,
-                    success: function(res) {
-                        if (res) {
-                            $("#id_puesto").empty();
-                            $("#id_puesto").attr("value", res.puesto);
-                            $("#id_area").empty();
-                            $("#id_area").attr("value", res.area);
-                        } else {
-                            $("#id_puesto").empty();
-                            $("#id_area").empty();
-                        }
-                    }
-                });
-            } else {
-                $("#id_puesto").empty();
-                $("#id_area").empty();
-            }
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+
+            let responsable = document.querySelector('#id_responsable');
+            let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+            let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+
+            document.getElementById('id_puesto').innerHTML = puesto_init;
+            document.getElementById('id_area').innerHTML = area_init;
+            responsable.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('id_puesto').innerHTML = puesto;
+                document.getElementById('id_area').innerHTML = area;
+            })
         });
+
     </script>
 
     <script>
@@ -334,7 +330,7 @@
     </script>
 
     <script type="text/javascript">
-        
+
         $("#ejemplo").click(function() {
                 var val = $(this).val();
                 if(val == 0){
@@ -348,6 +344,8 @@
             });
 
     </script>
+
+
 
 
 @endsection

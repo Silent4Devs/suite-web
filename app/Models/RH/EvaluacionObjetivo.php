@@ -9,7 +9,7 @@ class EvaluacionObjetivo extends Model
 {
     use HasFactory;
     protected $table = 'ev360_evaluacion_objetivos';
-    protected $guarded = ["id"];
+    protected $guarded = ['id'];
 
     public function objetivo()
     {

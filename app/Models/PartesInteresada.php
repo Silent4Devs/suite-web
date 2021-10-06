@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 class PartesInteresada extends Model
 {
@@ -74,6 +74,7 @@ class PartesInteresada extends Model
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
     public function clausulas()
     {
         return $this->belongsToMany(Clausula::class, 'partes_interesadas_clausula', 'partesint_id', 'clausula_id');

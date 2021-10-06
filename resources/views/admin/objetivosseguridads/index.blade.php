@@ -20,7 +20,7 @@
                             {{ trans('cruds.objetivosseguridad.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.objetivosseguridad.fields.objetivoseguridad') }}
+                            Objetivo&nbsp;de&nbsp;seguridad
                         </th>
                         <th>
                             {{ trans('cruds.objetivosseguridad.fields.indicador') }}
@@ -29,7 +29,7 @@
                             Responsable
                         </th>
                         <th>
-                            Formula
+                            Fórmula
                         </th>
                         <th>
                             Meta

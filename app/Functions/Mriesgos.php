@@ -1,10 +1,6 @@
 <?php
 
-
 namespace App\Functions;
-
-use App\Models\MatrizRiesgo;
-use Illuminate\Support\Facades\DB;
 
 class Mriesgos
 {
@@ -33,7 +29,7 @@ class Mriesgos
         }
 
         $resultadoponderacion = $disp + $Intg + $conf;
+
         return $resultadoponderacion;
     }
 }
-

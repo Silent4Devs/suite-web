@@ -11,10 +11,9 @@ class AnalisisSeguridad extends Model
 
     protected $table = 'analisis_seguridad';
 
-    protected $guarded=[
-        'id'
+    protected $guarded = [
+        'id',
     ];
-
 
     public function seguridad()
     {

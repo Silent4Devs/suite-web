@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\EstadoDocumento;
-
+use Illuminate\Database\Seeder;
 
 class EstadodocumentosTableSeeder extends Seeder
 {

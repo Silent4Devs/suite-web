@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyIndicadoresSgsiRequest;
+use App\Models\Empleado;
+use App\Models\IndicadoresSgsi;
+use App\Models\Proceso;
 use App\Models\Team;
 use App\Models\User;
-use App\Models\Proceso;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use App\Models\IndicadoresSgsi;
 use App\Models\VariablesIndicador;
-use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
+use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\StoreIndicadoresSgsiRequest;
-use App\Http\Requests\UpdateIndicadoresSgsiRequest;
-use App\Http\Requests\MassDestroyIndicadoresSgsiRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class IndicadoresSgsiController extends Controller
 {
@@ -24,16 +22,16 @@ class IndicadoresSgsiController extends Controller
         abort_if(Gate::denies('indicadores_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = IndicadoresSgsi::get();
+            $query = IndicadoresSgsi::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'indicadores_sgsi_show';
-                $editGate      = 'indicadores_sgsi_edit';
-                $deleteGate    = 'indicadores_sgsi_delete';
+                $viewGate = 'indicadores_sgsi_show';
+                $editGate = 'indicadores_sgsi_edit';
+                $deleteGate = 'indicadores_sgsi_delete';
                 $crudRoutePart = 'indicadores-sgsis';
 
                 return view('partials.datatablesActions', compact(
@@ -46,35 +44,35 @@ class IndicadoresSgsiController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
 
             $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : "";
+                return $row->nombre ? $row->nombre : '';
             });
 
             $table->editColumn('año', function ($row) {
-                return $row->ano ? $row->ano : "";
+                return $row->ano ? $row->ano : '';
             });
 
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
 
             $table->editColumn('formula', function ($row) {
-                return $row->formula ? $row->formula : "";
+                return $row->formula ? $row->formula : '';
             });
 
             $table->editColumn('unidadmedida', function ($row) {
-                return $row->unidadmedida ? $row->unidadmedida : "";
+                return $row->unidadmedida ? $row->unidadmedida : '';
             });
 
             $table->editColumn('frecuencia', function ($row) {
-                return $row->frecuencia ? $row->frecuencia : "";
+                return $row->frecuencia ? $row->frecuencia : '';
             });
 
             $table->editColumn('enlace', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
 
             /*$table->editColumn('meta', function ($row) {
@@ -110,7 +108,7 @@ class IndicadoresSgsiController extends Controller
     {
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
         //return redirect()->route('admin.indicadores-sgsis.index');
-        return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with('success', 'Guardado con éxito');
     }
 
     public function edit(IndicadoresSgsi $indicadoresSgsi)
@@ -126,12 +124,11 @@ class IndicadoresSgsiController extends Controller
         $indicadoresSgsi->update($request->all());
 
         //return redirect()->route('admin.indicadores-sgsis.index');
-        return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with("success", 'Editado con éxito');
+        return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
     }
 
     public function show(IndicadoresSgsi $indicadoresSgsi)
     {
-
         return view('admin.indicadoresSgsis.show', compact('indicadoresSgsi'));
     }
 
@@ -156,17 +153,17 @@ class IndicadoresSgsiController extends Controller
         $id = $request->all();
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
-        $formula_array = explode("!", $indicadoresSgsis->formula);
+        $formula_array = explode('!', $indicadoresSgsis->formula);
 
-        $finish_array = array();
+        $finish_array = [];
 
         foreach ($formula_array as $result) {
             if (strstr($result, '$')) {
                 array_push($finish_array, $result);
             }
-        };
+        }
 
-        $remplazo_formula = str_replace("!", "", $indicadoresSgsis->formula);
+        $remplazo_formula = str_replace('!', '', $indicadoresSgsis->formula);
 
         if ($remplazo_formula) {
             $up = $indicadoresSgsis
@@ -174,8 +171,7 @@ class IndicadoresSgsiController extends Controller
         }
 
         foreach ($finish_array as $key => $value) {
-
-            VariablesIndicador::create(['id_indicador' => $indicadoresSgsis->id, 'variable' => str_replace(".", "", $value)]);
+            VariablesIndicador::create(['id_indicador' => $indicadoresSgsis->id, 'variable' => str_replace('.', '', $value)]);
         }
 
         //dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);
@@ -188,17 +184,17 @@ class IndicadoresSgsiController extends Controller
         $id = $request->all();
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
-        $formula_array = explode("!", $indicadoresSgsis->formula);
+        $formula_array = explode('!', $indicadoresSgsis->formula);
 
-        $finish_array = array();
+        $finish_array = [];
 
         foreach ($formula_array as $result) {
             if (strstr($result, '$')) {
                 array_push($finish_array, $result);
             }
-        };
+        }
 
-        $remplazo_formula = str_replace("!", "", $indicadoresSgsis->formula);
+        $remplazo_formula = str_replace('!', '', $indicadoresSgsis->formula);
 
         if ($remplazo_formula) {
             $up = $indicadoresSgsis
@@ -237,5 +233,4 @@ class IndicadoresSgsiController extends Controller
         return view('admin.indicadoresSgsis.evaluacion')
             ->with('indicadoresSgsis', $indicadoresSgsis);
     }
-
 }
