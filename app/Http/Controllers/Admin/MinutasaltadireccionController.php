@@ -2,32 +2,31 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use Carbon\Carbon;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Empleado;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\RevisionMinuta;
-use App\Models\PlanImplementacion;
 use App\Http\Controllers\Controller;
-use App\Models\Minutasaltadireccion;
-use Illuminate\Support\Facades\Mail;
-use App\Models\HistoralRevisionMinuta;
-use Illuminate\Support\Facades\Storage;
-use App\Rules\ActividadesPlanAccionRule;
-use Yajra\DataTables\Facades\DataTables;
-use App\Mail\Minutas\SolicitudDeAprobacion;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Rules\ParticipantesMinutasAltaDireccionRule;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use App\Http\Requests\StoreMinutasaltadireccionRequest;
-use App\Http\Requests\UpdateMinutasaltadireccionRequest;
 use App\Http\Requests\MassDestroyMinutasaltadireccionRequest;
+use App\Http\Requests\StoreMinutasaltadireccionRequest;
 use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
+use App\Mail\Minutas\SolicitudDeAprobacion;
+use App\Models\Empleado;
+use App\Models\HistoralRevisionMinuta;
+use App\Models\Minutasaltadireccion;
+use App\Models\PlanImplementacion;
+use App\Models\RevisionMinuta;
+use App\Models\Team;
+use App\Models\User;
+use App\Rules\ActividadesPlanAccionRule;
+use App\Rules\ParticipantesMinutasAltaDireccionRule;
+use Carbon\Carbon;
+use Gate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class MinutasaltadireccionController extends Controller
 {
@@ -37,7 +36,7 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('minutasaltadireccion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = Minutasaltadireccion::with(['responsable', 'team', 'participantes', 'planes'])->get();
+            $query = Minutasaltadireccion::with(['responsable', 'team', 'participantes', 'planes'])->orderByDesc('id')->get();
             // $table = Datatables::of($query);
 
             // $table->addColumn('placeholder', '&nbsp;');
@@ -98,14 +97,13 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('minutasaltadireccion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsablereunions = Empleado::select('id', 'name', 'foto')->with('area')->get();
-        $esta_vinculado= auth()->user()->empleado?true:false;
+        $esta_vinculado = auth()->user()->empleado ? true : false;
 
-        return view('admin.minutasaltadireccions.create', compact('responsablereunions','esta_vinculado'));
+        return view('admin.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
     }
 
     public function store(StoreMinutasaltadireccionRequest $request)
     {
-
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required',
@@ -115,7 +113,7 @@ class MinutasaltadireccionController extends Controller
             'tema_reunion' => 'required',
             'tema_tratado' => 'required',
             'actividades' => new ActividadesPlanAccionRule,
-            'participantes' => new ParticipantesMinutasAltaDireccionRule
+            'participantes' => new ParticipantesMinutasAltaDireccionRule,
         ]);
 
         //Creación Minuta
@@ -142,7 +140,7 @@ class MinutasaltadireccionController extends Controller
         // Revisiones
         $this->initReviews($minutasaltadireccion);
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Guardado con éxito');
     }
 
     public function vincularParticipantes($request, $minutasaltadireccion)
@@ -159,14 +157,14 @@ class MinutasaltadireccionController extends Controller
         // Almacenamiento de revisiones vinculado a participantes y minutas
         Mail::to($minutasaltadireccion->responsable->email)->send(new MinutaConfirmacionSolicitud($minutasaltadireccion));
         $numero_revision = RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision') ? intval(RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision')) + 1 : 1;
-        #Historial#
+        //Historial#
         $historialRevisionMinuta = HistoralRevisionMinuta::create([
             'minuta_id' => $minutasaltadireccion->id,
             'descripcion' =>  $minutasaltadireccion->objetivoreunion,
             'comentarios' =>  $minutasaltadireccion->tema_tratado,
-            'fecha' => Carbon::now()
+            'fecha' => Carbon::now(),
         ]);
-        #Revisiones#
+        //Revisiones#
         foreach ($minutasaltadireccion->participantes as $participante) {
             $revisor = RevisionMinuta::create([
                 'empleado_id' => $participante->id,
@@ -182,81 +180,81 @@ class MinutasaltadireccionController extends Controller
     {
         if (isset($request->actividades)) {
             $tasks = [
-                array(
+                [
                     'id' => 'tmp_' . (strtotime(now()) * 1000) . '_1',
                     'end' => strtotime(now()) * 1000,
                     'name' => 'Minuta - ' . $request->tema_reunion,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
-                    "canAdd" => true,
-                    "status" => "STATUS_ACTIVE",
-                    "canWrite" => true,
+                    'canAdd' => true,
+                    'status' => 'STATUS_ACTIVE',
+                    'canWrite' => true,
                     'duration' => 0,
                     'progress' => 0,
-                    "canDelete" => true,
-                    "collapsed" => false,
-                    "relevance" => "0",
-                    "canAddIssue" => true,
-                    "endIsMilestone" => false,
-                    "startIsMilestone" => false,
-                    "progressByWorklog" => false,
-                    "assigs" => []
-                )
+                    'canDelete' => true,
+                    'collapsed' => false,
+                    'relevance' => '0',
+                    'canAddIssue' => true,
+                    'endIsMilestone' => false,
+                    'startIsMilestone' => false,
+                    'progressByWorklog' => false,
+                    'assigs' => [],
+                ],
             ];
             $actividades = json_decode($request->actividades);
 
             foreach ($actividades as $actividad) {
-                    $asignados=[];
+                $asignados = [];
                 if ($edit) {
                     if (gettype($actividad[6]) == 'string') {
-                        if (str_contains($actividad[6], ",")) {
-                              $asignados = explode(',', $actividad[6]);
-                        }else{
-                        array_push($asignados, $actividad[6]);
+                        if (str_contains($actividad[6], ',')) {
+                            $asignados = explode(',', $actividad[6]);
+                        } else {
+                            array_push($asignados, $actividad[6]);
                         }
                     } else {
                         $asignados = $actividad[6];
                     }
-                }else{
+                } else {
                     $asignados = $actividad[6];
                 }
                 $assigs = [];
                 foreach ($asignados as $asignado) {
                     $id = intval($asignado);
                     // $empleado = Empleado::find($id);
-                    $assigs[] = array(
-                        "id" => 'tmp_' . time() . '_' . $id,
-                        "effort" => "0",
-                        "roleId" => "1",
-                        "resourceId" => $id
-                    );
+                    $assigs[] = [
+                        'id' => 'tmp_' . time() . '_' . $id,
+                        'effort' => '0',
+                        'roleId' => '1',
+                        'resourceId' => $id,
+                    ];
                 }
 
-                $tasks[] = array(
+                $tasks[] = [
                     'id' => $actividad[0],
                     'end' => strtotime($actividad[3]) * 1000,
                     'name' => $actividad[1],
                     'level' => 1,
                     'start' => strtotime($actividad[2]) * 1000,
-                    "canAdd" => true,
-                    "status" => "STATUS_ACTIVE",
-                    "canWrite" => true,
+                    'canAdd' => true,
+                    'status' => 'STATUS_ACTIVE',
+                    'canWrite' => true,
                     'duration' => $actividad[4],
                     'progress' => 0,
-                    "canDelete" => true,
-                    "collapsed" => false,
-                    "relevance" => "0",
-                    "canAddIssue" => true,
-                    "description" => $actividad[7],
-                    "endIsMilestone" => false,
-                    "startIsMilestone" => false,
-                    "progressByWorklog" => false,
-                    "assigs" => $assigs
-                );
+                    'canDelete' => true,
+                    'collapsed' => false,
+                    'relevance' => '0',
+                    'canAddIssue' => true,
+                    'description' => $actividad[7],
+                    'endIsMilestone' => false,
+                    'startIsMilestone' => false,
+                    'progressByWorklog' => false,
+                    'assigs' => $assigs,
+                ];
             }
             if ($edit) {
                 $planEdit->update([
-                    'tasks' => $tasks
+                    'tasks' => $tasks,
                 ]);
                 $minuta->planes()->sync($planEdit);
             } else {
@@ -267,7 +265,7 @@ class MinutasaltadireccionController extends Controller
                 $planImplementacion->canWriteOnParent = true;
                 $planImplementacion->changesReasonWhy = false;
                 $planImplementacion->selectedRow = 0;
-                $planImplementacion->zoom = "3d";
+                $planImplementacion->zoom = '3d';
                 $planImplementacion->parent = $request->tema_reunion;
                 $planImplementacion->norma = 'ISO 27001';
                 $planImplementacion->modulo_origen = 'Minutas Alta Dirección';
@@ -321,7 +319,7 @@ class MinutasaltadireccionController extends Controller
             'tema_reunion' => 'required',
             'tema_tratado' => 'required',
             'actividades' => new ActividadesPlanAccionRule,
-            'participantes' => new ParticipantesMinutasAltaDireccionRule
+            'participantes' => new ParticipantesMinutasAltaDireccionRule,
         ]);
 
         $minuta = $minutasaltadireccion->update($request->all());
@@ -337,7 +335,7 @@ class MinutasaltadireccionController extends Controller
 
     public function update(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
-        $this->processUpdate($request, $minutasaltadireccion,true);
+        $this->processUpdate($request, $minutasaltadireccion, true);
 
         if ($request->input('archivo', false)) {
             if (!$minutasaltadireccion->archivo || $request->input('archivo') !== $minutasaltadireccion->archivo->file_name) {
@@ -351,7 +349,7 @@ class MinutasaltadireccionController extends Controller
             $minutasaltadireccion->archivo->delete();
         }
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Editado con éxito');
     }
 
     public function updateAndReview(Request $request, $minutasaltadireccion)
@@ -371,20 +369,20 @@ class MinutasaltadireccionController extends Controller
         // Revisiones
         $this->initReviews($minutasaltadireccion);
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Editado con éxito');
     }
 
     public function sendEmailRejectToBeforeReviewers($minuta)
     {
         $minuta->update([
-            'estatus' => Minutasaltadireccion::EN_REVISION
+            'estatus' => Minutasaltadireccion::EN_REVISION,
         ]);
         $revision_actual = intval(RevisionMinuta::where('minuta_id', $minuta->id)->max('no_revision'));
 
         $revisionesSinReponderAun = RevisionMinuta::where('minuta_id', $minuta->id)->where('no_revision', $revision_actual)->where('estatus', strval(RevisionMinuta::SOLICITUD_REVISION))->get();
         foreach ($revisionesSinReponderAun as $revisionSinResponder) {
             $revisionSinResponder->update([
-                'estatus' => RevisionMinuta::RECHAZADO_POR_NUEVA_EDICION
+                'estatus' => RevisionMinuta::RECHAZADO_POR_NUEVA_EDICION,
             ]);
         }
 
@@ -409,6 +407,7 @@ class MinutasaltadireccionController extends Controller
         abort_if(Gate::denies('minutasaltadireccion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $minutasaltadireccion->delete();
+
             return response()->json(['success', true]);
         }
     }
@@ -424,10 +423,10 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('minutasaltadireccion_create') && Gate::denies('minutasaltadireccion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Minutasaltadireccion();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Minutasaltadireccion();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
@@ -440,17 +439,16 @@ class MinutasaltadireccionController extends Controller
         return view('admin.minutasaltadireccions.revisiones.history-reviews', compact('minuta', 'revisiones'));
     }
 
-
     public function createPlanAccion(Minutasaltadireccion $id)
     {
-        $planImplementacion  = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion();
         $modulo = $id;
         $modulo_name = 'Matríz de Requisitos Legales';
         $referencia = $modulo->nombrerequisito;
         $urlStore = route('admin.matriz-requisito-legales.storePlanAccion', $id);
+
         return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
-
 
     public function storePlanAccion(Request $request, Minutasaltadireccion $id)
     {
@@ -473,7 +471,7 @@ class MinutasaltadireccionController extends Controller
         $planImplementacion->canWriteOnParent = true;
         $planImplementacion->changesReasonWhy = false;
         $planImplementacion->selectedRow = 0;
-        $planImplementacion->zoom = "3d";
+        $planImplementacion->zoom = '3d';
         $planImplementacion->parent = $request->parent;
         $planImplementacion->norma = $request->norma;
         $planImplementacion->modulo_origen = $request->modulo_origen;

@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\IncidentesSeguridad;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\IncidentesSeguridad;
 
 class CreateIncidentesSeguridadTable extends Migration
 {
@@ -27,7 +27,7 @@ class CreateIncidentesSeguridadTable extends Migration
             $table->string('ubicacion')->nullable();
 
             $table->longText('descripcion')->nullable();
-            
+
             $table->text('areas_afectados')->nullable();
             $table->text('procesos_afectados')->nullable();
             $table->text('activos_afectados')->nullable();
@@ -38,7 +38,6 @@ class CreateIncidentesSeguridadTable extends Migration
 
             $table->longText('comentarios')->nullable();
 
-
             $table->unsignedBigInteger('empleado_reporto_id')->nullable();
             $table->unsignedBigInteger('empleado_asignado_id')->nullable();
 
@@ -48,7 +47,6 @@ class CreateIncidentesSeguridadTable extends Migration
             $table->string('evidencia')->nullable();
 
             $table->enum('archivado', [IncidentesSeguridad::NO_ARCHIVADO, IncidentesSeguridad::ARCHIVADO])->default(IncidentesSeguridad::NO_ARCHIVADO);
-            
 
             $table->timestamps();
             $table->softDeletes();

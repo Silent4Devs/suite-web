@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Proceso
+ * Class Proceso.
  *
  * @property int $id
  * @property string|null $codigo
@@ -21,17 +21,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property Macroproceso|null $macroproceso
  * @property Collection|IndicadoresSgsi[] $indicadores_sgsis
- *
- * @package App\Models
  */
 class Proceso extends Model
 {
-	use SoftDeletes;
-	protected $table = 'procesos';
+    use SoftDeletes;
+    protected $table = 'procesos';
 
-	protected $casts = [
-		'id_macroproceso' => 'int'
-	];
+    protected $casts = [
+        'id_macroproceso' => 'int',
+    ];
 
     protected $dates = ['deleted_at'];
 
@@ -40,42 +38,33 @@ class Proceso extends Model
     const ACTIVO = '1';
     const NO_ACTIVO = '2';
 
-
-	protected $fillable = [
-		'codigo',
-		'nombre',
-		'id_macroproceso',
-		'descripcion',
+    protected $fillable = [
+        'codigo',
+        'nombre',
+        'id_macroproceso',
+        'descripcion',
         'estatus',
-        'documento_id'
+        'documento_id',
 
-	];
+    ];
 
+    public function macroproceso()
+    {
+        return $this->belongsTo(Macroproceso::class, 'id_macroproceso');
+    }
 
-
-	public function macroproceso()
-	{
-		return $this->belongsTo(Macroproceso::class, 'id_macroproceso');
-	}
-
-	public function indicadores_sgsis()
-	{
-		return $this->hasMany(IndicadoresSgsi::class, 'id_proceso');
-	}
+    public function indicadores_sgsis()
+    {
+        return $this->hasMany(IndicadoresSgsi::class, 'id_proceso');
+    }
 
     public function documento()
-	{
-		return $this->belongsTo(Documento::class,'documento_id','id');
-	}
+    {
+        return $this->belongsTo(Documento::class, 'documento_id', 'id');
+    }
 
     public function vistaDocumento()
-	{
-		return $this->belongsToMany(Documento::class);
-	}
-
-
-
-
-
-
+    {
+        return $this->belongsToMany(Documento::class);
+    }
 }

@@ -34,6 +34,7 @@
             <div class="form-group col-md-4">
                 <label for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
                 <select class="form-control {{ $errors->has('empleados') ? 'is-invalid' : '' }}" name="responsable_evidencia_id" id="responsable_evidencia_id">
+                    <option value="">Seleccione una opción</option>
                     @foreach ($empleados as $empleado)
                     <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
                         {{ $empleado->name }}
@@ -49,12 +50,12 @@
             </div>
             <div class="form-group col-md-4">
                 <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                <div class="form-control" id="puesto_reviso"></div>
+                <div class="form-control" id="puesto_reviso" readonly></div>
 
             </div>
             <div class="form-group col-md-4">
                 <label for="id_area_reviso"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                <div class="form-control" id="area_reviso"></div>
+                <div class="form-control" id="area_reviso" readonly></div>
 
             </div>
             {{-- <div class="form-group col-md-6">

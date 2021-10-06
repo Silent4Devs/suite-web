@@ -145,7 +145,10 @@
 
 
 
-        .menu_a a {
+        .menu_a a, .menu_a button {
+            outline: inherit;
+            box-shadow: none;
+            border: none;
             width: 200px;
             height: 30px;
             background-color: #fff;
@@ -160,7 +163,7 @@
             transition: 0.1s;
         }
 
-        .menu_a a:hover {
+        .menu_a a:hover, .menu_a button:hover {
             text-decoration: none;
             background-color: rgba(0, 0, 0, 0.2);
         }
@@ -197,14 +200,26 @@
         <div class="menu_a">
             <a href="#iso27001">ISO 27001</a>
             <a href="#capacitaciones">Capacitaciones</a>
+
+            <button onclick="printJS({
+                printable: 'impreso_row',
+                type: 'html', 
+                css: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+                css: '{{asset('css/print_dashboard.css')}}',
+                })">
+                <i class="fas fa-print mr-2"></i>
+                Imprimir
+            </button>
         </div>
 
-        <section id="iso27001">
-            @include('home_dash_iso27001')
+        <div id="impreso_row">
+            <section id="iso27001">
+                @include('home_dash_iso27001')
 
-        <section id="capacitaciones" class="mt-5">
-            @include('home_dash_capacitaciones')
-        </section>
+            <section id="capacitaciones" class="mt-5">
+                @include('home_dash_capacitaciones')
+            </section>
+        </div>
     </div>
     <!--col-->
 @endsection

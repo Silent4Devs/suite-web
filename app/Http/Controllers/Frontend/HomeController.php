@@ -9,6 +9,5 @@ class HomeController
         //return view('frontend.home');
         //return view('organizacions');
         return view('home');
-        
     }
 }

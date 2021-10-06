@@ -5,10 +5,8 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 /**
- * Class Amenaza
- * @package App\Models
+ * Class Amenaza.
  * @version August 5, 2021, 6:19 pm UTC
  *
  * @property \Illuminate\Database\Eloquent\Collection $vulnerabilidads
@@ -20,21 +18,17 @@ class Amenaza extends Model
 {
     use SoftDeletes;
 
-
     public $table = 'amenazas';
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
     protected $dates = ['deleted_at'];
-
-
 
     public $fillable = [
         'nombre',
         'categoria',
-        'descripcion'
+        'descripcion',
     ];
 
     /**
@@ -46,11 +40,11 @@ class Amenaza extends Model
         'id' => 'integer',
         'nombre' => 'string',
         'categoria' => 'string',
-        'descripcion' => 'string'
+        'descripcion' => 'string',
     ];
 
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
@@ -60,21 +54,19 @@ class Amenaza extends Model
         'descripcion' => 'nullable|string|max:255',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
-        'deleted_at' => 'nullable'
+        'deleted_at' => 'nullable',
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-
     public function matriz_riesgos()
-	{
-		return $this->hasMany(MatrizRiesgo::class, 'id_amenaza');
-	}
+    {
+        return $this->hasMany(MatrizRiesgo::class, 'id_amenaza');
+    }
 
-	public function vulnerabilidads()
-	{
-		return $this->hasMany(Vulnerabilidad::class, 'id_amenaza');
-	}
+    public function vulnerabilidads()
+    {
+        return $this->hasMany(Vulnerabilidad::class, 'id_amenaza');
+    }
 }
-

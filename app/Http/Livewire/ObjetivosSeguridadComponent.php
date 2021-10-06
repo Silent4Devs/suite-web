@@ -2,17 +2,35 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Empleado;
 use App\Models\EvaluacionObjetivo;
 use App\Models\VariablesObjetivosseguridad;
+use Livewire\Component;
 
 class ObjetivosSeguridadComponent extends Component
 {
-    public $nombre, $description, $formula, $frecuencia, $unidadmedida, $meta, $no_revisiones, $resultado, $id_empleado, $id_proceso, $objetivos;
+    public $nombre;
+    public $description;
+    public $formula;
+    public $frecuencia;
+    public $unidadmedida;
+    public $meta;
+    public $no_revisiones;
+    public $resultado;
+    public $id_empleado;
+    public $id_proceso;
+    public $objetivos;
     public $view = 'create';
-    public $formSlugs, $customFields, $fecha, $id_evaluacion;
-    public $variable, $valor, $formula_calcular, $value, $remplazo_formula, $evaluacion;
+    public $formSlugs;
+    public $customFields;
+    public $fecha;
+    public $id_evaluacion;
+    public $variable;
+    public $valor;
+    public $formula_calcular;
+    public $value;
+    public $remplazo_formula;
+    public $evaluacion;
 
     public function mount($objetivos)
     {
@@ -22,6 +40,7 @@ class ObjetivosSeguridadComponent extends Component
         $data = [];
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
             $data[$value->variable] = '';
+
             return $data;
         })->toArray();
     }
@@ -41,8 +60,8 @@ class ObjetivosSeguridadComponent extends Component
 
     public function store()
     {
-        $variables = array();
-        $valores = array();
+        $variables = [];
+        $valores = [];
         $formula_sustitucion = $this->objetivos->formula;
 
         foreach ($this->formSlugs as $key => $v1) {
@@ -65,7 +84,8 @@ class ObjetivosSeguridadComponent extends Component
         $this->alert('success', 'Registro añadido!');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $evaluaciones = EvaluacionObjetivo::find($id);
         $this->evaluacion = $evaluaciones->evaluacion;
         $this->fecha = $evaluaciones->fecha;
@@ -74,11 +94,12 @@ class ObjetivosSeguridadComponent extends Component
         $this->id_evaluacion = $evaluaciones->id;
     }
 
-    public function update(){
+    public function update()
+    {
         $evaluaciones = EvaluacionObjetivo::find($this->id_evaluacion);
 
-        $variables = array();
-        $valores = array();
+        $variables = [];
+        $valores = [];
         $formula_sustitucion = $this->objetivos->formula;
 
         foreach ($this->formSlugs as $key => $v1) {
@@ -98,7 +119,6 @@ class ObjetivosSeguridadComponent extends Component
 
         $this->default();
         $this->alert('success', 'Registro actualizado!');
-
     }
 
     public function delete($id)
@@ -110,8 +130,8 @@ class ObjetivosSeguridadComponent extends Component
 
     public function default()
     {
-        $this->evaluacion = "";
-        $this->fecha = "";
+        $this->evaluacion = '';
+        $this->fecha = '';
 
         $this->dispatchBrowserEvent('contentChanged');
 

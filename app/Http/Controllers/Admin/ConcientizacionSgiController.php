@@ -9,14 +9,14 @@ use App\Http\Requests\StoreConcientizacionSgiRequest;
 use App\Http\Requests\UpdateConcientizacionSgiRequest;
 use App\Models\Area;
 use App\Models\ConcientizacionSgi;
+use App\Models\DocumentoConcientizacionSgis;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Storage;
-use App\Models\DocumentoConcientizacionSgis;
 
 class ConcientizacionSgiController extends Controller
 {
@@ -27,16 +27,16 @@ class ConcientizacionSgiController extends Controller
         abort_if(Gate::denies('concientizacion_sgi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ConcientizacionSgi::with(['arearesponsable', 'team', 'documentos_concientizacion'])->select(sprintf('%s.*', (new ConcientizacionSgi)->table));
+            $query = ConcientizacionSgi::with(['arearesponsable', 'team', 'documentos_concientizacion'])->select(sprintf('%s.*', (new ConcientizacionSgi)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'concientizacion_sgi_show';
-                $editGate      = 'concientizacion_sgi_edit';
-                $deleteGate    = 'concientizacion_sgi_delete';
+                $viewGate = 'concientizacion_sgi_show';
+                $editGate = 'concientizacion_sgi_edit';
+                $deleteGate = 'concientizacion_sgi_delete';
                 $crudRoutePart = 'concientizacion-sgis';
 
                 return view('partials.datatablesActions', compact(
@@ -49,10 +49,10 @@ class ConcientizacionSgiController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('objetivocomunicado', function ($row) {
-                return $row->objetivocomunicado ? $row->objetivocomunicado : "";
+                return $row->objetivocomunicado ? $row->objetivocomunicado : '';
             });
             $table->editColumn('personalobjetivo', function ($row) {
                 return $row->personalobjetivo ? ConcientizacionSgi::PERSONALOBJETIVO_SELECT[$row->personalobjetivo] : '';
@@ -70,7 +70,7 @@ class ConcientizacionSgiController extends Controller
             });
 
             $table->editColumn('archivo', function ($row) {
-                return $row->documentos_concientizacion ? $row->documentos_concientizacion:[];
+                return $row->documentos_concientizacion ? $row->documentos_concientizacion : [];
             });
 
             $table->rawColumns(['actions', 'placeholder', 'arearesponsable', 'archivo']);
@@ -114,7 +114,7 @@ class ConcientizacionSgiController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $concientizacionSgi->id]);
         }
 
-        return redirect()->route('admin.concientizacion-sgis.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.concientizacion-sgis.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(ConcientizacionSgi $concientizacionSgi)
@@ -122,16 +122,15 @@ class ConcientizacionSgiController extends Controller
         abort_if(Gate::denies('concientizacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $documentos=DocumentoConcientizacionSgis::get();
+        $documentos = DocumentoConcientizacionSgis::get();
         $concientizacionSgi->load('arearesponsable', 'team');
 
-        return view('admin.concientizacionSgis.edit', compact('arearesponsables', 'concientizacionSgi','documentos'));
+        return view('admin.concientizacionSgis.edit', compact('arearesponsables', 'concientizacionSgi', 'documentos'));
     }
 
     public function update(UpdateConcientizacionSgiRequest $request, ConcientizacionSgi $concientizacionSgi)
     {
         $concientizacionSgi->update($request->all());
-
 
         $files = $request->file('files');
         if ($request->hasFile('files')) {
@@ -157,7 +156,7 @@ class ConcientizacionSgiController extends Controller
         //     $concientizacionSgi->archivo->delete();
         // }
 
-        return redirect()->route('admin.concientizacion-sgis.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.concientizacion-sgis.index')->with('success', 'Editado con éxito');
     }
 
     public function show(ConcientizacionSgi $concientizacionSgi)
@@ -189,10 +188,10 @@ class ConcientizacionSgiController extends Controller
     {
         abort_if(Gate::denies('concientizacion_sgi_create') && Gate::denies('concientizacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new ConcientizacionSgi();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new ConcientizacionSgi();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

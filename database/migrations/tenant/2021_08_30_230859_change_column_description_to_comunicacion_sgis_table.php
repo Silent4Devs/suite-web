@@ -14,8 +14,8 @@ class ChangeColumnDescriptionToComunicacionSgisTable extends Migration
     public function up()
     {
         Schema::table('comunicacion_sgis', function (Blueprint $table) {
-           $table->longText("descripcion")->change();
-           $table->string('habilitar')->change();
+            $table->longText('descripcion')->change();
+            $table->string('habilitar')->change();
         });
     }
 

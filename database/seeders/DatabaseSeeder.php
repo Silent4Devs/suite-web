@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\PlanImplementacion;
-use App\Models\Puesto;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -38,6 +36,8 @@ class DatabaseSeeder extends Seeder
             CategoriaIncidenteSeeder::class,
             SubcategoriaIncidenteSeeder::class,
             ClausulasSeeder::class,
+            VulnerabilidadesTableSeeder::class,
+            AmenazasTableSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Models\PlanImplementacion;
 use App\Http\Controllers\Controller;
 use App\Models\AccionCorrectiva;
 use App\Models\ActividadAccionCorrectiva;
+use App\Models\PlanImplementacion;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ActividadAccionCorrectivaController extends Controller
 {
@@ -15,6 +15,7 @@ class ActividadAccionCorrectivaController extends Controller
     {
         if ($request->ajax()) {
             $actividades = ActividadAccionCorrectiva::with('responsables')->where('accion_correctiva_id', $accion_correctiva_id)->get();
+
             return datatables()->of($actividades)->toJson();
         }
     }
@@ -49,92 +50,91 @@ class ActividadAccionCorrectivaController extends Controller
         }
     }
 
-
     public function vincularActividadesPlanDeAccion($actividad, $modelo, $planEdit = null, $edit = false)
     {
         if (isset($actividad)) {
             if (!count($modelo->planes)) {
                 $tasks = [
-                    array(
+                    [
                         'id' => 'tmp_' . (strtotime(now())) . '_1',
                         'end' => strtotime(now()) * 1000,
                         'name' => 'Accion Correctiva - ' . $modelo->folio . '-' . $modelo->titulo,
                         'level' => 0,
                         'start' => strtotime(now()) * 1000,
-                        "canAdd" => true,
-                        "status" => "STATUS_UNDEFINED",
-                        "canWrite" => true,
+                        'canAdd' => true,
+                        'status' => 'STATUS_UNDEFINED',
+                        'canWrite' => true,
                         'duration' => 0,
                         'progress' => 0,
-                        "canDelete" => true,
-                        "collapsed" => false,
-                        "relevance" => "0",
-                        "canAddIssue" => true,
-                        "description" => "",
-                        "endIsMilestone" => false,
-                        "startIsMilestone" => false,
-                        "progressByWorklog" => false,
-                        "assigs" => []
-                    ),
-                    array(
+                        'canDelete' => true,
+                        'collapsed' => false,
+                        'relevance' => '0',
+                        'canAddIssue' => true,
+                        'description' => '',
+                        'endIsMilestone' => false,
+                        'startIsMilestone' => false,
+                        'progressByWorklog' => false,
+                        'assigs' => [],
+                    ],
+                    [
                         'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
                         'end' => strtotime(now()) * 1000,
                         'name' => $modelo->folio . '-' . $modelo->titulo,
                         'level' => 1,
                         'start' => strtotime(now()) * 1000,
-                        "canAdd" => true,
-                        "status" => "STATUS_UNDEFINED",
-                        "canWrite" => true,
+                        'canAdd' => true,
+                        'status' => 'STATUS_UNDEFINED',
+                        'canWrite' => true,
                         'duration' => 0,
                         'progress' => 0,
-                        "canDelete" => true,
-                        "collapsed" => false,
-                        "relevance" => "0",
-                        "canAddIssue" => true,
-                        "description" => "",
-                        "endIsMilestone" => false,
-                        "startIsMilestone" => false,
-                        "progressByWorklog" => false,
-                        "assigs" => []
-                    )
+                        'canDelete' => true,
+                        'collapsed' => false,
+                        'relevance' => '0',
+                        'canAddIssue' => true,
+                        'description' => '',
+                        'endIsMilestone' => false,
+                        'startIsMilestone' => false,
+                        'progressByWorklog' => false,
+                        'assigs' => [],
+                    ],
                 ];
 
                 $asignados = $actividad->responsables;
                 $assigs = [];
                 foreach ($asignados as $asignado) {
                     // $empleado = Empleado::find($id);
-                    $assigs[] = array(
-                        "id" => 'tmp_' . time() . '_' . $asignado->id,
-                        "effort" => "0",
-                        "roleId" => "1",
-                        "resourceId" => $asignado->id
-                    );
+                    $assigs[] = [
+                        'id' => 'tmp_' . time() . '_' . $asignado->id,
+                        'effort' => '0',
+                        'roleId' => '1',
+                        'resourceId' => $asignado->id,
+                    ];
                 }
 
                 $start = strtotime($actividad->fecha_inicio) * 1000;
                 $end = strtotime($actividad->fecha_fin) * 1000;
                 $duration = Carbon::parse($actividad->fecha_inicio)->diffInDays(Carbon::parse($actividad->fecha_fin));
-                $tasks[] = array(
+                $tasks[] = [
                     'id' => 'tmp_' . $start . '_' . $end . '_' . $actividad->id,
                     'end' => $end,
                     'name' => $actividad->actividad,
                     'level' => 2,
                     'start' => $start,
-                    "canAdd" => true,
-                    "status" => "STATUS_UNDEFINED",
-                    "canWrite" => true,
+                    'canAdd' => true,
+                    'status' => 'STATUS_UNDEFINED',
+                    'canWrite' => true,
                     'duration' => $duration,
                     'progress' => 0,
-                    "canDelete" => true,
-                    "collapsed" => false,
-                    "relevance" => "0",
-                    "canAddIssue" => true,
-                    "description" => $actividad->comentarios,
-                    "endIsMilestone" => false,
-                    "startIsMilestone" => false,
-                    "progressByWorklog" => false,
-                    "assigs" => $assigs
-                );
+                    'canDelete' => true,
+                    'collapsed' => false,
+                    'relevance' => '0',
+                    'canAddIssue' => true,
+                    'description' => $actividad->comentarios,
+                    'endIsMilestone' => false,
+                    'startIsMilestone' => false,
+                    'progressByWorklog' => false,
+                    'assigs' => $assigs,
+                ];
             } else {
                 $planActual = $modelo->planes->first();
                 $tasks = $planActual->tasks;
@@ -144,43 +144,43 @@ class ActividadAccionCorrectivaController extends Controller
                 $assigs = [];
                 foreach ($asignados as $asignado) {
                     // $empleado = Empleado::find($id);
-                    $assigs[] = array(
-                        "id" => 'tmp_' . time() . '_' . $asignado->id,
-                        "effort" => "0",
-                        "roleId" => "1",
-                        "resourceId" => $asignado->id
-                    );
+                    $assigs[] = [
+                        'id' => 'tmp_' . time() . '_' . $asignado->id,
+                        'effort' => '0',
+                        'roleId' => '1',
+                        'resourceId' => $asignado->id,
+                    ];
                 }
 
                 $start = strtotime($actividad->fecha_inicio) * 1000;
                 $end = strtotime($actividad->fecha_fin) * 1000;
                 $duration = Carbon::parse($actividad->fecha_inicio)->diffInDays(Carbon::parse($actividad->fecha_fin));
-                $tasks[] = array(
+                $tasks[] = [
                     'id' => 'tmp_' . $start . '_' . $end . '_' . $actividad->id,
                     'end' => $end,
                     'name' => $actividad->actividad,
                     'level' => 2,
                     'start' => $start,
-                    "canAdd" => true,
-                    "status" => "STATUS_UNDEFINED",
-                    "canWrite" => true,
+                    'canAdd' => true,
+                    'status' => 'STATUS_UNDEFINED',
+                    'canWrite' => true,
                     'duration' => $duration,
                     'progress' => 0,
-                    "canDelete" => true,
-                    "collapsed" => false,
-                    "relevance" => "0",
-                    "canAddIssue" => true,
-                    "description" => $actividad->comentarios,
-                    "endIsMilestone" => false,
-                    "startIsMilestone" => false,
-                    "progressByWorklog" => false,
-                    "assigs" => $assigs
-                );
+                    'canDelete' => true,
+                    'collapsed' => false,
+                    'relevance' => '0',
+                    'canAddIssue' => true,
+                    'description' => $actividad->comentarios,
+                    'endIsMilestone' => false,
+                    'startIsMilestone' => false,
+                    'progressByWorklog' => false,
+                    'assigs' => $assigs,
+                ];
             }
 
             if ($edit) {
                 $planEdit->update([
-                    'tasks' => $tasks
+                    'tasks' => $tasks,
                 ]);
                 $modelo->planes()->sync($planEdit);
             } else {
@@ -191,7 +191,7 @@ class ActividadAccionCorrectivaController extends Controller
                 $planImplementacion->canWriteOnParent = true;
                 $planImplementacion->changesReasonWhy = false;
                 $planImplementacion->selectedRow = 0;
-                $planImplementacion->zoom = "3d";
+                $planImplementacion->zoom = '3d';
                 $planImplementacion->parent = 'Accion Correctiva - ' . $modelo->folio;
                 $planImplementacion->norma = 'ISO 27001';
                 $planImplementacion->modulo_origen = 'Acciones Correctivas';

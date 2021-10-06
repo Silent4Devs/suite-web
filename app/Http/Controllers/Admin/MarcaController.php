@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Marca;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class MarcaController extends Controller
 {
@@ -36,21 +36,19 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $request->validate([
-                'nombre'=>'required|string|unique:marca,nombre'
+                'nombre'=>'required|string|unique:marca,nombre',
             ]);
-            $nombre=$request->nombre;
+            $nombre = $request->nombre;
             // dd($request->all());
-           $marca=Marca::create([
-                "nombre"=>$nombre
+            $marca = Marca::create([
+                'nombre'=>$nombre,
             ]);
             if ($marca) {
                 return response()->json(['success'=>true]);
-            }
-            else{
+            } else {
                 return response()->json(['success'=>false]);
-
             }
         }
     }
@@ -102,21 +100,19 @@ class MarcaController extends Controller
 
     public function getMarcas(Request $request)
     {
-        if($request->ajax()){
-
-            $marcas_arr=array();
-            $marcas=Marca::get();
+        if ($request->ajax()) {
+            $marcas_arr = [];
+            $marcas = Marca::get();
             // dd($marcas);
-        foreach ($marcas as $marca) {
-            $marcas_arr[]=array('id'=>$marca->id,'text'=>$marca->nombre);
+            foreach ($marcas as $marca) {
+                $marcas_arr[] = ['id'=>$marca->id, 'text'=>$marca->nombre];
+            }
 
-        }
+            $array_m = [];
+            $array_m['results'] = $marcas_arr;
+            $array_m['pagination'] = ['more'=>false];
 
-        $array_m=[];
-        $array_m['results']=$marcas_arr;
-        $array_m['pagination']=['more'=>false];
-        return $array_m;
+            return $array_m;
         }
     }
 }
-

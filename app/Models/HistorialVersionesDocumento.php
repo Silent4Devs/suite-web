@@ -26,17 +26,18 @@ class HistorialVersionesDocumento extends Model
         'elaboro_id',
         'reviso_id',
         'aprobo_id',
-        'responsable_id'
+        'responsable_id',
     ];
-
 
     public function getDayLocalizedAttribute()
     {
         // Carbon::setlocale(LC_ALL, 'es_ES');
         setlocale(LC_ALL, 'es_ES.UTF-8');
         setlocale(LC_TIME, 'es_ES');
+
         return Carbon::parse($this->fecha)->formatLocalized('%d de %B de %Y');
     }
+
     public function getFechaDMYAttribute()
     {
         return Carbon::parse($this->fecha)->format('d-m-Y');
@@ -63,10 +64,8 @@ class HistorialVersionesDocumento extends Model
         }
     }
 
-
     public function getPathDocumentAttribute()
     {
-
         $documento = Documento::find($this->documento_id);
         $version_actual = $documento->version;
         $path_documento = '/storage/Documentos publicados';

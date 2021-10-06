@@ -207,14 +207,16 @@
                 </a>
             </li>
         @endcan
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('cargadocs') }}"
-                class="c-sidebar-nav-link {{ request()->is('CargaDocs') || request()->is('CargaDocs/*') ? 'active' : '' }}">
-                <i class="fas fa-file-upload iconos_menu letra_blanca"></i>
+        @can('configuracion_procesos_access') {{-- este acceso no corresponde --}}
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('cargadocs') }}"
+                    class="c-sidebar-nav-link {{ request()->is('CargaDocs') || request()->is('CargaDocs/*') ? 'active' : '' }}">
+                    <i class="fas fa-file-upload iconos_menu letra_blanca"></i>
 
-                <font class="letra_blanca">Carga de Documentos</font>
-            </a>
-        </li>
+                    <font class="letra_blanca">Carga de Documentos</font>
+                </a>
+            </li>
+        @endcan
 
         {{-- <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.planTrabajoBase.index') }}"
@@ -260,18 +262,20 @@
                     </a>
                 </li>
 
-                <li class="c-sidebar-nav-item">
-                    <a href="{{ route('admin.analisis-riesgos.index') }}"
-                        class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
-                        {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
+                @can('configuracion_procesos_access') {{-- este acceso no correspnde --}}
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.analisis-riesgos.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
+                            {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
-                        </i> --}}
-                        <i class="fas fa-table iconos_menu letra_blanca">
+                            </i> --}}
+                            <i class="fas fa-table iconos_menu letra_blanca">
 
-                        </i>
-                        <font class="letra_blanca">Matriz de Riesgos</font>
-                    </a>
-                </li>
+                            </i>
+                            <font class="letra_blanca">Matriz de Riesgos</font>
+                        </a>
+                    </li>
+                @endcan
 
             </ul>
         </li>

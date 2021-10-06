@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use \DateTimeInterface;
 
 class ConcientizacionSgi extends Model implements HasMedia
 {
@@ -100,10 +100,9 @@ class ConcientizacionSgi extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
     public function documentos_concientizacion()
     {
-        return $this->hasMany(DocumentoConcientizacionSgis::class, "concientSgsi_id", "id");
+        return $this->hasMany(DocumentoConcientizacionSgis::class, 'concientSgsi_id', 'id');
     }
-
-
 }

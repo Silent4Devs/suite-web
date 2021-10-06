@@ -145,7 +145,6 @@
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
                             let urlBtnEliminar =
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
-                            //let urlBtnVinc
 
                             let botones = `
                                 <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>

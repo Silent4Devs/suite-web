@@ -33,7 +33,7 @@
                             Descripción
                         </th>
                         <th>
-                            Formula de Cálculo
+                            Fórmula de cálculo
                         </th>
                         <th>
                             Unidad
@@ -340,7 +340,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [3, 'desc']
                 ]
             };
             let table = $('.datatable-IndicadoresSgsi').DataTable(dtOverrideGlobals);

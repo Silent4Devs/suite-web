@@ -13,9 +13,9 @@ class AddDireccionSedesTable extends Migration
      */
     public function up()
     {
-      Schema::table('sedes', function (Blueprint $table) {
-          $table->string('direccion')->nullable();
-      });
+        Schema::table('sedes', function (Blueprint $table) {
+            $table->string('direccion')->nullable();
+        });
     }
 
     /**
@@ -25,10 +25,8 @@ class AddDireccionSedesTable extends Migration
      */
     public function down()
     {
-      Schema::table('sedes', function (Blueprint $table) {
-
-          $table->dropColumn('direccion');
-
-      });
+        Schema::table('sedes', function (Blueprint $table) {
+            $table->dropColumn('direccion');
+        });
     }
 }

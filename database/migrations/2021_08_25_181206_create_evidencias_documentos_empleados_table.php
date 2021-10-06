@@ -20,7 +20,6 @@ class CreateEvidenciasDocumentosEmpleadosTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('empleado_id')->references('id')->on('empleados');
-
         });
     }
 

@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\PoliticaSgsi;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StorePoliticaSgsiRequest extends FormRequest
 {

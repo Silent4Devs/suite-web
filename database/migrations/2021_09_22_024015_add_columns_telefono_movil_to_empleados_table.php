@@ -16,7 +16,6 @@ class AddColumnsTelefonoMovilToEmpleadosTable extends Migration
         Schema::table('empleados', function (Blueprint $table) {
             $table->string('telefono_movil')->after('telefono')->nullable();
             $table->string('extension')->before('telefono')->nullable();
-
         });
     }
 

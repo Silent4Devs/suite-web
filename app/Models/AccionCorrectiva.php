@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use \DateTimeInterface;
 
 class AccionCorrectiva extends Model implements HasMedia
 {
@@ -20,7 +20,7 @@ class AccionCorrectiva extends Model implements HasMedia
 
     protected $appends = [
         'documentometodo',
-        'folio'
+        'folio',
     ];
 
     public static $searchable = [
@@ -87,8 +87,6 @@ class AccionCorrectiva extends Model implements HasMedia
         'team_id',
     ];
 
-
-
     public function getFolioAttribute()
     {
         return  sprintf('AC-%04d', $this->id);
@@ -98,7 +96,6 @@ class AccionCorrectiva extends Model implements HasMedia
     {
         return $date->format('Y-m-d H:i:s');
     }
-
 
     public function registerMediaConversions(Media $media = null): void
     {
@@ -111,20 +108,20 @@ class AccionCorrectiva extends Model implements HasMedia
         return $this->hasMany(PlanaccionCorrectiva::class, 'accioncorrectiva_id', 'id');
     }
 
-    public function getFechaRegistroAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
+    // public function getFechaRegistroAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
-    public function getFechaCompromisoAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
+    // public function getFechaCompromisoAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
-    public function getFechaVerificacionAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
+    // public function getFechaVerificacionAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
     public function nombrereporta()
     {
@@ -145,7 +142,6 @@ class AccionCorrectiva extends Model implements HasMedia
     {
         return $this->belongsTo(Puesto::class, 'puestoregistra_id');
     }
-
 
     public function responsable_accion()
     {
@@ -168,10 +164,14 @@ class AccionCorrectiva extends Model implements HasMedia
     }
 
     public function empleados()
-	{
+    {
         return $this->belongsTo(Empleado::class, 'id_registro', 'id')->with('area');
+    }
 
-	}
+    public function reporto()
+    {
+        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->with('area');
+    }
 
     public function area()
     {
@@ -197,5 +197,4 @@ class AccionCorrectiva extends Model implements HasMedia
     {
         return $this->hasMany(ActividadAccionCorrectiva::class, 'accion_correctiva_id', 'id');
     }
-
 }

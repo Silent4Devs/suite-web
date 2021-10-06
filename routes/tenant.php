@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Frontend\OrganizacionController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use App\Http\Controllers\Frontend\OrganizacionController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 /*
@@ -80,12 +80,10 @@ Route::middleware([
         'update' => 'ev360-competencias.update',
     ]);
 
-
     Route::post('recursos-humanos/evaluacion-360/conductas/store', 'RH\EV360ConductasController@store')->name('ev360-conductas.store');
     Route::get('recursos-humanos/evaluacion-360/conductas/{conducta}/edit', 'RH\EV360ConductasController@edit')->name('ev360-conductas.edit');
     Route::patch('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@update')->name('ev360-conductas.update');
     Route::delete('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@destroy')->name('ev360-conductas.destroy');
-
 
     Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@createByEmpleado')->name('ev360-objetivos-empleado.create');
     Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@storeByEmpleado')->name('ev360-objetivos-empleado.store');
@@ -142,14 +140,12 @@ Route::middleware([
 
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
-
     Route::post('desk/{seguridad}/analisis_seguridad-update', 'DeskController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
     Route::post('desk/{riesgos}/analisis_riesgo-update', 'DeskController@updateAnalisisReisgos')->name('desk.analisis_riesgo-update');
     Route::post('desk/{mejoras}/analisis_mejora-update', 'DeskController@updateAnalisisMejoras')->name('desk.analisis_mejora-update');
     Route::post('desk/{quejas}/analisis_queja-update', 'DeskController@updateAnalisisQuejas')->name('desk.analisis_queja-update');
     Route::post('desk/{denuncias}/analisis_denuncia-update', 'DeskController@updateAnalisisDenuncias')->name('desk.analisis_denuncia-update');
     Route::post('desk/{sugerencias}/analisis_sugerencia-update', 'DeskController@updateAnalisisSugerencias')->name('desk.analisis_sugerencia-update');
-
 
     Route::get('desk/{seguridad}/seguridad-edit', 'DeskController@editSeguridad')->name('desk.seguridad-edit');
     Route::post('desk/{seguridad}/seguridad-update', 'DeskController@updateSeguridad')->name('desk.seguridad-update');
@@ -241,20 +237,20 @@ Route::middleware([
     Route::resource('users', 'UsersController');
 
     // Empleados
-    Route::post('empleados/store/{empleado}/competencias-resumen','EmpleadoController@storeResumen')->name('empleados.storeResumen');
-    Route::post('empleados/store/{empleado}/competencias-certificaciones','EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
-    Route::delete('empleados/delete/{certificacion}/competencias-certificaciones','EmpleadoController@deleteCertificaciones')->name('empleados.deleteCertificaciones');
-    Route::post('empleados/store/{empleado}/competencias-cursos','EmpleadoController@storeCursos')->name('empleados.storeCursos');
-    Route::delete('empleados/delete/{curso}/competencias-cursos','EmpleadoController@deleteCursos')->name('empleados.deleteCursos');
-    Route::post('empleados/store/{empleado}/competencias-experiencia','EmpleadoController@storeExperiencia')->name('empleados.storeExperiencia');
-    Route::delete('empleados/delete/{educacion}/competencias-educacion','EmpleadoController@deleteEducacion')->name('empleados.deleteEducacion');
-    Route::post('empleados/store/{empleado}/competencias-educacion','EmpleadoController@storeEducacion')->name('empleados.storeEducacion');
-    Route::delete('empleados/delete/{experiencia}/competencias-experiencia','EmpleadoController@deleteExperiencia')->name('empleados.deleteExperiencia');
-    Route::get('empleados/store/{empleado}/competencias-certificaciones','EmpleadoController@getCertificaciones')->name('empleados.getCertificaciones');
-    Route::get('empleados/store/{empleado}/competencias-educacion','EmpleadoController@getEducacion')->name('empleados.getEducacion');
-    Route::get('empleados/store/{empleado}/competencias-experiencia','EmpleadoController@getExperiencia')->name('empleados.getExperiencia');
-    Route::get('empleados/store/{empleado}/competencias-cursos','EmpleadoController@getCursos')->name('empleados.getCursos');
-    Route::post('empleados/store/competencias','EmpleadoController@storeWithCompetencia')->name('empleados.storeWithCompetencia');
+    Route::post('empleados/store/{empleado}/competencias-resumen', 'EmpleadoController@storeResumen')->name('empleados.storeResumen');
+    Route::post('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
+    Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', 'EmpleadoController@deleteCertificaciones')->name('empleados.deleteCertificaciones');
+    Route::post('empleados/store/{empleado}/competencias-cursos', 'EmpleadoController@storeCursos')->name('empleados.storeCursos');
+    Route::delete('empleados/delete/{curso}/competencias-cursos', 'EmpleadoController@deleteCursos')->name('empleados.deleteCursos');
+    Route::post('empleados/store/{empleado}/competencias-experiencia', 'EmpleadoController@storeExperiencia')->name('empleados.storeExperiencia');
+    Route::delete('empleados/delete/{educacion}/competencias-educacion', 'EmpleadoController@deleteEducacion')->name('empleados.deleteEducacion');
+    Route::post('empleados/store/{empleado}/competencias-educacion', 'EmpleadoController@storeEducacion')->name('empleados.storeEducacion');
+    Route::delete('empleados/delete/{experiencia}/competencias-experiencia', 'EmpleadoController@deleteExperiencia')->name('empleados.deleteExperiencia');
+    Route::get('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@getCertificaciones')->name('empleados.getCertificaciones');
+    Route::get('empleados/store/{empleado}/competencias-educacion', 'EmpleadoController@getEducacion')->name('empleados.getEducacion');
+    Route::get('empleados/store/{empleado}/competencias-experiencia', 'EmpleadoController@getExperiencia')->name('empleados.getExperiencia');
+    Route::get('empleados/store/{empleado}/competencias-cursos', 'EmpleadoController@getCursos')->name('empleados.getCursos');
+    Route::post('empleados/store/competencias', 'EmpleadoController@storeWithCompetencia')->name('empleados.storeWithCompetencia');
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
     Route::get('empleados/get-all', 'EmpleadoController@getAllEmpleados')->name('empleados.getAll');
     Route::resource('empleados', 'EmpleadoController');
@@ -613,7 +609,6 @@ Route::middleware([
     Route::post('vulnerabilidads/parse-csv-import', 'VulnerabilidadController@parseCsvImport')->name('vulnerabilidads.parseCsvImport');
     Route::post('vulnerabilidads/process-csv-import', 'VulnerabilidadController@processCsvImport')->name('vulnerabilidads.processCsvImport');
 
-
     // analisis Riesgos
     Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
     Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
@@ -647,7 +642,7 @@ Route::middleware([
     Route::post('/revisiones/desarchivar', 'RevisionDocumentoController@desarchivar')->name('revisiones.desarchivar');
 
     //Documentos
-    Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');;
+    Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');
     Route::patch('documentos/{documento}/update-when-publish', 'DocumentosController@updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
     Route::post('documentos/store-when-publish', 'DocumentosController@storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
     Route::post('documentos/publish', 'DocumentosController@publish')->name('documentos.publish');

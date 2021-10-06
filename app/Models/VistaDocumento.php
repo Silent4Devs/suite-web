@@ -12,7 +12,7 @@ class VistaDocumento extends Model
     protected $table = 'vistas_documentos';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public function empleados()

@@ -20,7 +20,6 @@ class CreateActividadesIncidentesResponsablesTable extends Migration
             $table->timestamps();
             $table->foreign('responsable_id')->references('id')->on('empleados');
             $table->foreign('actividad_id')->references('id')->on('actividades_incidentes');
-
         });
     }
 

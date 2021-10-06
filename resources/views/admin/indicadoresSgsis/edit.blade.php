@@ -111,9 +111,9 @@
         enctype="multipart/form-data">
         @method('PUT')
         @csrf
-        <div class="card mt-4">
-            <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-                <h3 class="mb-1  text-center text-white"><strong> Editar: </strong>Indicadores SGSI</h3>
+        <div class="mt-4 card">
+            <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+                <h3 class="mb-1 text-center text-white"><strong> Editar: </strong>Indicadores SGSI</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -139,8 +139,8 @@
                                 <option value="">Seleccione un proceso</option>
                                 @foreach ($procesos as $proceso)
                                     <option value="{{ $proceso->id }}"
-                                        {{ old('id_proceso', $indicadoresSgsi->id_proceso) === (string) $key ? 'selected' : '' }}>
-                                        {{ $proceso->codigo }}/{{ $proceso->nombre }}</option>
+                                        {{$indicadoresSgsi->id_proceso== $proceso->id ? 'selected' : '' }}>
+                                        {{ $proceso->codigo }} / {{ $proceso->nombre }}</option>
                                 @endforeach
                             </select>
                             @if ($errors->has('organizacion'))
@@ -160,7 +160,7 @@
                                 <option value="">Seleccione un responsable</option>
                                 @foreach ($responsables as $responsable)
                                     <option value="{{ $responsable->id }}"
-                                        {{ old('id_empleado', $indicadoresSgsi->id_empleado) === (string) $key ? 'selected' : '' }}>
+                                        {{ old('id_empleado', $indicadoresSgsi->id_empleado) == $responsable->id ? 'selected' : '' }}>
                                         {{ $responsable->name }} </option>
                                 @endforeach
                             </select>
@@ -237,7 +237,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-sm-2">
+                    <div class="form-group col-sm-6 col-md-2 col-lg-2">
                         <label class="required" for="unidad"><i class="fas fa-calculator iconos-crear"></i>Unidad</label>
                         <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" type="text"
                             name="unidadmedida" id="unidadmedida"
@@ -250,7 +250,7 @@
                         <span class="help-block"></span>
                     </div>
 
-                    <div class="form-group col-sm-2">
+                    <div class="form-group col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label class="required" for="meta"><i
                                     class="fas fa-flag-checkered iconos-crear"></i></i></i>Meta</label>
@@ -265,7 +265,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-sm-2">
+                    <div class="form-group col-sm-6 col-md-4 col-lg-4">
                         <div class="form-group">
                             <label class="required" for="frecuencia"><i
                                     class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
@@ -281,7 +281,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-sm-2">
+                    <div class="form-group col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label class="required" for="no_revisiones"><i
                                     class="fas fa-clipboard-check iconos-crear"></i>Revisiones</label>
@@ -297,7 +297,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-sm-2">
+                    <div class="form-group col-sm-6 col-md-2 col-lg-2">
                         <label class="required" for="ano"><i class="fas fa-calendar-alt iconos-crear"></i>Año</label>
                         <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}" type="text"
                             name="ano" id="ano" value="{{ old('ano', $indicadoresSgsi->ano) }}">
@@ -348,11 +348,11 @@
                     <div class="form-group col-sm-6">
 
                         <div class="form-inline">
-                            <div class="form-group mb-2">
+                            <div class="mb-2 form-group">
                                 <input type="text" readonly class="form-control-plaintext" id="staticEmail2"
                                     value="Añadir una variable:" disabled>
                             </div>
-                            <div class="form-group mx-sm-3 mb-2">
+                            <div class="mb-2 form-group mx-sm-3">
                                 <input id="variable" class="form-control" type="text" placeholder="Variable"><br>
                             </div>
                             <button id="añadir" class="btn btn-success" type="button">Añadir</button>

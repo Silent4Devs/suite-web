@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\RH\Competencia;
 use App\Models\RH\Conducta;
 use App\Models\RH\EvaluacionRepuesta;
-use App\Models\RH\EvaluadoEvaluador;
 use Illuminate\Http\Request;
 
 class EV360CompetenciasController extends Controller
@@ -15,8 +14,10 @@ class EV360CompetenciasController extends Controller
     {
         if ($request->ajax()) {
             $competencias = Competencia::with('tipo')->get();
+
             return datatables()->of($competencias)->toJson();
         }
+
         return view('admin.recursos-humanos.evaluacion-360.competencias.index');
     }
 
@@ -24,14 +25,16 @@ class EV360CompetenciasController extends Controller
     {
         $competencia = new Competencia;
         $tipo_seleccionado = null;
+
         return view('admin.recursos-humanos.evaluacion-360.competencias.create', compact('competencia', 'tipo_seleccionado'));
     }
+
     public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:255',
-            'tipo_id' => 'required|exists:ev360_tipo_competencias,id'
+            'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
         $competencia = Competencia::create($request->all());
         if ($competencia) {
@@ -46,7 +49,7 @@ class EV360CompetenciasController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:255',
-            'tipo_id' => 'required|exists:ev360_tipo_competencias,id'
+            'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
         $competencia = Competencia::create($request->all());
         if ($competencia) {
@@ -56,10 +59,8 @@ class EV360CompetenciasController extends Controller
         }
     }
 
-
     public function edit($competencia)
     {
-
         $competencia = Competencia::find(intval($competencia));
         $tipo_seleccionado = $competencia->tipo_id;
 
@@ -71,7 +72,7 @@ class EV360CompetenciasController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:255',
-            'tipo_id' => 'required|exists:ev360_tipo_competencias,id'
+            'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
         $competencia = Competencia::find(intval($competencia));
         $competencia_u = $competencia->update($request->all());
@@ -86,6 +87,7 @@ class EV360CompetenciasController extends Controller
     {
         if ($request->ajax()) {
             $conductas = Conducta::where('competencia_id', intval($competencia))->get()->sortBy('ponderacion');
+
             return datatables()->of($conductas)->toJson();
         }
     }
@@ -96,6 +98,7 @@ class EV360CompetenciasController extends Controller
             $competencia = Competencia::with(['opciones' => function ($q) {
                 $q->orderByDesc('ponderacion');
             }])->find(intval($competencia));
+
             return response()->json(['competencia' => $competencia]);
         }
     }
@@ -103,7 +106,6 @@ class EV360CompetenciasController extends Controller
     public function guardarRespuestaCompetencia(Request $request, $competencia)
     {
         if ($request->ajax()) {
-
             $repuesta = EvaluacionRepuesta::where('evaluacion_id', $request->evaluacion_id)
                 ->where('evaluado_id', $request->evaluado_id)
                 ->where('evaluador_id', $request->evaluador_id)
@@ -129,6 +131,16 @@ class EV360CompetenciasController extends Controller
             } else {
                 return response()->json(['error' => true]);
             }
+        }
+    }
+
+    public function obtenerNiveles(Request $request)
+    {
+        if ($request->ajax()) {
+            $competencia = Competencia::find(intval($request->competencia_id));
+            $niveles = $competencia->opciones;
+
+            return json_encode($niveles);
         }
     }
 }

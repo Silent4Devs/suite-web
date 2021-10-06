@@ -109,9 +109,9 @@
 
     <form method="POST" action="{{ route('admin.indicadores-sgsis.store') }}" enctype="multipart/form-data">
         @csrf
-        <div class="card mt-4">
-            <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-                <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong>Indicadores SGSI</h3>
+        <div class="mt-4 card">
+            <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+                <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong>Indicadores SGSI</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -255,7 +255,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-sm-2">
+                    <div class="form-group col-sm-6 col-md-4 col-lg-4">
                         <div class="form-group">
                             <label class="required" for="frecuencia"><i class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
                             <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}" type="text"
@@ -296,7 +296,7 @@
                         <span class="help-block"></span>
                     </div>
                 </div>
-                <h4 class="text-primary">Generación de formúla</h4>
+                <h4 class="text-primary">Generación de fórmula</h4>
                 <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada"
                     required><br>
                 {{-- <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp; --}}
@@ -335,17 +335,17 @@
                     <div class="form-group col-sm-6">
 
                         <div class="form-inline">
-                            <div class="form-group mb-2">
+                            <div class="mb-2 form-group">
                                 <input type="text" readonly class="form-control-plaintext" id="staticEmail2"
                                     value="Añadir una variable:" disabled>
                             </div>
-                            <div class="form-group mx-sm-3 mb-2">
+                            <div class="mb-2 form-group mx-sm-3">
                                 <input id="variable" class="form-control" type="text" placeholder="Variable"><br>
                             </div>
                             <button id="añadir" class="btn btn-success" type="button">Añadir</button>
                         </div>
 
-                        <table id="mytable" class="table table-bordered table-hover mt-3">
+                        <table id="mytable" class="table mt-3 table-bordered table-hover">
                             <tr>
                                 <th>ID</th>
                                 <th>Variable</th>
@@ -356,14 +356,14 @@
 
                     </div>
 
-                     <div class="form-group text-right mt-4 col-12">
+                     <div class="mt-4 text-right form-group col-12">
                         <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                         <button class="btn btn-danger" type="submit">{{ trans('global.save') }}</button>
                     </div>
                 </div>
             </div>
 
-           
+
 
         </div>
     </form>

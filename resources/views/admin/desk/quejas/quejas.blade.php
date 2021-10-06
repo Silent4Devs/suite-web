@@ -45,6 +45,9 @@
 
 
 <div class="datatable-fix" style="width: 100%;">
+    <div class="text-right mb-3">
+        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/quejas')}}">Crear reporte</a>
+    </div>
 
    <table class="table tabla_quejas">
    		<thead>
@@ -70,7 +73,7 @@
                 <th style="min-width:200px;">Ubicación</th>
                 <th style="min-width:200px;">Externos</th>
        			<th style="min-width: 500px;">Descripción</th>
-       			<th>Opciones</th> 
+       			<th>Opciones</th>
             </tr>
    		</thead>
    		<tbody>
@@ -89,7 +92,7 @@
                     @else
                         <td> -- </td>
                         <td> -- </td>
-                        <td> -- </td> 
+                        <td> -- </td>
                     @endif
                     <td>{{ $queja->quejado }}</td>
                     <td>{{ $queja->area_quejado }}</td>
@@ -192,10 +195,13 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            
+
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
+                order:[
+                            [0,'desc']
+                        ]
             };
             let table = $('.tabla_quejas').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {

@@ -110,22 +110,42 @@
                                     hora
                                     de cierre del ticket</label>
 
-                                    <input class="form-control"  name="fecha_cierre" type="datetime" value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
+                                    <input class="form-control" readonly name="fecha_cierre" type="datetime" value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
 
                             </div>
 
-                            <div class="mt-2 form-group col-md-4">
+                            {{-- <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i class="fas fa-user-plus iconos-crear"></i>Asignado
                                     a</label>
                                 <select name="empleado_asignado_id" class="form-control">
-                                    <option value="" disabled selected>
-                                        {{-- {{ old('empleado_asignado_id', $incidentesSeguridad->asignado->name) }} --}}
-                                    </option>
                                     @foreach ($empleados as $empleado)
+                                    <option value="" disabled selected
+                                    {{ old('empleado_asignado_id', $incidentesSeguridad->asignado->name) }}
+                                        >
+                                    </option>
                                         <option
                                             value="{{ $empleado->id }}">{{ $empleado->name }}</option>
                                     @endforeach
                                 </select>
+                            </div> --}}
+
+                            <div class="form-group col-md-4">
+                                <label for="empleado_asignado_id"><i class="fas fa-user-tie iconos-crear"></i>Asignado</label>
+                                <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="empleado_asignado_id"
+                                    id="empleado_asignado_id">
+                                    @foreach ($empleados as $id => $empleado)
+                                        <option value="{{ $empleado->id }}"
+                                            {{ old('empleado_asignado_id', $incidentesSeguridad->empleado_asignado_id) == $empleado->id ? 'selected' : '' }}>
+
+                                            {{ $empleado->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('empleados'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('empleados') }}
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="mt-2 form-group col-md-4">

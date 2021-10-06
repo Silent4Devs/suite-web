@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use \DateTimeInterface;
 
 class AuditoriaInterna extends Model implements HasMedia
 {
@@ -52,7 +52,6 @@ class AuditoriaInterna extends Model implements HasMedia
         '10.1 No conformidad y acciones correctivas'=>'10.1 No conformidad y acciones correctivas',
         '10.2 Mejora continua'=>'10.2 Mejora continua',
     ];
-
 
     public static $searchable = [
         'alcance',
@@ -127,9 +126,9 @@ class AuditoriaInterna extends Model implements HasMedia
         $file = $this->getMedia('logotipo')->last();
 
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
+            $file->preview = $file->getUrl('preview');
         }
 
         return $file;

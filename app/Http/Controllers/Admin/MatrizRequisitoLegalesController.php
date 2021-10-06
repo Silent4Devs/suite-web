@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Team;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\PlanImplementacion;
 use App\Http\Controllers\Controller;
-use App\Models\MatrizRequisitoLegale;
-use App\Models\EvidenciaMatrizRequisitoLegale;
-use Yajra\DataTables\Facades\DataTables;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
 use App\Http\Requests\StoreMatrizRequisitoLegaleRequest;
 use App\Http\Requests\UpdateMatrizRequisitoLegaleRequest;
-use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
 use App\Models\Empleado;
-use Illuminate\Support\Facades\Storage;
+use App\Models\EvidenciaMatrizRequisitoLegale;
+use App\Models\MatrizRequisitoLegale;
+use App\Models\PlanImplementacion;
+use App\Models\Team;
 use Carbon\Carbon;
+use Gate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class MatrizRequisitoLegalesController extends Controller
 {
@@ -107,15 +106,16 @@ class MatrizRequisitoLegalesController extends Controller
             //     return $row->comentarios ? $row->comentarios : "";
             // });
 
-
             // $table->rawColumns(['actions', 'placeholder']);
 
             // return $table->make(true);
-            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado')->get();
+            $matrizRequisitoLegales = MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado')->orderBy('id')->get();
+
             return datatables()->of($matrizRequisitoLegales)->toJson();
         }
 
         $teams = Team::get();
+
         return view('admin.matrizRequisitoLegales.index', compact('teams'));
     }
 
@@ -124,12 +124,12 @@ class MatrizRequisitoLegalesController extends Controller
         abort_if(Gate::denies('matriz_requisito_legale_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
         $empleados = Empleado::with('area')->get();
+
         return view('admin.matrizRequisitoLegales.create', compact('planes_implementacion', 'empleados'));
     }
 
     public function store(StoreMatrizRequisitoLegaleRequest $request)
     {
-
         $matrizRequisitoLegale = MatrizRequisitoLegale::create($request->all());
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -154,10 +154,10 @@ class MatrizRequisitoLegalesController extends Controller
     public function edit(MatrizRequisitoLegale $matrizRequisitoLegale)
     {
         abort_if(Gate::denies('matriz_requisito_legale_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $matrizRequisitoLegale->load('team', 'planes','evidencias_matriz');
+        $matrizRequisitoLegale->load('team', 'planes', 'evidencias_matriz');
         // dd($matrizRequisitoLegale);
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
-        $planes_seleccionados = array();
+        $planes_seleccionados = [];
         if ($matrizRequisitoLegale->planes) {
             foreach ($matrizRequisitoLegale->planes as $plan) {
                 array_push($planes_seleccionados, $plan->id);
@@ -186,13 +186,12 @@ class MatrizRequisitoLegalesController extends Controller
             }
         }
 
-
         if (isset($request->plan_accion)) {
             // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
             $matrizRequisitoLegale->planes()->sync($request->plan_accion);
         }
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Editado con éxito');
     }
 
     public function show(MatrizRequisitoLegale $matrizRequisitoLegale)
@@ -226,11 +225,12 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function createPlanAccion(MatrizRequisitoLegale $id)
     {
-        $planImplementacion  = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion();
         $modulo = $id;
         $modulo_name = 'Matríz de Requisitos Legales';
         $referencia = $modulo->nombrerequisito;
         $urlStore = route('admin.matriz-requisito-legales.storePlanAccion', $id);
+
         return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
 
@@ -252,31 +252,31 @@ class MatrizRequisitoLegalesController extends Controller
         $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
         $planImplementacion->tasks = [
             [
-                "id" => "1",
-                "end" => Carbon::now()->timestamp * 1000,
-                "name" => $request->parent,
-                "level" => "0",
-                "start" => Carbon::now()->timestamp * 1000,
-                "canAdd" => true,
-                "status" => "STATUS_ACTIVE",
-                "canWrite" => true,
-                "duration" => "1",
-                "progress" => "0",
-                "canDelete" => true,
-                "collapsed" => false,
-                "relevance" => "0",
-                "canAddIssue" => true,
-                "endIsMilestone" => false,
-                "startIsMilestone" => false,
-                "progressByWorklog" => false
-            ]
+                'id' => '1',
+                'end' => Carbon::now()->timestamp * 1000,
+                'name' => $request->parent,
+                'level' => '0',
+                'start' => Carbon::now()->timestamp * 1000,
+                'canAdd' => true,
+                'status' => 'STATUS_ACTIVE',
+                'canWrite' => true,
+                'duration' => '1',
+                'progress' => '0',
+                'canDelete' => true,
+                'collapsed' => false,
+                'relevance' => '0',
+                'canAddIssue' => true,
+                'endIsMilestone' => false,
+                'startIsMilestone' => false,
+                'progressByWorklog' => false,
+            ],
         ];
         $planImplementacion->canAdd = true;
         $planImplementacion->canWrite = true;
         $planImplementacion->canWriteOnParent = true;
         $planImplementacion->changesReasonWhy = false;
         $planImplementacion->selectedRow = 0;
-        $planImplementacion->zoom = "3d";
+        $planImplementacion->zoom = '3d';
         $planImplementacion->parent = $request->parent;
         $planImplementacion->norma = $request->norma;
         $planImplementacion->modulo_origen = $request->modulo_origen;

@@ -26,13 +26,13 @@ class PlanImplementacion extends Model
         'objetivo',
         'elaboro_id',
         'plan_implementacionable_id',
-        'plan_implementacionable_type'
+        'plan_implementacionable_type',
     ];
 
     protected $casts = ['tasks' => 'object'];
 
     const NORMAS = [
-        'ISO 27001' => 'ISO 27001'
+        'ISO 27001' => 'ISO 27001',
     ];
 
     // public function tasks()
@@ -43,12 +43,14 @@ class PlanImplementacion extends Model
     public function getRolesAttribute()
     {
         $roles = Role::select('id', 'title as name')->get();
+
         return $roles;
     }
 
     public function getResourcesAttribute()
     {
         $empleado = Empleado::all();
+
         return $empleado;
     }
 

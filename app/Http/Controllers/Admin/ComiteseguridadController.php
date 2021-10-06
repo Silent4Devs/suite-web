@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyComiteseguridadRequest;
-use App\Http\Requests\StoreComiteseguridadRequest;
 use App\Http\Requests\UpdateComiteseguridadRequest;
 use App\Models\Comiteseguridad;
-use App\Models\Team;
 use App\Models\Empleado;
 use App\Models\Organizacion;
+use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -25,16 +24,16 @@ class ComiteseguridadController extends Controller
         abort_if(Gate::denies('comiteseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Comiteseguridad::with(['personaasignada', 'team','asignacion'])->select(sprintf('%s.*', (new Comiteseguridad)->table));
+            $query = Comiteseguridad::with(['personaasignada', 'team', 'asignacion'])->select(sprintf('%s.*', (new Comiteseguridad)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'comiteseguridad_show';
-                $editGate      = 'comiteseguridad_edit';
-                $deleteGate    = 'comiteseguridad_delete';
+                $viewGate = 'comiteseguridad_show';
+                $editGate = 'comiteseguridad_edit';
+                $deleteGate = 'comiteseguridad_delete';
                 $crudRoutePart = 'comiteseguridads';
 
                 return view('partials.datatablesActions', compact(
@@ -47,19 +46,19 @@ class ComiteseguridadController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('nombrerol', function ($row) {
-                return $row->nombrerol ? $row->nombrerol : "";
+                return $row->nombrerol ? $row->nombrerol : '';
             });
             $table->addColumn('asignada', function ($row) {
                 return $row->asignacion ? $row->asignacion : '';
             });
             $table->editColumn('responsabilidades', function ($row) {
-                return $row->responsabilidades ? $row->responsabilidades : "";
+                return $row->responsabilidades ? $row->responsabilidades : '';
             });
             $table->editColumn('fechavigor', function ($row) {
-                return $row->fechavigor ? $row->fechavigor : "";
+                return $row->fechavigor ? $row->fechavigor : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'personaasignada']);
@@ -80,7 +79,7 @@ class ComiteseguridadController extends Controller
         $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.comiteseguridads.create', compact('personaasignadas','empleados'));
+        return view('admin.comiteseguridads.create', compact('personaasignadas', 'empleados'));
     }
 
     public function store(Request $request)
@@ -88,7 +87,7 @@ class ComiteseguridadController extends Controller
         $comiteseguridad = Comiteseguridad::create($request->all());
         // dd($comiteseguridad);
 
-        return redirect()->route('admin.comiteseguridads.index')->with("success", 'Guardado con éxito');;
+        return redirect()->route('admin.comiteseguridads.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Comiteseguridad $comiteseguridad)
@@ -107,7 +106,7 @@ class ComiteseguridadController extends Controller
     {
         $comiteseguridad->update($request->all());
 
-        return redirect()->route('admin.comiteseguridads.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.comiteseguridads.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Comiteseguridad $comiteseguridad)

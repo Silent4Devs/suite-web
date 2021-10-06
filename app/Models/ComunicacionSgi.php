@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use \DateTimeInterface;
 
 class ComunicacionSgi extends Model implements HasMedia
 {
@@ -74,16 +74,19 @@ class ComunicacionSgi extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
     public function documentos_comunicacion()
     {
-        return $this->hasMany(DocumentoComunicacionSgis::class,"comunicacion_id","id");
+        return $this->hasMany(DocumentoComunicacionSgis::class, 'comunicacion_id', 'id');
     }
+
     public function imagenes_comunicacion()
     {
-        return $this->hasMany(ImagenesComunicacionSgis::class,"comunicacion_id","id");
+        return $this->hasMany(ImagenesComunicacionSgis::class, 'comunicacion_id', 'id');
     }
+
     public function empleados()
     {
-        return $this->belongsToMany(Empleado::class,"empleado_comunicacion","comunicacion_id","empleado_id");
+        return $this->belongsToMany(Empleado::class, 'empleado_comunicacion', 'comunicacion_id', 'empleado_id');
     }
 }

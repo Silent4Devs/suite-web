@@ -44,6 +44,9 @@
 </div>
 
 <div class="datatable-fix" style="width: 100%;">
+    <div class="text-right mb-3">
+        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/mejoras')}}">Crear reporte</a>
+    </div>
 
    <table class="table tabla_mejoras">
    		<thead>
@@ -62,7 +65,7 @@
                 <th style="min-width:200px;">Proceso</th>
        			<th style="min-width: 500px;">Descripción</th>
                 <th style="min-width: 500px;">Beneficios</th>
-       			<th>Opciones</th> 
+       			<th>Opciones</th>
    			</tr>
    		</thead>
    		<tbody>
@@ -74,8 +77,8 @@
                     <td>{{ $mejora->created_at }}</td>
                     <td>{{ $mejora->fecha_cierre }}</td>
 	       			<td>{{ $mejora->mejoro->name }}</td>
-	       			<td>{{ $mejora->mejoro->email }}</td> 
-	       			<td>{{ $mejora->mejoro->telefono }}</td> 
+	       			<td>{{ $mejora->mejoro->email }}</td>
+	       			<td>{{ $mejora->mejoro->telefono }}</td>
                     <td>{{ $mejora->titulo }}</td>
                     <td>{{ $mejora->tipo }}</td>
                     <td>{{ $mejora->area_mejora }}</td>
@@ -176,10 +179,13 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            
+
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
+                order:[
+                            [0,'desc']
+                        ]
             };
             let table = $('.tabla_mejoras').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {

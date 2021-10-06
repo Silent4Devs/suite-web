@@ -15,7 +15,7 @@ class Ev360GrupoEvaluadosCreate extends Component
 
     protected $rules = [
         'nombreGrupo' => 'required|string|max:255',
-        'empleados' => 'required'
+        'empleados' => 'required',
     ];
 
     protected $mesages = [
@@ -42,10 +42,10 @@ class Ev360GrupoEvaluadosCreate extends Component
         $this->emit('select2');
     }
 
-
     public function render()
     {
         $lista_empleados = Empleado::all();
+
         return view('livewire.ev360-grupo-evaluados-create', ['lista_empleados' => $lista_empleados]);
     }
 

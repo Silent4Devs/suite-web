@@ -44,6 +44,9 @@
 </div>
 
 <div class="datatable-fix" style="width: 100%;">
+    <div class="text-right mb-3">
+        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/riesgos')}}">Crear reporte</a>
+    </div>
 
    <table class="table tabla_riesgos">
    		<thead>
@@ -65,7 +68,7 @@
        			<th style="min-width:200px;">Quién reportó</th>
        			<th style="min-width:200px;">Correo</th>
        			<th style="min-width:200px;">Teléfono</th>
-       			<th>Opciones</th> 
+       			<th>Opciones</th>
             </tr>
    		</thead>
    		<tbody>
@@ -86,8 +89,8 @@
                     <td>{{ $riesgo->activos_afectados }}</td>
 	       			<td>{{ $riesgo->fecha }}</td>
 	       			<td>{{ $riesgo->reporto->name }}</td>
-	       			<td>{{ $riesgo->reporto->email }}</td> 
-	       			<td>{{ $riesgo->reporto->telefono }}</td> 
+	       			<td>{{ $riesgo->reporto->email }}</td>
+	       			<td>{{ $riesgo->reporto->telefono }}</td>
 	       			<td>
 	       				<a href="{{ route('admin.desk.riesgos-edit', $riesgo->id) }}"><i class="fas fa-edit"></i></a>
 	       			</td>
@@ -182,10 +185,13 @@
                 };
                 dtButtons.push(btnAgregar);
             @endcan
-            
+
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
+                order:[
+                            [0,'desc']
+                        ]
             };
             let table = $('.tabla_riesgos').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {

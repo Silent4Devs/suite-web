@@ -25,8 +25,6 @@ class CreatePlanAccionTable extends Migration
             $table->string('estatus');
             $table->longText('comentarios');
 
-
-
             $table->timestamps();
         });
     }

@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 class Puesto extends Model
 {
@@ -37,5 +37,10 @@ class Puesto extends Model
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function competencias()
+    {
+        return $this->hasMany('App\Models\RH\CompetenciaPuesto', 'puesto_id', 'id');
     }
 }

@@ -27,9 +27,9 @@ class EstadoDocumentoController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'estado_documento_show';
-                $editGate      = 'estado_documento_edit';
-                $deleteGate    = 'estado_documento_delete';
+                $viewGate = 'estado_documento_show';
+                $editGate = 'estado_documento_edit';
+                $deleteGate = 'estado_documento_delete';
                 $crudRoutePart = 'estado-documentos';
 
                 return view('partials.datatablesActions', compact(
@@ -42,13 +42,13 @@ class EstadoDocumentoController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('estado', function ($row) {
-                return $row->estado ? $row->estado : "";
+                return $row->estado ? $row->estado : '';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

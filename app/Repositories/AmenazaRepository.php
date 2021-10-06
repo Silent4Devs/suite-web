@@ -3,14 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Amenaza;
-use App\Repositories\BaseRepository;
 
 /**
- * Class AmenazaRepository
- * @package App\Repositories
+ * Class AmenazaRepository.
  * @version August 5, 2021, 6:19 pm UTC
-*/
-
+ */
 class AmenazaRepository extends BaseRepository
 {
     /**
@@ -19,11 +16,11 @@ class AmenazaRepository extends BaseRepository
     protected $fieldSearchable = [
         'nombre',
         'categoria',
-        'descripcion'
+        'descripcion',
     ];
 
     /**
-     * Return searchable fields
+     * Return searchable fields.
      *
      * @return array
      */
@@ -33,7 +30,7 @@ class AmenazaRepository extends BaseRepository
     }
 
     /**
-     * Configure the Model
+     * Configure the Model.
      **/
     public function model()
     {

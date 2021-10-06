@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Sede
+ * Class Sede.
  *
  * @property int $id
  * @property string $sede
@@ -30,48 +30,46 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Team|null $team
  * @property Collection|Activo[] $activos
  * @property Collection|Empleado[] $empleados
- *
- * @package App\Models
  */
 class Sede extends Model
 {
-	use SoftDeletes;
-	use HasFactory;
-	protected $table = 'sedes';
+    use SoftDeletes;
+    use HasFactory;
+    protected $table = 'sedes';
 
-	protected $casts = [
-		'organizacion_id' => 'int',
-		'team_id' => 'int'
-	];
+    protected $casts = [
+        'organizacion_id' => 'int',
+        'team_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'sede',
-		'foto_sedes',
-		'descripcion',
-		'organizacion_id',
-		'team_id',
-		'direccion',
-		'latitude',
-		'longitud',
-	];
+    protected $fillable = [
+        'sede',
+        'foto_sedes',
+        'descripcion',
+        'organizacion_id',
+        'team_id',
+        'direccion',
+        'latitude',
+        'longitud',
+    ];
 
-	public function organizacion()
-	{
-		return $this->belongsTo(Organizacion::class, 'organizacion_id', 'id');
-	}
+    public function organizacion()
+    {
+        return $this->belongsTo(Organizacion::class, 'organizacion_id', 'id');
+    }
 
-	public function team()
-	{
-		return $this->belongsTo(Team::class);
-	}
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 
-	public function activos()
-	{
-		return $this->hasMany(Activo::class, 'ubicacion_id');
-	}
+    public function activos()
+    {
+        return $this->hasMany(Activo::class, 'ubicacion_id');
+    }
 
-	public function empleados()
-	{
-		return $this->hasMany(Empleado::class);
-	}
+    public function empleados()
+    {
+        return $this->hasMany(Empleado::class);
+    }
 }

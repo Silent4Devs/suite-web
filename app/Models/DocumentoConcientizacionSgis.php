@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +11,6 @@ class DocumentoConcientizacionSgis extends Model
 
     protected $table = 'documento_concientizacion_sgis';
 
-
     protected $dates = [
         'created_at',
         'updated_at',
@@ -20,16 +18,17 @@ class DocumentoConcientizacionSgis extends Model
     ];
     protected $cast = [
         'concientSgsi_id',
-        'documento'
+        'documento',
     ];
 
     protected $fillable = [
-		'concientSgsi_id',
-        'documento'
-		
-	];
+        'concientSgsi_id',
+        'documento',
 
-    public function documentos_concientizacion(){
-        return $this->belongsTo(ConcientizacionSgi::class,'concientSgsi_id');
-    }   
+    ];
+
+    public function documentos_concientizacion()
+    {
+        return $this->belongsTo(ConcientizacionSgi::class, 'concientSgsi_id');
+    }
 }

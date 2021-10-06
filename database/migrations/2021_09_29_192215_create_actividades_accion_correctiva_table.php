@@ -25,7 +25,6 @@ class CreateActividadesAccionCorrectivaTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('accion_correctiva_id')->references('id')->on('accion_correctivas');
-
         });
     }
 

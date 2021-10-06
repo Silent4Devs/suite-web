@@ -600,12 +600,13 @@
 
                 theme: "bootstrap4"
             });
-            $("#marca").val(@json($marca_seleccionada?$marca_seleccionada->id:0)).trigger("change")
 
-            // $('.selecmarca').select2("data", {
-            //     id: "1",
-            //     text: "hello"
-            // })
+
+            let selectMarca = $('#marca');
+
+            var option = new Option(@json($marca_seleccionada?$marca_seleccionada->nombre:""), @json($marca_seleccionada?$marca_seleccionada->id:0), true, true);
+
+            selectMarca.append(option).trigger('change');
 
 
 
@@ -618,8 +619,12 @@
                 theme: "bootstrap4"
 
             });
-            $("#modelo").val(@json($modelo_seleccionado?$modelo_seleccionado->id:0)).trigger("change")
 
+            let selectModelo = $('#modelo');
+
+            var optionModelo = new Option(@json($modelo_seleccionado?$modelo_seleccionado->nombre:""), @json($modelo_seleccionado?$modelo_seleccionado->id:0), true, true);
+
+            selectModelo.append(optionModelo).trigger('change');
 
 
         });

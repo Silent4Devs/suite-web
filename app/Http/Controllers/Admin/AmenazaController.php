@@ -2,27 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\DataTables\AmenazaDataTable;
-use App\Http\Requests;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
+use App\Http\Controllers\AppBaseController;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\CreateAmenazaRequest;
 use App\Http\Requests\UpdateAmenazaRequest;
-use App\Repositories\AmenazaRepository;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\MassDestroyAmenazaRequest;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Controllers\Traits\CsvImportTrait;
-use Flash;
-use App\Http\Controllers\AppBaseController;
 use App\Models\Amenaza;
+use App\Repositories\AmenazaRepository;
+use Flash;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class AmenazaController extends AppBaseController
 {
-
     use CsvImportTrait;
-    /** @var  AmenazaRepository */
+    /** @var AmenazaRepository */
     private $amenazaRepository;
 
     public function __construct(AmenazaRepository $amenazaRepo)
@@ -33,16 +27,16 @@ class AmenazaController extends AppBaseController
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Amenaza::get();
+            $query = Amenaza::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'user_show';
-                $editGate      = 'user_edit';
-                $deleteGate    = 'user_delete';
+                $viewGate = 'user_show';
+                $editGate = 'user_edit';
+                $deleteGate = 'user_delete';
                 $crudRoutePart = 'amenazas';
 
                 return view('partials.datatablesActions', compact(
@@ -55,16 +49,16 @@ class AmenazaController extends AppBaseController
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : "";
+                return $row->nombre ? $row->nombre : '';
             });
             $table->editColumn('categoria', function ($row) {
                 return $row->categoria ? $row->categoria : '';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

@@ -5,18 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyMaterialSgsiRequest;
-use App\Http\Requests\StoreMaterialSgsiRequest;
 use App\Http\Requests\UpdateMaterialSgsiRequest;
 use App\Models\Area;
+use App\Models\DocumentoMaterialSgsi;
 use App\Models\MaterialSgsi;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Storage;
-use App\Models\DocumentoMaterialSgsi;
 
 class MaterialSgsiController extends Controller
 {
@@ -24,22 +23,19 @@ class MaterialSgsiController extends Controller
 
     public function index(Request $request)
     {
-
         abort_if(Gate::denies('material_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd(MaterialSgsi::with('arearesponsable', 'team','documentos_material')->get());
         if ($request->ajax()) {
-
-            $query = MaterialSgsi::with(['arearesponsable', 'team','documentos_material'])->select(sprintf('%s.*', (new MaterialSgsi)->table));
+            $query = MaterialSgsi::with(['arearesponsable', 'team', 'documentos_material'])->select(sprintf('%s.*', (new MaterialSgsi)->table))->orderByDesc('id');
             $table = Datatables::of($query);
-
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'material_sgsi_show';
-                $editGate      = 'material_sgsi_edit';
-                $deleteGate    = 'material_sgsi_delete';
+                $viewGate = 'material_sgsi_show';
+                $editGate = 'material_sgsi_edit';
+                $deleteGate = 'material_sgsi_delete';
                 $crudRoutePart = 'material-sgsis';
 
                 return view('partials.datatablesActions', compact(
@@ -52,10 +48,10 @@ class MaterialSgsiController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('objetivo', function ($row) {
-                return $row->objetivo ? $row->objetivo : "";
+                return $row->objetivo ? $row->objetivo : '';
             });
             $table->editColumn('personalobjetivo', function ($row) {
                 return $row->personalobjetivo ? MaterialSgsi::PERSONALOBJETIVO_SELECT[$row->personalobjetivo] : '';
@@ -73,13 +69,12 @@ class MaterialSgsiController extends Controller
             // });
 
             $table->editColumn('documento', function ($row) {
-                return $row->documentos_material ? $row->documentos_material : "";
+                return $row->documentos_material ? $row->documentos_material : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'arearesponsable', 'archivo']);
 
             return $table->make(true);
-
 
             // $materialSgsi = MaterialSgsi::with('team','documentos_material')->get();
             // return datatables()->of($materialSgsi)->toJson();
@@ -99,9 +94,6 @@ class MaterialSgsiController extends Controller
         $documentos = DocumentoMaterialSgsi::get();
 
         return view('admin.materialSgsis.create', compact('arearesponsables', 'documentos'));
-
-
-
     }
 
     public function store(Request $request)
@@ -126,7 +118,7 @@ class MaterialSgsiController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $materialSgsi->id]);
         }
 
-        return redirect()->route('admin.material-sgsis.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.material-sgsis.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(MaterialSgsi $materialSgsi)
@@ -134,7 +126,7 @@ class MaterialSgsiController extends Controller
         abort_if(Gate::denies('material_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $documentos=DocumentoMaterialSgsi::get();
+        $documentos = DocumentoMaterialSgsi::get();
         $materialSgsi->load('arearesponsable', 'team');
 
         return view('admin.materialSgsis.edit', compact('arearesponsables', 'materialSgsi', 'documentos'));
@@ -155,7 +147,7 @@ class MaterialSgsiController extends Controller
             }
         }
 
-        return redirect()->route('admin.material-sgsis.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.material-sgsis.index')->with('success', 'Editado con éxito');
     }
 
     public function show(MaterialSgsi $materialSgsi)
@@ -187,10 +179,10 @@ class MaterialSgsiController extends Controller
     {
         abort_if(Gate::denies('material_sgsi_create') && Gate::denies('material_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new MaterialSgsi();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new MaterialSgsi();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

@@ -2,16 +2,8 @@
 
 //Route::view('/', 'welcome');
 
-use App\Http\Controllers\Admin\CategoriaCapacitacionController;
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
-use App\Http\Controllers\Admin\RH\EV360GrupoCompetenciasController;
-use App\Http\Controllers\Admin\RH\EV360NivelesDominioController;
-use App\Http\Controllers\NotificacionesController;
-use App\Http\Livewire\NotificacionesComponent;
-use App\Models\RH\GrupoCompetencia;
-use App\Models\RH\NivelDominio;
-use App\Models\RH\PeriodoEvaluacion;
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
@@ -57,6 +49,27 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/remover', 'RH\EvaluadoEvaluadorController@remover')->name('ev360-evaluaciones.evaluadores.remover');
     Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/agregar', 'RH\EvaluadoEvaluadorController@agregar')->name('ev360-evaluaciones.evaluadores.agregar');
 
+    Route::get(
+        'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/create',
+        'RH\CompetenciasPorPuestoController@create'
+    )->name('ev360-competencias-por-puesto.create');
+    Route::get(
+        'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/obtener',
+        'RH\CompetenciasPorPuestoController@indexCompetenciasPorPuesto'
+    )->name('ev360-competencias-por-puesto.indexCompetenciasPorPuesto');
+    Route::post(
+        'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}',
+        'RH\CompetenciasPorPuestoController@store'
+    )->name('ev360-competencias-por-puesto.store');
+    Route::resource('recursos-humanos/evaluacion-360/competencias-por-puesto', 'RH\CompetenciasPorPuestoController')->names([
+        'index' => 'ev360-competencias-por-puesto.index',
+        'show' => 'ev360-competencias-por-puesto.show',
+        'edit' => 'ev360-competencias-por-puesto.edit',
+        'update' => 'ev360-competencias-por-puesto.update',
+        'destroy' => 'ev360-competencias-por-puesto.destroy',
+    ])->except('create', 'store');
+
+    Route::post('recursos-humanos/evaluacion-360/competencias/obtener-niveles', 'RH\EV360CompetenciasController@obtenerNiveles')->name('ev360-competencias.obtenerNiveles');
     Route::post('recursos-humanos/evaluacion-360/competencias/store-redirect', 'RH\EV360CompetenciasController@storeAndRedirect')->name('ev360-competencias.conductas');
     Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/conductas', 'RH\EV360CompetenciasController@conductas')->name('ev360-competencias.obtenerConductas');
     Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/informacion', 'RH\EV360CompetenciasController@informacionCompetencia')->name('ev360-competencias.informacionCompetencia');
@@ -70,12 +83,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'update' => 'ev360-competencias.update',
     ]);
 
-
     Route::post('recursos-humanos/evaluacion-360/conductas/store', 'RH\EV360ConductasController@store')->name('ev360-conductas.store');
     Route::get('recursos-humanos/evaluacion-360/conductas/{conducta}/edit', 'RH\EV360ConductasController@edit')->name('ev360-conductas.edit');
     Route::patch('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@update')->name('ev360-conductas.update');
     Route::delete('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@destroy')->name('ev360-conductas.destroy');
-
 
     Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@createByEmpleado')->name('ev360-objetivos-empleado.create');
     Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@storeByEmpleado')->name('ev360-objetivos-empleado.store');
@@ -87,7 +98,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'edit' => 'ev360-objetivos.edit',
         'update' => 'ev360-objetivos.update',
     ]);
-
 
     // Route::resource('recursos-humanos/evaluacion-360/periodo', 'RH\EV360EvaluacionPeriodosController')->names([
     //     'index' => 'ev360-periodo.index',
@@ -101,7 +111,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
 
     Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
-
 
     Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
     Route::resource('portal-comunicacion', 'PortalComunicacionController');
@@ -136,14 +145,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
-
     Route::post('desk/{seguridad}/analisis_seguridad-update', 'DeskController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
     Route::post('desk/{riesgos}/analisis_riesgo-update', 'DeskController@updateAnalisisReisgos')->name('desk.analisis_riesgo-update');
     Route::post('desk/{mejoras}/analisis_mejora-update', 'DeskController@updateAnalisisMejoras')->name('desk.analisis_mejora-update');
     Route::post('desk/{quejas}/analisis_queja-update', 'DeskController@updateAnalisisQuejas')->name('desk.analisis_queja-update');
     Route::post('desk/{denuncias}/analisis_denuncia-update', 'DeskController@updateAnalisisDenuncias')->name('desk.analisis_denuncia-update');
     Route::post('desk/{sugerencias}/analisis_sugerencia-update', 'DeskController@updateAnalisisSugerencias')->name('desk.analisis_sugerencia-update');
-
 
     Route::get('desk/{seguridad}/seguridad-edit', 'DeskController@editSeguridad')->name('desk.seguridad-edit');
     Route::post('desk/{seguridad}/seguridad-update', 'DeskController@updateSeguridad')->name('desk.seguridad-update');
@@ -253,7 +260,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleados/get-lista', 'EmpleadoController@getListaEmpleados')->name('empleados.lista');
     Route::get('empleados/get-all', 'EmpleadoController@getAllEmpleados')->name('empleados.getAll');
     Route::resource('empleados', 'EmpleadoController');
-
 
     // Organizacions
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
@@ -615,7 +621,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('vulnerabilidads/parse-csv-import', 'VulnerabilidadController@parseCsvImport')->name('vulnerabilidads.parseCsvImport');
     Route::post('vulnerabilidads/process-csv-import', 'VulnerabilidadController@processCsvImport')->name('vulnerabilidads.processCsvImport');
 
-
     // analisis Riesgos
     Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
     Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
@@ -649,7 +654,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('/revisiones/desarchivar', 'RevisionDocumentoController@desarchivar')->name('revisiones.desarchivar');
 
     //Documentos
-    Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');;
+    Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');
     Route::patch('documentos/{documento}/update-when-publish', 'DocumentosController@updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
     Route::post('documentos/store-when-publish', 'DocumentosController@storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
     Route::post('documentos/publish', 'DocumentosController@publish')->name('documentos.publish');
@@ -686,7 +691,6 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
         Route::post('profile/two-factor', 'ChangePasswordController@toggleTwoFactor')->name('password.toggleTwoFactor');
     }
 });
-
 
 /* Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
 
@@ -945,9 +949,9 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
     Route::post('profile/toggle-two-factor', 'ProfileController@toggleTwoFactor')->name('profile.toggle-two-factor');
 }); */
 
-########################
-#### NOTIFICACIONES ###
-######################
+//#######################
+//### NOTIFICACIONES ###
+//#####################
 
 // Route::get('/notificaciones', [\App\Http\Livewire\NotificacionesComponent::class, '__invoke'])->name('notificaciones');
 Route::get('/notificaciones', 'NotificacionesController@index')->name('notificaciones');
@@ -987,3 +991,12 @@ Route::post('CargaRevisionDireccion', 'SubidaExcel@RevisionDireccion')->name('ca
 Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
 Route::post('CargaFaqCategoria', 'SubidaExcel@FaqCategoria')->name('carga-faqcategoria');
 Route::post('CargaFaqPregunta', 'SubidaExcel@FaqPregunta')->name('carga-faqpregunta');
+Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');
+Route::post('CargaPartesInteresadas', 'SubidaExcel@PartesInteresadas')->name('carga-partes_interesadas');
+Route::post('CargaMatrizRequisitosLegales', 'SubidaExcel@MatrizRequisitosLegales')->name('carga-matriz_requisitos_legales');
+Route::post('CargaFoda', 'SubidaExcel@Foda')->name('carga-foda');
+Route::post('CargaDeterminacionAlcance', 'SubidaExcel@DeterminacionAlcance')->name('carga-determinacion_alcance');
+Route::post('CargaComiteSeguridad', 'SubidaExcel@ComiteSeguridad')->name('carga-comite_seguridad');
+Route::post('CargaAltaDireccion', 'SubidaExcel@AltaDireccion')->name('carga-alta_direccion');
+Route::post('CargaEvidenciaRecursos', 'SubidaExcel@EvidenciaRecursos')->name('carga-evidencia_recursos');
+Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politica_sgi');

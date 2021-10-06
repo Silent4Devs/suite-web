@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -10,7 +9,7 @@ use Livewire\WithPagination;
 class NotificacionesComponent extends Component
 {
     use WithPagination;
-    public $view = "no-leidas";
+    public $view = 'no-leidas';
     private $lista_notificaciones;
     protected $paginationTheme = 'bootstrap';
 
@@ -43,13 +42,13 @@ class NotificacionesComponent extends Component
         }
 
         return view('livewire.notificaciones-component', [
-            'lista_notificaciones' => $this->lista_notificaciones
+            'lista_notificaciones' => $this->lista_notificaciones,
         ]);
     }
 
     public function unreadNotifications()
     {
-        $this->view = "no-leidas";
+        $this->view = 'no-leidas';
         $this->resetPage();
 
         //$this->getUnreadNotifications();
@@ -58,7 +57,7 @@ class NotificacionesComponent extends Component
 
     public function notificationsReaded()
     {
-        $this->view = "leidas";
+        $this->view = 'leidas';
         $this->resetPage();
 
         //$this->getReadedNotifications();
@@ -68,12 +67,14 @@ class NotificacionesComponent extends Component
     public function getUnreadNotifications()
     {
         $this->lista_notificaciones = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->paginate(10);
+
         return response()->noContent();
     }
 
     public function getReadedNotifications()
     {
         $this->lista_notificaciones = Auth::user()->readNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->paginate(10);
+
         return response()->noContent();
     }
 
@@ -84,6 +85,7 @@ class NotificacionesComponent extends Component
                 return $query->where('id', $notificationId)->markAsRead();
             });
         $this->emit('NotificationMarkedAsReadList');
+
         return response()->noContent();
     }
 
@@ -94,6 +96,7 @@ class NotificacionesComponent extends Component
             $notificacion_campana->markAsRead();
         }
         $this->emit('NotificationMarkedAsReadList');
+
         return response()->noContent();
     }
 }

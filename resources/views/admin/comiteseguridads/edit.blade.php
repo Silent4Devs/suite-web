@@ -41,6 +41,7 @@
                 <label for="id_asignada"><i class="fas fa-user-tie iconos-crear"></i>Colaborador(a) asignado</label>
                 <select class="form-control {{ $errors->has('id_asignada') ? 'is-invalid' : '' }}" name="id_asignada"
                     id="id_asignada">
+                    <option value="">Seleccione una opción</option>
                     @foreach ($empleados as $id => $empleado)
                         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                             data-area="{{ $empleado->area->area }}"
@@ -60,14 +61,14 @@
 
             <div class="form-group col-md-4">
                 <label for="id_puesto_asignada"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                <div class="form-control" id="puesto_asignada"></div>
+                <div class="form-control" id="puesto_asignada" readonly></div>
 
             </div>
 
 
             <div class="form-group col-sm-12 col-md-4 col-lg-4">
                 <label for="id_area_asignada"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                <div class="form-control" id="area_asignada"></div>
+                <div class="form-control" id="area_asignada" readonly></div>
             </div>
 
 

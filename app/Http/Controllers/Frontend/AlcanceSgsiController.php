@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateAlcanceSgsiRequest;
 use App\Models\AlcanceSgsi;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AlcanceSgsiController extends Controller

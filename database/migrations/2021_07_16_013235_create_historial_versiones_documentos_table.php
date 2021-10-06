@@ -34,7 +34,7 @@ class CreateHistorialVersionesDocumentosTable extends Migration
         });
 
         Schema::table('historial_versiones_documentos', function (Blueprint $table) {
-            // Relaciones 
+            // Relaciones
             $table->foreign('documento_id')->references('id')->on('documentos');
             $table->foreign('macroproceso_id')->references('id')->on('macroprocesos');
             $table->foreign('elaboro_id')->references('id')->on('empleados')->onDelete('SET NULL');

@@ -866,7 +866,13 @@
             padding: 6px;
         }
 
-    </style>
+
+
+    .table td{
+        text-align: justify !important;
+    }
+
+</style>
 
     @yield('styles')
     @livewireStyles
@@ -1092,7 +1098,7 @@
     <script src="{{ asset('js/yearpicker.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
-
+    <script src="https://cdn.datatables.net/fixedcolumns/4.0.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
     <script>
@@ -1100,7 +1106,7 @@
     'user' => auth()->check() ? auth()->user()->id : null,
 ]) !!};
     </script>
-
+    <script src="//unpkg.com/alpinejs" defer></script>
 
     <script src="{{ asset('js/main.js') }}"></script>
 
