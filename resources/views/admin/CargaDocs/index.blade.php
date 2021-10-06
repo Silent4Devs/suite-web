@@ -109,7 +109,7 @@
                     </div>
                 </div>
 
-                  <!-- Categoria Field -->
+                <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
                     <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('matriz_requisitos_legales', 'Matriz de Requisitos Legales') !!}
                     <div>
@@ -120,7 +120,7 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-
+                <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
                     <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('foda', 'Foda') !!}
                     <div>
@@ -131,7 +131,7 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-
+                <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
                     <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('determinacion_alcance', 'Determinación Alcance') !!}
                     <div>
@@ -143,6 +143,56 @@
                     </div>
                 </div>
 
+                <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <span class="mb-1 text-center text-">ISO 27001 | Liderazgo</span>
+                    </div>
+                </div>
+
+                <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('comite_seguridad', 'Conformación del comité de seguridad') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-comite_seguridad', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="comite_seguridad" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('alta_direccion', 'Minutas Alta Dirección') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-alta_direccion', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="alta_direccion" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('evidencia_recursos', 'Evidencia de asignación de recursos') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-evidencia_recursos', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="evidencia_recursos" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('politica_sgi', 'Politica del SGI') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-politica_sgi', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="politica_sgi" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
 
                 <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">

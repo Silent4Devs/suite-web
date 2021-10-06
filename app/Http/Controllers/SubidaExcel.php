@@ -8,6 +8,7 @@ use App\Imports\AnalisisDeRiesgoImport;
 use App\Imports\CategoriaActivoImport;
 use App\Imports\CategoriaCapacitacionImport;
 use App\Imports\CompetenciaImport;
+use App\Imports\ComiteseguridadImport;
 use App\Imports\ControlImport;
 use App\Imports\EjecutarenlaceImport;
 use App\Imports\EntendimientoOrganizacionImport;
@@ -18,6 +19,7 @@ use App\Imports\FaqPreguntaImport;
 use App\Imports\MatrizRequisitoLegaleImport;
 use App\Imports\PartesInteresadaImport;
 use App\Imports\PuestoImport;
+use App\Imports\PoliticaSgsiImport;
 use App\Imports\RevisionDIreccionImport;
 use App\Imports\TeamImport;
 use App\Imports\UsuarioImport;
@@ -167,6 +169,34 @@ class SubidaExcel extends Controller
     public function DeterminacionAlcance()
     {
         Excel::import(new AlcanceSgsiImport, request()->file('determinacion_alcance'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
+    public function ComiteSeguridad()
+    {
+        Excel::import(new ComiteseguridadImport, request()->file('comite_seguridad'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
+    public function AltaDireccion()
+    {
+        Excel::import(new MinutasaltadireccionImport, request()->file('alta_direccion'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
+    public function EvidenciaRecursos()
+    {
+        Excel::import(new EvidenciasSgsiImport, request()->file('evidencia_recursos'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
+    public function PoliticaSgsi()
+    {
+        Excel::import(new PoliticaSgsiImport, request()->file('politica_sgi'));
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
