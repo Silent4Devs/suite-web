@@ -55,7 +55,6 @@ class RevisionMinutasController extends Controller
                             'estatus' => strval(Minutasaltadireccion::DOCUMENTO_RECHAZADO),
                         ]);
                     } else {
-
                         $path_documento_aprobacion = 'public/minutas/en aprobacion/' . $minutaOriginal->documento;
                         $ruta_publicacion = 'public/minutas/aprobadas/' . $minutaOriginal->documento;
                         $minutaOriginal->update([
@@ -74,7 +73,7 @@ class RevisionMinutasController extends Controller
                         $this->sendMailPublish($documentoAct->responsable->email, $documentoAct);
                     }
                 }
-            };
+            }
 
             return response()->json(['approve' => true]);
         }
@@ -93,7 +92,7 @@ class RevisionMinutasController extends Controller
 
     public function allLevelSendAnswer($minuta_id, $minuta)
     {
-        $nivelesArr = array();
+        $nivelesArr = [];
 
         foreach (RevisionMinuta::select('nivel')->where('minuta_id', '=', strval($minuta_id))->get() as $revision) {
             array_push($nivelesArr, intval($revision->nivel));
@@ -126,6 +125,7 @@ class RevisionMinutasController extends Controller
 
                     return;
                 }
+
                 return;
             }
         }
@@ -154,7 +154,6 @@ class RevisionMinutasController extends Controller
         }
     }
 
-
     public function reject(Request $request)
     {
         if ($request->ajax()) {
@@ -174,7 +173,6 @@ class RevisionMinutasController extends Controller
                 if ($historialRevisionMinuta) {
                     $historialDocumento = HistoralRevisionMinuta::find($historialRevisionMinuta->id);
                     if ($this->containsReject($minuta->minuta_id)) {
-
                         $minutaOriginal->update([
                             'estatus' => strval(Minutasaltadireccion::DOCUMENTO_RECHAZADO),
                         ]);
@@ -201,7 +199,8 @@ class RevisionMinutasController extends Controller
                         $this->sendMailPublish($documentoAct->responsable->email, $documentoAct);
                     }
                 }
-            };
+            }
+
             return response()->json(['reject' => true]);
         }
     }

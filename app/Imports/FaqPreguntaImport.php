@@ -2,17 +2,17 @@
 
 namespace App\Imports;
 
-use App\Models\FaqQuestion;
 use App\Models\FaqCategory;
+use App\Models\FaqQuestion;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class FaqPreguntaImport implements ToModel
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         return new FaqQuestion([
@@ -34,7 +34,7 @@ class FaqPreguntaImport implements ToModel
     public function obtenerEmpleadoPorNombre($nombre)
     {
         $empleado_bd = FaqCategory::select('id', 'category')->where('category', $nombre)->first();
+
         return $empleado_bd->id;
     }
-
 }

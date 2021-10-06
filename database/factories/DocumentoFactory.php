@@ -25,6 +25,7 @@ class DocumentoFactory extends Factory
     public function definition()
     {
         static $numero = 1;
+
         return [
             'codigo' => 'DC' . $numero++,
             'nombre' => 'Documento Proceso' . $numero,

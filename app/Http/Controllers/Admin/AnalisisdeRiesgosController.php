@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\AnalisisDeRiesgo;
 use App\Models\Area;
 use App\Models\Empleado;
-use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
-use App\Models\AnalisisDeRiesgo;
-use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 use Yajra\DataTables\Facades\DataTables;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\MassDestroyAnalisisRiesgosRequest;
 
 class AnalisisdeRiesgosController extends Controller
 {
@@ -23,16 +21,16 @@ class AnalisisdeRiesgosController extends Controller
     {
         if ($request->ajax()) {
             //Esta es el error , activo_id no lo encuentra, hay que modificar la relacion en el modelo de matrizriesgo
-            $query = AnalisisDeRiesgo::get();
+            $query = AnalisisDeRiesgo::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'user_show';
-                $editGate      = 'user_edit';
-                $deleteGate    = 'user_delete';
+                $viewGate = 'user_show';
+                $editGate = 'user_edit';
+                $deleteGate = 'user_delete';
                 $crudRoutePart = 'analisis-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -45,45 +43,43 @@ class AnalisisdeRiesgosController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : "";
+                return $row->nombre ? $row->nombre : '';
             });
 
             $table->editColumn('tipo', function ($row) {
-                return $row->tipo ? $row->tipo : "";
+                return $row->tipo ? $row->tipo : '';
             });
 
             $table->editColumn('fecha', function ($row) {
-                return $row->fecha ? $row->fecha : "";
+                return $row->fecha ? \Carbon\Carbon::parse($row->fecha)->format('d-m-Y') : '';
             });
 
             $table->editColumn('porcentaje_implementacion', function ($row) {
-                return $row->porcentaje_implementacion ? $row->porcentaje_implementacion : "";
+                return $row->porcentaje_implementacion ? $row->porcentaje_implementacion : '';
             });
 
             $table->editColumn('elaboro', function ($row) {
-                return $row->empleado ? $row->empleado->name : "";
+                return $row->empleado ? $row->empleado->name : '';
             });
 
             $table->editColumn('estatus', function ($row) {
                 if ($row->estatus == 1) {
-                    return $row->estatus ? "Válido" : "";
+                    return $row->estatus ? 'Válido' : '';
                 } else {
-                    return $row->estatus ? "Obsoleto" : "";
+                    return $row->estatus ? 'Obsoleto' : '';
                 }
             });
             $table->editColumn('enlace', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'activo_id', 'controles']);
 
-
             return $table->make(true);
         }
-
 
         return view('admin.analisis-riesgos.index');
     }
@@ -114,10 +110,12 @@ class AnalisisdeRiesgosController extends Controller
         switch ($request->tipo) {
             case 'Seguridad de la información':
                 Flash::success('<h5 class="text-center">Análisis de riesgo agregado</h5>');
+
                 return redirect()->route('admin.matriz-seguridad', ['id' => $analisis->id]);
                 break;
             default:
                 Flash::error('<h5 class="text-center">Ocurrio un error intente de nuevo</h5>');
+
                 return redirect()->route('admin.analisis-riesgos.index');
         }
     }
@@ -161,14 +159,15 @@ class AnalisisdeRiesgosController extends Controller
         $analisis = AnalisisDeRiesgo::find($id);
 
         $analisis->update([
-            "nombre" =>  $request->nombre,
-            "tipo" =>  $request->tipo,
-            "fecha" =>  $request->fecha,
-            "id_elaboro" =>  $request->id_elaboro,
-            "porcentaje_implementacion" => $request->porcentaje_implementacion,
-            "estatus" =>  $request->estatus,
+            'nombre' =>  $request->nombre,
+            'tipo' =>  $request->tipo,
+            'fecha' =>  $request->fecha,
+            'id_elaboro' =>  $request->id_elaboro,
+            'porcentaje_implementacion' => $request->porcentaje_implementacion,
+            'estatus' =>  $request->estatus,
         ]);
-        return redirect()->route('admin.analisis-riesgos.index')->with("success", 'Editado con éxito');
+
+        return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Editado con éxito');
     }
 
     /**
@@ -190,6 +189,6 @@ class AnalisisdeRiesgosController extends Controller
         $empleados = Empleado::find($request->id);
         $areas = Area::find($empleados->area_id);
 
-        return response()->json(["puesto" => $empleados->puesto, 'area' => $areas->area]);
+        return response()->json(['puesto' => $empleados->puesto, 'area' => $areas->area]);
     }
 }

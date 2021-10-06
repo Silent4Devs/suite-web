@@ -26,9 +26,9 @@ class GlosarioController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'glosario_show';
-                $editGate      = 'glosario_edit';
-                $deleteGate    = 'glosario_delete';
+                $viewGate = 'glosario_show';
+                $editGate = 'glosario_edit';
+                $deleteGate = 'glosario_delete';
                 $crudRoutePart = 'glosarios';
 
                 return view('partials.datatablesActions', compact(
@@ -41,16 +41,16 @@ class GlosarioController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('concepto', function ($row) {
-                return $row->concepto ? $row->concepto : "";
+                return $row->concepto ? $row->concepto : '';
             });
             $table->editColumn('definicion', function ($row) {
-                return $row->definicion ? $row->definicion : "";
+                return $row->definicion ? $row->definicion : '';
             });
             $table->editColumn('explicacion', function ($row) {
-                return $row->explicacion ? $row->explicacion : "";
+                return $row->explicacion ? $row->explicacion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

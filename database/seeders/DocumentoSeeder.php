@@ -22,7 +22,7 @@ class DocumentoSeeder extends Seeder
                 'nombre' => $documento->nombre,
                 'id_macroproceso' => $documento->macroproceso_id,
                 'estatus' => Proceso::ACTIVO,
-                'documento_id' => $documento->id
+                'documento_id' => $documento->id,
             ]);
         }
     }

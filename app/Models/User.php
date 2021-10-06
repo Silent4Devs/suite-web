@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-use App\Notifications\VerifyUserNotification;
+use App\Notifications\MyResetPassword;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Notifications\MyResetPassword;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
-use \DateTimeInterface;
 
 class User extends Authenticatable
 {
@@ -71,7 +68,7 @@ class User extends Authenticatable
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        self::created(function (User $user) {
+        self::created(function (self $user) {
             $registrationRole = config('panel.registration_default_role');
 
             if (!$user->roles()->get()->contains($registrationRole)) {
@@ -82,16 +79,16 @@ class User extends Authenticatable
 
     public function generateTwoFactorCode()
     {
-        $this->timestamps            = false;
-        $this->two_factor_code       = rand(100000, 999999);
+        $this->timestamps = false;
+        $this->two_factor_code = rand(100000, 999999);
         $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
         $this->save();
     }
 
     public function resetTwoFactorCode()
     {
-        $this->timestamps            = false;
-        $this->two_factor_code       = null;
+        $this->timestamps = false;
+        $this->two_factor_code = null;
         $this->two_factor_expires_at = null;
         $this->save();
     }
@@ -171,6 +168,7 @@ class User extends Authenticatable
     {
         $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
+
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado');

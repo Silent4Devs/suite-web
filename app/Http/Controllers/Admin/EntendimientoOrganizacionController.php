@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyEntendimientoOrganizacionRequest;
-use App\Models\EntendimientoOrganizacion;
 use App\Models\Empleado;
+use App\Models\EntendimientoOrganizacion;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class EntendimientoOrganizacionController extends Controller
 {
@@ -32,9 +31,9 @@ class EntendimientoOrganizacionController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'entendimiento_organizacion_show';
-                $editGate      = 'entendimiento_organizacion_edit';
-                $deleteGate    = 'entendimiento_organizacion_delete';
+                $viewGate = 'entendimiento_organizacion_show';
+                $editGate = 'entendimiento_organizacion_edit';
+                $deleteGate = 'entendimiento_organizacion_delete';
                 $crudRoutePart = 'entendimiento-organizacions';
 
                 return view('partials.datatablesActions', compact(
@@ -46,46 +45,40 @@ class EntendimientoOrganizacionController extends Controller
                 ));
             });
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('fortaleza', function ($row) {
-                return $row->fortaleza ?strip_tags($row->fortaleza) : "";
+                return $row->fortaleza ? strip_tags($row->fortaleza) : '';
             });
             $table->editColumn('oportunidades', function ($row) {
-                return $row->oportunidades ? $row->oportunidades : "";
+                return $row->oportunidades ? $row->oportunidades : '';
             });
             $table->editColumn('debilidades', function ($row) {
-                return $row->debilidades ? $row->debilidades : "";
+                return $row->debilidades ? $row->debilidades : '';
             });
             $table->editColumn('amenazas', function ($row) {
-                return $row->amenazas ? $row->amenazas : "";
+                return $row->amenazas ? $row->amenazas : '';
             });
             $table->editColumn('analisis', function ($row) {
-                return $row->analisis ? $row->analisis : "";
+                return $row->analisis ? $row->analisis : '';
             });
             $table->editColumn('fecha', function ($row) {
-                return $row->fecha ? $row->fecha : "";
+                return $row->fecha ? $row->fecha : '';
             });
             $table->editColumn('elabora', function ($row) {
-                return $row->empleado ? $row->empleado->name : "";
+                return $row->empleado ? $row->empleado->name : '';
             });
-
-
 
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
-
-
         }
 
+        $obtener_FODA = EntendimientoOrganizacion::first();
+        $empleado = Empleado::get();
+        $teams = Team::get();
 
-
-            $obtener_FODA = EntendimientoOrganizacion::first();
-            $empleado = Empleado::get();
-            $teams = Team::get();
-
-            return view('admin.entendimientoOrganizacions.index', compact('obtener_FODA','teams','empleado'));
+        return view('admin.entendimientoOrganizacions.index', compact('obtener_FODA', 'teams', 'empleado'));
     }
 
     public function create()
@@ -93,12 +86,12 @@ class EntendimientoOrganizacionController extends Controller
         abort_if(Gate::denies('entendimiento_organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entendimientoOrganizacion = new EntendimientoOrganizacion;
         $empleados = Empleado::get();
-        return view('admin.entendimientoOrganizacions.create', compact('entendimientoOrganizacion','empleados'));
+
+        return view('admin.entendimientoOrganizacions.create', compact('entendimientoOrganizacion', 'empleados'));
     }
 
     public function store(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-
         $request->validate([
             'fortalezas' => 'required|string',
             'debilidades' => 'required|string',
@@ -136,8 +129,6 @@ class EntendimientoOrganizacionController extends Controller
 
         ]);
 
-
-
         $entendimientoOrganizacion->update($request->all());
 
         return redirect()->route('admin.entendimiento-organizacions.index')->with('success', 'Análisis FODA actualizado correctamente');
@@ -147,15 +138,11 @@ class EntendimientoOrganizacionController extends Controller
     {
         abort_if(Gate::denies('entendimiento_organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
         $empleados = Empleado::get();
         $obtener_FODA = $entendimientoOrganizacion;
 
-
-
-        return view('admin.entendimientoOrganizacions.show', compact('empleados','obtener_FODA'));
+        return view('admin.entendimientoOrganizacions.show', compact('empleados', 'obtener_FODA'));
     }
-
 
     public function destroy(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
@@ -163,7 +150,7 @@ class EntendimientoOrganizacionController extends Controller
 
         $entendimientoOrganizacion->delete();
 
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyEntendimientoOrganizacionRequest $request)
@@ -173,16 +160,12 @@ class EntendimientoOrganizacionController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-
     // public function edit()
     // {
     //     abort_if(Gate::denies('entendimiento_organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
-
     //     return view('admin.entendimiento-organizacion.edit');
     // }
-
 
     // public function massDestroy(MassDestroyAreaRequest $request)
     // {
@@ -190,6 +173,4 @@ class EntendimientoOrganizacionController extends Controller
 
     //     return response(null, Response::HTTP_NO_CONTENT);
     // }
-
-
 }

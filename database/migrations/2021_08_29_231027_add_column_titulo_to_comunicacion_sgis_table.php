@@ -32,18 +32,16 @@ class AddColumnTituloToComunicacionSgisTable extends Migration
     public function down()
     {
         Schema::table('comunicacion_sgis', function (Blueprint $table) {
-     $table->dropForeign('comunicacion_sgis_id_publico')->nullable();
+            $table->dropForeign('comunicacion_sgis_id_publico')->nullable();
         });
 
-         Schema::table('comunicacion_sgis', function (Blueprint $table) {
+        Schema::table('comunicacion_sgis', function (Blueprint $table) {
             $table->dropColumn('fecha_publicacion')->nullable();
             $table->dropColumn('titulo')->nullable();
             $table->dropColumn('publicar_en')->nullable();
             $table->dropColumn('habilitar')->nullable();
             $table->dropColumn('link')->nullable();
             $table->dropColumn('id_publico')->nullable();
-
-         });
-
-}
+        });
+    }
 }

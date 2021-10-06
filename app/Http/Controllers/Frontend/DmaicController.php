@@ -10,7 +10,6 @@ use App\Models\Dmaic;
 use App\Models\Registromejora;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DmaicController extends Controller

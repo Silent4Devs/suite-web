@@ -7,19 +7,17 @@ use Livewire\Component;
 
 class TareasNotificacionesComponent extends Component
 {
-
     public $notificaciones_sin_leer;
 
     protected $listeners = [
-        "render-task-count" => 'getTotalNotificaciones',
-        'TaskMarkedAsReadList' => 'getTotalNotificaciones'
+        'render-task-count' => 'getTotalNotificaciones',
+        'TaskMarkedAsReadList' => 'getTotalNotificaciones',
     ];
 
     public function mount()
     {
         $this->notificaciones_sin_leer = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->count();
     }
-
 
     public function render()
     {

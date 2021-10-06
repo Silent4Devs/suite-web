@@ -26,7 +26,7 @@ class AddRelationshipFieldsToPlanBaseActividades extends Migration
     public function down()
     {
         Schema::table('plan_base_actividades', function (Blueprint $table) {
-             $table->dropForeign('plan_base_actividades_actividad_fase_id_foreign');
+            $table->dropForeign('plan_base_actividades_actividad_fase_id_foreign');
         });
     }
 }

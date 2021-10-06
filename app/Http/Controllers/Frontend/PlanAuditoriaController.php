@@ -11,7 +11,6 @@ use App\Models\PlanAuditorium;
 use App\Models\Team;
 use App\Models\User;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PlanAuditoriaController extends Controller

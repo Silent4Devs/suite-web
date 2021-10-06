@@ -27,9 +27,9 @@ class TeamController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'team_show';
-                $editGate      = 'team_edit';
-                $deleteGate    = 'team_delete';
+                $viewGate = 'team_show';
+                $editGate = 'team_edit';
+                $deleteGate = 'team_delete';
                 $crudRoutePart = 'teams';
 
                 return view('partials.datatablesActions', compact(
@@ -42,10 +42,10 @@ class TeamController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : "";
+                return $row->name ? $row->name : '';
             });
             $table->addColumn('owner_name', function ($row) {
                 return $row->owner ? $row->owner->name : '';
@@ -70,9 +70,9 @@ class TeamController extends Controller
 
     public function store(StoreTeamRequest $request)
     {
-        $data             = $request->all();
-        $data["owner_id"] = auth()->user()->id;
-        $team             = Team::create($data);
+        $data = $request->all();
+        $data['owner_id'] = auth()->user()->id;
+        $team = Team::create($data);
 
         return redirect()->route('admin.teams.index');
     }

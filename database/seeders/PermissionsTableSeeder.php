@@ -13,7 +13,7 @@ class PermissionsTableSeeder extends Seeder
             // MI PERFIL
             [
                 'name' => 'Acceder a Mi Perfil',
-                'title' => 'mi_perfil_access'
+                'title' => 'mi_perfil_access',
             ],
             // MI ORGANIZACION
             [
@@ -926,7 +926,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'registromejora_access',
             ],
             // CONTROLES ISO 27001
-            ## ADMINISTRACIÓN ##
+            //# ADMINISTRACIÓN ##
             //Documentos Administración
             [
                 'name' => 'Crear Documento',
@@ -1465,25 +1465,25 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Visualizar Ajustes',
-                'title' => 'ajustes_access'
+                'title' => 'ajustes_access',
             ],
             [
                 'name' => 'Visualizar Configuración de Datos',
-                'title' => 'configuracion_datos_access'
+                'title' => 'configuracion_datos_access',
             ],
             [
                 'name' => 'Visualizar Consulta de Datos',
-                'title' => 'consulta_access'
+                'title' => 'consulta_access',
             ],
             [
                 'name' => 'Acceder a Módulo de Administración',
-                'title' => 'administracion_access'
+                'title' => 'administracion_access',
             ],
             // SITEMAP
             // CHECAR ESTOS PERMISOS
             [
                 'name' => 'Acceder a Mapa del Sitio',
-                'title' => 'sitemap_access'
+                'title' => 'sitemap_access',
             ],
             [
                 'name' => 'Acceder a ISO 22301',
@@ -1625,14 +1625,6 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'puede crear, editar y eliminar archivos en las carpetas del repositorio documental',
                 'title' => 'documentador',
             ],
-
-
-
-
-
-
-
-
 
             //Vistas generdas no asignadas
             [

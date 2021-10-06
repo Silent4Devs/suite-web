@@ -22,11 +22,11 @@ class RevisionDocumento extends Model
         'nivel',
         'no_revision',
         'version',
-        'archivado'
+        'archivado',
     ];
 
     protected $appends = [
-        'fecha_solicitud', 'before_level_all_answered', 'estatus_revisiones_formateado', 'color_revisiones_estatus'
+        'fecha_solicitud', 'before_level_all_answered', 'estatus_revisiones_formateado', 'color_revisiones_estatus',
     ];
 
     public function getBeforeLevelAllAnsweredAttribute()
@@ -34,7 +34,7 @@ class RevisionDocumento extends Model
         if (intval($this->nivel) == 1) {
             return true;
         } else {
-            $revisiones = RevisionDocumento::where('documento_id', '=', $this->documento_id)
+            $revisiones = self::where('documento_id', '=', $this->documento_id)
                 ->where('no_revision', '=', $this->no_revision)
                 ->where('version', '=', $this->version)
                 ->where('nivel', '=', strval(intval($this->nivel) - 1))->get();
@@ -46,10 +46,10 @@ class RevisionDocumento extends Model
                     $habilitar_revision = true;
                 }
             }
+
             return $habilitar_revision;
         }
     }
-
 
     public function getEstatusRevisionesFormateadoAttribute()
     {
@@ -96,6 +96,7 @@ class RevisionDocumento extends Model
     public function getFechaSolicitudAttribute()
     {
         $fecha_diff = Carbon::parse($this->created_at)->format('d-m-Y');
+
         return $fecha_diff;
     }
 

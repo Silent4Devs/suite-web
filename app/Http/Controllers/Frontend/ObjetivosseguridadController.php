@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateObjetivosseguridadRequest;
 use App\Models\Objetivosseguridad;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ObjetivosseguridadController extends Controller

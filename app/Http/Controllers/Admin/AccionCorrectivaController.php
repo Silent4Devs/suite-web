@@ -2,28 +2,27 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use Flash;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Puesto;
-use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Tipoactivo;
-use Illuminate\Http\Request;
 use App\Functions\GeneratePdf;
-use App\Models\AccionCorrectiva;
 use App\Http\Controllers\Controller;
-use App\Models\PlanaccionCorrectiva;
-use Yajra\DataTables\Facades\DataTables;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\StoreAccionCorrectivaRequest;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\UpdateAccionCorrectivaRequest;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
+use App\Http\Requests\UpdateAccionCorrectivaRequest;
+use App\Models\AccionCorrectiva;
 use App\Models\AnalisisAccionCorrectiva;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\PlanaccionCorrectiva;
+use App\Models\Proceso;
+use App\Models\Puesto;
+use App\Models\Team;
+use App\Models\Tipoactivo;
+use App\Models\User;
+use Flash;
+use Gate;
+use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class AccionCorrectivaController extends Controller
 {
@@ -35,7 +34,7 @@ class AccionCorrectivaController extends Controller
         // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
         // dd($query);
         if ($request->ajax()) {
-            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id');
+            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -57,23 +56,23 @@ class AccionCorrectivaController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
 
             $table->addColumn('folio', function ($row) {
-                return $row->folio ? $row->folio : "";
+                return $row->folio ? $row->folio : '';
             });
 
             $table->addColumn('tema', function ($row) {
-                return $row->tema ? $row->tema : "";
+                return $row->tema ? $row->tema : '';
             });
 
             $table->addColumn('fecharegistro', function ($row) {
-                return $row->fecharegistro ? $row->fecharegistro : "";
+                return $row->fecharegistro ? $row->fecharegistro : '';
             });
 
             $table->addColumn('fecha_verificacion', function ($row) {
-                return $row->fecha_verificacion ? $row->fecha_verificacion : "";
+                return $row->fecha_verificacion ? $row->fecha_verificacion : '';
             });
 
             $table->addColumn('estatus', function ($row) {
@@ -81,7 +80,7 @@ class AccionCorrectivaController extends Controller
             });
 
             $table->addColumn('fecha_cierre', function ($row) {
-                return $row->fecha_cierre ? $row->fecha_cierre : "";
+                return $row->fecha_cierre ? $row->fecha_cierre : '';
             });
 
             $table->addColumn('reporto', function ($row) {
@@ -103,7 +102,7 @@ class AccionCorrectivaController extends Controller
                 return $row->empleados ? $row->empleados->puesto : '';
             });
             $table->addColumn('registro_area', function ($row) {
-                return $row->empleados ? $row->empleados->area->area  : '';
+                return $row->empleados ? $row->empleados->area->area : '';
             });
             $table->addColumn('causaorigen', function ($row) {
                 return $row->causaorigen ? $row->causaorigen : '';
@@ -114,7 +113,6 @@ class AccionCorrectivaController extends Controller
             $table->addColumn('comentarios', function ($row) {
                 return $row->comentarios ? $row->comentarios : '';
             });
-
 
             $table->rawColumns(['actions', 'placeholder', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'documentometodo']);
 
@@ -152,11 +150,11 @@ class AccionCorrectivaController extends Controller
 
         $areas = Area::get();
 
-        $procesos=Proceso::get();
+        $procesos = Proceso::get();
 
-        $activos=Tipoactivo::get();
+        $activos = Tipoactivo::get();
 
-        return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas','empleados', 'areas', 'procesos', 'activos'));
+        return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'empleados', 'areas', 'procesos', 'activos'));
     }
 
     public function store(Request $request)
@@ -171,7 +169,7 @@ class AccionCorrectivaController extends Controller
         'areas' => $request->areas,
         'procesos' => $request->procesos,
         'activos' => $request->activos,
-        'estatus'=> 'Nuevo'
+        'estatus'=> 'Nuevo',
     ]);
 
         // $accionCorrectiva = AccionCorrectiva::create($request->all());;
@@ -188,12 +186,9 @@ class AccionCorrectivaController extends Controller
              //$generar->Generate($request['pdf-value'], $request);
              $generar->Generate($request['pdf-value'], $accionCorrectiva);      */
 
-        Flash::success("Registro guardado exitosamente");
+        Flash::success('Registro guardado exitosamente');
         // return redirect('admin/plan-correctiva?param=' . $accionCorrectiva->id);
-        return redirect()->route('admin.accion-correctivas.edit',$accionCorrectiva);
-
-
-
+        return redirect()->route('admin.accion-correctivas.edit', $accionCorrectiva);
     }
 
     public function edit(AccionCorrectiva $accionCorrectiva)
@@ -218,14 +213,13 @@ class AccionCorrectivaController extends Controller
 
         $areas = Area::get();
 
-        $procesos=Proceso::get();
+        $procesos = Proceso::get();
 
-        $activos=Tipoactivo::get();
+        $activos = Tipoactivo::get();
 
         $id = $accionCorrectiva->id;
 
-        $analisis=AnalisisAccionCorrectiva::where('accion_correctiva_id',$accionCorrectiva->id)->first();
-
+        $analisis = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accionCorrectiva->id)->first();
 
         // $PlanAccion = PlanaccionCorrectiva::select('planaccion_correctivas.id', 'planaccion_correctivas.accioncorrectiva_id', 'planaccion_correctivas.actividad', 'planaccion_correctivas.fechacompromiso', 'planaccion_correctivas.estatus', 'planaccion_correctivas.responsable_id', 'users.name','empleados')
         //     ->join('accion_correctivas', 'planaccion_correctivas.accioncorrectiva_id', '=', 'accion_correctivas.id')
@@ -235,8 +229,7 @@ class AccionCorrectivaController extends Controller
         // $Count = $PlanAccion->count();
         // dd($accionCorrectiva);
 
-
-        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas','procesos','activos','analisis'));
+        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
     }
 
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
@@ -273,8 +266,8 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->delete();
 
+        Flash::success('Registro guardado exitosamente');
 
-        Flash::success("Registro guardado exitosamente");
         return back();
     }
 
@@ -299,20 +292,19 @@ class AccionCorrectivaController extends Controller
 
     public function test()
     {
-        dd("Test");
+        dd('Test');
     }
 
     public function storeAnalisis(Request $request, $accion)
     {
-        $exist_accion_id=AnalisisAccionCorrectiva::where('accion_correctiva_id',$accion)->exists();
-        if($exist_accion_id){
-            $analisis=AnalisisAccionCorrectiva::where('accion_correctiva_id',$accion)->first();
+        $exist_accion_id = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accion)->exists();
+        if ($exist_accion_id) {
+            $analisis = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accion)->first();
             $analisis->update($request->all());
+        } else {
+            $analisis = AnalisisAccionCorrectiva::create(array_merge($request->all(), ['accion_correctiva_id'=>$accion]));
         }
-        else{
-            $analisis=AnalisisAccionCorrectiva::create(array_merge($request->all(),['accion_correctiva_id'=>$accion]));
-        }
-        return redirect()->route('admin.accion-correctivas.edit',$accion);
 
+        return redirect()->route('admin.accion-correctivas.edit', $accion);
     }
 }

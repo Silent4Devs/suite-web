@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Marca;
-use App\Models\Activo;
-use App\Models\Modelo;
-use App\Models\Empleado;
-use App\Models\Documento;
-use App\Models\Tipoactivo;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\MassDestroyActivoRequest;
 use App\Http\Requests\StoreActivoRequest;
 use App\Http\Requests\UpdateActivoRequest;
+use App\Models\Activo;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\Marca;
+use App\Models\Modelo;
+use App\Models\Sede;
+use App\Models\Team;
+use App\Models\Tipoactivo;
+use App\Models\User;
+use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\MassDestroyActivoRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class ActivosController extends Controller
 {
@@ -35,9 +34,9 @@ class ActivosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'configuracion_activo_show';
-                $editGate      = 'configuracion_activo_edit';
-                $deleteGate    = 'configuracion_activo_delete';
+                $viewGate = 'configuracion_activo_show';
+                $editGate = 'configuracion_activo_edit';
+                $deleteGate = 'configuracion_activo_delete';
                 $crudRoutePart = 'activos';
 
                 return view('partials.datatablesActions', compact(
@@ -50,11 +49,11 @@ class ActivosController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
 
             $table->editColumn('nombre_activo', function ($row) {
-                return $row->nombre_activo ? $row->nombre_activo : "";
+                return $row->nombre_activo ? $row->nombre_activo : '';
             });
 
             $table->addColumn('tipoactivo_tipo', function ($row) {
@@ -66,10 +65,9 @@ class ActivosController extends Controller
             });
 
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
             $table->addColumn('dueno_name', function ($row) {
-
                 return $row->dueno ? $row->dueno->name : '';
             });
 
@@ -78,47 +76,44 @@ class ActivosController extends Controller
             });
 
             $table->editColumn('marca', function ($row) {
-                return $row->marca ? $row->marca : "";
+                return $row->marca ? $row->marca : '';
             });
 
             $table->editColumn('modelo', function ($row) {
-                return $row->modelo ? $row->modelo : "";
+                return $row->modelo ? $row->modelo : '';
             });
 
             $table->editColumn('n_serie', function ($row) {
-                return $row->n_serie ? $row->n_serie : "";
+                return $row->n_serie ? $row->n_serie : '';
             });
 
             $table->editColumn('n_producto', function ($row) {
-                return $row->n_producto ? $row->n_producto : "";
+                return $row->n_producto ? $row->n_producto : '';
             });
 
             $table->editColumn('fecha_fin', function ($row) {
-                return $row->fecha_fin ? $row->fecha_fin : "";
+                return $row->fecha_fin ? $row->fecha_fin : '';
             });
 
             $table->editColumn('fecha_compra', function ($row) {
-                return $row->fecha_compra ? $row->fecha_compra : "";
+                return $row->fecha_compra ? $row->fecha_compra : '';
             });
 
             $table->editColumn('puesto_dueño', function ($row) {
-                return $row->empleado ? $row->empleado->puesto : "";
+                return $row->empleado ? $row->empleado->puesto : '';
             });
             $table->editColumn('area_dueño', function ($row) {
-                return $row->empleado ? $row->empleado->area : "";
+                return $row->empleado ? $row->empleado->area : '';
             });
             $table->editColumn('responsable', function ($row) {
-                return $row->empleado ? $row->empleado->name : "";
+                return $row->empleado ? $row->empleado->name : '';
             });
             $table->editColumn('puesto_responsable', function ($row) {
-                return $row->empleado ? $row->empleado->puesto : "";
+                return $row->empleado ? $row->empleado->puesto : '';
             });
             $table->editColumn('area_responsable', function ($row) {
-                return $row->empleado ? $row->empleado->area : "";
+                return $row->empleado ? $row->empleado->area : '';
             });
-
-
-
 
             $table->rawColumns(['actions', 'placeholder', 'tipoactivo', 'subtipo', 'dueno', 'ubicacion']);
 
@@ -127,9 +122,9 @@ class ActivosController extends Controller
 
         $tipoactivos = Tipoactivo::get();
         $tipoactivos = Tipoactivo::get();
-        $users       = User::get();
-        $sedes       = Sede::get();
-        $teams       = Team::get();
+        $users = User::get();
+        $sedes = Sede::get();
+        $teams = Team::get();
 
         return view('admin.activos.index', compact('tipoactivos', 'tipoactivos', 'users', 'sedes', 'teams'));
     }
@@ -154,7 +149,6 @@ class ActivosController extends Controller
 
         $modelos = Modelo::get();
 
-
         return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos'));
     }
 
@@ -172,25 +166,20 @@ class ActivosController extends Controller
         // dd($request->all());
         // dd($request->hasfile('documentos_relacionados'));
         // $activo = Activo::create($request->all());
-        $data = array();
+        $data = [];
 
         if ($request->hasfile('documentos_relacionados')) {
-
-
-
             foreach ($request->file('documentos_relacionados') as $file) {
-
 
                 // $nombre_original =  $request->nombreactivo;
                 // $nombre_compuesto = basename($nombre_original) . '.' . $file->extension();
                 $nombre_compuesto = $file->getClientOriginalName();
                 $file->storeAs('public/activos', $nombre_compuesto); // Almacenar Archivo
 
-
                 $data[] = $nombre_compuesto;
             }
         } else {
-            $data = array();
+            $data = [];
         }
 
         // $extension = pathinfo($request->file('documentos_relacionados')->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -200,30 +189,29 @@ class ActivosController extends Controller
         // $activo->documentos_relacionados = $data;
         // $activo->save();
 
-
         Activo::create([
-            "nombreactivo" => $request->nombreactivo,
-            "descripcion" => $request->descripcion,
-            "marca" => intval($request->marca),
-            "modelo" => intval($request->modelo),
-            "n_serie" => $request->n_serie,
-            "n_producto" => $request->n_producto,
-            "fecha_fin" => $request->fecha_fin,
-            "fecha_compra" => $request->fecha_compra,
-            "fecha_baja" => $request->fecha_baja,
-            "fecha_alta" => $request->fecha_alta,
-            "dueno_id" => $request->dueno_id,
-            "id_responsable" => $request->id_responsable,
-            "tipoactivo_id" => $request->tipoactivo_id,
-            "subtipo_id" => $request->subtipo_id,
-            "ubicacion_id" => $request->ubicacion_id,
-            "sede" => $request->sede,
-            "observaciones" => $request->observaciones,
-            "documentos_relacionados" => json_encode($data)
+            'nombreactivo' => $request->nombreactivo,
+            'descripcion' => $request->descripcion,
+            'marca' => intval($request->marca),
+            'modelo' => intval($request->modelo),
+            'n_serie' => $request->n_serie,
+            'n_producto' => $request->n_producto,
+            'fecha_fin' => $request->fecha_fin,
+            'fecha_compra' => $request->fecha_compra,
+            'fecha_baja' => $request->fecha_baja,
+            'fecha_alta' => $request->fecha_alta,
+            'dueno_id' => $request->dueno_id,
+            'id_responsable' => $request->id_responsable,
+            'tipoactivo_id' => $request->tipoactivo_id,
+            'subtipo_id' => $request->subtipo_id,
+            'ubicacion_id' => $request->ubicacion_id,
+            'sede' => $request->sede,
+            'observaciones' => $request->observaciones,
+            'documentos_relacionados' => json_encode($data),
 
         ]);
 
-        return redirect()->route('admin.activos.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Activo $activo)
@@ -248,60 +236,51 @@ class ActivosController extends Controller
 
         $modelos = Modelo::get();
 
-        $marca_seleccionada = Marca::select('id','nombre')->find($activo->marca);
+        $marca_seleccionada = Marca::select('id', 'nombre')->find($activo->marca);
 
-        $modelo_seleccionado = Modelo::select('id','nombre')->find($activo->modelo);
+        $modelo_seleccionado = Modelo::select('id', 'nombre')->find($activo->modelo);
 
-        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'activo', 'empleados', 'area', 'marcas', 'modelos','marca_seleccionada','modelo_seleccionado'));
+        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'activo', 'empleados', 'area', 'marcas', 'modelos', 'marca_seleccionada', 'modelo_seleccionado'));
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)
     {
-
-
-        $data = array();
+        $data = [];
         if ($request->hasfile('documentos_relacionados')) {
-
             foreach ($request->file('documentos_relacionados') as $file) {
-
-
                 $nombre_compuesto = $file->getClientOriginalName();
                 $file->storeAs('public/activos', $nombre_compuesto); // Almacenar Archivo
 
-
                 $data[] = $nombre_compuesto;
             }
-        }
-        else{
-            $data=$activo->documentos_relacionados;
+        } else {
+            $data = $activo->documentos_relacionados;
         }
 
         $activo->update([
-            "nombreactivo" => $request->nombreactivo,
-            "descripcion" => $request->descripcion,
-            "marca" => intval($request->marca),
-            "modelo" => intval($request->modelo),
-            "n_serie" => $request->n_serie,
-            "n_producto" => $request->n_producto,
-            "fecha_fin" => $request->fecha_fin,
-            "fecha_compra" => $request->fecha_compra,
-            "fecha_baja" => $request->fecha_baja,
-            "fecha_alta" => $request->fecha_alta,
-            "dueno_id" => $request->dueno_id,
-            "id_responsable" => $request->id_responsable,
-            "tipoactivo_id" => $request->tipoactivo_id,
-            "subtipo_id" => $request->subtipo_id,
-            "ubicacion_id" => $request->ubicacion_id,
-            "sede" => $request->sede,
-            "observaciones" => $request->observaciones,
-            "documentos_relacionados" => $data
+            'nombreactivo' => $request->nombreactivo,
+            'descripcion' => $request->descripcion,
+            'marca' => intval($request->marca),
+            'modelo' => intval($request->modelo),
+            'n_serie' => $request->n_serie,
+            'n_producto' => $request->n_producto,
+            'fecha_fin' => $request->fecha_fin,
+            'fecha_compra' => $request->fecha_compra,
+            'fecha_baja' => $request->fecha_baja,
+            'fecha_alta' => $request->fecha_alta,
+            'dueno_id' => $request->dueno_id,
+            'id_responsable' => $request->id_responsable,
+            'tipoactivo_id' => $request->tipoactivo_id,
+            'subtipo_id' => $request->subtipo_id,
+            'ubicacion_id' => $request->ubicacion_id,
+            'sede' => $request->sede,
+            'observaciones' => $request->observaciones,
+            'documentos_relacionados' => $data,
 
         ]);
-            //  dd($activo);
+        //  dd($activo);
 
-
-
-        return redirect()->route('admin.activos.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.activos.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Activo $activo)

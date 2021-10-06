@@ -1,77 +1,106 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
+    <style>
+        .img-size {
+            /* 	padding: 0;
+            margin: 0; */
+            height: 450px;
+            width: 700px;
+            background-size: cover;
+            overflow: hidden;
+        }
 
-    .img-size{
-    /* 	padding: 0;
-        margin: 0; */
-        height: 450px;
-        width: 700px;
-        background-size: cover;
-        overflow: hidden;
-    }
-    .modal-content {
-       width: 700px;
-      border:none;
-    }
-    .modal-body {
-       padding: 0;
-    }
+        .modal-content {
+            width: 700px;
+            border: none;
+        }
 
-    .carousel-control-prev-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-        width: 30px;
-        height: 48px;
-    }
-    .carousel-control-next-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-        width: 30px;
-        height: 48px;
-    }
+        .modal-body {
+            padding: 0;
+        }
 
-    .carousel-control-next {
-        top: 100px;
-        height: 10px;
-    }
+        .carousel-control-prev-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 48px;
+        }
 
-    .carousel-control-prev {
-        height: 40px;
-        top: 80px;
-    }
+        .carousel-control-next-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 48px;
+        }
 
-    .table tr td:nth-child(6){
+        .carousel-control-next {
+            top: 100px;
+            height: 10px;
+        }
 
-        max-width:415px !important;
-        width:415px !important;
+        .carousel-control-prev {
+            height: 40px;
+            top: 80px;
+        }
 
-    }
-    /* se comento por que se descuadra la cabecera de la tabla y el registro */
-    /* .table tr th:nth-child(6){
+        .table tr td:nth-child(6) {
 
-        width:415px !important;
-        max-width:415px !important;
-    } */
+            max-width: 415px !important;
+            width: 415px !important;
 
-    .table tr td:nth-child(5){
+        }
 
-    text-align:justify !important;
+        /* se comento por que se descuadra la cabecera de la tabla y el registro */
+        /* .table tr th:nth-child(6){
+
+            width:415px !important;
+            max-width:415px !important;
+        } */
+
+        .table tr td:nth-child(2) {
+
+        min-width:300px !important;
+        text-align: justify !important;
+
+        }
+
+        .table tr th:nth-child(2) {
+
+        text-align: center !important;
+
+        }
+        .table tr td:nth-child(3) {
+
+            min-width:500px !important;
+            text-align: justify !important;
+
+        }
+
+        .table tr th:nth-child(3) {
+
+        text-align: center !important;
+
+        }
+
+        .table tr td:nth-child(5) {
+
+            text-align: justify !important;
 
 
-    }
+        }
 
-    .table tr td:nth-child(10){
+        .table tr td:nth-child(10) {
 
-        text-align: center;
+            text-align: center;
 
-    }
+        }
 
-    .tamaño{
+        .tamaño {
 
-        width:168px !important;
+            width: 168px !important;
 
-    }
-</style>
+        }
+
+    </style>
 
 
 
@@ -90,7 +119,7 @@
             </a>
         </div>
     </div> --}}
-     @endcan
+        @endcan
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -101,7 +130,7 @@
                             {{ trans('cruds.materialSgsi.fields.id') }}
                         </th>
                         <th>
-                             Nombre&nbsp;del&nbsp;material
+                            Nombre&nbsp;del&nbsp;material
                         </th>
                         <th>
                             {{ trans('cruds.materialSgsi.fields.objetivo') }}
@@ -323,10 +352,10 @@
                     {
                         data: 'documento',
                         name: 'documento',
-                        render:function(data,type,row,meta){
-                             let archivo="";
-                             let archivos= JSON.parse(data);
-                               archivo=` <div class="container">
+                        render: function(data, type, row, meta) {
+                            let archivo = "";
+                            let archivos = JSON.parse(data);
+                            archivo = ` <div class="container">
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
@@ -339,8 +368,8 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                         <div class="modal-body">`;
-                                            if(archivos.length>0){
-                                                archivo+=`
+                            if (archivos.length > 0) {
+                                archivo += `
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -350,31 +379,30 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                    <li
-                                                    data-target='#carouselExampleIndicators${row.id}'
-                                                    data-slide-to='${idx}'></li>`})}
+                                                        <li
+                                                        data-target='#carouselExampleIndicators${row.id}'
+                                                        data-slide-to='${idx}'></li>`})}
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                    <div class='carousel-item ${idx==0?"active":""}'>
-                                                        <iframe seamless class='img-size' src='{{asset("storage/documentos_material_sgsi")}}/${archivo.documento}'></iframe>
-                                                    </div>`
+                                                        <div class='carousel-item ${idx==0?"active":""}'>
+                                                            <iframe seamless class='img-size' src='{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}'></iframe>
+                                                        </div>`
                                                     })}
 
                                             </div>
 
                                             </div>`;
-                                        }
-                                            else{
-                                                archivo+=`
+                            } else {
+                                archivo += `
                                                 <div class="text-center">
                                                     <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
-                                                    <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                    <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
                                                     </div>
                                                 `
-                                            }
-                                            archivo+=`
+                            }
+                            archivo += `
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -432,6 +460,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

@@ -25,8 +25,6 @@ class CreateGapLogroDosTable extends Migration
             $table->longText('recomendacion')->nullable();
             $table->timestamps();
         });
-
-
     }
 
     /**

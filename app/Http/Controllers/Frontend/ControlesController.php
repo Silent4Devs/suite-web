@@ -10,7 +10,6 @@ use App\Http\Requests\UpdateControleRequest;
 use App\Models\Controle;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ControlesController extends Controller

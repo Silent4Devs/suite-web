@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateEstatusPlanTrabajoRequest;
 use App\Models\EstatusPlanTrabajo;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class EstatusPlanTrabajoController extends Controller

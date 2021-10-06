@@ -19,7 +19,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * Get disk list
+     * Get disk list.
      *
      * ['public', 'local', 's3']
      *
@@ -44,11 +44,12 @@ class FileManagerRepository implements ConfigRepository
         if (auth()->user()->can('documentos_versiones_anteriores_respositorio_access')) {
             array_push($disklist, 'Documentos versiones anteriores');
         }
+
         return $disklist;
     }
 
     /**
-     * Default disk for left manager
+     * Default disk for left manager.
      *
      * null - auto select the first disk in the disk list
      *
@@ -60,7 +61,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * Default disk for right manager
+     * Default disk for right manager.
      *
      * null - auto select the first disk in the disk list
      *
@@ -72,7 +73,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * Default path for left manager
+     * Default path for left manager.
      *
      * null - root directory
      *
@@ -84,7 +85,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * Default path for right manager
+     * Default path for right manager.
      *
      * null - root directory
      *
@@ -96,7 +97,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * Image cache ( Intervention Image Cache )
+     * Image cache ( Intervention Image Cache ).
      *
      * set null, 0 - if you don't need cache (default)
      * if you want use cache - set the number of minutes for which the value should be cached
@@ -109,7 +110,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * File manager modules configuration
+     * File manager modules configuration.
      *
      * 1 - only one file manager window
      * 2 - one file manager window with directories tree module
@@ -123,7 +124,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * File upload - Max file size in KB
+     * File upload - Max file size in KB.
      *
      * null - no restrictions
      */
@@ -133,7 +134,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * File upload - Allow these file types
+     * File upload - Allow these file types.
      *
      * [] - no restrictions
      */
@@ -143,7 +144,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * Show / Hide system files and folders
+     * Show / Hide system files and folders.
      *
      * @return bool
      */
@@ -153,7 +154,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * Middleware
+     * Middleware.
      *
      * Add your middleware name to array -> ['web', 'auth', 'admin']
      * !!!! RESTRICT ACCESS FOR NON ADMIN USERS !!!!
@@ -166,7 +167,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * ACL mechanism ON/OFF
+     * ACL mechanism ON/OFF.
      *
      * default - false(OFF)
      *
@@ -178,7 +179,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * Hide files and folders from file-manager if user doesn't have access
+     * Hide files and folders from file-manager if user doesn't have access.
      *
      * ACL access level = 0
      *
@@ -190,7 +191,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * ACL strategy
+     * ACL strategy.
      *
      * blacklist - Allow everything(access - 2 - r/w) that is not forbidden by the ACL rules list
      *
@@ -204,7 +205,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * ACL rules repository
+     * ACL rules repository.
      *
      * default - config file(ConfigACLRepository)
      *
@@ -216,7 +217,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * ACL Rules cache
+     * ACL Rules cache.
      *
      * null or value in minutes
      *

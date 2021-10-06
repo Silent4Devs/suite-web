@@ -5,17 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAuditoriaInternaRequest;
-use App\Http\Requests\StoreAuditoriaInternaRequest;
 use App\Http\Requests\UpdateAuditoriaInternaRequest;
 use App\Models\AuditoriaInterna;
+use App\Models\Clausula;
 use App\Models\Controle;
+use App\Models\Empleado;
 use App\Models\Team;
 use App\Models\User;
-use App\Models\Empleado;
-use App\Models\Clausula;
 use Gate;
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -35,9 +33,9 @@ class AuditoriaInternaController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'auditoria_interna_show';
-                $editGate      = 'auditoria_interna_edit';
-                $deleteGate    = 'auditoria_interna_delete';
+                $viewGate = 'auditoria_interna_show';
+                $editGate = 'auditoria_interna_edit';
+                $deleteGate = 'auditoria_interna_delete';
                 $crudRoutePart = 'auditoria-internas';
 
                 return view('partials.datatablesActions', compact(
@@ -50,19 +48,19 @@ class AuditoriaInternaController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('alcance', function ($row) {
-                return $row->alcance ? $row->alcance : "";
+                return $row->alcance ? $row->alcance : '';
             });
             $table->editColumn('fecha_inicio', function ($row) {
-                return $row->fecha_inicio ? $row->fecha_inicio : "";
+                return $row->fecha_inicio ? $row->fecha_inicio : '';
             });
             $table->editColumn('fecha_fin', function ($row) {
-                return $row->fecha_fin ? $row->fecha_fin : "";
+                return $row->fecha_fin ? $row->fecha_fin : '';
             });
             $table->addColumn('clausula', function ($row) {
-                return $row->clausulas ? $row->clausulas :'';
+                return $row->clausulas ? $row->clausulas : '';
             });
 
             $table->addColumn('lider', function ($row) {
@@ -70,35 +68,35 @@ class AuditoriaInternaController extends Controller
             });
 
             $table->addColumn('equipo', function ($row) {
-                return $row->equipo ? $row->equipo: '';
+                return $row->equipo ? $row->equipo : '';
             });
 
             $table->editColumn('hallazgos', function ($row) {
-                return $row->hallazgos ? $row->hallazgos : "";
+                return $row->hallazgos ? $row->hallazgos : '';
             });
             $table->editColumn('cheknoconformidadmenor', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->cheknoconformidadmenor ? 'checked' : null) . '>';
             });
             $table->editColumn('totalnoconformidadmenor', function ($row) {
-                return $row->totalnoconformidadmenor ? $row->totalnoconformidadmenor : "";
+                return $row->totalnoconformidadmenor ? $row->totalnoconformidadmenor : '';
             });
             $table->editColumn('checknoconformidadmayor', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->checknoconformidadmayor ? 'checked' : null) . '>';
             });
             $table->editColumn('totalnoconformidadmayor', function ($row) {
-                return $row->totalnoconformidadmayor ? $row->totalnoconformidadmayor : "";
+                return $row->totalnoconformidadmayor ? $row->totalnoconformidadmayor : '';
             });
             $table->editColumn('checkobservacion', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->checkobservacion ? 'checked' : null) . '>';
             });
             $table->editColumn('totalobservacion', function ($row) {
-                return $row->totalobservacion ? $row->totalobservacion : "";
+                return $row->totalobservacion ? $row->totalobservacion : '';
             });
             $table->editColumn('checkmejora', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->checkmejora ? 'checked' : null) . '>';
             });
             $table->editColumn('totalmejora', function ($row) {
-                return $row->totalmejora ? $row->totalmejora : "";
+                return $row->totalmejora ? $row->totalmejora : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'cheknoconformidadmenor', 'checknoconformidadmayor', 'checkobservacion', 'checkmejora']);
@@ -107,9 +105,9 @@ class AuditoriaInternaController extends Controller
         }
 
         $controles = Controle::get();
-        $users     = User::get();
-        $users     = User::get();
-        $teams     = Team::get();
+        $users = User::get();
+        $users = User::get();
+        $teams = Team::get();
 
         return view('admin.auditoriaInternas.index', compact('controles', 'users', 'users', 'teams'));
     }
@@ -123,7 +121,6 @@ class AuditoriaInternaController extends Controller
         $auditorliders = Empleado::all();
 
         $equipoauditorias = Empleado::all();
-
 
         return view('admin.auditoriaInternas.create', compact('clausulas', 'auditorliders', 'equipoauditorias'));
     }
@@ -169,7 +166,6 @@ class AuditoriaInternaController extends Controller
         $auditoriaInterna->equipo()->sync($request->equipo);
         $auditoriaInterna->clausulas()->sync($request->clausulas);
 
-
         return redirect()->route('admin.auditoria-internas.index');
     }
 
@@ -202,10 +198,10 @@ class AuditoriaInternaController extends Controller
     {
         abort_if(Gate::denies('auditoria_interna_create') && Gate::denies('auditoria_interna_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new AuditoriaInterna();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new AuditoriaInterna();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

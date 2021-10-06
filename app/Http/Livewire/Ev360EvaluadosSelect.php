@@ -19,7 +19,7 @@ class Ev360EvaluadosSelect extends Component
         if ($this->evaluados_objetivo == 'manual') {
             $this->habilitarSelectManual = true;
             $this->habilitarSelectAreas = false;
-        } else if ($this->evaluados_objetivo == 'area') {
+        } elseif ($this->evaluados_objetivo == 'area') {
             $this->habilitarSelectAreas = true;
             $this->habilitarSelectManual = false;
         } else {
@@ -33,6 +33,7 @@ class Ev360EvaluadosSelect extends Component
         $grupos_evaluados = GruposEvaluado::all();
         $empleados = Empleado::all();
         $areas = Area::all();
+
         return view('livewire.ev360-evaluados-select', ['grupos_evaluados' => $grupos_evaluados, 'areas' => $areas, 'empleados' => $empleados]);
     }
 }

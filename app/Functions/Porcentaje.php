@@ -1,12 +1,6 @@
 <?php
 
-
 namespace App\Functions;
-
-use App\Models\GapUno;
-use App\Models\GapDo;
-use App\Models\GapTre;
-use Illuminate\Support\Facades\DB;
 
 class Porcentaje
 {
@@ -47,13 +41,12 @@ class Porcentaje
         $porcentaje = ($satisfactoriamente + $parcialmenteValor) * (100) / 40;
         $avance = $satisfactoriamente + $parcialmenteValor;
 
-
-        return array(
+        return [
             'Gap2Satis' => $satisfactoriamente,
             'Gap2Parcial' => $parcialmenteValor,
             'Porcentaje' => $porcentaje,
-            'Avance' => $avance
-        );
+            'Avance' => $avance,
+        ];
     }//termina func
 
     public function GapTresPorc($gap3porcentaje, $gap32porcentaje)
@@ -82,10 +75,10 @@ class Porcentaje
 
         $resultado = $gap1cont + $gap12cont;
         //$porc2 = (round($gap12cont) * 20) / 100;
-        return array(
+        return [
             'porcentaje' => $resultado,
             'verificar' => $gap1cont,
             'actuar' => $gap12cont,
-        );
+        ];
     }//termina func
 }

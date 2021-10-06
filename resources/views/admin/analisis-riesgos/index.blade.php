@@ -261,7 +261,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [4, 'desc']
                 ]
             };
             let table = $('.datatable-AnalisisRiesgo').DataTable(dtOverrideGlobals);

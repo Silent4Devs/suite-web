@@ -47,7 +47,6 @@ class LoginController extends Controller
     public function redirectTo()
     {
         if (auth()->user()->is_admin) {
-
             $numero_bloqueo = LockedPlanTrabajo::count();
             if ($numero_bloqueo == 1) {
                 $bloqueo = LockedPlanTrabajo::first();
@@ -59,6 +58,7 @@ class LoginController extends Controller
                     ]);
                 }
             }
+
             return '/admin/inicioUsuario';
         }
 
@@ -87,6 +87,7 @@ class LoginController extends Controller
             }
         }
         $this->performLogout($request);
+
         return redirect('/');
     }
 }

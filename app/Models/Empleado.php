@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
- * Class Empleado
+ * Class Empleado.
  *
  * @property int $id
  * @property string|null $name
@@ -43,8 +43,6 @@ use \DateTimeInterface;
  * @property Collection|MatrizRiesgo[] $matriz_riesgos
  * @property Collection|RevisionDocumento[] $revision_documentos
  * @property Collection|User[] $users
- *
- * @package App\Models
  */
 class Empleado extends Model
 {
@@ -55,15 +53,15 @@ class Empleado extends Model
     protected $casts = [
         'supervisor_id' => 'int',
         'area_id' => 'int',
-        'sede_id' => 'int'
+        'sede_id' => 'int',
     ];
 
     public static $searchable = [
-        'name'
+        'name',
     ];
 
     protected $dates = [
-        'antiguedad'
+        'antiguedad',
     ];
 
     //public $preventsLazyLoading = true;
@@ -89,9 +87,8 @@ class Empleado extends Model
         'direccion',
         'cumpleaños',
         'resumen',
-        'puesto_id'
+        'puesto_id',
     ];
-
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -111,25 +108,26 @@ class Empleado extends Model
     public function getGeneroFormateadoAttribute()
     {
         if ($this->genero == 'H') {
-            return "Masculino";
+            return 'Masculino';
         } elseif ($this->genero == 'M') {
-            return "Femenino";
+            return 'Femenino';
         } else {
-            return "Otro Género";
+            return 'Otro Género';
         }
     }
 
     public function getAvatarAttribute()
     {
-        if ($this->foto == null || $this->foto == "0") {
+        if ($this->foto == null || $this->foto == '0') {
             if ($this->genero == 'H') {
-                return "man.png";
+                return 'man.png';
             } elseif ($this->genero == 'M') {
-                return "woman.png";
+                return 'woman.png';
             } else {
-                return "usuario_no_cargado.png";
+                return 'usuario_no_cargado.png';
             }
         }
+
         return $this->foto;
     }
 
@@ -145,7 +143,7 @@ class Empleado extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'supervisor_id');
+        return $this->belongsTo(self::class, 'supervisor_id');
     }
 
     public function analisis_de_riesgos()
@@ -172,7 +170,7 @@ class Empleado extends Model
 
     public function empleados()
     {
-        return $this->hasMany(Empleado::class, 'supervisor_id', 'id'); //Sin Eager Loading
+        return $this->hasMany(self::class, 'supervisor_id', 'id'); //Sin Eager Loading
     }
 
     public function entendimiento_organizacions()
@@ -207,13 +205,14 @@ class Empleado extends Model
 
     public function supervisor()
     {
-        return $this->belongsTo(Empleado::class);
+        return $this->belongsTo(self::class);
     }
 
     public function children()
     {
-        return $this->hasMany(Empleado::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
+
     public function fodas()
     {
         return $this->hasMany(EntendimientoOrganizacion::class, 'id_elabora', 'id');
@@ -259,7 +258,6 @@ class Empleado extends Model
         return $this->hasMany(CursosDiplomasEmpleados::class);
     }
 
-
     public function empleado_educacion()
     {
         return $this->hasMany(EducacionEmpleados::class);
@@ -274,7 +272,6 @@ class Empleado extends Model
     {
         return $this->hasMany(EvidenciasDocumentosEmpleados::class);
     }
-
 
     public function foto_organizacion()
     {
@@ -299,7 +296,8 @@ class Empleado extends Model
 
     public function getEmpleadosMismaAreaAttribute()
     {
-        $by_area = Empleado::where('area_id', $this->area_id)->pluck('id')->toArray();
+        $by_area = self::where('area_id', $this->area_id)->pluck('id')->toArray();
+
         return $by_area;
     }
 }

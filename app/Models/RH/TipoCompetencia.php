@@ -10,5 +10,5 @@ class TipoCompetencia extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'ev360_tipo_competencias';
-    protected $guarded = ["id"];
+    protected $guarded = ['id'];
 }

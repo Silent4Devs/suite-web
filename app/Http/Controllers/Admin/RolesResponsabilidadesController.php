@@ -27,9 +27,9 @@ class RolesResponsabilidadesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'roles_responsabilidade_show';
-                $editGate      = 'roles_responsabilidade_edit';
-                $deleteGate    = 'roles_responsabilidade_delete';
+                $viewGate = 'roles_responsabilidade_show';
+                $editGate = 'roles_responsabilidade_edit';
+                $deleteGate = 'roles_responsabilidade_delete';
                 $crudRoutePart = 'roles-responsabilidades';
 
                 return view('partials.datatablesActions', compact(
@@ -42,25 +42,25 @@ class RolesResponsabilidadesController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('responsabilidad', function ($row) {
-                return $row->responsabilidad ? $row->responsabilidad : "";
+                return $row->responsabilidad ? $row->responsabilidad : '';
             });
             $table->editColumn('direccionsgsi', function ($row) {
-                return $row->direccionsgsi ? $row->direccionsgsi : "";
+                return $row->direccionsgsi ? $row->direccionsgsi : '';
             });
             $table->editColumn('comiteseguridad', function ($row) {
-                return $row->comiteseguridad ? $row->comiteseguridad : "";
+                return $row->comiteseguridad ? $row->comiteseguridad : '';
             });
             $table->editColumn('responsablesgsi', function ($row) {
-                return $row->responsablesgsi ? $row->responsablesgsi : "";
+                return $row->responsablesgsi ? $row->responsablesgsi : '';
             });
             $table->editColumn('coordinadorsgsi', function ($row) {
-                return $row->coordinadorsgsi ? $row->coordinadorsgsi : "";
+                return $row->coordinadorsgsi ? $row->coordinadorsgsi : '';
             });
             $table->editColumn('rol', function ($row) {
-                return $row->rol ? $row->rol : "";
+                return $row->rol ? $row->rol : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -84,7 +84,7 @@ class RolesResponsabilidadesController extends Controller
     {
         $rolesResponsabilidade = RolesResponsabilidade::create($request->all());
 
-        return redirect()->route('admin.roles-responsabilidades.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.roles-responsabilidades.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(RolesResponsabilidade $rolesResponsabilidade)
@@ -100,7 +100,7 @@ class RolesResponsabilidadesController extends Controller
     {
         $rolesResponsabilidade->update($request->all());
 
-        return redirect()->route('admin.roles-responsabilidades.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.roles-responsabilidades.index')->with('success', 'Editado con éxito');
     }
 
     public function show(RolesResponsabilidade $rolesResponsabilidade)

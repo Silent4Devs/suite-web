@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\User;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use App\Functions\Porcentaje;
-use App\Models\ActividadFase;
-use Illuminate\Http\Response;
-use App\Models\PlanImplementacion;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Empleado;
+use App\Models\PlanImplementacion;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use App\Models\PlanImplementacionTask;
 use Illuminate\Support\Facades\Storage;
 
 class PlanTrabajoBaseController extends Controller
@@ -27,8 +22,7 @@ class PlanTrabajoBaseController extends Controller
         $write_empleados = $json_code;
         file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
 
-
-        $files = glob("storage/gantt/versiones/gantt_inicial*.json");
+        $files = glob('storage/gantt/versiones/gantt_inicial*.json');
         $archivos_gantt = [];
 
         sort($files, SORT_NATURAL | SORT_FLAG_CASE);
@@ -39,19 +33,16 @@ class PlanTrabajoBaseController extends Controller
         $path_asset = asset('storage/gantt/versiones/');
         $gant_readed = end($archivos_gantt);
         $file_gant = json_decode(file_get_contents($gant_readed), true);
-        $empleados = Empleado::select("name")->get();
+        $empleados = Empleado::select('name')->get();
         $name_file_gantt = 'gantt_inicial.json';
-
 
         return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
     }
 
-
-
     public function saveImplementationProyect(Request $request)
     {
-        $project =  $request->prj;
-        $project = (array)json_decode($project);
+        $project = $request->prj;
+        $project = (array) json_decode($project);
 
         if (PlanImplementacion::find(1)) {
             $tasks = isset($project['tasks']) ? $project['tasks'] : [];
@@ -76,10 +67,9 @@ class PlanTrabajoBaseController extends Controller
                 'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
             ]);
         }
+
         return response()->json(['success' => true], 200);
     }
-
-
 
     public function loadProyect()
     {
@@ -113,14 +103,13 @@ class PlanTrabajoBaseController extends Controller
         return $implementacion;
     }
 
-
-
     public function saveCurrentProyect(Request $request)
     {
         if ($request->ajax()) {
             $gantt_path = 'storage/gantt/gantt_inicial.json';
             $path = public_path($gantt_path);
             $store = file_put_contents($path, $request->gantt);
+
             return response('guardado con exito', 200);
         }
     }
@@ -143,7 +132,7 @@ class PlanTrabajoBaseController extends Controller
             Storage::disk('public')->put('gantt/tmp/ganttTemporal.json', $proyecto);
             $gantt_path = 'storage/gantt/';
             $path = public_path($gantt_path);
-            $files = glob($path . "gantt_inicial*.json");
+            $files = glob($path . 'gantt_inicial*.json');
             $archivos_gantt = [];
 
             sort($files, SORT_NATURAL | SORT_FLAG_CASE);
@@ -151,7 +140,7 @@ class PlanTrabajoBaseController extends Controller
                 array_push($archivos_gantt, $valor);
             }
 
-            $current_gantt = $path . "gantt_inicial.json";
+            $current_gantt = $path . 'gantt_inicial.json';
             $tmp_gantt = json_decode(file_get_contents($path . 'tmp/ganttTemporal.json'));
             $old_gant = json_decode(file_get_contents($current_gantt));
             $notExistsChanges = $tmp_gantt == $old_gant;

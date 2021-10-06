@@ -29,7 +29,6 @@ class MetricaObjetivoCreate extends Component
         $this->emit('render-metrica-objetivo-select');
     }
 
-
     public function render()
     {
         return view('livewire.metrica-objetivo-create');

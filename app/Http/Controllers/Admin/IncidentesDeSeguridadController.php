@@ -29,9 +29,9 @@ class IncidentesDeSeguridadController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'incidentes_de_seguridad_show';
-                $editGate      = 'incidentes_de_seguridad_edit';
-                $deleteGate    = 'incidentes_de_seguridad_delete';
+                $viewGate = 'incidentes_de_seguridad_show';
+                $editGate = 'incidentes_de_seguridad_edit';
+                $deleteGate = 'incidentes_de_seguridad_delete';
                 $crudRoutePart = 'incidentes-de-seguridads';
 
                 return view('partials.datatablesActions', compact(
@@ -44,13 +44,13 @@ class IncidentesDeSeguridadController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('folio', function ($row) {
-                return $row->folio ? $row->folio : "";
+                return $row->folio ? $row->folio : '';
             });
             $table->editColumn('resumen', function ($row) {
-                return $row->resumen ? $row->resumen : "";
+                return $row->resumen ? $row->resumen : '';
             });
             $table->editColumn('prioridad', function ($row) {
                 return $row->prioridad ? IncidentesDeSeguridad::PRIORIDAD_SELECT[$row->prioridad] : '';
@@ -66,7 +66,7 @@ class IncidentesDeSeguridadController extends Controller
                 return implode(' ', $labels);
             });
             $table->editColumn('clasificacion', function ($row) {
-                return $row->clasificacion ? $row->clasificacion : "";
+                return $row->clasificacion ? $row->clasificacion : '';
             });
             $table->addColumn('estado_estado', function ($row) {
                 return $row->estado ? $row->estado->estado : '';
@@ -77,9 +77,9 @@ class IncidentesDeSeguridadController extends Controller
             return $table->make(true);
         }
 
-        $activos           = Activo::get();
+        $activos = Activo::get();
         $estado_incidentes = EstadoIncidente::get();
-        $teams             = Team::get();
+        $teams = Team::get();
 
         return view('admin.incidentesDeSeguridads.index', compact('activos', 'estado_incidentes', 'teams'));
     }

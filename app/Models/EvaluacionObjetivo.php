@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class EvaluacionObjetivo
+ * Class EvaluacionObjetivo.
  *
  * @property int $id
  * @property character varying|null $no
@@ -24,39 +24,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  *
  * @property Objetivosseguridad|null $objetivosseguridad
- *
- * @package App\Models
  */
 class EvaluacionObjetivo extends Model
 {
-	use SoftDeletes;
-	protected $table = 'evaluacion_objetivo';
+    use SoftDeletes;
+    protected $table = 'evaluacion_objetivo';
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-	protected $casts = [
-		'no' => 'int',
-		'evaluacion' => 'string',
-		'resultado' => 'int',
-		'id_objetivo' => 'int',
-	];
+    protected $casts = [
+        'no' => 'int',
+        'evaluacion' => 'string',
+        'resultado' => 'int',
+        'id_objetivo' => 'int',
+    ];
 
-	protected $dates = [
-		'fecha',
+    protected $dates = [
+        'fecha',
         'deleted_at',
-	];
+    ];
 
-	protected $fillable = [
-		'no',
-		'evaluacion',
-		'fecha',
-		'resultado',
-		'id_objetivo'
-	];
+    protected $fillable = [
+        'no',
+        'evaluacion',
+        'fecha',
+        'resultado',
+        'id_objetivo',
+    ];
 
-	public function objetivosseguridad()
-	{
-		return $this->belongsTo(Objetivosseguridad::class, 'id_objetivo');
-	}
+    public function objetivosseguridad()
+    {
+        return $this->belongsTo(Objetivosseguridad::class, 'id_objetivo');
+    }
 }

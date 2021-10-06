@@ -28,7 +28,7 @@ class AddColumnUbicacaionAndPrescencialToRecursosTable extends Migration
     {
         Schema::table('recursos', function (Blueprint $table) {
             $table->dropColumn('modalidad');
-            $table->dropColumn('ubicacion');        
+            $table->dropColumn('ubicacion');
         });
     }
 }
