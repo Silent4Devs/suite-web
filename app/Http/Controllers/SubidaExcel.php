@@ -20,7 +20,8 @@ use App\Imports\FaqCategoriaImport;
 use App\Imports\FaqPreguntaImport;
 use App\Imports\AnalisisDeRiesgoImport;
 use App\Imports\PartesInteresadaImport;
-use App\Imports\FodaImport;
+use App\Imports\EntendimientoOrganizacionImport;
+use App\Imports\AlcanceSgsiImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SubidaExcel extends Controller
