@@ -87,32 +87,32 @@
         </div>
     </div>
 </div>
-<div class="datatable-fix" style="width: 100%;">
 
+<div class="datatable-fix" style="width: 100%;">
+    <div class="text-right mb-3">
+        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/seguridad')}}">Crear reporte</a>
+    </div>
     <table class="table tabla_incidentes_seguridad">
         <thead>
             <tr>
                 {{-- <th>ID</th> --}}
-                <th>Folio</th>
-                <th>Título</th>
-                <th>Sede</th>
-                <th>Ubicación</th>
+                <th style="min-width: 100px;">Folio</th>
+                <th style="min-width: 250px;">Título</th>
+                <th style="min-width: 250px;">Sede</th>
+                <th style="min-width: 250px;">Ubicación</th>
                 <th style="min-width: 500px;">Descripción</th>
-                <th>Areas, Afectadas</th>
-                <th>Procesos, Afectados</th>
-                <th>Activos, Afectados</th>
+                <th style="min-width: 250px;">Areas, Afectadas</th>
+                <th style="min-width: 250px;">Procesos, Afectados</th>
+                <th style="min-width: 250px;">Activos, Afectados</th>
                 <th style="min-width: 150px;">Fecha</th>
-                <th>Quién reporto</th>
-                <th>Correo</th>
-                <th>Teléfono</th>
-                <th>Categoría</th>
-                <th>Subcategoria</th>
+                <th style="min-width: 250px;">Quién reporto</th>
+                <th style="min-width: 250px;">Correo</th>
+                <th style="min-width: 250px;">Teléfono</th>
                 <th>Urgencia</th>
                 <th>Impacto</th>
-                <th>Prioridad</th>
                 <th>Estatus</th>
                 <th style="min-width: 150px;">Fecha de cierre</th>
-                <th>Asignado a</th>
+                <th style="min-width: 250px;">Asignado a</th>
                 <th style="min-width: 500px;">Comentarios</th>
                 <th>Opciones</th>
             </tr>
@@ -284,19 +284,10 @@
                             }
                         },
                         {
-                            data: 'categoria'
-                        },
-                        {
-                            data: 'subcategoria'
-                        },
-                        {
                             data: 'urgencia'
                         },
                         {
                             data: 'impacto'
-                        },
-                        {
-                            data: 'prioridad'
                         },
                         {
                             data: 'estatus'
