@@ -19,8 +19,6 @@ class AddColumnObservacionesToActivosTable extends Migration
             $table->string('documentos_relacionados')->nullable();
             $table->date('fecha_alta')->nullable();
             $table->date('fecha_baja')->nullable();
-
-
         });
     }
 

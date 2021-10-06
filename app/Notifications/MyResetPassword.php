@@ -3,11 +3,8 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-
-
 
 class MyResetPassword extends Notification
 {
@@ -19,6 +16,7 @@ class MyResetPassword extends Notification
      * @return void
      */
     protected $token;
+
     public function __construct($token)
     {
         //
@@ -42,10 +40,8 @@ class MyResetPassword extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-
     public function toMail($notifiable)
     {
-
         return (new MailMessage)
             ->subject('TABANTAJ: Restablecimiento de contraseña.')
             ->line([
@@ -69,7 +65,6 @@ class MyResetPassword extends Notification
             ], false)))
             ->line('Si usted no solicitó un restablecimiento de contraseña, no se requiere ninguna otra acción');
     }
-
 
     /**
      * Get the array representation of the notification.

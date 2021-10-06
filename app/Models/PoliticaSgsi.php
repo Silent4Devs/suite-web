@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use \DateTimeInterface;
-use Carbon\Carbon;
 use App\Traits\MultiTenantModelTrait;
+use Carbon\Carbon;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PoliticaSgsi extends Model
 {
@@ -46,7 +46,6 @@ class PoliticaSgsi extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-
     public function getFechaPublicacionAttribute($value)
     {
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
@@ -68,10 +67,7 @@ class PoliticaSgsi extends Model
     }
 
     public function reviso()
-	{
+    {
         return $this->belongsTo(Empleado::class, 'id_reviso_politica', 'id');
-
-	}
-
-
+    }
 }

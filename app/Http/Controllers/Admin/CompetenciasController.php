@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Area;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Empleado;
-use App\Models\Competencium;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\StoreCompetenciumRequest;
-use App\Http\Requests\UpdateCompetenciumRequest;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyCompetenciumRequest;
+use App\Http\Requests\StoreCompetenciumRequest;
+use App\Http\Requests\UpdateCompetenciumRequest;
+use App\Models\Area;
+use App\Models\Competencium;
+use App\Models\Team;
+use App\Models\User;
+use Gate;
+use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class CompetenciasController extends Controller
 {
@@ -34,9 +33,9 @@ class CompetenciasController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'competencium_show';
-                $editGate      = 'competencium_edit';
-                $deleteGate    = 'competencium_delete';
+                $viewGate = 'competencium_show';
+                $editGate = 'competencium_edit';
+                $deleteGate = 'competencium_delete';
                 $crudRoutePart = 'competencia';
 
                 return view('partials.datatablesActions', compact(
@@ -49,14 +48,14 @@ class CompetenciasController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->addColumn('nombrecolaborador_name', function ($row) {
                 return $row->nombrecolaborador ? $row->nombrecolaborador->name : '';
             });
 
             $table->editColumn('perfilpuesto', function ($row) {
-                return $row->perfilpuesto ? $row->perfilpuesto : "";
+                return $row->perfilpuesto ? $row->perfilpuesto : '';
             });
             $table->editColumn('certificados', function ($row) {
                 if (!$row->certificados) {
@@ -104,7 +103,7 @@ class CompetenciasController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $competencium->id]);
         }
 
-        return redirect()->route('admin.competencia.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.competencia.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Competencium $competencium)
@@ -138,7 +137,7 @@ class CompetenciasController extends Controller
             }
         }
 
-        return redirect()->route('admin.competencia.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.competencia.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Competencium $competencium)
@@ -170,10 +169,10 @@ class CompetenciasController extends Controller
     {
         abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Competencium();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Competencium();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
@@ -182,10 +181,8 @@ class CompetenciasController extends Controller
     {
         // dd($request->all());
 
-        $areas= Area::get();
+        $areas = Area::get();
 
-
-        return view('admin.competencia.buscarCV',compact('areas'));
-
+        return view('admin.competencia.buscarCV', compact('areas'));
     }
 }

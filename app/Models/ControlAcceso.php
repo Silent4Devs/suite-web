@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use \DateTimeInterface;
 
 class ControlAcceso extends Model implements HasMedia
 {
@@ -59,7 +59,6 @@ class ControlAcceso extends Model implements HasMedia
 
     public function documentos_controlA()
     {
-        return $this->hasMany(DocumentoControlAcceso::class, "controlA_id", "id");
+        return $this->hasMany(DocumentoControlAcceso::class, 'controlA_id', 'id');
     }
-
 }

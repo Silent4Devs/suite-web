@@ -6,20 +6,19 @@ use Alexusmai\LaravelFileManager\Services\ACLService\ACLRepository;
 
 class UsersACLRepository implements ACLRepository
 {
-
     public function getUserID()
     {
         return auth()->user()->id;
     }
 
     /**
-     * Get ACL rules list for user
+     * Get ACL rules list for user.
      *
      * @return array
      */
     public function getRules(): array
     {
-        if (auth()->user()->isAdmin||auth()->user()->can('documentador')) {
+        if (auth()->user()->isAdmin || auth()->user()->can('documentador')) {
             return [
                 ['disk' => 'Administrador', 'path' => '*', 'access' => 2],
                 ['disk' => 'Normas', 'path' => '*', 'access' => 2],
@@ -31,12 +30,12 @@ class UsersACLRepository implements ACLRepository
         }
 
         return [
-            ['disk' => 'Administrador', 'path' => '*', 'access' => 1],  // Not Admin then only read           
-            ['disk' => 'Normas', 'path' => '*', 'access' => 1], // Not Admin then only read           
-            ['disk' => 'Documentos publicados', 'path' => '*', 'access' => 1],  // Not Admin then only read           
-            ['disk' => 'Documentos en aprobacion', 'path' => '*', 'access' => 1],   // Not Admin then only read           
-            ['disk' => 'Documentos obsoletos', 'path' => '*', 'access' => 1],   // Not Admin then only read           
-            ['disk' => 'Documentos versiones anteriores', 'path' => '*', 'access' => 1],    // Not Admin then only read           
+            ['disk' => 'Administrador', 'path' => '*', 'access' => 1],  // Not Admin then only read
+            ['disk' => 'Normas', 'path' => '*', 'access' => 1], // Not Admin then only read
+            ['disk' => 'Documentos publicados', 'path' => '*', 'access' => 1],  // Not Admin then only read
+            ['disk' => 'Documentos en aprobacion', 'path' => '*', 'access' => 1],   // Not Admin then only read
+            ['disk' => 'Documentos obsoletos', 'path' => '*', 'access' => 1],   // Not Admin then only read
+            ['disk' => 'Documentos versiones anteriores', 'path' => '*', 'access' => 1],    // Not Admin then only read
         ];
     }
 }

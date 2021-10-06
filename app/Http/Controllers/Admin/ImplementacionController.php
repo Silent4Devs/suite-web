@@ -3,19 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\PlanBaseActividade;
-use Illuminate\Http\Request;
-use App\Functions\Porcentaje;
-use App\Models\User;
 use App\Models\ActividadFase;
+use App\Models\PlanBaseActividade;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-
-
-class implementacionController extends Controller
+class ImplementacionController extends Controller
 {
-
-
     public function index()
     {
         // dd(ActividadFase::with('plan_base_actividades')->get());
@@ -23,7 +18,7 @@ class implementacionController extends Controller
         $fases = ActividadFase::with('plan_base_actividades')->get();
         $gantt_path = 'storage/gantt/';
         $path = public_path($gantt_path);
-        $archivos_gantt = glob($path . "gantt_inicial*.json");
+        $archivos_gantt = glob($path . 'gantt_inicial*.json');
         // PlanBaseActividade::with('fase')->get()
         $path_asset = asset($gantt_path);
         $gant_readed = end($archivos_gantt);
@@ -43,28 +38,27 @@ class implementacionController extends Controller
                     $planbas = PlanBaseActividade::findOrFail($id);
                     $planbas->estatus_id = $request->value;
                     $planbas->save();
+
                     return response()->json(['success' => $request]);
                     break;
                 case 'fecha_inicio_p':
                     $planbas = PlanBaseActividade::findOrFail($id);
                     $planbas->fecha_inicio = $request->value;
                     $planbas->save();
+
                     return response()->json(['success' => $request]);
                     break;
             }
         }
     }
 
-
-
     public function saveImplementationProyect(Request $request)
     {
-
         $gantt_path = 'storage/gantt/';
 
         $path = public_path($gantt_path);
 
-        $version_gantt = glob($path . "gantt_inicial*.json");
+        $version_gantt = glob($path . 'gantt_inicial*.json');
 
         $ultima_version = 0;
 
@@ -73,13 +67,11 @@ class implementacionController extends Controller
         }
 
         if ($request->ajax()) {
-
             $proyecto = $request->get('txt_prj');
 
             // dd($proyecto);
 
             // $json = json_encode($proyecto);
-
 
             // $file = file_put_contents(storage_path('app/public/gantt/gantt_inicial.json'), $json);
 
@@ -93,19 +85,16 @@ class implementacionController extends Controller
         }
     }
 
-
-
     public function loadProyect(Request $request)
     {
-
         $gantt_path = 'storage/gantt/';
 
         $path = public_path($gantt_path);
 
-        $version_gantt = glob($path . "gantt_inicial*.json");
+        $version_gantt = glob($path . 'gantt_inicial*.json');
 
         $path = end($version_gantt);
-        $json_code =  json_decode(file_get_contents($path), true);
+        $json_code = json_decode(file_get_contents($path), true);
 
         return $json_code;
     }

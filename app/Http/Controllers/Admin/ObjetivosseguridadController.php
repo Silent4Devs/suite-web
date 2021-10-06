@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Team;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use App\Models\Objetivosseguridad;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use App\Models\VariablesObjetivosseguridad;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\StoreObjetivosseguridadRequest;
-use App\Http\Requests\UpdateObjetivosseguridadRequest;
 use App\Http\Requests\MassDestroyObjetivosseguridadRequest;
+use App\Http\Requests\UpdateObjetivosseguridadRequest;
+use App\Models\Empleado;
+use App\Models\Objetivosseguridad;
+use App\Models\Team;
+use App\Models\VariablesObjetivosseguridad;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class ObjetivosseguridadController extends Controller
 {
@@ -28,9 +27,9 @@ class ObjetivosseguridadController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'objetivosseguridad_show';
-                $editGate      = 'objetivosseguridad_edit';
-                $deleteGate    = 'objetivosseguridad_delete';
+                $viewGate = 'objetivosseguridad_show';
+                $editGate = 'objetivosseguridad_edit';
+                $deleteGate = 'objetivosseguridad_delete';
                 $crudRoutePart = 'objetivosseguridads';
 
                 return view('partials.datatablesActions', compact(
@@ -43,35 +42,35 @@ class ObjetivosseguridadController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('objetivoseguridad', function ($row) {
-                return $row->objetivoseguridad ? $row->objetivoseguridad : "";
+                return $row->objetivoseguridad ? $row->objetivoseguridad : '';
             });
             $table->editColumn('indicador', function ($row) {
-                return $row->indicador ? $row->indicador : "";
+                return $row->indicador ? $row->indicador : '';
             });
             $table->editColumn('responsable', function ($row) {
-                return $row->empleado ? $row->empleado->name : "";
+                return $row->empleado ? $row->empleado->name : '';
             });
 
             $table->editColumn('formula', function ($row) {
-                return $row->formula ? $row->formula : "";
+                return $row->formula ? $row->formula : '';
             });
 
             $table->editColumn('meta', function ($row) {
-                return $row->meta . $row->unidadmedida ? $row->meta . $row->unidadmedida : "";
+                return $row->meta . $row->unidadmedida ? $row->meta . $row->unidadmedida : '';
             });
 
             $table->editColumn('frecuencia', function ($row) {
-                return $row->frecuencia ? $row->frecuencia : "";
+                return $row->frecuencia ? $row->frecuencia : '';
             });
 
             $table->editColumn('ano', function ($row) {
-                return $row->ano ? $row->ano : "";
+                return $row->ano ? $row->ano : '';
             });
             $table->editColumn('enlace', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -87,7 +86,7 @@ class ObjetivosseguridadController extends Controller
     public function create()
     {
         abort_if(Gate::denies('objetivosseguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $responsables  = Empleado::get();
+        $responsables = Empleado::get();
 
         return view('admin.objetivosseguridads.create', compact('responsables'));
     }
@@ -97,14 +96,14 @@ class ObjetivosseguridadController extends Controller
         // dd($request);
         $objetivosseguridad = Objetivosseguridad::create($request->all());
         //return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
-        return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with('success', 'Guardado con éxito');
     }
 
     public function edit(Objetivosseguridad $objetivosseguridad)
     {
         abort_if(Gate::denies('objetivosseguridad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $responsables  = Empleado::get();
+        $responsables = Empleado::get();
 
         return view('admin.objetivosseguridads.edit', compact('objetivosseguridad', 'responsables'));
     }
@@ -113,7 +112,7 @@ class ObjetivosseguridadController extends Controller
     {
         $objetivosseguridad->update($request->all());
 
-        return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.objetivosseguridads.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Objetivosseguridad $objetivosseguridad)
@@ -146,17 +145,17 @@ class ObjetivosseguridadController extends Controller
         $id = $request->all();
         $objetivos = Objetivosseguridad::find($id['id']);
 
-        $formula_array = explode("!", $objetivos->formula);
+        $formula_array = explode('!', $objetivos->formula);
 
-        $finish_array = array();
+        $finish_array = [];
 
         foreach ($formula_array as $result) {
             if (strstr($result, '$')) {
                 array_push($finish_array, $result);
             }
-        };
+        }
 
-        $remplazo_formula = str_replace("!", "", $objetivos->formula);
+        $remplazo_formula = str_replace('!', '', $objetivos->formula);
 
         if ($remplazo_formula) {
             $up = $objetivos
@@ -164,8 +163,7 @@ class ObjetivosseguridadController extends Controller
         }
 
         foreach ($finish_array as $key => $value) {
-
-            VariablesObjetivosseguridad::create(['id_objetivo' => $objetivos->id, 'variable' => str_replace(".", "", $value)]);
+            VariablesObjetivosseguridad::create(['id_objetivo' => $objetivos->id, 'variable' => str_replace('.', '', $value)]);
         }
 
         return redirect()->action('Admin\ObjetivosseguridadController@evaluacionesInsert', ['id' => $objetivos->id]);

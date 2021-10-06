@@ -7,10 +7,10 @@ use App\Http\Requests\MassDestroyTratamientoRiesgoRequest;
 use App\Http\Requests\StoreTratamientoRiesgoRequest;
 use App\Http\Requests\UpdateTratamientoRiesgoRequest;
 use App\Models\Controle;
+use App\Models\Empleado;
 use App\Models\Team;
 use App\Models\TratamientoRiesgo;
 use App\Models\User;
-use App\Models\Empleado;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,9 +30,9 @@ class TratamientoRiesgosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'tratamiento_riesgo_show';
-                $editGate      = 'tratamiento_riesgo_edit';
-                $deleteGate    = 'tratamiento_riesgo_delete';
+                $viewGate = 'tratamiento_riesgo_show';
+                $editGate = 'tratamiento_riesgo_edit';
+                $deleteGate = 'tratamiento_riesgo_delete';
                 $crudRoutePart = 'tratamiento-riesgos';
 
                 return view('partials.datatablesActions', compact(
@@ -45,17 +45,17 @@ class TratamientoRiesgosController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('nivelriesgo', function ($row) {
-                return $row->nivelriesgo ? $row->nivelriesgo : "";
+                return $row->nivelriesgo ? $row->nivelriesgo : '';
             });
             $table->addColumn('control_control', function ($row) {
                 return $row->control ? $row->control->control : '';
             });
 
             $table->editColumn('acciones', function ($row) {
-                return $row->acciones ? $row->acciones : "";
+                return $row->acciones ? $row->acciones : '';
             });
             // $table->addColumn('responsable_name', function ($row) {
             //     return $row->responsable ? $row->responsable->name : '';
@@ -64,7 +64,7 @@ class TratamientoRiesgosController extends Controller
             $table->addColumn('id_reviso', function ($row) {
                 return $row->empleado ? $row->empleado->name : '';
             });
-            
+
             $table->addColumn('fechacompromiso', function ($row) {
                 return $row->fechacompromiso ? $row->fechacompromiso : '';
             });
@@ -73,16 +73,16 @@ class TratamientoRiesgosController extends Controller
                 return $row->prioridad ? TratamientoRiesgo::PRIORIDAD_SELECT[$row->prioridad] : '';
             });
             $table->editColumn('estatus', function ($row) {
-                return $row->estatus ? $row->estatus : "";
+                return $row->estatus ? $row->estatus : '';
             });
             $table->editColumn('probabilidad', function ($row) {
-                return $row->probabilidad ? $row->probabilidad : "";
+                return $row->probabilidad ? $row->probabilidad : '';
             });
             $table->editColumn('impacto', function ($row) {
-                return $row->impacto ? $row->impacto : "";
+                return $row->impacto ? $row->impacto : '';
             });
             $table->editColumn('nivelriesgoresidual', function ($row) {
-                return $row->nivelriesgoresidual ? $row->nivelriesgoresidual : "";
+                return $row->nivelriesgoresidual ? $row->nivelriesgoresidual : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'control', 'responsable']);
@@ -91,8 +91,8 @@ class TratamientoRiesgosController extends Controller
         }
 
         $controles = Controle::get();
-        $users     = User::get();
-        $teams     = Team::get();
+        $users = User::get();
+        $teams = Team::get();
 
         return view('admin.tratamientoRiesgos.index', compact('controles', 'users', 'teams'));
     }
@@ -114,7 +114,7 @@ class TratamientoRiesgosController extends Controller
         // dd($request);
         $tratamientoRiesgo = TratamientoRiesgo::create($request->all());
         // dd($tratamientoRiesgo);
-        return redirect()->route('admin.tratamiento-riesgos.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(TratamientoRiesgo $tratamientoRiesgo)
@@ -136,7 +136,7 @@ class TratamientoRiesgosController extends Controller
     {
         $tratamientoRiesgo->update($request->all());
 
-        return redirect()->route('admin.tratamiento-riesgos.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Editado con éxito');
     }
 
     public function show(TratamientoRiesgo $tratamientoRiesgo)
@@ -154,7 +154,7 @@ class TratamientoRiesgosController extends Controller
 
         $tratamientoRiesgo->delete();
 
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyTratamientoRiesgoRequest $request)

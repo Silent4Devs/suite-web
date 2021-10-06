@@ -6,11 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\Minutasaltadireccion;
 use App\Models\RevisionMinuta;
-use Illuminate\Http\Request;
 
 class RevisionMinutasController extends Controller
 {
-
     public function edit(RevisionMinuta $revisionMinuta)
     {
         $minuta = Minutasaltadireccion::find(intval($revisionMinuta->minuta_id));

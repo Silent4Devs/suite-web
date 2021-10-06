@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-
-use Flash;
-use App\Models\Team;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
-use Yajra\DataTables\Facades\DataTables;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\StoreOrganizacionRequest;
-use App\Http\Requests\UpdateOrganizacionRequest;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyOrganizacionRequest;
+use App\Http\Requests\StoreOrganizacionRequest;
+use App\Http\Requests\UpdateOrganizacionRequest;
+use App\Models\Organizacion;
+use Flash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Intervention\Image\Facades\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrganizacionController extends Controller
 {
@@ -35,11 +31,13 @@ class OrganizacionController extends Controller
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
-            $empty = FALSE;
+            $empty = false;
+
             return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty);
         } else {
-            $empty = TRUE;
+            $empty = true;
             $count = Organizacion::get()->count();
+
             return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo);
         }
     }
@@ -49,9 +47,11 @@ class OrganizacionController extends Controller
         $count = Organizacion::get()->count();
         if ($count == 0) {
             abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
             return view('admin.organizacions.create');
         } else {
             Flash::warning("<h5 align='center'>Ya existe un registro en la base de datos</h5>");
+
             return redirect()->route('admin.organizacions.index');
         }
     }
@@ -60,28 +60,28 @@ class OrganizacionController extends Controller
     {
         abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacion::create([
-            "empresa" => $request->empresa,
-            "direccion" => $request->direccion,
-            "telefono" => $request->telefono,
-            "correo" => $request->correo,
-            "pagina_web" => $request->pagina_web,
-            "servicios" => $request->servicios,
-            "giro" => $request->giro,
-            "mision" => $request->mision,
-            "vision" => $request->vision,
-            "valores" => $request->valores,
-            "antecedentes" => $request->antecedentes
+            'empresa' => $request->empresa,
+            'direccion' => $request->direccion,
+            'telefono' => $request->telefono,
+            'correo' => $request->correo,
+            'pagina_web' => $request->pagina_web,
+            'servicios' => $request->servicios,
+            'giro' => $request->giro,
+            'mision' => $request->mision,
+            'vision' => $request->vision,
+            'valores' => $request->valores,
+            'antecedentes' => $request->antecedentes,
         ]);
 
         if ($request->hasFile('logotipo')) {
             $this->validate($request, [
-                'logotipo' => 'mimetypes:image/jpeg,image/bmp,image/png'
+                'logotipo' => 'mimetypes:image/jpeg,image/bmp,image/png',
             ]);
         }
         $image = 'silent4business.png';
         if ($request->file('logotipo') != null or !empty($request->file('logotipo'))) {
             $extension = pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+            $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
             $new_name_image = 'UID_' . $organizacions->id . '_' . $name_image . '.' . $extension;
             $route = public_path() . '/images/' . $new_name_image;
             $image = $new_name_image;
@@ -97,13 +97,14 @@ class OrganizacionController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $organizacions->id]);
         }
 
-        return redirect()->route('admin.organizacions.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.organizacions.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Organizacion $organizacion)
     {
         abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->load('team');
+
         return view('admin.organizacions.edit', compact('organizacion'));
     }
 
@@ -114,7 +115,7 @@ class OrganizacionController extends Controller
 
         if ($request->hasFile('logotipo')) {
             $this->validate($request, [
-                'logotipo' => 'mimetypes:image/jpeg,image/bmp,image/png'
+                'logotipo' => 'mimetypes:image/jpeg,image/bmp,image/png',
             ]);
         }
         $file = $request->file('logotipo');
@@ -125,13 +126,15 @@ class OrganizacionController extends Controller
             $organizacions->logotipo = $nombre;
             $organizacions->save();
         }
-        return redirect()->route('admin.organizacions.index')->with("success", 'Editado con éxito');
+
+        return redirect()->route('admin.organizacions.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Organizacion $organizacion)
     {
         abort_if(Gate::denies('organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->load('team');
+
         return view('admin.organizacions.show', compact('organizacion'));
     }
 
@@ -139,6 +142,7 @@ class OrganizacionController extends Controller
     {
         abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->delete();
+
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
@@ -146,6 +150,7 @@ class OrganizacionController extends Controller
     {
         abort_if(Gate::denies('organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         Organizacion::whereIn('id', request('ids'))->delete();
+
         return response(null, Response::HTTP_NO_CONTENT);
     }
 

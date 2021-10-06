@@ -41,7 +41,6 @@ class CreateAnalisisAccionCorrectivaTable extends Migration
             $table->longText('problema_diagrama')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

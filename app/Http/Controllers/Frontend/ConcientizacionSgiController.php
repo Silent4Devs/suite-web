@@ -115,10 +115,10 @@ class ConcientizacionSgiController extends Controller
     {
         abort_if(Gate::denies('concientizacion_sgi_create') && Gate::denies('concientizacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new ConcientizacionSgi();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new ConcientizacionSgi();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

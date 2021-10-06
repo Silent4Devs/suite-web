@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +11,6 @@ class DocumentoControlAcceso extends Model
 
     protected $table = 'documento_control_accesos';
 
-
     protected $dates = [
         'created_at',
         'updated_at',
@@ -20,18 +18,17 @@ class DocumentoControlAcceso extends Model
     ];
     protected $cast = [
         'controlA_id',
-        'documento'
+        'documento',
     ];
 
     protected $fillable = [
-		'controlA_id',
-        'documento'
-		
-	];
+        'controlA_id',
+        'documento',
 
-    public function documentos_controlA(){
-        return $this->belongsTo(ControlAcceso::class,'controlA_id');
-    }    
+    ];
 
-    
+    public function documentos_controlA()
+    {
+        return $this->belongsTo(ControlAcceso::class, 'controlA_id');
+    }
 }

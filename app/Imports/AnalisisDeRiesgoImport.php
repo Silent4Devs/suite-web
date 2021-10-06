@@ -9,13 +9,12 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class AnalisisDeRiesgoImport implements ToModel
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
-
         return new AnalisisDeRiesgo([
             'nombre' => $row[0],
             'tipo' => $row[1],
@@ -39,16 +38,17 @@ class AnalisisDeRiesgoImport implements ToModel
     public function obtenerIdEstatusPorTexto($estatus)
     {
         $estatusId = AnalisisDeRiesgo::EstatusSelect;
-        $estatus_filtrado = array_filter($estatusId, function($item) use ($estatus)
-        {
+        $estatus_filtrado = array_filter($estatusId, function ($item) use ($estatus) {
             return strtolower($item) == strtolower($estatus);
         });
+
         return $estatus_filtrado;
     }
 
     public function obtenerEmpleadoPorNombre($nombre)
     {
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+
         return $empleado_bd->id;
     }
 }

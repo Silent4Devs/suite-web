@@ -27,7 +27,8 @@ class EvidenciasRiesgo extends Model
         'evidencia',
     ];
 
-    public function riesgos(){
+    public function riesgos()
+    {
         return $this->belongsTo(RiesgoIdentificado::class, 'id_riesgos');
     }
 }

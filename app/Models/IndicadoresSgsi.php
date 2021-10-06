@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class IndicadoresSgsi
+ * Class IndicadoresSgsi.
  *
  * @property int $id
  * @property string|null $nombre
@@ -38,68 +38,65 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property User|null $user
  * @property Team|null $team
  * @property Collection|EvaluacionIndicador[] $evaluacion_indicadors
- *
- * @package App\Models
  */
 class IndicadoresSgsi extends Model
 {
-	use SoftDeletes;
-	protected $table = 'indicadores_sgsis';
+    use SoftDeletes;
+    protected $table = 'indicadores_sgsis';
 
-	protected $casts = [
-		'responsable_id' => 'int',
-		'team_id' => 'int',
-		'id_proceso' => 'int',
-		'id_empleado' => 'int'
-	];
+    protected $casts = [
+        'responsable_id' => 'int',
+        'team_id' => 'int',
+        'id_proceso' => 'int',
+        'id_empleado' => 'int',
+    ];
 
-	protected $fillable = [
-		'nombre',
-		'descripcion',
-		'formula',
-		'frecuencia',
-		'unidadmedida',
-		'meta',
-		'no_revisiones',
-		'resultado',
-		'responsable_id',
-		'team_id',
-		'id_proceso',
-		'id_empleado',
-		'verde',
-		'amarillo',
-		'rojo',
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'formula',
+        'frecuencia',
+        'unidadmedida',
+        'meta',
+        'no_revisiones',
+        'resultado',
+        'responsable_id',
+        'team_id',
+        'id_proceso',
+        'id_empleado',
+        'verde',
+        'amarillo',
+        'rojo',
         'ano',
-	];
+    ];
 
-    public function getResultado(){
-
+    public function getResultado()
+    {
         return $this->evaluacion_indicadors()->sum('resultado');
     }
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'id_empleado');
-	}
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_empleado');
+    }
 
-	public function proceso()
-	{
-		return $this->belongsTo(Proceso::class, 'id_proceso');
-	}
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'id_proceso');
+    }
 
-	public function user()
-	{
-		return $this->belongsTo(User::class, 'responsable_id');
-	}
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'responsable_id');
+    }
 
-	public function team()
-	{
-		return $this->belongsTo(Team::class);
-	}
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 
-	public function evaluacion_indicadors()
-	{
-		return $this->hasMany(EvaluacionIndicador::class, 'id_indicador');
-	}
+    public function evaluacion_indicadors()
+    {
+        return $this->hasMany(EvaluacionIndicador::class, 'id_indicador');
+    }
 }
-

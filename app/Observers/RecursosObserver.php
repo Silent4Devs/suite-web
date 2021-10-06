@@ -14,6 +14,7 @@ class RecursosObserver
     {
         $this->request = $request;
     }
+
     /**
      * Handle the Recurso "created" event.
      *

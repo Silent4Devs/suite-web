@@ -12,7 +12,7 @@ class Denuncias extends Model
     protected $table = 'denuncias';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $appends = ['folio'];
@@ -31,7 +31,6 @@ class Denuncias extends Model
     {
         return $this->hasMany(EvidenciasDenuncia::class, 'id_denuncias');
     }
-
 
     public function denunciado()
     {

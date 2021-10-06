@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Amenaza;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAmenazaRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +25,7 @@ class UpdateAmenazaRequest extends FormRequest
     public function rules()
     {
         $rules = Amenaza::$rules;
-        
+
         return $rules;
     }
 }

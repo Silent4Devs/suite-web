@@ -28,9 +28,9 @@ class FaqQuestionController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'faq_question_show';
-                $editGate      = 'faq_question_edit';
-                $deleteGate    = 'faq_question_delete';
+                $viewGate = 'faq_question_show';
+                $editGate = 'faq_question_edit';
+                $deleteGate = 'faq_question_delete';
                 $crudRoutePart = 'faq-questions';
 
                 return view('partials.datatablesActions', compact(
@@ -43,17 +43,17 @@ class FaqQuestionController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->addColumn('category_category', function ($row) {
                 return $row->category ? $row->category->category : '';
             });
 
             $table->editColumn('question', function ($row) {
-                return $row->question ? $row->question : "";
+                return $row->question ? $row->question : '';
             });
             $table->editColumn('answer', function ($row) {
-                return $row->answer ? $row->answer : "";
+                return $row->answer ? $row->answer : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'category']);
@@ -62,7 +62,7 @@ class FaqQuestionController extends Controller
         }
 
         $faq_categories = FaqCategory::get();
-        $teams          = Team::get();
+        $teams = Team::get();
 
         return view('admin.faqQuestions.index', compact('faq_categories', 'teams'));
     }

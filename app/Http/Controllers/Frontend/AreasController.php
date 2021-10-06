@@ -10,7 +10,6 @@ use App\Http\Requests\UpdateAreaRequest;
 use App\Models\Area;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AreasController extends Controller

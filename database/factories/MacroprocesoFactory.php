@@ -23,6 +23,7 @@ class MacroprocesoFactory extends Factory
     public function definition()
     {
         static $numero = 1;
+
         return [
             'codigo' => $this->faker->ean8,
             'nombre' => 'Macroproceso' . $numero++,

@@ -24,7 +24,7 @@ class HistorialRevisionDocumento extends Model
     protected $appends = ['fecha_dmy'];
 
     protected $dates = [
-        'fecha'
+        'fecha',
     ];
 
     public function getFechaDMYAttribute()

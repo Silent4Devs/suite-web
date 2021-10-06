@@ -6,8 +6,8 @@ use App\Events\AccionCorrectivaEvent;
 use App\Events\AuditoriaAnualEvent;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Events\RecursosEvent;
-use App\Events\TaskRecursosEvent;
 use App\Events\RegistroMejoraEvent;
+use App\Events\TaskRecursosEvent;
 use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AuditoriaAnualListener;
 use App\Listeners\IncidentesDeSeguridadListener;
@@ -41,23 +41,23 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         IncidentesDeSeguridadEvent::class => [
-            IncidentesDeSeguridadListener::class
+            IncidentesDeSeguridadListener::class,
         ],
         AuditoriaAnualEvent::class => [
-            AuditoriaAnualListener::class
+            AuditoriaAnualListener::class,
         ],
         AccionCorrectivaEvent::class => [
-            AccionCorrectivaListener::class
+            AccionCorrectivaListener::class,
         ],
         RegistroMejoraEvent::class => [
-            RegistroMejoraListener::class
+            RegistroMejoraListener::class,
         ],
         RecursosEvent::class => [
-            RecursosListener::class
+            RecursosListener::class,
         ],
         TaskRecursosEvent::class => [
-            TaskRecursosListener::class
-        ]
+            TaskRecursosListener::class,
+        ],
     ];
 
     /**

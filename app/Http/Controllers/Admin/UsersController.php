@@ -95,11 +95,11 @@ class UsersController extends Controller
             return datatables()->of($query)->toJson();
         }
 
-        $roles          = Role::get();
+        $roles = Role::get();
         $organizaciones = Organizacione::get();
-        $areas          = Area::get();
-        $puestos        = Puesto::get();
-        $teams          = Team::get();
+        $areas = Area::get();
+        $puestos = Puesto::get();
+        $teams = Team::get();
         $empleadosNoAsignados = Empleado::get();
         $empleados = $empleadosNoAsignados->filter(function ($item) {
             return !User::where('n_empleado', $item->n_empleado)->exists();
@@ -192,9 +192,10 @@ class UsersController extends Controller
             $usuarios = User::select('id', 'name', 'email')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
             $lista = "<ul class='list-group' id='empleados-lista'>";
             foreach ($usuarios as $usuario) {
-                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . "</button>";
+                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . '</button>';
             }
-            $lista .= "</ul>";
+            $lista .= '</ul>';
+
             return $lista;
         }
     }
@@ -203,7 +204,7 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $request->validate([
-                'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado']
+                'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado'],
             ]);
             $usuario = User::find(intval($request->user_id));
             $usuario->update([

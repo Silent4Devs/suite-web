@@ -28,9 +28,9 @@ class DmaicController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'dmaic_show';
-                $editGate      = 'dmaic_edit';
-                $deleteGate    = 'dmaic_delete';
+                $viewGate = 'dmaic_show';
+                $editGate = 'dmaic_edit';
+                $deleteGate = 'dmaic_delete';
                 $crudRoutePart = 'dmaics';
 
                 return view('partials.datatablesActions', compact(
@@ -43,29 +43,29 @@ class DmaicController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->addColumn('mejora_nombre', function ($row) {
                 return $row->mejora ? $row->mejora->nombre : '';
             });
 
             $table->editColumn('definir', function ($row) {
-                return $row->definir ? $row->definir : "";
+                return $row->definir ? $row->definir : '';
             });
             $table->editColumn('medir', function ($row) {
-                return $row->medir ? $row->medir : "";
+                return $row->medir ? $row->medir : '';
             });
             $table->editColumn('analizar', function ($row) {
-                return $row->analizar ? $row->analizar : "";
+                return $row->analizar ? $row->analizar : '';
             });
             $table->editColumn('implementar', function ($row) {
-                return $row->implementar ? $row->implementar : "";
+                return $row->implementar ? $row->implementar : '';
             });
             $table->editColumn('controlar', function ($row) {
-                return $row->controlar ? $row->controlar : "";
+                return $row->controlar ? $row->controlar : '';
             });
             $table->editColumn('leccionesaprendidas', function ($row) {
-                return $row->leccionesaprendidas ? $row->leccionesaprendidas : "";
+                return $row->leccionesaprendidas ? $row->leccionesaprendidas : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'mejora']);
@@ -74,7 +74,7 @@ class DmaicController extends Controller
         }
 
         $registromejoras = Registromejora::get();
-        $teams           = Team::get();
+        $teams = Team::get();
 
         return view('admin.dmaics.index', compact('registromejoras', 'teams'));
     }

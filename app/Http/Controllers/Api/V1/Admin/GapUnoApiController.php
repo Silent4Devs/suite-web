@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateGapUnoRequest;
 use App\Http\Resources\Admin\GapUnoResource;
 use App\Models\GapUno;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GapUnoApiController extends Controller

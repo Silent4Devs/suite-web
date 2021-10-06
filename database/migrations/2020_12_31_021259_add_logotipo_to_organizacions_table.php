@@ -26,9 +26,7 @@ class AddLogotipoToOrganizacionsTable extends Migration
     public function down()
     {
         Schema::table('organizacions', function (Blueprint $table) {
-
             $table->dropColumn('logotipo');
-
         });
     }
 }

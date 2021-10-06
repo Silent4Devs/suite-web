@@ -12,7 +12,7 @@ class Mejoras extends Model
     protected $table = 'mejoras';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $appends = ['folio'];

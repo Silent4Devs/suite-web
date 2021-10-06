@@ -34,9 +34,9 @@ class PlanBaseActividadesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'plan_base_actividade_show';
-                $editGate      = 'plan_base_actividade_edit';
-                $deleteGate    = 'plan_base_actividade_delete';
+                $viewGate = 'plan_base_actividade_show';
+                $editGate = 'plan_base_actividade_edit';
+                $deleteGate = 'plan_base_actividade_delete';
                 $crudRoutePart = 'plan-base-actividades';
 
                 return view('partials.datatablesActions', compact(
@@ -49,10 +49,10 @@ class PlanBaseActividadesController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('actividad', function ($row) {
-                return $row->actividad ? $row->actividad : "";
+                return $row->actividad ? $row->actividad : '';
             });
             $table->editColumn('actividad_padre', function ($row) {
                 return $row->actividad_padre ? $row->actividad_padre->actividad : '';
@@ -83,10 +83,10 @@ class PlanBaseActividadesController extends Controller
         }
 
         $plan_base_actividades = PlanBaseActividade::get();
-        $enlaces_ejecutars     = EnlacesEjecutar::get();
+        $enlaces_ejecutars = EnlacesEjecutar::get();
         $estatus_plan_trabajos = EstatusPlanTrabajo::get();
-        $users                 = User::get();
-        $teams                 = Team::get();
+        $users = User::get();
+        $teams = Team::get();
 
         return view('admin.planBaseActividades.index', compact('plan_base_actividades', 'enlaces_ejecutars', 'estatus_plan_trabajos', 'users', 'users', 'teams'));
     }
@@ -197,7 +197,6 @@ class PlanBaseActividadesController extends Controller
         }
     }*/
 
-
     public function show(PlanBaseActividade $planBaseActividade)
     {
         abort_if(Gate::denies('plan_base_actividade_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -227,10 +226,10 @@ class PlanBaseActividadesController extends Controller
     {
         abort_if(Gate::denies('plan_base_actividade_create') && Gate::denies('plan_base_actividade_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new PlanBaseActividade();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new PlanBaseActividade();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

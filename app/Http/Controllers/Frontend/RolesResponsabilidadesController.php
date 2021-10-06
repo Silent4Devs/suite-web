@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateRolesResponsabilidadeRequest;
 use App\Models\RolesResponsabilidade;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class RolesResponsabilidadesController extends Controller

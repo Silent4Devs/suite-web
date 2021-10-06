@@ -12,11 +12,11 @@ class RiesgoIdentificado extends Model
     protected $table = 'riesgos_identificados';
 
     protected $dates = [
-        'fecha'
+        'fecha',
     ];
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $appends = ['folio'];

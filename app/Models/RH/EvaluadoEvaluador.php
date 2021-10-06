@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EvaluadoEvaluador extends Model
 {
     use HasFactory;
-    protected $table = "ev360_evaluado_evaluador";
+    protected $table = 'ev360_evaluado_evaluador';
     protected $guarded = ['id'];
     protected $appends = ['progreso_competencias', 'progreso_objetivos'];
 
@@ -21,19 +21,19 @@ class EvaluadoEvaluador extends Model
     {
         switch ($this->tipo) {
             case '0':
-                return "Autoevaluación";
+                return 'Autoevaluación';
                 break;
             case '1':
-                return "Jefe Inmediato";
+                return 'Jefe Inmediato';
                 break;
             case '2':
-                return "Misma Área";
+                return 'Misma Área';
                 break;
             case '3':
-                return "Equipo a Cargo";
+                return 'Equipo a Cargo';
                 break;
             default:
-                #Code...
+                //Code...
                 break;
         }
     }
@@ -68,6 +68,7 @@ class EvaluadoEvaluador extends Model
         } else {
             $progreso = 0;
         }
+
         return $progreso;
     }
 
@@ -87,6 +88,7 @@ class EvaluadoEvaluador extends Model
         } else {
             $progreso_objetivos = 0;
         }
+
         return $progreso_objetivos;
     }
 }

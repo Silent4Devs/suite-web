@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ControlDocumento;
-use Illuminate\Http\Request;
 
 class ReporteContextoController extends Controller
 {

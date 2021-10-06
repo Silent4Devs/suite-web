@@ -14,9 +14,8 @@ class ChangeColumnRetroalimentaciondesempenoToRevisionDireccionsTable extends Mi
     public function up()
     {
         Schema::table('revision_direccions', function (Blueprint $table) {
-           $table->longText("retroalimentaciondesempeno")->nullable()->change();
-           $table->longText("retroalimentacionpartesinteresadas")->nullable()->change();
-           
+            $table->longText('retroalimentaciondesempeno')->nullable()->change();
+            $table->longText('retroalimentacionpartesinteresadas')->nullable()->change();
         });
     }
 

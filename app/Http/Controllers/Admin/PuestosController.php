@@ -30,9 +30,9 @@ class PuestosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'puesto_show';
-                $editGate      = 'puesto_edit';
-                $deleteGate    = 'puesto_delete';
+                $viewGate = 'puesto_show';
+                $editGate = 'puesto_edit';
+                $deleteGate = 'puesto_delete';
                 $crudRoutePart = 'puestos';
 
                 return view('partials.datatablesActions', compact(
@@ -45,13 +45,13 @@ class PuestosController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('puesto', function ($row) {
-                return $row->puesto ? $row->puesto : "";
+                return $row->puesto ? $row->puesto : '';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

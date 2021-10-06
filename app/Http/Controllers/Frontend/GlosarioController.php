@@ -8,7 +8,6 @@ use App\Http\Requests\StoreGlosarioRequest;
 use App\Http\Requests\UpdateGlosarioRequest;
 use App\Models\Glosario;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GlosarioController extends Controller

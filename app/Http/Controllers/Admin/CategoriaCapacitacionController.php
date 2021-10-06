@@ -23,9 +23,9 @@ class CategoriaCapacitacionController extends Controller
             $table->addColumn('actions', '&nbsp;');
             $table->addIndexColumn();
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'recurso_show';
-                $editGate      = 'recurso_edit';
-                $deleteGate    = 'recurso_delete';
+                $viewGate = 'recurso_show';
+                $editGate = 'recurso_edit';
+                $deleteGate = 'recurso_delete';
                 $crudRoutePart = 'categoria-capacitacion';
 
                 return view('partials.datatablesActions', compact(
@@ -38,10 +38,10 @@ class CategoriaCapacitacionController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : "";
+                return $row->nombre ? $row->nombre : '';
             });
 
             $table->rawColumns(['actions']);
@@ -71,9 +71,10 @@ class CategoriaCapacitacionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|unique:categoria_capacitacions,nombre'
+            'nombre' => 'required|string|unique:categoria_capacitacions,nombre',
         ], ['nombre.unique' => 'Esta categoria ya ha sido utilizada']);
         CategoriaCapacitacion::create($request->all());
+
         return redirect()->route('admin.categoria-capacitacion.index');
     }
 
@@ -109,9 +110,10 @@ class CategoriaCapacitacionController extends Controller
     public function update(Request $request, CategoriaCapacitacion $categoriaCapacitacion)
     {
         $request->validate([
-            'nombre' => 'required|string|unique:categoria_capacitacions,nombre,' . $categoriaCapacitacion->id
+            'nombre' => 'required|string|unique:categoria_capacitacions,nombre,' . $categoriaCapacitacion->id,
         ], ['nombre.unique' => 'Esta categoria ya ha sido utilizada']);
         $categoriaCapacitacion->update($request->all());
+
         return redirect()->route('admin.categoria-capacitacion.index');
     }
 
@@ -124,6 +126,7 @@ class CategoriaCapacitacionController extends Controller
     public function destroy(CategoriaCapacitacion $categoriaCapacitacion)
     {
         $categoriaCapacitacion->delete();
+
         return redirect()->route('admin.categoria-capacitacion.index');
     }
 }

@@ -5,36 +5,30 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 /**
- * Class Vulnerabilidad
- * @package App\Models
+ * Class Vulnerabilidad.
  * @version August 5, 2021, 7:45 pm UTC
  *
  * @property \App\Models\Amenaza $idAmenaza
  * @property string $nombre
  * @property string $descripcion
- * @property integer $id_amenaza
+ * @property int $id_amenaza
  */
 class Vulnerabilidad extends Model
 {
     use SoftDeletes;
-
 
     public $table = 'vulnerabilidads';
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
     protected $dates = ['deleted_at'];
-
-
 
     public $fillable = [
         'nombre',
         'descripcion',
-        'id_amenaza'
+        'id_amenaza',
     ];
 
     /**
@@ -46,11 +40,11 @@ class Vulnerabilidad extends Model
         'id' => 'integer',
         'nombre' => 'string',
         'descripcion' => 'string',
-        'id_amenaza' => 'integer'
+        'id_amenaza' => 'integer',
     ];
 
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
@@ -60,7 +54,7 @@ class Vulnerabilidad extends Model
         'id_amenaza' => 'nullable|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
-        'deleted_at' => 'nullable'
+        'deleted_at' => 'nullable',
     ];
 
     /**
