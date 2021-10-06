@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use App\Models\AuditoriaAnual;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\MassDestroyAuditoriaAnualRequest;
 use App\Http\Requests\StoreAuditoriaAnualRequest;
 use App\Http\Requests\UpdateAuditoriaAnualRequest;
-use App\Http\Requests\MassDestroyAuditoriaAnualRequest;
+use App\Models\AuditoriaAnual;
+use App\Models\Empleado;
+use App\Models\Team;
+use App\Models\User;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class AuditoriaAnualController extends Controller
 {
@@ -46,13 +46,13 @@ class AuditoriaAnualController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-            
+
             $table->editColumn('tipo', function ($row) {
                 return $row->tipo ? AuditoriaAnual::TIPO_SELECT[$row->tipo] : '';
             });
 
             $table->editColumn('fechainicio', function ($row) {
-                return $row->fechainicio ? $row->fechainicio: '';
+                return $row->fechainicio ? $row->fechainicio : '';
             });
 
             $table->editColumn('fechafin', function ($row) {
@@ -82,7 +82,7 @@ class AuditoriaAnualController extends Controller
         abort_if(Gate::denies('auditoria_anual_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $empleados=Empleado::get();
+        $empleados = Empleado::get();
 
         return view('admin.auditoriaAnuals.create', compact('auditorliders', 'empleados'));
     }
@@ -102,9 +102,9 @@ class AuditoriaAnualController extends Controller
 
         $auditoriaAnual->load('auditorlider', 'team');
 
-        $empleados=Empleado::get();
+        $empleados = Empleado::get();
 
-        return view('admin.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual','empleados'));
+        return view('admin.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual', 'empleados'));
     }
 
     public function update(UpdateAuditoriaAnualRequest $request, AuditoriaAnual $auditoriaAnual)
