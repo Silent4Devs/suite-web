@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -19,17 +18,17 @@ class DocumentoMaterialSgsi extends Model
     ];
     protected $cast = [
         'material_id',
-        'documento'
+        'documento',
     ];
 
     protected $fillable = [
-		'material_id',
-        'documento'
-		
-	];
+        'material_id',
+        'documento',
 
-    public function documentos_material(){
-        return $this->belongsTo(MaterialSgsi::class,'material_id');
+    ];
+
+    public function documentos_material()
+    {
+        return $this->belongsTo(MaterialSgsi::class, 'material_id');
     }
-
 }

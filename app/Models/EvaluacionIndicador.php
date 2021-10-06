@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class EvaluacionIndicador
+ * Class EvaluacionIndicador.
  *
  * @property int $id
  * @property string|null $no
@@ -20,39 +20,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  *
  * @property IndicadoresSgsi|null $indicadores_sgsi
- *
- * @package App\Models
  */
 class EvaluacionIndicador extends Model
 {
-	use SoftDeletes;
-	protected $table = 'evaluacion_indicador';
+    use SoftDeletes;
+    protected $table = 'evaluacion_indicador';
 
-	protected $casts = [
-		'resultado' => 'int',
-		'id_indicador' => 'int'
-	];
+    protected $casts = [
+        'resultado' => 'int',
+        'id_indicador' => 'int',
+    ];
 
-	protected $dates = [
-		'fecha'=>'date:d F Y'
-	];
+    protected $dates = [
+        'fecha'=>'date:d F Y',
+    ];
 
-    protected $dateFormat='d F Y';
+    protected $dateFormat = 'd F Y';
 
-	protected $fillable = [
-		'no',
-		'evaluacion',
-		'fecha',
-		'resultado',
-		'id_indicador'
-	];
+    protected $fillable = [
+        'no',
+        'evaluacion',
+        'fecha',
+        'resultado',
+        'id_indicador',
+    ];
 
     // protected $appends=['fecha_formateada'];
 
-	public function indicadores_sgsi()
-	{
-		return $this->belongsTo(IndicadoresSgsi::class, 'id_indicador');
-	}
+    public function indicadores_sgsi()
+    {
+        return $this->belongsTo(IndicadoresSgsi::class, 'id_indicador');
+    }
 
     // public function setFechaAttribute(){
 

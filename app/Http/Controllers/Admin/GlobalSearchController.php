@@ -10,7 +10,7 @@ class GlobalSearchController extends Controller
 {
     private $models = [
         'Documento' => 'Documentos',
-        'Empleado' => 'Empleados'
+        'Empleado' => 'Empleados',
         // 'Organizacion'            => 'cruds.organizacion.title',
         // 'Glosario'                => 'cruds.glosario.title',
         // 'PartesInteresada'        => 'cruds.partesInteresada.title',
@@ -48,12 +48,12 @@ class GlobalSearchController extends Controller
             abort(400);
         }
 
-        $term           = $search['term'];
+        $term = $search['term'];
         $searchableData = [];
 
         foreach ($this->models as $model => $translation) {
             $modelClass = 'App\Models\\' . $model;
-            $query      = $modelClass::query();
+            $query = $modelClass::query();
 
             $fields = $modelClass::$searchable;
 
@@ -65,10 +65,10 @@ class GlobalSearchController extends Controller
                 ->get();
 
             foreach ($results as $result) {
-                $parsedData           = $result->only($fields);
-                $parsedData['model']  = trans($translation);
+                $parsedData = $result->only($fields);
+                $parsedData['model'] = trans($translation);
                 $parsedData['fields'] = $fields;
-                $formattedFields      = [];
+                $formattedFields = [];
 
                 foreach ($fields as $field) {
                     $formattedFields[$field] = Str::title(str_replace('_', ' ', $field));

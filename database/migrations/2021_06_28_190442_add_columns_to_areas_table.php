@@ -17,7 +17,6 @@ class AddColumnsToAreasTable extends Migration
             $table->string('descripcion', 100)->after('area')->nullable();
             $table->unsignedInteger('id_grupo')->after('area')->nullable();
             $table->unsignedInteger('id_reporta')->after('id_grupo')->nullable();
-
         });
     }
 

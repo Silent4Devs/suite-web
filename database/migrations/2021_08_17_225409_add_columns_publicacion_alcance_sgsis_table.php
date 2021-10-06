@@ -11,8 +11,6 @@ class AddColumnsPublicacionAlcanceSgsisTable extends Migration
      *
      * @return void
      */
-
-
     public function up()
     {
         Schema::table('alcance_sgsis', function (Blueprint $table) {

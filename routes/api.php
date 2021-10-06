@@ -14,7 +14,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Incidentes De Seguridads
     Route::apiResource('incidentes-de-seguridads', 'IncidentesDeSeguridadApiController');
 
-	  // Gap Unos
+    // Gap Unos
     Route::apiResource('gap-unos', 'GapUnoApiController');
 
     // Gap Dos

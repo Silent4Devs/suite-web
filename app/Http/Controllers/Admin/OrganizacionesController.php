@@ -30,9 +30,9 @@ class OrganizacionesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'organizacione_show';
-                $editGate      = 'organizacione_edit';
-                $deleteGate    = 'organizacione_delete';
+                $viewGate = 'organizacione_show';
+                $editGate = 'organizacione_edit';
+                $deleteGate = 'organizacione_delete';
                 $crudRoutePart = 'organizaciones';
 
                 return view('partials.datatablesActions', compact(
@@ -45,10 +45,10 @@ class OrganizacionesController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('organizacion', function ($row) {
-                return $row->organizacion ? $row->organizacion : "";
+                return $row->organizacion ? $row->organizacion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

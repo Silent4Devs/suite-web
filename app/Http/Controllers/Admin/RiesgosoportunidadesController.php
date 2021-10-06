@@ -28,9 +28,9 @@ class RiesgosoportunidadesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'riesgosoportunidade_show';
-                $editGate      = 'riesgosoportunidade_edit';
-                $deleteGate    = 'riesgosoportunidade_delete';
+                $viewGate = 'riesgosoportunidade_show';
+                $editGate = 'riesgosoportunidade_edit';
+                $deleteGate = 'riesgosoportunidade_delete';
                 $crudRoutePart = 'riesgosoportunidades';
 
                 return view('partials.datatablesActions', compact(
@@ -43,7 +43,7 @@ class RiesgosoportunidadesController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->addColumn('control_control', function ($row) {
                 return $row->control ? $row->control->control : '';
@@ -53,7 +53,7 @@ class RiesgosoportunidadesController extends Controller
                 return $row->aplicaorganizacion ? Riesgosoportunidade::APLICAORGANIZACION_SELECT[$row->aplicaorganizacion] : '';
             });
             $table->editColumn('justificacion', function ($row) {
-                return $row->justificacion ? $row->justificacion : "";
+                return $row->justificacion ? $row->justificacion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'control']);
@@ -62,7 +62,7 @@ class RiesgosoportunidadesController extends Controller
         }
 
         $controles = Controle::get();
-        $teams     = Team::get();
+        $teams = Team::get();
 
         return view('admin.riesgosoportunidades.index', compact('controles', 'teams'));
     }
@@ -80,7 +80,7 @@ class RiesgosoportunidadesController extends Controller
     {
         $riesgosoportunidade = Riesgosoportunidade::create($request->all());
 
-        return redirect()->route('admin.riesgosoportunidades.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.riesgosoportunidades.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Riesgosoportunidade $riesgosoportunidade)
@@ -98,7 +98,7 @@ class RiesgosoportunidadesController extends Controller
     {
         $riesgosoportunidade->update($request->all());
 
-        return redirect()->route('admin.riesgosoportunidades.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.riesgosoportunidades.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Riesgosoportunidade $riesgosoportunidade)

@@ -9,12 +9,11 @@ use Illuminate\Support\Str;
 
 class LaravelChart
 {
-
-    public $options     = [];
-    private $datasets   = [];
+    public $options = [];
+    private $datasets = [];
 
     /**
-     * Group Periods
+     * Group Periods.
      */
     const GROUP_PERIODS = [
         'day'   => 'Y-m-d',
@@ -30,9 +29,9 @@ class LaravelChart
      */
     public function __construct($chart_options)
     {
-        $this->options                  = $chart_options;
-        $this->options['chart_name']    = strtolower(Str::slug($chart_options['chart_title'], '_'));
-        $this->datasets                 = $this->prepareData();
+        $this->options = $chart_options;
+        $this->options['chart_name'] = strtolower(Str::slug($chart_options['chart_title'], '_'));
+        $this->datasets = $this->prepareData();
     }
 
     /**
@@ -50,18 +49,17 @@ class LaravelChart
 
             $datasets = [];
             $conditions = $this->options['conditions'] ??
-                [['name' => '', 'condition' => "", 'color' => '']];
+                [['name' => '', 'condition' => '', 'color' => '']];
 
             foreach ($conditions as $condition) {
                 $query = $this->options['model']::when(isset($this->options['filter_field']), function ($query) {
-
                     if (isset($this->options['filter_days'])) {
                         return $query->where(
                             $this->options['filter_field'],
                             '>=',
                             now()->subDays($this->options['filter_days'])->format($this->options['date_format_filter_days'] ?? 'Y-m-d')
                         );
-                    } else if (isset($this->options['filter_period'])) {
+                    } elseif (isset($this->options['filter_period'])) {
                         switch ($this->options['filter_period']) {
                             case 'week':
                                 $start = date('Y-m-d', strtotime('last Monday'));
@@ -113,13 +111,13 @@ class LaravelChart
                         ->groupBy(function ($entry) {
                             if ($this->options['report_type'] == 'group_by_string') {
                                 return $entry->{$this->options['group_by_field']};
-                            } else if ($this->options['report_type'] == 'group_by_relationship') {
+                            } elseif ($this->options['report_type'] == 'group_by_relationship') {
                                 if ($entry->{$this->options['relationship_name']}) {
                                     return $entry->{$this->options['relationship_name']}->{$this->options['group_by_field']};
                                 } else {
                                     return '';
                                 }
-                            } else if ($entry->{$this->options['group_by_field']} instanceof \Carbon\Carbon) {
+                            } elseif ($entry->{$this->options['group_by_field']} instanceof \Carbon\Carbon) {
                                 return $entry->{$this->options['group_by_field']}
                                     ->format($this->options['date_format'] ?? self::GROUP_PERIODS[$this->options['group_by_period']]);
                             } else {
@@ -129,7 +127,7 @@ class LaravelChart
                                         $entry->{$this->options['group_by_field']}
                                     )
                                         ->format($this->options['date_format'] ?? self::GROUP_PERIODS[$this->options['group_by_period']]);
-                                } else if ($entry->{$this->options['group_by_field']}) {
+                                } elseif ($entry->{$this->options['group_by_field']}) {
                                     return \Carbon\Carbon::createFromFormat(
                                         'Y-m-d H:i:s',
                                         $entry->{$this->options['group_by_field']}
@@ -148,12 +146,12 @@ class LaravelChart
                             if (@$this->options['aggregate_transform']) {
                                 $aggregate = $this->options['aggregate_transform']($aggregate);
                             }
+
                             return $aggregate;
                         });
                 } else {
                     $data = collect([]);
                 }
-
 
                 if (@$this->options['continuous_time']) {
                     $dates = $data->keys();

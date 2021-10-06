@@ -9,7 +9,8 @@ class Evidencia extends Model
 {
     use HasFactory;
 
-    public function evidenciable(){
+    public function evidenciable()
+    {
         return $this->morphTo();
     }
 }

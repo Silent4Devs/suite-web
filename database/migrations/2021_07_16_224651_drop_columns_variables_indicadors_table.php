@@ -29,6 +29,5 @@ class DropColumnsVariablesIndicadorsTable extends Migration
      */
     public function down()
     {
-
     }
 }

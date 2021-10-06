@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateEnlacesEjecutarRequest;
 use App\Models\EnlacesEjecutar;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnlacesEjecutarController extends Controller

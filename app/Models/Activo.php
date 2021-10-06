@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 class Activo extends Model
 {
@@ -42,15 +42,14 @@ class Activo extends Model
         'fecha_baja',
         'fecha_alta',
         'sede',
-        "documentos_relacionados"
+        'documentos_relacionados',
     ];
 
     protected $casts = [
 
-        "modelo"=>"int",
-        "marca"=>"int"
+        'modelo'=>'int',
+        'marca'=>'int',
     ];
-
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -88,20 +87,17 @@ class Activo extends Model
     }
 
     public function empleado()
-	{
+    {
         return $this->belongsTo(Empleado::class, 'id_responsable', 'id');
-
-	}
+    }
 
     public function marca()
     {
         return $this->belongsTo(Marca::class, 'marca', 'id');
-
     }
 
     public function modelo()
     {
         return $this->belongsTo(Modelo::class, 'modelo', 'id');
-
     }
 }

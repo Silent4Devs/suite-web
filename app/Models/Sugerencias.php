@@ -12,7 +12,7 @@ class Sugerencias extends Model
     protected $table = 'sugerencias';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $appends = ['folio'];

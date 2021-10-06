@@ -3,14 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Vulnerabilidad;
-use App\Repositories\BaseRepository;
 
 /**
- * Class VulnerabilidadRepository
- * @package App\Repositories
+ * Class VulnerabilidadRepository.
  * @version August 5, 2021, 7:45 pm UTC
-*/
-
+ */
 class VulnerabilidadRepository extends BaseRepository
 {
     /**
@@ -19,11 +16,11 @@ class VulnerabilidadRepository extends BaseRepository
     protected $fieldSearchable = [
         'nombre',
         'descripcion',
-        'id_amenaza'
+        'id_amenaza',
     ];
 
     /**
-     * Return searchable fields
+     * Return searchable fields.
      *
      * @return array
      */
@@ -33,7 +30,7 @@ class VulnerabilidadRepository extends BaseRepository
     }
 
     /**
-     * Configure the Model
+     * Configure the Model.
      **/
     public function model()
     {

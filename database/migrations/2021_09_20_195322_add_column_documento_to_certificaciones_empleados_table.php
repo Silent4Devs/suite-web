@@ -15,7 +15,6 @@ class AddColumnDocumentoToCertificacionesEmpleadosTable extends Migration
     {
         Schema::table('certificaciones_empleados', function (Blueprint $table) {
             $table->string('documento')->nullable();
-
         });
     }
 

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Macroproceso
+ * Class Macroproceso.
  *
  * @property int $id
  * @property string|null $codigo
@@ -26,43 +26,41 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property Grupo|null $grupo
  * @property Collection|Proceso[] $procesos
- *
- * @package App\Models
  */
 class Macroproceso extends Model
 {
-	use SoftDeletes;
-	use HasFactory;
-	protected $table = 'macroprocesos';
+    use SoftDeletes;
+    use HasFactory;
+    protected $table = 'macroprocesos';
 
-	protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
-	const CREATED_AT = 'created_at';
-	const UPDATED_AT = 'updated_at';
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
-	protected $casts = [
-		'id_grupo' => 'int'
-	];
+    protected $casts = [
+        'id_grupo' => 'int',
+    ];
 
-	protected $fillable = [
-		'codigo',
-		'nombre',
-		'id_grupo',
-		'descripcion'
-	];
+    protected $fillable = [
+        'codigo',
+        'nombre',
+        'id_grupo',
+        'descripcion',
+    ];
 
-	public function grupo()
-	{
-		return $this->belongsTo(Grupo::class, 'id_grupo');
-	}
+    public function grupo()
+    {
+        return $this->belongsTo(Grupo::class, 'id_grupo');
+    }
 
-	public function procesos()
-	{
-		return $this->hasMany(Proceso::class, 'id_macroproceso');
-	}
+    public function procesos()
+    {
+        return $this->hasMany(Proceso::class, 'id_macroproceso');
+    }
 
-	public function procesosWithDocumento()
-	{
-		return $this->hasMany(Proceso::class, 'id_macroproceso')->with('documento');
-	}
+    public function procesosWithDocumento()
+    {
+        return $this->hasMany(Proceso::class, 'id_macroproceso')->with('documento');
+    }
 }

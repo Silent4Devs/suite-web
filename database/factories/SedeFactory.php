@@ -26,7 +26,7 @@ class SedeFactory extends Factory
             'sede' => $this->faker->state,
             'foto_sedes' => $this->faker->image(storage_path('app/public/sedes/imagenes'), 640, 480, 'city', false),
             'descripcion' => $this->faker->sentence(),
-            'organizacion_id' => Organizacion::all()->count() ?  Organizacion::all()->random()->id : null,
+            'organizacion_id' => Organizacion::all()->count() ? Organizacion::all()->random()->id : null,
             'direccion' => $this->faker->address,
             'latitude' => $this->faker->latitude,
             'longitud' => $this->faker->longitude,

@@ -5,7 +5,6 @@ namespace App\Notifications;
 use App\Models\AccionCorrectiva;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +16,7 @@ class AccionCorrectivaNotification extends Notification
     public $tipo_consulta;
     public $tabla;
     public $slug;
+
     /**
      * Create a new notification instance.
      *

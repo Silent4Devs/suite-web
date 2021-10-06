@@ -15,7 +15,6 @@ class ChangeColumnObjetivodocumentoToEvidenciasSgsisTable extends Migration
     {
         Schema::table('evidencias_sgsis', function (Blueprint $table) {
             $table->longText('objetivodocumento')->change();
-
         });
     }
 

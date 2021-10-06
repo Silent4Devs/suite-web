@@ -27,9 +27,9 @@ class EstatusPlanTrabajoController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'estatus_plan_trabajo_show';
-                $editGate      = 'estatus_plan_trabajo_edit';
-                $deleteGate    = 'estatus_plan_trabajo_delete';
+                $viewGate = 'estatus_plan_trabajo_show';
+                $editGate = 'estatus_plan_trabajo_edit';
+                $deleteGate = 'estatus_plan_trabajo_delete';
                 $crudRoutePart = 'estatus-plan-trabajos';
 
                 return view('partials.datatablesActions', compact(
@@ -42,13 +42,13 @@ class EstatusPlanTrabajoController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('estado', function ($row) {
-                return $row->estado ? $row->estado : "";
+                return $row->estado ? $row->estado : '';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

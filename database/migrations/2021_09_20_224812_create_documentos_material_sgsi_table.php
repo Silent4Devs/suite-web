@@ -17,7 +17,7 @@ class CreateDocumentosMaterialSgsiTable extends Migration
             $table->id();
             $table->unsignedInteger('material_id')->nullable();
             $table->string('documento')->nullable();
-            
+
             $table->timestamps();
             $table->softDeletes();
 

@@ -76,7 +76,8 @@ class ControlDocumentosController extends Controller
 
         $teams = Team::get();
 
-        $controlDocumentos =  ControlDocumento::with(['elaboro', 'reviso', 'estado', 'team'])->get();
+        $controlDocumentos = ControlDocumento::with(['elaboro', 'reviso', 'estado', 'team'])->get();
+
         return view('admin.controlDocumentos.index', compact('controlDocumentos'));
     }
 
@@ -132,14 +133,13 @@ class ControlDocumentosController extends Controller
 
     public function update(UpdateControlDocumentoRequest $request, ControlDocumento $controlDocumento)
     {
-
         $controlDocumento->update([
-            "clave" => $request->clave,
+            'clave' => $request->clave,
             //"nombre" => $request->nombre,
-            "fecha_creacion" => $request->fecha_creacion,
+            'fecha_creacion' => $request->fecha_creacion,
             //"version" => $request->version,
-            "elaboro_id" => $request->elaboro_id,
-            "reviso_id" => $request->reviso_id,
+            'elaboro_id' => $request->elaboro_id,
+            'reviso_id' => $request->reviso_id,
         ]);
 
         return redirect()->route('admin.control-documentos.index');

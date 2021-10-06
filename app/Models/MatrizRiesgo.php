@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class MatrizRiesgo
+ * Class MatrizRiesgo.
  *
  * @property int $id
  * @property string|null $descripcionriesgo
@@ -55,8 +55,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Vulnerabilidad|null $vulnerabilidad
  * @property Team|null $team
  * @property Collection|MatrizRiesgosControlesPivot[] $matriz_riesgos_controles_pivots
- *
- * @package App\Models
  */
 class MatrizRiesgo extends Model
 {
@@ -88,7 +86,6 @@ class MatrizRiesgo extends Model
         '0'     => 'BAJO (0)',
     ];
 
-
     protected $casts = [
         'plan_de_accion' => 'string',
         'confidencialidad_cid' => 'string',
@@ -111,7 +108,7 @@ class MatrizRiesgo extends Model
         'activo_id' => 'int',
         'id_amenaza' => 'int',
         'id_area' => 'int',
-        'id_vulnerabilidad' => 'int'
+        'id_vulnerabilidad' => 'int',
     ];
 
     protected $fillable = [
@@ -156,20 +153,19 @@ class MatrizRiesgo extends Model
 
     public function generateTwoFactorCode()
     {
-        $this->timestamps            = false;
-        $this->two_factor_code       = rand(100000, 999999);
+        $this->timestamps = false;
+        $this->two_factor_code = rand(100000, 999999);
         $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
         $this->save();
     }
 
     public function resetTwoFactorCode()
     {
-        $this->timestamps            = false;
-        $this->two_factor_code       = null;
+        $this->timestamps = false;
+        $this->two_factor_code = null;
         $this->two_factor_expires_at = null;
         $this->save();
     }
-
 
     public function controles()
     {

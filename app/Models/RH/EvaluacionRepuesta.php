@@ -9,7 +9,7 @@ class EvaluacionRepuesta extends Model
 {
     use HasFactory;
     protected $table = 'ev360_competencias_respuestas';
-    protected $guarded = ["id"];
+    protected $guarded = ['id'];
 
     public function competencia()
     {

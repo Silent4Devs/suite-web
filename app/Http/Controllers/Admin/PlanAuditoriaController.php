@@ -30,9 +30,9 @@ class PlanAuditoriaController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'plan_auditorium_show';
-                $editGate      = 'plan_auditorium_edit';
-                $deleteGate    = 'plan_auditorium_delete';
+                $viewGate = 'plan_auditorium_show';
+                $editGate = 'plan_auditorium_edit';
+                $deleteGate = 'plan_auditorium_delete';
                 $crudRoutePart = 'plan-auditoria';
 
                 return view('partials.datatablesActions', compact(
@@ -45,7 +45,7 @@ class PlanAuditoriaController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->addColumn('fecha_fechainicio', function ($row) {
                 return $row->fecha ? $row->fecha->fechainicio : '';
@@ -58,19 +58,19 @@ class PlanAuditoriaController extends Controller
                 return $row->fecha ? (is_string($row->fecha) ? $row->fecha : $row->fecha->observaciones) : '';
             });
             $table->editColumn('objetivo', function ($row) {
-                return $row->objetivo ? $row->objetivo : "";
+                return $row->objetivo ? $row->objetivo : '';
             });
             $table->editColumn('alcance', function ($row) {
-                return $row->alcance ? $row->alcance : "";
+                return $row->alcance ? $row->alcance : '';
             });
             $table->editColumn('criterios', function ($row) {
-                return $row->criterios ? $row->criterios : "";
+                return $row->criterios ? $row->criterios : '';
             });
             $table->editColumn('documentoauditar', function ($row) {
-                return $row->documentoauditar ? $row->documentoauditar : "";
+                return $row->documentoauditar ? $row->documentoauditar : '';
             });
             $table->editColumn('equipoauditor', function ($row) {
-                return $row->equipoauditor ? $row->equipoauditor : "";
+                return $row->equipoauditor ? $row->equipoauditor : '';
             });
             $table->editColumn('auditados', function ($row) {
                 $labels = [];
@@ -82,7 +82,7 @@ class PlanAuditoriaController extends Controller
                 return implode(' ', $labels);
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'fecha', 'auditados']);
@@ -91,8 +91,8 @@ class PlanAuditoriaController extends Controller
         }
 
         $auditoria_anuals = AuditoriaAnual::get();
-        $users            = User::get();
-        $teams            = Team::get();
+        $users = User::get();
+        $teams = Team::get();
 
         return view('admin.planAuditoria.index', compact('auditoria_anuals', 'users', 'teams'));
     }
