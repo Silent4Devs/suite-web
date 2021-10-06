@@ -27,7 +27,8 @@ class EvidenciasDenuncia extends Model
         'evidencia',
     ];
 
-    public function denuncias(){
+    public function denuncias()
+    {
         return $this->belongsTo(Denuncias::class, 'id_denuncias');
     }
 }

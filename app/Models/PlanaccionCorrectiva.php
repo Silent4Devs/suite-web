@@ -4,10 +4,10 @@ namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 class PlanaccionCorrectiva extends Model
 {
@@ -48,12 +48,13 @@ class PlanaccionCorrectiva extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-/*
-    public function accioncorrectiva()
-    {
-        return $this->belongsTo(AccionCorrectiva::class, 'accioncorrectiva_id');
-    }
-*/
+
+    /*
+        public function accioncorrectiva()
+        {
+            return $this->belongsTo(AccionCorrectiva::class, 'accioncorrectiva_id');
+        }
+    */
     public function responsable()
     {
         return $this->belongsTo(User::class, 'responsable_id');

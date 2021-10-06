@@ -30,9 +30,9 @@ class ControlesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'controle_show';
-                $editGate      = 'controle_edit';
-                $deleteGate    = 'controle_delete';
+                $viewGate = 'controle_show';
+                $editGate = 'controle_edit';
+                $deleteGate = 'controle_delete';
                 $crudRoutePart = 'controles';
 
                 return view('partials.datatablesActions', compact(
@@ -45,13 +45,13 @@ class ControlesController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('numero', function ($row) {
-                return $row->numero ? $row->numero : "";
+                return $row->numero ? $row->numero : '';
             });
             $table->editColumn('control', function ($row) {
-                return $row->control ? $row->control : "";
+                return $row->control ? $row->control : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

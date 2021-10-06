@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 
 class ImagenesComunicacionSgis extends Model
 {
@@ -25,9 +23,8 @@ class ImagenesComunicacionSgis extends Model
 
     ];
 
-    public function imagenes_comunicacion(){
-        return $this->belongsTo(ComunicacionSgi::class,'comunicacion_id');
-
+    public function imagenes_comunicacion()
+    {
+        return $this->belongsTo(ComunicacionSgi::class, 'comunicacion_id');
     }
-
 }

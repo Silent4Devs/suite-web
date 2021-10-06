@@ -14,7 +14,6 @@ class AddColumnResponsableToActivosTable extends Migration
     public function up()
     {
         Schema::table('activos', function (Blueprint $table) {
-
             $table->dropForeign('dueno_fk_2438646');
         });
         Schema::table('activos', function (Blueprint $table) {
@@ -30,7 +29,6 @@ class AddColumnResponsableToActivosTable extends Migration
             $table->date('fecha_compra')->after('fecha_fin')->nullable();
             $table->unsignedBigInteger('id_responsable')->nullable();
             $table->foreign('id_responsable')->references('id')->on('empleados');
-
         });
     }
 
@@ -42,9 +40,7 @@ class AddColumnResponsableToActivosTable extends Migration
     public function down()
     {
         Schema::table('activos', function (Blueprint $table) {
-
             $table->dropforeign('activos_dueno_id_foreign');
-
         });
 
         Schema::table('activos', function (Blueprint $table) {

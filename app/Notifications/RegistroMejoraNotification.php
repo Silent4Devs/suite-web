@@ -5,7 +5,6 @@ namespace App\Notifications;
 use App\Models\Registromejora;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +17,7 @@ class RegistroMejoraNotification extends Notification
     public $tipo_consulta;
     public $tabla;
     public $slug;
+
     /**
      * Create a new notification instance.
      *
@@ -30,7 +30,6 @@ class RegistroMejoraNotification extends Notification
         $this->tabla = $tabla;
         $this->slug = $slug;
     }
-
 
     /**
      * Get the notification's delivery channels.

@@ -9,9 +9,9 @@ class CategoriaIncidente extends Model
 {
     use HasFactory;
 
-    protected $table='categorias_incidentes';
+    protected $table = 'categorias_incidentes';
 
-    protected $guarded=[
-        'id'
+    protected $guarded = [
+        'id',
     ];
 }

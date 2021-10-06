@@ -5,8 +5,6 @@ namespace App\Events;
 use App\Models\Recurso;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -15,12 +13,10 @@ class RecursosEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
     public $recurso;
     public $tipo_consulta;
     public $tabla;
     public $slug;
-
 
     public function __construct(Recurso $recurso, $tipo_consulta, $tabla, $slug)
     {

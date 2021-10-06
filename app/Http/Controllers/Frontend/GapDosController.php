@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateGapDoRequest;
 use App\Models\GapDo;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GapDosController extends Controller

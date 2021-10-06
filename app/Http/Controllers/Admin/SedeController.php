@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Requests\MassDestroySedeRequest;
+use App\Http\Requests\StoreSedeRequest;
+use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Team;
-use App\Models\Organizacion;
+use Gate;
 use Illuminate\Http\Request;
-use Geocoder;
-use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
-use App\Http\Requests\StoreSedeRequest;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UpdateSedeRequest;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\MassDestroySedeRequest;
+use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Controllers\Traits\CsvImportTrait;
+use Yajra\DataTables\Facades\DataTables;
 
 class SedeController extends Controller
 {
@@ -34,9 +32,9 @@ class SedeController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'configuracion_sede_show';
-                $editGate      = 'configuracion_sede_edit';
-                $deleteGate    = 'configuracion_sede_delete';
+                $viewGate = 'configuracion_sede_show';
+                $editGate = 'configuracion_sede_edit';
+                $deleteGate = 'configuracion_sede_delete';
                 $crudRoutePart = 'sedes';
 
                 return view('partials.datatablesActions', compact(
@@ -49,23 +47,23 @@ class SedeController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('sede', function ($row) {
-                return $row->sede ? $row->sede : "";
+                return $row->sede ? $row->sede : '';
             });
             $table->editColumn('foto_sedes', function ($row) {
                 return $row->foto_sedes ? $row->foto_sedes : '';
             });
             $table->editColumn('direccion', function ($row) {
-                return $row->direccion ? $row->direccion : "";
+                return $row->direccion ? $row->direccion : '';
             });
             $table->editColumn('ubicacion', function ($row) {
                 //return "'lat' => ".$row->latitude. ",'long' => ".$row->longitud ? "'lat' => ".$row->latitude. ",'long' =>".$row->longitud : "";
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
             $table->addColumn('organizacion_empresa', function ($row) {
                 return $row->organizacion ? $row->organizacion->empresa : '';
@@ -82,9 +80,7 @@ class SedeController extends Controller
         $teams = Team::get();
         $numero_sedes = Sede::count();
 
-
         //$sede_inicio = !is_null($sedes) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
-
 
         return view('admin.sedes.index', compact('organizacions', 'teams', 'numero_sedes'));
     }
@@ -111,7 +107,7 @@ class SedeController extends Controller
         $image = null;
         if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
             $extension = pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+            $name_image = basename(pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
             $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
             $route = storage_path() . '/app/public/sedes/imagenes/' . $new_name_image;
             $image = $new_name_image;
@@ -123,10 +119,10 @@ class SedeController extends Controller
         }
 
         $sede->update([
-            'foto_sedes' => $image
+            'foto_sedes' => $image,
         ]);
 
-        return redirect()->route('admin.sedes.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.sedes.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Sede $sede)
@@ -144,7 +140,6 @@ class SedeController extends Controller
     {
         // $sede->update($request->all());
 
-
         $sede = Sede::find($id);
         $image = $sede->foto_sedes;
         if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
@@ -158,7 +153,7 @@ class SedeController extends Controller
                 }
             }
             $extension = pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+            $name_image = basename(pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
             $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
             $route = storage_path() . '/app/public/sedes/imagenes/' . $new_name_image;
             $image = $new_name_image;
@@ -169,18 +164,16 @@ class SedeController extends Controller
             })->save($route);
         }
 
-
         $sede->update([
 
-            "sede" =>  $request->sede,
-            "foto_sedes" =>  $request->foto_sede,
-            "direccion" =>  $request->direccion,
-            "descripcion" =>  $request->descripcion,
-            "foto_sedes" => $image
+            'sede' =>  $request->sede,
+            'foto_sedes' =>  $request->foto_sede,
+            'direccion' =>  $request->direccion,
+            'descripcion' =>  $request->descripcion,
+            'foto_sedes' => $image,
         ]);
 
-
-        return redirect()->route('admin.sedes.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.sedes.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Sede $sede)
@@ -224,6 +217,7 @@ class SedeController extends Controller
     {
         abort_if(Gate::denies('organizacion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $sede = Sede::find($request);
+
         return view('admin.sedes.ubicacion', compact('sede'));
     }
 

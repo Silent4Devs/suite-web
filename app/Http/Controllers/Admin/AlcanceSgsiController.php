@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Team;
-use App\Models\Empleado;
-use App\Models\AlcanceSgsi;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\StoreAlcanceSgsiRequest;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\UpdateAlcanceSgsiRequest;
 use App\Http\Requests\MassDestroyAlcanceSgsiRequest;
+use App\Http\Requests\StoreAlcanceSgsiRequest;
+use App\Http\Requests\UpdateAlcanceSgsiRequest;
+use App\Models\AlcanceSgsi;
+use App\Models\Empleado;
+use App\Models\Team;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class AlcanceSgsiController extends Controller
 {
@@ -21,16 +21,16 @@ class AlcanceSgsiController extends Controller
         abort_if(Gate::denies('alcance_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AlcanceSgsi::with(['team','empleado'])->select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
+            $query = AlcanceSgsi::with(['team', 'empleado'])->select(sprintf('%s.*', (new AlcanceSgsi)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'alcance_sgsi_show';
-                $editGate      = 'alcance_sgsi_edit';
-                $deleteGate    = 'alcance_sgsi_delete';
+                $viewGate = 'alcance_sgsi_show';
+                $editGate = 'alcance_sgsi_edit';
+                $deleteGate = 'alcance_sgsi_delete';
                 $crudRoutePart = 'alcance-sgsis';
 
                 return view('partials.datatablesActions', compact(
@@ -43,28 +43,28 @@ class AlcanceSgsiController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('alcancesgsi', function ($row) {
-                return $row->alcancesgsi ? strip_tags($row->alcancesgsi) : "";
+                return $row->alcancesgsi ? strip_tags($row->alcancesgsi) : '';
             });
             $table->editColumn('fecha_publicacion', function ($row) {
-                return $row->fecha_publicacion ? $row->fecha_publicacion: "";
+                return $row->fecha_publicacion ? $row->fecha_publicacion : '';
             });
             $table->editColumn('fecha_entrada', function ($row) {
-                return $row->fecha_entrada ? $row->fecha_entrada: "";
+                return $row->fecha_entrada ? $row->fecha_entrada : '';
             });
             $table->editColumn('reviso_alcance', function ($row) {
-                return $row->empleado ? $row->empleado->name : "";
+                return $row->empleado ? $row->empleado->name : '';
             });
             $table->editColumn('puesto_reviso', function ($row) {
-                return $row->empleado ? $row->empleado->puesto : "";
+                return $row->empleado ? $row->empleado->puesto : '';
             });
             $table->editColumn('area_reviso', function ($row) {
-                return $row->empleado ? $row->empleado->area->area : "";
+                return $row->empleado ? $row->empleado->area->area : '';
             });
             $table->editColumn('fecha_revision', function ($row) {
-                return $row->fecha_revision ? $row->fecha_revision : "";
+                return $row->fecha_revision ? $row->fecha_revision : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -75,8 +75,7 @@ class AlcanceSgsiController extends Controller
         $teams = Team::get();
         $empleados = Empleado::with('area')->get();
 
-
-        return view('admin.alcanceSgsis.index', compact('teams','empleados'));
+        return view('admin.alcanceSgsis.index', compact('teams', 'empleados'));
     }
 
     public function create()
@@ -92,8 +91,7 @@ class AlcanceSgsiController extends Controller
     {
         $alcanceSgsi = AlcanceSgsi::create($request->all());
 
-
-        return redirect()->route('admin.alcance-sgsis.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(AlcanceSgsi $alcanceSgsi)
@@ -104,15 +102,14 @@ class AlcanceSgsiController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-
-        return view('admin.alcanceSgsis.edit', compact('alcanceSgsi','empleados'));
+        return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados'));
     }
 
     public function update(UpdateAlcanceSgsiRequest $request, AlcanceSgsi $alcanceSgsi)
     {
         $alcanceSgsi->update($request->all());
 
-        return redirect()->route('admin.alcance-sgsis.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Editado con éxito');
     }
 
     public function show(AlcanceSgsi $alcanceSgsi)
@@ -130,7 +127,7 @@ class AlcanceSgsiController extends Controller
 
         $alcanceSgsi->delete();
 
-        return back()->with('deleted','Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyAlcanceSgsiRequest $request)

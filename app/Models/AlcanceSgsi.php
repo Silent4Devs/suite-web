@@ -4,10 +4,10 @@ namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 class AlcanceSgsi extends Model
 {
@@ -40,8 +40,6 @@ class AlcanceSgsi extends Model
         'team_id',
     ];
 
-
-
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
@@ -71,5 +69,4 @@ class AlcanceSgsi extends Model
     {
         return $this->belongsTo(Empleado::class, 'id_reviso_alcance', 'id');
     }
-
 }

@@ -15,7 +15,6 @@ class ChangeColumnDescripcionToMacroprocesosTable extends Migration
     {
         Schema::table('macroprocesos', function (Blueprint $table) {
             $table->longText('descripcion')->change();
-
         });
     }
 

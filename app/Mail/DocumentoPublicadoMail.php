@@ -3,9 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Documento;
-use App\Models\RevisionDocumento;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -19,6 +17,7 @@ class DocumentoPublicadoMail extends Mailable
      * @return void
      */
     public $documento;
+
     public function __construct(Documento $documento)
     {
         $this->documento = $documento;

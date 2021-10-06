@@ -2,9 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\Recurso;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -18,7 +16,6 @@ class TaskRecursosNotification extends Notification
     public $mensaje;
     public $user;
     public $tipo_notificacion;
-
 
     public function __construct($tabla, $slug, $mensaje, $user, $tipo_notificacion)
     {

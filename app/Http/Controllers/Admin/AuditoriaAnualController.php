@@ -28,9 +28,9 @@ class AuditoriaAnualController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'auditoria_anual_show';
-                $editGate      = 'auditoria_anual_edit';
-                $deleteGate    = 'auditoria_anual_delete';
+                $viewGate = 'auditoria_anual_show';
+                $editGate = 'auditoria_anual_edit';
+                $deleteGate = 'auditoria_anual_delete';
                 $crudRoutePart = 'auditoria-anuals';
 
                 return view('partials.datatablesActions', compact(
@@ -43,21 +43,21 @@ class AuditoriaAnualController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('tipo', function ($row) {
                 return $row->tipo ? AuditoriaAnual::TIPO_SELECT[$row->tipo] : '';
             });
 
             $table->editColumn('dias', function ($row) {
-                return $row->dias ? $row->dias : "";
+                return $row->dias ? $row->dias : '';
             });
             $table->addColumn('auditorlider_name', function ($row) {
                 return $row->auditorlider ? $row->auditorlider->name : '';
             });
 
             $table->editColumn('observaciones', function ($row) {
-                return $row->observaciones ? $row->observaciones : "";
+                return $row->observaciones ? $row->observaciones : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'auditorlider']);

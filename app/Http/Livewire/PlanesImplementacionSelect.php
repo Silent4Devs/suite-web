@@ -10,6 +10,7 @@ class PlanesImplementacionSelect extends Component
     protected $listeners = ['render-select' => 'render'];
     public $planes_implementacion;
     public $planes_seleccionados;
+
     public function mount($planes_seleccionados)
     {
         $this->planes_seleccionados = $planes_seleccionados;
@@ -19,6 +20,7 @@ class PlanesImplementacionSelect extends Component
     public function render()
     {
         $this->planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
+
         return view('livewire.planes-implementacion-select', ['planes_implementacion' => $this->planes_implementacion]);
     }
 

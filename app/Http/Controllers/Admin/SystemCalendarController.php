@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use App\Models\PlanBaseActividade;
 use App\Models\AuditoriaAnual;
-use App\Models\Recurso;
 use App\Models\AuditoriaInterna;
+use App\Models\PlanBaseActividade;
 use App\Models\PlanImplementacion;
+use App\Models\Recurso;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 
@@ -56,9 +55,7 @@ class SystemCalendarController extends Controller
         $actividades = collect();
 
         if ($implementaciones) {
-            foreach($implementaciones as $implementacion){
-
-            
+            foreach ($implementaciones as $implementacion) {
                 $tasks = $implementacion->tasks;
                 foreach ($tasks as $task) {
                     $task->parent_id = $implementacion->id;
@@ -83,11 +80,9 @@ class SystemCalendarController extends Controller
                 // if (!isset($implementacion->assigs)) {
                 //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
                 // }
-                
             }
         }
         // $actividades = $actividades->flatten(1);
-        
 
         $plan_base = PlanBaseActividade::get();
         $auditorias_anual = AuditoriaAnual::get();

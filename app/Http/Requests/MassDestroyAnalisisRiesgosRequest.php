@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\AnalisisRiesgos;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class MassDestroyAnalisisRiegosRequest extends FormRequest
+class MassDestroyAnalisisRiesgosRequest extends FormRequest
 {
     public function authorize()
     {

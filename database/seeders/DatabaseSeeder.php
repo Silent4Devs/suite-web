@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\PlanImplementacion;
-use App\Models\Puesto;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

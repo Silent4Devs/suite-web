@@ -29,11 +29,11 @@ class RevisionMinuta extends Model
         'estatus',
         'nivel',
         'no_revision',
-        'archivado'
+        'archivado',
     ];
 
     protected $appends = [
-        'fecha_solicitud', 'estatus_revisiones_formateado', 'color_revisiones_estatus'
+        'fecha_solicitud', 'estatus_revisiones_formateado', 'color_revisiones_estatus',
     ];
 
     public function getEstatusRevisionesFormateadoAttribute()
@@ -87,6 +87,7 @@ class RevisionMinuta extends Model
     public function getFechaSolicitudAttribute()
     {
         $fecha_diff = Carbon::parse($this->created_at)->format('d-m-Y');
+
         return $fecha_diff;
     }
 

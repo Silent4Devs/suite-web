@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateEstadoIncidenteRequest;
 use App\Models\EstadoIncidente;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class EstadoIncidentesController extends Controller

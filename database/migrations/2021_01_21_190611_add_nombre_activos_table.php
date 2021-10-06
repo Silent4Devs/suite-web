@@ -13,9 +13,9 @@ class AddNombreActivosTable extends Migration
      */
     public function up()
     {
-      Schema::table('activos', function (Blueprint $table) {
-          $table->string('nombre_activo')->nullable();
-      });
+        Schema::table('activos', function (Blueprint $table) {
+            $table->string('nombre_activo')->nullable();
+        });
     }
 
     /**
@@ -25,10 +25,8 @@ class AddNombreActivosTable extends Migration
      */
     public function down()
     {
-      Schema::table('activos', function (Blueprint $table) {
-
-          $table->dropColumn('nombre_activo');
-
-      });
+        Schema::table('activos', function (Blueprint $table) {
+            $table->dropColumn('nombre_activo');
+        });
     }
 }

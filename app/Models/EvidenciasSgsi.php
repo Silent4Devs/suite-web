@@ -4,15 +4,13 @@ namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use \DateTimeInterface;
-use App\Models\EvidenciaSgsiPdf;
-use App\Models\Area;
 
 class EvidenciasSgsi extends Model implements HasMedia
 {
@@ -99,7 +97,6 @@ class EvidenciasSgsi extends Model implements HasMedia
 
     public function evidencia_sgsi()
     {
-        return $this->hasMany(EvidenciaSgsiPdf::class,'id_evidencias_sgsis');
+        return $this->hasMany(EvidenciaSgsiPdf::class, 'id_evidencias_sgsis');
     }
-
 }

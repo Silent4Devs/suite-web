@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EvidenciasCertificadosEmpleados extends Model
 {
     use SoftDeletes;
-	protected $table = 'evidencias_certificados_empleados';
+    protected $table = 'evidencias_certificados_empleados';
 
     protected $dates = [
         'created_at',
@@ -17,22 +16,20 @@ class EvidenciasCertificadosEmpleados extends Model
         'deleted_at',
     ];
 
-
     protected $casts = [
         'empleado_id' => 'int',
         'evidencia' => 'string',
 
-	];
+    ];
 
     protected $fillable = [
-		'empleado_id',
-        'evidencia'
+        'empleado_id',
+        'evidencia',
 
-	];
+    ];
 
-    public function empleado_documentos_certificados(){
-
-        return $this->belongsTo(Empleado::class,'empleado_id');
-
+    public function empleado_documentos_certificados()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id');
     }
 }

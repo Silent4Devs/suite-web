@@ -15,8 +15,8 @@ class ChangeColumnsToEv360Objetivos extends Migration
     public function up()
     {
         Schema::table('ev360_objetivos', function (Blueprint $table) {
-            DB::statement("ALTER TABLE ev360_objetivos ALTER COLUMN 
-            meta TYPE integer USING (meta::integer)");
+            DB::statement('ALTER TABLE ev360_objetivos ALTER COLUMN 
+            meta TYPE integer USING (meta::integer)');
             $table->text('descripcion_meta')->nullable();
         });
     }

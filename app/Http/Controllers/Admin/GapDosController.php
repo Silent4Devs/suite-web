@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGapDoRequest;
 use App\Http\Requests\StoreGapDoRequest;
-use App\Http\Requests\UpdateGapDoRequest;
 use App\Models\GapDo;
 use App\Models\Team;
 use Gate;
@@ -27,9 +26,9 @@ class GapDosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'gap_do_show';
-                $editGate      = 'gap_do_edit';
-                $deleteGate    = 'gap_do_delete';
+                $viewGate = 'gap_do_show';
+                $editGate = 'gap_do_edit';
+                $deleteGate = 'gap_do_delete';
                 $crudRoutePart = 'gap-dos';
 
                 return view('partials.datatablesActions', compact(
@@ -42,25 +41,25 @@ class GapDosController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('anexo_indice', function ($row) {
-                return $row->anexo_indice ? $row->anexo_indice : "";
+                return $row->anexo_indice ? $row->anexo_indice : '';
             });
             $table->editColumn('control', function ($row) {
-                return $row->control ? $row->control : "";
+                return $row->control ? $row->control : '';
             });
             $table->editColumn('descripcion_control', function ($row) {
-                return $row->descripcion_control ? $row->descripcion_control : "";
+                return $row->descripcion_control ? $row->descripcion_control : '';
             });
             $table->editColumn('valoracion', function ($row) {
                 return $row->valoracion ? GapDo::VALORACION_SELECT[$row->valoracion] : '';
             });
             $table->editColumn('evidencia', function ($row) {
-                return $row->evidencia ? $row->evidencia : "";
+                return $row->evidencia ? $row->evidencia : '';
             });
             $table->editColumn('recomendacion', function ($row) {
-                return $row->recomendacion ? $row->recomendacion : "";
+                return $row->recomendacion ? $row->recomendacion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -104,18 +103,21 @@ class GapDosController extends Controller
                     $gapun = GapDo::findOrFail($id);
                     $gapun->evidencia = $request->value;
                     $gapun->save();
+
                     return response()->json(['success' => true]);
                     break;
                 case 'recomendacion':
                     $gapun = GapDo::findOrFail($id);
                     $gapun->recomendacion = $request->value;
                     $gapun->save();
+
                     return response()->json(['success' => true]);
                     break;
                 case 'valoracion':
                     $gapun = GapDo::findOrFail($id);
                     $gapun->valoracion = $request->value;
                     $gapun->save();
+
                     return response()->json(['success' => true]);
                     break;
             }

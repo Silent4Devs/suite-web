@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Organizacion
- * 
+ * Class Organizacion.
+ *
  * @property int $id
  * @property string $empresa
  * @property string $direccion
@@ -31,45 +31,43 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $team_id
  * @property string|null $antecedentes
  * @property string|null $logotipo
- * 
+ *
  * @property Team|null $team
  * @property Collection|Sede[] $sedes
- *
- * @package App\Models
  */
 class Organizacion extends Model
 {
-	use SoftDeletes;
-	protected $table = 'organizacions';
+    use SoftDeletes;
+    protected $table = 'organizacions';
 
-	protected $casts = [
-		'telefono' => 'int',
-		'team_id' => 'int'
-	];
+    protected $casts = [
+        'telefono' => 'int',
+        'team_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'empresa',
-		'direccion',
-		'telefono',
-		'correo',
-		'pagina_web',
-		'giro',
-		'servicios',
-		'mision',
-		'vision',
-		'valores',
-		'team_id',
-		'antecedentes',
-		'logotipo'
-	];
+    protected $fillable = [
+        'empresa',
+        'direccion',
+        'telefono',
+        'correo',
+        'pagina_web',
+        'giro',
+        'servicios',
+        'mision',
+        'vision',
+        'valores',
+        'team_id',
+        'antecedentes',
+        'logotipo',
+    ];
 
-	public function team()
-	{
-		return $this->belongsTo(Team::class);
-	}
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 
-	public function sedes()
-	{
-		return $this->hasMany(Sede::class);
-	}
+    public function sedes()
+    {
+        return $this->hasMany(Sede::class);
+    }
 }

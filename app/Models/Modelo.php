@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Modelo
+ * Class Modelo.
  *
  * @property int $id
  * @property int|null $marca_id
@@ -21,26 +21,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  *
  * @property Marca|null $marca
- *
- * @package App\Models
  */
 class Modelo extends Model
 {
-	use SoftDeletes;
-	protected $table = 'modelo';
+    use SoftDeletes;
+    protected $table = 'modelo';
 
-	protected $casts = [
-		'marca_id' => 'int'
-	];
+    protected $casts = [
+        'marca_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'marca_id',
-		'nombre'
-	];
+    protected $fillable = [
+        'marca_id',
+        'nombre',
+    ];
 
-	public function marca()
-	{
-		return $this->belongsTo(Marca::class);
-	}
-
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class);
+    }
 }

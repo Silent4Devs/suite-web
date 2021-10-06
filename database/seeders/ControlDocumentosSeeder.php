@@ -15,8 +15,8 @@ class ControlDocumentosSeeder extends Seeder
     public function run()
     {
         ControlDocumento::create([
-            "nombre" => 'Contexto de la organización',
-            "version" => '0',
+            'nombre' => 'Contexto de la organización',
+            'version' => '0',
             'estado_id' => 5,
         ]);
     }

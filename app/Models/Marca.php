@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -10,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Marca
+ * Class Marca.
  *
  * @property int $id
  * @property int|null $activo_id
@@ -21,30 +19,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property Tipoactivo|null $tipoactivo
  * @property Collection|Modelo[] $modelos
- *
- * @package App\Models
  */
 class Marca extends Model
 {
-	use SoftDeletes;
-	protected $table = 'marca';
+    use SoftDeletes;
+    protected $table = 'marca';
 
-	protected $casts = [
-		'activo_id' => 'int'
-	];
+    protected $casts = [
+        'activo_id' => 'int',
+    ];
 
-	protected $fillable = [
-		'activo_id',
-		'nombre'
-	];
+    protected $fillable = [
+        'activo_id',
+        'nombre',
+    ];
 
-	public function tipoactivo()
-	{
-		return $this->belongsTo(Tipoactivo::class, 'activo_id');
-	}
+    public function tipoactivo()
+    {
+        return $this->belongsTo(Tipoactivo::class, 'activo_id');
+    }
 
-	public function modelos()
-	{
-		return $this->hasMany(Modelo::class);
-	}
+    public function modelos()
+    {
+        return $this->hasMany(Modelo::class);
+    }
 }

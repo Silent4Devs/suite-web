@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\PlanBaseActividade;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StorePlanBaseActividadeRequest extends FormRequest
 {
