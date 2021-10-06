@@ -23,5 +23,3 @@ bootstrap/cache/
 storage/debugbar/
 storage/app/public/gantt/
 .php_cs.cache
-
-config/

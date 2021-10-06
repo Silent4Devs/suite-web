@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\Models\MatrizRequisitoLegale;
 use App\Models\Empleado;
+use App\Models\MatrizRequisitoLegale;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class MatrizRequisitoLegaleImport implements ToModel
@@ -37,10 +37,10 @@ class MatrizRequisitoLegaleImport implements ToModel
         return [
             'nombrerequisito' => 'required|string|min:2|max:255',
             'formacumple' => 'required|text|min:2|max:400',
-            'requisitoacumplir' => 'required|text|min:2|max:400', 
+            'requisitoacumplir' => 'required|text|min:2|max:400',
             'medio' => 'required|string|min:2|max:255',
             'fechaexpedicion' => 'required|date',
-            'fechavigor' => 'required|date', 
+            'fechavigor' => 'required|date',
             'cumplerequisito' => 'required|string|min:2|max:255',
         ];
     }
@@ -48,34 +48,36 @@ class MatrizRequisitoLegaleImport implements ToModel
     public function obtenerIdTipoPorTexto($tipo)
     {
         $tipoId = MatrizRequisitoLegale::TIPO_SELECT;
-        $tipo_filtrado = array_filter($tipoId, function($item) use ($tipo)
-        {
+        $tipo_filtrado = array_filter($tipoId, function ($item) use ($tipo) {
             return strtolower($item) == strtolower($tipo);
         });
+
         return $tipo_filtrado;
     }
+
     public function obtenerIdPCPorTexto($periodicidad)
     {
         $periodicidadId = MatrizRequisitoLegale::PERIODICIDAD_SELECT;
-        $periodicidad_filtrado = array_filter($periodicidadId, function($item) use ($periodicidad)
-        {
+        $periodicidad_filtrado = array_filter($periodicidadId, function ($item) use ($periodicidad) {
             return strtolower($item) == strtolower($periodicidad);
         });
+
         return $periodicidad_filtrado;
     }
+
     public function obtenerIdCRPorTexto($cumplimiento)
     {
         $cumplimientoId = MatrizRequisitoLegale::CUMPLEREQUISITO_SELECT;
-        $cumplimiento_filtrado = array_filter($cumplimientoId, function($item) use ($cumplimiento)
-        {
+        $cumplimiento_filtrado = array_filter($cumplimientoId, function ($item) use ($cumplimiento) {
             return strtolower($item) == strtolower($cumplimiento);
         });
         dd($cumplimiento_filtrado);
     }
+
     public function obtenerEmpleadoPorNombre($nombre)
     {
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+
         return $empleado_bd->id;
     }
-
 }
