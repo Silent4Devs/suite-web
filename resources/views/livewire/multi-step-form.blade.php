@@ -165,6 +165,7 @@
         }
 
         #progressbar .active {
+            z-index: 1;
             color: #008186;
         }
 
@@ -180,26 +181,31 @@
 
         #progressbar #createEvaluacion:before {
             font-family: "Font Awesome 5 Free";
-            content: "\f007"
+            font-weight: 900;
+            content: "\f02d"
         }
 
         #progressbar #publicoObjetivo:before {
             font-family: "Font Awesome 5 Free";
-            content: "\f500"
+            font-weight: 900;
+            content: "\f007";
         }
 
         #progressbar #evaluadores:before {
             font-family: "Font Awesome 5 Free";
-            content: "\f500"
+            font-weight: 900;
+            content: "\f470"
         }
 
         #progressbar #periodosCircle:before {
             font-family: "Font Awesome 5 Free";
-            content: "\f00c"
+            font-weight: 900;
+            content: "\f073"
         }
 
         #progressbar #finalizarEvaluacion:before {
             font-family: "Font Awesome 5 Free";
+            font-weight: 900;
             content: "\f00c"
         }
 
@@ -230,6 +236,7 @@
         #progressbar li.active:before,
         #progressbar li.active:after {
             background: #008186;
+            z-index: -1;
         }
 
         .progress {
@@ -241,7 +248,7 @@
         }
 
         .head {
-            text-transform: uppercase;
+            text-transform: capitalize;
             color: #008186;
             font-weight: normal
         }
@@ -469,7 +476,7 @@
                                     aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
                             </div>
                             <div class="card-body">
-                                <h4 class="head">SELECCIONA TU PÚBLICO OBJETIVO</h4>
+                                <h4 class="head">Selecciona tu público objetivo</h4>
                                 <div class="row justify-content-center align-items-center">
                                     <div class="col-9">
                                         <div>
@@ -560,7 +567,7 @@
                                     aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
                             </div>
                             <div class="card-body">
-                                <h4 class="head">SELECCIONA LOS EVALUADORES ENCARGADOS</h4>
+                                <h4 class="head">Selecciona los evaluadores encargados</h4>
                                 <p class="m-0 text-muted"><i class="fas fa-info-circle"></i>
                                     Selecciona los evaluadores participantes
                                 </p>
@@ -722,7 +729,7 @@
                                     aria-valuemin="0" aria-valuemax="100" style="width: 90%"></div>
                             </div>
                             <div class="card-body">
-                                <h4 class="head">SELECCIONA LOS PERIODOS A EVALUAR</h4>
+                                <h4 class="head">Selecciona los periodos a evaluar</h4>
                                 <p class="m-0 text-muted"><i class="fas fa-info-circle"></i>
                                     Define los periodos que requieras para la evaluación
                                 </p>

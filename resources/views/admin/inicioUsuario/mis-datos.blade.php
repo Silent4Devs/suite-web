@@ -121,6 +121,15 @@
                         <div class="p-3 mt-3 card">
                             <h5 class="text-center"><i class="mr-2 fas fa-chart-bar"></i>Reportes de mis evaluaciones
                             </h5>
+                            @foreach ($lista_evaluaciones as $evaluacion)
+                                <a href="{{ route('admin.ev360-evaluaciones.autoevaluacion.consulta.evaluado', [
+    'evaluacion' => $evaluacion['id'],
+    'evaluado' => $usuario->empleado->id,
+]) }}"
+                                    class="mt-3 d-inline-block" style="font-size:15px"><i
+                                        class="mr-2 fas fa-poll-h"></i>{{ $evaluacion['nombre'] }}</a>
+
+                            @endforeach
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -191,22 +200,7 @@
                         </div>
 
                         <div class="row gutters-sm">
-                            <div class="mb-3 col-sm-6">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h5><i class="mb-3 mr-2 fas fa-bullseye"></i>Mis Objetivos</h5>
-                                        @foreach ($mis_objetivos as $objetivo)
-                                            <small>{{ $objetivo->objetivo->nombre }}</small>
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                    role="progressbar" style="width: 25%;" aria-valuenow="25"
-                                                    aria-valuemin="0" aria-valuemax="100">25%</div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3 col-sm-6">
+                            <div class="mb-3 col-sm-12">
                                 <div class="card h-100">
                                     <div class="card-body">
                                         <h5><i class="mr-2 far fa-sticky-note"></i>Evaluaciones a realizar <i
@@ -248,6 +242,52 @@
                                                     </div>
                                                 </div>
                                             @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-sm-12">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5><i class="mb-1 mr-2 fas fa-bullseye"></i>Mis Objetivos</h5>
+                                        <small class="text-muted"><i class="fas fa-exclamation-triangle"></i>Tus
+                                            objetivos son evaluados por tu jefe
+                                            inmediato</small>
+                                        <br>
+                                        @foreach ($lista_evaluaciones as $evaluacion)
+                                            <small class="mt-3 d-inline-block"
+                                                style="font-size:15px">{{ $evaluacion['nombre'] }}</small>
+                                            <br>
+                                            <small><i
+                                                    class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_inicio'] }}</small>
+                                            <small><i
+                                                    class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_fin'] }}</small>
+                                            @foreach ($evaluacion['informacion_evaluacion']['evaluadores_objetivos'] as $evaluador)
+                                                @if ($evaluador['esSupervisor'])
+                                                    <small>{{ $evaluador['nombre'] }}</small>
+                                                    <br>
+                                                    @foreach ($evaluador['objetivos'] as $objetivo)
+                                                        <small style="font-size:13px"
+                                                            class="m-0">{{ $objetivo['nombre'] }}</small>
+                                                        <br>
+                                                        <small>KPI: <strong>{{ $objetivo['KPI'] }}</strong></small>
+                                                        <small>Meta: <strong>{{ $objetivo['meta'] }}</strong></small>
+                                                        <small>Alcanzado:
+                                                            <strong>{{ $objetivo['calificacion'] }}</strong></small>
+                                                        <small>Comentario(s): <strong>
+                                                                {{ $objetivo['meta_alcanzada'] }}</strong></small>
+                                                        <div class="progress">
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                                role="progressbar"
+                                                                style="width: {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%;"
+                                                                aria-valuenow="{{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}"
+                                                                aria-valuemin="0" aria-valuemax="100">
+                                                                {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
                                         @endforeach
                                     </div>
                                 </div>
