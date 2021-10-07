@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Frontend\OrganizacionController;
 use App\Http\Controllers\Frontend\PortalComunicacionController;
+use App\Http\Controllers\Frontend\SedeController;
+use App\Http\Controllers\Frontend\GrupoAreaController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -480,20 +482,20 @@ Route::middleware([
     Route::resource('puestos', 'PuestosController');
 
     // Sedes
-    Route::delete('sedes/destroy', 'SedeController@massDestroy')->name('sedes.massDestroy');
-    Route::get('sedes/organizacion', 'SedeController@obtenerListaSedes')->name('sedes.obtenerListaSedes');
-    Route::post('sedes/parse-csv-import', 'SedeController@parseCsvImport')->name('sedes.parseCsvImport');
-    Route::post('sedes/process-csv-import', 'SedeController@processCsvImport')->name('sedes.processCsvImport');
-    Route::resource('sedes', 'SedeController');
-    Route::get('sede-ubicacion/{data}', 'SedeController@ubicacion');
-    Route::get('sedes/sede-ubicacionorganizacion/{id}', 'SedeController@ubicacionorg');
+    Route::delete('sedes/destroy', [SedeController::class, 'massDestroy'])->name('sedes.massDestroy');
+    Route::get('sedes/organizacion', [SedeController::class, 'obtenerListaSedes'])->name('sedes.obtenerListaSedes');
+    Route::post('sedes/parse-csv-import', [SedeController::class, 'parseCsvImport'])->name('sedes.parseCsvImport');
+    Route::post('sedes/process-csv-import', [SedeController::class, 'processCsvImport'])->name('sedes.processCsvImport');
+    Route::resource('sedes', SedeController::class);
+    Route::get('sede-ubicacion/{data}', [SedeController::class, 'ubicacion']);
+    Route::get('sedes/sede-ubicacionorganizacion/{id}', [SedeController::class, 'ubicacionorg']);
 
     //Grupo Areas
     Route::post('grupoarea/areas-relacionadas', [GrupoAreaController::class, 'getRelationatedAreas'])->name('grupoarea.getRelationatedAreas');
     Route::delete('grupoarea/destroy', 'GrupoAreaController@massDestroy')->name('grupoarea.massDestroy');
     Route::post('grupoarea/parse-csv-import', 'GrupoAreaController@parseCsvImport')->name('grupoarea.parseCsvImport');
     Route::post('grupoarea/process-csv-import', 'GrupoAreaController@processCsvImport')->name('grupoarea.processCsvImport');
-    Route::resource('grupoarea', 'GrupoAreaController');
+    Route::resource('grupoarea', GrupoAreaController::class);
 
     // Indicadores Sgsis
     Route::get('evaluaciones-sgsisInsertar', 'IndicadoresSgsiController@evaluacionesInsert')->name('evaluacionesInsert');

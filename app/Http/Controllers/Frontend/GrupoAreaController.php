@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
@@ -18,21 +18,21 @@ class GrupoAreaController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_grupoarea_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_grupoarea_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $grupos = Grupo::orderByDesc('id')->get();
 
             return datatables()->of($grupos)->toJson();
         }
 
-        return view('admin.grupoarea.index');
+        return view('frontend.grupoarea.index');
     }
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_grupoarea_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_grupoarea_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.grupoarea.create');
+        return view('frontend.grupoarea.create');
     }
 
     public function store(Request $request)
@@ -51,16 +51,16 @@ class GrupoAreaController extends Controller
             // 'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
         ]);
         // Flash::success('<h5 class="text-center">Grupo agregado satisfactoriamente</h5>');
-        return redirect()->route('admin.grupoarea.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('frontend.grupoarea.index')->with('success', 'Guardado con éxito');
     }
 
     public function show(Grupo $grupoarea)
     {
-        abort_if(Gate::denies('configuracion_grupoarea_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_grupoarea_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $grupoarea->load('team');
 
-        return view('admin.grupoarea.show', compact('grupoarea'));
+        return view('frontend.grupoarea.show', compact('grupoarea'));
     }
 
     public function edit(Grupo $grupoarea)
@@ -69,7 +69,7 @@ class GrupoAreaController extends Controller
 
         $grupoarea->load('team');
 
-        return view('admin.grupoarea.edit', compact('grupoarea'));
+        return view('frontend.grupoarea.edit', compact('grupoarea'));
     }
 
     public function update(Request $request, Grupo $grupoarea)
@@ -82,12 +82,12 @@ class GrupoAreaController extends Controller
         );
         $grupoarea->update($request->all());
         // Flash::success('<h5 class="text-center">Grupo actualizado satisfactoriamente</h5>');
-        return redirect()->route('admin.grupoarea.index')->with('success', 'Editado con éxito');
+        return redirect()->route('frontend.grupoarea.index')->with('success', 'Editado con éxito');
     }
 
     public function destroy(Grupo $grupoarea)
     {
-        abort_if(Gate::denies('configuracion_grupoarea_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_grupoarea_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $deleted = $grupoarea->delete();
         if ($deleted) {
