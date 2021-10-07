@@ -24,6 +24,7 @@ use App\Imports\RevisionDIreccionImport;
 use App\Imports\TeamImport;
 use App\Imports\UsuarioImport;
 use App\Imports\VulnerabilidadImport;
+use App\Imports\MinutasaltadireccionImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SubidaExcel extends Controller
