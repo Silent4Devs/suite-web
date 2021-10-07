@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
+use App\Models\Puesto;
 use App\Models\RH\Competencia;
+use App\Models\RH\CompetenciaPuesto;
 use App\Models\RH\Conducta;
 use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
@@ -68,6 +70,7 @@ class EV360CompetenciasController extends Controller
 
     public function update(Request $request, $competencia)
     {
+
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:255',
@@ -75,6 +78,22 @@ class EV360CompetenciasController extends Controller
         ]);
         $competencia = Competencia::find(intval($competencia));
         $competencia_u = $competencia->update($request->all());
+        // Almacenamos la competencia en todos los puestos
+        if ($request->toda_la_empresa) {
+            $puestos = Puesto::all();
+            foreach ($puestos as $puesto) {
+                $exists = CompetenciaPuesto::where('puesto_id', '=', $puesto->id)
+                    ->where('competencia_id', '=',  $competencia->id)
+                    ->exists();
+                if (!$exists) {
+                    CompetenciaPuesto::create([
+                        'puesto_id' => $puesto->id,
+                        'competencia_id' => $competencia->id,
+                        'nivel_esperado' => $request->nivel_esperado,
+                    ]);
+                }
+            }
+        }
         if ($competencia_u) {
             return redirect()->route('admin.ev360-competencias.index')->with('success', 'Competencia actualizada con éxito');
         } else {

@@ -77,7 +77,7 @@ class CompetenciasPorPuestoController extends Controller
                 return response()->json(array('success' => true));
             }
         } else {
-            return response()->json(array('error' => true, 'mensaje' => 'Competencia asignada'));
+            return response()->json(array('error' => true, 'mensaje' => 'Esta competencia ya ha sido asignada'));
         }
     }
 
