@@ -26,7 +26,7 @@ class AreasController extends Controller
         abort_if(Gate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Area::get();
+            $query = Area::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
