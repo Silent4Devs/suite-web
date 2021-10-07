@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Imports\AlcanceSgsiImport;
-use App\Imports\AlcanceSgsiImport;
 use App\Imports\AmenazaImport;
 use App\Imports\AnalisisDeRiesgoImport;
 use App\Imports\CategoriaActivoImport;
@@ -11,7 +10,6 @@ use App\Imports\CategoriaCapacitacionImport;
 use App\Imports\CompetenciaImport;
 use App\Imports\ControlImport;
 use App\Imports\EjecutarenlaceImport;
-use App\Imports\EntendimientoOrganizacionImport;
 use App\Imports\EntendimientoOrganizacionImport;
 use App\Imports\EstadoIncidenteImport;
 use App\Imports\EvaluacionImport;
@@ -24,6 +22,7 @@ use App\Imports\RevisionDIreccionImport;
 use App\Imports\TeamImport;
 use App\Imports\UsuarioImport;
 use App\Imports\VulnerabilidadImport;
+use App\Imports\MinutasaltadireccionImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SubidaExcel extends Controller
@@ -180,7 +179,7 @@ class SubidaExcel extends Controller
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
-    public function ComiteSeguridad()
+    public function AltaDireccion()
     {
         Excel::import(new MinutasaltadireccionImport, request()->file('alta_direccion'));
 
