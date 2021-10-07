@@ -29,8 +29,8 @@
         </li>
         {{-- @can('mi_perfil_access') --}}
         <li class="c-sidebar-nav-item">
-            <a href="{{ route('inicio-Usuario.index') }}"
-                class="c-sidebar-nav-link {{ request()->is('inicioUsuario') || request()->is('inicioUsuario/*') ? 'active' : '' }}">
+            {{-- <a href="{{ route('inicio-Usuario.index') }}" --}}
+                <a class="c-sidebar-nav-link {{ request()->is('inicioUsuario') || request()->is('inicioUsuario/*') ? 'active' : '' }}">
                 <i class="fas fa-user iconos_menu letra_blanca"></i>
                 <span class="letra_blanca"> Mi perfil</span>
             </a>
@@ -111,7 +111,7 @@
         {{-- @endcan
 @can('dashboard_access') --}}
         <li class="c-sidebar-nav-item">
-            <a href="{{ route('home') }}"
+            <a href="{{ url('/') }}"
                 class="c-sidebar-nav-link {{ request()->is('dashboards') || request()->is('dashboards/*') ? 'active' : '' }}">
                 <i class="fa-fw far fa-chart-bar iconos_menu letra_blanca">
 

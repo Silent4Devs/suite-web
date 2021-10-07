@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Frontend\OrganizacionController;
+use App\Http\Controllers\Frontend\PortalComunicacionController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -28,8 +29,6 @@ Route::middleware([
         return view('frontend.home');
     });
 
-    Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
-    Route::resource('portal-comunicacion', 'PortalComunicacionController');
     // Organizacions
     Route::resource('organizacions', OrganizacionController::class);
     Route::post('organizacions/media', [OrganizacionController::class, 'storeMedia'])->name('organizacions.storeMedia');
@@ -107,8 +106,8 @@ Route::middleware([
 
     Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
     Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
-    Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
-    Route::resource('portal-comunicacion', 'PortalComunicacionController');
+    Route::get('portal-comunicacion/reportes', [PortalComunicacionController::class, 'reportes'])->name('portal-comunicacion.reportes');
+    Route::resource('portal-comunicacion', PortalComunicacionController::class);
 
     Route::post('plantTrabajoBase/bloqueo/mostrar', 'LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');
     Route::post('plantTrabajoBase/bloqueo/quitar', 'LockedPlanTrabajoController@removeLockedToPlanTrabajo')->name('lockedPlan.removeLockedToPlanTrabajo');
@@ -194,7 +193,6 @@ Route::middleware([
     Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
     Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
 
-    Route::get('/', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');

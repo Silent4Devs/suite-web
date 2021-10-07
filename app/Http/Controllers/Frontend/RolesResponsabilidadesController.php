@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRolesResponsabilidadeRequest;
@@ -9,33 +9,82 @@ use App\Http\Requests\UpdateRolesResponsabilidadeRequest;
 use App\Models\RolesResponsabilidade;
 use App\Models\Team;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class RolesResponsabilidadesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('roles_responsabilidade_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $rolesResponsabilidades = RolesResponsabilidade::all();
+        if ($request->ajax()) {
+            $query = RolesResponsabilidade::with(['team'])->select(sprintf('%s.*', (new RolesResponsabilidade)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'roles_responsabilidade_show';
+                $editGate = 'roles_responsabilidade_edit';
+                $deleteGate = 'roles_responsabilidade_delete';
+                $crudRoutePart = 'roles-responsabilidades';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('responsabilidad', function ($row) {
+                return $row->responsabilidad ? $row->responsabilidad : '';
+            });
+            $table->editColumn('direccionsgsi', function ($row) {
+                return $row->direccionsgsi ? $row->direccionsgsi : '';
+            });
+            $table->editColumn('comiteseguridad', function ($row) {
+                return $row->comiteseguridad ? $row->comiteseguridad : '';
+            });
+            $table->editColumn('responsablesgsi', function ($row) {
+                return $row->responsablesgsi ? $row->responsablesgsi : '';
+            });
+            $table->editColumn('coordinadorsgsi', function ($row) {
+                return $row->coordinadorsgsi ? $row->coordinadorsgsi : '';
+            });
+            $table->editColumn('rol', function ($row) {
+                return $row->rol ? $row->rol : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
 
         $teams = Team::get();
 
-        return view('frontend.rolesResponsabilidades.index', compact('rolesResponsabilidades', 'teams'));
+        return view('admin.rolesResponsabilidades.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('roles_responsabilidade_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.rolesResponsabilidades.create');
+        return view('admin.rolesResponsabilidades.create');
     }
 
     public function store(StoreRolesResponsabilidadeRequest $request)
     {
         $rolesResponsabilidade = RolesResponsabilidade::create($request->all());
 
-        return redirect()->route('frontend.roles-responsabilidades.index');
+        return redirect()->route('admin.roles-responsabilidades.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(RolesResponsabilidade $rolesResponsabilidade)
@@ -44,14 +93,14 @@ class RolesResponsabilidadesController extends Controller
 
         $rolesResponsabilidade->load('team');
 
-        return view('frontend.rolesResponsabilidades.edit', compact('rolesResponsabilidade'));
+        return view('admin.rolesResponsabilidades.edit', compact('rolesResponsabilidade'));
     }
 
     public function update(UpdateRolesResponsabilidadeRequest $request, RolesResponsabilidade $rolesResponsabilidade)
     {
         $rolesResponsabilidade->update($request->all());
 
-        return redirect()->route('frontend.roles-responsabilidades.index');
+        return redirect()->route('admin.roles-responsabilidades.index')->with('success', 'Editado con éxito');
     }
 
     public function show(RolesResponsabilidade $rolesResponsabilidade)
@@ -60,7 +109,7 @@ class RolesResponsabilidadesController extends Controller
 
         $rolesResponsabilidade->load('team');
 
-        return view('frontend.rolesResponsabilidades.show', compact('rolesResponsabilidade'));
+        return view('admin.rolesResponsabilidades.show', compact('rolesResponsabilidade'));
     }
 
     public function destroy(RolesResponsabilidade $rolesResponsabilidade)
@@ -69,7 +118,7 @@ class RolesResponsabilidadesController extends Controller
 
         $rolesResponsabilidade->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyRolesResponsabilidadeRequest $request)

@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                   Bienvenido {{ tenant('id') }}
+                    {{ __('You are logged in!') }}
                 </div>
             </div>
         </div>
