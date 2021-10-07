@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PerfilEmpleado;
 use App\Models\PlanImplementacion;
 use App\Models\Puesto;
 use Illuminate\Database\Seeder;
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
             GrupoSeeder::class,
             AreaSeeder::class,
             PuestoSeeder::class,
+            PerfilEmpleadosSeeder::class,
             EmpleadosSeeder::class,
             MacroprocesoSeeder::class,
             DocumentoSeeder::class,
