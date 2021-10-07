@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EvidenciasSeguridad extends Model
 {
@@ -28,8 +27,8 @@ class EvidenciasSeguridad extends Model
         'evidencia',
     ];
 
-
-    public function seguridad(){
+    public function seguridad()
+    {
         return $this->belongsTo(IncidentesSeguridad::class, 'id_seguridad');
     }
 }

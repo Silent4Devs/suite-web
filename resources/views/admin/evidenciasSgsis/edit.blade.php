@@ -72,7 +72,6 @@
                 <div class="form-group col-md-4">
                     <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                     <div class="form-control" id="puesto_reviso" readonly></div>
-
                 </div>
                 <div class="form-group col-md-4">
                     <label for="id_area_reviso"><i class="fas fa-street-viewa iconos-crear"></i>Área</label>

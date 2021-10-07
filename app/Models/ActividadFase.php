@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\PlanBaseActividade;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ActividadFase extends Model
 {
@@ -17,14 +16,8 @@ class ActividadFase extends Model
 
     protected $fillable = ['fase_nombre'];
 
-
-    public function plan_base_actividades(){
-    	return $this->hasMany(PlanBaseActividade::class, 'actividad_fase_id', 'id');
+    public function plan_base_actividades()
+    {
+        return $this->hasMany(PlanBaseActividade::class, 'actividad_fase_id', 'id');
     }
 }
-
-
-
-
-
-

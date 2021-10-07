@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class IncidentesSeguridad extends Model implements HasMedia
 {
     use InteractsWithMedia;
-
     use HasFactory;
     use SoftDeletes;
     const ARCHIVADO = '1';
@@ -22,11 +19,11 @@ class IncidentesSeguridad extends Model implements HasMedia
     protected $table = 'incidentes_seguridad';
 
     protected $dates = [
-        'fecha' => 'format:d-m-Y'
+        'fecha' => 'format:d-m-Y',
     ];
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $appends = ['folio', 'archivo'];
@@ -45,6 +42,7 @@ class IncidentesSeguridad extends Model implements HasMedia
     {
         return $this->belongsTo(Empleado::class, 'empleado_reporto_id', 'id');
     }
+
     public function asignado()
     {
         return $this->belongsTo(Empleado::class, 'empleado_asignado_id', 'id');

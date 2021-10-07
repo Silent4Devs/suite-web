@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\RH\Competencia;
-use App\Models\RH\Conducta;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionCompetencia;
 use App\Models\RH\EvaluacionObjetivo;
@@ -17,7 +16,6 @@ use App\Models\RH\ObjetivoRespuesta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 
 class EV360EvaluacionesController extends Controller
 {
@@ -28,8 +26,10 @@ class EV360EvaluacionesController extends Controller
 
         if ($request->ajax()) {
             $evaluaciones = Evaluacion::all();
+
             return datatables()->of($evaluaciones)->toJson();
         }
+
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.index', compact('areas', 'empleados'));
     }
 
@@ -38,6 +38,7 @@ class EV360EvaluacionesController extends Controller
         $evaluacion = new Evaluacion;
         $areas = Area::all();
         $empleados = Empleado::all();
+
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.create', compact('evaluacion', 'areas', 'empleados'));
     }
 
@@ -127,7 +128,7 @@ class EV360EvaluacionesController extends Controller
             EvaluadoEvaluador::create([
                 'evaluado_id' => $empleado->id,
                 'evaluador_id' => intval($evaluador),
-                'evaluacion_id' => $evaluacion->id
+                'evaluacion_id' => $evaluacion->id,
             ]);
         }
         // $competencia = Competencia::find($evaluacion->competencia_id);
@@ -179,7 +180,7 @@ class EV360EvaluacionesController extends Controller
                     'competencia_id' => $competencia->id,
                     'evaluado_id' => $empleado->id,
                     'evaluador_id' => $evaluador,
-                    'evaluacion_id' => $evaluacion->id
+                    'evaluacion_id' => $evaluacion->id,
                 ]);
             }
         }
@@ -187,12 +188,12 @@ class EV360EvaluacionesController extends Controller
         foreach ($evaluadores as $evaluador) {
             foreach ($objetivos as $objetivo) {
                 ObjetivoRespuesta::create([
-                    'meta_alcanzada' => "Sin evaluar",
+                    'meta_alcanzada' => 'Sin evaluar',
                     'calificacion' => 0,
                     'objetivo_id' => $objetivo->id,
                     'evaluado_id' => $empleado->id,
                     'evaluador_id' => $evaluador,
-                    'evaluacion_id' => $evaluacion->id
+                    'evaluacion_id' => $evaluacion->id,
                 ]);
             }
         }
@@ -243,6 +244,7 @@ class EV360EvaluacionesController extends Controller
             }
         }
     }
+
     public function cerrarEvaluacion(Request $request, $evaluacion)
     {
         $evaluacion = Evaluacion::find(intval($evaluacion));
@@ -262,7 +264,6 @@ class EV360EvaluacionesController extends Controller
 
     public function contestarCuestionario($evaluacion, $evaluado, $evaluador)
     {
-
         $evaluacion = Evaluacion::find(intval($evaluacion));
         $evaluado = Empleado::with(['puestoRelacionado' => function ($q) {
             $q->with(['competencias' => function ($q) {
@@ -344,6 +345,7 @@ class EV360EvaluacionesController extends Controller
                 return $competencia;
             }
         }); //Filtro para obtener solo las competencias evaluadas al momento de la creación de la evaluacion
+
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.cuestionario', compact('evaluacion', 'preguntas', 'evaluado', 'evaluador', 'total_preguntas', 'preguntas_contestadas', 'preguntas_no_contestadas', 'progreso', 'finalizo_tiempo', 'objetivos', 'progreso_objetivos', 'objetivos_evaluados', 'objetivos_no_evaluados', 'esta_evaluado', 'competencias_por_puesto_nivel_esperado'));
     }
 
@@ -369,7 +371,6 @@ class EV360EvaluacionesController extends Controller
 
     public function getParticipantes(Request $request, $evaluacion)
     {
-
         if ($request->ajax()) {
             $lista_evaluados = [];
             $evaluados_evaluacion = Evaluacion::with(['evaluados' => function ($q) use ($evaluacion) {
@@ -386,7 +387,7 @@ class EV360EvaluacionesController extends Controller
                         ->where('evaluacion_id', intval($evaluacion))
                         ->where('evaluado', true)->count();
                     $progreso = floatval(number_format((($contestadas / $total_evaluaciones) * 100), 2));
-                    array_push($lista_evaluados, array([
+                    array_push($lista_evaluados, [[
                         'id' => $evaluado->id,
                         'name' => $evaluado->name,
                         'area' => $evaluado->area->area,
@@ -395,13 +396,14 @@ class EV360EvaluacionesController extends Controller
                         'contestadas' => $contestadas,
                         'progreso' => $progreso,
                         'evaluacion' => intval($evaluacion),
-                        'can_edit' => $evaluados_evaluacion->estatus == Evaluacion::DRAFT ? true : false
-                    ])[0]);
+                        'can_edit' => $evaluados_evaluacion->estatus == Evaluacion::DRAFT ? true : false,
+                    ]][0]);
                 }
 
                 return datatables()->of($lista_evaluados)->toJson();
             } else {
-                $evaluados = array();
+                $evaluados = [];
+
                 return datatables()->of($evaluados)->toJson();
             }
         }
@@ -409,11 +411,10 @@ class EV360EvaluacionesController extends Controller
 
     public function relatedCompetenciaWithEvaluacion(Request $request, $evaluacion)
     {
-
         if ($request->ajax()) {
             $evaluacion_competencia = EvaluacionCompetencia::create([
                 'competencia_id' => $request->competencia_id,
-                'evaluacion_id' => $evaluacion
+                'evaluacion_id' => $evaluacion,
             ]);
             if ($evaluacion_competencia) {
                 return response()->json(['success' => true]);
@@ -425,11 +426,10 @@ class EV360EvaluacionesController extends Controller
 
     public function relatedObjetivoWithEvaluacion(Request $request, $evaluacion)
     {
-
         if ($request->ajax()) {
             $evaluacion_objetivo = EvaluacionObjetivo::create([
                 'objetivo_id' => $request->objetivo_id,
-                'evaluacion_id' => $evaluacion
+                'evaluacion_id' => $evaluacion,
             ]);
             if ($evaluacion_objetivo) {
                 return response()->json(['success' => true]);
@@ -480,6 +480,7 @@ class EV360EvaluacionesController extends Controller
             return response()->json(['error' => true]);
         }
     }
+
     public function storeMetaAlcanzada(Request $request)
     {
         $objetivo = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
@@ -488,7 +489,7 @@ class EV360EvaluacionesController extends Controller
             ->where('objetivo_id', $request->objetivo);
         $update_objetivo = $objetivo->update([
             'calificacion' => intval($request->calificacion),
-            'evaluado' => true
+            'evaluado' => true,
         ]);
 
         $objetivos = ObjetivoRespuesta::where('evaluado_id', $request->evaluado)
@@ -531,7 +532,7 @@ class EV360EvaluacionesController extends Controller
             if (preg_match('/^data:image\/(\w+);base64,/', $request->firma_evaluado)) {
                 $value = substr($request->firma_evaluado, strpos($request->firma_evaluado, ',') + 1);
                 $value = base64_decode($value);
-                $new_name_image = "FirmaEvaluado" . $evaluacion->id . $evaluado . $evaluador . '.png';
+                $new_name_image = 'FirmaEvaluado' . $evaluacion->id . $evaluado . $evaluador . '.png';
                 $image = $new_name_image;
                 $route = 'public/evaluaciones/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre) . '/' . $new_name_image;
                 Storage::put($route, $value);
@@ -539,7 +540,7 @@ class EV360EvaluacionesController extends Controller
                     ->where('evaluador_id', $evaluador)
                     ->where('evaluacion_id', $evaluacion->id)->first();
                 $evaluacion_especifica->update([
-                    'firma_evaluado' => $image
+                    'firma_evaluado' => $image,
                 ]);
             }
         }
@@ -547,7 +548,7 @@ class EV360EvaluacionesController extends Controller
             if (preg_match('/^data:image\/(\w+);base64,/', $request->firma_evaluador)) {
                 $value = substr($request->firma_evaluador, strpos($request->firma_evaluador, ',') + 1);
                 $value = base64_decode($value);
-                $new_name_image = "FirmaEvaluador" . $evaluacion->id . $evaluador . $evaluado . '.png';
+                $new_name_image = 'FirmaEvaluador' . $evaluacion->id . $evaluador . $evaluado . '.png';
                 $image = $new_name_image;
                 $route = 'public/evaluaciones/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $evaluacion->nombre) . '/' . $new_name_image;
                 Storage::put($route, $value);
@@ -555,7 +556,7 @@ class EV360EvaluacionesController extends Controller
                     ->where('evaluador_id', $evaluador)
                     ->where('evaluacion_id', $evaluacion->id)->first();
                 $evaluacion_especifica->update([
-                    'firma_evaluador' => $image
+                    'firma_evaluador' => $image,
                 ]);
             }
         }
@@ -581,8 +582,9 @@ class EV360EvaluacionesController extends Controller
                     ->where('evaluador_id', $evaluador)
                     ->where('evaluacion_id', $evaluacion->id)->first();
                 $evaluacion_especifica->update([
-                    'evaluado' => true
+                    'evaluado' => true,
                 ]);
+
                 return response()->json(['success' => true]);
             } else {
                 return response()->json(['error' => true]);
@@ -595,8 +597,9 @@ class EV360EvaluacionesController extends Controller
                     ->where('evaluador_id', $evaluador)
                     ->where('evaluacion_id', $evaluacion->id)->first();
                 $evaluacion_especifica->update([
-                    'evaluado' => true
+                    'evaluado' => true,
                 ]);
+
                 return response()->json(['success' => true]);
             } else {
                 return response()->json(['error' => true]);
@@ -610,8 +613,9 @@ class EV360EvaluacionesController extends Controller
                     ->where('evaluador_id', $evaluador)
                     ->where('evaluacion_id', $evaluacion->id)->first();
                 $evaluacion_especifica->update([
-                    'evaluado' => true
+                    'evaluado' => true,
                 ]);
+
                 return response()->json(['success' => true]);
             } else {
                 return response()->json(['error' => true]);
@@ -635,6 +639,7 @@ class EV360EvaluacionesController extends Controller
         } else {
             $progreso_objetivos = 0;
         }
+
         return $progreso_objetivos;
     }
 
@@ -649,6 +654,7 @@ class EV360EvaluacionesController extends Controller
             ->where('evaluador_id', $evaluador)
             ->where('calificacion', '>', 0)->count();
         $progreso = floatval(number_format((($preguntas_contestadas / $total_preguntas) * 100)));
+
         return $progreso;
     }
 
@@ -737,9 +743,10 @@ class EV360EvaluacionesController extends Controller
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-                })
-            ));
+                }),
+            ]);
 
             $calificacion = 0;
             if (count($lista_autoevaluacion->first()['evaluaciones'])) {
@@ -753,8 +760,7 @@ class EV360EvaluacionesController extends Controller
                 $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
             }
 
-
-            $lista_jefe_inmediato->push(array(
+            $lista_jefe_inmediato->push([
                 'tipo' => 'Jefe Inmediato',
                 'peso_general' => $evaluacion->peso_jefe_inmediato,
                 'evaluaciones' => $filtro_jefe_inmediato->map(function ($evaluador) use ($evaluacion, $evaluado) {
@@ -762,9 +768,10 @@ class EV360EvaluacionesController extends Controller
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-                })
-            ));
+                }),
+            ]);
 
             $calificacion = 0;
             if (count($lista_jefe_inmediato->first()['evaluaciones'])) {
@@ -778,7 +785,7 @@ class EV360EvaluacionesController extends Controller
                 $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100);
             }
 
-            $lista_equipo_a_cargo->push(array(
+            $lista_equipo_a_cargo->push([
                 'tipo' => 'Equipo a cargo',
                 'peso_general' => $evaluacion->peso_equipo,
                 'evaluaciones' => $filtro_equipo_a_cargo->map(function ($evaluador) use ($evaluacion, $evaluado) {
@@ -786,9 +793,10 @@ class EV360EvaluacionesController extends Controller
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-                })
-            ));
+                }),
+            ]);
 
             $calificacion = 0;
             if (count($lista_equipo_a_cargo->first()['evaluaciones'])) {
@@ -802,7 +810,7 @@ class EV360EvaluacionesController extends Controller
                 $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_equipo / 100);
             }
 
-            $lista_misma_area->push(array(
+            $lista_misma_area->push([
                 'tipo' => 'Misma área',
                 'peso_general' => $evaluacion->peso_area,
                 'evaluaciones' => $filtro_misma_area->map(function ($evaluador) use ($evaluacion, $evaluado) {
@@ -810,9 +818,10 @@ class EV360EvaluacionesController extends Controller
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-                })
-            ));
+                }),
+            ]);
 
             $calificacion = 0;
             if (count($lista_misma_area->first()['evaluaciones'])) {
@@ -844,12 +853,12 @@ class EV360EvaluacionesController extends Controller
                     ->where('evaluado_id', $evaluado->id)
                     ->where('evaluador_id', $evaluado->supervisor->id)
                     ->get();
-                $evaluadores_objetivos->push(array(
+                $evaluadores_objetivos->push([
                     'id' => $evaluado->supervisor->id, 'nombre' => $evaluado->supervisor->name,
                     'esSupervisor' => true,
                     'esAutoevaluacion' => false,
                     'objetivos' => $objetivos_calificaciones->map(function ($objetivo) {
-                        return array(
+                        return [
                             'nombre' => $objetivo->objetivo->nombre,
                             'KPI' => $objetivo->objetivo->KPI,
                             'meta' => $objetivo->objetivo->meta,
@@ -857,9 +866,9 @@ class EV360EvaluacionesController extends Controller
                             'metrica' => $objetivo->objetivo->metrica->definicion,
                             'meta_alcanzada' => $objetivo->meta_alcanzada,
                             'calificacion' => $objetivo->calificacion,
-                        );
-                    })
-                ));
+                        ];
+                    }),
+                ]);
             }
             $calificacion_objetivos = 0;
             if (count($evaluadores_objetivos->first()['objetivos'])) {
@@ -875,12 +884,12 @@ class EV360EvaluacionesController extends Controller
                 ->where('evaluador_id', $evaluado->id)
                 ->get();
 
-            $evaluadores_objetivos->push(array(
+            $evaluadores_objetivos->push([
                 'id' => $evaluado->id, 'nombre' => $evaluado->name,
                 'esSupervisor' => false,
                 'esAutoevaluacion' => true,
                 'objetivos' => $objetivos_calificaciones_autoevaluacion->map(function ($objetivo) {
-                    return array(
+                    return [
                         'nombre' => $objetivo->objetivo->nombre,
                         'KPI' => $objetivo->objetivo->KPI,
                         'meta' => $objetivo->objetivo->meta,
@@ -888,9 +897,9 @@ class EV360EvaluacionesController extends Controller
                         'metrica' => $objetivo->objetivo->metrica->definicion,
                         'meta_alcanzada' => $objetivo->meta_alcanzada,
                         'calificacion' => $objetivo->calificacion,
-                    );
-                })
-            ));
+                    ];
+                }),
+            ]);
 
             $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
             $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
@@ -916,13 +925,12 @@ class EV360EvaluacionesController extends Controller
 
     public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias)
     {
-        return array(
+        return [
             'id' => $evaluador_empleado->id, 'nombre' => $evaluador_empleado->name,
             'esSupervisor' => $evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->evaluador_id ? true : false) : false,
             'esAutoevaluacion' => $evaluado->id == $evaluador->evaluador_id ? true : false,
             'tipo' => $evaluador->tipo_formateado,
-            'competencias' =>
-            $evaluaciones_competencias->map(function ($competencia) use ($evaluador, $evaluado) {
+            'competencias' => $evaluaciones_competencias->map(function ($competencia) use ($evaluador, $evaluado) {
                 $nivel_esperado = $evaluado->puestoRelacionado->competencias->filter(function ($compe) use ($competencia) {
                     return $compe->competencia_id == $competencia->competencia_id;
                 })->first()->nivel_esperado;
@@ -931,7 +939,8 @@ class EV360EvaluacionesController extends Controller
                 if ($competencia->calificacion > 0) {
                     $porcentaje = number_format((($competencia->calificacion) / $nivel_esperado), 2);
                 }
-                return array(
+
+                return [
                     'competencia' => $competencia->competencia->nombre,
                     'tipo_competencia' => $competencia->competencia->tipo_competencia,
                     'calificacion' => $competencia->calificacion,
@@ -941,9 +950,9 @@ class EV360EvaluacionesController extends Controller
                     'meta' => $nivel_esperado,
                     'firma_evaluador' => $evaluador->firma_evaluador,
                     'firma_evaluado' => $evaluador->firma_evaluado,
-                );
-            })
-        );
+                ];
+            }),
+        ];
     }
 
     public function resumen($evaluacion)

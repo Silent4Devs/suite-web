@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class VariablesIndicador
- * 
+ * Class VariablesIndicador.
+ *
  * @property int $id
  * @property int|null $id_indicador
  * @property string|null $variable
@@ -20,29 +20,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- * 
- * @property IndicadoresSgsi|null $indicadores_sgsi
  *
- * @package App\Models
+ * @property IndicadoresSgsi|null $indicadores_sgsi
  */
 class VariablesIndicador extends Model
 {
-	use SoftDeletes;
-	protected $table = 'variables_indicadors';
+    use SoftDeletes;
+    protected $table = 'variables_indicadors';
 
-	protected $casts = [
-		'id_indicador' => 'int',
-		'valor' => 'int'
-	];
+    protected $casts = [
+        'id_indicador' => 'int',
+        'valor' => 'int',
+    ];
 
-	protected $fillable = [
-		'id_indicador',
-		'variable',
-		'valor'
-	];
+    protected $fillable = [
+        'id_indicador',
+        'variable',
+        'valor',
+    ];
 
-	public function indicadores_sgsi()
-	{
-		return $this->belongsTo(IndicadoresSgsi::class, 'id_indicador');
-	}
+    public function indicadores_sgsi()
+    {
+        return $this->belongsTo(IndicadoresSgsi::class, 'id_indicador');
+    }
 }

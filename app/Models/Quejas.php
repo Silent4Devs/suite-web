@@ -12,7 +12,7 @@ class Quejas extends Model
     protected $table = 'quejas';
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $appends = ['folio'];

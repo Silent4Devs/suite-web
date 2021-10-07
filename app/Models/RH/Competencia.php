@@ -10,7 +10,7 @@ class Competencia extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'ev360_competencias';
-    protected $guarded = ["id"];
+    protected $guarded = ['id'];
     protected $appends = ['tipo_competencia'];
 
     const TODA_LA_EMPRESA = 0;
@@ -18,7 +18,7 @@ class Competencia extends Model
     const POR_AREA = 2;
     const POR_PERFIL = 3;
 
-    function getTipoCompetenciaAttribute()
+    public function getTipoCompetenciaAttribute()
     {
         return $this->tipo->nombre;
     }

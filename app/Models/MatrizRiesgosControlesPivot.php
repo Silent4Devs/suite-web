@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class MatrizRiesgosControlesPivot
+ * Class MatrizRiesgosControlesPivot.
  *
  * @property int $id
  * @property int $matriz_id
@@ -16,8 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property DeclaracionAplicabilidad $declaracion_aplicabilidad
  * @property MatrizRiesgo $matriz_riesgo
- *
- * @package App\Models
  */
 class MatrizRiesgosControlesPivot extends Model
 {
@@ -25,12 +23,12 @@ class MatrizRiesgosControlesPivot extends Model
 
     protected $casts = [
         'matriz_id' => 'int',
-        'controles_id' => 'int'
+        'controles_id' => 'int',
     ];
 
     protected $fillable = [
         'matriz_id',
-        'controles_id'
+        'controles_id',
     ];
 
     public function declaracion_aplicabilidad()

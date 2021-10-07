@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRoleRequest;
-use App\Http\Requests\StoreRoleRequest;
-use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use Gate;
@@ -27,9 +25,9 @@ class RolesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'role_show';
-                $editGate      = 'role_edit';
-                $deleteGate    = 'role_delete';
+                $viewGate = 'role_show';
+                $editGate = 'role_edit';
+                $deleteGate = 'role_delete';
                 $crudRoutePart = 'roles';
 
                 return view('partials.datatablesActions', compact(
@@ -42,10 +40,10 @@ class RolesController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('title', function ($row) {
-                return $row->title ? $row->title : "";
+                return $row->title ? $row->title : '';
             });
             $table->editColumn('permissions', function ($row) {
                 $labels = [];
@@ -74,7 +72,6 @@ class RolesController extends Controller
         $permissions = Permission::all();
         $role = Role::all();
 
-
         return view('admin.roles.create', compact('permissions', 'role'));
     }
 
@@ -83,7 +80,7 @@ class RolesController extends Controller
         $request->validate([
             'nombre_rol' => 'required|string',
             'permissions.*' => 'integer',
-            'permissions' => 'required|array'
+            'permissions' => 'required|array',
         ]);
     }
 
@@ -95,6 +92,7 @@ class RolesController extends Controller
             $permissions = $request->permissions;
             $role = Role::create(['title' => $nombre_rol]);
             $role->permissions()->sync($permissions);
+
             return response()->json(['success' => true]);
         }
 
@@ -108,6 +106,7 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $permissions = Permission::all();
         $role->load('permissions');
+
         return view('admin.roles.edit', compact('permissions', 'role'));
     }
 
@@ -120,6 +119,7 @@ class RolesController extends Controller
             $permissions = $request->permissions;
             $role->update(['title' => $nombre_rol]);
             $role->permissions()->sync($permissions);
+
             return response()->json(['success' => true]);
         }
         // $role->update($request->all());
@@ -131,6 +131,7 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $role->load('permissions');
+
         return view('admin.roles.show', compact('role'));
     }
 
@@ -138,12 +139,14 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $role->delete();
+
         return back();
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)
     {
         Role::whereIn('id', request('ids'))->delete();
+
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
@@ -154,6 +157,7 @@ class RolesController extends Controller
             foreach ($role->permissions as $permission) {
                 $permissions_role[] = $permission->id;
             }
+
             return $permissions_role;
         }
     }

@@ -10,9 +10,8 @@ class Evaluacion extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     protected $table = 'ev360_evaluaciones';
-    protected $guarded = ["id"];
+    protected $guarded = ['id'];
     protected $appends = ['estatus_formateado', 'color_estatus', 'color_estatus_text'];
     const DRAFT = '1';
     const ACTIVE = '2';
@@ -76,7 +75,6 @@ class Evaluacion extends Model
                 break;
         }
     }
-
 
     public function evaluados()
     {

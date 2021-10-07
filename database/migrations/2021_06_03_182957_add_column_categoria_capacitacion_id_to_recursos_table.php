@@ -18,6 +18,7 @@ class AddColumnCategoriaCapacitacionIdToRecursosTable extends Migration
             $table->foreign('categoria_capacitacion_id')->references('id')->on('categoria_capacitacions')->onDelete('SET NULL');
         });
     }
+
     /**
      * Reverse the migrations.
      *

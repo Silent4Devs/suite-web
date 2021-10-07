@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
-use App\Models\Empleado;
 use App\Models\Puesto;
 use App\Models\RH\Competencia;
 use App\Models\RH\CompetenciaPuesto;
@@ -27,6 +26,7 @@ class CompetenciasPorPuestoController extends Controller
             $puestos = Puesto::with(['competencias' => function ($q) {
                 $q->with('competencia');
             }])->orderByDesc('id')->get();
+
             return datatables()->of($puestos)->toJson();
         }
 
@@ -37,9 +37,11 @@ class CompetenciasPorPuestoController extends Controller
     {
         if ($request->ajax()) {
             $competencias = CompetenciaPuesto::with('puesto', 'competencia')->where('puesto_id', intval($puesto));
+
             return datatables()->of($competencias)->toJson();
         }
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -49,6 +51,7 @@ class CompetenciasPorPuestoController extends Controller
     {
         $puesto = Puesto::find(intval($puesto));
         $competencias = Competencia::all();
+
         return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.create', compact('puesto', 'competencias'));
     }
 
@@ -74,14 +77,12 @@ class CompetenciasPorPuestoController extends Controller
                 'nivel_esperado' => $request->nivel_esperado,
             ]);
             if ($puestoCompetencia) {
-                return response()->json(array('success' => true));
+                return response()->json(['success' => true]);
             }
         } else {
-            return response()->json(array('error' => true, 'mensaje' => 'Esta competencia ya ha sido asignada'));
+            return response()->json(['error' => true, 'mensaje' => 'Esta competencia ya ha sido asignada']);
         }
     }
-
-
 
     /**
      * Display the specified resource.
@@ -115,7 +116,7 @@ class CompetenciasPorPuestoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nivel_esperado' => 'required|numeric'
+            'nivel_esperado' => 'required|numeric',
         ]);
 
         $competenciaPorPuesto = CompetenciaPuesto::find($id);
@@ -123,7 +124,7 @@ class CompetenciasPorPuestoController extends Controller
             'nivel_esperado' => $request->nivel_esperado,
         ]);
         if ($update) {
-            return response()->json(array('success' => true));
+            return response()->json(['success' => true]);
         }
     }
 
@@ -138,7 +139,7 @@ class CompetenciasPorPuestoController extends Controller
         $competenciaPorPuesto = CompetenciaPuesto::find($id);
         $delete = $competenciaPorPuesto->delete();
         if ($delete) {
-            return response()->json(array('success' => true));
+            return response()->json(['success' => true]);
         }
     }
 }

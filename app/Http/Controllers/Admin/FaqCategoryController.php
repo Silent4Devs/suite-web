@@ -27,9 +27,9 @@ class FaqCategoryController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'faq_category_show';
-                $editGate      = 'faq_category_edit';
-                $deleteGate    = 'faq_category_delete';
+                $viewGate = 'faq_category_show';
+                $editGate = 'faq_category_edit';
+                $deleteGate = 'faq_category_delete';
                 $crudRoutePart = 'faq-categories';
 
                 return view('partials.datatablesActions', compact(
@@ -42,10 +42,10 @@ class FaqCategoryController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('category', function ($row) {
-                return $row->category ? $row->category : "";
+                return $row->category ? $row->category : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

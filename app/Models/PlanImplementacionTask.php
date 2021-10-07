@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PlanImplementacionTask extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = "plan_implementacion_tasks";
+    protected $table = 'plan_implementacion_tasks';
     protected $fillable = [
         'name',
         'progress',
@@ -31,7 +31,7 @@ class PlanImplementacionTask extends Model
         'id_fase',
         'id_task',
         'url',
-        'plan_implementacion_id'
+        'plan_implementacion_id',
     ];
 
     public function plan()

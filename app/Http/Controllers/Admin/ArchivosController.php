@@ -33,9 +33,9 @@ class ArchivosController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'archivo_show';
-                $editGate      = 'archivo_edit';
-                $deleteGate    = 'archivo_delete';
+                $viewGate = 'archivo_show';
+                $editGate = 'archivo_edit';
+                $deleteGate = 'archivo_delete';
                 $crudRoutePart = 'archivos';
 
                 return view('partials.datatablesActions', compact(
@@ -48,7 +48,7 @@ class ArchivosController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->addColumn('carpeta_nombre', function ($row) {
                 return $row->carpeta ? $row->carpeta->nombre : '';
@@ -66,9 +66,9 @@ class ArchivosController extends Controller
             return $table->make(true);
         }
 
-        $carpeta           = Carpetum::get();
+        $carpeta = Carpetum::get();
         $estado_documentos = EstadoDocumento::get();
-        $teams             = Team::get();
+        $teams = Team::get();
 
         return view('admin.archivos.index', compact('carpeta', 'estado_documentos', 'teams'));
     }
@@ -160,10 +160,10 @@ class ArchivosController extends Controller
     {
         abort_if(Gate::denies('archivo_create') && Gate::denies('archivo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Archivo();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Archivo();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

@@ -10,7 +10,6 @@ class EvaluadoEvaluadorController extends Controller
 {
     public function remover(Request $request)
     {
-
         if ($request->ajax()) {
             $evaluado = intval($request->evaluado);
             $evaluador = intval($request->evaluador);
@@ -21,9 +20,9 @@ class EvaluadoEvaluadorController extends Controller
                 ->first();
             $eliminado = $evaluadoEvaluador->delete();
             if ($eliminado) {
-                return response()->json(array('success' => true));
+                return response()->json(['success' => true]);
             } else {
-                return response()->json(array('error' => true));
+                return response()->json(['error' => true]);
             }
         }
     }
@@ -40,7 +39,7 @@ class EvaluadoEvaluadorController extends Controller
                 ->where('evaluacion_id', $evaluacion)
                 ->exists();
             if ($evaluadoEvaluador_exists) {
-                return response()->json(array('exists' => true));
+                return response()->json(['exists' => true]);
             }
             $evaluadoEvaluador = EvaluadoEvaluador::create([
                 'evaluado_id' => $evaluado,
@@ -49,9 +48,9 @@ class EvaluadoEvaluadorController extends Controller
                 'evaluado' => false,
             ]);
             if ($evaluadoEvaluador) {
-                return response()->json(array('success' => true));
+                return response()->json(['success' => true]);
             } else {
-                return response()->json(array('error' => true));
+                return response()->json(['error' => true]);
             }
         }
     }

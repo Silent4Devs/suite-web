@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateFaqCategoryRequest;
 use App\Models\FaqCategory;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class FaqCategoryController extends Controller

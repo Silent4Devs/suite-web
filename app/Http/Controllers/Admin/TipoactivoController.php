@@ -30,9 +30,9 @@ class TipoactivoController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'configuracion_tipoactivo_show';
-                $editGate      = 'configuracion_tipoactivo_edit';
-                $deleteGate    = 'configuracion_tipoactivo_delete';
+                $viewGate = 'configuracion_tipoactivo_show';
+                $editGate = 'configuracion_tipoactivo_edit';
+                $deleteGate = 'configuracion_tipoactivo_delete';
                 $crudRoutePart = 'tipoactivos';
 
                 return view('partials.datatablesActions', compact(
@@ -45,13 +45,13 @@ class TipoactivoController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('tipo', function ($row) {
-                return $row->tipo ? $row->tipo : "";
+                return $row->tipo ? $row->tipo : '';
             });
             $table->editColumn('subtipo', function ($row) {
-                return $row->subtipo ? $row->subtipo : "";
+                return $row->subtipo ? $row->subtipo : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -75,7 +75,7 @@ class TipoactivoController extends Controller
     {
         $tipoactivo = Tipoactivo::create($request->all());
 
-        return redirect()->route('admin.tipoactivos.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.tipoactivos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Tipoactivo $tipoactivo)
@@ -91,7 +91,7 @@ class TipoactivoController extends Controller
     {
         $tipoactivo->update($request->all());
 
-        return redirect()->route('admin.tipoactivos.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.tipoactivos.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Tipoactivo $tipoactivo)

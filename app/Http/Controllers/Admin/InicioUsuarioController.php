@@ -2,50 +2,40 @@
 
 namespace App\Http\Controllers\admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-
-use App\Models\User;
-use App\Models\PlanBaseActividade;
+use App\Models\Activo;
+use App\Models\AnalisisSeguridad;
+use App\Models\Area;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
-use App\Models\Recurso;
-use App\Models\Proceso;
-use App\Models\Area;
-use App\Models\Empleado;
-use App\Models\Sede;
-use App\Models\SubcategoriaIncidente;
-
-use App\Models\IncidentesSeguridad;
-use App\Models\RiesgoIdentificado;
-use App\Models\Quejas;
 use App\Models\Denuncias;
-use App\Models\Mejoras;
-use App\Models\Sugerencias;
-use App\Models\AnalisisSeguridad;
-
-use Intervention\Image\Facades\Image;
-use App\Models\EvidenciasQueja;
-use App\Models\EvidenciasSeguridad;
-use App\Models\EvidenciasRiesgo;
-use App\Models\EvidenciasDenuncia;
-
-use App\Models\Activo;
 use App\Models\Documento;
+use App\Models\Empleado;
+use App\Models\EvidenciasDenuncia;
+use App\Models\EvidenciasQueja;
+use App\Models\EvidenciasRiesgo;
+use App\Models\EvidenciasSeguridad;
+use App\Models\IncidentesSeguridad;
+use App\Models\Mejoras;
 use App\Models\PlanImplementacion;
+use App\Models\Proceso;
+use App\Models\Quejas;
+use App\Models\Recurso;
 use App\Models\RevisionDocumento;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
-use App\Models\RH\ObjetivoCalificacion;
 use App\Models\RH\ObjetivoRespuesta;
+use App\Models\RiesgoIdentificado;
+use App\Models\Sede;
+use App\Models\SubcategoriaIncidente;
+use App\Models\Sugerencias;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
 
-
-class inicioUsuarioController extends Controller
+class InicioUsuarioController extends Controller
 {
     public function index()
     {
@@ -185,6 +175,7 @@ class inicioUsuarioController extends Controller
             $supervisor = null;
             $mis_objetivos = collect();
         }
+
         return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'auditoria_internas', 'lista_evaluaciones'));
     }
 
@@ -221,7 +212,7 @@ class inicioUsuarioController extends Controller
             });
             $promedio_competencias = 0;
             $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() > 0 ? $evaluado->puestoRelacionado->competencias->count() : 1;
-            $lista_autoevaluacion->push(array(
+            $lista_autoevaluacion->push([
                 'tipo' => 'Autoevaluación',
                 'peso_general' => $evaluacion->peso_autoevaluacion,
                 'evaluaciones' => $filtro_autoevaluacion->map(function ($evaluador) use ($evaluacion, $evaluado) {
@@ -229,9 +220,10 @@ class inicioUsuarioController extends Controller
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-                })
-            ));
+                }),
+            ]);
 
             $calificacion = 0;
             if (count($lista_autoevaluacion->first()['evaluaciones'])) {
@@ -245,8 +237,7 @@ class inicioUsuarioController extends Controller
                 $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
             }
 
-
-            $lista_jefe_inmediato->push(array(
+            $lista_jefe_inmediato->push([
                 'tipo' => 'Jefe Inmediato',
                 'peso_general' => $evaluacion->peso_jefe_inmediato,
                 'evaluaciones' => $filtro_jefe_inmediato->map(function ($evaluador) use ($evaluacion, $evaluado) {
@@ -254,9 +245,10 @@ class inicioUsuarioController extends Controller
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-                })
-            ));
+                }),
+            ]);
 
             $calificacion = 0;
             if (count($lista_jefe_inmediato->first()['evaluaciones'])) {
@@ -270,7 +262,7 @@ class inicioUsuarioController extends Controller
                 $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100);
             }
 
-            $lista_equipo_a_cargo->push(array(
+            $lista_equipo_a_cargo->push([
                 'tipo' => 'Equipo a cargo',
                 'peso_general' => $evaluacion->peso_equipo,
                 'evaluaciones' => $filtro_equipo_a_cargo->map(function ($evaluador) use ($evaluacion, $evaluado) {
@@ -278,9 +270,10 @@ class inicioUsuarioController extends Controller
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-                })
-            ));
+                }),
+            ]);
 
             $calificacion = 0;
             if (count($lista_equipo_a_cargo->first()['evaluaciones'])) {
@@ -294,7 +287,7 @@ class inicioUsuarioController extends Controller
                 $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_equipo / 100);
             }
 
-            $lista_misma_area->push(array(
+            $lista_misma_area->push([
                 'tipo' => 'Misma área',
                 'peso_general' => $evaluacion->peso_area,
                 'evaluaciones' => $filtro_misma_area->map(function ($evaluador) use ($evaluacion, $evaluado) {
@@ -302,9 +295,10 @@ class inicioUsuarioController extends Controller
                         ->where('evaluado_id', $evaluado->id)
                         ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
                     $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
+
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-                })
-            ));
+                }),
+            ]);
 
             $calificacion = 0;
             if (count($lista_misma_area->first()['evaluaciones'])) {
@@ -336,12 +330,12 @@ class inicioUsuarioController extends Controller
                     ->where('evaluado_id', $evaluado->id)
                     ->where('evaluador_id', $evaluado->supervisor->id)
                     ->get();
-                $evaluadores_objetivos->push(array(
+                $evaluadores_objetivos->push([
                     'id' => $evaluado->supervisor->id, 'nombre' => $evaluado->supervisor->name,
                     'esSupervisor' => true,
                     'esAutoevaluacion' => false,
                     'objetivos' => $objetivos_calificaciones->map(function ($objetivo) {
-                        return array(
+                        return [
                             'nombre' => $objetivo->objetivo->nombre,
                             'KPI' => $objetivo->objetivo->KPI,
                             'meta' => $objetivo->objetivo->meta,
@@ -349,9 +343,9 @@ class inicioUsuarioController extends Controller
                             'metrica' => $objetivo->objetivo->metrica->definicion,
                             'meta_alcanzada' => $objetivo->meta_alcanzada,
                             'calificacion' => $objetivo->calificacion,
-                        );
-                    })
-                ));
+                        ];
+                    }),
+                ]);
             }
             $calificacion_objetivos = 0;
             if (count($evaluadores_objetivos->first()['objetivos'])) {
@@ -367,12 +361,12 @@ class inicioUsuarioController extends Controller
                 ->where('evaluador_id', $evaluado->id)
                 ->get();
 
-            $evaluadores_objetivos->push(array(
+            $evaluadores_objetivos->push([
                 'id' => $evaluado->id, 'nombre' => $evaluado->name,
                 'esSupervisor' => false,
                 'esAutoevaluacion' => true,
                 'objetivos' => $objetivos_calificaciones_autoevaluacion->map(function ($objetivo) {
-                    return array(
+                    return [
                         'nombre' => $objetivo->objetivo->nombre,
                         'KPI' => $objetivo->objetivo->KPI,
                         'meta' => $objetivo->objetivo->meta,
@@ -380,9 +374,9 @@ class inicioUsuarioController extends Controller
                         'metrica' => $objetivo->objetivo->metrica->definicion,
                         'meta_alcanzada' => $objetivo->meta_alcanzada,
                         'calificacion' => $objetivo->calificacion,
-                    );
-                })
-            ));
+                    ];
+                }),
+            ]);
 
             $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
             $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
@@ -390,6 +384,7 @@ class inicioUsuarioController extends Controller
             $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
             $calificacion_final += $promedio_general_objetivos;
         }
+
         return [
             'lista_autoevaluacion' => $lista_autoevaluacion,
             'lista_jefe_inmediato' => $lista_jefe_inmediato,
@@ -407,13 +402,12 @@ class inicioUsuarioController extends Controller
 
     public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias)
     {
-        return array(
+        return [
             'id' => $evaluador_empleado->id, 'nombre' => $evaluador_empleado->name,
             'esSupervisor' => $evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->evaluador_id ? true : false) : false,
             'esAutoevaluacion' => $evaluado->id == $evaluador->evaluador_id ? true : false,
             'tipo' => $evaluador->tipo_formateado,
-            'competencias' =>
-            $evaluaciones_competencias->map(function ($competencia) use ($evaluador, $evaluado) {
+            'competencias' => $evaluaciones_competencias->map(function ($competencia) use ($evaluador, $evaluado) {
                 $nivel_esperado = $evaluado->puestoRelacionado->competencias->filter(function ($compe) use ($competencia) {
                     return $compe->competencia_id == $competencia->competencia_id;
                 })->first()->nivel_esperado;
@@ -422,7 +416,8 @@ class inicioUsuarioController extends Controller
                 if ($competencia->calificacion > 0) {
                     $porcentaje = number_format((($competencia->calificacion) / $nivel_esperado), 2);
                 }
-                return array(
+
+                return [
                     'competencia' => $competencia->competencia->nombre,
                     'tipo_competencia' => $competencia->competencia->tipo_competencia,
                     'calificacion' => $competencia->calificacion,
@@ -432,9 +427,9 @@ class inicioUsuarioController extends Controller
                     'meta' => $nivel_esperado,
                     'firma_evaluador' => $evaluador->firma_evaluador,
                     'firma_evaluado' => $evaluador->firma_evaluado,
-                );
-            })
-        );
+                ];
+            }),
+        ];
     }
 
     public function obtenerEquipoACargo($childrens)
@@ -475,11 +470,12 @@ class inicioUsuarioController extends Controller
         $sedes = Sede::get();
 
         abort_if(Gate::denies('quejas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.inicioUsuario.formularios.quejas', compact('areas', 'procesos', 'empleados', 'activos', 'sedes'));
     }
+
     public function storeQuejas(Request $request)
     {
-
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
             'empleado_quejo_id' => auth()->user()->empleado->id,
@@ -502,16 +498,13 @@ class inicioUsuarioController extends Controller
             'formulario' => 'queja',
         ]);
 
-
-
         $image = null;
 
         if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
-
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
                 $new_name_image = 'Queja_file_' . $quejas->id . '_' . $name_image . '.' . $extension;
 
@@ -528,8 +521,6 @@ class inicioUsuarioController extends Controller
             }
         }
 
-
-
         return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
@@ -540,8 +531,10 @@ class inicioUsuarioController extends Controller
         $sedes = Sede::get();
 
         abort_if(Gate::denies('denuncias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
     }
+
     public function storeDenuncias(Request $request)
     {
         $denuncias = Denuncias::create([
@@ -561,15 +554,13 @@ class inicioUsuarioController extends Controller
             'formulario' => 'denuncia',
         ]);
 
-
         $image = null;
 
         if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
-
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
                 $new_name_image = 'Denuncia_file_' . $denuncias->id . '_' . $name_image . '.' . $extension;
 
@@ -591,14 +582,15 @@ class inicioUsuarioController extends Controller
 
     public function mejoras()
     {
-
         $areas = Area::get();
 
         $procesos = Proceso::get();
 
         abort_if(Gate::denies('mejoras_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.inicioUsuario.formularios.mejoras', compact('areas', 'procesos'));
     }
+
     public function storeMejoras(Request $request)
     {
         $mejoras = Mejoras::create([
@@ -630,8 +622,10 @@ class inicioUsuarioController extends Controller
         $procesos = Proceso::get();
 
         abort_if(Gate::denies('sugerencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
+
     public function storeSugerencias(Request $request)
     {
         $sugerencias = Sugerencias::create([
@@ -655,7 +649,6 @@ class inicioUsuarioController extends Controller
 
     public function seguridad()
     {
-
         $areas = Area::get();
 
         $procesos = Proceso::get();
@@ -668,14 +661,14 @@ class inicioUsuarioController extends Controller
 
         $subcategorias = SubcategoriaIncidente::get();
 
-
         abort_if(Gate::denies('incidentes_seguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activos = Activo::get();
+
         return view('admin.inicioUsuario.formularios.seguridad', compact('activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
     }
+
     public function storeSeguridad(Request $request)
     {
-
         $incidentes_seguridad = IncidentesSeguridad::create([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
@@ -688,22 +681,18 @@ class inicioUsuarioController extends Controller
             'empleado_reporto_id' => auth()->user()->empleado->id,
         ]);
 
-
         AnalisisSeguridad::create([
             'seguridad_id' => $incidentes_seguridad->id,
             'formulario' => 'seguridad',
         ]);
 
-
-
         $image = null;
 
         if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
-
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
                 $new_name_image = 'Seguridad_file_' . $incidentes_seguridad->id . '_' . $name_image . '.' . $extension;
 
@@ -727,8 +716,6 @@ class inicioUsuarioController extends Controller
     {
     }
 
-
-
     public function riesgos()
     {
         $areas = Area::get();
@@ -742,11 +729,12 @@ class inicioUsuarioController extends Controller
         $sedes = Sede::get();
 
         abort_if(Gate::denies('riesgos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }
+
     public function storeRiesgos(Request $request)
     {
-
         $riesgos = RiesgoIdentificado::create([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
@@ -760,21 +748,18 @@ class inicioUsuarioController extends Controller
             'empleado_reporto_id' => auth()->user()->empleado->id,
         ]);
 
-
         AnalisisSeguridad::create([
             'riesgos_id' => $riesgos->id,
             'formulario' => 'riesgo',
         ]);
 
-
         $image = null;
 
         if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
-
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
                 $new_name_image = 'Riesgo_file_' . $riesgos->id . '_' . $name_image . '.' . $extension;
 
@@ -793,7 +778,6 @@ class inicioUsuarioController extends Controller
 
         return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
-
 
     public function archivarCapacitacion(Request $request)
     {

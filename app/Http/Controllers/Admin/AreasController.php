@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyAreaRequest;
 use App\Http\Requests\StoreAreaRequest;
 use App\Http\Requests\UpdateAreaRequest;
 use App\Models\Area;
-use App\Models\Team;
 use App\Models\Grupo;
 use App\Models\Organizacion;
+use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,16 +26,16 @@ class AreasController extends Controller
         abort_if(Gate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Area::get();
+            $query = Area::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'configuracion_area_show';
-                $editGate      = 'configuracion_area_edit';
-                $deleteGate    = 'configuracion_area_delete';
+                $viewGate = 'configuracion_area_show';
+                $editGate = 'configuracion_area_edit';
+                $deleteGate = 'configuracion_area_delete';
                 $crudRoutePart = 'areas';
 
                 return view('partials.datatablesActions', compact(
@@ -49,22 +48,22 @@ class AreasController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('area', function ($row) {
-                return $row->area ? $row->area : "";
+                return $row->area ? $row->area : '';
             });
             $table->editColumn('grupo', function ($row) {
-                return $row->grupo ? $row->grupo->nombre : "";
+                return $row->grupo ? $row->grupo->nombre : '';
             });
             $table->editColumn(
                 'reporta',
                 function ($row) {
-                    return $row->supervisor ? $row->supervisor->area : "";
+                    return $row->supervisor ? $row->supervisor->area : '';
                 }
             );
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
             $table->rawColumns(['actions', 'placeholder']);
 
@@ -106,10 +105,9 @@ class AreasController extends Controller
 
         ]);
 
-
         $area = Area::create($request->all());
 
-        return redirect()->route('admin.areas.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Area $area)
@@ -119,7 +117,6 @@ class AreasController extends Controller
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
-
 
         return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area'));
     }
@@ -148,13 +145,13 @@ class AreasController extends Controller
 
         $area->update([
             'area' => $request->area,
-            "id_grupo" =>  $request->id_grupo,
-            "id_reporta" =>  $request->id_reporta,
-            "descripcion" =>  $request->descripcion,
+            'id_grupo' =>  $request->id_grupo,
+            'id_reporta' =>  $request->id_reporta,
+            'descripcion' =>  $request->descripcion,
 
         ]);
 
-        return redirect()->route('admin.areas.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.areas.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Area $area)
@@ -186,6 +183,7 @@ class AreasController extends Controller
     {
         $grupos = Grupo::with('areas')->get();
         $numero_grupos = Grupo::count();
+
         return view('admin.areas.areas-grupo', compact('grupos', 'numero_grupos'));
     }
 
@@ -199,6 +197,7 @@ class AreasController extends Controller
         if ($request->ajax()) {
             // La construccion del arbol necesita un primer nodo (NULL)
             $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+
             return $areasTree->toJson();
         }
 

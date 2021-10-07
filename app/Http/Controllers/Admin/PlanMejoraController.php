@@ -29,9 +29,9 @@ class PlanMejoraController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'plan_mejora_show';
-                $editGate      = 'plan_mejora_edit';
-                $deleteGate    = 'plan_mejora_delete';
+                $viewGate = 'plan_mejora_show';
+                $editGate = 'plan_mejora_edit';
+                $deleteGate = 'plan_mejora_delete';
                 $crudRoutePart = 'plan-mejoras';
 
                 return view('partials.datatablesActions', compact(
@@ -44,14 +44,14 @@ class PlanMejoraController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->addColumn('mejora_nombre', function ($row) {
                 return $row->mejora ? $row->mejora->nombre : '';
             });
 
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
             $table->addColumn('responsable_name', function ($row) {
                 return $row->responsable ? $row->responsable->name : '';
@@ -67,8 +67,8 @@ class PlanMejoraController extends Controller
         }
 
         $registromejoras = Registromejora::get();
-        $users           = User::get();
-        $teams           = Team::get();
+        $users = User::get();
+        $teams = Team::get();
 
         return view('admin.planMejoras.index', compact('registromejoras', 'users', 'teams'));
     }

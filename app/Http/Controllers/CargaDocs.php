@@ -10,6 +10,4 @@ class CargaDocs extends Controller
     {
         return view('admin.CargaDocs.index');
     }
-
-
 }

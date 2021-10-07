@@ -27,9 +27,9 @@ class EstadoIncidentesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'estado_incidente_show';
-                $editGate      = 'estado_incidente_edit';
-                $deleteGate    = 'estado_incidente_delete';
+                $viewGate = 'estado_incidente_show';
+                $editGate = 'estado_incidente_edit';
+                $deleteGate = 'estado_incidente_delete';
                 $crudRoutePart = 'estado-incidentes';
 
                 return view('partials.datatablesActions', compact(
@@ -42,10 +42,10 @@ class EstadoIncidentesController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('estado', function ($row) {
-                return $row->estado ? $row->estado : "";
+                return $row->estado ? $row->estado : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

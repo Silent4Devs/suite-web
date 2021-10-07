@@ -2,25 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Flash;
-use App\Models\Amenaza;
-use Illuminate\Http\Request;
-use App\Models\Vulnerabilidad;
-use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
-use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\VulnerabilidadRepository;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Controllers\Traits\CsvImportTrait;
-use App\Http\Requests\MassDestroyAmenazaRequest;
 use App\Http\Requests\CreateVulnerabilidadRequest;
 use App\Http\Requests\UpdateVulnerabilidadRequest;
-
+use App\Models\Amenaza;
+use App\Models\Vulnerabilidad;
+use App\Repositories\VulnerabilidadRepository;
+use Flash;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class VulnerabilidadController extends AppBaseController
 {
-    /** @var  VulnerabilidadRepository */
+    /** @var VulnerabilidadRepository */
     private $vulnerabilidadRepository;
 
     public function __construct(VulnerabilidadRepository $vulnerabilidadRepo)
@@ -45,9 +40,9 @@ class VulnerabilidadController extends AppBaseController
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'user_show';
-                $editGate      = 'user_edit';
-                $deleteGate    = 'user_delete';
+                $viewGate = 'user_show';
+                $editGate = 'user_edit';
+                $deleteGate = 'user_delete';
                 $crudRoutePart = 'vulnerabilidads';
 
                 return view('partials.datatablesActions', compact(
@@ -60,17 +55,17 @@ class VulnerabilidadController extends AppBaseController
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : "";
+                return $row->nombre ? $row->nombre : '';
             });
             $table->editColumn('amenaza', function ($row) {
-                return $row->idAmenaza ? $row->idAmenaza->nombre : "";
+                return $row->idAmenaza ? $row->idAmenaza->nombre : '';
             });
 
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : "";
+                return $row->descripcion ? $row->descripcion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -80,7 +75,6 @@ class VulnerabilidadController extends AppBaseController
 
         return view('admin.vulnerabilidads.index');
     }
-
 
     /**
      * Show the form for creating a new Vulnerabilidad.

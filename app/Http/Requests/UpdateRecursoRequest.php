@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Recurso;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class UpdateRecursoRequest extends FormRequest
 {
@@ -18,7 +16,7 @@ class UpdateRecursoRequest extends FormRequest
     {
         return [
             'tipo' => [
-                'required'
+                'required',
             ],
             'fecha_curso' => [
                 'date',

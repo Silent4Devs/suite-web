@@ -28,7 +28,7 @@ class AddActividadFaseIdToPlanBaseActividades extends Migration
     public function down()
     {
         Schema::table('plan_base_actividades', function (Blueprint $table) {
-             $table->dropColumn('actividad_fase_id');
+            $table->dropColumn('actividad_fase_id');
         });
     }
 }

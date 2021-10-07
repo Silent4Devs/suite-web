@@ -27,9 +27,9 @@ class UserAlertsController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'user_alert_show';
-                $editGate      = 'user_alert_edit';
-                $deleteGate    = 'user_alert_delete';
+                $viewGate = 'user_alert_show';
+                $editGate = 'user_alert_edit';
+                $deleteGate = 'user_alert_delete';
                 $crudRoutePart = 'user-alerts';
 
                 return view('partials.datatablesActions', compact(
@@ -42,13 +42,13 @@ class UserAlertsController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('alert_text', function ($row) {
-                return $row->alert_text ? $row->alert_text : "";
+                return $row->alert_text ? $row->alert_text : '';
             });
             $table->editColumn('alert_link', function ($row) {
-                return $row->alert_link ? $row->alert_link : "";
+                return $row->alert_link ? $row->alert_link : '';
             });
             $table->editColumn('user', function ($row) {
                 $labels = [];
@@ -118,7 +118,7 @@ class UserAlertsController extends Controller
         $alerts = \Auth::user()->userUserAlerts()->where('read', false)->get();
 
         foreach ($alerts as $alert) {
-            $pivot       = $alert->pivot;
+            $pivot = $alert->pivot;
             $pivot->read = true;
             $pivot->save();
         }

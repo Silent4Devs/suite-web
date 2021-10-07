@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\AuditoriaAnual;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class UpdateAuditoriaAnualRequest extends FormRequest
 {
@@ -21,8 +19,7 @@ class UpdateAuditoriaAnualRequest extends FormRequest
                 'required',
             ],
             'fechainicio' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
+                'required',
             ],
             'dias'        => [
                 'numeric',

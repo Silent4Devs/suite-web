@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Mail;
-
-use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Documento;
-use App\Models\RevisionDocumento;
-use App\Models\HistorialVersionesDocumento;
-use App\Models\HistorialRevisionDocumento;
 use App\Mail\DocumentoAprobadoMail;
+use App\Mail\DocumentoNoPublicadoMail;
 use App\Mail\DocumentoPublicadoMail;
 use App\Mail\DocumentoRechazadoMail;
 use App\Mail\SolicitudAprobacionMail;
-use App\Mail\DocumentoNoPublicadoMail;
+use App\Models\Documento;
+use App\Models\Empleado;
+use App\Models\HistorialRevisionDocumento;
+use App\Models\HistorialVersionesDocumento;
+use App\Models\Proceso;
+use App\Models\RevisionDocumento;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class RevisionDocumentoController extends Controller
 {
-
     public function edit(RevisionDocumento $revisionDocumento)
     {
         $documento = Documento::find(intval($revisionDocumento->documento_id));
@@ -92,7 +89,6 @@ class RevisionDocumentoController extends Controller
                             'estatus' => strval(Documento::DOCUMENTO_RECHAZADO),
                         ]);
                     } else {
-
                         $path_documentos_aprobacion = 'public/Documentos en aprobacion';
                         switch ($documentoOriginal->tipo) {
                             case 'politica':
@@ -126,7 +122,7 @@ class RevisionDocumentoController extends Controller
 
                         $documentoOriginal->update([
                             'estatus' => strval(Documento::PUBLICADO),
-                            'version' => ($documentoOriginal->version + 1)
+                            'version' => ($documentoOriginal->version + 1),
                         ]);
 
                         $historialDocumento->update([
@@ -148,7 +144,7 @@ class RevisionDocumentoController extends Controller
                             'elaboro_id' => $documentoOriginal->elaboro_id,
                             'aprobo_id' => $documentoOriginal->aprobo_id,
                             'reviso_id' => $documentoOriginal->reviso_id,
-                            'responsable_id' => $documentoOriginal->responsable_id
+                            'responsable_id' => $documentoOriginal->responsable_id,
                         ]);
 
                         $documentoAct = Documento::with('elaborador')->find($documentoOriginal->id);
@@ -161,8 +157,7 @@ class RevisionDocumentoController extends Controller
                         }
                     }
                 }
-            };
-
+            }
 
             return response()->json(['approve' => true]);
         }
@@ -187,7 +182,6 @@ class RevisionDocumentoController extends Controller
                 if ($hDocummento) {
                     $historialDocumento = HistorialRevisionDocumento::find($hDocummento->id);
                     if ($this->containsReject($documento->documento_id)) {
-
                         $documentoOriginal->update([
                             'estatus' => strval(Documento::DOCUMENTO_RECHAZADO),
                         ]);
@@ -196,7 +190,7 @@ class RevisionDocumentoController extends Controller
                             'estatus' => strval(Documento::DOCUMENTO_RECHAZADO),
                         ]);
 
-                        // $documentoActual = Documento::with('elaborador')->find($documento->documento_id);
+                    // $documentoActual = Documento::with('elaborador')->find($documento->documento_id);
                         // $this->sendMailNotPublish($documentoActual->elaborador->email, $documentoActual);
                     } else {
                         $path_documentos_aprobacion = 'public/Documentos en aprobacion';
@@ -232,7 +226,7 @@ class RevisionDocumentoController extends Controller
 
                         $documentoOriginal->update([
                             'estatus' => strval(Documento::PUBLICADO),
-                            'version' => ($documentoOriginal->version + 1)
+                            'version' => ($documentoOriginal->version + 1),
                         ]);
 
                         $historialDocumento->update([
@@ -254,7 +248,7 @@ class RevisionDocumentoController extends Controller
                             'elaboro_id' => $documentoOriginal->elaboro_id,
                             'aprobo_id' => $documentoOriginal->aprobo_id,
                             'reviso_id' => $documentoOriginal->reviso_id,
-                            'responsable_id' => $documentoOriginal->responsable_id
+                            'responsable_id' => $documentoOriginal->responsable_id,
                         ]);
 
                         $documentoAct = Documento::with('elaborador')->find($documentoOriginal->id);
@@ -267,7 +261,8 @@ class RevisionDocumentoController extends Controller
                         }
                     }
                 }
-            };
+            }
+
             return response()->json(['reject' => true]);
         }
     }
@@ -294,7 +289,7 @@ class RevisionDocumentoController extends Controller
 
     public function allLevelSendAnswer($documento_id, $documento)
     {
-        $nivelesArr = array();
+        $nivelesArr = [];
 
         foreach (RevisionDocumento::select('nivel')->where('documento_id', '=', strval($documento_id))->get() as $revision) {
             array_push($nivelesArr, intval($revision->nivel));
@@ -328,6 +323,7 @@ class RevisionDocumentoController extends Controller
                     // $this->sendMailNotPublish($documentoActual->elaborador->email, $documentoActual);
                     return;
                 }
+
                 return;
             }
             if (!$revisiones_actuales) {
@@ -346,13 +342,13 @@ class RevisionDocumentoController extends Controller
 
     public function sendEmailToNextLevel($email, Documento $documento, RevisionDocumento $revisor, HistorialRevisionDocumento $historialRevisionDocumento)
     {
-
         Mail::to($email)->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
     }
 
     public function checkMaxLevel($documento_id)
     {
         $nivel_maximo = intval(RevisionDocumento::where('documento_id', '=', strval($documento_id))->max('nivel'));
+
         return $nivel_maximo;
     }
 
@@ -428,7 +424,7 @@ class RevisionDocumentoController extends Controller
         $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-v' . $documento->version . '-publicado.' . $extension;
         $ruta_publicacion = $path_documentos_publicados . '/' . $nombre_documento;
         $documento->update([
-            'archivo' => $nombre_documento
+            'archivo' => $nombre_documento,
         ]);
         if (Storage::exists($path_documento_aprobacion)) {
             Storage::move($path_documento_aprobacion, $ruta_publicacion);
@@ -516,7 +512,6 @@ class RevisionDocumentoController extends Controller
             Storage::makeDirectory('/public/Documentos publicados/procesos', 0775, true);
         }
     }
-
 
     public function createDocumentoVersionesAnterioresIfNotExists()
     {

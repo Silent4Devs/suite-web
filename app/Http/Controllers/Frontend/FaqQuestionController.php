@@ -10,7 +10,6 @@ use App\Models\FaqCategory;
 use App\Models\FaqQuestion;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class FaqQuestionController extends Controller

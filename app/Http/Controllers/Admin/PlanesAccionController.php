@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Empleado;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\PlanImplementacion;
 use App\Http\Controllers\Controller;
+use App\Models\PlanImplementacion;
+use Illuminate\Http\Request;
 
 class PlanesAccionController extends Controller
 {
@@ -19,8 +17,10 @@ class PlanesAccionController extends Controller
     {
         if ($request->ajax()) {
             $planesImplementacion = PlanImplementacion::with('elaborador')->get();
+
             return datatables()->of($planesImplementacion)->toJson();
         }
+
         return view('admin.planesDeAccion.index');
     }
 
@@ -31,7 +31,8 @@ class PlanesAccionController extends Controller
      */
     public function create($modulo, $referencia = null)
     {
-        $planImplementacion  = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion();
+
         return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo', 'referencia'));
     }
 
@@ -81,8 +82,8 @@ class PlanesAccionController extends Controller
      */
     public function show($planImplementacion)
     {
-
         $planImplementacion = PlanImplementacion::find($planImplementacion);
+
         return view('admin.planesDeAccion.show', compact('planImplementacion'));
     }
 
@@ -96,6 +97,7 @@ class PlanesAccionController extends Controller
     {
         $planImplementacion = PlanImplementacion::find($planImplementacion);
         $referencia = null;
+
         return view('admin.planesDeAccion.edit', compact('planImplementacion', 'referencia'));
     }
 
@@ -120,7 +122,7 @@ class PlanesAccionController extends Controller
             'objetivo.required' => 'Debes de definir un objetivo para el plan de acción',
         ]);
         $planImplementacion = PlanImplementacion::find($planImplementacion);
-        $planImplementacion->update([ // Necesario se carga inicialmente el Diagrama Universal de Gantt            
+        $planImplementacion->update([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
             'parent' => $request->parent,
             'norma' => $request->norma,
             'modulo_origen' => $request->modulo_origen,
@@ -151,8 +153,8 @@ class PlanesAccionController extends Controller
 
     public function saveProject(Request $request, $plan)
     {
-        $project =  $request->prj;
-        $project = (array)json_decode($project);
+        $project = $request->prj;
+        $project = (array) json_decode($project);
         if (PlanImplementacion::find($plan)) {
             $tasks = isset($project['tasks']) ? $project['tasks'] : [];
             PlanImplementacion::find($plan)->update([
@@ -176,10 +178,9 @@ class PlanesAccionController extends Controller
                 'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
             ]);
         }
+
         return response()->json(['success' => true], 200);
     }
-
-
 
     public function loadProject($plan)
     {

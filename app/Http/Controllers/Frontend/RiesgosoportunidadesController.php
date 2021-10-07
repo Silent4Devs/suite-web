@@ -10,7 +10,6 @@ use App\Models\Controle;
 use App\Models\Riesgosoportunidade;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class RiesgosoportunidadesController extends Controller

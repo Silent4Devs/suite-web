@@ -1,20 +1,16 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Team;
-use App\Models\Grupo;
-use Laracasts\Flash\Flash;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\StoreGrupoRequest;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyGrupoAreaRequest;
 use App\Models\Area;
+use App\Models\Grupo;
+use Gate;
+use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
+use Symfony\Component\HttpFoundation\Response;
 
 class GrupoAreaController extends Controller
 {
@@ -22,10 +18,10 @@ class GrupoAreaController extends Controller
 
     public function index(Request $request)
     {
-
         abort_if(Gate::denies('configuracion_grupoarea_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $grupos = Grupo::get();
+            $grupos = Grupo::orderByDesc('id')->get();
+
             return datatables()->of($grupos)->toJson();
         }
 
@@ -55,7 +51,7 @@ class GrupoAreaController extends Controller
             // 'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
         ]);
         // Flash::success('<h5 class="text-center">Grupo agregado satisfactoriamente</h5>');
-        return redirect()->route('admin.grupoarea.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.grupoarea.index')->with('success', 'Guardado con éxito');
     }
 
     public function show(Grupo $grupoarea)
@@ -81,12 +77,12 @@ class GrupoAreaController extends Controller
         $request->validate(
             [
                 'nombre' => 'required|string',
-                'descripcion' => 'required|string'
+                'descripcion' => 'required|string',
             ],
         );
         $grupoarea->update($request->all());
         // Flash::success('<h5 class="text-center">Grupo actualizado satisfactoriamente</h5>');
-        return redirect()->route('admin.grupoarea.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.grupoarea.index')->with('success', 'Editado con éxito');
     }
 
     public function destroy(Grupo $grupoarea)
@@ -112,6 +108,7 @@ class GrupoAreaController extends Controller
     {
         $grupo = Grupo::select('id')->where('id', intval($request->grupo_id))->first();
         $areas = Area::select('area')->where('id_grupo', $grupo->id)->get();
+
         return $areas;
     }
 }

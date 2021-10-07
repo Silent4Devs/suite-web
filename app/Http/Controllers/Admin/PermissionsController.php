@@ -26,9 +26,9 @@ class PermissionsController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'permission_show';
-                $editGate      = 'permission_edit';
-                $deleteGate    = 'permission_delete';
+                $viewGate = 'permission_show';
+                $editGate = 'permission_edit';
+                $deleteGate = 'permission_delete';
                 $crudRoutePart = 'permissions';
 
                 return view('partials.datatablesActions', compact(
@@ -41,10 +41,10 @@ class PermissionsController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('title', function ($row) {
-                return $row->title ? $row->title : "";
+                return $row->title ? $row->title : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

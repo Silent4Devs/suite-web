@@ -20,8 +20,6 @@ class AddColumnsMedioToMatrizRequisitoLegalesTable extends Migration
             $table->string('evidencia')->nullable();
             $table->unsignedBigInteger('id_reviso')->nullable();
             $table->foreign('id_reviso')->references('id')->on('empleados');
-
-
         });
     }
 
@@ -33,12 +31,10 @@ class AddColumnsMedioToMatrizRequisitoLegalesTable extends Migration
     public function down()
     {
         Schema::table('matriz_requisito_legales', function (Blueprint $table) {
-
             $table->dropforeign('matriz_requisitos_legales_id_reviso_foreign');
         });
 
         Schema::table('matriz_requisito_legales', function (Blueprint $table) {
-
             $table->dropColumn('id_reviso');
             // $table->dropColumn('id_area_responsable');
             // $table->dropColumn('id_puesto_responsable');
@@ -47,8 +43,6 @@ class AddColumnsMedioToMatrizRequisitoLegalesTable extends Migration
             $table->dropColumn('tipo');
             $table->dropColumn('descripcion_cumplimiento');
             $table->dropColumn('evidencia');
-
         });
-
     }
 }

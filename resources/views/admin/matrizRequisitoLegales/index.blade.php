@@ -371,21 +371,21 @@
                         data: 'reviso',
                         name: 'reviso',
                         render: function(data, type, row, meta) {
-                            return row.empleado.name;
+                            return row.empleado?.name;
                         }
                     },
                     {
                         data: 'puesto',
                         name: 'puesto',
                         render: function(data, type, row, meta) {
-                            return row.empleado.puesto;
+                            return row.empleado?.puesto;
                         }
                     },
                     {
                         data: 'area',
                         name: 'area',
                         render: function(data, type, row, meta) {
-                            return row.empleado.area.area;
+                            return row.empleado?.area?.area;
                         }
                     },
                     {

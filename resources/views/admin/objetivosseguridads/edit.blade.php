@@ -106,9 +106,9 @@
 
     {{ Breadcrumbs::render('admin.objetivosseguridads.create') }}
 
-    <div class="card mt-4">
-        <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Objetivos de Seguridad </h3>
+    <div class="mt-4 card">
+        <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Objetivos de Seguridad </h3>
         </div>
 
         <div class="card-body">
@@ -117,7 +117,7 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                <div class="card mt-4">
+                <div class="mt-4 card">
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-sm-6">
@@ -253,7 +253,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-sm-2">
+                            <div class="form-group col-sm-4">
                                 <div class="form-group">
                                     <label class="required" for="frecuencia"><i
                                             class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
@@ -337,12 +337,12 @@
 
                             <div class="form-group col-sm-6">
 
-                                <div class="form-inline mb-2">
-                                    <div class="form-group mb-2">
+                                <div class="mb-2 form-inline">
+                                    <div class="mb-2 form-group">
                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail2"
                                             value="Añadir una variable:" disabled>
                                     </div>
-                                    <div class="form-group mx-sm-3 mb-2">
+                                    <div class="mb-2 form-group mx-sm-3">
                                         <input id="variable" class="form-control" type="text" placeholder="Variable"><br>
                                     </div>
                                     <button id="añadir" class="btn btn-success" type="button">Añadir</button>
@@ -362,7 +362,7 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="text-center form-group col-12" style="margin-left:15px;">
+                        <div class="text-right form-group col-12" style="margin-left:15px;">
                             <a href="{{ redirect()->getUrlGenerator()->previous() }}"
                                 class="btn_cancelar">Cancelar</a>
                             <button class="btn btn-danger" type="submit">

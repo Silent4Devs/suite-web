@@ -1,8 +1,21 @@
 @extends('layouts.admin')
 @section('content')
 
+    <style>
+        .table tr td:nth-child(3) {
+            min-width: 80px !important;
+            text-align: center !important;
+        }
+
+        .table tr td:nth-child(4) {
+            min-width: 100px !important;
+            text-align: center !important;
+        }
+
+    </style>
+
     {{ Breadcrumbs::render('admin.auditoria-anuals.index') }}
-    
+
     @can('auditoria_anual_create')
 
     @endcan
@@ -25,7 +38,7 @@
                             Fecha&nbsp;inicio
                         </th>
                         <th>
-                            {{ trans('cruds.auditoriaAnual.fields.dias') }}
+                            Fecha&nbsp;fin
                         </th>
                         <th>
                             Auditor(a)&nbsp;líder
@@ -112,7 +125,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -170,13 +183,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -210,8 +223,8 @@
                         name: 'fechainicio'
                     },
                     {
-                        data: 'dias',
-                        name: 'dias'
+                        data: 'fechafin',
+                        name: 'fechafin'
                     },
                     {
                         data: 'auditorlider_name',
@@ -245,6 +258,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

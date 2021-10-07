@@ -42,10 +42,6 @@ class CreateQuejasTable extends Migration
 
             $table->longText('comentarios')->nullable();
 
-            
-
-            
-
             $table->timestamps();
             $table->softDeletes();
         });

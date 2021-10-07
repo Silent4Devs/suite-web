@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\AuditoriaAnual;
-use App\Models\Registromejora;
-use App\Services\LaravelChart;
-use App\Models\IndicadoresSgsi;
 use App\Models\AccionCorrectiva;
-use App\Models\ControlDocumento;
-use App\Models\PlanBaseActividade;
-use App\Models\EvaluacionIndicador;
-use App\Models\IncidentesSeguridad;
+use App\Models\AuditoriaAnual;
 use App\Models\CategoriaCapacitacion;
-use App\Models\IncidentesDeSeguridad;
+use App\Models\ControlDocumento;
 use App\Models\Documento;
+use App\Models\IncidentesDeSeguridad;
+use App\Models\IncidentesSeguridad;
+use App\Models\IndicadoresSgsi;
+use App\Models\PlanBaseActividade;
 use App\Models\PlanImplementacion;
 use App\Models\Recurso;
+use App\Models\Registromejora;
+use App\Services\LaravelChart;
+use Carbon\Carbon;
 
 class HomeController
 {
@@ -116,16 +113,16 @@ class HomeController
                         '>=',
                         now()->subDays($settings5['filter_days'])->format('Y-m-d')
                     );
-                } else if (isset($settings5['filter_period'])) {
+                } elseif (isset($settings5['filter_period'])) {
                     switch ($settings5['filter_period']) {
                         case 'week':
-                            $start  = date('Y-m-d', strtotime('last Monday'));
+                            $start = date('Y-m-d', strtotime('last Monday'));
                             break;
                         case 'month':
                             $start = date('Y-m') . '-01';
                             break;
                         case 'year':
-                            $start  = date('Y') . '-01-01';
+                            $start = date('Y') . '-01-01';
                             break;
                     }
 
@@ -161,16 +158,16 @@ class HomeController
                         '>=',
                         now()->subDays($settings6['filter_days'])->format('Y-m-d')
                     );
-                } else if (isset($settings6['filter_period'])) {
+                } elseif (isset($settings6['filter_period'])) {
                     switch ($settings6['filter_period']) {
                         case 'week':
-                            $start  = date('Y-m-d', strtotime('last Monday'));
+                            $start = date('Y-m-d', strtotime('last Monday'));
                             break;
                         case 'month':
                             $start = date('Y-m') . '-01';
                             break;
                         case 'year':
-                            $start  = date('Y') . '-01-01';
+                            $start = date('Y') . '-01-01';
                             break;
                     }
 
@@ -250,8 +247,6 @@ class HomeController
 
         $chart10 = new LaravelChart($settings10);
 
-
-
         $registro = Registromejora::select('id')->count('id');
         $accionc = AccionCorrectiva::select('id')->count('id');
 
@@ -262,7 +257,7 @@ class HomeController
         $incidentescurso = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '2')->count('id');
 
         $actividadsininici = PlanBaseActividade::select('id')->where('estatus_id', '=', '1')->count('id');
-        $actividadenproc =  PlanBaseActividade::select('id')->where('estatus_id', '=', '2')->count('id');
+        $actividadenproc = PlanBaseActividade::select('id')->where('estatus_id', '=', '2')->count('id');
         $actividadcompl = PlanBaseActividade::select('id')->where('estatus_id', '=', '3')->count('id');
         $actividadretr = PlanBaseActividade::select('id')->where('estatus_id', '=', '4')->count('id');
 
@@ -338,13 +333,13 @@ class HomeController
         $contador_documentos_en_elaboracion = Documento::where('estatus', '=', Documento::EN_ELABORACION)->count();
         $contador_documentos_en_revision = Documento::where('estatus', '=', Documento::EN_REVISION)->count();
         $contador_documentos_rechazados = Documento::where('estatus', '=', Documento::DOCUMENTO_RECHAZADO)->count();
-        $contador_documentos_obsoletos =  Documento::where('estatus', '=', Documento::DOCUMENTO_OBSOLETO)->count();
+        $contador_documentos_obsoletos = Documento::where('estatus', '=', Documento::DOCUMENTO_OBSOLETO)->count();
         //Fin Documentos
 
         $evaluacion_indicadores = IndicadoresSgsi::select('indicadores_sgsis.nombre', 'evaluacion_indicador.*', 'indicadores_sgsis.meta', 'indicadores_sgsis.id')
             ->join('evaluacion_indicador', 'indicadores_sgsis.id', '=', 'evaluacion_indicador.id_indicador')->get()->toArray();
-        $evaluaciones = array();
-        $evaluacion_nombre = array();
+        $evaluaciones = [];
+        $evaluacion_nombre = [];
 
         foreach ($evaluacion_indicadores as $evaluacion) {
             array_push($evaluaciones, $evaluacion['resultado']);

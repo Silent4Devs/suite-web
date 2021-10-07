@@ -5,7 +5,6 @@ namespace App\Notifications;
 use App\Models\Recurso;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +17,6 @@ class RecursosNotification extends Notification
     public $tipo_consulta;
     public $tabla;
     public $slug;
-
 
     public function __construct(Recurso $recurso, $tipo_consulta, $tabla, $slug)
     {

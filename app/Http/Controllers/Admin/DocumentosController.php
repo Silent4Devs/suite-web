@@ -11,9 +11,8 @@ use App\Models\HistorialRevisionDocumento;
 use App\Models\HistorialVersionesDocumento;
 use App\Models\Macroproceso;
 use App\Models\Proceso;
-use App\Models\VistaDocumento;
 use App\Models\RevisionDocumento;
-use App\Models\User;
+use App\Models\VistaDocumento;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -21,7 +20,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 
 class DocumentosController extends Controller
 {
@@ -40,6 +38,7 @@ class DocumentosController extends Controller
         $procesos = Proceso::get();
         $empleados = Empleado::get();
         $documentoActual = new Documento;
+
         return view('admin.documentos.create', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));
     }
 
@@ -47,9 +46,11 @@ class DocumentosController extends Controller
     {
         if ($request->ajax()) {
             $this->validateRequestStore($request);
+
             return response()->json(['success' => true]);
         } else {
             $this->storeDocument($request, Documento::EN_ELABORACION);
+
             return redirect()->route('admin.documentos.index')->with('success', 'Documento creado con éxito');
         }
     }
@@ -58,6 +59,7 @@ class DocumentosController extends Controller
     {
         if ($request->ajax()) {
             $documento = $this->storeDocument($request, Documento::EN_REVISION);
+
             return response()->json(['success' => true, 'documento_id' => $documento->id]);
         }
     }
@@ -75,16 +77,15 @@ class DocumentosController extends Controller
             'elaboro_id' => 'required|exists:empleados,id',
             'aprobo_id' => 'required|exists:empleados,id',
             'reviso_id' => 'required|exists:empleados,id',
-            'responsable_id' => 'required|exists:empleados,id'
+            'responsable_id' => 'required|exists:empleados,id',
         ], [
             'codigo.unique' => 'El código de documento ya ha sido tomado',
-            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF'
+            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
         ]);
     }
 
     public function storeDocument(Request $request, $estatus)
     {
-
         $this->validateRequestStore($request);
         $this->createDocumentosEnAprobacionIfNotExists();
         $path_documentos_aprobacion = 'public/Documentos en aprobacion';
@@ -144,7 +145,7 @@ class DocumentosController extends Controller
             'elaboro_id' => $request->elaboro_id,
             'aprobo_id' => $request->aprobo_id,
             'reviso_id' => $request->reviso_id,
-            'responsable_id' => $request->responsable_id
+            'responsable_id' => $request->responsable_id,
         ]);
 
         if ($request->tipo == 'proceso') {
@@ -153,7 +154,7 @@ class DocumentosController extends Controller
                 'codigo' => $request->codigo,
                 'estatus' => Proceso::NO_ACTIVO,
                 'id_macroproceso' => $request->macroproceso,
-                'documento_id' => $documento->id
+                'documento_id' => $documento->id,
             ]);
         }
 
@@ -175,9 +176,11 @@ class DocumentosController extends Controller
     {
         if ($request->ajax()) {
             $this->validateRequestUpdate($request, $documento);
+
             return response()->json(['success' => true]);
         } else {
             $this->updateDocument($request, $documento, $documento->estatus);
+
             return redirect()->route('admin.documentos.index')->with('success', 'Documento editado con éxito');
         }
     }
@@ -192,6 +195,7 @@ class DocumentosController extends Controller
                     'estatus' => Proceso::NO_ACTIVO,
                 ]);
             }
+
             return response()->json(['success' => true, 'documento_id' => $documento->id]);
         }
     }
@@ -209,16 +213,15 @@ class DocumentosController extends Controller
             'elaboro_id' => 'required_if:elaboro_id,null|exists:empleados,id',
             'aprobo_id' => 'required_if:aprobo_id,null|exists:empleados,id',
             'reviso_id' => 'required_if:reviso_id,null|exists:empleados,id',
-            'responsable_id' => 'required_if:responsable_id,null|exists:empleados,id'
+            'responsable_id' => 'required_if:responsable_id,null|exists:empleados,id',
         ], [
             'codigo.unique' => 'El código de documento ya ha sido tomado',
-            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF'
+            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
         ]);
     }
 
     public function updateDocument(Request $request, Documento $documento, $estatus)
     {
-
         $this->validateRequestUpdate($request, $documento);
         $this->createDocumentosEnAprobacionIfNotExists();
         $path_documentos_aprobacion = $this->pathDocumentsWhenUpdate($request->tipo);
@@ -282,7 +285,7 @@ class DocumentosController extends Controller
             'elaboro_id' => $elaborador,
             'aprobo_id' => $aprobador,
             'reviso_id' => $revisor,
-            'responsable_id' => $responsable
+            'responsable_id' => $responsable,
         ]);
 
         return $documento;
@@ -320,6 +323,7 @@ class DocumentosController extends Controller
                 $path_documentos_aprobacion .= '/procesos';
                 break;
         }
+
         return $path_documentos_aprobacion;
     }
 
@@ -360,8 +364,8 @@ class DocumentosController extends Controller
                 return response()->json(['success' => true]);
             }
         } catch (QueryException $e) {
-            if ($e->errorInfo[0] == "23000") {
-                return response()->json(['error' => "Este registro contiene relación con diversas tablas, eliminarlo trearía problemas de estabilidad en el sistema."]);
+            if ($e->errorInfo[0] == '23000') {
+                return response()->json(['error' => 'Este registro contiene relación con diversas tablas, eliminarlo trearía problemas de estabilidad en el sistema.']);
             }
         }
     }
@@ -386,10 +390,10 @@ class DocumentosController extends Controller
     public function publish(Request $request)
     {
         if ($request->ajax()) {
-            $datos = array();
+            $datos = [];
             parse_str($request->datosRevisores, $datos);
             $documento_id = intval($request->documentoCreado);
-            $revisores1 = array();
+            $revisores1 = [];
             $documento = Documento::find($documento_id);
             $documento->load('elaborador', 'macroproceso');
             Mail::to($documento->elaborador->email)->send(new ConfirmacionSolicitudAprobacionMail($documento));
@@ -400,7 +404,7 @@ class DocumentosController extends Controller
                 'descripcion' =>  $datos['descripcion'],
                 'comentarios' =>  $datos['comentarios'],
                 'version' => $documento->version,
-                'fecha' => Carbon::now()
+                'fecha' => Carbon::now(),
             ]);
 
             if (isset($datos['revisores1'])) {
@@ -411,7 +415,7 @@ class DocumentosController extends Controller
                         'nivel' => 1,
                         'no_revision' => strval($numero_revision),
                         'documento_id' => $documento_id,
-                        'version' => $documento->version
+                        'version' => $documento->version,
                     ]);
                     Mail::to($revisor->empleado->email)->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
                 }
@@ -425,7 +429,7 @@ class DocumentosController extends Controller
                         'nivel' => 2,
                         'no_revision' => strval($numero_revision),
                         'documento_id' => $documento_id,
-                        'version' => $documento->version
+                        'version' => $documento->version,
                     ]);
                 }
             }
@@ -437,7 +441,7 @@ class DocumentosController extends Controller
                         'nivel' => 3,
                         'no_revision' => strval($numero_revision),
                         'documento_id' => $documento_id,
-                        'version' => $documento->version
+                        'version' => $documento->version,
                     ]);
                 }
             }
@@ -459,8 +463,8 @@ class DocumentosController extends Controller
         abort_if(Gate::denies('documentos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $path_documento = $this->getPathDocumento($documento, 'storage');
 
-        if(auth()->user()->empleado){
-            if( !VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', auth()->user()->empleado->id)->exists() ){
+        if (auth()->user()->empleado) {
+            if (!VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', auth()->user()->empleado->id)->exists()) {
                 VistaDocumento::create([
                     'empleado_id' => auth()->user()->empleado->id,
                     'documento_id' => $documento->id,
@@ -618,6 +622,7 @@ class DocumentosController extends Controller
         $proceso = Proceso::where('documento_id', intval($request->documento_id))->first();
         if ($proceso) {
             $dependencias = Documento::where('proceso_id', '=', $proceso->id)->get();
+
             return response()->json(['dependencias' => $dependencias]);
         } else {
             return response()->json(['dependencias' => null]);
@@ -635,6 +640,7 @@ class DocumentosController extends Controller
     public function publicados()
     {
         $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
+
         return view('admin.documentos.list-published', compact('documentos'));
     }
 }

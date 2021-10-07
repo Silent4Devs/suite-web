@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\VistaDocumento;
 
 class Documento extends Model
 {
@@ -26,7 +25,7 @@ class Documento extends Model
     const DOCUMENTO_OBSOLETO = 5;
 
     public static $searchable = [
-        'nombre', 'codigo'
+        'nombre', 'codigo',
     ];
 
     protected $dates = ['fecha'];
@@ -46,7 +45,7 @@ class Documento extends Model
         'elaboro_id',
         'reviso_id',
         'aprobo_id',
-        'responsable_id'
+        'responsable_id',
     ];
 
     public function searchableAs()
@@ -57,6 +56,7 @@ class Documento extends Model
     public function getNoVistasAttribute()
     {
         $no_vistas = VistaDocumento::where('documento_id', $this->id)->count();
+
         return $no_vistas;
     }
 
@@ -64,7 +64,6 @@ class Documento extends Model
     {
         return Carbon::parse($this->fecha)->format('d-m-Y');
     }
-
 
     public function getEstatusFormateadoAttribute()
     {
@@ -110,8 +109,6 @@ class Documento extends Model
 
     public function getArchivoActualAttribute()
     {
-
-
         $path_documento = '/storage/Documentos publicados';
         if ($this->estatus == $this::EN_REVISION) {
             $path_documento = '/storage/Documentos en aprobacion';
@@ -149,6 +146,7 @@ class Documento extends Model
 
         return asset($path_documento . '/' . $this->archivo);
     }
+
     //Relacion uno a muchos inversa
     public function empleado()
     {
@@ -159,7 +157,6 @@ class Documento extends Model
     {
         return $this->belongsToMany(Empleado::class);
     }
-
 
     public function revisiones()
     {
@@ -185,6 +182,7 @@ class Documento extends Model
     {
         return $this->belongsTo(Empleado::class, 'aprobo_id', 'id');
     }
+
     public function responsable()
     {
         return $this->belongsTo(Empleado::class, 'responsable_id', 'id');

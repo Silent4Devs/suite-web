@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ObjetivoEmpleado extends Model
 {
     use HasFactory;
-    protected $table = "ev360_objetivo_empleados";
+    protected $table = 'ev360_objetivo_empleados';
     protected $fillable = ['empleado_id', 'objetivo_id', 'completado'];
 
     public function objetivo()

@@ -8,7 +8,6 @@ use Symfony\Component\Finder\Finder;
 
 class CustomSessionHandler implements \SessionHandlerInterface
 {
-
     protected $files;
 
     /**
@@ -43,9 +42,11 @@ class CustomSessionHandler implements \SessionHandlerInterface
     public function open($savePath, $sessionName)
     {
     }
+
     public function close()
     {
     }
+
     public function read($sessionId)
     {
         if ($this->files->isFile($path = $this->path . '/' . $sessionId)) {
@@ -58,7 +59,7 @@ class CustomSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function write($sessionId, $data)
     {
@@ -68,7 +69,7 @@ class CustomSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function destroy($sessionId)
     {
@@ -78,7 +79,7 @@ class CustomSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function gc($lifetime)
     {

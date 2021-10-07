@@ -10,7 +10,7 @@
         <form method="POST" action="{{ route("admin.faq-categories.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label class="required" for="category"><i class="fab fa-delicious iconos-crear"></i>{{ trans('cruds.faqCategory.fields.category') }}</label>
+                <label class="required" for="category"><i class="fab fa-delicious iconos-crear"></i>{{ trans('Categoria') }}</label>
                 <input class="form-control {{ $errors->has('category') ? 'is-invalid' : '' }}" type="text" name="category" id="category" value="{{ old('category', '') }}" required>
                 @if($errors->has('category'))
                     <div class="invalid-feedback">

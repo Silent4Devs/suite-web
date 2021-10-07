@@ -14,7 +14,6 @@ class PuestoSeeder extends Seeder
      */
     public function run()
     {
-
         $puestos = [
             ['id' => 1, 'puesto' => 'Analista de Contenido'],
             ['id' => 2, 'puesto' => 'Analista de Diseño'],

@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateMatrizRequisitoLegaleRequest;
 use App\Models\MatrizRequisitoLegale;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class MatrizRequisitoLegalesController extends Controller

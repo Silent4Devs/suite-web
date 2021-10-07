@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-
 use App\Models\CategoriaIncidente;
+use Illuminate\Database\Seeder;
 
 class CategoriaIncidenteSeeder extends Seeder
 {
@@ -18,28 +17,28 @@ class CategoriaIncidenteSeeder extends Seeder
         $categorias = [
             [
                 'id'    => 1,
-                'categoria' => 'Ataques'
+                'categoria' => 'Ataques',
             ],
             [
                 'id'    => 2,
-                'categoria' => 'Código malicioso'
+                'categoria' => 'Código malicioso',
             ],
             [
                 'id'    => 3,
-                'categoria' => 'Acceso no autorizado, robo o pérdida de datos'
+                'categoria' => 'Acceso no autorizado, robo o pérdida de datos',
             ],
             [
                 'id'    => 4,
-                'categoria' => 'Pruebas y reconocimientos'
+                'categoria' => 'Pruebas y reconocimientos',
             ],
             [
                 'id'    => 5,
-                'categoria' => 'Daños físicos'
+                'categoria' => 'Daños físicos',
             ],
             [
                 'id'    => 6,
-                'categoria' => 'Abuso de privilegios y usos inadecuados'
-            ]
+                'categoria' => 'Abuso de privilegios y usos inadecuados',
+            ],
         ];
 
         CategoriaIncidente::insert($categorias);

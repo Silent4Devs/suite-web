@@ -22,6 +22,7 @@ class GrupoFactory extends Factory
     public function definition()
     {
         static $number = 1;
+
         return [
             'nombre' => 'Grupo ' . $number++,
             'descripcion' => $this->faker->sentence(),

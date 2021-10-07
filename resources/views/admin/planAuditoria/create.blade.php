@@ -3,18 +3,18 @@
 
     {{ Breadcrumbs::render('admin.plan-auditoria.create') }}
 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Plan de Auditoría  </h3>
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Plan de Auditoría  </h3>
     </div>
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.plan-auditoria.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             {{ Form::hidden('pdf-value', 'planAuditoria')}}
-            <div class="form-group col-12">
+            {{-- <div class="form-group col-12">
                 <label for="fecha_id"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.planAuditorium.fields.fecha') }}</label>
-                <select class="form-control select2 {{ $errors->has('fecha') ? 'is-invalid' : '' }}" name="fecha_id" id="fecha_id">
+                <select class="form-control select2 {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="date" name="fecha_id" id="fecha_id">
                     @foreach($fechas as $id => $fecha)
                         <option value="{{ $id }}" {{ old('fecha_id') == $id ? 'selected' : '' }}>{{ $fecha }}</option>
                     @endforeach
@@ -25,7 +25,19 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.fecha_helper') }}</span>
+            </div> --}}
+
+            <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                <label for="fecha"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de Auditoría</label>
+                <input class="form-control date {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="date" name="fecha" id="fecha" value="{{ old('fecha') }}">
+                @if($errors->has('fecha'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('fecha') }}
+                </div>
+                @endif
             </div>
+
+
             <div class="form-group col-md-6">
                 <label for="objetivo"><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.planAuditorium.fields.objetivo') }}</label>
                 <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo" id="objetivo">{{ old('objetivo') }}</textarea>
@@ -79,7 +91,7 @@
             <div class="form-group col-12">
                 <label for="auditados"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.planAuditorium.fields.auditados') }}</label>
                 <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="select-all btn btn-info btn-xs" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
                 <select class="form-control select2 {{ $errors->has('auditados') ? 'is-invalid' : '' }}" name="auditados[]" id="auditados" multiple>
@@ -104,7 +116,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planAuditorium.fields.descripcion_helper') }}</span>
             </div>
-            <div class="form-group col-12 text-right">
+            <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

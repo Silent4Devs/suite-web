@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Functions\Porcentaje;
 use App\Http\Controllers\Controller;
 use App\Models\GapDo;
 use App\Models\GapTre;
-use Illuminate\Http\Request;
 use App\Models\GapUno;
-use App\Functions\Porcentaje;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 
@@ -176,6 +176,7 @@ class AnalisisBController extends Controller
     {
         if ($request->ajax()) {
             GapUno::find($request->input('pk'))->update([$request->input('evidencia') => $request->input('value')]);
+
             return response()->json(['success' => true]);
         }
     }

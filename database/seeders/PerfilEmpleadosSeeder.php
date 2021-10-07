@@ -17,7 +17,7 @@ class PerfilEmpleadosSeeder extends Seeder
         $perfiles = [
             ['nombre' => 'Director'],
             ['nombre' => 'Gerente'],
-            ['nombre' => 'Colaborador']
+            ['nombre' => 'Colaborador'],
         ];
 
         PerfilEmpleado::insert($perfiles);

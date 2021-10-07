@@ -2,26 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use App\Models\EducacionEmpleados;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\ExperienciaEmpleados;
-use Intervention\Image\Facades\Image;
-use App\Models\CursosDiplomasEmpleados;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Area;
 use App\Models\CertificacionesEmpleados;
-use Yajra\DataTables\Facades\DataTables;
-use App\Models\EvidenciasDocumentosEmpleados;
-use Symfony\Component\HttpFoundation\Response;
+use App\Models\CursosDiplomasEmpleados;
+use App\Models\EducacionEmpleados;
+use App\Models\Empleado;
 use App\Models\EvidenciasCertificadosEmpleados;
+use App\Models\EvidenciasCertificadosEmpleados;
+use App\Models\EvidenciasDocumentosEmpleados;
+use App\Models\EvidenciasDocumentosEmpleados;
+use App\Models\ExperienciaEmpleados;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
+use App\Models\Puesto;
+use App\Models\Sede;
+use Gate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class EmpleadoController extends Controller
 {
@@ -32,8 +36,6 @@ class EmpleadoController extends Controller
      */
     public function index(Request $request)
     {
-
-
         abort_if(Gate::denies('configuracion_empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             // $query = DB::table('empleados')->select(DB::raw('id,
@@ -62,9 +64,9 @@ class EmpleadoController extends Controller
             $table->addIndexColumn();
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'configuracion_empleados_show';
-                $editGate      = 'configuracion_empleados_edit';
-                $deleteGate    = 'configuracion_empleados_delete';
+                $viewGate = 'configuracion_empleados_show';
+                $editGate = 'configuracion_empleados_edit';
+                $deleteGate = 'configuracion_empleados_delete';
                 $crudRoutePart = 'empleados';
 
                 return view('partials.datatablesActions', compact(
@@ -77,10 +79,10 @@ class EmpleadoController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : "";
+                return $row->name ? $row->name : '';
             });
 
             $table->editColumn('avatar', function ($row) {
@@ -88,37 +90,37 @@ class EmpleadoController extends Controller
             });
 
             $table->editColumn('area', function ($row) {
-                return $row->area ? $row->area->area : "";
+                return $row->area ? $row->area->area : '';
             });
             $table->editColumn('puesto', function ($row) {
-                return $row->puesto ? $row->puesto : "";
+                return $row->puesto ? $row->puesto : '';
             });
             $table->editColumn(
                 'jefe',
                 function ($row) {
-                    return $row->supervisor ? $row->supervisor->name : "";
+                    return $row->supervisor ? $row->supervisor->name : '';
                 }
             );
             $table->editColumn('antiguedad', function ($row) {
                 return Carbon::parse(Carbon::parse($row->antiguedad))->diffForHumans(Carbon::now()->subDays());
             });
             $table->editColumn('estatus', function ($row) {
-                return $row->estatus ? $row->estatus : "";
+                return $row->estatus ? $row->estatus : '';
             });
             $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : "";
+                return $row->email ? $row->email : '';
             });
 
             $table->editColumn('telefono', function ($row) {
-                return $row->telefono ? $row->telefono : "";
+                return $row->telefono ? $row->telefono : '';
             });
 
             $table->editColumn('n_empleado', function ($row) {
-                return $row->n_empleado ? $row->n_empleado : "";
+                return $row->n_empleado ? $row->n_empleado : '';
             });
 
             $table->editColumn('n_registro', function ($row) {
-                return $row->n_registro ? $row->n_registro : "";
+                return $row->n_registro ? $row->n_registro : '';
             });
 
             $table->editColumn('sede', function ($row) {
@@ -131,38 +133,40 @@ class EmpleadoController extends Controller
         }
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+
         return view('admin.empleados.index', compact('ceo_exists'));
     }
 
-
-
     public function getCertificaciones($empleado)
     {
-        $certificaciones = CertificacionesEmpleados::where("empleado_id", intval($empleado))->get();
+        $certificaciones = CertificacionesEmpleados::where('empleado_id', intval($empleado))->get();
+
         return datatables()->of($certificaciones)->toJson();
     }
 
     public function getEducacion($empleado)
     {
-        $educacions = EducacionEmpleados::where("empleado_id", intval($empleado))->get();
+        $educacions = EducacionEmpleados::where('empleado_id', intval($empleado))->get();
+
         return datatables()->of($educacions)->toJson();
     }
 
     public function getExperiencia($empleado)
     {
-        $experiencias = ExperienciaEmpleados::where("empleado_id", intval($empleado))->get();
+        $experiencias = ExperienciaEmpleados::where('empleado_id', intval($empleado))->get();
+
         return datatables()->of($experiencias)->toJson();
     }
 
     public function getCursos($empleado)
     {
-        $cursos = CursosDiplomasEmpleados::where("empleado_id", intval($empleado))->get();
+        $cursos = CursosDiplomasEmpleados::where('empleado_id', intval($empleado))->get();
+
         return datatables()->of($cursos)->toJson();
     }
 
     public function create()
     {
-
         abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
@@ -175,8 +179,10 @@ class EmpleadoController extends Controller
         $certificaciones = CertificacionesEmpleados::get();
         $puestos = Puesto::all();
         $perfiles = PerfilEmpleado::all();
+
         return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles'));
     }
+
     public function onlyStore($request)
     {
 
@@ -186,7 +192,6 @@ class EmpleadoController extends Controller
         $cursos = json_decode($request->curso);
         $certificados = json_decode($request->certificado);
         // dd($cursos);
-
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $validateSupervisor = 'nullable|exists:empleados,id';
@@ -207,30 +212,30 @@ class EmpleadoController extends Controller
             'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
 
         ], [
-            'n_empleado.unique' => 'El número de empleado ya ha sido tomado'
+            'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
 
         $empleado = Empleado::create([
-            "name" => $request->name,
-            "area_id" =>  $request->area_id,
-            "puesto_id" =>  $request->puesto_id,
-            "perfil_empleado_id" => $request->perfil_empleado_id,
-            "supervisor_id" =>  $request->supervisor_id,
-            "antiguedad" =>  $request->antiguedad,
-            "estatus" =>  $request->estatus,
-            "email" =>  $request->email,
-            "telefono" =>  $request->telefono,
-            "genero" =>  $request->genero,
-            "n_empleado" =>  $request->n_empleado,
-            "n_registro" =>  $request->n_registro,
-            "sede_id" =>  $request->sede_id,
-            "resumen" =>  $request->resumen,
-            "cumpleaños" => $request->cumpleaños,
-            "direccion" => $request->direccion,
-            "telefono_movil" => $request->telefono_movil,
-            "extension" => $request->extension,
-            "cumpleaños" => $request->cumpleaños,
-            "direccion" => $request->direccion,
+            'name' => $request->name,
+            'area_id' =>  $request->area_id,
+            'puesto_id' =>  $request->puesto_id,
+            'perfil_empleado_id' => $request->perfil_empleado_id,
+            'supervisor_id' =>  $request->supervisor_id,
+            'antiguedad' =>  $request->antiguedad,
+            'estatus' =>  $request->estatus,
+            'email' =>  $request->email,
+            'telefono' =>  $request->telefono,
+            'genero' =>  $request->genero,
+            'n_empleado' =>  $request->n_empleado,
+            'n_registro' =>  $request->n_registro,
+            'sede_id' =>  $request->sede_id,
+            'resumen' =>  $request->resumen,
+            'cumpleaños' => $request->cumpleaños,
+            'direccion' => $request->direccion,
+            'telefono_movil' => $request->telefono_movil,
+            'extension' => $request->extension,
+            'cumpleaños' => $request->cumpleaños,
+            'direccion' => $request->direccion,
         ]);
         $image = null;
         if ($request->snap_foto && $request->file('foto')) {
@@ -248,7 +253,7 @@ class EmpleadoController extends Controller
                     })->save($route);
                 }
             }
-        } else if ($request->snap_foto && !$request->file('foto')) {
+        } elseif ($request->snap_foto && !$request->file('foto')) {
             if ($request->snap_foto) {
                 if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
                     $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
@@ -266,7 +271,7 @@ class EmpleadoController extends Controller
         } else {
             if ($request->file('foto') != null or !empty($request->file('foto'))) {
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
                 $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.' . $extension;
                 $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
                 $image = $new_name_image;
@@ -279,11 +284,12 @@ class EmpleadoController extends Controller
         }
 
         $empleado->update([
-            'foto' => $image
+            'foto' => $image,
         ]);
 
         return $empleado;
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -294,15 +300,14 @@ class EmpleadoController extends Controller
     {
         $empleado = $this->onlyStore($request);
 
-        return redirect()->route('admin.empleados.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.empleados.index')->with('success', 'Guardado con éxito');
     }
 
     public function storeWithCompetencia(Request $request)
     {
-
         $empleado = $this->onlyStore($request);
 
-        return redirect()->route('admin.empleados.edit', $empleado)->with("success", 'Guardado con éxito');
+        return redirect()->route('admin.empleados.edit', $empleado)->with('success', 'Guardado con éxito');
 
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -366,6 +371,7 @@ class EmpleadoController extends Controller
         //     ]);
         // }
     }
+
     /**
      * Display the specified resource.
      *
@@ -385,7 +391,6 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-
         abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::findOrfail($id);
         // dd($empleado);
@@ -401,6 +406,7 @@ class EmpleadoController extends Controller
         $documentos = EvidenciasDocumentosEmpleados::get();
         $puestos = Puesto::all();
         $perfiles = PerfilEmpleado::all();
+
         return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles'));
     }
 
@@ -425,8 +431,6 @@ class EmpleadoController extends Controller
             }
         }
 
-
-
         $request->validate([
             'name' => 'required|string',
             'n_empleado' => 'unique:empleados,n_empleado,' . $id,
@@ -440,10 +444,8 @@ class EmpleadoController extends Controller
             'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
 
         ], [
-            'n_empleado.unique' => 'El número de empleado ya ha sido tomado'
+            'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
         ]);
-
-
 
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
@@ -462,7 +464,7 @@ class EmpleadoController extends Controller
                     })->save($route);
                 }
             }
-        } else if (
+        } elseif (
             $request->snap_foto && !$request->file('foto')
         ) {
             if ($request->snap_foto) {
@@ -484,7 +486,7 @@ class EmpleadoController extends Controller
                 $request->file('foto') != null or !empty($request->file('foto'))
             ) {
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), "." . $extension);
+                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
                 $new_name_image = 'UID_' . $empleado->id . '_' . $request->name . '.' . $extension;
                 $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
                 $image = $new_name_image;
@@ -511,23 +513,23 @@ class EmpleadoController extends Controller
         $empleado->update([
 
             'name' => $request->name,
-            "area_id" =>  $request->area_id,
-            "puesto_id" =>  $request->puesto_id,
+            'area_id' =>  $request->area_id,
+            'puesto_id' =>  $request->puesto_id,
             'perfil_empleado_id' => $request->perfil_empleado_id,
-            "supervisor_id" =>  $request->supervisor_id,
-            "antiguedad" =>  $request->antiguedad,
-            "estatus" =>  $request->estatus,
-            "email" =>  $request->email,
-            "telefono" =>  $request->telefono,
-            "genero" =>  $request->genero,
-            "n_empleado" =>  $request->n_empleado,
-            "n_registro" =>  $request->n_empleado,
+            'supervisor_id' =>  $request->supervisor_id,
+            'antiguedad' =>  $request->antiguedad,
+            'estatus' =>  $request->estatus,
+            'email' =>  $request->email,
+            'telefono' =>  $request->telefono,
+            'genero' =>  $request->genero,
+            'n_empleado' =>  $request->n_empleado,
+            'n_registro' =>  $request->n_empleado,
             'foto' => $image,
-            "sede_id" => $request->sede_id,
-            "cumpleaños" => $request->cumpleaños,
-            "direccion" => $request->direccion,
-            "telefono_movil" => $request->telefono_movil,
-            "extension" => $request->extension,
+            'sede_id' => $request->sede_id,
+            'cumpleaños' => $request->cumpleaños,
+            'direccion' => $request->direccion,
+            'telefono_movil' => $request->telefono_movil,
+            'extension' => $request->extension,
         ]);
 
         // $gantt_path = 'storage/gantt/gantt_inicial.json';
@@ -538,7 +540,7 @@ class EmpleadoController extends Controller
         // $write_empleados = $json_code;
         // file_put_contents($path, json_encode($write_empleados));
 
-        return redirect()->route('admin.empleados.index')->with("success", 'Editado con éxito');
+        return redirect()->route('admin.empleados.index')->with('success', 'Editado con éxito');
     }
 
     /**
@@ -551,6 +553,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('configuracion_empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado->delete();
+
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
@@ -614,9 +617,10 @@ class EmpleadoController extends Controller
                 $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
                 $lista = "<ul class='list-group' id='empleados-lista'>";
                 foreach ($usuarios as $usuario) {
-                    $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'><i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . "</button>";
+                    $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'><i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . '</button>';
                 }
-                $lista .= "</ul>";
+                $lista .= '</ul>';
+
                 return $lista;
             }
         }
@@ -628,6 +632,7 @@ class EmpleadoController extends Controller
             $nombre = $request->nombre;
             if ($nombre != null) {
                 $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+
                 return json_encode($usuarios);
             }
         }
@@ -636,9 +641,11 @@ class EmpleadoController extends Controller
     public function getAllEmpleados(Request $request)
     {
         $empleados = Empleado::select('id', 'name')->get();
+
         return json_encode($empleados);
         if ($request->ajax()) {
             $empleados = Empleado::select('id', 'name')->get();
+
             return json_encode($empleados);
         }
     }

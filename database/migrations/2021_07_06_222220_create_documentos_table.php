@@ -34,7 +34,7 @@ class CreateDocumentosTable extends Migration
         });
 
         Schema::table('documentos', function (Blueprint $table) {
-            // Relaciones 
+            // Relaciones
             $table->foreign('macroproceso_id')->references('id')->on('macroprocesos');
             $table->foreign('proceso_id')->references('id')->on('procesos');
             $table->foreign('elaboro_id')->references('id')->on('empleados')->onDelete('SET NULL');
