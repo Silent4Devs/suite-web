@@ -89,7 +89,8 @@ class Empleado extends Model
         'direccion',
         'cumpleaños',
         'resumen',
-        'puesto_id'
+        'puesto_id',
+        'perfil_empleado_id',
     ];
 
 
@@ -284,6 +285,11 @@ class Empleado extends Model
     public function objetivos()
     {
         return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id');
+    }
+
+    public function perfil()
+    {
+        return $this->belongsTo('App\Models\PerfilEmpleado', 'perfil_empleado_id', 'id');
     }
 
     // Recursos Humanos
