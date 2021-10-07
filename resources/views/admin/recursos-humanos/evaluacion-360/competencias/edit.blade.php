@@ -2,7 +2,15 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/menu-secciones.css') }}">
     {{ Breadcrumbs::render('EV360-Competencias-Edit') }}
+    <style>
+        .alerta-error {
+            padding: 10px;
+            background: #ffc5c594;
+            border: 1px solid red;
+            border-radius: 10px;
+        }
 
+    </style>
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Competencia: ({{ $competencia->nombre }})
@@ -250,5 +258,59 @@
         Livewire.on('select2', () => {
             initSelect2();
         });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            document.getElementById('toda_la_empresa').addEventListener('change', function(e) {
+                e.preventDefault();
+                if (e.currentTarget.checked) {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('admin.ev360-competencias.obtenerNiveles') }}",
+                        data: {
+                            competencia_id: @json($competencia->id),
+                        },
+                        dataType: "JSON",
+                        beforeSend: function() {
+                            document.getElementById('niveles_cargando').classList.remove(
+                                'd-none');
+                        },
+                        success: function(response) {
+                            document.getElementById('niveles_cargando').classList.add('d-none');
+                            let contenedor = document.getElementById(
+                                'nivel_esperado_contenedor');
+                            if (response.length > 0) {
+                                let select = `
+                                <label for="nivel_esperado">Establece el nivel esperado general
+                                <span class="text-danger">*</span>    
+                                </label>
+                                <select name="nivel_esperado" id="nivel_esperado" class="form-control" required>
+                            `;
+                                response.forEach(nivel => {
+                                    select += `
+                            <option value="${nivel.ponderacion}">${nivel.ponderacion}</option>
+                            `;
+                                });
+                                select += "</select>";
+                                contenedor.innerHTML = select;
+                            } else {
+                                contenedor.innerHTML = `<span class="mt-2 alerta-error">
+                                    <i class='mr-2 fas fa-exclamation-triangle'></i> 
+                                    Debes ingresar niveles a la competencia primero, luego deselecciona y vuelve a seleccionar.
+                                    </span>`;
+                            }
+                        }
+                    });
+                } else {
+                    let contenedor = document.getElementById('nivel_esperado_contenedor');
+                    contenedor.innerHTML = "";
+                }
+            })
+        })
     </script>
 @endsection

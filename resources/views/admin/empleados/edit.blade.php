@@ -287,7 +287,7 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-3">
                                                 <label class="required" for="puesto_id"><i
                                                         class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                                                 <select
@@ -311,6 +311,28 @@
                                                 @if ($errors->has('puesto_id'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('puesto_id') }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="required" for="perfil_empleado_id"><i
+                                                        class="fas fa-briefcase iconos-crear"></i>Perfil</label>
+                                                <select
+                                                    class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"
+                                                    name="perfil_empleado_id" id="perfil_empleado_id" required>
+                                                    <option value="" selected disabled>
+                                                        -- Selecciona un perfil --
+                                                    </option>
+                                                    @foreach ($perfiles as $perfil)
+                                                        <option
+                                                            {{ old('perfil_empleado_id', $empleado->perfil_empleado_id) == $perfil->id ? 'selected' : '' }}
+                                                            value="{{ $perfil->id }}">{{ $perfil->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('perfil_empleado_id'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('perfil_empleado_id') }}
                                                     </div>
                                                 @endif
                                             </div>

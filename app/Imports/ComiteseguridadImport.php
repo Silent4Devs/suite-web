@@ -22,6 +22,7 @@ class ComiteseguridadImport implements ToModel
             'responsabilidades'=> $row[3],
         ]);
     }
+
     public function rules(): array
     {
         return [
@@ -31,6 +32,7 @@ class ComiteseguridadImport implements ToModel
 
         ];
     }
+
     public function obtenerEmpleadoPorNombre($nombre)
     {
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();

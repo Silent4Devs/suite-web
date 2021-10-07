@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\Models\Minutasaltadireccion;
 use App\Models\Empleado;
+use App\Models\Minutasaltadireccion;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class MinutasaltadireccionImport implements ToModel
@@ -21,7 +21,7 @@ class MinutasaltadireccionImport implements ToModel
             'hora_inicio' => $row[2],
             'hora_termino' => $row[3],
             'tema_reunion' => $row[4],
-            'tema_tratado' => $row[5], 
+            'tema_tratado' => $row[5],
             'estatus' => $this->obtenerEstatusPorTexto($row[6]),
             'responsable_id' => $this->obtenerResponsablePorNombre($row[7]),
         ]);
@@ -47,12 +47,11 @@ class MinutasaltadireccionImport implements ToModel
                 break;
         }
     }
+
     public function obtenerResponsablePorNombre($nombre)
     {
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
-        return $empleado_bd->id;
-        
-    }
-    
 
+        return $empleado_bd->id;
+    }
 }

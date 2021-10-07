@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             GrupoSeeder::class,
             AreaSeeder::class,
             PuestoSeeder::class,
+            PerfilEmpleadosSeeder::class,
             EmpleadosSeeder::class,
             MacroprocesoSeeder::class,
             DocumentoSeeder::class,

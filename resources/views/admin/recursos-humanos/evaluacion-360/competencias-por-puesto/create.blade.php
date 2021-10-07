@@ -323,7 +323,9 @@
                             'd-none');
                         if (response.success) {
                             tblCompetenciasPorPuesto.ajax.reload();
-                            document.getElementById('formCompetenciaCreate').reset();
+                            // document.getElementById('formCompetenciaCreate').reset();
+                            $("#competencia_id").val('').trigger('change');
+                            document.querySelector('#nivel_esperado').innerHTML = "";
                             toastr.success('Competencia asignada correctamente');
                         }
                         if (response.error) {

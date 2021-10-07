@@ -7,10 +7,16 @@
             font-size: 11px;
         }
 
+        img.rounded-circle {
+            border-radius: 0 !important;
+            clip-path: circle(40px at 50% 50%);
+            height: 20px;
+        }
+
     </style>
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Evaluación </h3>
+            <h3 class="mb-1 text-center text-white"><strong> Consulta: </strong> Evaluación </h3>
         </div>
         <div class="card-body">
             <div class="row">
@@ -85,7 +91,15 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-4 row">
+            <div class="mt-2 row">
+                <div class="p-0 col-12 progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ $calificacion_final }}%;"
+                        aria-valuenow="{{ $calificacion_final }}" aria-valuemin="0" aria-valuemax="100">
+                        {{ $calificacion_final }}%
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2 row">
                 <div class="p-2 text-center col-12" style="background: #3e3e3e">
                     <h6 class="m-0 text-white">Evaluación de competencias</h6>
                 </div>
@@ -95,7 +109,7 @@
                 <span>{{ $lista_autoevaluacion->first()['tipo'] }}</span>
                 <span>{{ $lista_autoevaluacion->first()['peso_general'] }}%</span>
                 @forelse ($lista_autoevaluacion->first()['evaluaciones'] as $evaluador)
-                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template')
+                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'autoevaluacion'])
                 @empty
                     <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
                         para la evaluación
@@ -107,7 +121,7 @@
                 <span>{{ $lista_jefe_inmediato->first()['tipo'] }}</span>
                 <span>{{ $lista_jefe_inmediato->first()['peso_general'] }}%</span>
                 @forelse ($lista_jefe_inmediato->first()['evaluaciones'] as $evaluador)
-                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template')
+                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'jefe'])
                 @empty
                     <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
                         para la evaluación
@@ -119,7 +133,7 @@
                 <span>{{ $lista_equipo_a_cargo->first()['tipo'] }}</span>
                 <span>{{ $lista_equipo_a_cargo->first()['peso_general'] }}%</span>
                 @forelse ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluador)
-                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template')
+                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'equipo'])
                 @empty
                     <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
                         para la evaluación
@@ -131,7 +145,7 @@
                 <span>{{ $lista_misma_area->first()['tipo'] }}</span>
                 <span>{{ $lista_misma_area->first()['peso_general'] }}%</span>
                 @forelse ($lista_misma_area->first()['evaluaciones'] as $evaluador)
-                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template')
+                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'misma_area'])
                 @empty
                     <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
                         para la evaluación

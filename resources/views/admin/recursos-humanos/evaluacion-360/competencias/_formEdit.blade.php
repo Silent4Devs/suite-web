@@ -24,6 +24,24 @@
                     </tr>
                 </thead>
             </table>
+            <div class="d-flex justify-content-center">
+                <div style="width: 300px">
+                    <h4 class="text-center text-muted" style="border-bottom: 2px solid #008186;">Asignación</h4>
+                </div>
+            </div>
+            <div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input"
+                        {{ old('toda_la_empresa', $competencia->toda_la_empresa) ? 'checked' : '' }} name="toda_la_empresa"
+                        type="checkbox" id="toda_la_empresa">
+                    <label class="form-check-label" for="toda_la_empresa">¿Desea asignar a toda la empresa?</label>
+                </div>
+                <span id="niveles_cargando" class="d-none"><i class="fas fa-circle-notch fa-spin"></i>
+                    Cargando niveles</span>
+                <div class="mt-2" id="nivel_esperado_contenedor">
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

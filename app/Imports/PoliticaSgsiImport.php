@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\Models\PoliticaSgsi;
 use App\Models\Empleado;
+use App\Models\PoliticaSgsi;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class PoliticaSgsiImport implements ToModel
@@ -23,6 +23,7 @@ class PoliticaSgsiImport implements ToModel
             'id_reviso_politica'=> $this->obtenerEmpleadoPorNombre($row[4]),
         ]);
     }
+
     public function rules(): array
     {
         return [
@@ -33,6 +34,7 @@ class PoliticaSgsiImport implements ToModel
 
         ];
     }
+
     public function obtenerEmpleadoPorNombre($nombre)
     {
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();

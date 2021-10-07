@@ -88,6 +88,7 @@ class Empleado extends Model
         'cumpleaños',
         'resumen',
         'puesto_id',
+        'perfil_empleado_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -281,6 +282,11 @@ class Empleado extends Model
     public function objetivos()
     {
         return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id');
+    }
+
+    public function perfil()
+    {
+        return $this->belongsTo('App\Models\PerfilEmpleado', 'perfil_empleado_id', 'id');
     }
 
     // Recursos Humanos
