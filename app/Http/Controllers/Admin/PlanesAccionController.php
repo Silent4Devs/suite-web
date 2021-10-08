@@ -98,7 +98,6 @@ class PlanesAccionController extends Controller
         $planImplementacion = PlanImplementacion::find($planImplementacion);
         $referencia = null;
 
-
         return view('admin.planesDeAccion.edit', compact('planImplementacion', 'referencia'));
     }
 
