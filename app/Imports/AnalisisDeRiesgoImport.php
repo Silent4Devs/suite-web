@@ -15,6 +15,7 @@ class AnalisisDeRiesgoImport implements ToModel
      */
     public function model(array $row)
     {
+        // dd($row);
         return new AnalisisDeRiesgo([
             'nombre' => $row[0],
             'tipo' => $row[1],
@@ -41,8 +42,9 @@ class AnalisisDeRiesgoImport implements ToModel
         $estatus_filtrado = array_filter($estatusId, function ($item) use ($estatus) {
             return strtolower($item) == strtolower($estatus);
         });
-
+        dd($estatus_filtrado)
         return $estatus_filtrado;
+       
     }
 
     public function obtenerEmpleadoPorNombre($nombre)
@@ -51,4 +53,5 @@ class AnalisisDeRiesgoImport implements ToModel
 
         return $empleado_bd->id;
     }
+    
 }
