@@ -3,7 +3,19 @@
         <div class="mt-2 row fs-consulta">
             <div class="col-5 align-items-end ">
                 Evaluación realizada por:
-                <strong> {{ $evaluador['nombre'] }}</strong>
+                <strong>
+                    @if ($tipo != 'autoevaluacion' && $tipo != 'jefe')
+                        @if (auth()->user()->empleado)
+                            @if ($evaluado->id != auth()->user()->empleado->id)
+                                {{ $evaluador['nombre'] }}
+                            @else
+                                Evaluador
+                            @endif
+                        @endif
+                    @else
+                        {{ $evaluador['nombre'] }}
+                    @endif
+                </strong>
                 {{-- <span class="badge badge-primary">{{ $evaluador['tipo'] }}</span> --}}
             </div>
             <div class="text-center col-3" style="align-self: flex-end;"><small>Tipo</small></div>

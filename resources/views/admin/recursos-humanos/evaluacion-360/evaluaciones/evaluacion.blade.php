@@ -85,7 +85,7 @@
                             onclick="almacenarMenuEnLocalStorage('#tab-configuracion')" href="#tab-configuracion" role="tab"
                             aria-controls="tab-configuracion" aria-selected="true"><i class="mr-2 fas fa-cogs"></i>
                             Configuración</a>
-                        <a class="nav-link" id="tab-cuestionario-tab" data-toggle="pill"
+                        {{-- <a class="nav-link" id="tab-cuestionario-tab" data-toggle="pill"
                             onclick="almacenarMenuEnLocalStorage('#tab-cuestionario')" href="#tab-cuestionario" role="tab"
                             aria-controls="tab-cuestionario" aria-selected="false"><i
                                 class="mr-2 fas fa-file-signature"></i>Competencias y Objetivos
@@ -94,7 +94,7 @@
                                     {{ count($evaluacion->competencias) }}</span>
                             @endif
 
-                        </a>
+                        </a> --}}
                         <a class="nav-link" id="tab-participantes-tab" data-toggle="pill"
                             onclick="almacenarMenuEnLocalStorage('#tab-participantes')" href="#tab-participantes" role="tab"
                             aria-controls="tab-participantes" aria-selected="false"><i class="mr-2 fas fa-users"></i>
@@ -141,14 +141,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (!count($evaluacion->competencias))
+                                {{-- @if (!count($evaluacion->competencias))
                                     <div class="alerta-no-preguntas">
                                         <i class="fas fa-exclamation-triangle"></i> Debes de seleccionar competencias u
                                         objetivos
                                         para poder
                                         iniciar la evaluación...
                                     </div>
-                                @endif
+                                @endif --}}
                                 <ul class="list-group list-group-horizontal w-100">
                                     <li class="pr-0 list-group-item w-100" style="border:none;">
                                         <p class="m-0 text-muted">Autor</p>
@@ -255,7 +255,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="tab-cuestionario" role="tabpanel"
+                        {{-- <div class="tab-pane fade" id="tab-cuestionario" role="tabpanel"
                             aria-labelledby="tab-cuestionario-tab">
                             <div>
                                 <div class="w-100"
@@ -294,7 +294,7 @@
                                     </ul>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="tab-pane fade" id="tab-participantes" role="tabpanel"
                             aria-labelledby="tab-participantes-tab">
                             <div class="w-100"

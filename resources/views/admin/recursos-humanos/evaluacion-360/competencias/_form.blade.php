@@ -10,7 +10,7 @@
     }
 
 </style>
-<div class="row">
+<div class="container row">
     <div class="col-12">
         <p class="text-muted"><i class="fas fa-info-circle"></i> Empieza configurando la competencia definiendo el
             nombre y la descripción</p>

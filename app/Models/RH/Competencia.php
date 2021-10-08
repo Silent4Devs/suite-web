@@ -13,6 +13,11 @@ class Competencia extends Model
     protected $guarded = ['id'];
     protected $appends = ['tipo_competencia'];
 
+    const TODA_LA_EMPRESA = 0;
+    const POR_PUESTO = 1;
+    const POR_AREA = 2;
+    const POR_PERFIL = 3;
+
     public function getTipoCompetenciaAttribute()
     {
         return $this->tipo->nombre;

@@ -390,8 +390,8 @@ class MultiStepForm extends Component
             'peso_jefe_inmediato' => $this->pesoEvaluacionJefe,
             'peso_equipo' => $this->pesoEvaluacionEquipo,
             'peso_area' => $this->pesoEvaluacionArea,
-            'peso_general_competencias' => $this->pesoEvaluacionGeneralCompetencias,
-            'peso_general_objetivos' => $this->pesoEvEvaluacionGeneralObjetivos,
+            'peso_general_competencias' => $this->pesoGeneralCompetencias,
+            'peso_general_objetivos' => $this->pesoGeneralObjetivos,
             'include_competencias' => $this->includeCompetencias ? $this->includeCompetencias : false,
             'include_objetivos' => $this->includeObjetivos ? $this->includeObjetivos : false,
         ]);
