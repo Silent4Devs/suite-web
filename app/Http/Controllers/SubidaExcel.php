@@ -16,6 +16,7 @@ use App\Imports\EstadoIncidenteImport;
 use App\Imports\EvaluacionImport;
 use App\Imports\FaqCategoriaImport;
 use App\Imports\FaqPreguntaImport;
+use App\Imports\GrupoImport;
 use App\Imports\MatrizRequisitoLegaleImport;
 use App\Imports\MinutasaltadireccionImport;
 use App\Imports\PartesInteresadaImport;
@@ -201,6 +202,7 @@ class SubidaExcel extends Controller
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
+
     public function GrupoArea()
     {
         Excel::import(new GrupoImport, request()->file('grupo_area'));
