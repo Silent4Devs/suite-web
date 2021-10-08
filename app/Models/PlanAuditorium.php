@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,6 +49,11 @@ class PlanAuditorium extends Model
     // {
     //     return $this->belongsTo(AuditoriaAnual::class, 'fecha_id');
     // }
+
+    public function getFechaAuditoriaAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    }
 
     public function auditados()
     {

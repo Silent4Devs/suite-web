@@ -53,7 +53,7 @@
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
 
                     <input type="file" name="imagen" class="form-control" accept="image/*" value="{{ old('imagen') }}">
-
+                    <small>Tamaño recomendado de la imagen 500px por 300px</small>
                     @if ($errors->has('imagen'))
                         <div class="invalid-feedback">
                             {{ $errors->first('imagen') }}
