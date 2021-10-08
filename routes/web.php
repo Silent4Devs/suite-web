@@ -1001,4 +1001,3 @@ Route::post('CargaAltaDireccion', 'SubidaExcel@AltaDireccion')->name('carga-alta
 Route::post('CargaEvidenciaRecursos', 'SubidaExcel@EvidenciaRecursos')->name('carga-evidencia_recursos');
 Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politica_sgi');
 Route::post('CargaGrupoArea', 'SubidaExcel@aGrupoArea')->name('carga-grupo_area');
-
