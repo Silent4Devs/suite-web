@@ -201,4 +201,10 @@ class SubidaExcel extends Controller
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
+    public function GrupoArea()
+    {
+        Excel::import(new GrupoImport, request()->file('grupo_area'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
 }
