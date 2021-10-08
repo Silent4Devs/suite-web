@@ -287,6 +287,10 @@
             clip-path: circle(12px at 50% 50%);
             /* height: 37px; */
         }
+        .img_empleado{
+            clip-path: circle(20px at 50% 40%);
+            height: 40px;
+        }
 
         .fm-breadcrumb .breadcrumb.active-manager {
             background-color: ##00abb229;
