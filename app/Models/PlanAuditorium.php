@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,18 +20,19 @@ class PlanAuditorium extends Model
     ];
 
     protected $dates = [
+        'fecha_auditoria',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
     protected $fillable = [
-        'fecha_id',
         'objetivo',
         'alcance',
         'criterios',
+        'id_equipo_auditores',
         'documentoauditar',
-        'equipoauditor',
+        'fecha_auditoria',
         'descripcion',
         'created_at',
         'updated_at',
@@ -43,9 +45,14 @@ class PlanAuditorium extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function fecha()
+    // public function fecha()
+    // {
+    //     return $this->belongsTo(AuditoriaAnual::class, 'fecha_id');
+    // }
+
+    public function getFechaAuditoriaAttribute($value)
     {
-        return $this->belongsTo(AuditoriaAnual::class, 'fecha_id');
+        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
     public function auditados()
@@ -53,8 +60,13 @@ class PlanAuditorium extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function equipo()
+    {
+        return $this->belongsTo(Empleado::class, 'id_equipo_auditores', 'id');
+    }
+
     public function team()
     {
-        return $this->belongsTo(Team::class, 'team_id');
+        return $this->belongsTo(Team::class);
     }
 }

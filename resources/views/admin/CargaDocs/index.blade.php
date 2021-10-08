@@ -355,6 +355,22 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
+                <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <span class="mb-1 text-center text-">Configuración de datos/Áreas</span>
+                    </div>
+                </div>
+                <!-- Categoria Field -->
+                <div class="form-group col-sm-6">
+                    <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('grupo_area', 'Crear grupo') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-grupo_area', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="grupo_area" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
         </div>
     </div>
 @endsection

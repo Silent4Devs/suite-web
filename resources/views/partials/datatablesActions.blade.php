@@ -117,7 +117,7 @@
 
                 .delete {
                     width: 400px;
-                    height: 200px;
+                    height: 410px;
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -126,11 +126,24 @@
                     margin: auto;
                     background: #fff;
                     padding: 20px;
+                    text-align: center;
+                    border-radius: 8px;
                 }
 
                 .icono_delete {
-                    margin-right: 20px;
-                    color: #FF3C3C;
+                    margin: 40px 0px;
+                    color: red;
+                    opacity: 0.7;
+                    font-size: 70pt;
+                }
+                .eliminar{
+                    background-color: red;
+                    opacity: 0.7;
+                    border: none;
+                }
+                .eliminar:hover{
+                    background-color: red;
+                    opacity: 1;
                 }
 
                 body.c-dark-theme .delete {
@@ -146,11 +159,12 @@
 
             <div class="fondo_delete">
                 <div class="delete">
-                    <h1><i class="fas fa-exclamation-triangle icono_delete"></i>Eliminar: {{ $row->id }}</h1>
+                    <i class="fas fa-exclamation-triangle icono_delete"></i>
+                    <h1 class="mb-4">Eliminar</h1>
                     <p class="parrafo">{{ trans('global.areYouSure') }}</p>
-                    <div align="right">
+                    <div class="mt-4">
                         <div class="mr-4 cancelar btn btn-outline-secondary">Cancelar</div>
-                        <button class="eliminar btn btn-danger" type="submit">Eliminar</button>
+                        <button class="eliminar btn btn-info" type="submit">Eliminar</button>
                     </div>
                 </div>
             </div>

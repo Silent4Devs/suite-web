@@ -11,6 +11,7 @@ use App\Models\Empleado;
 use App\Models\EvidenciasCertificadosEmpleados;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
+use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\Sede;
 use Gate;
@@ -173,8 +174,9 @@ class EmpleadoController extends Controller
         $documentos = EvidenciasDocumentosEmpleados::get();
         $certificaciones = CertificacionesEmpleados::get();
         $puestos = Puesto::all();
+        $perfiles = PerfilEmpleado::all();
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos'));
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles'));
     }
 
     public function onlyStore($request)
@@ -203,6 +205,7 @@ class EmpleadoController extends Controller
             'estatus' => 'required',
             'email' => 'required|email',
             'sede_id' => 'required|exists:sedes,id',
+            'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
 
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
@@ -212,6 +215,7 @@ class EmpleadoController extends Controller
             'name' => $request->name,
             'area_id' =>  $request->area_id,
             'puesto_id' =>  $request->puesto_id,
+            'perfil_empleado_id' => $request->perfil_empleado_id,
             'supervisor_id' =>  $request->supervisor_id,
             'antiguedad' =>  $request->antiguedad,
             'estatus' =>  $request->estatus,
@@ -397,8 +401,9 @@ class EmpleadoController extends Controller
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
         $puestos = Puesto::all();
+        $perfiles = PerfilEmpleado::all();
 
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos'));
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles'));
     }
 
     /**
@@ -432,6 +437,7 @@ class EmpleadoController extends Controller
             'estatus' => 'required',
             'email' => 'required|email',
             'sede_id' => 'required|exists:sedes,id',
+            'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
 
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
@@ -505,6 +511,7 @@ class EmpleadoController extends Controller
             'name' => $request->name,
             'area_id' =>  $request->area_id,
             'puesto_id' =>  $request->puesto_id,
+            'perfil_empleado_id' => $request->perfil_empleado_id,
             'supervisor_id' =>  $request->supervisor_id,
             'antiguedad' =>  $request->antiguedad,
             'estatus' =>  $request->estatus,

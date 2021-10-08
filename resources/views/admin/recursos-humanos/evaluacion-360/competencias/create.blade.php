@@ -12,9 +12,13 @@
                 class="mt-3 row">
                 @csrf
                 @include('admin.recursos-humanos.evaluacion-360.competencias._form')
-                <div class="d-flex justify-content-end w-100">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button type="submit" class="btn btn-danger">Guardar</button>
+                <div class="container row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end w-100">
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <button type="submit" class="ml-2 btn btn-danger">Guardar</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

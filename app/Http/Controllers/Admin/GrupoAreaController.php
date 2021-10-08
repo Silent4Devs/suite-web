@@ -20,7 +20,7 @@ class GrupoAreaController extends Controller
     {
         abort_if(Gate::denies('configuracion_grupoarea_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $grupos = Grupo::get();
+            $grupos = Grupo::orderByDesc('id')->get();
 
             return datatables()->of($grupos)->toJson();
         }

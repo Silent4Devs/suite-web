@@ -1,0 +1,5 @@
+@media print{
+	header, #sidebar, .tawk-min-container{
+		display: none !important;
+	}	
+}

@@ -5,24 +5,36 @@
     </div>
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Competencias</strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Asignar competencias por puesto</strong></h3>
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
+            <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                            Instrucciones</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor
+                            asigne las competencias definidas a cada uno de los puestos de la organización</p>
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered w-100 tblCompetenciasPorPuesto">
                 <thead class="thead-dark">
                     <tr>
                         <th style="vertical-align: top">
-                            ID
-                        </th>
-                        <th style="vertical-align: top">
                             Puesto
                         </th>
                         <th style="vertical-align: top">
-                            Cantidad de competencias
+                            Opciones
                         </th>
                         <th style="vertical-align: top">
-                            Asignar
+                            Competencias asignadas
                         </th>
                     </tr>
 
@@ -112,16 +124,8 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.ev360-competencias-por-puesto.index') }}",
                 columns: [{
-                        data: 'id'
-                    }, {
-                        data: 'puesto'
-                    }, {
-                        data: 'competencias',
-                        render: function(data, type, row, meta) {
-                            return data.length > 0 ?
-                                `<span class="badge badge-success">${data.length} competencia(s) asignada(s)</span>` :
-                                '<span class="badge badge-primary">Sin competencias asignadas</span>';
-                        }
+                        data: 'puesto',
+                        width: '60%',
                     },
                     {
                         data: 'id',
@@ -129,17 +133,28 @@
                             let urlBtnAsignarCompetencias =
                                 `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
                             let botones = `
-                                <a class="btn btn-sm btn-editar" title="Asignar competencias" href="${urlBtnAsignarCompetencias}"><i class="fas fa-sync-alt"></i></a>
+                                <a class="btn btn-sm btn-editar btn-primary" title="Asignar competencias" href="${urlBtnAsignarCompetencias}"><i class="mr-2 fas fa-user-tag"></i> Asignar</a>
                             `;
                             return botones;
-                        }
+                        },
+                        width: '15%'
+                    }, {
+                        data: 'competencias',
+                        render: function(data, type, row, meta) {
+                            return data.length > 0 ?
+                                `<span class="badge badge-success">${data.length} competencia(s) asignada(s)</span>` :
+                                '<span class="badge badge-primary">Sin competencias asignadas</span>';
+                        },
+                        width: '25%'
                     }
                 ],
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
                 ],
-
+                dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
             };
             let table = $('.tblCompetenciasPorPuesto').DataTable(dtOverrideGlobals);
         });

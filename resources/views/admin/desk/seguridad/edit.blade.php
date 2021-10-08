@@ -153,6 +153,7 @@
                                         class="fas fa-layer-group iconos-crear"></i>Categoría</label>
                                 <select id="select_categoria" class="form-control"
                                     value="{{ $incidentesSeguridad->categoria }}" name="categoria">
+                                    <option selected disabled></option>
                                     @foreach ($categorias as $categoria)
                                         <option id="categoria{{ $categoria->id }}" value="{{ $categoria->id }}"
                                             class="">{{ $categoria->categoria }}</option>
@@ -165,6 +166,7 @@
                                                     class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
                                             <select id="select_subcategorias" class="form-control"
                                                 value="{{ $incidentesSeguridad->subcategoria }}" name="subcatgoría">
+                                                <option selected disabled class="option_vacio"></option>
                                                 @foreach ($subcategorias as $subcategoria)
                                                     <option
                                                         class="d-none categoria{{ $subcategoria->categoria->id }}"
@@ -846,6 +848,7 @@
 <script type="text/javascript">
     $(document).on('change', '#select_categoria', function(event) {
         $("#select_subcategorias option").addClass("d-none");
+        $("#select_subcategorias option:selected").remove();
         var categoria_selected = $("#select_categoria option:selected").attr('id');
         $(document.getElementsByClassName(categoria_selected)).removeClass("d-none");
     });
