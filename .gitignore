@@ -22,4 +22,4 @@ yarn-error.log
 bootstrap/cache/
 storage/debugbar/
 storage/app/public/gantt/
-.php_cs.cache
+.php-cs-fixer.cache
