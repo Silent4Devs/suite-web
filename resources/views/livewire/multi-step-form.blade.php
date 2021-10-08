@@ -372,15 +372,17 @@
                                             <div class="mt-3 row">
                                                 <div
                                                     class="col-6 {{ $showPesoGeneralCompetencias ? '' : 'd-none' }}">
-                                                    <label for="pesoGeneralCompetencias">Peso General
+                                                    <label for="pesoGeneralCompetencias"><i
+                                                            class="mr-2 fas fa-question-circle"></i>Peso General
                                                         Competencias<span class="text-danger">*</span></label>
                                                     <input wire:model.defer="pesoGeneralCompetencias"
                                                         id="pesoGeneralCompetencias" class="form-control"
                                                         type="number" min="0" max="100">
                                                 </div>
                                                 <div class="col-6 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
-                                                    <label for="pesoGeneralOnjetivos">Peso General Objetivos<span
-                                                            class="text-danger">*</span></label>
+                                                    <label for="pesoGeneralOnjetivos"><i
+                                                            class="mr-2 fas fa-question-circle"></i>Peso General
+                                                        Objetivos<span class="text-danger">*</span></label>
                                                     <input wire:model.defer="pesoGeneralObjetivos"
                                                         id="pesoGeneralOnjetivos" class="form-control" type="number"
                                                         min="0" max="100">
@@ -567,14 +569,15 @@
                                     aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
                             </div>
                             <div class="card-body">
-                                <h4 class="head">Selecciona los evaluadores encargados</h4>
+                                <h4 class="head">Peso por evaluador</h4>
                                 <p class="m-0 text-muted"><i class="fas fa-info-circle"></i>
-                                    Selecciona los evaluadores participantes
+                                    Ingresa el peso correspondiente de cada evaluador, por defecto se encuentra en 25,
+                                    pero puedes modificarlo según los valores que requieras.
                                 </p>
-                                <small>Nota: Puedes realizar por defecto una evaluación de desempeño de 360° o la que
+                                {{-- <small>Nota: Puedes realizar por defecto una evaluación de desempeño de 360° o la que
                                     mas se
                                     adecue a
-                                    tu evaluación</small>
+                                    tu evaluación</small> --}}
                                 @if ($errors->has('sumaTotalPeso'))
                                     <p style="font-size:12px;" class="m-0 text-center text-danger">
                                         {{ $errors->first('sumaTotalPeso') }}
@@ -583,7 +586,8 @@
                                 <section class="mt-4 row justify-content-center">
                                     <div class="col-8" wire:loading.class="disableEvents">
                                         <article class="ml-5 feature1">
-                                            <input type="checkbox" wire:change="restarGrados('jefe_inmediato')"
+                                            <input readonly disabled type="checkbox"
+                                                wire:change="restarGrados('jefe_inmediato')"
                                                 wire:model="evaluado_por_jefe" wire:target="evaluado_por_jefe"
                                                 id="feature1" wire:loading.attr="readonly" />
                                             <div>
@@ -613,7 +617,8 @@
                                         </article>
 
                                         <article class="feature2">
-                                            <input type="checkbox" wire:change="restarGrados('misma_area')"
+                                            <input readonly disabled type="checkbox"
+                                                wire:change="restarGrados('misma_area')"
                                                 wire:model="evaluado_por_misma_area" id="feature2"
                                                 wire:target="evaluado_por_misma_area" wire:loading.attr="readonly" />
                                             <div>
@@ -644,7 +649,8 @@
                                         </article>
 
                                         <article class="mt-4 ml-5 feature3">
-                                            <input type="checkbox" wire:change="restarGrados('equipo_a_cargo')"
+                                            <input readonly disabled type="checkbox"
+                                                wire:change="restarGrados('equipo_a_cargo')"
                                                 wire:model="evaluado_por_equipo_a_cargo" id="feature3"
                                                 wire:target="evaluado_por_equipo_a_cargo"
                                                 wire:loading.attr="readonly" />
@@ -674,8 +680,9 @@
                                         </article>
 
                                         <article class="mt-4 feature4">
-                                            <input type="checkbox" wire:change="restarGrados('autoevaluacion')"
-                                                wire:model="autoevaluacion" id="feature4" wire:target="autoevaluacion"
+                                            <input readonly disabled type="checkbox"
+                                                wire:change="restarGrados('autoevaluacion')" wire:model="autoevaluacion"
+                                                id="feature4" wire:target="autoevaluacion"
                                                 wire:loading.attr="readonly" />
                                             <div>
                                                 <span class="text-center">
@@ -827,6 +834,22 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            window.initSelect2 = () => {
+                $('#by_manual').select2({
+                    'theme': 'bootstrap4'
+                });
+                $('#by_manual').on('change', function(e) {
+                    var data = $('#by_manual').select2("val");
+                    console.log(data);
+                    @this.set('by_manual', data);
+                });
+            }
+
+            initSelect2();
+
+            Livewire.on('select2', () => {
+                initSelect2();
+            });
             window.livewire.on('increaseStep', () => {
                 if (document.getElementById('btnModalOpen')) {
                     document.getElementById('btnModalOpen').addEventListener('click', function(e) {
