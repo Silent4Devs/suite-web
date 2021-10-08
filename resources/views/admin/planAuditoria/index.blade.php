@@ -2,7 +2,7 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.plan-auditoria.index') }}
-    
+
     @can('plan_auditorium_create')
 
     @endcan
@@ -20,12 +20,7 @@
                         <th>
                             Fecha&nbsp;auditoria
                         </th>
-                        <th>
-                            {{ trans('cruds.auditoriaAnual.fields.tipo') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.auditoriaAnual.fields.observaciones') }}
-                        </th>
+
                         <th>
                             Objetivo&nbsp;de&nbsp;la&nbsp;auditoria
                         </th>
@@ -40,9 +35,6 @@
                         </th>
                         <th>
                             Equipo&nbsp;auditor
-                        </th>
-                        <th>
-                            {{ trans('cruds.planAuditorium.fields.auditados') }}
                         </th>
                         <th>
                             Descripción&nbsp;general&nbsp;de&nbsp;actividades
@@ -140,7 +132,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -198,13 +190,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -230,16 +222,8 @@
                         name: 'id'
                     },
                     {
-                        data: 'fecha_fechainicio',
-                        name: 'fecha.fechainicio'
-                    },
-                    {
-                        data: 'fecha.tipo',
-                        name: 'fecha.tipo'
-                    },
-                    {
-                        data: 'fecha.observaciones',
-                        name: 'fecha.observaciones'
+                        data: 'fecha_auditoria',
+                        name: 'fecha_auditoria'
                     },
                     {
                         data: 'objetivo',
@@ -258,12 +242,8 @@
                         name: 'documentoauditar'
                     },
                     {
-                        data: 'equipoauditor',
-                        name: 'equipoauditor'
-                    },
-                    {
-                        data: 'auditados',
-                        name: 'auditados.name'
+                        data: 'equipo_auditor',
+                        name: 'equipo_auditor'
                     },
                     {
                         data: 'descripcion',
