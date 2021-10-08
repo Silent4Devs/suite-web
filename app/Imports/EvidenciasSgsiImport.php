@@ -2,10 +2,10 @@
 
 namespace App\Imports;
 
-use App\Models\Grupo;
+use App\Models\EvidenciasSgsi;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class GrupoImport implements ToModel
+class EvidenciasSgsiImport implements ToModel
 {
     /**
      * @param array $row
@@ -14,10 +14,8 @@ class GrupoImport implements ToModel
      */
     public function model(array $row)
     {
-        return new Grupo([
-            'nombre' => $row[0],
-            'descripcion' => $row[1],
-            'color' => $row[2],
+        return new EvidenciasSgsi([
+            //
         ]);
     }
 }
