@@ -25,6 +25,7 @@ use App\Imports\RevisionDIreccionImport;
 use App\Imports\TeamImport;
 use App\Imports\UsuarioImport;
 use App\Imports\VulnerabilidadImport;
+use App\Imports\GrupoImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SubidaExcel extends Controller
@@ -198,6 +199,12 @@ class SubidaExcel extends Controller
     public function PoliticaSgsi()
     {
         Excel::import(new PoliticaSgsiImport, request()->file('politica_sgi'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+    public function GrupoArea()
+    {
+        Excel::import(new GrupoImport, request()->file('grupo_area'));
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
