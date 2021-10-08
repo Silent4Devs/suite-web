@@ -23,7 +23,7 @@ class TipoactivoController extends Controller
         abort_if(Gate::denies('configuracion_tipoactivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Tipoactivo::with(['team'])->select(sprintf('%s.*', (new Tipoactivo)->table));
+            $query = Tipoactivo::with(['team'])->select(sprintf('%s.*', (new Tipoactivo)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
