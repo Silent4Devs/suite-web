@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <div class="mt-2 row fs-consulta">
+        <div class="row fs-consulta">
             <div class="col-5 align-items-end ">
                 Evaluación realizada por:
                 <strong>

@@ -62,7 +62,7 @@ class PlanAuditorium extends Model
 
     public function equipo()
     {
-        return $this->belongsTo(Empleado::class,'id_equipo_auditores','id');
+        return $this->belongsTo(Empleado::class, 'id_equipo_auditores', 'id');
     }
 
     public function team()
