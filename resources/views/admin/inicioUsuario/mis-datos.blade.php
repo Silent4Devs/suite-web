@@ -41,8 +41,9 @@
 
     .lista-acciones {
         position: absolute;
-        bottom: 5px;
+        bottom: -18px;
         right: 0px;
+        z-index: 1;
     }
 
     .lista-acciones a {
@@ -96,9 +97,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-3 mt-3 card">
-                            <h5 class="text-center"><i class="mr-2 fas fa-users"></i>Mi Equipo</h5>
-                            <div class="row align-items-center" id="listaEquipo">
+                        <div class="p-3 mt-3 card" x-data="{show:false}">
+                            <h5 class="text-center"><i class="mr-2 fas fa-users"></i>Mi Equipo
+                                <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
+                                        class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                            </h5>
+                            <div class="row align-items-center" id="listaEquipo" x-show="show"
+                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 @foreach ($equipo_a_cargo as $empleado)
                                     <div class="text-center col-4 col-sm-4 col-lg-4 col-md-4">
                                         <img class="img-fluid img-profile-secondary" style="position:relative;"
@@ -112,6 +117,12 @@
                                                 class="list-group-item list-group-item-action text-muted"
                                                 aria-current="true"><i class="fas fa-dot-circle"></i>
                                                 Objetivos
+                                            </a>
+                                            <a type="button"
+                                                href="{{ route('admin.ev360-evaluaciones.evaluacionesDelEmpleado', $empleado) }}"
+                                                class="list-group-item list-group-item-action text-muted"
+                                                aria-current="true"><i class="fas fa-book"></i>
+                                                Evaluaciones
                                             </a>
                                         </div>
                                     </div>
@@ -202,7 +213,7 @@
                         <div class="row gutters-sm">
                             <div class="mb-3 col-sm-12">
                                 <div class="card h-100">
-                                    <div class="card-body">
+                                    <div class="card-body" x-data="{show:false}">
                                         <h5><i class="mr-2 far fa-sticky-note"></i>Evaluaciones a realizar <i
                                                 class="ml-2 fas fa-link" style="font-size: 11px;"></i>
                                             <br>
@@ -210,85 +221,100 @@
                                                     class="mr-1 fas fa-circle text-primary"></i>Competencias</small>
                                             <small style="font-size:10px;"><i
                                                     class="mr-1 fas fa-circle text-success"></i>Objetivos</small>
+                                            <span style="float: right; cursor:pointer; margin-top: -15px;"
+                                                @click="show=!show"><i class="fas"
+                                                    :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
                                         </h5>
-                                        @foreach ($evaluaciones as $evaluacion)
-                                            <small>{{ $evaluacion->empleado_evaluado->name }}
-                                                @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->id)
-                                                    <span class="badge badge-primary">Autoevaluación</span>
+                                        <div x-show="show" x-transition:enter.duration.500ms
+                                            x-transition:leave.duration.400ms>
+                                            @foreach ($evaluaciones as $evaluacion)
+                                                <small>{{ $evaluacion->empleado_evaluado->name }}
+                                                    @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->id)
+                                                        <span class="badge badge-primary">Autoevaluación</span>
+                                                    @endif
+                                                </small>
+                                                <a
+                                                    href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}"><i
+                                                        class="fas fa-link" style="font-size:11px;"></i></a>
+                                                @if ($evaluacion->evaluacion->include_competencias)
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                            role="progressbar"
+                                                            style="width: {{ $evaluacion->progreso_competencias }}%;"
+                                                            aria-valuenow="{{ $evaluacion->progreso_competencias }}"
+                                                            aria-valuemin="0" aria-valuemax="100">
+                                                            {{ $evaluacion->progreso_competencias }}%
+                                                        </div>
+                                                    </div>
                                                 @endif
-                                            </small>
-                                            <a
-                                                href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}"><i
-                                                    class="fas fa-link" style="font-size:11px;"></i></a>
-                                            @if ($evaluacion->evaluacion->include_competencias)
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                        role="progressbar"
-                                                        style="width: {{ $evaluacion->progreso_competencias }}%;"
-                                                        aria-valuenow="{{ $evaluacion->progreso_competencias }}"
-                                                        aria-valuemin="0" aria-valuemax="100">
-                                                        {{ $evaluacion->progreso_competencias }}%
+                                                @if ($evaluacion->evaluacion->include_objetivos)
+                                                    <div class="mt-2 progress">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                                            role="progressbar"
+                                                            style="width: {{ $evaluacion->progreso_objetivos }}%;"
+                                                            aria-valuenow="{{ $evaluacion->progreso_objetivos }}"
+                                                            aria-valuemin="0" aria-valuemax="100">
+                                                            {{ $evaluacion->progreso_objetivos }}%
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endif
-                                            @if ($evaluacion->evaluacion->include_objetivos)
-                                                <div class="mt-2 progress">
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                                        role="progressbar"
-                                                        style="width: {{ $evaluacion->progreso_objetivos }}%;"
-                                                        aria-valuenow="{{ $evaluacion->progreso_objetivos }}"
-                                                        aria-valuemin="0" aria-valuemax="100">
-                                                        {{ $evaluacion->progreso_objetivos }}%
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        @endforeach
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3 col-sm-12">
                                 <div class="card h-100">
-                                    <div class="card-body">
-                                        <h5><i class="mb-1 mr-2 fas fa-bullseye"></i>Mis Objetivos</h5>
+                                    <div class="card-body" x-data="{show:false}">
+                                        <h5><i class="mb-1 mr-2 fas fa-bullseye"></i>Mis Objetivos
+                                            <span style="float: right; cursor:pointer; margin-top: 5px;"
+                                                @click="show=!show"><i class="fas"
+                                                    :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                                        </h5>
                                         <small class="text-muted"><i class="fas fa-exclamation-triangle"></i>Tus
                                             objetivos son evaluados por tu jefe
                                             inmediato</small>
                                         <br>
-                                        @foreach ($lista_evaluaciones as $evaluacion)
-                                            <small class="mt-3 d-inline-block"
-                                                style="font-size:15px">{{ $evaluacion['nombre'] }}</small>
-                                            <br>
-                                            <small><i
-                                                    class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_inicio'] }}</small>
-                                            <small><i
-                                                    class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_fin'] }}</small>
-                                            @foreach ($evaluacion['informacion_evaluacion']['evaluadores_objetivos'] as $evaluador)
-                                                @if ($evaluador['esSupervisor'])
-                                                    <small>{{ $evaluador['nombre'] }}</small>
-                                                    <br>
-                                                    @foreach ($evaluador['objetivos'] as $objetivo)
-                                                        <small style="font-size:13px"
-                                                            class="m-0">{{ $objetivo['nombre'] }}</small>
+                                        <div x-show="show" x-transition:enter.duration.500ms
+                                            x-transition:leave.duration.400ms>
+                                            @foreach ($lista_evaluaciones as $evaluacion)
+                                                <small class="mt-3 d-inline-block"
+                                                    style="font-size:15px">{{ $evaluacion['nombre'] }}</small>
+                                                <br>
+                                                <small><i
+                                                        class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_inicio'] }}</small>
+                                                <small><i
+                                                        class="mr-1 fas fa-calendar-day"></i>{{ $evaluacion['fecha_fin'] }}</small>
+                                                @foreach ($evaluacion['informacion_evaluacion']['evaluadores_objetivos'] as $evaluador)
+                                                    @if ($evaluador['esSupervisor'])
+                                                        <small>{{ $evaluador['nombre'] }}</small>
                                                         <br>
-                                                        <small>KPI: <strong>{{ $objetivo['KPI'] }}</strong></small>
-                                                        <small>Meta: <strong>{{ $objetivo['meta'] }}</strong></small>
-                                                        <small>Alcanzado:
-                                                            <strong>{{ $objetivo['calificacion'] }}</strong></small>
-                                                        <small>Comentario(s): <strong>
-                                                                {{ $objetivo['meta_alcanzada'] }}</strong></small>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                                role="progressbar"
-                                                                style="width: {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%;"
-                                                                aria-valuenow="{{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}"
-                                                                aria-valuemin="0" aria-valuemax="100">
-                                                                {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%
+                                                        @foreach ($evaluador['objetivos'] as $objetivo)
+                                                            <small style="font-size:13px"
+                                                                class="m-0">{{ $objetivo['nombre'] }}</small>
+                                                            <br>
+                                                            <small>KPI:
+                                                                <strong>{{ $objetivo['KPI'] }}</strong></small>
+                                                            <small>Meta:
+                                                                <strong>{{ $objetivo['meta'] }}</strong></small>
+                                                            <small>Alcanzado:
+                                                                <strong>{{ $objetivo['calificacion'] }}</strong></small>
+                                                            <small>Comentario(s): <strong>
+                                                                    {{ $objetivo['meta_alcanzada'] }}</strong></small>
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                                    role="progressbar"
+                                                                    style="width: {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%;"
+                                                                    aria-valuenow="{{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}"
+                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                    {{ ($objetivo['calificacion'] * 100) / $objetivo['meta'] }}%
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    @endforeach
-                                                @endif
+                                                        @endforeach
+                                                    @endif
+                                                @endforeach
                                             @endforeach
-                                        @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>

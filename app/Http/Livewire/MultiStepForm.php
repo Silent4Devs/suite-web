@@ -75,6 +75,11 @@ class MultiStepForm extends Component
         ]];
     }
 
+    public function hydrate()
+    {
+        $this->emit('select2');
+    }
+
     public function render()
     {
         $evaluacion = new Evaluacion;

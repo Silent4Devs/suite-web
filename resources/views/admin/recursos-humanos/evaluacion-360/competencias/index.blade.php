@@ -9,6 +9,21 @@
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
+            <div class="px-1 py-2 mx-3 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                            Instrucciones</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor
+                            ingrese las competencias definidas en la organización</p>
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered w-100 tblCompetencias">
                 <thead class="thead-dark">
                     <tr>
@@ -147,6 +162,7 @@
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
 
                             let botones = `
+                            <a class="mr-2 btn btn-sm btn-editar" title="Agregar Conductas" href="${urlBtnEditar}"><i class="fas fa-chalkboard-teacher"></i></a>
                                 <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-editar" title="Visualizar" href="${urlBtnVisualizar}"><i class="fas fa-eye"></i></a>
                                 <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>

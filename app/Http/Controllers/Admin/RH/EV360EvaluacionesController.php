@@ -683,6 +683,44 @@ class EV360EvaluacionesController extends Controller
     public function consultaPorEvaluado($evaluacion, $evaluado)
     {
         $informacion_obtenida = $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
+
+        $calificaciones_autoevaluacion_competencias = collect();
+        $competencias_lista_nombre = collect();
+        foreach ($informacion_obtenida['lista_autoevaluacion'] as $autoevaluacion_calificaciones) {
+            foreach ($autoevaluacion_calificaciones['evaluaciones'] as $evaluacion_auto) {
+                foreach ($evaluacion_auto['competencias'] as $competencia_auto) {
+                    $competencias_lista_nombre->push($competencia_auto['competencia']);
+                    $calificaciones_autoevaluacion_competencias->push($competencia_auto['calificacion']);
+                }
+            }
+        }
+        $calificaciones_jefe_competencias = collect();
+        foreach ($informacion_obtenida['lista_jefe_inmediato'] as $jefe_calificaciones) {
+            foreach ($jefe_calificaciones['evaluaciones'] as $evaluacion_jefe) {
+                foreach ($evaluacion_jefe['competencias'] as $competencia_jefe) {
+                    $calificaciones_jefe_competencias->push($competencia_jefe['calificacion']);
+                }
+            }
+        }
+
+        $calificaciones_equipo_competencias = collect();
+        foreach ($informacion_obtenida['lista_equipo_a_cargo'] as $equipo_calificaciones) {
+            foreach ($equipo_calificaciones['evaluaciones'] as $evaluacion_equipo) {
+
+                foreach ($evaluacion_equipo['competencias'] as $competencia_equipo) {
+                    $calificaciones_equipo_competencias->push($competencia_equipo['calificacion']);
+                }
+            }
+        }
+        $calificaciones_area_competencias = collect();
+        foreach ($informacion_obtenida['lista_misma_area'] as $area_calificaciones) {
+            foreach ($area_calificaciones['evaluaciones'] as $evaluacion_area) {
+                foreach ($evaluacion_area['competencias'] as $competencia_area) {
+                    $calificaciones_area_competencias->push($competencia_area['calificacion']);
+                }
+            }
+        }
+
         $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
         $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
         $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
@@ -699,7 +737,7 @@ class EV360EvaluacionesController extends Controller
         }])->find(intval($evaluado));
 
         // dd($evaluadores_objetivos);
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final'));
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias', 'calificaciones_equipo_competencias', 'calificaciones_area_competencias'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -746,7 +784,7 @@ class EV360EvaluacionesController extends Controller
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
                 }),
-            ]);
+            ));
 
             $calificacion = 0;
             if (count($lista_autoevaluacion->first()['evaluaciones'])) {
@@ -996,5 +1034,24 @@ class EV360EvaluacionesController extends Controller
         $calificaciones = $calificaciones->first();
 
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('lista_evaluados', 'calificaciones', 'evaluacion'));
+    }
+
+    public function evaluacionesDelEmpleado($empleado)
+    {
+        $empleado = Empleado::find($empleado);
+        $evaluacione = Evaluacion::whereHas('evaluados', function ($q) use ($empleado) {
+            $q->where('evaluado_id', $empleado->id);
+        })->get();
+        $lista_evaluaciones = collect();
+        foreach ($evaluacione as $evaluacion) {
+            $lista_evaluaciones->push([
+                'id' => $evaluacion->id,
+                'nombre' => $evaluacion->nombre,
+                'fecha_inicio' => Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y'),
+                'fecha_fin' => Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y'),
+                'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $empleado->id),
+            ]);
+        }
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.lista-evaluaciones-por-empleado', compact('lista_evaluaciones', 'empleado'));
     }
 }
