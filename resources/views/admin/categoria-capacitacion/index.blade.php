@@ -148,7 +148,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [3, 'desc']
                 ]
             };
             let table = $('.tbl-categorias').DataTable(dtOverrideGlobals);

@@ -334,7 +334,7 @@
             <font class="letra_blanca">Normas</font>
         </li>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link " href="{{ route('admin.iso27001.index') }}">
+            <a class="c-sidebar-nav-link " href="{{ route('admin.iso27001.index') }}#contexto">
                 <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> ISO 27001 </font>
             </a>
@@ -635,7 +635,7 @@
                             </a>
                         </li>
                     @endcan
-                    @can('estado_incidente_access')
+                    {{-- @can('estado_incidente_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.estado-incidentes.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/estado-incidentes') || request()->is('admin/estado-incidentes/*') ? 'active' : '' }}">
@@ -645,8 +645,8 @@
                                 <font class="letra_blanca"> {{ trans('cruds.estadoIncidente.title') }} </font>
                             </a>
                         </li>
-                    @endcan
-                    @can('estado_documento_access')
+                    @endcan --}}
+                    {{-- @can('estado_documento_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.estado-documentos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/estado-documentos') || request()->is('admin/estado-documentos/*') ? 'active' : '' }}">
@@ -656,8 +656,8 @@
                                 <font class="letra_blanca"> {{ trans('cruds.estadoDocumento.title') }} </font>
                             </a>
                         </li>
-                    @endcan
-                    @can('estatus_plan_trabajo_access')
+                    @endcan --}}
+                    {{-- @can('estatus_plan_trabajo_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.estatus-plan-trabajos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/estatus-plan-trabajos') || request()->is('admin/estatus-plan-trabajos/*') ? 'active' : '' }}">
@@ -667,8 +667,8 @@
                                 <font class="letra_blanca"> {{ trans('cruds.estatusPlanTrabajo.title') }} </font>
                             </a>
                         </li>
-                    @endcan
-                    @can('plan_base_actividade_access')
+                    @endcan --}}
+                    {{-- @can('plan_base_actividade_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.plan-base-actividades.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/plan-base-actividades') || request()->is('admin/plan-base-actividades/*') ? 'active' : '' }}">
@@ -687,7 +687,7 @@
                                 <font class="letra_blanca">{{ trans('cruds.controlDocumento.title') }}</font>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                 </ul>
             </li>
         @endcan
@@ -697,7 +697,7 @@
                     <i class="fa-fw fas fa-question iconos_menu letra_blanca">
 
                     </i>
-                    <font class="letra_blanca"> {{ trans('cruds.faqManagement.title') }} </font>
+                    <font class="letra_blanca">Manual de Usuario </font>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('faq_category_access')
@@ -707,21 +707,21 @@
                                 <i class="fa-fw fas fa-briefcase iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca"> {{ trans('cruds.faqCategory.title') }} </font>
+                                <font class="letra_blanca"> Documento</font>
                             </a>
                         </li>
                     @endcan
-                    @can('faq_question_access')
+                    {{-- @can('faq_question_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.faq-questions.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/faq-questions') || request()->is('admin/faq-questions/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-question iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca"> {{ trans('cruds.faqQuestion.title') }} </font>
+                                <font class="letra_blanca"> Manual </font>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                 </ul>
             </li>
         @endcan
