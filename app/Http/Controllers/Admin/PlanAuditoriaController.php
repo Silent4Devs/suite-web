@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
 use App\Functions\GeneratePdf;
-use App\Models\AuditoriaAnual;
-use App\Models\PlanAuditorium;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\MassDestroyPlanAuditoriumRequest;
 use App\Http\Requests\StorePlanAuditoriumRequest;
 use App\Http\Requests\UpdatePlanAuditoriumRequest;
-use App\Http\Requests\MassDestroyPlanAuditoriumRequest;
+use App\Models\AuditoriaAnual;
+use App\Models\Empleado;
+use App\Models\PlanAuditorium;
+use App\Models\Team;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class PlanAuditoriaController extends Controller
 {
@@ -24,7 +23,7 @@ class PlanAuditoriaController extends Controller
         abort_if(Gate::denies('plan_auditorium_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PlanAuditorium::with(['auditados', 'team','equipo'])->select(sprintf('%s.*', (new PlanAuditorium)->table))->orderByDesc('id');
+            $query = PlanAuditorium::with(['auditados', 'team', 'equipo'])->select(sprintf('%s.*', (new PlanAuditorium)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -109,12 +108,12 @@ class PlanAuditoriaController extends Controller
 
         // $fechas = AuditoriaAnual::all()->pluck('fechainicio', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $equipo_seleccionado=$planAuditorium->equipoauditorias;
+        $equipo_seleccionado = $planAuditorium->equipoauditorias;
         dd($equipo_seleccionado);
 
         $equipoauditorias = Empleado::get();
 
-        return view('admin.planAuditoria.edit', compact('equipoauditorias','planAuditorium'));
+        return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium'));
     }
 
     public function update(UpdatePlanAuditoriumRequest $request, PlanAuditorium $planAuditorium)
