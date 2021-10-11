@@ -2,7 +2,7 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <div id="barraGap2">
+                <div id="barraGap2" class="barraGap2">
                     <h6 align="center">GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN ({{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%)
                     </h6>
                     <div class="progress">
@@ -25,7 +25,7 @@
                             siguiente cuestionario de acuerdo con los siguientes
                             parámetros:</p>
                         <div class="row">
-                            <div class="col-3 p-3 mb-2 bg-success text-white">
+                            <div class="p-3 mb-2 text-white col-3 bg-success">
                                 Cumple
                                 satisfactoriamente
                             </div>
@@ -37,7 +37,7 @@
                                 cumple 100%.
                             </div>
                             <div class="w-100"></div>
-                            <div class="col-3 p-3 mb-2 bg-warning text-white">
+                            <div class="p-3 mb-2 text-white col-3 bg-warning">
                                 Cumple
                                 parcialmente
                             </div>
@@ -49,27 +49,27 @@
                                 se gestiona
                             </div>
                             <div class="w-100"></div>
-                            <div class="col-3 p-3 mb-2 bg-danger text-white">No
+                            <div class="p-3 mb-2 text-white col-3 bg-danger">No
                                 cumple
                             </div>
                             <div class="col-9">No existe y/o no se está
                                 haciendo.
                             </div>
-                            <div class="col-3 p-3 mb-2 bg-dark text-white">
+                            <div class="p-3 mb-2 text-white col-3 bg-dark">
                                 No aplica
                             </div>
                             <div class="col-9">
                                 El control no es aplicable para la entidad. En el campo evidencia por favor indicar la
                                 justificación respectiva de su no aplicabilidad.
                             </div>
-                            <h5 class="p-3 mb-2 bg-white text-dark mx-auto">
+                            <h5 class="p-3 mx-auto mb-2 bg-white text-dark">
                                 HACER</h5>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">POLÍTICAS DE LA
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">POLÍTICAS DE LA
                                     SEGURIDAD DE LA INFORMACION</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Orientación de la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Orientación de la
                                     dirección para la gestión de la seguridad de la información</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px; margin: 0px;">OBJETIVO:
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px; margin: 0px;">OBJETIVO:
                                     Brindar orientación y soporte, por parte de la dirección, para la seguridad de la
                                     información de acuerdo con los requisitos del negocio y con las leyes y reglamentos
                                     pertinentes</p>
@@ -127,10 +127,10 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">ORGANIZACIÓN DE LA
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">ORGANIZACIÓN DE LA
                                     SEGURIDAD DE LA INFORMACION</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Organización Interna</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px; margin: 0px;">OBJETIVO:
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Organización Interna</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px; margin: 0px;">OBJETIVO:
                                     Establecer un marco de referencia de gestión para iniciar y controlar la
                                     implementación y operación de la seguridad de la información dentro de la
                                     organización.</p>
@@ -189,9 +189,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Dispositivos móviles y
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Dispositivos móviles y
                                     teletrabajo</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Garantizar la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Garantizar la
                                     seguridad del teletrabajo y el uso de dispositivos móviles</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -248,9 +248,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Dispositivos móviles y
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Dispositivos móviles y
                                     teletrabajo</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Garantizar la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Garantizar la
                                     seguridad del teletrabajo y el uso de dispositivos móviles</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -307,9 +307,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Dispositivos móviles y
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Dispositivos móviles y
                                     teletrabajo</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Garantizar la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Garantizar la
                                     seguridad del teletrabajo y el uso de dispositivos móviles</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -366,9 +366,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Durante la ejecución del
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Durante la ejecución del
                                     empleo</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurarse de
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurarse de
                                     que los empleados y contratistas tomen conciencia de sus responsabilidades de
                                     seguridad de la información y las cumplan.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -426,9 +426,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Terminación y cambio de
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Terminación y cambio de
                                     empleo</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Proteger los
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Proteger los
                                     intereses de la organización como parte del proceso de cambio o terminación de
                                     empleo</p>
                                 <table class="table" style="font-size: 12px;">
@@ -486,10 +486,10 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">GESTION DE ACTIVOS</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Responsabilidad por los
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">GESTION DE ACTIVOS</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Responsabilidad por los
                                     activos</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Identificar
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Identificar
                                     los activos organizacionales y definir las responsabilidades de protección
                                     adecuadas.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -547,9 +547,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Clasificación de la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Clasificación de la
                                     información</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar que
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar que
                                     la información recibe un nivel apropiado de protección, de acuerdo con su
                                     importancia para la organización.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -607,8 +607,8 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Manejo de medios</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Evitar la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Manejo de medios</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Evitar la
                                     divulgación, la modificación, el retiro o la destrucción no autorizados de
                                     información almacenada en los medios</p>
                                 <table class="table" style="font-size: 12px;">
@@ -666,10 +666,10 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">CONTROL DE ACCESO</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Requisitos del negocio
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">CONTROL DE ACCESO</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Requisitos del negocio
                                     para el control de acceso</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Limitar el
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Limitar el
                                     acceso a información y a instalaciones de procesamiento de información.</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -726,9 +726,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Gestión de acceso de
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Gestión de acceso de
                                     usuarios</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar el
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar el
                                     acceso de los usuarios autorizados y evitar el acceso no autorizado a sistemas y
                                     servicios.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -786,9 +786,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Responsabilidades de los
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Responsabilidades de los
                                     usuarios</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Hacer que los
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Hacer que los
                                     usuarios rindan cuentas por la salvaguarda de su información de autenticación.</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -845,9 +845,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Responsabilidades de los
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Responsabilidades de los
                                     usuarios</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Hacer que los
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Hacer que los
                                     usuarios rindan cuentas por la salvaguarda de su información de autenticación.</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -904,9 +904,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Control de acceso a
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Control de acceso a
                                     sistemas y aplicaciones</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Evitar el
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Evitar el
                                     acceso no autorizado a sistemas y aplicaciones.</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -963,10 +963,10 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">CRIPTOGRAFIA</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Controles
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">CRIPTOGRAFIA</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Controles
                                     criptográficos</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar el
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar el
                                     uso apropiado y eficaz de la criptografía para proteger la confidencialidad,
                                     autenticidad y/o la integridad de la información.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1024,10 +1024,10 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">SEGURIDAD FISICA Y DEL
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">SEGURIDAD FISICA Y DEL
                                     ENTORNO</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Áreas seguras</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Prevenir el
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Áreas seguras</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Prevenir el
                                     acceso físico no autorizado, el daño e la interferencia a la información y a las
                                     instalaciones de procesamiento de información de la organización.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1085,8 +1085,8 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Equipos</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Prevenir la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Equipos</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Prevenir la
                                     perdida, daño, robo o compromiso de activos, y la interrupción de las operaciones de
                                     la organización.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1144,11 +1144,11 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">SEGURIDAD DE LAS
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">SEGURIDAD DE LAS
                                     OPERACIONES</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Procedimientos
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Procedimientos
                                     operacionales y responsabilidades</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar las
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar las
                                     operaciones correctas y seguras de las instalaciones de procesamiento de
                                     información.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1206,9 +1206,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Protección contra
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Protección contra
                                     códigos maliciosos</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurarse de
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurarse de
                                     que la información y las instalaciones de procesamiento de información estén
                                     protegidas contra códigos maliciosos.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1266,8 +1266,8 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Copias de respaldo</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurarse de
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Copias de respaldo</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurarse de
                                     que la información y las instalaciones de procesamiento de información estén
                                     protegidas contra códigos maliciosos.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1325,9 +1325,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Registro y
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Registro y
                                     seguimiento</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Registrar
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Registrar
                                     eventos y generar evidencia</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -1384,9 +1384,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Control de software
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Control de software
                                     operacional</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurarse de
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurarse de
                                     la integridad de los sistemas operacionales</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -1443,9 +1443,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Gestión de la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Gestión de la
                                     vulnerabilidad técnica</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Prevenir el
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Prevenir el
                                     aprovechamiento de las vulnerabilidades técnicas</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -1502,9 +1502,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Consideraciones sobre
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Consideraciones sobre
                                     auditorias de sistemas de información</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Minimizar el
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Minimizar el
                                     impacto de las actividades de auditoria sobre los sistemas operativos</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -1561,11 +1561,11 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">SEGURIDAD DE LAS
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">SEGURIDAD DE LAS
                                     COMUNICACIONES</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Gestión de la seguridad
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Gestión de la seguridad
                                     de las redes</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar la
                                     protección de la información en las redes, y sus instalaciones de procesamiento de
                                     información de soporte.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1623,9 +1623,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Transferencia de
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Transferencia de
                                     información</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Mantener la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Mantener la
                                     seguridad de la información transferida dentro de una organización y con cualquier
                                     entidad externa.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1683,11 +1683,11 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">ADQUISICIÓN, DESARROLLO
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">ADQUISICIÓN, DESARROLLO
                                     Y MANTENIMIENTO DE SISTEMAS</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Requisitos de seguridad
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Requisitos de seguridad
                                     de los sistemas de información</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar que
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar que
                                     la seguridad de la información sea una parte integral de los sistemas de información
                                     durante todo el ciclo de vida. Esto incluye también los requisitos para sistemas de
                                     información que prestan servicios sobre redes .</p>
@@ -1746,9 +1746,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Seguridad en los
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Seguridad en los
                                     procesos de Desarrollo y de Soporte</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar que
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar que
                                     la seguridad de la información este diseñada e implementada dentro del ciclo de vida
                                     de desarrollo de los sistemas de información.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1806,8 +1806,8 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Datos de prueba</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Datos de prueba</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar la
                                     protección de los datos usados para pruebas. </p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -1864,11 +1864,11 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">RELACIONES CON LOS
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">RELACIONES CON LOS
                                     PROVEEDORES</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Seguridad de la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Seguridad de la
                                     información en las relaciones con los proveedores.</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar la
                                     protección de los activos de la organización que sean accesibles a los
                                     proveedores.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1926,9 +1926,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Gestión de la prestación
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Gestión de la prestación
                                     de servicios de proveedores</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Mantener el
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Mantener el
                                     nivel acordado de seguridad de la información y de prestación del servicio en línea
                                     con los acuerdos con los proveedores</p>
                                 <table class="table" style="font-size: 12px;">
@@ -1986,11 +1986,11 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">GESTION DE INCIDENTES DE
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">GESTION DE INCIDENTES DE
                                     SEGURIDAD DE LA INFORMACION</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Gestión de incidentes y
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Gestión de incidentes y
                                     mejoras en la seguridad de la información</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar un
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar un
                                     enfoque coherente y eficaz para la gestión de incidentes de seguridad de la
                                     información, incluida la comunicación sobre eventos de seguridad y debilidades.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -2048,11 +2048,11 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">ASPECTOS DE SEGURIDAD DE
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">ASPECTOS DE SEGURIDAD DE
                                     LA INFORMACIÓN DE LA GESTION DE CONTINUIDAD DE NEGOCIO</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Continuidad de Seguridad
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Continuidad de Seguridad
                                     de la información</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: La continuidad
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: La continuidad
                                     de seguridad de la información se debe incluir en los sistemas de gestión de la
                                     continuidad de negocio de la organización.</p>
                                 <table class="table" style="font-size: 12px;">
@@ -2110,8 +2110,8 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Redundancias</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar la
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Redundancias</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar la
                                     disponibilidad de instalaciones de procesamiento de información.</p>
                                 <table class="table" style="font-size: 12px;">
                                     <thead class="thead-dark" align="center">
@@ -2168,10 +2168,10 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">CUMPLIMIENTO</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Cumplimiento de
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">CUMPLIMIENTO</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Cumplimiento de
                                     requisitos legales y contractuales</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Evitar el
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Evitar el
                                     incumplimiento de las obligaciones legales, estatutarias, de reglamentación o
                                     contractuales relacionadas con seguridad de la información y de cualquier requisito
                                     de seguridad.</p>
@@ -2230,9 +2230,9 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">Revisiones de seguridad
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Revisiones de seguridad
                                     de la información</p>
-                                <p class="p-2 mb-2 bg-info text-white" style="font-size: 12px;">OBJETIVO: Asegurar que
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Asegurar que
                                     la seguridad de la información se implemente y opere de acuerdo con las políticas y
                                     procedimientos organizacionales.</p>
                                 <table class="table" style="font-size: 12px;">

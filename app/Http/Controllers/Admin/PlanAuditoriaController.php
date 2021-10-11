@@ -64,7 +64,7 @@ class PlanAuditoriaController extends Controller
                 return $row->documentoauditar ? $row->documentoauditar : '';
             });
             $table->editColumn('equipo_auditor', function ($row) {
-                return $row->equipo ? $row->equipo : '';
+                return $row->auditados ? $row->auditados : '';
             });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
@@ -94,10 +94,11 @@ class PlanAuditoriaController extends Controller
 
     public function store(StorePlanAuditoriumRequest $request)
     {
+
         $planAuditorium = PlanAuditorium::create($request->all());
         // $generar = new GeneratePdf();
         // $generar->Generate($request['pdf-value'], $planAuditorium);
-        $planAuditorium->auditados()->sync($request->input('auditados', []));
+        $planAuditorium->auditados()->sync($request->equipo);
 
         return redirect()->route('admin.plan-auditoria.index');
     }
@@ -108,18 +109,19 @@ class PlanAuditoriaController extends Controller
 
         // $fechas = AuditoriaAnual::all()->pluck('fechainicio', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $equipo_seleccionado = $planAuditorium->equipoauditorias;
-        dd($equipo_seleccionado);
+        $equipo_seleccionado = $planAuditorium->auditados->pluck('id')->toArray();
+        // dd($equipo_seleccionado);
 
         $equipoauditorias = Empleado::get();
 
-        return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium'));
+        return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium','equipo_seleccionado'));
     }
 
     public function update(UpdatePlanAuditoriumRequest $request, PlanAuditorium $planAuditorium)
     {
         $planAuditorium->update($request->all());
-        $planAuditorium->auditados()->sync($request->input('auditados', []));
+        // $planAuditorium->auditados()->sync($request->input('auditados', []));
+        $planAuditorium->auditados()->sync($request->equipo);
 
         return redirect()->route('admin.plan-auditoria.index');
     }

@@ -63,10 +63,10 @@
 
 
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="id_equipo_auditores"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.equipoauditoria') }}</label>
+                <label for="id_equipo_auditores"><i class="fas fa-users iconos-crear"></i>Equipo Auditoría</label>
                 <select multiple class="form-control select2 {{ $errors->has('equipoauditoria') ? 'is-invalid' : '' }}" name="equipo[]" id="id_equipo_auditores">
                     @foreach($equipoauditorias as $equipoauditoria)
-                        <option value="{{ $equipoauditoria->id }}" {{ in_array(old('equipo',$equipoauditoria->id),$auditoriaInterna->equipo->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $equipoauditoria->name }}</option>
+                        <option value="{{ $equipoauditoria->id }}" {{ in_array(old('equipo',$equipoauditoria->id), $equipo_seleccionado) ? 'selected' : '' }}>{{ $equipoauditoria->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('equipoauditoria'))
@@ -76,6 +76,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.equipoauditoria_helper') }}</span>
             </div>
+
 
 
                 <div class="form-group col-md-6">
