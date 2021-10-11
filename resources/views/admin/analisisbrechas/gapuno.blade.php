@@ -7,12 +7,9 @@
         }
       </style>
 
-
-
-
       <div class="row">
           <div class="col-12 col-md-12 col-sm-12">
-              <div class="card-header font-weight-bold  text-white" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
+              <div class="text-white card-header font-weight-bold" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
                   GAP 01: DEFINICIÓN DE MARCO DE SEGURIDAD Y PRIVACIDAD DE LA ORGANIZACIÓN (30%)
               </div>
 
@@ -63,7 +60,7 @@
         </div>
     </div>
 @endcan
-                      <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-GapUno">
+                      <table class="table  table-bordered table-striped table-hover ajaxTable datatable datatable-GapUno">
             <thead>
                 <tr>
                     <th width="10">
@@ -184,7 +181,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 let visibleColumnsIndexes = null;
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false

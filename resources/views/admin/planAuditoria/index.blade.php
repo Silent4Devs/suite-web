@@ -6,6 +6,13 @@
             text-align: center !important;
         }
 
+        .table tr th:nth-child(2) {
+            text-align: center !important;
+        }
+        .table tr th:nth-child(3) {
+            text-align: center !important;
+        }
+
         .table tr td:nth-child(3) {
 
             min-width: 600px !important;
@@ -18,10 +25,20 @@
             text-align: justify !important;
         }
 
+        .table tr th:nth-child(4) {
+
+        text-align: center !important;
+        }
+
         .table tr td:nth-child(5) {
 
             min-width: 600px !important;
             text-align: justify !important;
+        }
+
+        .table tr th:nth-child(5) {
+
+        text-align: center !important;
         }
 
         .table tr td:nth-child(6) {
@@ -30,10 +47,21 @@
         text-align: justify !important;
         }
 
+        .table tr th:nth-child(6) {
+
+        text-align: center !important;
+        }
+
+
         .table tr td:nth-child(8) {
 
         min-width: 600px !important;
         text-align: justify !important;
+        }
+
+        .table tr th:nth-child(8) {
+
+        text-align: center !important;
         }
 
     </style>
@@ -280,7 +308,19 @@
                     },
                     {
                         data: 'equipo_auditor',
-                        name: 'equipo_auditor'
+                        render: function(data, type, row, meta){
+                            let equipos = JSON.parse(data);
+                            let html = '<div class="d-flex">';
+                            equipos.forEach(empleado=>{
+                                html += `
+                                   <img src="{{ asset('storage/empleados/imagenes') }}/${empleado.avatar}" title="${empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+
+                                `;
+                            })
+                            html +='</div>'
+                            return html
+                        },
+                        width:'20%'
                     },
                     {
                         data: 'descripcion',
