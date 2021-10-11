@@ -181,6 +181,9 @@
             success: function (response, newValue) {
                 $("#barraGap1").empty();
                 $("#barraGap1").load(location.href + " #barraGap1>*", "");
+
+                $("#barraGap1_tablero").empty();
+                $("#barraGap1_tablero").load(location.href + " #barraGap1_tablero>*", "");
                 console.log('Actualizado, response')
             }
         });
@@ -204,8 +207,11 @@
                 }
             ],
             success: function (response, newValue) {
-                $("#barraGap2").empty();
-                $("#barraGap2").load(location.href + " #barraGap2>*", "");
+                $("#barraGap2_tablero").empty();
+                $("#barraGap2_tablero").load(location.href + " #barraGap2_tablero>*", "");
+
+                $("#barraGap2_tablero").empty();
+                $("#barraGap2_tablero").load(location.href + " #barraGap2_tablero>*", "");
                 console.log('Actualizado, response')
             }
         });

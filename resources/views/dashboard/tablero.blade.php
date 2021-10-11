@@ -273,7 +273,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div id="barraGap1">
+                    <div id="barraGap1_tablero">
                         <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE
                             SEGURIDAD
                             Y PRIVACIDAD DE LA ORGANIZACIÓN ({{number_format($porcentajeGap1, 2, '.', '')}}%)</h6>
@@ -363,7 +363,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div id="barraGap2">
+                    <div id="barraGap2_tablero">
                         <h6 align="center">GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN
                             ({{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%)
                         </h6>
@@ -465,7 +465,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div id="barraGap3">
+                    <div id="barraGap3_tablero">
                         <h6 align="center">GAP 03: MONITOREO Y MEJORA CONTINUA ({{$porcentajeGap3['porcentaje']}}%)
                         </h6>
                         <div class="progress">
@@ -981,7 +981,7 @@
     }
 
     // Drawing and updating the chart
-    GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(100)
+    GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle({{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}})
 
     //radarchart
     //Empieza radar chart

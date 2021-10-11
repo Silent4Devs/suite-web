@@ -219,6 +219,9 @@
             success: function(response, newValue) {
                 $("#barraGap3").empty();
                 $("#barraGap3").load(location.href + " #barraGap3>*", "");
+
+                $("#barraGap3_tablero").empty();
+                $("#barraGap3_tablero").load(location.href + " #barraGap3_tablero>*", "");
                 console.log('Actualizado, response')
             }
         });
