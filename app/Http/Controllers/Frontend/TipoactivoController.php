@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
@@ -20,8 +20,8 @@ class TipoactivoController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+       // abort_if(Gate::denies('configuracion_tipoactivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        dd("asdad");
         if ($request->ajax()) {
             $query = Tipoactivo::with(['team'])->select(sprintf('%s.*', (new Tipoactivo)->table));
             $table = Datatables::of($query);
@@ -61,21 +61,21 @@ class TipoactivoController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.tipoactivos.index', compact('teams'));
+        return view('frontend.tipoactivos.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('configuracion_tipoactivo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.tipoactivos.create');
+        return view('frontend.tipoactivos.create');
     }
 
     public function store(StoreTipoactivoRequest $request)
     {
         $tipoactivo = Tipoactivo::create($request->all());
 
-        return redirect()->route('admin.tipoactivos.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('frontend.tipoactivos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Tipoactivo $tipoactivo)
@@ -84,14 +84,14 @@ class TipoactivoController extends Controller
 
         $tipoactivo->load('team');
 
-        return view('admin.tipoactivos.edit', compact('tipoactivo'));
+        return view('frontend.tipoactivos.edit', compact('tipoactivo'));
     }
 
     public function update(UpdateTipoactivoRequest $request, Tipoactivo $tipoactivo)
     {
         $tipoactivo->update($request->all());
 
-        return redirect()->route('admin.tipoactivos.index')->with('success', 'Editado con éxito');
+        return redirect()->route('frontend.tipoactivos.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Tipoactivo $tipoactivo)
@@ -100,7 +100,7 @@ class TipoactivoController extends Controller
 
         $tipoactivo->load('team');
 
-        return view('admin.tipoactivos.show', compact('tipoactivo'));
+        return view('frontend.tipoactivos.show', compact('tipoactivo'));
     }
 
     public function destroy(Tipoactivo $tipoactivo)

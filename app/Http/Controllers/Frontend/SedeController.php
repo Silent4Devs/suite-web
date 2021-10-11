@@ -94,12 +94,12 @@ class SedeController extends Controller
         return view('frontend.sedes.create', compact('organizacions'));
     }
 
-    public function store(StoreSedeRequest $request)
+    public function store(Request $request)
     {
-        dd("sdad");
+
         $client = new \GuzzleHttp\Client();
         $geocoder = new \Spatie\Geocoder\Geocoder($client);
-        $geocoder->setApiKey(config('geocoder.key'));
+        $geocoder->setApiKey('AIzaSyDByWqsyGQopJ8tnvFk8yp4PjcfG7zoXuo');
         $result = $geocoder->getCoordinatesForAddress($request->direccion);
         $request['latitude'] = $result['lat'];
         $request['longitud'] = $result['lng'];

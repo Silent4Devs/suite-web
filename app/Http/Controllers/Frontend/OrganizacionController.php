@@ -21,11 +21,6 @@ class OrganizacionController extends Controller
     public function index(Request $request)
     {
         $organizacions = Organizacion::first();
-        $logotipo_organizacion = $organizacions->logotipo;
-        $logotipo = 'img/logotipo-tabantaj.png';
-        if ($logotipo_organizacion) {
-            $logotipo = 'images/' . $logotipo_organizacion;
-        }
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
@@ -36,6 +31,12 @@ class OrganizacionController extends Controller
             $empty = true;
             $count = Organizacion::get()->count();
 
+            $logotipo_organizacion = $organizacions->logotipo;
+            $logotipo = 'img/logotipo-tabantaj.png';
+            if ($logotipo_organizacion) {
+                $logotipo = 'images/' . $logotipo_organizacion;
+            }
+
             return view('frontend.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo);
         }
     }
@@ -44,7 +45,7 @@ class OrganizacionController extends Controller
     {
         $count = Organizacion::get()->count();
         if ($count == 0) {
-            abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            //abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             return view('frontend.organizacions.create');
         } else {
@@ -54,7 +55,7 @@ class OrganizacionController extends Controller
         }
     }
 
-    public function store(StoreOrganizacionRequest $request)
+    public function store(Request $request)
     {
         //abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacion::create([
@@ -95,7 +96,7 @@ class OrganizacionController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $organizacions->id]);
         }
 
-        dd('terminado');
+
 
         return redirect()->route('organizacions.index')->with('success', 'Guardado con éxito');
     }

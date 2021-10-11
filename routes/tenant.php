@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Frontend\OrganizacionController;
-use App\Http\Controllers\Frontend\PortalComunicacionController;
-use App\Http\Controllers\Frontend\SedeController;
-use App\Http\Controllers\Frontend\GrupoAreaController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\SedeController;
+use App\Http\Controllers\Admin\TipoactivoController;
+use App\Http\Controllers\Frontend\EmpleadoController;
+use App\Http\Controllers\Frontend\GrupoAreaController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use App\Http\Controllers\Frontend\OrganizacionController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-
+use App\Http\Controllers\Frontend\PortalComunicacionController;
+use App\Http\Controllers\Frontend\DocumentosController;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -237,23 +239,23 @@ Route::middleware([
     Route::resource('users', 'UsersController');
 
     // Empleados
-    Route::post('empleados/store/{empleado}/competencias-resumen', 'EmpleadoController@storeResumen')->name('empleados.storeResumen');
-    Route::post('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
-    Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', 'EmpleadoController@deleteCertificaciones')->name('empleados.deleteCertificaciones');
-    Route::post('empleados/store/{empleado}/competencias-cursos', 'EmpleadoController@storeCursos')->name('empleados.storeCursos');
-    Route::delete('empleados/delete/{curso}/competencias-cursos', 'EmpleadoController@deleteCursos')->name('empleados.deleteCursos');
-    Route::post('empleados/store/{empleado}/competencias-experiencia', 'EmpleadoController@storeExperiencia')->name('empleados.storeExperiencia');
-    Route::delete('empleados/delete/{educacion}/competencias-educacion', 'EmpleadoController@deleteEducacion')->name('empleados.deleteEducacion');
-    Route::post('empleados/store/{empleado}/competencias-educacion', 'EmpleadoController@storeEducacion')->name('empleados.storeEducacion');
-    Route::delete('empleados/delete/{experiencia}/competencias-experiencia', 'EmpleadoController@deleteExperiencia')->name('empleados.deleteExperiencia');
-    Route::get('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@getCertificaciones')->name('empleados.getCertificaciones');
-    Route::get('empleados/store/{empleado}/competencias-educacion', 'EmpleadoController@getEducacion')->name('empleados.getEducacion');
-    Route::get('empleados/store/{empleado}/competencias-experiencia', 'EmpleadoController@getExperiencia')->name('empleados.getExperiencia');
-    Route::get('empleados/store/{empleado}/competencias-cursos', 'EmpleadoController@getCursos')->name('empleados.getCursos');
-    Route::post('empleados/store/competencias', 'EmpleadoController@storeWithCompetencia')->name('empleados.storeWithCompetencia');
-    Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
-    Route::get('empleados/get-all', 'EmpleadoController@getAllEmpleados')->name('empleados.getAll');
-    Route::resource('empleados', 'EmpleadoController');
+    Route::post('empleados/store/{empleado}/competencias-resumen', [EmpleadoController::class , 'storeResumen'])->name('empleados.storeResumen');
+    Route::post('empleados/store/{empleado}/competencias-certificaciones', [EmpleadoController::class , 'storeCertificaciones'])->name('empleados.storeCertificaciones');
+    Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', [EmpleadoController::class , 'deleteCertificaciones'])->name('empleados.deleteCertificaciones');
+    Route::post('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class , 'storeCursos'])->name('empleados.storeCursos');
+    Route::delete('empleados/delete/{curso}/competencias-cursos', [EmpleadoController::class , 'deleteCursos'])->name('empleados.deleteCursos');
+    Route::post('empleados/store/{empleado}/competencias-experiencia', [EmpleadoController::class , 'storeExperiencia'])->name('empleados.storeExperiencia');
+    Route::delete('empleados/delete/{educacion}/competencias-educacion', [EmpleadoController::class , 'deleteEducacion'])->name('empleados.deleteEducacion');
+    Route::post('empleados/store/{empleado}/competencias-educacion', [EmpleadoController::class , 'storeEducacion'])->name('empleados.storeEducacion');
+    Route::delete('empleados/delete/{experiencia}/competencias-experiencia', [EmpleadoController::class , 'deleteExperiencia'])->name('empleados.deleteExperiencia');
+    Route::get('empleados/store/{empleado}/competencias-certificaciones', [EmpleadoController::class , 'getCertificaciones'])->name('empleados.getCertificaciones');
+    Route::get('empleados/store/{empleado}/competencias-educacion', [EmpleadoController::class , 'getEducacion'])->name('empleados.getEducacion');
+    Route::get('empleados/store/{empleado}/competencias-experiencia', [EmpleadoController::class , 'getExperiencia'])->name('empleados.getExperiencia');
+    Route::get('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class , 'getCursos'])->name('empleados.getCursos');
+    Route::post('empleados/store/competencias', [EmpleadoController::class ,'storeWithCompetencia'])->name('empleados.storeWithCompetencia');
+    Route::post('empleados/get', [EmpleadoController::class ,'getEmpleados'])->name('empleados.get');
+    Route::get('empleados/get-all', [EmpleadoController::class ,'getAllEmpleados'])->name('empleados.getAll');
+    Route::resource('empleados', EmpleadoController::class);
 
     Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
     Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
@@ -470,10 +472,10 @@ Route::middleware([
     Route::resource('organizaciones', 'OrganizacionesController');
 
     // Tipoactivos
-    Route::delete('tipoactivos/destroy', 'TipoactivoController@massDestroy')->name('tipoactivos.massDestroy');
-    Route::post('tipoactivos/parse-csv-import', 'TipoactivoController@parseCsvImport')->name('tipoactivos.parseCsvImport');
-    Route::post('tipoactivos/process-csv-import', 'TipoactivoController@processCsvImport')->name('tipoactivos.processCsvImport');
-    Route::resource('tipoactivos', 'TipoactivoController');
+    Route::delete('tipoactivos/destroy', [TipoactivoController::class , 'massDestroy'])->name('tipoactivos.massDestroy');
+    Route::post('tipoactivos/parse-csv-import', [TipoactivoController::class , 'parseCsvImport'])->name('tipoactivos.parseCsvImport');
+    Route::post('tipoactivos/process-csv-import', [TipoactivoController::class , 'processCsvImport'])->name('tipoactivos.processCsvImport');
+    Route::resource('tipoactivos', TipoactivoController::class);
 
     // Puestos
     Route::delete('puestos/destroy', 'PuestosController@massDestroy')->name('puestos.massDestroy');
@@ -643,16 +645,16 @@ Route::middleware([
 
     //Documentos
     Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');
-    Route::patch('documentos/{documento}/update-when-publish', 'DocumentosController@updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
-    Route::post('documentos/store-when-publish', 'DocumentosController@storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
-    Route::post('documentos/publish', 'DocumentosController@publish')->name('documentos.publish');
-    Route::post('documentos/check-code', 'DocumentosController@checkCode')->name('documentos.checkCode');
-    Route::get('documentos/{documento}/view-document', 'DocumentosController@renderViewDocument')->name('documentos.renderViewDocument');
-    Route::get('documentos/{documento}/history-reviews', 'DocumentosController@renderHistoryReview')->name('documentos.renderHistoryReview');
-    Route::get('documentos/{documento}/document-versions', 'DocumentosController@renderHistoryVersions')->name('documentos.renderHistoryVersions');
-    Route::post('documentos/dependencies', 'DocumentosController@getDocumentDependencies')->name('documentos.getDocumentDependencies');
-    Route::delete('documentos/{documento}/', 'DocumentosController@destroy')->name('documentos.destroy');
-    Route::resource('documentos', 'DocumentosController');
+    Route::patch('documentos/{documento}/update-when-publish', [DocumentosController::class, 'updateDocumentWhenPublish'])->name('documentos.updateDocumentWhenPublish');
+    Route::post('documentos/store-when-publish', [DocumentosController::class, 'storeDocumentWhenPublish'])->name('documentos.storeDocumentWhenPublish');
+    Route::post('documentos/publish', [DocumentosController::class, 'publish'])->name('documentos.publish');
+    Route::post('documentos/check-code', [DocumentosController::class, 'checkCode'])->name('documentos.checkCode');
+    Route::get('documentos/{documento}/view-document', [DocumentosController::class, 'renderViewDocument'])->name('documentos.renderViewDocument');
+    Route::get('documentos/{documento}/history-reviews', [DocumentosController::class, 'renderHistoryReview'])->name('documentos.renderHistoryReview');
+    Route::get('documentos/{documento}/document-versions', [DocumentosController::class, 'renderHistoryVersions'])->name('documentos.renderHistoryVersions');
+    Route::post('documentos/dependencies', [DocumentosController::class, 'getDocumentDependencies'])->name('documentos.getDocumentDependencies');
+    Route::delete('documentos/{documento}/', [DocumentosController::class, 'destroy'])->name('documentos.destroy');
+    Route::resource('documentos', DocumentosController::class);
 
     // Control Documentos
     Route::delete('control-documentos/destroy', 'ControlDocumentosController@massDestroy')->name('control-documentos.massDestroy');
