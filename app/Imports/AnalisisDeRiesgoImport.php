@@ -20,7 +20,7 @@ class AnalisisDeRiesgoImport implements ToModel
             'tipo' => $row[1],
             'fecha'=> $row[2],
             'porcentaje_implementacion'=> $row[3],
-            'id_elaboro'=> $this->obtenerEmpleadoPorNombre($row[4]),
+            'id_elaboro'=> $this->obtenerEmpleadoPorNumero($row[4]),
             'estatus'=> array_keys($this->obtenerIdEstatusPorTexto($row[5]))[0],
         ]);
     }
@@ -48,6 +48,13 @@ class AnalisisDeRiesgoImport implements ToModel
     public function obtenerEmpleadoPorNombre($nombre)
     {
         $empleado_bd = Empleado::select('id', 'name')->where('name', $nombre)->first();
+
+        return $empleado_bd->id;
+    }
+
+    public function obtenerEmpleadoPorNumero($numero)
+    {
+        $empleado_bd = Empleado::select('id', 'name')->where('n_empleado', trim($numero))->first();
 
         return $empleado_bd->id;
     }

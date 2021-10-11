@@ -1,6 +1,43 @@
 @extends('layouts.admin')
 @section('content')
 
+    <style>
+        .table tr td:nth-child(2) {
+            text-align: center !important;
+        }
+
+        .table tr td:nth-child(3) {
+
+            min-width: 600px !important;
+            text-align: justify !important;
+        }
+
+        .table tr td:nth-child(4) {
+
+            min-width: 600px !important;
+            text-align: justify !important;
+        }
+
+        .table tr td:nth-child(5) {
+
+            min-width: 600px !important;
+            text-align: justify !important;
+        }
+
+        .table tr td:nth-child(6) {
+
+        min-width: 600px !important;
+        text-align: justify !important;
+        }
+
+        .table tr td:nth-child(8) {
+
+        min-width: 600px !important;
+        text-align: justify !important;
+        }
+
+    </style>
+
     {{ Breadcrumbs::render('admin.plan-auditoria.index') }}
 
     @can('plan_auditorium_create')
@@ -18,11 +55,11 @@
                             {{ trans('cruds.planAuditorium.fields.id') }}
                         </th>
                         <th>
-                            Fecha&nbsp;auditoria
+                            Fecha&nbsp;auditoría
                         </th>
 
                         <th>
-                            Objetivo&nbsp;de&nbsp;la&nbsp;auditoria
+                            Objetivo&nbsp;de&nbsp;la&nbsp;auditoría
                         </th>
                         <th>
                             {{ trans('cruds.planAuditorium.fields.alcance') }}
@@ -273,6 +310,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

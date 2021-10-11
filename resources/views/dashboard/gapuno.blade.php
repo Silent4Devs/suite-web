@@ -32,7 +32,7 @@
                     siguiente cuestionario de acuerdo con los siguientes
                     parámetros:</p>
                 <div class="row">
-                    <div class="col-3 p-3 mb-2 bg-success text-white">
+                    <div class="p-3 mb-2 text-white col-3 bg-success">
                         Cumple
                         satisfactoriamente
                     </div>
@@ -44,7 +44,7 @@
                         cumple 100%.
                     </div>
                     <div class="w-100"></div>
-                    <div class="col-3 p-3 mb-2 bg-warning text-white">
+                    <div class="p-3 mb-2 text-white col-3 bg-warning">
                         Cumple
                         parcialmente
                     </div>
@@ -56,14 +56,14 @@
                         se gestiona
                     </div>
                     <div class="w-100"></div>
-                    <div class="col-3 p-3 mb-2 bg-danger text-white">No
+                    <div class="p-3 mb-2 text-white col-3 bg-danger">No
                         cumple
                     </div>
                     <div class="col-9">No existe y/o no se está
                         haciendo.
                     </div>
 
-                    <h5 class="p-3 mb-2 bg-white text-dark mx-auto">
+                    <h5 class="p-3 mx-auto mb-2 bg-white text-dark">
                         PLANEAR</h5>
                     <div class="table-responsive">
                         <table class="table" style="font-size: 12px;">

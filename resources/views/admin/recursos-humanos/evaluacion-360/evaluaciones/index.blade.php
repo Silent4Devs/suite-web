@@ -11,7 +11,7 @@
     </div>
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Cuestionarios</strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Evaluaciones</strong></h3>
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -195,19 +195,31 @@
                     },
                     {
                         data: 'autoevaluacion',
-                        name: 'autoevaluacion'
+                        name: 'autoevaluacion',
+                        render: function(data, type, row, meta) {
+                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                        }
                     },
                     {
                         data: 'evaluado_por_jefe',
-                        name: 'evaluado_por_jefe'
+                        name: 'evaluado_por_jefe',
+                        render: function(data, type, row, meta) {
+                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                        }
                     },
                     {
                         data: 'evaluado_por_equipo_a_cargo',
-                        name: 'evaluado_por_equipo_a_cargo'
+                        name: 'evaluado_por_equipo_a_cargo',
+                        render: function(data, type, row, meta) {
+                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                        }
                     },
                     {
                         data: 'evaluado_por_misma_area',
-                        name: 'evaluado_por_misma_area'
+                        name: 'evaluado_por_misma_area',
+                        render: function(data, type, row, meta) {
+                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                        }
                     },
                     {
                         data: 'fecha_inicio',
@@ -219,11 +231,17 @@
                     },
                     {
                         data: 'include_competencias',
-                        name: 'include_competencias'
+                        name: 'include_competencias',
+                        render: function(data, type, row, meta) {
+                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                        }
                     },
                     {
                         data: 'include_objetivos',
-                        name: 'include_objetivos'
+                        name: 'include_objetivos',
+                        render: function(data, type, row, meta) {
+                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                        }
                     },
                     {
                         data: 'id',
@@ -238,12 +256,12 @@
                             let urlResumen = `
                                 /admin/recursos-humanos/evaluacion-360/evaluacion/${data}/resumen
                                 `;
+                            // <a href="${urlEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                            // <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                             let html = `
                                 <div class="btn-group" style="background: white;">
-                                    <a href="${urlEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                                     <a href="${urlEvaluacion}" class="btn btn-sm" title="Evaluación"><i class="fas fa-cogs"></i></a>
-                                    <a href="${urlResumen}" class="btn btn-sm" title="Evaluación"><i class="fas fa-chart-bar"></i></a>
+                                    <a href="${urlResumen}" class="btn btn-sm" title="Gráfica"><i class="fas fa-chart-bar"></i></a>
                                     <button onclick="Delete('${urlEdit}',${row})" class="btn btn-sm text-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                                 </div>
                             `;

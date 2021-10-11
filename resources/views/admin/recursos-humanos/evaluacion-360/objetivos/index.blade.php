@@ -19,16 +19,19 @@
                             Nombre
                         </th>
                         <th style="vertical-align: top">
-                            KPI
+                            Puesto
                         </th>
                         <th style="vertical-align: top">
-                            Meta
+                            Área
                         </th>
                         <th style="vertical-align: top">
-                            Tipo
+                            Perfil
                         </th>
                         <th style="vertical-align: top">
-                            Opciones
+                            Cantidad Objetivos
+                        </th>
+                        <th style="vertical-align: top">
+                            Asignar
                         </th>
                     </tr>
 
@@ -133,32 +136,36 @@
                 columns: [{
                         data: 'id'
                     }, {
-                        data: 'nombre'
+                        data: 'name'
                     }, {
-                        data: 'KPI',
+                        data: 'puesto',
                     }, {
-                        data: 'meta',
+                        data: 'area.area',
+                    }, {
+                        data: 'perfil.nombre',
+                    },
+                    {
+                        data: 'objetivos',
                         render: function(data, type, row, meta) {
-                            return `${data} ${row.metrica.definicion}`;
-                        }
-                    }, {
-                        data: 'tipo',
-                        render: function(data, type, row, meta) {
-                            return `${data.nombre}`;
+                            if (data.length > 0) {
+                                if (data.length == 1) {
+                                    return `<span class="badge badge-primary">${data.length} asignado</span>`;
+                                } else {
+                                    return `<span class="badge badge-primary">${data.length} asignados</span>`;
+                                }
+                            } else {
+                                return `<span class="badge badge-dark">Sin asignar</span>`;
+                            }
                         }
                     },
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                            let urlEditar =
-                                `admin/recursos-humanos/evaluacion-360/objetivos/${data}/edit`;
-                            let urlVisualizarEliminar =
-                                `admin/recursos-humanos/evaluacion-360/objetivos/${data}`;
+                            let urlAsignar =
+                                `/admin/recursos-humanos/evaluacion-360/${data}/objetivos`;
                             let html = `
                             <div class="btn-group">
-                                <a href="${urlEditar}" title="Editar" class="btn btn-sm"><i class="fa fa-edit"></i></a>
-                                <a href="${urlVisualizarEliminar}" title="Visualizar" class="btn btn-sm"><i class="fa fa-eye"></i></a>
-                                <button onclick="event.preventDefault();Eliminar('${urlVisualizarEliminar}',${row.nombre})" title="Eliminar" class="btn btn-sm text-danger"><i class="fa fa-trash-alt"></i></button>
+                                <a href="${urlAsignar}" title="Editar" class="btn btn-sm"><i class="fas fa-sync-alt"></i></a>
                             </div>
                             `;
                             return html;

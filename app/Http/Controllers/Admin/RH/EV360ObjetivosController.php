@@ -13,9 +13,8 @@ class EV360ObjetivosController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $objetivos = Objetivo::with(['metrica', 'tipo'])->get();
-
-            return datatables()->of($objetivos)->toJson();
+            $empleados = Empleado::with(['objetivos', 'area', 'perfil'])->get();
+            return datatables()->of($empleados)->toJson();
         }
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.index');
