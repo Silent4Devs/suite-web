@@ -285,7 +285,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [4, 'desc']
+                    [0, 'desc']
                 ]
             };
             let table = $('.datatable-Minutasaltadireccion').DataTable(dtOverrideGlobals);
