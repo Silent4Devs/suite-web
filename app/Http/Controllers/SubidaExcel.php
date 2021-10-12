@@ -26,6 +26,7 @@ use App\Imports\RevisionDIreccionImport;
 use App\Imports\TeamImport;
 use App\Imports\UsuarioImport;
 use App\Imports\VulnerabilidadImport;
+use App\Imports\ActivoImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SubidaExcel extends Controller
@@ -206,6 +207,12 @@ class SubidaExcel extends Controller
     public function GrupoArea()
     {
         Excel::import(new GrupoImport, request()->file('grupo_area'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+    public function Activos()
+    {
+        Excel::import(new ActivoImport, request()->file('activo_inventario'));
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
