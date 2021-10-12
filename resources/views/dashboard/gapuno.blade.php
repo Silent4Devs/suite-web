@@ -161,26 +161,30 @@
         }
         });
         $(".valoracion").editable({
-        dataType: 'json',
-        source: [{
-        value: '1',
-        text: 'Cumple satisfactoriamente'
-        },
-        {
-        value: '2',
-        text: 'Cumple parcialmente'
-        },
-        {
-        value: '3',
-        text: 'No cumple'
-        }
-        ],
-        success: function (response, newValue) {
-        // $("#barraGap1").empty();
 
-        $(".barraGap1").load(location.href + " .barraGap1 > *");
-        console.log('Actualizado, response')
-        }
+            dataType: 'json',
+                source: [{
+                value: '1',
+                text: 'Cumple satisfactoriamente'
+                },
+                {
+                value: '2',
+                text: 'Cumple parcialmente'
+                },
+                {
+                value: '3',
+                text: 'No cumple'
+                }
+            ],
+            success: function (response, newValue) {
+            // $("#barraGap1").empty();
+
+                $(".barraGap1").load(location.href + " .barraGap1 > *");
+
+                $(".barraGap1_table").load(location.href + " .barraGap1_table > *");
+
+                console.log('Actualizado, response')
+            }
         });
         $(".valoracionGap2").editable({
         dataType: 'json',
@@ -204,6 +208,9 @@
         success: function (response, newValue) {
         // $(".barraGap2").empty();
         $(".barraGap2").load(location.href + " .barraGap2 > *");
+
+        $(".barraGap2_table").load(location.href + " .barraGap2_table > *");
+
         console.log('Actualizado, response')
         }
         });
@@ -214,7 +221,43 @@
         }
         });
 
+
+        $(".valoracionGap3").editable({
+            dataType: 'json',
+            source: [{
+                value: '1',
+                text: 'Cumple satisfactoriamente'
+            },
+                {
+                    value: '2',
+                    text: 'Cumple parcialmente'
+                },
+                {
+                    value: '3',
+                    text: 'No cumple'
+                }
+            ],
+            success: function(response, newValue) {
+                
+                $(".barraGap3").load(location.href + " .barraGap3 > *");
+
+                $(".barraGap3_table").load(location.href + " .barraGap3_table > *");
+                
+
+                    console.log('Actualizado, response')
+                }
         });
+        $(".recomendacion").editable({
+            dataType: 'json',
+            success: function(response, newValue) {
+                console.log('Actualizado, response')
+            }
+        });
+
+        });
+
+
+
 
     @endsection
 </script>

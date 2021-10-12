@@ -2,7 +2,7 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <div id="barraGap3" class="">
+                <div id="barraGap3" class="barraGap3">
                     <h6 align="center">GAP 03:  MONITOREO Y MEJORA CONTINUA ({{$porcentajeGap3['porcentaje']}}%)
                     </h6>
                     <div class="progress">
@@ -87,7 +87,7 @@
                                        data-url="{{route("admin.gap-tres.update",  $verificar->id)}}"
                                        data-title="Seleccionar valoracion"
                                        data-value="{{$verificar->valoracion}}"
-                                       class="valoracion" data-name="valoracion">
+                                       class="valoracionGap3" data-name="valoracion">
                                     </a>
                                 </td>
                                 <td>
@@ -149,7 +149,7 @@
                                            data-url="{{route("admin.gap-tres.update",  $actuar->id)}}"
                                            data-title="Seleccionar valoracion"
                                            data-value="{{$actuar->valoracion}}"
-                                           class="valoracion" data-name="valoracion">
+                                           class="valoracionGap3" data-name="valoracion">
                                         </a>
                                     </td>
                                     <td>
@@ -201,33 +201,7 @@
                 console.log('Actualizado, response')
             }
         });
-        $(".valoracion").editable({
-            dataType: 'json',
-            source: [{
-                value: '1',
-                text: 'Cumple satisfactoriamente'
-            },
-                {
-                    value: '2',
-                    text: 'Cumple parcialmente'
-                },
-                {
-                    value: '3',
-                    text: 'No cumple'
-                }
-            ],
-            success: function(response, newValue) {
-                $("#barraGap3").empty();
-                $("#barraGap3").load(location.href + " #barraGap3>*", "");
-                console.log('Actualizado, response')
-            }
-        });
-        $(".recomendacion").editable({
-            dataType: 'json',
-            success: function(response, newValue) {
-                console.log('Actualizado, response')
-            }
-        });
+        
 
     });
 
