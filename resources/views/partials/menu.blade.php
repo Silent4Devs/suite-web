@@ -691,7 +691,7 @@
                 </ul>
             </li>
         @endcan
-        @can('faq_management_access')
+        {{-- @can('faq_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-question iconos_menu letra_blanca">
@@ -711,7 +711,7 @@
                             </a>
                         </li>
                     @endcan
-                    {{-- @can('faq_question_access')
+                    @can('faq_question_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.faq-questions.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/faq-questions') || request()->is('admin/faq-questions/*') ? 'active' : '' }}">
@@ -721,10 +721,10 @@
                                 <font class="letra_blanca"> Manual </font>
                             </a>
                         </li>
-                    @endcan --}}
+                    @endcan
                 </ul>
             </li>
-        @endcan
+        @endcan --}}
         @if (\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') && \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
             <li class="c-sidebar-nav-item">
                 <a class="{{ request()->is('admin/team-members') || request()->is('admin/team-members/*') ? 'active' : '' }} c-sidebar-nav-link"
@@ -735,7 +735,7 @@
                 </a>
             </li>
         @endif
-        @can('sitemap_access')
+        {{-- @can('sitemap_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ url('sitemap') }}" class="c-sidebar-nav-link">
                     <i class="iconos_menu letra_blanca fas fa-fw fa-sitemap">
@@ -744,7 +744,7 @@
                     <font class="letra_blanca">Mapa de sitio</font>
                 </a>
             </li>
-        @endcan
+        @endcan --}}
     </ul>
 
 </div>

@@ -343,7 +343,7 @@ text-align: center !important;
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'asc']
+                    [0, 'desc']
                 ]
             };
             let table = $('.datatable-AlcanceSgsi').DataTable(dtOverrideGlobals);
