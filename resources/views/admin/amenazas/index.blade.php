@@ -187,7 +187,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [4, 'desc']
+                    [0, 'desc']
                 ],
             };
             let table = $('.datatable-amenaza').DataTable(dtOverrideGlobals);

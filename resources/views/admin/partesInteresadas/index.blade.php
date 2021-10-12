@@ -366,7 +366,7 @@ width:900px !important;
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [0, 'desc']
                 ],
                 //pageLength: 100,
             };
