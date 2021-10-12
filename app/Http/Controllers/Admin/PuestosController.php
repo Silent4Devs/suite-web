@@ -23,7 +23,7 @@ class PuestosController extends Controller
         abort_if(Gate::denies('puesto_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Puesto::with(['team'])->select(sprintf('%s.*', (new Puesto)->table));
+            $query = Puesto::with(['team'])->select(sprintf('%s.*', (new Puesto)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
