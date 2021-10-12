@@ -172,7 +172,7 @@
                     </div>
                 </div>
 
-                <div class="form-group col-sm-6">
+                {{-- <div class="form-group col-sm-6">
                     <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('evidencia_recursos', 'Evidencia de asignación de recursos') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-evidencia_recursos', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
@@ -181,7 +181,7 @@
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-group col-sm-6">
                     <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('politica_sgi', 'Politica del SGI') !!}
@@ -254,7 +254,7 @@
                     </div>
                 </div>
 
-                <!-- Categoria Field -->
+                {{-- <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
                     <i class="fas fa-user iconos-crear"></i>{!! Form::label('usuario', 'Usuario') !!}
                     <div>
@@ -264,7 +264,7 @@
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
@@ -290,7 +290,7 @@
                     </div>
                 </div>
 
-                <!-- Categoria Field -->
+                {{-- <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
                     <i class="fa-fw fas fa-cogs iconos-crear"></i>{!! Form::label('ejecutarenlace', 'Enlace a Ejecutar') !!}
                     <div>
@@ -300,9 +300,9 @@
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
 
-                <!-- Categoria Field -->
+                {{-- <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
                     <i class="fa-fw fas fa-users iconos-crear"></i>{!! Form::label('team', 'Team') !!}
                     <div>
@@ -312,9 +312,9 @@
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
 
-                <!-- Categoria Field -->
+                {{-- <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
                     <i class="fa-fw fab fa-stripe-s iconos-crear"></i>{!! Form::label('estadoincidente', 'Estado Incidente') !!}
                     <div>
@@ -324,7 +324,7 @@
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
@@ -356,7 +356,7 @@
                     </div>
                 </div>
 
-                <!-- Categoria Field -->
+                {{-- <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
                     <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('faqpregunta', 'Preguntas') !!}
                     <div>
@@ -366,7 +366,7 @@
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">
                         <span class="mb-1 text-center text-">Configuración de datos</span>
