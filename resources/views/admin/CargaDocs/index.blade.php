@@ -394,10 +394,10 @@
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
-                    <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('crear_area', 'Áreas/Crear área') !!}
+                    <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('datos_area', 'Áreas/Crear área') !!}
                     <div>
-                        {!! Form::open(['route' => 'carga-grupo_area', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-primary btn-sm" type="file" name="crear_area" required>
+                        {!! Form::open(['route' => 'carga-datos_area', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="datos_area" required>
                         {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
