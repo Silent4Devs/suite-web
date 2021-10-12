@@ -241,7 +241,7 @@
                 } = config;
                 window.location.href = url;
                 }
-                };
+            };
                 dtButtons.push(btnAgregar)
             if (!$.fn.dataTable.isDataTable('.tabla_incidentes_seguridad')) {
                 let tabla_incidentes = $(".tabla_incidentes_seguridad").DataTable({
@@ -309,9 +309,10 @@
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                let html = `
-                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.asignado.avatar}" title="${row.asignado.name}"></img>
-                                `;
+
+                                if (row.asignado) {
+                                    let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.asignado.avatar}" title="${row.asignado.name}"></img>`;
+                                }
                                 return `${row.asignado ? html: 'sin asignar'}`;
                             }
                         },
