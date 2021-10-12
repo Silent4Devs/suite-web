@@ -2,7 +2,7 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <div id="barraGap3">
+                <div id="barraGap3" class="barraGap3">
                     <h6 align="center">GAP 03:  MONITOREO Y MEJORA CONTINUA ({{$porcentajeGap3['porcentaje']}}%)
                     </h6>
                     <div class="progress">
@@ -25,7 +25,7 @@
                     siguiente cuestionario de acuerdo con los siguientes
                     parámetros:</p>
                 <div class="row">
-                    <div class="col-3 p-3 mb-2 bg-success text-white">
+                    <div class="p-3 mb-2 text-white col-3 bg-success">
                         Cumple
                         satisfactoriamente
                     </div>
@@ -37,7 +37,7 @@
                         cumple 100%.
                     </div>
                     <div class="w-100"></div>
-                    <div class="col-3 p-3 mb-2 bg-warning text-white">
+                    <div class="p-3 mb-2 text-white col-3 bg-warning">
                         Cumple
                         parcialmente
                     </div>
@@ -49,14 +49,14 @@
                         se gestiona
                     </div>
                     <div class="w-100"></div>
-                    <div class="col-3 p-3 mb-2 bg-danger text-white">No
+                    <div class="p-3 mb-2 text-white col-3 bg-danger">No
                         cumple
                     </div>
                     <div class="col-9">No existe y/o no se está
                         haciendo.
                     </div>
 
-                    <h5 class="p-3 mb-2 bg-white text-dark mx-auto">
+                    <h5 class="p-3 mx-auto mb-2 bg-white text-dark">
                         VERIFICAR</h5>
                     <div class="table-responsive">
                         <table class="table" style="font-size: 12px;">
@@ -87,7 +87,7 @@
                                        data-url="{{route("admin.gap-tres.update",  $verificar->id)}}"
                                        data-title="Seleccionar valoracion"
                                        data-value="{{$verificar->valoracion}}"
-                                       class="valoracion" data-name="valoracion">
+                                       class="valoracionGap3" data-name="valoracion">
                                     </a>
                                 </td>
                                 <td>
@@ -118,7 +118,7 @@
                         </table>
                     </div>
                     <hr>
-                    <h5 class="p-3 mb-2 bg-white text-dark mx-auto">
+                    <h5 class="p-3 mx-auto mb-2 bg-white text-dark">
                         ACTUAR</h5>
                     <div class="table-responsive">
                         <table class="table" style="font-size: 12px;">
@@ -149,7 +149,7 @@
                                            data-url="{{route("admin.gap-tres.update",  $actuar->id)}}"
                                            data-title="Seleccionar valoracion"
                                            data-value="{{$actuar->valoracion}}"
-                                           class="valoracion" data-name="valoracion">
+                                           class="valoracionGap3" data-name="valoracion">
                                         </a>
                                     </td>
                                     <td>
@@ -201,36 +201,7 @@
                 console.log('Actualizado, response')
             }
         });
-        $(".valoracion").editable({
-            dataType: 'json',
-            source: [{
-                value: '1',
-                text: 'Cumple satisfactoriamente'
-            },
-                {
-                    value: '2',
-                    text: 'Cumple parcialmente'
-                },
-                {
-                    value: '3',
-                    text: 'No cumple'
-                }
-            ],
-            success: function(response, newValue) {
-                $("#barraGap3").empty();
-                $("#barraGap3").load(location.href + " #barraGap3>*", "");
-
-                $("#barraGap3_tablero").empty();
-                $("#barraGap3_tablero").load(location.href + " #barraGap3_tablero>*", "");
-                console.log('Actualizado, response')
-            }
-        });
-        $(".recomendacion").editable({
-            dataType: 'json',
-            success: function(response, newValue) {
-                console.log('Actualizado, response')
-            }
-        });
+        
 
     });
 

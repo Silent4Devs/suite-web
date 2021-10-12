@@ -273,7 +273,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div id="barraGap1_tablero">
+                    <div id="barraGap1_tablero" class="barraGap1_table">
                         <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE
                             SEGURIDAD
                             Y PRIVACIDAD DE LA ORGANIZACIÓN ({{number_format($porcentajeGap1, 2, '.', '')}}%)</h6>
@@ -363,7 +363,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div id="barraGap2_tablero">
+                    <div id="barraGap2_tablero" class="barraGap2_table">
                         <h6 align="center">GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN
                             ({{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%)
                         </h6>
@@ -465,7 +465,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div id="barraGap3_tablero">
+                    <div id="barraGap3_tablero" class="barraGap3_table">
                         <h6 align="center">GAP 03: MONITOREO Y MEJORA CONTINUA ({{$porcentajeGap3['porcentaje']}}%)
                         </h6>
                         <div class="progress">
