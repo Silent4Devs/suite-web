@@ -3,9 +3,9 @@
 
     {{ Breadcrumbs::render('admin.planificacion-controls.create') }}
 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Planificación y Control  </h3>
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Planificación y Control  </h3>
     </div>
 
     <div class="card-body">
@@ -32,7 +32,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planificacionControl.fields.descripcion_helper') }}</span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-12 col-lg-12 col-sm-12">
                 <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
                 <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="id_reviso"
                     id="id_reviso">
@@ -131,7 +131,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.planificacionControl.fields.nivelriesgo_helper') }}</span>
             </div>
-            <div class="form-group col-12 text-right">
+            <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
