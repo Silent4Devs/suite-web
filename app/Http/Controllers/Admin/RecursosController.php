@@ -29,7 +29,7 @@ class RecursosController extends Controller
         abort_if(Gate::denies('recurso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Recurso::with(['participantes', 'team', 'categoria_capacitacion'])->select(sprintf('%s.*', (new Recurso)->table));
+            $query = Recurso::with(['participantes', 'team', 'categoria_capacitacion'])->select(sprintf('%s.*', (new Recurso)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
