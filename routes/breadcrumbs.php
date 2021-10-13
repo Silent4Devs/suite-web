@@ -399,9 +399,9 @@ Breadcrumbs::for('EV360-Evaluaciones-Create', function ($trail) {
     $trail->push('Crear Evaluación', route('admin.ev360-evaluaciones.create'));
 });
 
-Breadcrumbs::for('EV360-Evaluaciones-Evaluacion', function ($trail) {
+Breadcrumbs::for('EV360-Evaluaciones-Evaluacion', function ($trail, $evaluacion) {
     $trail->parent('EV360-Evaluaciones');
-    $trail->push('Evaluación', '/recursos-humanos/evaluacion-360/evaluaciones/*/evaluacion');
+    $trail->push('Evaluación', route('admin.ev360-evaluaciones.evaluacion', $evaluacion->id));
 });
 
 Breadcrumbs::for('EV360-Competencias', function ($trail) {
@@ -417,17 +417,42 @@ Breadcrumbs::for('EV360-Competencias-Edit', function ($trail) {
     $trail->push('Editar Competencia', '/recursos-humanos/evaluacion-360/evaluaciones/*/evaluacion');
 });
 
+Breadcrumbs::for('EV360-Competencias-Por-Puesto', function ($trail) {
+    $trail->parent('Evaluacion360');
+    $trail->push('Competencias por puesto', route('admin.ev360-competencias-por-puesto.index'));
+});
+Breadcrumbs::for('EV360-Competencias-Por-Puesto-Create', function ($trail) {
+    $trail->parent('EV360-Competencias-Por-Puesto');
+    $trail->push('Asignar competencia al puesto', 'recursos-humanos/evaluacion-360/competencias-por-puesto/*/create');
+});
+
+
+
 Breadcrumbs::for('EV360-Objetivos', function ($trail) {
     $trail->parent('Evaluacion360');
     $trail->push('Objetivos', route('admin.ev360-objetivos.index'));
 });
-Breadcrumbs::for('EV360-Objetivos-Create', function ($trail) {
+Breadcrumbs::for('EV360-Objetivos-Create', function ($trail, $empleado) {
     $trail->parent('EV360-Objetivos');
-    $trail->push('Crear Objetivo', route('admin.ev360-objetivos.create'));
+    $trail->push('Asignar Objetivo', route('admin.ev360-objetivos-empleado.create', $empleado));
 });
 Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
     $trail->parent('EV360-Objetivos');
     $trail->push('Editar Objetivo', '/recursos-humanos/evaluacion-360/objetivos/*/edit');
+});
+
+
+Breadcrumbs::for('EV360-Evaluacion-Resumen', function ($trail, $evaluacion) {
+    $trail->parent('EV360-Evaluaciones-Evaluacion', $evaluacion);
+    $trail->push($evaluacion->nombre, '/recursos-humanos/evaluacion-360/evaluacion/*/resumen');
+});
+Breadcrumbs::for('EV360-Evaluacion-Consulta-Evaluado', function ($trail, $evaluacion) {
+    $trail->parent('EV360-Evaluaciones-Evaluacion', $evaluacion['evaluacion']);
+    $trail->push($evaluacion['evaluado']->name, route('admin.ev360-evaluaciones.autoevaluacion.consulta.evaluado', ['evaluacion' => $evaluacion['evaluacion']->id, 'evaluado' => $evaluacion['evaluado']->id]));
+});
+Breadcrumbs::for('EV360-Evaluacion-Cuestionario', function ($trail, $evaluacion) {
+    $trail->parent('EV360-Evaluaciones-Evaluacion', $evaluacion['evaluacion']);
+    $trail->push('Cuestionario', route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion['evaluacion']->id, 'evaluado' => $evaluacion['evaluado']->id, 'evaluador' => $evaluacion['evaluador']->id]));
 });
 // Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
 //     $trail->parent('EV360-Objetivos');

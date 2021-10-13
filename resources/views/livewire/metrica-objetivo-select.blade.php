@@ -1,4 +1,4 @@
-<div class="col-12" id="metrica_objetivo_select">
+<div class="w-100" id="metrica_objetivo_select">
     <select class="form-control select2 {{ $errors->has('metrica_id') ? 'is-invalid' : '' }}" name="metrica_id"
         id="metrica_id">
         @foreach ($metricas as $metrica)

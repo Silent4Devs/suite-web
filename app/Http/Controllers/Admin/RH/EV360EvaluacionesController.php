@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RH\Evaluaciones\CitaEvaluadorEvaluado;
+use App\Mail\RH\Evaluaciones\RecordatorioEvaluadores;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\RH\Competencia;
@@ -14,8 +16,11 @@ use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoRespuesta;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Spatie\CalendarLinks\Link;
 
 class EV360EvaluacionesController extends Controller
 {
@@ -1053,5 +1058,66 @@ class EV360EvaluacionesController extends Controller
             ]);
         }
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.lista-evaluaciones-por-empleado', compact('lista_evaluaciones', 'empleado'));
+    }
+
+    public function enviarCorreoAEvaluadores(Evaluacion $evaluacion)
+    {
+        $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->pluck('evaluador_id')->unique()->toArray();
+        foreach ($evaluadores as $evaluador) {
+            $evaluados = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
+                ->where('evaluador_id', $evaluador)
+                ->where('evaluado', false)
+                ->pluck('evaluado_id')
+                ->unique()
+                ->toArray();
+            $evaluados = Empleado::find($evaluados);
+            $evaluador_model = Empleado::find($evaluador);
+            if (count($evaluados)) {
+                $this->enviarNotificacionAlEvaluador($evaluador_model->email, $evaluacion, $evaluador_model, $evaluados);
+                if (env('APP_ENV') == 'local') { // solo funciona en desarrollo, es una muy mala práctica, es para que funcione con mailtrap y la limitación del plan gratuito
+                    if (env('MAIL_HOST') == 'smtp.mailtrap.io') {
+                        sleep(1); //use usleep(500000) for half a second or less
+                    }
+                }
+            }
+        }
+        return response()->json(['success' => true]);
+    }
+
+    public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
+    {
+        Mail::to($email)->send(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
+    }
+
+
+    public function enviarInvitacionDeEvaluacion(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date|after:fecha_inicio',
+            'descripcion' => 'nullable|string'
+        ]);
+        $evaluacion = Evaluacion::find(intval($request->evaluacion));
+        $evaluado = Empleado::find(intval($request->evaluado));
+        $evaluador = Empleado::find(intval($request->evaluador));
+        $fecha_inicio = $request->fecha_inicio;
+        $fecha_fin = $request->fecha_fin;
+        $nombre = $request->nombre;
+        $descripcion = $request->descripcion ? $request->descripcion : 'Sin descripción';
+        $from = DateTime::createFromFormat('Y-m-d H:i', Carbon::parse($fecha_inicio)->format('Y-m-d H:i'));
+        $to = DateTime::createFromFormat('Y-m-d H:i', Carbon::parse($fecha_fin)->format('Y-m-d H:i'));
+        $link = Link::create($nombre, $from, $to)
+            ->description($descripcion);
+        $link_outlook = $link->google();
+
+        $this->enviarCorreoInvitacionAlEvaluado($evaluador->email, $evaluacion, $evaluador, $evaluado, $link_outlook);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function enviarCorreoInvitacionAlEvaluado($email, $evaluacion, $evaluador, $evaluado, $enlace)
+    {
+        Mail::to($email)->send(new CitaEvaluadorEvaluado($evaluacion, $evaluador, $evaluado, $enlace));
     }
 }

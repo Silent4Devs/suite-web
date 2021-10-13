@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin\RH;
-
+// header("Access-Control-Allow-Origin: *");
 use App\Http\Controllers\Controller;
 use App\Models\Puesto;
 use App\Models\RH\Competencia;
@@ -9,6 +9,8 @@ use App\Models\RH\CompetenciaPuesto;
 use App\Models\RH\Conducta;
 use App\Models\RH\EvaluacionRepuesta;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class EV360CompetenciasController extends Controller
 {
@@ -39,6 +41,22 @@ class EV360CompetenciasController extends Controller
             'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
         $competencia = Competencia::create($request->all());
+        $imagen = $competencia->imagen;
+        if ($request->hasFile('foto')) {
+            Storage::makeDirectory('public/competencias/img'); //Crear si no existe
+            $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $nombre_imagen = 'COMPETENCIA_' . $competencia->id . '_' . $competencia->nombre . '.' . $extension;
+            $route = storage_path() . '/app/public/competencias/img/' . $nombre_imagen;
+            $imagen = $nombre_imagen;
+            //Usamos image_intervention para disminuir el peso de la imagen
+            $img_intervention = Image::make($request->file('foto'));
+            $img_intervention->resize(720, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($route);
+            $competencia->update([
+                'imagen' => $imagen
+            ]);
+        }
         if ($competencia) {
             return redirect()->route('admin.ev360-competencias.edit', $competencia->id);
         } else {
@@ -61,12 +79,16 @@ class EV360CompetenciasController extends Controller
         }
     }
 
-    public function edit($competencia)
+    public function edit($competencia, $onlyConductas = null)
     {
         $competencia = Competencia::find(intval($competencia));
         $tipo_seleccionado = $competencia->tipo_id;
+        $editar_solo_conductas = false;
+        if ($onlyConductas) {
+            $editar_solo_conductas = true;
+        }
 
-        return view('admin.recursos-humanos.evaluacion-360.competencias.edit', compact('competencia', 'tipo_seleccionado'));
+        return view('admin.recursos-humanos.evaluacion-360.competencias.edit', compact('competencia', 'tipo_seleccionado', 'editar_solo_conductas'));
     }
 
     public function update(Request $request, $competencia)
@@ -78,6 +100,22 @@ class EV360CompetenciasController extends Controller
         ]);
         $competencia = Competencia::find(intval($competencia));
         $competencia_u = $competencia->update($request->all());
+
+        if ($request->hasFile('foto')) {
+            Storage::makeDirectory('public/competencias/img'); //Crear si no existe
+            $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $nombre_imagen = 'COMPETENCIA_' . $competencia->id . '_' . $competencia->nombre . '.' . $extension;
+            $route = storage_path() . '/app/public/competencias/img/' . $nombre_imagen;
+
+            //Usamos image_intervention para disminuir el peso de la imagen
+            $img_intervention = Image::make($request->file('foto'));
+            $img_intervention->resize(1080, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($route);
+            $competencia->update([
+                'imagen' => $nombre_imagen
+            ]);
+        }
         // Almacenamos la competencia en todos los puestos
         if ($request->toda_la_empresa) {
             $puestos = Puesto::all();
@@ -160,5 +198,15 @@ class EV360CompetenciasController extends Controller
 
             return json_encode($niveles);
         }
+    }
+    public function obtenerUltimoNivel(Request $request)
+    {
+        $competencia = Competencia::find(intval($request->competencia_id));
+        if (count($competencia->opciones->pluck('ponderacion')->toArray()) == 0) {
+            $nivel = 0;
+        } else {
+            $nivel = max($competencia->opciones->pluck('ponderacion')->toArray());
+        }
+        return $nivel;
     }
 }

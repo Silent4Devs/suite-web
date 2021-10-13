@@ -1,7 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('EV360-Evaluaciones-Create') }}
+    {{ Breadcrumbs::render('EV360-Evaluacion-Consulta-Evaluado', ['evaluacion' => $evaluacion,'evaluado'=>$evaluado]) }}
+
     <style>
         .fs-consulta {
             font-size: 11px;

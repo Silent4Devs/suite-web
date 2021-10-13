@@ -12,11 +12,70 @@
             </div>
         @endcan
 
-        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
-            <div class="row w-100">
-                <div class="text-center col-1 align-items-center d-flex justify-content-center">
-                    <div class="w-100">
-                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table  table-bordered table-striped table-hover datatable datatable-Area">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.area.fields.id') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.area.fields.area') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($areas as $key => $area)
+                                    <tr data-entry-id="{{ $area->id }}">
+                                        <td>
+                                            {{ $area->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $area->area ?? '' }}
+                                        </td>
+                                        <td>
+                                            @can('area_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.areas.show', $area->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('area_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.areas.edit', $area->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('area_delete')
+                                                <form action="{{ route('frontend.areas.destroy', $area->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="col-11">
@@ -169,8 +228,25 @@
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+  $.extend(true, $.fn.dataTable.defaults, {
+    orderCellsTop: true,
+    order: [[ 0, 'desc' ]],
+    pageLength: 100,
+  });
+  let table = $('.datatable-Area:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  $('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+      table
+        .column($(this).parent().index())
+        .search(value, strict)
+        .draw()
+  });
+})
 
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({

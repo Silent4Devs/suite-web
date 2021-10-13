@@ -25,3 +25,5 @@ storage/app/public/gantt/
 .php-cs-fixer.cache
 
 storage/logs/
+
+*.cache

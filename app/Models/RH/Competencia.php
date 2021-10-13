@@ -11,7 +11,7 @@ class Competencia extends Model
     use HasFactory, SoftDeletes;
     protected $table = 'ev360_competencias';
     protected $guarded = ['id'];
-    protected $appends = ['tipo_competencia'];
+    protected $appends = ['tipo_competencia', 'imagen_ruta'];
 
     const TODA_LA_EMPRESA = 0;
     const POR_PUESTO = 1;
@@ -21,6 +21,14 @@ class Competencia extends Model
     public function getTipoCompetenciaAttribute()
     {
         return $this->tipo->nombre;
+    }
+
+    public function getImagenRutaAttribute()
+    {
+        if ($this->imagen) {
+            return asset('storage/competencias/img/' . $this->imagen);
+        }
+        return asset('img/star.png');
     }
 
     public function competencia_puesto()

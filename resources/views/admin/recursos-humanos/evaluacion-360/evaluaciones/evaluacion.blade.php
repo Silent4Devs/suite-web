@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('EV360-Evaluaciones-Evaluacion') }}
+    {{ Breadcrumbs::render('EV360-Evaluaciones-Evaluacion', $evaluacion) }}
     <style>
         .nav-pills .nav-link.active,
         .nav-pills .show>.nav-link {
@@ -78,40 +78,37 @@
         </div>
         <div class="card-body">
             <div>
-                <h3><i class="mr-2 fas fa-book"></i>Información general de la evaluación:
+                {{-- <h3><i class="mr-2 fas fa-book"></i>Información general de la evaluación:
                     <strong>{{ $evaluacion->nombre }}</strong>
-                </h3>
+                </h3> --}}
                 <div class="w-100" style="border-radius: 8px 8px 5px 5px">
-                    <hr>
                     <div class="w-100" style="color:rgb(51, 51, 51);">
                         <div>
-                            <div class="pl-0 col-6 d-flex align-items-center">
-                                <span style="font-size:15px;" class="mr-2">
-                                    <i class="mr-2 fas fa-cogs"></i>Configuración</span><span class="badge"
-                                    style="background: {{ $evaluacion->color_estatus }};color:{{ $evaluacion->color_estatus_text }}">
-                                    <span
-                                        style="border-radius: 100%;width: 6px;height: 6px;background: white;display: inline-block;margin-right: 3px"></span>{{ $evaluacion->estatus_formateado }}
-                                </span>
+                            <div class="text-center form-group"
+                                style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                INFORMACIÓN GENERAL
                             </div>
-                            <div class="col-6 d-flex align-items-center justify-content-end">
-                                @if (count($evaluacion->competencias))
-                                    @if ($evaluacion->estatus == App\Models\RH\Evaluacion::DRAFT)
-                                        <button id="btnIniciarEvaluacion" class="btn btn-sm"
-                                            style="background: #2cb142;color: #fff;"><i
-                                                class="mr-2 fas fa-calendar-check"></i>Iniciar
-                                            Evaluación</button>
-                                    @elseif ($evaluacion->estatus == App\Models\RH\Evaluacion::CLOSED)
-                                        <button id="btnPostergarEvaluacion" class="btn btn-sm"
-                                            style="background: #2c40b1;color: #fff;"><i
-                                                class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
-                                            nueva fecha de finalización</button>
-                                    @else
-                                        <button id="btnCerrarEvaluacion"
-                                            onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
-                                            class="btn btn-sm" style="background: #c53030;color: #fff;"><i
-                                                class="mr-2 fas fa-calendar-times"></i>Cerrar
-                                            Evaluación</button>
-                                    @endif
+                            <div style="float: right">
+                                <button id="btnEnviarRecordatorio" class="btn btn-sm"
+                                    style="background: #99faa6;color: rgb(54, 54, 54);"><i
+                                        class="mr-2 fas fa-envelope-open-text"></i>Enviar
+                                    recordatorio de evaluación</button>
+                                @if ($evaluacion->estatus == App\Models\RH\Evaluacion::DRAFT)
+                                    <button id="btnIniciarEvaluacion" class="btn btn-sm"
+                                        style="background: #3ddf58;color: #fff;"><i
+                                            class="mr-2 fas fa-calendar-check"></i>Iniciar
+                                        Evaluación</button>
+                                @elseif ($evaluacion->estatus == App\Models\RH\Evaluacion::CLOSED)
+                                    <button id="btnPostergarEvaluacion" class="btn btn-sm"
+                                        style="background: #4e59d4;color: #fff;"><i
+                                            class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
+                                        nueva fecha de finalización</button>
+                                @else
+                                    <button id="btnCerrarEvaluacion"
+                                        onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
+                                        class="btn btn-sm" style="background: #eb4a4a;color: #fff;"><i
+                                            class="mr-2 fas fa-calendar-times"></i>Cerrar
+                                        Evaluación</button>
                                 @endif
                             </div>
                         </div>
@@ -125,6 +122,15 @@
                                     class="rounded-circle"
                                     style="clip-path: circle(15px at 50% 50%);height: 30px;margin-left: -6px;" />
                                 {{ $evaluacion->autor->name }}
+                            </p>
+                        </li>
+                        <li class="px-0 text-center list-group-item w-100" style="border:none;width: 90px !important;">
+                            <p class="m-0 text-center text-muted">Estatus</p>
+                            <p class="m-0"> <span class="badge"
+                                    style="background: {{ $evaluacion->color_estatus }};color:{{ $evaluacion->color_estatus_text }}">
+                                    <span
+                                        style="border-radius: 100%;width: 6px;height: 6px;background: white;display: inline-block;margin-right: 3px"></span>{{ $evaluacion->estatus_formateado }}
+                                </span>
                             </p>
                         </li>
                         <li class="px-0 text-center list-group-item w-100" style="border:none;">
@@ -217,9 +223,10 @@
                     <hr>
                 </div>
                 <div class="datatable-fix w-100">
-                    <span style="font-size:15px;" class="mb-3 mr-2 d-inline-block">
-                        <i class="mr-2 fas fa-users"></i>Evaluados
-                    </span>
+                    <div class="text-center form-group"
+                        style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                        EVALUADOS
+                    </div>
                     <table id="tblParticipantes" class="table">
                         <thead class="bg-dark">
                             <tr>
@@ -723,6 +730,40 @@
                     }
                 })
             }
+
+            document.getElementById('btnEnviarRecordatorio').addEventListener('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: '¿Quieres enviar recordatorio por correo a los evaluadores?',
+                    html: "<span style='font-size:20px'><i class='fas fa-envelope-open-text'></i></span>",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Enviar!',
+                    cancelButtonText: 'No',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let url =
+                            "{{ route('admin.ev360-evaluaciones.recordatorio', $evaluacion) }}"
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            dataType: "JSON",
+                            beforeSend: function() {
+                                toastr.info(
+                                    'Enviando recordatorio, espere un momento...');
+                            },
+                            success: function(response) {
+                                toastr.success('Recordatorio enviado');
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                toastr.error(errorThrown);
+                            }
+                        });
+                    }
+                })
+            })
         });
 
         function seleccionarMenuAlIniciar() {

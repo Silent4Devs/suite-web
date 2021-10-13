@@ -1,4 +1,70 @@
 <style>
+    .lds-facebook {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+    }
+
+    .lds-facebook div {
+        display: inline-block;
+        position: absolute;
+        left: 8px;
+        width: 16px;
+        background: rgb(24, 24, 24);
+        animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+    }
+
+    .lds-facebook div:nth-child(1) {
+        left: 8px;
+        animation-delay: -0.24s;
+    }
+
+    .lds-facebook div:nth-child(2) {
+        left: 32px;
+        animation-delay: -0.12s;
+    }
+
+    .lds-facebook div:nth-child(3) {
+        left: 56px;
+        animation-delay: 0;
+    }
+
+    @keyframes lds-facebook {
+        0% {
+            top: 8px;
+            height: 64px;
+        }
+
+        50%,
+        100% {
+            top: 24px;
+            height: 32px;
+        }
+    }
+
+</style>
+<style>
+    .display-almacenando {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        margin-left: 0px;
+        background: #0000000d;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .display-almacenando h1 {
+        font-size: 50px;
+    }
+
+    .display-almacenando p {
+        font-size: 30px;
+    }
+
     .img-profile {
         width: 130px;
         height: 130px;
@@ -225,12 +291,23 @@
                                                 @click="show=!show"><i class="fas"
                                                     :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
                                         </h5>
-                                        <div x-show="show" x-transition:enter.duration.500ms
+                                        <div id="evaluacionesRealizar" x-show="show" x-transition:enter.duration.500ms
                                             x-transition:leave.duration.400ms>
                                             @foreach ($evaluaciones as $evaluacion)
                                                 <small>{{ $evaluacion->empleado_evaluado->name }}
                                                     @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->id)
                                                         <span class="badge badge-primary">Autoevaluación</span>
+                                                    @endif
+                                                    @if ($evaluacion->empleado_evaluado->supervisor)
+                                                        @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->supervisor->id)
+                                                            <span class="badge badge-success">Supervisor</span>
+                                                            <i data-evaluacion={{ $evaluacion->evaluacion->id }}
+                                                                data-evaluado={{ $evaluacion->empleado_evaluado->id }}
+                                                                data-evaluador={{ $evaluacion->evaluador->id }}
+                                                                title="Solicitar reunión"
+                                                                class="fas fa-envelope-open-text sendInvitacion"
+                                                                style="font-size:11px;"></i>
+                                                        @endif
                                                     @endif
                                                 </small>
                                                 <a
@@ -324,6 +401,64 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="invitacionModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="invitacionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="invitacionModalLabel"><i class="fas fa-plus mr-2"></i>Crear Reunión
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('admin.ev360-evaluaciones.invitacion-reunion-evaluacion') }}"
+                    id="formInvitacion">
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="">Nombre<span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" name="nombre">
+                            <small class="errores error_nombre text-danger"></small>
+                        </div>
+                        <div class="col-6">
+                            <label for="">Fecha Inicio<span class="text-danger">*</span></label>
+                            <input class="form-control" type="datetime-local" name="fecha_inicio">
+                            <small class="errores error_fecha_inicio text-danger"></small>
+                        </div>
+                        <div class="col-6">
+                            <label for="">Fecha Fin<span class="text-danger">*</span></label>
+                            <input class="form-control" type="datetime-local" name="fecha_fin">
+                            <small class="errores error_fecha_fin text-danger"></small>
+                        </div>
+                        <div class="col-12">
+                            <label for="">Descripción</label>
+                            <textarea class="form-control" name="descripcion" id="" cols="30" rows="1"></textarea>
+                            <small class="errores error_descripcion text-danger"></small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger" id="btnEnviarInvitacion">Enviar</button>
+            </div>
+            <div class="display-almacenando row" id="displayAlmacenandoUniversal" style="display: none">
+                <div class="col-12">
+                    <h1>
+                        <div class="lds-facebook">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 @section('scripts')
@@ -339,5 +474,77 @@
                 console.log(e.target);
             }
         })
+        document.addEventListener('DOMContentLoaded', function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            document.getElementById('evaluacionesRealizar').addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('sendInvitacion')) {
+                    e.preventDefault();
+                    const evaluacion = e.target.getAttribute('data-evaluacion');
+                    const evaluado = e.target.getAttribute('data-evaluado');
+                    const evaluador = e.target.getAttribute('data-evaluador');
+                    $('#invitacionModal').modal('show');
+                    // e.target.parentNode.nextElementSibling.classList.toggle('lista-toggle');
+
+                    $('#btnEnviarInvitacion').replaceWith($('#btnEnviarInvitacion')
+                        .clone()); //Evitar creacion multiple de eventos click
+                    document.getElementById('btnEnviarInvitacion').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        limpiarErrores();
+                        mostrarValidando();
+                        let formulario = document.getElementById('formInvitacion');
+                        let formData = new FormData(formulario);
+                        formData.append('evaluacion', evaluacion);
+                        formData.append('evaluado', evaluado);
+                        formData.append('evaluador', evaluador);
+                        $.ajax({
+                            type: "POST",
+                            url: formulario.getAttribute('action'),
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            dataType: "JSON",
+                            success: function(response) {
+                                toastr.success('Enlace de reunión enviado con éxito');
+                                $('#invitacionModal').modal('hide');
+                                formulario.reset();
+                                ocultarValidando();
+                            },
+                            error: function(request, status, error) {
+                                document.querySelectorAll('.errors').forEach(error => {
+                                    error.innerHTML = "";
+                                });
+                                ocultarValidando();
+                                $.each(request.responseJSON.errors, function(
+                                    indexInArray, valueOfElement) {
+                                    console.log(valueOfElement, indexInArray);
+                                    $(`small.error_${indexInArray}`).text(
+                                        valueOfElement[0]);
+
+                                });
+                            }
+                        });
+                    })
+                }
+            });
+        })
+
+        function limpiarErrores() {
+            let errores = document.querySelectorAll('.errores');
+            errores.forEach(error => {
+                error.innerHTML = "";
+            });
+        }
+
+        function mostrarValidando() {
+            document.getElementById('displayAlmacenandoUniversal').style.display = 'grid';
+        }
+
+        function ocultarValidando() {
+            document.getElementById('displayAlmacenandoUniversal').style.display = 'none';
+        }
     </script>
 @endsection

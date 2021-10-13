@@ -9,6 +9,23 @@
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
+            <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                            Instrucciones</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor
+                            asigne los objetivos definidos a cada uno de los colaboradores de la organización <small
+                                class="text-muted">(Consulte los objetivos con el jefe inmediato de cada
+                                colaborador)</small></p>
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered w-100 tblObjetivos">
                 <thead class="thead-dark">
                     <tr>
@@ -112,19 +129,6 @@
                 }
 
             ];
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar competencia',
-                url: "{{ route('admin.ev360-objetivos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            dtButtons.push(btnAgregar);
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

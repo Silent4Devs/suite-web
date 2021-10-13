@@ -1,8 +1,15 @@
 @extends('layouts.admin')
 @section('content')
     <div class="mt-3">
-        {{ Breadcrumbs::render('EV360-Competencias') }}
+        {{ Breadcrumbs::render('EV360-Competencias-Por-Puesto') }}
     </div>
+    <style>
+        .imagen-responsiva {
+            clip-path: circle(10px at 50% 50%);
+            height: 20px;
+        }
+
+    </style>
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Asignar competencias por puesto</strong></h3>
@@ -31,10 +38,13 @@
                             Puesto
                         </th>
                         <th style="vertical-align: top">
-                            Opciones
+                            Competencias
                         </th>
                         <th style="vertical-align: top">
                             Competencias asignadas
+                        </th>
+                        <th style="vertical-align: top">
+                            Opciones
                         </th>
                     </tr>
 
@@ -124,30 +134,41 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.ev360-competencias-por-puesto.index') }}",
                 columns: [{
-                        data: 'puesto',
-                        width: '60%',
+                    data: 'puesto',
+                    width: '40%',
+                }, {
+                    data: 'competencias',
+                    render: function(data, type, row, meta) {
+                        let html = '<div>';
+                        data.forEach(competencia => {
+                            console.log(competencia);
+                            html += `
+                                <img class="imagen-responsiva" src="${competencia.competencia.imagen_ruta}" title="${competencia.competencia.nombre}"/>
+                                `;
+                        });
+                        html += '</div>';
+                        return html;
                     },
-                    {
-                        data: 'id',
-                        render: function(data, type, row, meta) {
-                            let urlBtnAsignarCompetencias =
-                                `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
-                            let botones = `
-                                <a class="btn btn-sm btn-editar btn-primary" title="Asignar competencias" href="${urlBtnAsignarCompetencias}"><i class="mr-2 fas fa-user-tag"></i> Asignar</a>
-                            `;
-                            return botones;
-                        },
-                        width: '15%'
-                    }, {
-                        data: 'competencias',
-                        render: function(data, type, row, meta) {
-                            return data.length > 0 ?
-                                `<span class="badge badge-success">${data.length} competencia(s) asignada(s)</span>` :
-                                '<span class="badge badge-primary">Sin competencias asignadas</span>';
-                        },
-                        width: '25%'
-                    }
-                ],
+                    width: '20%',
+                }, {
+                    data: 'competencias',
+                    render: function(data, type, row, meta) {
+                        return data.length > 0 ?
+                            `<span class="badge badge-success">${data.length} competencia(s) asignada(s)</span>` :
+                            '<span class="badge badge-primary">Sin competencias asignadas</span>';
+                    },
+                    width: '25%'
+                }, {
+                    data: 'id',
+                    render: function(data, type, row, meta) {
+                        let urlBtnAsignarCompetencias =
+                            `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
+                        let botones =
+                            `<a class="btn btn-sm btn-editar btn-primary" title="Asignar competencias" href="${urlBtnAsignarCompetencias}"><i class="mr-2 fas fa-user-tag"></i> Asignar</a>`;
+                        return botones;
+                    },
+                    width: '15%'
+                }],
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']

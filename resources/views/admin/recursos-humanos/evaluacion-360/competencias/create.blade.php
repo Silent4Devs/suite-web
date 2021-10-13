@@ -9,15 +9,13 @@
         </div>
         <div class="card-body">
             <form id="formCompetenciaCreate" method="POST" action="{{ route('admin.ev360-competencias.store') }}"
-                class="mt-3 row">
+                class="mt-3" enctype="multipart/form-data">
                 @csrf
                 @include('admin.recursos-humanos.evaluacion-360.competencias._form')
-                <div class="container row">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-end w-100">
-                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                            <button type="submit" class="ml-2 btn btn-danger">Guardar</button>
-                        </div>
+                <div class="w-100">
+                    <div class="d-flex justify-content-end w-100">
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                        <button type="submit" class="ml-2 btn btn-danger">Guardar</button>
                     </div>
                 </div>
             </form>
@@ -27,6 +25,17 @@
 
 @section('scripts')
     <script type="text/javascript">
+        $('.form-control-file').on('change', function(e) {
+            let inputFile = e.currentTarget;
+            console.log('si')
+            $("#texto-imagen").text(inputFile.files[0].name);
+            // Imagen previa
+            var reader = new FileReader();
+            reader.readAsDataURL(inputFile.files[0]);
+            reader.onload = function(e) {
+                document.getElementById('uploadPreview').src = e.target.result;
+            };
+        });
         window.Conductas = function(url) {
             Swal.fire({
                 title: '¿Quieres Agregar Conductas?',
@@ -75,5 +84,30 @@
         Livewire.on('select2', () => {
             initSelect2();
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var headers = {
+                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': 'https://api.flaticon.com/v2'
+            };
+
+
+            // (async () => {
+            //     const rawResponse = await fetch('https://api.flaticon.com/v2/app/authentication', {
+            //         method: 'POST',
+            //         headers: {
+            //             'Accept': 'application/json',
+            //             'Content-Type': 'multipart/form-data'
+            //         },
+            //         body: JSON.stringify({
+            //             apikey: 'b4637afbcac328a8c4c535ccf8f67f636bad145e'
+            //         })
+            //     });
+            //     const content = await rawResponse.json();
+
+            //     console.log(content);
+            // })();
+        })
     </script>
 @endsection

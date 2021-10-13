@@ -24,7 +24,7 @@ class EntendimientoOrganizacionController extends Controller
         // $query = EntendimientoOrganizacion::with('empleado')->get();
         // dd($query);
         if ($request->ajax()) {
-            $query = EntendimientoOrganizacion::with('empleado')->get();
+            $query = EntendimientoOrganizacion::with('empleado')->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
