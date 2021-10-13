@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-   
+
     {{ Breadcrumbs::render('admin.tratamiento-riesgos.create') }}
- 
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Tratamiento de los Riesgos </h3>
+
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Tratamiento de los Riesgos </h3>
     </div>
 
     <div class="card-body">
@@ -46,7 +46,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.acciones_helper') }}</span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-12 col-sm-12 col-lg-12">
                 <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
                 <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="id_reviso"
                     id="id_reviso">
@@ -65,15 +65,16 @@
                     </div>
                 @endif
             </div>
-            <div class="form-group col-md-6">
-                <label for="fechacompromiso"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.fechacompromiso') }}</label>
-                <input class="form-control date {{ $errors->has('fechacompromiso') ? 'is-invalid' : '' }}" type="text" name="fechacompromiso" id="fechacompromiso" value="{{ old('fechacompromiso', $tratamientoRiesgo->fechacompromiso) }}">
-                @if($errors->has('fechacompromiso'))
+            <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                <label for="fechacompromiso"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de entrada en vigor</label>
+                <input class="form-control {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}"
+                    type="date" name="fechacompromiso" id="fechacompromiso"
+                    value="{{ old('fechacompromiso',\Carbon\Carbon::parse($tratamientoRiesgo->fechacompromiso))->format('Y-m-d') }}">
+                @if ($errors->has('fechacompromiso'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechacompromiso') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.fechacompromiso_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
                 <label><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.prioridad') }}</label>
@@ -130,7 +131,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgoresidual_helper') }}</span>
             </div>
-            <div class="form-group col-12 text-right">
+            <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

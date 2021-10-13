@@ -52,7 +52,7 @@ class EmpleadoController extends Controller
             // estatus,
             // n_registro
             // '))->whereNull('deleted_at')->get();
-            $query = Empleado::get();
+            $query = Empleado::orderByDesc('id')->get();
             $table = DataTables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

@@ -330,7 +330,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [0, 'desc']
                 ]
             };
             let table = $('.datatable-User').DataTable(dtOverrideGlobals);

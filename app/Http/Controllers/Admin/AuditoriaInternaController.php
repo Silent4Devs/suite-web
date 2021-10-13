@@ -26,7 +26,7 @@ class AuditoriaInternaController extends Controller
         abort_if(Gate::denies('auditoria_interna_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AuditoriaInterna::with(['clausulas', 'lider', 'equipo', 'team'])->get();
+            $query = AuditoriaInterna::with(['clausulas', 'lider', 'equipo', 'team'])->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

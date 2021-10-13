@@ -55,9 +55,10 @@ class PlanAuditorium extends Model
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
     }
 
+
     public function auditados()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Empleado::class, 'plan_auditoria_empleados', 'plan_auditoria_id', 'empleado_id');
     }
 
     public function equipo()

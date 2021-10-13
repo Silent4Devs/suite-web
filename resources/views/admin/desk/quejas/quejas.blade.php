@@ -182,19 +182,18 @@
                 }
 
             ];
-            @can('activo_create')
-                let btnAgregar = {
+            let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar inventario de activos',
-                url: "{{ route('admin.activos.create') }}",
+                titleAttr: 'Agregar empleado',
+                url: "{{asset('admin/inicioUsuario/reportes/quejas')}}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
+                action: function(e, dt, node, config) {
+                let {
+                url
+                } = config;
                 window.location.href = url;
                 }
-                };
-                dtButtons.push(btnAgregar);
-            @endcan
+            };
 
 
             let dtOverrideGlobals = {
