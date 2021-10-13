@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
@@ -9,12 +9,9 @@ use App\Models\CursosDiplomasEmpleados;
 use App\Models\EducacionEmpleados;
 use App\Models\Empleado;
 use App\Models\EvidenciasCertificadosEmpleados;
-use App\Models\EvidenciasCertificadosEmpleados;
-use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
 use App\Models\PerfilEmpleado;
-use App\Models\Puesto;
 use App\Models\Puesto;
 use App\Models\Sede;
 use Gate;
@@ -23,7 +20,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -36,7 +32,7 @@ class EmpleadoController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_empleados_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             // $query = DB::table('empleados')->select(DB::raw('id,
             // name,
@@ -134,7 +130,7 @@ class EmpleadoController extends Controller
 
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
 
-        return view('admin.empleados.index', compact('ceo_exists'));
+        return view('frontend.empleados.index', compact('ceo_exists'));
     }
 
     public function getCertificaciones($empleado)
@@ -167,7 +163,7 @@ class EmpleadoController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::get();
@@ -180,7 +176,7 @@ class EmpleadoController extends Controller
         $puestos = Puesto::all();
         $perfiles = PerfilEmpleado::all();
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles'));
+        return view('frontend.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles'));
     }
 
     public function onlyStore($request)
@@ -300,7 +296,7 @@ class EmpleadoController extends Controller
     {
         $empleado = $this->onlyStore($request);
 
-        return redirect()->route('admin.empleados.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('empleados.index')->with('success', 'Guardado con éxito');
     }
 
     public function storeWithCompetencia(Request $request)
@@ -391,7 +387,7 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::findOrfail($id);
         // dd($empleado);
         $empleados = Empleado::get();
@@ -407,7 +403,7 @@ class EmpleadoController extends Controller
         $puestos = Puesto::all();
         $perfiles = PerfilEmpleado::all();
 
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles'));
+        return view('frontend.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles'));
     }
 
     /**
@@ -540,7 +536,7 @@ class EmpleadoController extends Controller
         // $write_empleados = $json_code;
         // file_put_contents($path, json_encode($write_empleados));
 
-        return redirect()->route('admin.empleados.index')->with('success', 'Editado con éxito');
+        return redirect()->route('empleados.index')->with('success', 'Editado con éxito');
     }
 
     /**
@@ -551,7 +547,7 @@ class EmpleadoController extends Controller
      */
     public function destroy(Empleado $empleado)
     {
-        abort_if(Gate::denies('configuracion_empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     @can('control_documento_create')
         <div class="mt-5 card">
@@ -7,7 +7,7 @@
             </div>
         @endcan
         <div class="card-body datatable-fix">
-            @include('partials.flashMessages')
+            {{-- @include('partials.flashMessages')}} --}}
             <table id="tbl_documentos_control" class="table table-bordered w-100 datatable-ControlDocumento">
                 <thead class="thead-dark">
                     <tr>
@@ -242,7 +242,7 @@
                 customize: function(doc) {
                     doc.pageMargins = [20, 60, 20, 30];
                     // doc.styles.tableHeader.fontSize = 7.5;
-                    // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                    // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                 }
             },
             {
@@ -280,7 +280,7 @@
         let btnAgregar = {
             text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
             titleAttr: 'Agregar documento',
-            url: "{{ route('admin.documentos.create') }}",
+            url: "{{ route('documentos.create') }}",
             className: "btn-xs btn-outline-success rounded ml-2 pr-3",
             action: function(e, dt, node, config) {
                 let {
@@ -298,7 +298,7 @@
     });
 
     async function obtenerDependencias(documento_id) {
-        let api = await fetch("{{ route('admin.documentos.getDocumentDependencies') }}", {
+        let api = await fetch("{{ route('documentos.getDocumentDependencies') }}", {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

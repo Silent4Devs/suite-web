@@ -1,11 +1,11 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <div class="mt-5 card">
-        @can('configuracion_empleados_create')
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Lista de Empleados</strong></h3>
-            </div>
-        @endcan
+        {{-- @can('configuracion_empleados_create') --}}
+        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            <h3 class="mb-2 text-center text-white"><strong>Lista de Empleados</strong></h3>
+        </div>
+        {{-- @endcan --}}
         @if (!$ceo_exists)
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
                 <div class="row w-100">
@@ -16,7 +16,8 @@
                     </div>
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Cree el listado de los empleados, comenzando
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Cree el listado de los empleados,
+                            comenzando
                             por el de más alta jerarquía</p>
                     </div>
                 </div>
@@ -151,7 +152,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
-                url: "{{ route('admin.empleados.create') }}",
+                url: "{{ route('empleados.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                 let {
@@ -161,13 +162,13 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
+            //@endcan
 
             @can('configuracion_empleados_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.users.massDestroy') }}",
+                url: "{{ route('users.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -191,7 +192,7 @@
                 }
                 }
                 // dtButtons.push(deleteButton)
-            @endcan
+            //@endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -199,7 +200,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.empleados.index') }}",
+                ajax: "{{ route('empleados.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
