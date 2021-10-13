@@ -114,8 +114,7 @@
                         Esperadas
                     </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" style="color: white;
-                                        font-size: 28px;">&times;</span>
+                        <span aria-hidden="true" style="color: white;font-size: 28px;">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -136,6 +135,19 @@
 @section('scripts')
     <script>
         $(function() {
+            $('.form-control-file').on('change', function(e) {
+                let inputFile = e.currentTarget;
+                console.log('si')
+                $("#texto-imagen").text(inputFile.files[0].name);
+                // Imagen previa
+                var reader = new FileReader();
+                reader.readAsDataURL(inputFile.files[0]);
+                reader.onload = function(e) {
+                    document.getElementById('uploadPreview').src = e.target.result;
+                };
+            });
+
+
             let dtButtons = [];
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
@@ -148,6 +160,14 @@
                     $('#formConductaCreate').attr('method', 'POST');
                     CKEDITOR.instances.definicion.setData('');
                     $('#conductasModal').modal('show');
+                    document.getElementById('nivelEditCreate').innerHTML =
+                        `<i class="fas fa-circle-notch fa-spin mr-2"></i> Cargando...`;
+                    let ultimo_nivel = obtenerUltimoNivel(@json($competencia->id));
+                    ultimo_nivel.then(data => {
+                        document.getElementById('nivelEditCreate').innerHTML =
+                            `<i class="fas fa-info-circle mr-1"></i>Siguiente Nivel: <strong>${ data + 1 }</strong>`;
+                    });
+
                 }
             };
             dtButtons.push(btnAgregar);
@@ -193,6 +213,24 @@
             };
             window.table = $('.tblNiveles').DataTable(dtOverrideGlobals);
         });
+
+        async function obtenerUltimoNivel(competencia_id) {
+            let url = "{{ route('admin.ev360-competencias.obtenerUltimoNivel') }}";
+            const rawResponse = await fetch(url, {
+                headers: {
+                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    competencia_id
+                })
+            });
+            let siguiente_nivel = await rawResponse.json();
+            return siguiente_nivel;
+        }
+
         window.Editar = function(urlEditar, urlActualizar) {
             $.ajax({
                 type: "GET",
@@ -205,6 +243,8 @@
                     conducta
                 }) {
                     CKEDITOR.instances.definicion.setData(conducta.definicion);
+                    document.getElementById('nivelEditCreate').innerHTML =
+                        `<i class="fas fa-info-circle mr-1"></i>Nivel Actual: <strong>${ conducta.ponderacion }</strong>`;
                     $('#conductasModal').modal('show');
                     $('#formConductaCreate').removeAttr('action');
                     $('#formConductaCreate').removeAttr('method');
@@ -226,6 +266,7 @@
                 }
             });
         }
+
         window.Eliminar = function(urlEliminar) {
             Swal.fire({
                 title: '¿Quieres eliminar esta conducta?',
@@ -261,6 +302,7 @@
                 }
             })
         }
+
         $(document).ready(function() {
             document.getElementById('btnGuardarConducta').addEventListener('click', function(e) {
                 e.preventDefault();

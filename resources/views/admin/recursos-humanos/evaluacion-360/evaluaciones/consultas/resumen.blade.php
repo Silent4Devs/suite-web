@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('EV360-Evaluaciones-Create') }}
+    {{ Breadcrumbs::render('EV360-Evaluacion-Resumen', $evaluacion) }}
     <style>
         img.rounded-circle {
             border-radius: 0 !important;
@@ -18,8 +18,17 @@
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Resumen: </strong> Evaluación </h3>
         </div>
+        <div class="col-12 mt-3">
+            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                RESUMEN GENERAL
+            </div>
+        </div>
         @livewire('ev360-resumen-tabla', ['evaluacion' => $evaluacion->id])
-
+        <div class="col-12 mt-3">
+            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                GRÁFICAS
+            </div>
+        </div>
         <div class="container row">
             <div class="col-6">
                 <canvas id="resultadosGenerales"></canvas>

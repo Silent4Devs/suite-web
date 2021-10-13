@@ -19,13 +19,27 @@
 
         img.rounded-circle {
             border-radius: 0 !important;
-            clip-path: circle(12px at 50% 50%);
-            height: 24px;
+            clip-path: circle(35px at 50% 50%);
+            height: 70px;
+        }
+
+        .card-custom {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            margin: auto;
+            text-align: center;
+            height: 100%;
+            font-family: arial;
+        }
+
+        .title-custom {
+            color: grey;
+            font-size: 14px;
         }
 
     </style>
     <div class="mt-3">
-        {{ Breadcrumbs::render('EV360-Evaluaciones') }}
+        {{ Breadcrumbs::render('EV360-Evaluacion-Cuestionario', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}
     </div>
     @include('partials.flashMessages')
     <div class="mt-4 card">
@@ -35,28 +49,27 @@
         <div class="pt-0 card-body">
 
             <div>
-                <h3><i class="mr-2 fas fa-book"></i>Hoja de evaluación:
-                    <strong>{{ $evaluacion->nombre }}</strong>
-                </h3>
-                <div class=" row">
-                    <div class="col-6">
-                        <p class="m-0"><strong>Evaluado:</strong> <img class="rounded-circle"
-                                src="{{ asset('storage/empleados/imagenes/' . $evaluado->avatar) }}">
-                            {{ $evaluado->name }}</p>
-                    </div>
-                    <div class="col-6">
-                        <p class="m-0"><strong>Puesto:</strong> {{ $evaluado->puesto }}</p>
-                    </div>
+                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                    RESUMEN GENERAL
                 </div>
-                <div class="mt-3 row">
+                <div class="row">
                     <div class="col-6">
-                        <p class="m-0"><strong>Evaluador:</strong> <img class="rounded-circle"
+                        <div class="card-custom">
+                            <img class="rounded-circle"
+                                src="{{ asset('storage/empleados/imagenes/' . $evaluado->avatar) }}">
+                            <h5 class="mt-2">{{ $evaluado->name }}</h5>
+                            <p class="title-custom">{{ $evaluado->puesto }}</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card-custom">
+                            <img class="rounded-circle"
                                 src="{{ asset('storage/empleados/imagenes/' . $evaluador->avatar) }}">
-                            {{ $evaluador->name }}</p>
+                            <h5 class="mt-2">{{ $evaluador->name }}</h5>
+                            <p class="title-custom">{{ $evaluador->puesto }}</p>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <p class="m-0"><strong>Puesto:</strong> {{ $evaluador->puesto }}</p>
-                    </div>
+
                 </div>
                 @if ($evaluado->id == $evaluador->id)
                     <div class="mt-3"><strong>Nota:</strong> Estás realizando tú autoevaluación</div>
@@ -129,9 +142,13 @@
                         @if ($evaluacion->include_competencias)
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-12">
+                                    <div class="text-center form-group"
+                                        style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                        SECCIÓN DE COMPETENCIAS
+                                    </div>
                                     <section id="sectionCompetencias" class="mt-2" x-data="{show:true}">
                                         <h5 class="head">
-                                            <i class="mr-1 fas fa-chart-line"></i> Sección de Competencias
+                                            <i class="mr-1 fas fa-chart-line"></i> Competencias
                                             <span style="float: right; cursor:pointer; margin-top: 0px;"
                                                 @click="show=!show"><i class="fas"
                                                     :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -250,9 +267,13 @@
                             @if (count($objetivos))
                                 <div class="row">
                                     <div class="col-12">
+                                        <div class="text-center form-group"
+                                            style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                            SECCIÓN DE OBJETIVOS
+                                        </div>
                                         <section class="mt-1" x-data="{show:true}">
                                             <h5 class="head">
-                                                <i class="mr-1 fas fa-bullseye"></i> Sección de Objetivos
+                                                <i class="mr-1 fas fa-bullseye"></i> Objetivos
                                                 <span style="float: right; cursor:pointer; margin-top: 0px;"
                                                     @click="show=!show"><i class="fas"
                                                         :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
@@ -389,7 +410,11 @@
                         @endif
                         <!-- Sección Firmas -->
                         <div class="mt-4">
-                            <h5 class="mt-3 head"><i class="mr-1 fas fa-signature"></i> Sección de Firmas</h5>
+                            <div class="text-center form-group"
+                                style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                SECCIÓN DE FIRMAS
+                            </div>
+                            <h5 class="mt-3 head"><i class="mr-1 fas fa-signature"></i> Firmas</h5>
                             @if ($evaluado->supervisor)
                                 @if ($evaluado->supervisor->id == $evaluador->id)
                                     <p class="m-0 my-2 text-muted">

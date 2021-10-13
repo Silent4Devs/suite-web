@@ -5,6 +5,14 @@
             font-size: 11px;
         }
 
+        table {
+            height: 1px;
+        }
+
+        td.padding-0 {
+            padding: 0;
+        }
+
     </style>
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Evaluaciones') }}
@@ -15,6 +23,23 @@
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
+            <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                            Instrucciones</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En este apartado podrá conocer el
+                            estatus de la evaluación, así como crear una nueva presionando el botón
+                            <strong>"Agregar"</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered w-100 tblEvaluaciones">
                 <thead class="thead-dark">
                     <tr>
@@ -27,7 +52,7 @@
                         <th style="vertical-align: top">
                             Estatus
                         </th>
-                        <th style="vertical-align: top">
+                        {{-- <th style="vertical-align: top">
                             Autoevaluación
                         </th>
                         <th style="vertical-align: top">
@@ -38,7 +63,7 @@
                         </th>
                         <th style="vertical-align: top">
                             Misma&nbsp;Área
-                        </th>
+                        </th> --}}
                         <th style="vertical-align: top">
                             Fecha&nbsp;Inicio
                         </th>
@@ -46,10 +71,10 @@
                             Fecha&nbsp;Fin
                         </th>
                         <th style="vertical-align: top">
-                            Incluye&nbsp;Competencias
+                            Competencias
                         </th>
                         <th style="vertical-align: top">
-                            Incluye&nbsp;Objetivos
+                            Objetivos
                         </th>
                         <th style="vertical-align: top;">
                             Opciones
@@ -187,47 +212,59 @@
                     },
                     {
                         data: 'nombre',
-                        name: 'nombre'
+                        name: 'nombre',
+                        width: '800px'
                     },
                     {
                         data: 'estatus_formateado',
-                        name: 'estatus_formateado'
-                    },
-                    {
-                        data: 'autoevaluacion',
-                        name: 'autoevaluacion',
+                        name: 'estatus_formateado',
                         render: function(data, type, row, meta) {
-                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
-                        }
+                            return `
+                            <div class="d-flex w-100 align-items-center text-center" style="height:100%;background-color:${row.color_estatus};color:${row.color_estatus_text}">
+                                <p class="m-0 w-100">${data}</p>
+                            </div>
+                            `;
+                        },
+                        className: "padding-0",
+                        width: '110px'
                     },
-                    {
-                        data: 'evaluado_por_jefe',
-                        name: 'evaluado_por_jefe',
-                        render: function(data, type, row, meta) {
-                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
-                        }
-                    },
-                    {
-                        data: 'evaluado_por_equipo_a_cargo',
-                        name: 'evaluado_por_equipo_a_cargo',
-                        render: function(data, type, row, meta) {
-                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
-                        }
-                    },
-                    {
-                        data: 'evaluado_por_misma_area',
-                        name: 'evaluado_por_misma_area',
-                        render: function(data, type, row, meta) {
-                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
-                        }
-                    },
+                    // {
+                    //     data: 'autoevaluacion',
+                    //     name: 'autoevaluacion',
+                    //     render: function(data, type, row, meta) {
+                    //         return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'evaluado_por_jefe',
+                    //     name: 'evaluado_por_jefe',
+                    //     render: function(data, type, row, meta) {
+                    //         return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'evaluado_por_equipo_a_cargo',
+                    //     name: 'evaluado_por_equipo_a_cargo',
+                    //     render: function(data, type, row, meta) {
+                    //         return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'evaluado_por_misma_area',
+                    //     name: 'evaluado_por_misma_area',
+                    //     render: function(data, type, row, meta) {
+                    //         return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                    //     }
+                    // },
                     {
                         data: 'fecha_inicio',
-                        name: 'fecha_inicio'
+                        name: 'fecha_inicio',
+                        width: '110px'
                     },
                     {
                         data: 'fecha_fin',
-                        name: 'fecha_fin'
+                        name: 'fecha_fin',
+                        width: '110px'
                     },
                     {
                         data: 'include_competencias',
@@ -272,7 +309,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [0, 'desc']
                 ],
                 // fixedColumns: true,
                 // scrollX: true,

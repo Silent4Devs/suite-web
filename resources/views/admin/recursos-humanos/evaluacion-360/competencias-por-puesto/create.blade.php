@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('EV360-Competencias-Create') }}
+    {{ Breadcrumbs::render('EV360-Competencias-Por-Puesto-Create') }}
     <style>
         .select2-container {
             margin: 0 !important;
@@ -107,8 +107,8 @@
                             `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}`;
                         let botones = `
                             <div class="btn-group">
-                                <button style="color: white;background: #4a57ff;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlActualizar}','${urlEditar}','${row.competencia.id}','${row.competencia.nombre}','${row.nivel_esperado}')"><i class="fas fa-edit"></i></button>
-                                <button style="color: white;background: #ff4a4a;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-eliminar" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlActualizar}','${urlEditar}','${row.competencia.id}','${row.competencia.nombre}','${row.nivel_esperado}')"><i class="fas fa-edit"></i></button>
+                                <button class="text-danger btn btn-sm btn-eliminar" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlEliminar}')"><i class="fas fa-trash-alt"></i></button>
                             </div>
                         `;
                         return botones;
