@@ -19,7 +19,7 @@ class Objetivo extends Model
         if ($this->imagen) {
             return asset('storage/objetivos/img/' . $this->imagen);
         }
-        return asset('img/star.png');
+        return asset('img/bullseye.png');
     }
 
     public function metrica()

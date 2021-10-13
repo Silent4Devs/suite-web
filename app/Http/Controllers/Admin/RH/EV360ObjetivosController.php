@@ -162,4 +162,14 @@ class EV360ObjetivosController extends Controller
             return redirect()->route('admin.ev360-objetivos.index')->with('error', 'Ocurrió un error al editar el objetivo, intente de nuevo...');
         }
     }
+
+    public function show()
+    {
+        # code...
+    }
+
+    public function destroy()
+    {
+        # code...
+    }
 }
