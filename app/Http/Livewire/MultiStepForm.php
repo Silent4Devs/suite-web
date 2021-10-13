@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\RH\Evaluaciones\NotificacionEvaluador;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\RH\Competencia;
@@ -14,6 +15,7 @@ use App\Models\RH\GruposEvaluado;
 use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RH\TipoCompetencia;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -26,6 +28,8 @@ class MultiStepForm extends Component
     public $perPage = 10;
     public $filter = 1;
     public $selected = [];
+
+    public $sendEmail = true;
 
     //STEP 1
     public $showContentTable = false;
@@ -352,6 +356,7 @@ class MultiStepForm extends Component
             //     $estatus = Evaluacion::DRAFT;
             // }
             $this->createEvaluation(
+                $idx,
                 $this->nombre . '-' . ($idx + 1),
                 $this->descripcion,
                 $estatus,
@@ -367,7 +372,7 @@ class MultiStepForm extends Component
         $this->increaseStep();
     }
 
-    public function createEvaluation($nombre, $descripcion, $estatus, $evaluados_objetivo, $autoevaluacion, $evaluado_por_jefe, $evaluado_por_equipo_a_cargo, $evaluado_por_misma_area, $fecha_inicio, $fecha_fin)
+    public function createEvaluation($idx, $nombre, $descripcion, $estatus, $evaluados_objetivo, $autoevaluacion, $evaluado_por_jefe, $evaluado_por_equipo_a_cargo, $evaluado_por_misma_area, $fecha_inicio, $fecha_fin)
     {
         if ($evaluados_objetivo == 'all') {
             $evaluados = Empleado::pluck('id')->toArray();
@@ -379,6 +384,7 @@ class MultiStepForm extends Component
         } else {
             $evaluados = GruposEvaluado::find(intval($evaluados_objetivo))->empleados->pluck('id')->toArray();
         }
+
         $evaluacion = Evaluacion::create([
             'nombre' => $nombre,
             'descripcion' => $descripcion,
@@ -417,6 +423,11 @@ class MultiStepForm extends Component
                 $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
                     ->where('evaluado_id', $evaluado->id)->get();
                 $this->crearCuestionario($evaluacion, $evaluado->id, $evaluadores, $this->includeCompetencias, $this->includeObjetivos);
+            }
+        }
+        if ($idx == 0) {
+            if ($this->sendEmail) {
+                $this->enviarCorreoAEvaluadores($evaluacion, $evaluadores);
             }
         }
     }
@@ -604,5 +615,27 @@ class MultiStepForm extends Component
                 }
             }
         }
+    }
+
+    public function enviarCorreoAEvaluadores($evaluacion)
+    {
+        $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->pluck('evaluador_id')->unique()->toArray();
+        foreach ($evaluadores as $evaluador) {
+            $evaluados = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
+                ->where('evaluador_id', $evaluador)->pluck('evaluado_id')->unique()->toArray();
+            $evaluados = Empleado::find($evaluados);
+            $evaluador_model = Empleado::find($evaluador);
+            $this->enviarNotificacionAlEvaluador($evaluador_model->email, $evaluacion, $evaluador_model, $evaluados);
+            if (env('APP_ENV') == 'local') { // solo funciona en desarrollo, es una muy mala práctica, es para que funcione con mailtrap y la limitación del plan gratuito
+                if (env('MAIL_HOST') == 'smtp.mailtrap.io') {
+                    sleep(1); //use usleep(500000) for half a second or less
+                }
+            }
+        }
+    }
+
+    public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
+    {
+        Mail::to($email)->send(new NotificacionEvaluador($evaluacion, $evaluador, $evaluados));
     }
 }

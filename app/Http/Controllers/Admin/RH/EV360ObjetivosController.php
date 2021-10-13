@@ -7,6 +7,8 @@ use App\Models\Empleado;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class EV360ObjetivosController extends Controller
 {
@@ -22,11 +24,11 @@ class EV360ObjetivosController extends Controller
 
     public function create()
     {
-        $objetivo = new Objetivo;
-        $tipo_seleccionado = null;
-        $metrica_seleccionada = null;
+        // $objetivo = new Objetivo;
+        // $tipo_seleccionado = null;
+        // $metrica_seleccionada = null;
 
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.create', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada'));
+        // return view('admin.recursos-humanos.evaluacion-360.objetivos.create', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada'));
     }
 
     public function createByEmpleado(Request $request, $empleado)
@@ -65,6 +67,20 @@ class EV360ObjetivosController extends Controller
         $empleado = Empleado::find(intval($empleado));
         if ($request->ajax()) {
             $objetivo = Objetivo::create($request->all());
+            if ($request->hasFile('foto')) {
+                Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
+                $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
+                $nombre_imagen = 'OBJETIVO_' .  $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $empleado->id . '.' . $extension;
+                $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+                //Usamos image_intervention para disminuir el peso de la imagen
+                $img_intervention = Image::make($request->file('foto'));
+                $img_intervention->resize(720, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($route);
+                $objetivo->update([
+                    'imagen' => $nombre_imagen
+                ]);
+            }
             ObjetivoEmpleado::create([
                 'objetivo_id' => $objetivo->id,
                 'empleado_id' => $empleado->id,
@@ -93,6 +109,30 @@ class EV360ObjetivosController extends Controller
         } else {
             return redirect()->route('admin.ev360-objetivos.index')->with('error', 'Ocurrió un error al crear el objetivo, intente de nuevo...');
         }
+    }
+
+
+    public function editByEmpleado(Request $request, $empleado)
+    {
+        $objetivo = new Objetivo;
+        $empleado = Empleado::find(intval($empleado));
+        $empleado->load(['objetivos' => function ($q) {
+            $q->with(['objetivo' => function ($query) {
+                $query->with(['tipo', 'metrica']);
+            }]);
+        }]);
+
+        if ($request->ajax()) {
+            $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+
+            return datatables()->of($objetivos)->toJson();
+        }
+        $tipo_seleccionado = null;
+        $metrica_seleccionada = null;
+        if ($request->ajax()) {
+        }
+
+        return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado'));
     }
 
     public function edit($objetivo)
