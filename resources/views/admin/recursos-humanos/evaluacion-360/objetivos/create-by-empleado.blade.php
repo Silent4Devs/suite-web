@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('EV360-Objetivos-Create') }}
+    {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
