@@ -58,7 +58,7 @@
                 <div class="pl-0 col" style="text-align: center;
                 margin-top: -22px;
                 margin-left: inherit">
-                    <button id=" btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
+                    <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
                         data-toggle="modal" data-target="#tipoCompetenciaModal" title="Agregar Tipo"><i
                             class="fas fa-plus"></i></button>
                 </div>
@@ -83,12 +83,45 @@
             <span class="errors descripcion_error text-danger"></span>
         </div>
     </div>
+    <div class="col-sm-12 col-lg-12 col-md-12 col-12">
 
+        <div class="input-group is-invalid">
+            <div class="form-group" style="width: 100%;border: solid 1px #cecece;">
+                <div class="row align-items-center" style="padding: 20px 0;">
+                    <div class="col-md-6 col-sm-6 col-12 d-flex justify-content-center">
+                        <label style="cursor: pointer" for="foto">
+                            <div class="d-flex align-items-center">
+                                <h5>
+                                    <i class="fas fa-image iconos-crear"
+                                        style="font-size: 20pt;position: relative;top: 4px;"></i>
+                                    <span id="texto-imagen" class="pl-2">
+                                        Subir imágen
+                                        <small class="text-danger" style="font-size: 10px">
+                                            (Opcional)</small>
+                                    </span>
+                                </h5>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="text-center col-6">
+                        <img id="uploadPreview" width="150" height="150"
+                            src="{{ $competencia->imagen ? asset('storage/competencias/img/' . $competencia->imagen) : asset('img/not-available.png') }}"
+                            style="clip-path: circle(60px at 50% 50%);
+                        height: 120px;" />
+                    </div>
+                </div>
+                <input name="foto" type="file" accept="image/png, image/jpeg" class="form-control-file" id="foto"
+                    hidden="">
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('btnAgregarTipo').addEventListener('click', function(e) {
             e.preventDefault();
         })
+
+
     })
 </script>

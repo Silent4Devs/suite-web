@@ -1,4 +1,4 @@
-<div class="col-12" id="tipo_objetivo_select">
+<div class="w-100" id="tipo_objetivo_select">
     <select class="form-control select2 {{ $errors->has('tipo_id') ? 'is-invalid' : '' }}" name="tipo_id" id="tipo_id">
         @foreach ($tipos as $tipo)
             <option value="{{ $tipo->id }}"

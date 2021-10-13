@@ -2,6 +2,7 @@
 
 namespace App\Models\RH;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,6 +14,11 @@ class Evaluacion extends Model
     protected $table = 'ev360_evaluaciones';
     protected $guarded = ['id'];
     protected $appends = ['estatus_formateado', 'color_estatus', 'color_estatus_text'];
+    protected $casts = [
+        'fecha_inicio' => 'date:d-m-Y',
+        'fecha_fin' => 'date:d-m-Y',
+    ];
+
     const DRAFT = '1';
     const ACTIVE = '2';
     const CLOSED = '3';

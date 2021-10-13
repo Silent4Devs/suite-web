@@ -1,5 +1,14 @@
 <div>
     <style>
+        .alerta-error {
+            font-size: 13px;
+            padding: 5px;
+            background: #00abb27a;
+            border: 2px solid #00abb2;
+            color: #353535;
+            border-radius: 5px;
+        }
+
         /* The container */
         .container-check {
             display: block;
@@ -78,7 +87,7 @@
             height: 120px;
             margin: 5px;
             float: left;
-            border: 2px solid #008186;
+            border: 2px solid #00abb2;
             box-sizing: border-box;
             border-radius: 10px;
         }
@@ -100,14 +109,14 @@
             width: 160px;
             height: 120px;
             opacity: 0;
-            cursor: pointer;
+            /* cursor: pointer; */
         }
 
         article input[type="number"] {
             position: absolute;
             bottom: 5px;
-            left: 31px;
-            width: 50px;
+            left: 24px;
+            width: 65px;
             height: 20px;
             outline: none;
             background: white;
@@ -118,17 +127,17 @@
         }
 
         input[type=checkbox]:checked~div {
-            color: #f3f3f3;
-            background: #008186;
+            color: #ffffff;
+            background: #00abb2;
             border-radius: 7px;
             border: none;
-            box-shadow: 5px 5px 5px 0px #004d4d;
+            /* box-shadow: 5px 5px 5px 0px #004d4d; */
         }
 
         input[type=checkbox]:checked~input[type=number] {
-            border-bottom: 2px solid rgb(43, 43, 43);
-            color: #dfdfdf;
-            background: #008186;
+            border-bottom: 2px solid rgb(78 230 236);
+            color: #ffffff;
+            background: #00abb2;
             text-align: center;
         }
 
@@ -166,7 +175,7 @@
 
         #progressbar .active {
             z-index: 1;
-            color: #008186;
+            color: #00abb2;
         }
 
         #progressbar li {
@@ -235,7 +244,7 @@
 
         #progressbar li.active:before,
         #progressbar li.active:after {
-            background: #008186;
+            background: #00abb2;
             z-index: -1;
         }
 
@@ -244,12 +253,12 @@
         }
 
         .progress-bar {
-            background-color: #008186;
+            background-color: #00abb2;
         }
 
         .head {
             text-transform: capitalize;
-            color: #008186;
+            color: #00abb2;
             font-weight: normal
         }
 
@@ -263,14 +272,148 @@
             object-fit: cover
         }
 
+        .display-almacenando {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            margin-left: -15px;
+            background: #0000000d;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .display-almacenando h1 {
+            font-size: 50px;
+        }
+
+        .display-almacenando p {
+            font-size: 30px;
+        }
+
+    </style>
+    <style>
+        .lds-facebook {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .lds-facebook div {
+            display: inline-block;
+            position: absolute;
+            left: 8px;
+            width: 16px;
+            background: rgb(24, 24, 24);
+            animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+        }
+
+        .lds-facebook div:nth-child(1) {
+            left: 8px;
+            animation-delay: -0.24s;
+        }
+
+        .lds-facebook div:nth-child(2) {
+            left: 32px;
+            animation-delay: -0.12s;
+        }
+
+        .lds-facebook div:nth-child(3) {
+            left: 56px;
+            animation-delay: 0;
+        }
+
+        @keyframes lds-facebook {
+            0% {
+                top: 8px;
+                height: 64px;
+            }
+
+            50%,
+            100% {
+                top: 24px;
+                height: 32px;
+            }
+        }
+
+    </style>
+    <style>
+        /* The container */
+        .container-check {
+            display: block;
+            position: relative;
+            padding-left: 33px;
+            margin-bottom: 11px;
+            cursor: pointer;
+            font-size: 14px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default checkbox */
+        .container-check input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 23px;
+            width: 23px;
+            background-color: #eee;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container-check:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container-check input:checked~.checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container-check input:checked~.checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container-check .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
     </style>
     <div class="container row justify-content-center">
-        <div class="mt-3 col-9 card">
+        <div class="mt-3 col-9 card" style="position: relative;">
             <form wire:submit.prevent="register">
                 {{-- STEP 1 --}}
                 @if ($currentStep == 1)
-
-
                     <div class="step-one">
                         <div>
                             <ul id="progressbar">
@@ -285,18 +428,39 @@
                                     aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
                             </div>
                             <div class="card-body">
-                                <h4 class="head">Configura tu evaluación</h4>
+                                {{-- <h4 class="head">Configura tu evaluación</h4> --}}
                                 <div class="row">
                                     <div class="col-12">
-                                        <p class="text-muted"><i class="fas fa-info-circle"></i> Empieza
-                                            configurando tu evaluación, defininendo el nombre y agregando una
-                                            descripción opcionalmente,
-                                            no olvides incluir los objetivos o competencias... </p>
+                                        <div class="px-1 py-2 mb-3 rounded shadow-sm"
+                                            style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                            <div class="row w-100">
+                                                <div
+                                                    class="text-center col-1 align-items-center d-flex justify-content-center">
+                                                    <div class="w-100">
+                                                        <i class="fas fa-info-circle"
+                                                            style="color: #3B82F6; font-size: 22px"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-11">
+                                                    <p class="m-0"
+                                                        style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                                        Instrucciones</p>
+                                                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
+                                                        Empieza
+                                                        configurando tu evaluación, defininendo el nombre y agregando
+                                                        una
+                                                        descripción<small
+                                                            class="text-muted">(opcionalmente)</small>,
+                                                        no olvides incluir Objetivos o Competencias...
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-sm-12 col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
                                             <label for="nombre">
-                                                <i class="mr-1 fas fa-user-circle iconos-evaluacion"></i> Nombre <span
+                                                <i class="mr-1 fas fa-user-circle iconos-crear"></i> Nombre <span
                                                     class="text-danger">*</span>
                                             </label>
                                             <input type="text" wire:model.defer="nombre"
@@ -316,7 +480,7 @@
                                     <div class="col-sm-12 col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
                                             <label for="descripcion">
-                                                <i class="mr-1 fas fa-file-signature iconos-evaluacion"></i> Descripción
+                                                <i class="mr-1 fas fa-file-signature iconos-crear"></i> Descripción
                                             </label>
                                             <textarea
                                                 class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
@@ -337,7 +501,9 @@
                                     <div class="col-sm-12 col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
                                             <label for="">
-                                                <i class="mr-2 fab fa-discourse iconos-evaluacion"></i> ¿Qué campos
+                                                <i class="mr-2 iconos-crear fas fa-question-circle"></i>
+                                                ¿Qué
+                                                campos
                                                 deseas evaluar?
                                                 <span class="text-danger">*</span>
                                             </label>
@@ -373,7 +539,8 @@
                                                 <div
                                                     class="col-6 {{ $showPesoGeneralCompetencias ? '' : 'd-none' }}">
                                                     <label for="pesoGeneralCompetencias"><i
-                                                            class="mr-2 fas fa-question-circle"></i>Peso General
+                                                            class="mr-2 iconos-crear fas fa-question-circle"></i>Peso
+                                                        General
                                                         Competencias<span class="text-danger">*</span></label>
                                                     <input wire:model.defer="pesoGeneralCompetencias"
                                                         id="pesoGeneralCompetencias" class="form-control"
@@ -381,7 +548,8 @@
                                                 </div>
                                                 <div class="col-6 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
                                                     <label for="pesoGeneralOnjetivos"><i
-                                                            class="mr-2 fas fa-question-circle"></i>Peso General
+                                                            class="mr-2 iconos-crear fas fa-question-circle"></i>Peso
+                                                        General
                                                         Objetivos<span class="text-danger">*</span></label>
                                                     <input wire:model.defer="pesoGeneralObjetivos"
                                                         id="pesoGeneralOnjetivos" class="form-control" type="number"
@@ -478,15 +646,45 @@
                                     aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
                             </div>
                             <div class="card-body">
-                                <h4 class="head">Selecciona tu público objetivo</h4>
+                                {{-- <h4 class="head">Selecciona tu público objetivo</h4> --}}
                                 <div class="row justify-content-center align-items-center">
+                                    <div class="col-12">
+                                        <div class="px-1 py-2 mb-3 rounded shadow-sm"
+                                            style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                            <div class="row w-100">
+                                                <div
+                                                    class="text-center col-1 align-items-center d-flex justify-content-center">
+                                                    <div class="w-100">
+                                                        <i class="fas fa-info-circle"
+                                                            style="color: #3B82F6; font-size: 22px"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-11">
+                                                    <p class="m-0"
+                                                        style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                                        Instrucciones</p>
+                                                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
+                                                        Ahora es tiempo de elegir el público objetivo de la evaluación ,
+                                                        puedes seleccionar <small class="text-muted">(Toda la
+                                                            empresa, por áreas o manualmente)</small>,
+                                                        también tienes la posibilidad de crear tus grupos de evaluación
+                                                        para utilizarlos posteriormente.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-9">
                                         <div>
-                                            <p class="text-muted"><i class="fas fa-info-circle"></i> Seleccionar
+                                            {{-- <p class="text-muted"><i class="fas fa-info-circle"></i> Seleccionar
                                                 Evaluados
-                                            </p>
+                                            </p> --}}
+                                            <label class="mb-0" for="descripcion">
+                                                <i class="fas fa-users iconos-crear"></i> Público objetivo <small
+                                                    class="text-danger">*</small>
+                                            </label>
                                             <select
-                                                class="form-control {{ $errors->has('evaluados_objetivo') ? 'is-invalid' : '' }}"
+                                                class="mt-2 form-control {{ $errors->has('evaluados_objetivo') ? 'is-invalid' : '' }}"
                                                 wire:model="evaluados_objetivo" id="evaluados_objetivo"
                                                 name="evaluados_objetivo" wire:change="habilitarSelectAlternativo()">
                                                 <option value="" selected>-- Seleciona una opción --</option>
@@ -545,7 +743,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="mt-3 col-3">
+                                    <div class="col-3" style="margin-top: 0;">
                                         @livewire('ev360-grupo-evaluados-create')
                                     </div>
                                 </div>
@@ -569,17 +767,29 @@
                                     aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
                             </div>
                             <div class="card-body">
-                                <h4 class="head">Peso por evaluador</h4>
-                                <p class="m-0 text-muted"><i class="fas fa-info-circle"></i>
-                                    Ingresa el peso correspondiente de cada evaluador, por defecto se encuentra en 25,
-                                    pero puedes modificarlo según los valores que requieras.
-                                </p>
-                                {{-- <small>Nota: Puedes realizar por defecto una evaluación de desempeño de 360° o la que
-                                    mas se
-                                    adecue a
-                                    tu evaluación</small> --}}
+                                <div class="px-1 py-2 mb-3 rounded shadow-sm"
+                                    style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                    <div class="row w-100">
+                                        <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                            <div class="w-100">
+                                                <i class="fas fa-info-circle"
+                                                    style="color: #3B82F6; font-size: 22px"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-11">
+                                            <p class="m-0"
+                                                style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                                Instrucciones</p>
+                                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
+                                                Ahora ingresa el peso correspondiente de cada evaluador, por defecto
+                                                se encuentra en 25,
+                                                pero puedes modificarlo según los valores que requieras.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                                 @if ($errors->has('sumaTotalPeso'))
-                                    <p style="font-size:12px;" class="m-0 text-center text-danger">
+                                    <p class="m-0 text-center alerta-error">
                                         {{ $errors->first('sumaTotalPeso') }}
                                     </p>
                                 @endif
@@ -604,10 +814,10 @@
                                                 </span>
                                             </div>
                                             @if ($evaluado_por_jefe)
-                                                <input class="ml-4" wire:model="pesoEvaluacionJefe"
+                                                <input class="ml-4" wire:model.defer="pesoEvaluacionJefe"
                                                     type="number" placeholder="Define peso..." max="100" min="0">
                                                 <span
-                                                    style="position: absolute;top: 89px;color: white;left: 90px;">%</span>
+                                                    style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionJefe'))
                                                     <small style="font-size:9px;"
                                                         class="text-danger">{{ $errors->first('pesoEvaluacionJefe') }}</small>
@@ -637,10 +847,10 @@
                                                 </div>
                                             </div>
                                             @if ($evaluado_por_misma_area)
-                                                <input class="ml-4" wire:model="pesoEvaluacionArea"
+                                                <input class="ml-4" wire:model.defer="pesoEvaluacionArea"
                                                     type="number" placeholder="Define peso..." max="100" min="0">
                                                 <span
-                                                    style="position: absolute;top: 89px;color: white;left: 90px;">%</span>
+                                                    style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionArea'))
                                                     <small style="font-size:9px;"
                                                         class="text-danger">{{ $errors->first('pesoEvaluacionArea') }}</small>
@@ -668,10 +878,10 @@
                                                 </span>
                                             </div>
                                             @if ($evaluado_por_equipo_a_cargo)
-                                                <input class="ml-4" wire:model="pesoEvaluacionEquipo"
+                                                <input class="ml-4" wire:model.defer="pesoEvaluacionEquipo"
                                                     type="number" placeholder="Define peso..." max="100" min="0">
                                                 <span
-                                                    style="position: absolute;top: 89px;color: white;left: 90px;">%</span>
+                                                    style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionEquipo'))
                                                     <small style="font-size:9px;"
                                                         class="text-danger">{{ $errors->first('pesoEvaluacionEquipo') }}</small>
@@ -698,10 +908,10 @@
                                                 </span>
                                             </div>
                                             @if ($autoevaluacion)
-                                                <input class="ml-4" wire:model="pesoAutoevaluacion"
+                                                <input class="ml-4" wire:model.defer="pesoAutoevaluacion"
                                                     type="number" placeholder="Define peso..." max="100" min="0">
                                                 <span
-                                                    style="position: absolute;top: 89px;color: white;left: 90px;">%</span>
+                                                    style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoAutoevaluacion'))
                                                     <small style="font-size:9px;"
                                                         class="text-danger">{{ $errors->first('pesoAutoevaluacion') }}</small>
@@ -736,10 +946,30 @@
                                     aria-valuemin="0" aria-valuemax="100" style="width: 90%"></div>
                             </div>
                             <div class="card-body">
-                                <h4 class="head">Selecciona los periodos a evaluar</h4>
+                                {{-- <h4 class="head">Selecciona los periodos a evaluar</h4>
                                 <p class="m-0 text-muted"><i class="fas fa-info-circle"></i>
                                     Define los periodos que requieras para la evaluación
-                                </p>
+                                </p> --}}
+                                <div class="px-1 py-2 mb-3 rounded shadow-sm"
+                                    style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                                    <div class="row w-100">
+                                        <div
+                                            class="text-center col-1 align-items-center d-flex justify-content-center">
+                                            <div class="w-100">
+                                                <i class="fas fa-info-circle"
+                                                    style="color: #3B82F6; font-size: 22px"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-11">
+                                            <p class="m-0"
+                                                style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                                Instrucciones</p>
+                                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
+                                                Por último, define los periodos que requieras para esta evaluación
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                                 @foreach ($periodos as $idx => $periodo)
                                     <div class="mt-4 row align-items-center">
                                         <div class="pr-0 col-4">
@@ -769,6 +999,12 @@
                                 @endforeach
                                 <button class="mt-4 btn btn-sm btn-outline-primary" id="addPeriodo"
                                     wire:click="addPeriodo()"><i class="mr-2 fas fa-plus"></i> Añadir Periodo</button>
+                                <hr>
+                                <label class="container-check">Enviar notificación por email a los evaluadores
+                                    <input class="form-check-input" type="checkbox" id="sendEmail"
+                                        wire:model.defer="sendEmail">
+                                    <span class="checkmark"></span>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -826,10 +1062,21 @@
                     @endif
                     @if ($currentStep == 5)
                         <a type="button" href="{{ route('admin.ev360-evaluaciones.index') }}"
-                            class="btn btn-md btn-danger"><i class="mr-2 fas fa-paper-plane"></i>Salir</a>
+                            class="btn btn-md btn-danger"><i class="mr-2 fas fa-share"></i>Salir</a>
                     @endif
                 </div>
             </form>
+            <div class="display-almacenando row" wire:loading.grid>
+                <div class="col-12">
+                    <h1>
+                        <div class="lds-facebook">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </h1>
+                </div>
+            </div>
         </div>
     </div>
     <script>

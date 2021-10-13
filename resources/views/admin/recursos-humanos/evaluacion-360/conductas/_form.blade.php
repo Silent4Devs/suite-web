@@ -12,8 +12,9 @@
 </style>
 <div class="row">
     <div class="col-12">
-        <p class="text-muted"><i class="fas fa-info-circle"></i> Establece la conducta esperada para esta competencia
+        <p class="text-muted m-0"><i class="fas fa-info-circle"></i> Establece la conducta esperada para esta competencia
         </p>
+        <p id="nivelEditCreate" class="text-muted m-0"> <i class="fas fa-circle-notch fa-spin mr-2"></i> Cargando...</p>
     </div>
     <div class="col-sm-12 col-lg-12 col-md-12 col-12">
         <div class="form-group">

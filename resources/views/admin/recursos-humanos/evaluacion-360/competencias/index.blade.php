@@ -154,6 +154,8 @@
                         render: function(data, type, row, meta) {
                             let urlBtnEditar =
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}/edit`;
+                            let urlBtnEditarConductas =
+                                `/admin/recursos-humanos/evaluacion-360/competencias/${data}/${'editar-conductas'}/edit`;
                             // let urlBtnEvaluacionEstatus =
                             //     `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
                             let urlBtnVisualizar =
@@ -162,7 +164,7 @@
                                 `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
 
                             let botones = `
-                            <a class="mr-2 btn btn-sm btn-editar" title="Agregar Conductas" href="${urlBtnEditar}"><i class="fas fa-chalkboard-teacher"></i></a>
+                            <a class="mr-2 btn btn-sm btn-editar" title="Agregar Conductas" href="${urlBtnEditarConductas}"><i class="fas fa-chalkboard-teacher"></i></a>
                                 <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-editar" title="Visualizar" href="${urlBtnVisualizar}"><i class="fas fa-eye"></i></a>
                                 <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>

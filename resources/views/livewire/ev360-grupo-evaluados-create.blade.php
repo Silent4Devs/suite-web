@@ -7,8 +7,8 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="grupoModalLabel"><i class="mr-2 fas fa-cogs"></i>Agregar
+                <div class="modal-header" style="background: #00abb2;color: white;">
+                    <h5 class="modal-title" id="grupoModalLabel"><i class="mr-2 fas fa-plus-circle"></i>Agregar
                         Grupo
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
