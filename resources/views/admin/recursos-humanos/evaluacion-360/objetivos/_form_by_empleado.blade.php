@@ -28,6 +28,11 @@
         </div>
     </div>
 </div>
+<div class="col-12 mt-3">
+    <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+        CREACIÓN DE OBJETIVOS
+    </div>
+</div>
 <div class="col-sm-12 col-lg-4 col-md-4 col-12">
     <div class="form-group">
         <label for="nombre">
@@ -191,6 +196,11 @@
         title="Agregar objetivo"><i class="mr-2 fas fa-plus-circle"></i>Agregar</button>
 </div>
 <div class="card-body datatable-fix">
+    <div class="mt-3">
+        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+            LISTADO DE OBJETIVOS
+        </div>
+    </div>
     <table class="table table-bordered w-100 tblObjetivos">
         <thead class="thead-dark">
             <tr>
