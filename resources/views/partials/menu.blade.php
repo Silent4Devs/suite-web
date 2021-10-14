@@ -34,7 +34,7 @@
         </li>
         @can('mi_perfil_access')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route('admin.inicio-Usuario.index') }}"
+                <a href="{{ route('admin.inicio-Usuario.index') }}#datos"
                     class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') ? 'active' : '' }}">
                     <i class="fas fa-user iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Mi perfil</font>

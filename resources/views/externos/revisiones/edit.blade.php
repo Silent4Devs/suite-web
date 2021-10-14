@@ -128,6 +128,10 @@
                                 <button id="rechazar" class="btn btn-outline-danger"><i class="mr-1 fas fa-thumbs-down"></i>
                                     Rechazar</button>
                             </form>
+
+                            <div class="row">
+                                <a href="{{asset('admin/inicioUsuariouario#aprobaciones')}}" class="btn btn-danger">Aceptar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
