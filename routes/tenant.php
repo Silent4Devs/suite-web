@@ -2,36 +2,32 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\DeskController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SedeController;
 use App\Http\Controllers\Admin\TipoactivoController;
 use App\Http\Controllers\Frontend\EmpleadoController;
 use App\Http\Controllers\Frontend\GrupoAreaController;
+use App\Http\Controllers\Frontend\DocumentosController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Frontend\OrganizacionController;
+use App\Http\Controllers\Frontend\InicioUsuarioController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use Stancl\Tenancy\Middleware\ScopeSessions;
 use App\Http\Controllers\Frontend\PortalComunicacionController;
-use App\Http\Controllers\Frontend\DocumentosController;
-/*
-|--------------------------------------------------------------------------
-| Tenant Routes
-|--------------------------------------------------------------------------
-|
-| Here you can register the tenant routes for your application.
-| These routes are loaded by the TenantRouteServiceProvider.
-|
-| Feel free to customize them however you want. Good luck!
-|
-*/
 
 Route::middleware([
     'web',
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
+    ScopeSessions::class,
 ])->group(function () {
-    Route::get('/', function () {
-        return view('frontend.home');
-    });
+    Route::middleware(['universal'])->group(function () {
+	    Auth::routes();
+	});
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     // Organizacions
     Route::resource('organizacions', OrganizacionController::class);
@@ -108,8 +104,8 @@ Route::middleware([
     //     'update' => 'ev360-periodo.update',
     // ]);
 
-    Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
-    Route::view('soporte', 'admin.soporte.index')->name('soporte.index');
+    Route::view('iso27001', 'frontend.iso27001.index')->name('iso27001.index');
+    Route::view('soporte', 'frontend.soporte.index')->name('soporte.index');
     Route::get('portal-comunicacion/reportes', [PortalComunicacionController::class, 'reportes'])->name('portal-comunicacion.reportes');
     Route::resource('portal-comunicacion', PortalComunicacionController::class);
 
@@ -118,164 +114,164 @@ Route::middleware([
     Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
     Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 
-    Route::get('inicioUsuario', 'inicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
 
-    Route::get('inicioUsuario/reportes/quejas', 'inicioUsuarioController@quejas')->name('reportes-quejas');
-    Route::post('inicioUsuario/reportes/quejas', 'inicioUsuarioController@storeQuejas')->name('reportes-quejas-store');
+    Route::get('inicioUsuario/reportes/quejas', [InicioUsuarioController::class, 'quejas'])->name('reportes-quejas');
+    Route::post('inicioUsuario/reportes/quejas', [InicioUsuarioController::class, 'storeQuejas'])->name('reportes-quejas-store');
 
-    Route::get('inicioUsuario/reportes/denuncias', 'inicioUsuarioController@denuncias')->name('reportes-denuncias');
-    Route::post('inicioUsuario/reportes/denuncias', 'inicioUsuarioController@storeDenuncias')->name('reportes-denuncias-store');
+    Route::get('inicioUsuario/reportes/denuncias', [InicioUsuarioController::class, 'denuncias'])->name('reportes-denuncias');
+    Route::post('inicioUsuario/reportes/denuncias', [InicioUsuarioController::class, 'storeDenuncias'])->name('reportes-denuncias-store');
 
-    Route::get('inicioUsuario/reportes/mejoras', 'inicioUsuarioController@mejoras')->name('reportes-mejoras');
-    Route::post('inicioUsuario/reportes/mejoras', 'inicioUsuarioController@storeMejoras')->name('reportes-mejoras-store');
+    Route::get('inicioUsuario/reportes/mejoras', [InicioUsuarioController::class, 'mejoras'])->name('reportes-mejoras');
+    Route::post('inicioUsuario/reportes/mejoras', [InicioUsuarioController::class, 'storeMejoras'])->name('reportes-mejoras-store');
 
-    Route::get('inicioUsuario/reportes/sugerencias', 'inicioUsuarioController@sugerencias')->name('reportes-sugerencias');
-    Route::post('inicioUsuario/reportes/sugerencias', 'inicioUsuarioController@storeSugerencias')->name('reportes-sugerencias-store');
+    Route::get('inicioUsuario/reportes/sugerencias', [InicioUsuarioController::class, 'sugerencias'])->name('reportes-sugerencias');
+    Route::post('inicioUsuario/reportes/sugerencias', [InicioUsuarioController::class, 'storeSugerencias'])->name('reportes-sugerencias-store');
 
-    Route::get('inicioUsuario/reportes/seguridad', 'inicioUsuarioController@seguridad')->name('reportes-seguridad');
-    Route::post('inicioUsuario/reportes/seguridad/media', 'inicioUsuarioController@storeMedia')->name('reportes-seguridad.storeMedia');
-    Route::post('inicioUsuario/reportes/seguridad', 'inicioUsuarioController@storeSeguridad')->name('reportes-seguridad-store');
+    Route::get('inicioUsuario/reportes/seguridad', [InicioUsuarioController::class, 'seguridad'])->name('reportes-seguridad');
+    Route::post('inicioUsuario/reportes/seguridad/media', [InicioUsuarioController::class, 'storeMedia'])->name('reportes-seguridad.storeMedia');
+    Route::post('inicioUsuario/reportes/seguridad', [InicioUsuarioController::class, 'storeSeguridad'])->name('reportes-seguridad-store');
 
-    Route::get('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@riesgos')->name('reportes-riesgos');
-    Route::post('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@storeRiesgos')->name('reportes-riesgos-store');
+    Route::get('inicioUsuario/reportes/riesgos', [InicioUsuarioController::class, 'riesgos'])->name('reportes-riesgos');
+    Route::post('inicioUsuario/reportes/riesgos', [InicioUsuarioController::class, 'storeRiesgos'])->name('reportes-riesgos-store');
 
-    Route::post('inicioUsuario/capacitaciones/archivar', 'inicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
+    Route::post('inicioUsuario/capacitaciones/archivar', [InicioUsuarioController::class, 'archivarCapacitacion'])->name('inicio-Usuario.capacitaciones.archivar');
 
-    Route::get('desk', 'DeskController@index')->name('desk.index');
+    Route::get('desk', [DeskController::class, 'index'])->name('desk.index');
 
-    Route::post('desk/{seguridad}/analisis_seguridad-update', 'DeskController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
-    Route::post('desk/{riesgos}/analisis_riesgo-update', 'DeskController@updateAnalisisReisgos')->name('desk.analisis_riesgo-update');
-    Route::post('desk/{mejoras}/analisis_mejora-update', 'DeskController@updateAnalisisMejoras')->name('desk.analisis_mejora-update');
-    Route::post('desk/{quejas}/analisis_queja-update', 'DeskController@updateAnalisisQuejas')->name('desk.analisis_queja-update');
-    Route::post('desk/{denuncias}/analisis_denuncia-update', 'DeskController@updateAnalisisDenuncias')->name('desk.analisis_denuncia-update');
-    Route::post('desk/{sugerencias}/analisis_sugerencia-update', 'DeskController@updateAnalisisSugerencias')->name('desk.analisis_sugerencia-update');
+    Route::post('desk/{seguridad}/analisis_seguridad-update', [DeskController::class, 'updateAnalisisSeguridad'])->name('desk.analisis_seguridad-update');
+    Route::post('desk/{riesgos}/analisis_riesgo-update', [DeskController::class, 'updateAnalisisReisgos'])->name('desk.analisis_riesgo-update');
+    Route::post('desk/{mejoras}/analisis_mejora-update', [DeskController::class, 'updateAnalisisMejoras'])->name('desk.analisis_mejora-update');
+    Route::post('desk/{quejas}/analisis_queja-update', [DeskController::class, 'updateAnalisisQuejas'])->name('desk.analisis_queja-update');
+    Route::post('desk/{denuncias}/analisis_denuncia-update', [DeskController::class, 'updateAnalisisDenuncias'])->name('desk.analisis_denuncia-update');
+    Route::post('desk/{sugerencias}/analisis_sugerencia-update', [DeskController::class, 'updateAnalisisSugerencias'])->name('desk.analisis_sugerencia-update');
 
-    Route::get('desk/{seguridad}/seguridad-edit', 'DeskController@editSeguridad')->name('desk.seguridad-edit');
-    Route::post('desk/{seguridad}/seguridad-update', 'DeskController@updateSeguridad')->name('desk.seguridad-update');
-    Route::post('desk/{incidente}/archivar', 'DeskController@archivadoSeguridad')->name('desk.seguridad-archivar');
-    Route::get('desk/seguridad-archivo', 'DeskController@archivoSeguridad')->name('desk.seguridad-archivo');
-    Route::get('desk/seguridad', 'DeskController@indexSeguridad')->name('desk.seguridad-index');
+    Route::get('desk/{seguridad}/seguridad-edit', [DeskController::class, 'editSeguridad'])->name('desk.seguridad-edit');
+    Route::post('desk/{seguridad}/seguridad-update', [DeskController::class, 'updateSeguridad'])->name('desk.seguridad-update');
+    Route::post('desk/{incidente}/archivar', [DeskController::class, 'archivadoSeguridad'])->name('desk.seguridad-archivar');
+    Route::get('desk/seguridad-archivo', [DeskController::class, 'archivoSeguridad'])->name('desk.seguridad-archivo');
+    Route::get('desk/seguridad', [DeskController::class, 'indexSeguridad'])->name('desk.seguridad-index');
 
-    Route::get('desk/{riesgos}/riesgos-edit', 'DeskController@editRiesgos')->name('desk.riesgos-edit');
-    Route::post('desk/{riesgos}/riesgos-update', 'DeskController@updateRiesgos')->name('desk.riesgos-update');
+    Route::get('desk/{riesgos}/riesgos-edit', [DeskController::class, 'editRiesgos'])->name('desk.riesgos-edit');
+    Route::post('desk/{riesgos}/riesgos-update', [DeskController::class, 'updateRiesgos'])->name('desk.riesgos-update');
 
-    Route::get('desk/{quejas}/quejas-edit', 'DeskController@editQuejas')->name('desk.quejas-edit');
-    Route::post('desk/{quejas}/quejas-update', 'DeskController@updateQuejas')->name('desk.quejas-update');
+    Route::get('desk/{quejas}/quejas-edit', [DeskController::class, 'editQuejas'])->name('desk.quejas-edit');
+    Route::post('desk/{quejas}/quejas-update', [DeskController::class, 'updateQuejas'])->name('desk.quejas-update');
 
-    Route::get('desk/{denuncias}/denuncias-edit', 'DeskController@editDenuncias')->name('desk.denuncias-edit');
-    Route::post('desk/{denuncias}/denuncias-update', 'DeskController@updateDenuncias')->name('desk.denuncias-update');
+    Route::get('desk/{denuncias}/denuncias-edit', [DeskController::class, 'editDenuncias'])->name('desk.denuncias-edit');
+    Route::post('desk/{denuncias}/denuncias-update', [DeskController::class, 'updateDenuncias'])->name('desk.denuncias-update');
 
-    Route::get('desk/{mejoras}/mejoras-edit', 'DeskController@editMejoras')->name('desk.mejoras-edit');
-    Route::post('desk/{mejoras}/mejoras-update', 'DeskController@updateMejoras')->name('desk.mejoras-update');
+    Route::get('desk/{mejoras}/mejoras-edit', [DeskController::class, 'editMejoras'])->name('desk.mejoras-edit');
+    Route::post('desk/{mejoras}/mejoras-update', [DeskController::class, 'updateMejoras'])->name('desk.mejoras-update');
 
-    Route::get('desk/{sugerencias}/sugerencias-edit', 'DeskController@editSugerencias')->name('desk.sugerencias-edit');
-    Route::post('desk/{sugerencias}/sugerencias-update', 'DeskController@updateSugerencias')->name('desk.sugerencias-update');
+    Route::get('desk/{sugerencias}/sugerencias-edit', [DeskController::class, 'editSugerencias'])->name('desk.sugerencias-edit');
+    Route::post('desk/{sugerencias}/sugerencias-update', [DeskController::class, 'updateSugerencias'])->name('desk.sugerencias-update');
 
     // Actividades DESK - Plan Accion
-    Route::get('desk-seguridad-actividades/{seguridad_id}', 'ActividadesIncidentesController@index')->name('desk-seguridad-actividades.index');
-    Route::resource('desk-seguridad-actividades', 'ActividadesIncidentesController')->except(['index']);
+    Route::get('desk-seguridad-actividades/{seguridad_id}', [ActividadesIncidentesController::class, 'index'])->name('desk-seguridad-actividades.index');
+    Route::resource('desk-seguridad-actividades', ActividadesIncidentesController::class)->except(['index']);
 
-    Route::get('desk-riesgos-actividades/{riesgo_id}', 'ActividadesRiesgosController@index')->name('desk-riesgos-actividades.index');
-    Route::resource('desk-riesgos-actividades', 'ActividadesRiesgosController')->except(['index']);
+    Route::get('desk-riesgos-actividades/{riesgo_id}', [ActividadesRiesgosController::class, 'index'])->name('desk-riesgos-actividades.index');
+    Route::resource('desk-riesgos-actividades', ActividadesRiesgosController::class)->except(['index']);
 
-    Route::get('desk-quejas-actividades/{queja_id}', 'ActividadesQuejasController@index')->name('desk-quejas-actividades.index');
-    Route::resource('desk-quejas-actividades', 'ActividadesQuejasController')->except(['index']);
+    Route::get('desk-quejas-actividades/{queja_id}', [ActividadesQuejasController::class, 'index'])->name('desk-quejas-actividades.index');
+    Route::resource('desk-quejas-actividades', ActividadesQuejasController::class)->except(['index']);
 
-    Route::get('desk-denuncias-actividades/{denuncia_id}', 'ActividadesDenunciasController@index')->name('desk-denuncias-actividades.index');
-    Route::resource('desk-denuncias-actividades', 'ActividadesDenunciasController')->except(['index']);
+    Route::get('desk-denuncias-actividades/{denuncia_id}', [ActividadesDenunciasController::class, 'index'])->name('desk-denuncias-actividades.index');
+    Route::resource('desk-denuncias-actividades', ActividadesDenunciasController::class)->except(['index']);
 
-    Route::get('desk-mejoras-actividades/{mejora_id}', 'ActividadesMejorasController@index')->name('desk-mejoras-actividades.index');
-    Route::resource('desk-mejoras-actividades', 'ActividadesMejorasController')->except(['index']);
+    Route::get('desk-mejoras-actividades/{mejora_id}', [ActividadesMejorasController::class, 'index'])->name('desk-mejoras-actividades.index');
+    Route::resource('desk-mejoras-actividades', ActividadesMejorasController::class)->except(['index']);
 
-    Route::get('desk-sugerencias-actividades/{sugerencia_id}', 'ActividadesSugerenciasController@index')->name('desk-sugerencias-actividades.index');
-    Route::resource('desk-sugerencias-actividades', 'ActividadesSugerenciasController')->except(['index']);
+    Route::get('desk-sugerencias-actividades/{sugerencia_id}', [ActividadesSugerenciasController::class, 'index'])->name('desk-sugerencias-actividades.index');
+    Route::resource('desk-sugerencias-actividades', ActividadesSugerenciasController::class)->except(['index']);
 
-    Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
-    Route::post('planTrabajoBase/save/current', 'PlanTrabajoBaseController@saveCurrentProyect')->name('planTrabajoBase.saveCurrentProyect');
-    Route::post('planTrabajoBase/save/status', 'PlanTrabajoBaseController@saveStatus')->name('planTrabajoBase.saveStatus');
-    Route::post('planTrabajoBase/check/changes', 'PlanTrabajoBaseController@checkChanges')->name('planTrabajoBase.checkChanges');
-    Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
-    Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
+    Route::get('planTrabajoBase', [PlanTrabajoBaseController::class, 'index'])->name('planTrabajoBase.index');
+    Route::post('planTrabajoBase/save/current', [PlanTrabajoBaseController::class, 'saveCurrentProyect'])->name('planTrabajoBase.saveCurrentProyect');
+    Route::post('planTrabajoBase/save/status', [PlanTrabajoBaseController::class, 'saveStatus'])->name('planTrabajoBase.saveStatus');
+    Route::post('planTrabajoBase/check/changes', [PlanTrabajoBaseController::class, 'checkChanges'])->name('planTrabajoBase.checkChanges');
+    Route::post('planTrabajoBase/save', [PlanTrabajoBaseController::class, 'saveImplementationProyect'])->name('planTrabajoBase.saveProyect');
+    Route::post('planTrabajoBase/load', [PlanTrabajoBaseController::class, 'loadProyect'])->name('planTrabajoBase.loadProyect');
 
     // Permissions
-    Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
-    Route::resource('permissions', 'PermissionsController');
+    Route::delete('permissions/destroy', [PermissionsController::class, 'massDestroy'])->name('permissions.massDestroy');
+    Route::resource('permissions', PermissionsController::class);
 
     //analisis brechas
     //Route::resource('analisis-brechas', 'AnalisisBController');
-    Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
-    Route::post('analisis-brechas/update', 'AnalisisBController@update');
+    Route::get('analisis-brechas', [AnalisisBController::class, 'index'])->name('analisis-brechas.index');
+    Route::post('analisis-brechas/update', [AnalisisBController::class, 'update']);
 
     // Declaracion de Aplicabilidad
-    Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
-    Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
-    Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
+    Route::get('declaracion-aplicabilidad/descargar', [DeclaracionAplicabilidadController::class, 'download'])->name('declaracion-aplicabilidad.descargar');
+    Route::delete('declaracion-aplicabilidad/destroy', [DeclaracionAplicabilidadController::class, 'massDestroy'])->name('declaracion-aplicabilidad.massDestroy');
+    Route::resource('declaracion-aplicabilidad', DeclaracionAplicabilidadController::class);
 
     //gantt
-    Route::get('gantt', 'GanttController@index');
-    Route::post('gantt/update', 'GanttController@update');
+    Route::get('gantt', [GanttController::class, 'index']);
+    Route::post('gantt/update', [GanttController::class, 'update']);
 
     // Roles
-    Route::get('roles/{role}/permisos', 'RolesController@getPermissions')->name('roles.getPermissions');
-    Route::patch('roles/{role}/edit', 'RolesController@update')->name('roles.patch');
-    Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
-    Route::resource('roles', 'RolesController');
+    Route::get('roles/{role}/permisos', [RolesController::class, 'getPermissions'])->name('roles.getPermissions');
+    Route::patch('roles/{role}/edit', [RolesController::class, 'update'])->name('roles.patch');
+    Route::delete('roles/destroy', [RolesController::class, 'massDestroy'])->name('roles.massDestroy');
+    Route::resource('roles', RolesController::class);
 
     //procesos
 
-    Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
-    Route::get('procesos/{documento}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
-    Route::resource('procesos', 'ProcesoController');
-    Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
-    Route::post('selectRiesgos', 'ProcesoController@AjaxRequestRiesgos')->name('selectRiesgos');
+    Route::get('mapa-procesos', [ProcesoController::class, 'mapaProcesos'])->name('procesos.mapa');
+    Route::get('procesos/{documento}/vista', [ProcesoController::class, 'obtenerDocumentoProcesos'])->name('procesos.obtenerDocumentoProcesos');
+    Route::resource('procesos', ProcesoController::class);
+    Route::post('selectIndicador', [ProcesoController::class, 'AjaxRequestIndicador'])->name('selectIndicador');
+    Route::post('selectRiesgos', [ProcesoController::class, 'AjaxRequestRiesgos'])->name('selectRiesgos');
 
     //macroprocesos
-    Route::resource('macroprocesos', 'MacroprocesoController');
+    Route::resource('macroprocesos', MacroprocesoController::class);
 
     // Users
-    Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
-    Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::post('users/vincular', [UsersController::class, 'vincularEmpleado'])->name('users.vincular');
+    Route::delete('users/destroy', [UsersController::class, 'massDestroy'])->name('users.massDestroy');
     //Route::post('users/get', 'UsersController@getUsers')->name('users.get');
-    Route::resource('users', 'UsersController');
+    Route::resource('users', UsersController::class);
 
     // Empleados
-    Route::post('empleados/store/{empleado}/competencias-resumen', [EmpleadoController::class , 'storeResumen'])->name('empleados.storeResumen');
-    Route::post('empleados/store/{empleado}/competencias-certificaciones', [EmpleadoController::class , 'storeCertificaciones'])->name('empleados.storeCertificaciones');
-    Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', [EmpleadoController::class , 'deleteCertificaciones'])->name('empleados.deleteCertificaciones');
-    Route::post('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class , 'storeCursos'])->name('empleados.storeCursos');
-    Route::delete('empleados/delete/{curso}/competencias-cursos', [EmpleadoController::class , 'deleteCursos'])->name('empleados.deleteCursos');
-    Route::post('empleados/store/{empleado}/competencias-experiencia', [EmpleadoController::class , 'storeExperiencia'])->name('empleados.storeExperiencia');
-    Route::delete('empleados/delete/{educacion}/competencias-educacion', [EmpleadoController::class , 'deleteEducacion'])->name('empleados.deleteEducacion');
-    Route::post('empleados/store/{empleado}/competencias-educacion', [EmpleadoController::class , 'storeEducacion'])->name('empleados.storeEducacion');
-    Route::delete('empleados/delete/{experiencia}/competencias-experiencia', [EmpleadoController::class , 'deleteExperiencia'])->name('empleados.deleteExperiencia');
-    Route::get('empleados/store/{empleado}/competencias-certificaciones', [EmpleadoController::class , 'getCertificaciones'])->name('empleados.getCertificaciones');
-    Route::get('empleados/store/{empleado}/competencias-educacion', [EmpleadoController::class , 'getEducacion'])->name('empleados.getEducacion');
-    Route::get('empleados/store/{empleado}/competencias-experiencia', [EmpleadoController::class , 'getExperiencia'])->name('empleados.getExperiencia');
-    Route::get('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class , 'getCursos'])->name('empleados.getCursos');
-    Route::post('empleados/store/competencias', [EmpleadoController::class ,'storeWithCompetencia'])->name('empleados.storeWithCompetencia');
-    Route::post('empleados/get', [EmpleadoController::class ,'getEmpleados'])->name('empleados.get');
-    Route::get('empleados/get-all', [EmpleadoController::class ,'getAllEmpleados'])->name('empleados.getAll');
+    Route::post('empleados/store/{empleado}/competencias-resumen', [EmpleadoController::class, 'storeResumen'])->name('empleados.storeResumen');
+    Route::post('empleados/store/{empleado}/competencias-certificaciones', [EmpleadoController::class, 'storeCertificaciones'])->name('empleados.storeCertificaciones');
+    Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', [EmpleadoController::class, 'deleteCertificaciones'])->name('empleados.deleteCertificaciones');
+    Route::post('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class, 'storeCursos'])->name('empleados.storeCursos');
+    Route::delete('empleados/delete/{curso}/competencias-cursos', [EmpleadoController::class, 'deleteCursos'])->name('empleados.deleteCursos');
+    Route::post('empleados/store/{empleado}/competencias-experiencia', [EmpleadoController::class, 'storeExperiencia'])->name('empleados.storeExperiencia');
+    Route::delete('empleados/delete/{educacion}/competencias-educacion', [EmpleadoController::class, 'deleteEducacion'])->name('empleados.deleteEducacion');
+    Route::post('empleados/store/{empleado}/competencias-educacion', [EmpleadoController::class, 'storeEducacion'])->name('empleados.storeEducacion');
+    Route::delete('empleados/delete/{experiencia}/competencias-experiencia', [EmpleadoController::class, 'deleteExperiencia'])->name('empleados.deleteExperiencia');
+    Route::get('empleados/store/{empleado}/competencias-certificaciones', [EmpleadoController::class, 'getCertificaciones'])->name('empleados.getCertificaciones');
+    Route::get('empleados/store/{empleado}/competencias-educacion', [EmpleadoController::class, 'getEducacion'])->name('empleados.getEducacion');
+    Route::get('empleados/store/{empleado}/competencias-experiencia', [EmpleadoController::class, 'getExperiencia'])->name('empleados.getExperiencia');
+    Route::get('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class, 'getCursos'])->name('empleados.getCursos');
+    Route::post('empleados/store/competencias', [EmpleadoController::class, 'storeWithCompetencia'])->name('empleados.storeWithCompetencia');
+    Route::post('empleados/get', [EmpleadoController::class, 'getEmpleados'])->name('empleados.get');
+    Route::get('empleados/get-all', [EmpleadoController::class, 'getAllEmpleados'])->name('empleados.getAll');
     Route::resource('empleados', EmpleadoController::class);
 
-    Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
-    Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
+    Route::get('organigrama/exportar', [OrganigramaController::class, 'exportTo'])->name('organigrama.exportar');
+    Route::get('organigrama', [OrganigramaController::class, 'index'])->name('organigrama.index');
 
     // Dashboards
-    Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    Route::resource('dashboards', DashboardController::class, ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Implementacions
 
-    Route::resource('implementacions', 'ImplementacionController');
+    Route::resource('implementacions', ImplementacionController::class);
 
     // Planes de Acción
-    Route::post('planes-de-accion/{plan}/save', 'PlanesAccionController@saveProject')->name('planes-de-accion.saveProject');
-    Route::post('planes-de-accion/{plan}/load', 'PlanesAccionController@loadProject')->name('planes-de-accion.loadProject');
-    // Route::get('planes-de-accion/create/', 'PlanesAccionController@create')->name('planes-de-accion.create');
-    Route::resource('planes-de-accion', 'PlanesAccionController')->except(['create']);
+    Route::post('planes-de-accion/{plan}/save', [PlanesAccionController::class, 'saveProject'])->name('planes-de-accion.saveProject');
+    Route::post('planes-de-accion/{plan}/load', [PlanesAccionController::class, 'loadProject'])->name('planes-de-accion.loadProject');
+    // Route::get('planes-de-accion/create/', [PlanesAccionController::class, 'create')->name('planes-de-accion.create');
+    Route::resource('planes-de-accion', PlanesAccionController::class)->except(['create']);
 
     // Glosarios
-    Route::delete('glosarios/destroy', 'GlosarioController@massDestroy')->name('glosarios.massDestroy');
-    Route::resource('glosarios', 'GlosarioController');
+    Route::delete('glosarios/destroy', [GlosarioController::class, 'massDestroy'])->name('glosarios.massDestroy');
+    Route::resource('glosarios', GlosarioController::class);
 
     // Plan Base Actividades
     Route::delete('plan-base-actividades/destroy', 'PlanBaseActividadesController@massDestroy')->name('plan-base-actividades.massDestroy');
@@ -472,9 +468,9 @@ Route::middleware([
     Route::resource('organizaciones', 'OrganizacionesController');
 
     // Tipoactivos
-    Route::delete('tipoactivos/destroy', [TipoactivoController::class , 'massDestroy'])->name('tipoactivos.massDestroy');
-    Route::post('tipoactivos/parse-csv-import', [TipoactivoController::class , 'parseCsvImport'])->name('tipoactivos.parseCsvImport');
-    Route::post('tipoactivos/process-csv-import', [TipoactivoController::class , 'processCsvImport'])->name('tipoactivos.processCsvImport');
+    Route::delete('tipoactivos/destroy', [TipoactivoController::class, 'massDestroy'])->name('tipoactivos.massDestroy');
+    Route::post('tipoactivos/parse-csv-import', [TipoactivoController::class, 'parseCsvImport'])->name('tipoactivos.parseCsvImport');
+    Route::post('tipoactivos/process-csv-import', [TipoactivoController::class, 'processCsvImport'])->name('tipoactivos.processCsvImport');
     Route::resource('tipoactivos', TipoactivoController::class);
 
     // Puestos

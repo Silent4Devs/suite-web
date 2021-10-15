@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activo;
@@ -39,7 +39,7 @@ class InicioUsuarioController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('mi_perfil_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('mi_perfil_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $usuario = auth()->user();
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];

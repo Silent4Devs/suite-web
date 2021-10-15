@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Models\AccionCorrectiva;
 use App\Models\AuditoriaAnual;
@@ -346,7 +346,7 @@ class HomeController
             array_push($evaluacion_nombre, $evaluacion['nombre']);
         }
         // dd($evaluacion_nombre);
-        return view('home', compact(
+        return view('frontend.home', compact(
             'auditexterna',
             'auditinterna',
             'actividadsininici',
