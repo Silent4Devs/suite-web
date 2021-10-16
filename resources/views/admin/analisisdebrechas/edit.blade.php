@@ -51,30 +51,28 @@
                     </div>
                     {{ Form::hidden('fecha', date('Y-m-d')) }}
 
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>%
-                            Implementacion</label>
-                        {{-- <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
-                            type="text" name="porcentaje_implementacion" id="porcentaje_implementacion"
-                            value="{{ old('porcentaje_implementacion', $analisisBrecha->porcentaje_implementacion) }}"> --}}
-                            <div class="form-control">({{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}}
-                                %)</div>
-
-                        @if ($errors->has('porcentaje_implementacion'))
+                    <div class="form-group col-md-4 col-sm-4">
+                        <label for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+                        <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
+                            id="estatus">
+                            <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
+                                Selecciona una opción</option>
+                            @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
+                                <option value="{{ $key }}" {{ $key == $analisisBrecha->estatus ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('estatus'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('porcentaje_implementacion') }}
+                                {{ $errors->first('estatus') }}
                             </div>
                         @endif
                     </div>
 
-
                 </div>
 
-
-
                 <div class="row">
-
-
                     <div class="form-group col-md-4">
                         <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
                         <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
@@ -106,28 +104,21 @@
                         <label for="id_area"><i class="fas fa-street-viewa iconos-crear"></i>Área</label>
                         <div class="form-control" id="id_area" readonly></div>
                     </div>
-
-
                 </div>
 
                 <div class="row">
+                    <div class="form-group col-md-4 lg-4 col-sm-12">
+                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>%
+                            Implementacion</label>
+                        {{-- <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
+                            type="text" name="porcentaje_implementacion" id="porcentaje_implementacion"
+                            value="{{ old('porcentaje_implementacion', $analisisBrecha->porcentaje_implementacion) }}"> --}}
+                            <div class="form-control">({{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}}
+                                %)</div>
 
-
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                        <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
-                            id="estatus">
-                            <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
-                                Selecciona una opción</option>
-                            @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
-                                <option value="{{ $key }}" {{ $key == $analisisBrecha->estatus ? 'selected' : '' }}>
-                                    {{ $label }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('estatus'))
+                        @if ($errors->has('porcentaje_implementacion'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('estatus') }}
+                                {{ $errors->first('porcentaje_implementacion') }}
                             </div>
                         @endif
                     </div>

@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-4 col-lg-4 col-sm-12">
                         <label for="nombre"><i class="fas fa-table iconos-crear"></i>Nombre</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre', '') }}">
@@ -29,7 +29,7 @@
                     </div>
 
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-4 col-lg-4 col-sm-12">
                         <label for="fecha"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha</label>
                         <input class="form-control {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
                             id="fecha" value="{{ date('d-m-Y') }}" disabled>
@@ -41,9 +41,24 @@
                     </div>
                     {{ Form::hidden('fecha', date('Y-m-d')) }}
 
-                    <div class="form-group col-md-4 col-sm-12">
-                        <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>%
 
+                    <div class="form-group col-md-4 col-lg-4 col-sm-12">
+                        <label for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+                        <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
+                            id="estatus">
+                            <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
+                                Selecciona una opción</option>
+                            @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
+                                <option value="{{ $key }}"
+                                    {{ old('estatus', '') === (string) $key ? 'selected' : '' }}>{{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('estatus'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('estatus') }}
+                            </div>
+                        @endif
                     </div>
 
                 </div>
@@ -91,28 +106,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-
-
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                        <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
-                            id="estatus">
-                            <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
-                                Selecciona una opción</option>
-                            @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
-                                <option value="{{ $key }}"
-                                    {{ old('estatus', '') === (string) $key ? 'selected' : '' }}>{{ $label }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('estatus'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('estatus') }}
-                            </div>
-                        @endif
-                    </div>
-                </div>
 
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
