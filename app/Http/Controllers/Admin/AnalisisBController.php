@@ -120,6 +120,9 @@ class AnalisisBController extends Controller
             ->with('gapda152s', $gapa152)->with('gapda161s', $gapa161)->with('gapda171s', $gapa171)->with('gapda172s', $gapa172)
             ->with('gapda181s', $gapa181)->with('gapda182s', $gapa182)->with('porcentajeGap1', $porcentajeGap1)
             ->with('porcentajeGap2', $porcentajeGap2)->with('porcentajeGap3', $porcentajeGap3)->with('conteos', $conteos);
+
+
+
     }
 
     /**

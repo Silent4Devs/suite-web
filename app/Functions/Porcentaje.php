@@ -11,11 +11,12 @@ class Porcentaje
             if ($gap1->valoracion == '1') {
                 $gap1cont += 5;
             } elseif ($gap1->valoracion == '2') {
-                $gap1cont += 2.5;
+                $gap1cont += 0;
             } else {
                 $gap1cont += 0;
             }
         }
+
         //$porc1 = ($gap1cont * 20) / 13;
         $gap12cont = 0;
         foreach ($gap12porcentaje as $gap12) {
@@ -27,6 +28,8 @@ class Porcentaje
                 $gap12cont += 0;
             }
         }
+
+
 
         $resultado = $gap1cont + $gap12cont;
         //$porc2 = (round($gap12cont) * 20) / 100;

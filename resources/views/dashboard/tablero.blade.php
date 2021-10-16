@@ -15,18 +15,18 @@
 <div class="row" style="display:flex; justify-content: end; padding-right: 20px;">
     <button class="btn btn-danger" onclick="printJS({
         printable: 'impreso_row',
-        type: 'html', 
-        css: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',})">
+        type: 'html',
+        css: 'ht tps://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',})">
         <i class="fas fa-print"></i>
         Imprimir
     </button>
 </div>
 <div class="mt-3" id="impreso_row">
-    
-    
+
+
     <div class="row">
-        <div class="col-12">
-            <!--<div class="col">-->                
+                <div class="col-12">
+            <!--<div class="col">-->
             <div class="card">
                 <div class="card-body">
                     <h6 align="center">PORCENTAJE DE IMPLEMENTACIÓN GENERAL ISO 27001
@@ -102,7 +102,7 @@
         </div>
     </div>
     <!--segunda tabla-->
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -254,10 +254,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!--segunda tabla-->
     <!--tercera tabla-->
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -266,7 +266,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!--tercera tabla-->
     <!--cuarta tabla-->
     <div class="row">
@@ -287,7 +287,7 @@
                         </div>
                     </div>
                     <br>
-                    <div class="row">
+                    <div class="row" id="refrs">
                         <div class="col-sm" align="center">
                             <span>PLANEAR</span>
                             <table class="table table-responsive-sm letras-dashboard">
@@ -305,13 +305,17 @@
                                         {{$conteos['Gap1']['satisfactorio']}}
                                     </td>
                                     <td>{{number_format(($conteos['Gap1']['satisfactorio'] * 100) / 15), 2, '.', ''}}%</td>
+                                    {{-- <td>{{$conteos['Gap1']['satisfactorio']}}</td> --}}
+                                    {{-- <td>{{number_format($porcentajeGap1, 2, '.', '')}}%</td> --}}
                                 </tr>
                                 <tr>
                                     <td>Cumple parcialmente</td>
                                     <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
                                         {{$conteos['Gap1']['parcialmente']}}
                                     </td>
+                                    {{-- <td>{{number_format(($conteos['Gap1']['parcialmente'] * 30) / 15), 2, '.', ''}}%</td> --}}
                                     <td>{{number_format(($conteos['Gap1']['parcialmente'] * 100) / 15), 2, '.', ''}}%</td>
+
                                 </tr>
                                 <tr>
                                     <td>No cumple</td>
@@ -404,7 +408,7 @@
                                         {{$conteos['Gap2']['satisfactorio']}}
                                     </td>
                                     <td>
-                                        {{number_format(($conteos['Gap2']['satisfactorio'] * 100) / $total), 2, '.', ''}}%
+                                        {{number_format(($conteos['Gap2']['satisfactorio'] * 40) / $total), 2, '.', ''}}%
                                     </td>
                                 </tr>
                                 <tr>
@@ -413,7 +417,7 @@
                                         {{$conteos['Gap2']['parcialmente']}}
                                     </td>
                                     <td>
-                                        {{number_format(($conteos['Gap2']['parcialmente'] * 100) / $total), 2, '.', ''}}%
+                                        {{number_format(($conteos['Gap2']['parcialmente'] * 40) / $total), 2, '.', ''}}%
                                     </td>
                                 </tr>
                                 <tr>
@@ -422,7 +426,7 @@
                                         {{$conteos['Gap2']['nocumple']}}
                                     </td>
                                     <td>
-                                        {{number_format(($conteos['Gap2']['nocumple'] * 100) / $total), 2, '.', ''}}%
+                                        {{number_format(($conteos['Gap2']['nocumple'] * 40) / $total), 2, '.', ''}}%
                                     </td>
                                 </tr>
                                 <tr>
@@ -610,8 +614,6 @@
     </div>
     <!--sexta tabla-->
 </div>
-
-
 
 <script>
     //Grafica de barras
