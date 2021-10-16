@@ -88,7 +88,9 @@
                     <td>{{ $riesgo->areas_afectados }}</td>
                     <td>{{ $riesgo->activos_afectados }}</td>
 	       			<td>{{ $riesgo->fecha }}</td>
-	       			<td>{{ $riesgo->reporto->name }}</td>
+	       			<td>
+                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $riesgo->reporto->avatar }}" title="{{ $riesgo->reporto->name }}">
+                    </td>
 	       			<td>{{ $riesgo->reporto->email }}</td>
 	       			<td>{{ $riesgo->reporto->telefono }}</td>
 	       			<td>
