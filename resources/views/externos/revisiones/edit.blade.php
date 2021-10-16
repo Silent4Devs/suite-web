@@ -90,6 +90,7 @@
                     <img src="{{ asset('img/mensaje2.png') }}">
                 </div>
             </div>
+            <a href="{{asset('admin/inicioUsuario')}}#aprobaciones" class="mt-2 btn btn-primary">Regresar</a>
         </div>
     @else
         <div class="m-0 row justify-content-center w-100" style="position: relative">
@@ -129,9 +130,7 @@
                                     Rechazar</button>
                             </form>
 
-                            <div class="row">
-                                <a href="{{asset('admin/inicioUsuariouario#aprobaciones')}}" class="btn btn-danger">Aceptar</a>
-                            </div>
+
                         </div>
                     </div>
                 </div>
