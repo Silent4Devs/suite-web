@@ -150,4 +150,9 @@ class GapDosController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function analisis_brecha()
+	{
+		return $this->belongTo(AnalisisBrecha::class);
+	}
 }
