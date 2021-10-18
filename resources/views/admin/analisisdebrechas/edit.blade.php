@@ -110,19 +110,11 @@
                     <div class="form-group col-md-4 lg-4 col-sm-12">
                         <label for="porcentaje_implementacion"><i class="fas fa-percentage iconos-crear"></i>%
                             Implementacion</label>
-                        {{-- <input class="form-control {{ $errors->has('porcentaje_implementacion') ? 'is-invalid' : '' }}"
-                            type="text" name="porcentaje_implementacion" id="porcentaje_implementacion"
-                            value="{{ old('porcentaje_implementacion', $analisisBrecha->porcentaje_implementacion) }}"> --}}
-                            <div class="form-control">({{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}}
-                                %)</div>
+                            <div class="form-control" readonly>{{$cuentas}} %</div>
 
-                        @if ($errors->has('porcentaje_implementacion'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('porcentaje_implementacion') }}
-                            </div>
-                        @endif
                     </div>
                 </div>
+
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
