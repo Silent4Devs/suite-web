@@ -146,7 +146,16 @@
 { data: 'accioncorrectiva_tema', name: 'accioncorrectiva.tema' },
 { data: 'accioncorrectiva.fecharegistro', name: 'accioncorrectiva.fecharegistro' },
 { data: 'actividad', name: 'actividad' },
-{ data: 'responsable_name', name: 'responsable.name' },
+{ 
+    data: 'id',
+    render: function(data, type, row, meta) {
+
+        
+        let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.responsable.avatar}" title="${row.responsable.name}"></img>`;
+        
+        return `${row.responsable ? html: ''}`;
+    }
+},
 { data: 'fechacompromiso', name: 'fechacompromiso' },
 { data: 'estatus', name: 'estatus' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

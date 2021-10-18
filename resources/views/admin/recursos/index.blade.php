@@ -208,8 +208,13 @@
                         name: 'fecha_curso'
                     },
                     {
-                        data: 'participantes',
-                        name: 'participantes.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+        
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.participantes.avatar}" title="${row.participantes.name}"></img>`;
+                            
+                            return `${row.participantes ? html: ''}`;
+                        }
                     },
                     {
                         data: 'instructor',

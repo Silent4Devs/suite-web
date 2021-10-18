@@ -368,10 +368,13 @@
                         }
                     },
                     {
-                        data: 'reviso',
-                        name: 'reviso',
+                        data: 'id',
                         render: function(data, type, row, meta) {
-                            return row.empleado?.name;
+
+                            
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reviso.avatar}" title="${row.reviso.name}"></img>`;
+                            
+                            return `${row.reviso ? html: ''}`;
                         }
                     },
                     {

@@ -178,8 +178,13 @@
                         name: 'name'
                     },
                     {
-                        data: 'owner_name',
-                        name: 'owner.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+        
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.owner.avatar}" title="${row.owner.name}"></img>`;
+                            
+                            return `${row.owner ? html: ''}`;
+                        }
                     },
                     {
                         data: 'actions',

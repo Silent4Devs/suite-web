@@ -217,7 +217,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //analisis brechas
     //Route::resource('analisis-brechas', 'AnalisisBController');
     Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
+    Route::get('analisis-brechas/{id}', 'AnalisisBController@index')->name('analisis-brechas');
     Route::post('analisis-brechas/update', 'AnalisisBController@update');
+    Route::delete('analisisdebrechas/destroy', 'AnalisisBrechaController@massDestroy')->name('analisisdebrechas.massDestroy');
+    Route::resource('analisisdebrechas', 'AnalisisBrechaController');
+    Route::get('getEmployeeData', 'AnalisisBrechaController@getEmployeeData')->name('getEmployeeData');
+
+
 
     // Declaracion de Aplicabilidad
     Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');

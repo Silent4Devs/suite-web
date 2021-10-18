@@ -118,12 +118,16 @@
                                 {{ $controlDocumento->version ?? '' }}
                             </td>
                             <td>
-                                {{ $controlDocumento->elaboro->name ?? '' }}
+                                @if($controlDocumento->elaboro)
+                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $controlDocumento->elaboro->avatar }}" title="{{ $controlDocumento->elaboro->name }}">
+                                @endif
                             </td>
                             <td>
-                                {{ $controlDocumento->reviso->name ?? '' }}
+                                @if($controlDocumento->reviso)
+                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $controlDocumento->reviso->avatar }}" title="{{ $controlDocumento->reviso->name }}">
+                                @endif
                             </td>
-                            <td>
+                            <td style="min-width: 500px;">
                                 {{ $controlDocumento->estado->descripcion ?? '' }}
                             </td>
                             <td>

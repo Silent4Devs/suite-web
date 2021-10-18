@@ -81,7 +81,9 @@
                     <td>{{ $denuncia->created_at }}</td>
                     <td>{{ $denuncia->fecha_cierre }}</td>
                     @if($denuncia->anonimo == 'no')
-                        <td>{{ $denuncia->denuncio->name }}</td>
+                        <td>
+                            <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $denuncia->denuncio->avatar }}" title="{{ $denuncia->denuncio->name }}">
+                        </td>
                         <td>{{ $denuncia->denuncio->puesto }}</td>
                         <td>{{ $denuncia->denuncio->area->area }}</td>
                     @else
@@ -89,7 +91,9 @@
                         <td> -- </td>
                         <td> -- </td>
                     @endif
-                    <td>{{ $denuncia->denunciado->name }}</td>
+                    <td>
+                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $denuncia->denunciado->avatar }}" title="{{ $denuncia->denunciado->name }}">
+                    </td>
                     <td>{{ $denuncia->denunciado->area->area }}</td>
                     <td>{{ $denuncia->denunciado->puesto }}</td>
                     <td>{{ $denuncia->descripcion }}</td>
