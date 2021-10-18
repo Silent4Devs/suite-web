@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRiesgosoportunidadeRequest;
@@ -10,21 +10,61 @@ use App\Models\Controle;
 use App\Models\Riesgosoportunidade;
 use App\Models\Team;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class RiesgosoportunidadesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('riesgosoportunidade_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $riesgosoportunidades = Riesgosoportunidade::all();
+        if ($request->ajax()) {
+            $query = Riesgosoportunidade::with(['control', 'team'])->select(sprintf('%s.*', (new Riesgosoportunidade)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'riesgosoportunidade_show';
+                $editGate = 'riesgosoportunidade_edit';
+                $deleteGate = 'riesgosoportunidade_delete';
+                $crudRoutePart = 'riesgosoportunidades';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->addColumn('control_control', function ($row) {
+                return $row->control ? $row->control->control : '';
+            });
+
+            $table->editColumn('aplicaorganizacion', function ($row) {
+                return $row->aplicaorganizacion ? Riesgosoportunidade::APLICAORGANIZACION_SELECT[$row->aplicaorganizacion] : '';
+            });
+            $table->editColumn('justificacion', function ($row) {
+                return $row->justificacion ? $row->justificacion : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'control']);
+
+            return $table->make(true);
+        }
 
         $controles = Controle::get();
-
         $teams = Team::get();
 
-        return view('frontend.riesgosoportunidades.index', compact('riesgosoportunidades', 'controles', 'teams'));
+        return view('admin.riesgosoportunidades.index', compact('controles', 'teams'));
     }
 
     public function create()
@@ -33,14 +73,14 @@ class RiesgosoportunidadesController extends Controller
 
         $controls = Controle::all()->pluck('control', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.riesgosoportunidades.create', compact('controls'));
+        return view('admin.riesgosoportunidades.create', compact('controls'));
     }
 
     public function store(StoreRiesgosoportunidadeRequest $request)
     {
         $riesgosoportunidade = Riesgosoportunidade::create($request->all());
 
-        return redirect()->route('frontend.riesgosoportunidades.index');
+        return redirect()->route('admin.riesgosoportunidades.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Riesgosoportunidade $riesgosoportunidade)
@@ -51,14 +91,14 @@ class RiesgosoportunidadesController extends Controller
 
         $riesgosoportunidade->load('control', 'team');
 
-        return view('frontend.riesgosoportunidades.edit', compact('controls', 'riesgosoportunidade'));
+        return view('admin.riesgosoportunidades.edit', compact('controls', 'riesgosoportunidade'));
     }
 
     public function update(UpdateRiesgosoportunidadeRequest $request, Riesgosoportunidade $riesgosoportunidade)
     {
         $riesgosoportunidade->update($request->all());
 
-        return redirect()->route('frontend.riesgosoportunidades.index');
+        return redirect()->route('admin.riesgosoportunidades.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Riesgosoportunidade $riesgosoportunidade)
@@ -67,7 +107,7 @@ class RiesgosoportunidadesController extends Controller
 
         $riesgosoportunidade->load('control', 'team');
 
-        return view('frontend.riesgosoportunidades.show', compact('riesgosoportunidade'));
+        return view('admin.riesgosoportunidades.show', compact('riesgosoportunidade'));
     }
 
     public function destroy(Riesgosoportunidade $riesgosoportunidade)
@@ -76,7 +116,7 @@ class RiesgosoportunidadesController extends Controller
 
         $riesgosoportunidade->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyRiesgosoportunidadeRequest $request)
