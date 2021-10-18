@@ -3874,41 +3874,43 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "4.1.4",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "71cf170102c8371ccd933fa4df6252086d144de6"
+                "reference": "55564265fddf810504110bd68ca311932324b0e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/71cf170102c8371ccd933fa4df6252086d144de6",
-                "reference": "71cf170102c8371ccd933fa4df6252086d144de6",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/55564265fddf810504110bd68ca311932324b0e9",
+                "reference": "55564265fddf810504110bd68ca311932324b0e9",
                 "shasum": ""
             },
             "require": {
-                "ext-hash": "*",
-                "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
-                "ext-sodium": "*",
                 "lcobucci/clock": "^2.0",
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "infection/infection": "^0.21",
+                "infection/infection": "^0.20",
                 "lcobucci/coding-standard": "^6.0",
-                "mikey179/vfsstream": "^1.6.7",
-                "phpbench/phpbench": "^1.0@alpha",
+                "mikey179/vfsstream": "^1.6",
+                "phpbench/phpbench": "^0.17",
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.12",
                 "phpstan/phpstan-deprecation-rules": "^0.12",
                 "phpstan/phpstan-phpunit": "^0.12",
                 "phpstan/phpstan-strict-rules": "^0.12",
                 "phpunit/php-invoker": "^3.1",
-                "phpunit/phpunit": "^9.5"
+                "phpunit/phpunit": "^9.4"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Lcobucci\\JWT\\": "src"
@@ -3932,7 +3934,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-                "source": "https://github.com/lcobucci/jwt/tree/4.1.4"
+                "source": "https://github.com/lcobucci/jwt/tree/4.0.4"
             },
             "funding": [
                 {
@@ -3944,7 +3946,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-03-23T23:53:08+00:00"
+            "time": "2021-09-28T19:18:28+00:00"
         },
         {
             "name": "league/commonmark",
@@ -7839,178 +7841,6 @@
                 "source": "https://github.com/spatie/url/tree/1.3.5"
             },
             "time": "2020-11-03T10:36:20+00:00"
-        },
-        {
-            "name": "stancl/jobpipeline",
-            "version": "v1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/stancl/jobpipeline.git",
-                "reference": "906caa0872dc1b377b449832961598c09a42adb2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/stancl/jobpipeline/zipball/906caa0872dc1b377b449832961598c09a42adb2",
-                "reference": "906caa0872dc1b377b449832961598c09a42adb2",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^6.0|^7.11|^8.0"
-            },
-            "require-dev": {
-                "ext-redis": "*",
-                "orchestra/testbench": "^4.0|^5.2|^6.0",
-                "spatie/valuestore": "^1.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Stancl\\JobPipeline\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Samuel Štancl",
-                    "email": "samuel.stancl@gmail.com"
-                }
-            ],
-            "description": "Turn any series of jobs into Laravel listeners.",
-            "support": {
-                "issues": "https://github.com/stancl/jobpipeline/issues",
-                "source": "https://github.com/stancl/jobpipeline/tree/v1.5.0"
-            },
-            "time": "2020-11-15T15:11:12+00:00"
-        },
-        {
-            "name": "stancl/tenancy",
-            "version": "v3.4.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/stancl/tenancy.git",
-                "reference": "54a33f93a85a5e0a4d53ac48fabacd8ebb716eec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/stancl/tenancy/zipball/54a33f93a85a5e0a4d53ac48fabacd8ebb716eec",
-                "reference": "54a33f93a85a5e0a4d53ac48fabacd8ebb716eec",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "facade/ignition-contracts": "^1.0",
-                "illuminate/support": "^6.0|^7.0|^8.0",
-                "ramsey/uuid": "^3.7|^4.0",
-                "stancl/jobpipeline": "^1.0",
-                "stancl/virtualcolumn": "^1.0"
-            },
-            "require-dev": {
-                "doctrine/dbal": "^2.10",
-                "laravel/framework": "^6.0|^7.0|^8.0",
-                "league/flysystem-aws-s3-v3": "~1.0",
-                "orchestra/testbench-browser-kit": "^4.0|^5.0|^6.0",
-                "spatie/valuestore": "^1.2.5",
-                "vlucas/phpdotenv": "^3.3|^4.0|^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Stancl\\Tenancy\\TenancyServiceProvider"
-                    ],
-                    "aliases": {
-                        "Tenancy": "Stancl\\Tenancy\\Facades\\Tenancy",
-                        "GlobalCache": "Stancl\\Tenancy\\Facades\\GlobalCache"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Stancl\\Tenancy\\": "src/"
-                },
-                "files": [
-                    "src/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Samuel Štancl",
-                    "email": "samuel.stancl@gmail.com"
-                }
-            ],
-            "description": "Automatic multi-tenancy for your Laravel application.",
-            "keywords": [
-                "laravel",
-                "multi-database",
-                "multi-tenancy",
-                "tenancy"
-            ],
-            "support": {
-                "issues": "https://github.com/stancl/tenancy/issues",
-                "source": "https://github.com/stancl/tenancy/tree/v3.4.4"
-            },
-            "funding": [
-                {
-                    "url": "https://tenancyforlaravel.com/donate",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/stancl",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-04-22T09:09:22+00:00"
-        },
-        {
-            "name": "stancl/virtualcolumn",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/stancl/virtualcolumn.git",
-                "reference": "cdec7c6ade3cb3a599e69e407b876d73d115b737"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/stancl/virtualcolumn/zipball/cdec7c6ade3cb3a599e69e407b876d73d115b737",
-                "reference": "cdec7c6ade3cb3a599e69e407b876d73d115b737",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "^6.0|^7.11|^8.0",
-                "illuminate/support": "^6.0|^7.11|^8.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^4.0|^5.2|^6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Stancl\\VirtualColumn\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Samuel Štancl",
-                    "email": "samuel.stancl@gmail.com"
-                }
-            ],
-            "description": "Eloquent virtual column.",
-            "support": {
-                "issues": "https://github.com/stancl/virtualcolumn/issues",
-                "source": "https://github.com/stancl/virtualcolumn/tree/v1.1.0"
-            },
-            "time": "2020-09-08T16:49:16+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

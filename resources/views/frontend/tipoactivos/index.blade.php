@@ -1,225 +1,161 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
-    <div class="mt-5 card">
-        @can('configuracion_tipoactivo_create')
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Categorías de Activos</strong></h3>
-            </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            @can('tipoactivo_create')
+                <div style="margin-bottom: 10px;" class="row">
+                    <div class="col-lg-12">
+                        <a class="btn btn-success" href="{{ route('frontend.tipoactivos.create') }}">
+                            {{ trans('global.add') }} {{ trans('cruds.tipoactivo.title_singular') }}
+                        </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'Tipoactivo', 'route' => 'admin.tipoactivos.parseCsvImport'])
+                    </div>
+                </div>
+            @endcan
+            <div class="card">
+                <div class="card-header">
+                    {{ trans('cruds.tipoactivo.title_singular') }} {{ trans('global.list') }}
+                </div>
 
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'Tipoactivo', 'route' => 'admin.tipoactivos.parseCsvImport'])
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-Tipoactivo">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.tipoactivo.fields.id') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.tipoactivo.fields.tipo') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.tipoactivo.fields.subtipo') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($tipoactivos as $key => $tipoactivo)
+                                    <tr data-entry-id="{{ $tipoactivo->id }}">
+                                        <td>
+                                            {{ $tipoactivo->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $tipoactivo->tipo ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $tipoactivo->subtipo ?? '' }}
+                                        </td>
+                                        <td>
+                                            @can('tipoactivo_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.tipoactivos.show', $tipoactivo->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('tipoactivo_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.tipoactivos.edit', $tipoactivo->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('tipoactivo_delete')
+                                                <form action="{{ route('frontend.tipoactivos.destroy', $tipoactivo->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        @endcan
 
-        @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-Tipoactivo">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tipoactivo.fields.id') }}
-                        </th>
-                        <th>
-                            Categoría
-                        </th>
-                        <th>
-                            Subcategoría
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
-                </thead>
-            </table>
         </div>
     </div>
-
-
-
+</div>
 @endsection
 @section('scripts')
-    @parent
-    <script>
-        $(function() {
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Categorías de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Categorías de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Categorías de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: `Categorías de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
-                }
+@parent
+<script>
+    $(function () {
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+@can('tipoactivo_delete')
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButton = {
+    text: deleteButtonTrans,
+    url: "{{ route('frontend.tipoactivos.massDestroy') }}",
+    className: 'btn-danger',
+    action: function (e, dt, node, config) {
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
+      });
 
-            ];
+      if (ids.length === 0) {
+        alert('{{ trans('global.datatables.zero_selected') }}')
 
-            @can('configuracion_tipoactivo_create')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar categoría de activos',
-                url: "{{ route('admin.tipoactivos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                let btnImport = {
-                text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
-                titleAttr: 'Importar datos por CSV',
-                className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                $('#csvImportModal').modal('show');
-                }
-                };
-                dtButtons.push(btnAgregar);
-                dtButtons.push(btnImport);
-            @endcan
-            @can('configuracion_tipoactivo_delete')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.tipoactivos.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-            
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-            
-                return
-                }
-            
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
+        return
+      }
 
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                processing: true,
-                serverSide: true,
-                retrieve: true,
-                aaSorting: [],
-                ajax: "{{ route('admin.tipoactivos.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'tipo',
-                        name: 'tipo'
-                    },
-                    {
-                        data: 'subtipo',
-                        name: 'subtipo'
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ]
-            };
-            let table = $('.datatable-Tipoactivo').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
-        });
-    </script>
+      if (confirm('{{ trans('global.areYouSure') }}')) {
+        $.ajax({
+          headers: {'x-csrf-token': _token},
+          method: 'POST',
+          url: config.url,
+          data: { ids: ids, _method: 'DELETE' }})
+          .done(function () { location.reload() })
+      }
+    }
+  }
+  dtButtons.push(deleteButton)
+@endcan
+
+  $.extend(true, $.fn.dataTable.defaults, {
+    orderCellsTop: true,
+    order: [[ 1, 'desc' ]],
+    pageLength: 100,
+  });
+  let table = $('.datatable-Tipoactivo:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  $('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+      table
+        .column($(this).parent().index())
+        .search(value, strict)
+        .draw()
+  });
+})
+
+</script>
 @endsection
