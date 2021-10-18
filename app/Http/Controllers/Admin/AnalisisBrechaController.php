@@ -22,21 +22,6 @@ class AnalisisBrechaController extends Controller
     public function index(Request $request)
     {
 
-        $gap1porcentaje = GapUno::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', request()->id)->skip(3)->take(12);
-        $gap12porcentaje = GapUno::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id','asc')->get()->where('analisis_brechas_id', '=', request()->id)->take(3);
-        $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap2satisfactorio = GapDo::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->get()->where('analisis_brechas_id', '=', request()->id);
-        $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->get()->where('analisis_brechas_id', '=', request()->id);
-        $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', request()->id)->count();
-        $total = 114 - $gap2noaplica;
-        $gapunoPorc = new Porcentaje();
-        $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
-        $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
-        $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
-
-
         if ($request->ajax()) {
             $query = AnalisisBrecha::with(['empleado', 'gap_logro_tres', 'gap_logro_dos','gap_logro_unos'])->orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -72,7 +57,21 @@ class AnalisisBrechaController extends Controller
             });
 
             $table->editColumn('porcentaje_implementacion', function ($row) {
-                return $row->porcentaje_implementacion ? $row->porcentaje_implementacion : '';
+                $gap1porcentaje = GapUno::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', $row->id)->skip(3)->take(12);
+                $gap12porcentaje = GapUno::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id','asc')->get()->where('analisis_brechas_id', '=', $row->id)->take(3);
+                $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap2satisfactorio = GapDo::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->get()->where('analisis_brechas_id', '=', $row->id);
+                $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->get()->where('analisis_brechas_id', '=', $row->id);
+                $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
+                $total = 114 - $gap2noaplica;
+                $gapunoPorc = new Porcentaje();
+                $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
+                $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
+                $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
+                $cuentas = number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '');
+                return $cuentas."%" ?  $cuentas."%" : '';
             });
 
             $table->editColumn('elaboro', function ($row) {
@@ -96,7 +95,7 @@ class AnalisisBrechaController extends Controller
         }
 
 
-        return view('admin.analisisdebrechas.index', compact('gap1porcentaje','gap12porcentaje','gap2porcentaje','gap2satisfactorio','gap2parcialmente','gap3porcentaje','gap31porcentaje','gap2noaplica','total','gapunoPorc','porcentajeGap1','porcentajeGap2','porcentajeGap3'));
+        return view('admin.analisisdebrechas.index');
 
     }
 
@@ -162,21 +161,22 @@ class AnalisisBrechaController extends Controller
 
         $analisisBrecha = AnalisisBrecha::find($id);
 
-        $gap1porcentaje = GapUno::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', request()->id)->skip(3)->take(12);
-        $gap12porcentaje = GapUno::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id','asc')->get()->where('analisis_brechas_id', '=', request()->id)->take(3);
-        $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap2satisfactorio = GapDo::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->get()->where('analisis_brechas_id', '=', request()->id);
-        $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->get()->where('analisis_brechas_id', '=', request()->id);
-        $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap1porcentaje = GapUno::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id)->skip(3)->take(12);
+        $gap12porcentaje = GapUno::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id','asc')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id)->take(3);
+        $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', $analisisBrecha->id )->count();
+        $gap2satisfactorio = GapDo::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', $analisisBrecha->id )->count();
+        $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', $analisisBrecha->id )->count();
+        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id);
+        $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id);
+        $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
         $total = 114 - $gap2noaplica;
         $gapunoPorc = new Porcentaje();
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
         $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
         $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
-
-        return view('admin.analisisdebrechas.edit', compact('empleados', 'analisisBrecha','gap1porcentaje','gap12porcentaje','gap2porcentaje','gap2satisfactorio','gap2parcialmente','gap3porcentaje','gap31porcentaje','gap2noaplica','total','gapunoPorc','porcentajeGap1','porcentajeGap2','porcentajeGap3'));
+        $cuentas = number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '');
+        // dd( $analisisBrecha);
+        return view('admin.analisisdebrechas.edit', compact('empleados', 'analisisBrecha','gap1porcentaje','gap12porcentaje','gap2porcentaje','gap2satisfactorio','gap2parcialmente','gap3porcentaje','gap31porcentaje','gap2noaplica','total','gapunoPorc','porcentajeGap1','porcentajeGap2','porcentajeGap3','cuentas'));
 
     }
 
