@@ -1,160 +1,382 @@
-@extends('layouts.frontend')
+@extends('layouts.admin')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            @can('control_acceso_create')
-                <div style="margin-bottom: 10px;" class="row">
-                    <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.control-accesos.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.controlAcceso.title_singular') }}
-                        </a>
-                    </div>
-                </div>
-            @endcan
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('cruds.controlAcceso.title_singular') }} {{ trans('global.list') }}
-                </div>
 
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable datatable-ControlAcceso">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.controlAcceso.fields.id') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.controlAcceso.fields.descripcion') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.controlAcceso.fields.archivo') }}
-                                    </th>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($controlAccesos as $key => $controlAcceso)
-                                    <tr data-entry-id="{{ $controlAcceso->id }}">
-                                        <td>
-                                            {{ $controlAcceso->id ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $controlAcceso->descripcion ?? '' }}
-                                        </td>
-                                        <td>
-                                            @if($controlAcceso->archivo)
-                                                <a href="{{ $controlAcceso->archivo->getUrl() }}" target="_blank">
-                                                    {{ trans('global.view_file') }}
-                                                </a>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @can('control_acceso_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.control-accesos.show', $controlAcceso->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
+<style>
 
-                                            @can('control_acceso_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.control-accesos.edit', $controlAcceso->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
+    .table tr th:nth-child(2){
+    min-width:600px !important;
+    text-align:center !important;
+    }
 
-                                            @can('control_acceso_delete')
-                                                <form action="{{ route('frontend.control-accesos.destroy', $controlAcceso->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
+    .table tr td:nth-child(2){
+    text-align:justify !important;
+    } 
+    
+    .table tr th:nth-child(3){
+    text-align:center !important;
+    }
+    wire:
+    .img-size{
+    /* 	padding: 0;
+        margin: 0; */
+        height: 450px;
+        width: 700px;
+        background-size: cover;
+        overflow: hidden;
+    }
+    .modal-content {
+       width: 700px;
+      border:none;
+    }
+    .modal-body {
+       padding: 0;
+    }
+    
+    .carousel-control-prev-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+        width: 30px;
+        height: 48px;
+    }
+    .carousel-control-next-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+        width: 30px;
+        height: 48px;
+    }
+    
+    .carousel-control-next {
+        top: 100px;
+        height: 10px;
+    }
+    
+    .carousel-control-prev {
+        height: 40px;
+        top: 80px;
+    }
+    
+    .table tr td:nth-child(6){
+    
+        max-width:415px !important;
+        width:415px !important;
+    
+    }
+    /* se comento por que se descuadra la cabecera de la tabla y el registro */
+    /* .table tr th:nth-child(6){
+    
+        width:415px !important;
+        max-width:415px !important;
+    } */
+    
+    .table tr td:nth-child(5){
+    
+    text-align:justify !important;
+    
+    
+    }
+    
+    .table tr td:nth-child(10){
+    
+        text-align: center;
+    
+    }
+    
+    .tamaño{
+    
+        width:168px !important;
+    
+    }
+</style>
 
-                                        </td>
+    {{ Breadcrumbs::render('admin.control-accesos.index') }}
 
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    @can('control_acceso_create')
+
+        <div class="mt-5 card">
+            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+                <h3 class="mb-2 text-center text-white"><strong>Control de Acceso</strong></h3>
             </div>
+    @endcan
 
+
+            @include('partials.flashMessages')
+            <div class="card-body datable-fix">
+                <table class="table table-bordered w-100 datatable-ControlAcceso">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>
+                                {{ trans('cruds.controlAcceso.fields.id') }}
+                            </th>
+                            <th style="max-width: 400px;">
+                                {{ trans('cruds.controlAcceso.fields.descripcion') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.controlAcceso.fields.archivo') }}
+                            </th>
+                            <th>
+                                Opciones
+                            </th>
+                        </tr>
+                        {{-- <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                            </td>
+                            <td>
+                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr> --}}
+                    </thead>
+                </table>
+            </div>
         </div>
-    </div>
-</div>
 @endsection
 @section('scripts')
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('control_acceso_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('frontend.control-accesos.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+    @parent
+    <script>
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Control de Acceso ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Control de Acceso ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Control de Acceso ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'portrait',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [20, 60, 20, 30];
+                        // doc.styles.tableHeader.fontSize = 7.5;
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Control de Acceso ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+            ];
 
-        return
-      }
+            @can('control_acceso_delete')
+                let btnAgregar = {
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                titleAttr: 'Agregar control de acceso',
+                url: "{{ route('admin.control-accesos.create') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config){
+                let {url} = config;
+                window.location.href = url;
+                }
+                };
+                dtButtons.push(btnAgregar);
+            @endcan
+            @can('control_acceso_delete')
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+                let deleteButton = {
+                text: deleteButtonTrans,
+                url: "{{ route('admin.control-accesos.massDestroy') }}",
+                className: 'btn-danger',
+                action: function (e, dt, node, config) {
+                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+                return entry.id
+                });
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
+                if (ids.length === 0) {
+                alert('{{ trans('global.datatables.zero_selected') }}')
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  });
-  let table = $('.datatable-ControlAcceso:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  $('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-      table
-        .column($(this).parent().index())
-        .search(value, strict)
-        .draw()
-  });
-})
+                return
+                }
 
-</script>
+                if (confirm('{{ trans('global.areYouSure') }}')) {
+                $.ajax({
+                headers: {'x-csrf-token': _token},
+                method: 'POST',
+                url: config.url,
+                data: { ids: ids, _method: 'DELETE' }})
+                .done(function () { location.reload() })
+                }
+                }
+                }
+                //dtButtons.push(deleteButton)
+            @endcan
+
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                ajax: "{{ route('admin.control-accesos.index') }}",
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'descripcion',
+                        name: 'descripcion'
+                    },
+                    {
+                        data: 'documento',
+                        name: 'documento',
+                        render:function(data,type,row,meta){
+                             let archivo="";
+                            //  console.log(row);
+                             let archivos=row.documentos_control_a;
+                             console.log(archivos)
+                               archivo=` <div class="container">
+
+                                    <div class="mb-4 row">
+                                    <div class="text-center col">
+                                        <a href="#" class="btn btn-sm btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
+                                    </div>
+                                    </div>
+
+                                    <!-- modal -->
+                                    <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                        <div class="modal-body">`;
+                                            if(archivos.length>0){
+                                                archivo+=`
+                                            <!-- carousel -->
+                                            <div
+                                                id='carouselExampleIndicators${row.id}'
+                                                class='carousel slide'
+                                                data-ride='carousel'
+                                                >
+                                            <ol class='carousel-indicators'>
+                                                    ${archivos?.map((archivo,idx)=>{
+                                                        return `
+                                                    <li
+                                                    data-target='#carouselExampleIndicators${row.id}'
+                                                    data-slide-to='${idx}'></li>`})}
+                                            </ol>
+                                            <div class='carousel-inner'>
+                                                    ${archivos?.map((archivo,idx)=>{
+                                                        return `
+                                                    <div class='carousel-item ${idx==0?"active":""}'>
+                                                        <iframe seamless class='img-size' src='{{asset("storage/documentos_control_accesos")}}/${archivo.documento}'></iframe>
+                                                    </div>`
+                                                    })}
+                                            </div>
+
+                                            </div>`;
+                                            }
+                                            else{
+                                                    archivo+=`
+                                                    <div class="text-center">
+                                                        <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                                                        <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                        </div>
+                                                    `
+                                            }
+                                            archivo+=`</div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            ${archivos.length==0?`
+                                            <a
+                                                class='carousel-control-prev'
+                                                href='#carouselExampleIndicators${row.id}'
+                                                role='button'
+                                                data-slide='prev'
+                                                >
+                                                <span class='carousel-control-prev-icon'
+                                                    aria-hidden='true'
+                                                    ></span>
+                                                <span class='sr-only'>Previous</span>
+                                            </a>
+                                            <a
+                                                class='carousel-control-next'
+                                                href='#carouselExampleIndicators${row.id}'
+                                                role='button'
+                                                data-slide='next'
+                                                >
+                                                <span
+                                                    class='carousel-control-next-icon'
+                                                    aria-hidden='true'
+                                                    ></span>
+                                                <span class='sr-only'>Next</span>
+                                            </a>`:""}
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>`
+                            return archivo;
+                        }
+                    },
+                    {
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}'
+                    }
+                ],
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ]
+            };
+            let table = $('.datatable-ControlAcceso').DataTable(dtOverrideGlobals);
+            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+            //     $($.fn.dataTable.tables(true)).DataTable()
+            //         .columns.adjust();
+            // });
+            // $('.datatable thead').on('input', '.search', function() {
+            //     let strict = $(this).attr('strict') || false
+            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
+            //     table
+            //         .column($(this).parent().index())
+            //         .search(value, strict)
+            //         .draw()
+            // });
+        });
+
+    </script>
 @endsection

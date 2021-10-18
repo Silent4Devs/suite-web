@@ -1,251 +1,448 @@
-@extends('layouts.frontend')
+@extends('layouts.admin')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            @can('user_create')
-                <div style="margin-bottom: 10px;" class="row">
-                    <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.users.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
-                        </a>
-                    </div>
-                </div>
-            @endcan
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('cruds.user.title_singular') }} {{ trans('global.list') }}
-                </div>
+    @can('user_create')
 
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable datatable-User">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.user.fields.id') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.name') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.email') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.email_verified_at') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.two_factor') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.approved') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.verified') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.roles') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.organizacion') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.area') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.puesto') }}
-                                    </th>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($roles as $key => $item)
-                                                <option value="{{ $item->title }}">{{ $item->title }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($organizaciones as $key => $item)
-                                                <option value="{{ $item->organizacion }}">{{ $item->organizacion }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($areas as $key => $item)
-                                                <option value="{{ $item->area }}">{{ $item->area }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($puestos as $key => $item)
-                                                <option value="{{ $item->puesto }}">{{ $item->puesto }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($users as $key => $user)
-                                    <tr data-entry-id="{{ $user->id }}">
-                                        <td>
-                                            {{ $user->id ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $user->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $user->email ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $user->email_verified_at ?? '' }}
-                                        </td>
-                                        <td>
-                                            <span style="display:none">{{ $user->two_factor ?? '' }}</span>
-                                            <input type="checkbox" disabled="disabled" {{ $user->two_factor ? 'checked' : '' }}>
-                                        </td>
-                                        <td>
-                                            <span style="display:none">{{ $user->approved ?? '' }}</span>
-                                            <input type="checkbox" disabled="disabled" {{ $user->approved ? 'checked' : '' }}>
-                                        </td>
-                                        <td>
-                                            <span style="display:none">{{ $user->verified ?? '' }}</span>
-                                            <input type="checkbox" disabled="disabled" {{ $user->verified ? 'checked' : '' }}>
-                                        </td>
-                                        <td>
-                                            @foreach($user->roles as $key => $item)
-                                                <span>{{ $item->title }}</span>
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            {{ $user->organizacion->organizacion ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $user->area->area ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $user->puesto->puesto ?? '' }}
-                                        </td>
-                                        <td>
-                                            @can('user_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.users.show', $user->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
 
-                                            @can('user_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.users.edit', $user->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('user_delete')
-                                                <form action="{{ route('frontend.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
-
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <div class="mt-5 card">
+            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+                <h3 class="mb-2 text-center text-white"><strong>Usuarios</strong></h3>
             </div>
+        @endcan
 
+        <div class="card-body datatable-fix">
+            <table class="table table-bordered w-100 datatable-User">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="vertical-align: top">
+                            {{ trans('cruds.user.fields.id') }}
+                        </th>
+                        <th style="vertical-align: top">
+                            {{ trans('cruds.user.fields.name') }}
+                        </th>
+                        <th style="vertical-align: top">
+                            Correo&nbsp;electrónico
+                        </th>
+                        <th style="vertical-align: top">
+                            {{ trans('cruds.user.fields.roles') }}
+                        </th>
+                        <th style="vertical-align: top">
+                            Empleado Vinculado
+                        </th>
+                        <th style="vertical-align: top">
+                            {{ trans('cruds.user.fields.area') }}
+                        </th>
+                        <th style="vertical-align: top">
+                            {{ trans('cruds.user.fields.puesto') }}
+                        </th>
+                        <th style="vertical-align: top">
+                            Opciones
+                        </th>
+                    </tr>
+                    {{-- <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach ($roles as $key => $item)
+                                    <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach ($organizaciones as $key => $item)
+                                    <option value="{{ $item->organizacion }}">{{ $item->organizacion }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach ($areas as $key => $item)
+                                    <option value="{{ $item->area }}">{{ $item->area }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach ($puestos as $key => $item)
+                                    <option value="{{ $item->puesto }}">{{ $item->puesto }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                    </tr> --}}
+                </thead>
+            </table>
         </div>
     </div>
-</div>
 @endsection
 @section('scripts')
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('user_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('frontend.users.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+    @parent
+    <script>
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'landscape',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [5, 20, 5, 20];
+                        // doc.styles.tableHeader.fontSize = 6.5;
+                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+            ];
+            @can('user_create')
+                let btnAgregar = {
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                titleAttr: 'Agregar usuario',
+                url: "{{ route('admin.users.create') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config){
+                let {url} = config;
+                window.location.href = url;
+                }
+                };
+                dtButtons.push(btnAgregar);
+            @endcan
+            @can('user_delete')
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+                let deleteButton = {
+                text: deleteButtonTrans,
+                url: "{{ route('admin.users.massDestroy') }}",
+                className: 'btn-danger',
+                action: function (e, dt, node, config) {
+                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+                return entry.id
+                });
 
-        return
-      }
+                if (ids.length === 0) {
+                alert('{{ trans('global.datatables.zero_selected') }}')
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
+                return
+                }
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  });
-  let table = $('.datatable-User:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  $('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-      table
-        .column($(this).parent().index())
-        .search(value, strict)
-        .draw()
-  });
-})
+                if (confirm('{{ trans('global.areYouSure') }}')) {
+                $.ajax({
+                headers: {'x-csrf-token': _token},
+                method: 'POST',
+                url: config.url,
+                data: { ids: ids, _method: 'DELETE' }})
+                .done(function () { location.reload() })
+                }
+                }
+                }
+                // dtButtons.push(deleteButton)
+            @endcan
 
-</script>
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                ajax: "{{ route('admin.users.index') }}",
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+
+                    {
+                        data: 'roles',
+                        name: 'roles.title',
+                        render: function(data, type, row, meta) {
+                            let roles = data.map(rol => {
+                                return `
+                                    <span class="badge badge-primary">${rol.title}</span>
+                                `;
+                            })
+                            return roles;
+                        }
+                    },
+                    {
+                        data: 'n_empleado',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return row.empleado.name;
+                            } else {
+                                return 'Sin vincular a empleado';
+                            }
+                        }
+                    },
+                    {
+                        data: 'n_empleado',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return row.empleado.area.area;
+                            } else {
+                                return 'Sin vincular a empleado';
+                            }
+                        }
+                    },
+                    {
+                        data: 'n_empleado',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                return row.empleado.puesto;
+                            } else {
+                                return 'Sin vincular a empleado';
+                            }
+                        }
+                    },
+                    {
+                        data: 'id',
+                        name: '{{ trans('global.actions') }}',
+                        render: function(data, type, row, meta) {
+                            let urlButtonShow = `/admin/users/${data}`;
+                            let urlButtonDelete = `/admin/users/${data}`;
+                            let urlButtonEdit = `/admin/users/${data}/edit`;
+
+                            let htmlBotones = `
+                                <div class="btn-group">
+                                    <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm" onclick="AbrirModal('${data}');">
+                                        <i class="fas fa-user-tag"></i>
+                                    </button>
+                                    <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+
+
+                                <div data-user-id="${data}" class="modal fade" id="vincularEmpleado${data}" data-backdrop="static"
+                                    data-keyboard="false" tabindex="-1" aria-labelledby="vincularEmpleado${data}Label" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="vincularEmpleado${data}Label">Vinculación de Empleados
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <span><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</span>
+                                                <select name="n_empleado" id="n_empleado${data}" class="select2">
+                                                    <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>
+                                                    @foreach ($empleados as $empleado)
+                                                        <option value="{{ $empleado->n_empleado }}">{{ $empleado->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-sm n_empleado_error errores text-danger"></span>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            return htmlBotones;
+                        }
+                    }
+                ],
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ]
+            };
+            let table = $('.datatable-User').DataTable(dtOverrideGlobals);
+
+            window.Eliminar = function(url, nombre) {
+                Swal.fire({
+                    title: `¿Estás seguro de eliminar el siguiente usuario?`,
+                    html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, eliminar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            headers: {
+                                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: url,
+                            beforeSend: function() {
+                                Swal.fire(
+                                    '¡Estamos Eliminando!',
+                                    `El usuario: ${nombre} está siendo eliminado`,
+                                    'info'
+                                )
+                            },
+                            success: function(response) {
+                                Swal.fire(
+                                    'Eliminado!',
+                                    `El usuario: ${nombre} ha sido eliminado`,
+                                    'success'
+                                )
+                                table.ajax.reload();
+                            },
+                            error: function(error) {
+                                console.log(error);
+                                Swal.fire(
+                                    'Ocurrió un error',
+                                    `Error: ${error.responseJSON.message}`,
+                                    'error'
+                                )
+                            }
+                        });
+                    }
+                })
+            }
+
+
+            window.AbrirModal = function(user_id) {
+                let errores = document.querySelectorAll('.errores');
+                errores.forEach(element => {
+                    element.innerHTML = "";
+                });
+                $(`#vincularEmpleado${user_id}`).modal('show');
+                $('.select2').select2({
+                    'theme': 'bootstrap4',
+                    'dropdownParent': $(`#vincularEmpleado${user_id}`)
+                });
+            }
+
+            window.VincularEmpleado = function(nombre, user_id) {
+                let n_empleado = $(`#n_empleado${user_id}`).val()
+                console.log(n_empleado);
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/users/vincular",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        n_empleado,
+                        user_id
+                    },
+                    dataType: "JSON",
+                    beforeSend: function() {
+                        Swal.fire(
+                            '¡Estamos Vinculando!',
+                            `El usuario: ${nombre} está siendo vinculado`,
+                            'info'
+                        )
+                    },
+                    success: function(response) {
+                        Swal.fire(
+                            'Usuario Vinculado',
+                            `El usuario: ${nombre} ha sido vinculado`,
+                            'success'
+                        )
+                        table.ajax.reload();
+                        $(`#vincularEmpleado${user_id}`).modal('hide')
+                        $('.modal-backdrop').hide();
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    },
+                    error: function(error) {
+                        $.each(error.responseJSON.errors, function(indexInArray,
+                            valueOfElement) {
+                            $(`span.${indexInArray}_error`).text(valueOfElement[0]);
+                            console.log(indexInArray, valueOfElement);
+                        });
+                        Swal.fire(
+                            'Ocurrió un error',
+                            `Error: ${error.responseJSON.message}`,
+                            'error'
+                        )
+                    }
+                });
+            }
+
+        });
+    </script>
 @endsection
