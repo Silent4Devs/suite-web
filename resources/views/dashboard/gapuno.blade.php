@@ -238,11 +238,11 @@
                 }
             ],
             success: function(response, newValue) {
-                
+
                 $(".barraGap3").load(location.href + " .barraGap3 > *");
 
                 $(".barraGap3_table").load(location.href + " .barraGap3_table > *");
-                
+
 
                     console.log('Actualizado, response')
                 }

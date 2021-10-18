@@ -242,8 +242,13 @@
                         name: 'id'
                     },
                     {
-                        data: 'nombre_reporta_name',
-                        name: 'nombre_reporta.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+        
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.nombre_reporta.avatar}" title="${row.nombre_reporta.name}"></img>`;
+                            
+                            return `${row.nombre_reporta ? html: ''}`;
+                        }
                     },
                     {
                         data: 'nombre',
@@ -262,8 +267,13 @@
                         name: 'descripcion'
                     },
                     {
-                        data: 'responsableimplementacion_name',
-                        name: 'responsableimplementacion.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+        
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.responsableimplementacion.avatar}" title="${row.responsableimplementacion.name}"></img>`;
+                            
+                            return `${row.responsableimplementacion ? html: ''}`;
+                        }
                     },
                     {
                         data: 'participantes',
@@ -278,8 +288,13 @@
                         name: 'beneficios'
                     },
                     {
-                        data: 'valida_name',
-                        name: 'valida.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+        
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.valida.avatar}" title="${row.valida.name}"></img>`;
+                            
+                            return `${row.valida ? html: ''}`;
+                        }
                     },
                     {
                         data: 'actions',

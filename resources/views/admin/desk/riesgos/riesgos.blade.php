@@ -3,7 +3,7 @@
         <div class="tarjetas_seguridad_indicadores"
             style="background: linear-gradient(144deg, rgba(12, 119, 255, 1) 35%, rgba(0, 213, 214, 1) 100%);">
             <div class="numero"><i class="fas fa-exclamation-triangle"></i> {{ $total_riesgos }}</div>
-            <div>Reiesgos</div>
+            <div>Riesgos</div>
         </div>
     </div>
     <div class="col-6 col-md-2 ">
@@ -44,7 +44,7 @@
 </div>
 
 <div class="datatable-fix" style="width: 100%;">
-    <div class="text-right mb-3">
+    <div class="mb-3 text-right">
         <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/riesgos')}}">Crear reporte</a>
     </div>
 
@@ -88,7 +88,9 @@
                     <td>{{ $riesgo->areas_afectados }}</td>
                     <td>{{ $riesgo->activos_afectados }}</td>
 	       			<td>{{ $riesgo->fecha }}</td>
-	       			<td>{{ $riesgo->reporto->name }}</td>
+	       			<td>
+                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $riesgo->reporto->avatar }}" title="{{ $riesgo->reporto->name }}">
+                    </td>
 	       			<td>{{ $riesgo->reporto->email }}</td>
 	       			<td>{{ $riesgo->reporto->telefono }}</td>
 	       			<td>

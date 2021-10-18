@@ -213,7 +213,7 @@
                                 </a>
                                 @if ($revision->before_level_all_answered)
                                     @if ($revision->estatus == $Documento::SOLICITUD_REVISION)
-                                        <a href="{{ route('revisiones.revisar', $revision) }}" class="btn btn-sm" target="_blank"
+                                        <a href="{{ route('revisiones.revisar', $revision) }}" class="btn btn-sm"
                                             style="border:none;" title="Revisar">
                                             <i class="fas fa-file-signature text-dark" style="font-size: 15px;"></i>
                                         </a>

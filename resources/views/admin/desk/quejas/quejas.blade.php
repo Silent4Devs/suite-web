@@ -86,7 +86,9 @@
                     <td>{{ $queja->created_at }}</td>
                     <td>{{ $queja->fecha_cierre }}</td>
                     @if($queja->anonimo == 'no')
-                        <td>{{ $queja->quejo->name }}</td>
+                        <td>
+                            <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $queja->quejo->avatar }}" title="{{ $queja->quejo->name }}">
+                        </td>
                         <td>{{ $queja->quejo->puesto }}</td>
                         <td>{{ $queja->quejo->area->area }}</td>
                     @else

@@ -273,16 +273,34 @@
                         name: 'contenido'
                     },
                     {
-                        data: 'elaboro_name',
-                        name: 'elaboro.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+
+                            
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.elaboro.avatar}" title="${row.elaboro.name}"></img>`;
+                            
+                            return `${row.elaboro ? html: ''}`;
+                        }
                     },
                     {
-                        data: 'reviso_name',
-                        name: 'reviso.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+
+                            
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reviso.avatar}" title="${row.reviso.name}"></img>`;
+                            
+                            return `${row.reviso ? html: ''}`;
+                        }
                     },
                     {
-                        data: 'aprobacion_name',
-                        name: 'aprobacion.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+
+                            
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.aprobacion.avatar}" title="${row.aprobacion.name}"></img>`;
+                            
+                            return `${row.aprobacion ? html: ''}`;
+                        }
                     },
                     {
                         data: 'logotipo',
