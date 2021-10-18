@@ -11,7 +11,7 @@ class Porcentaje
             if ($gap1->valoracion == '1') {
                 $gap1cont += 5;
             } elseif ($gap1->valoracion == '2') {
-                $gap1cont += 0;
+                $gap1cont += 2.5;
             } else {
                 $gap1cont += 0;
             }
