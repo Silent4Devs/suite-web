@@ -227,8 +227,14 @@
                         name: 'fechafin'
                     },
                     {
-                        data: 'auditorlider_name',
-                        name: 'auditorlider.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+
+                            
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.auditorlider.avatar}" title="${row.auditorlider.name}"></img>`;
+                            
+                            return `${row.auditorlider ? html: ''}`;
+                        }
                     },
                     {
                         data: 'observaciones',

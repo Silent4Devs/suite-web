@@ -267,12 +267,24 @@
                         name: 'descripcion'
                     },
                     {
-                        data: 'dueno_name',
-                        name: 'dueno.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+
+                            
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.dueno.avatar}" title="${row.dueno.name}"></img>`;
+                            
+                            return `${row.dueno ? html: ''}`;
+                        }
                     },
                     {
-                        data: 'responsable',
-                        name: 'responsable'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+
+                            
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.responsable.avatar}" title="${row.responsable.name}"></img>`;
+                            
+                            return `${row.responsable ? html: ''}`;
+                        }
                     },
                     {
                         data: 'ubicacion_sede',

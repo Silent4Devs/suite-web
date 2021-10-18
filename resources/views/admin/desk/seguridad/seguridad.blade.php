@@ -279,7 +279,11 @@
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                return `${row.reporto.name}`;
+
+                                
+                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto.avatar}" title="${row.reporto.name}"></img>`;
+                                
+                                return html;
                             }
                         },
                         {
@@ -310,9 +314,9 @@
                             data: 'id',
                             render: function(data, type, row, meta) {
 
-                                if (row.asignado) {
-                                    let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.asignado.avatar}" title="${row.asignado.name}"></img>`;
-                                }
+                                
+                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.asignado.avatar}" title="${row.asignado.name}"></img>`;
+                                
                                 return `${row.asignado ? html: 'sin asignar'}`;
                             }
                         },

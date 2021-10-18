@@ -76,7 +76,9 @@
                     <td>{{ $mejora->fecha }}</td>
                     <td>{{ $mejora->created_at }}</td>
                     <td>{{ $mejora->fecha_cierre }}</td>
-	       			<td>{{ $mejora->mejoro->name }}</td>
+	       			<td>
+                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $mejora->mejoro->avatar }}" title="{{ $mejora->mejoro->name }}">
+                    </td>
 	       			<td>{{ $mejora->mejoro->email }}</td>
 	       			<td>{{ $mejora->mejoro->telefono }}</td>
                     <td>{{ $mejora->titulo }}</td>
