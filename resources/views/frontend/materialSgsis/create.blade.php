@@ -1,130 +1,105 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
 
-    {{ Breadcrumbs::render('admin.material-sgsis.create') }}
-
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Material SGSI</h3>
-    </div>
-
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.material-sgsis.store") }}" enctype="multipart/form-data" class="row">
-            @csrf
-            <div class="form-group col-12">
-                <label class="required" for="nombre"><i class="fas fa-file  iconos-crear"></i>Nombre del material de capacitación</label>
-                <input class="form-control{{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
-                @if($errors->has('nombre'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('nombre') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
-            </div>
-            <div class="form-group col-12">
-                <label class="form-label"><i class="fas fa-bullseye  iconos-crear"></i>Objetivo</label>
-                <textarea class="form-control{{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo" id="objetivo" value="{{ old('objetivo', '') }}" required></textarea>
-                @if($errors->has('objetivo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('objetivo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.personalobjetivo') }}</label>
-                <select class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}" name="personalobjetivo" id="personalobjetivo">
-                    <option value disabled {{ old('personalobjetivo', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\MaterialSgsi::PERSONALOBJETIVO_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('personalobjetivo', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('personalobjetivo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('personalobjetivo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.materialSgsi.fields.personalobjetivo_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="arearesponsable_id"><i class="fas fa-street-view iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.arearesponsable') }}</label>
-                <select class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" name="arearesponsable_id" id="arearesponsable_id">
-                    @foreach($arearesponsables as $id => $arearesponsable)
-                        <option value="{{ $id }}" {{ old('arearesponsable_id') == $id ? 'selected' : '' }}>{{ $arearesponsable }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('arearesponsable'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('arearesponsable') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.materialSgsi.fields.arearesponsable_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label><i class="fas fa-clipboard-check iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.tipoimparticion') }}</label>
-                <select class="form-control {{ $errors->has('tipoimparticion') ? 'is-invalid' : '' }}" name="tipoimparticion" id="tipoimparticion">
-                    <option value disabled {{ old('tipoimparticion', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\MaterialSgsi::TIPOIMPARTICION_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('tipoimparticion', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('tipoimparticion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('tipoimparticion') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.materialSgsi.fields.tipoimparticion_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="fechacreacion_actualizacion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha de creación</label>
-                <input class="form-control {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}" type="date" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion" value="{{ old('fechacreacion_actualizacion') }}">
-                @if($errors->has('fechacreacion_actualizacion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fechacreacion_actualizacion') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.materialSgsi.fields.fechacreacion_actualizacion_helper') }}</span>
-            </div>
-
-
-            <div class="form-group col-12">
-                <label for="documento"><i class="fas fa-file iconos-crear"></i>Material(Archivo PDF)</label>
-                <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf" value="{{ old('files[]') }}">
-            </div>
-
-            {{-- <div class="form-group col-12">
-                <label for="archivo"><i class="far fa-file iconos-crear"></i>Material(Archivo PDF)</label>
-                <div class="needsclick dropzone {{ $errors->has('archivo') ? 'is-invalid' : '' }}" id="archivo-dropzone">
+            <div class="card">
+                <div class="card-header">
+                    {{ trans('global.create') }} {{ trans('cruds.materialSgsi.title_singular') }}
                 </div>
-                @if($errors->has('archivo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('archivo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.materialSgsi.fields.archivo_helper') }}</span>
-            </div> --}}
 
-            {{-- <div class="form-group col-md-12 col-sm-12">
-                <label for="archivo"><i class="fas fa-folder-open iconos-crear"></i>Material(Archivo PDF)</label>
-                <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf" value="{{ old('files[]') }}">
-            </div> --}}
-
-
-
-
-
-            <div class="form-group col-12 text-right">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
+                <div class="card-body">
+                    <form method="POST" action="{{ route("frontend.material-sgsis.store") }}" enctype="multipart/form-data">
+                        @method('POST')
+                        @csrf
+                        <div class="form-group">
+                            <label class="required" for="objetivo">{{ trans('cruds.materialSgsi.fields.objetivo') }}</label>
+                            <input class="form-control" type="text" name="objetivo" id="objetivo" value="{{ old('objetivo', '') }}" required>
+                            @if($errors->has('objetivo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('objetivo') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ trans('cruds.materialSgsi.fields.personalobjetivo') }}</label>
+                            <select class="form-control" name="personalobjetivo" id="personalobjetivo">
+                                <option value disabled {{ old('personalobjetivo', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Models\MaterialSgsi::PERSONALOBJETIVO_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('personalobjetivo', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('personalobjetivo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('personalobjetivo') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.materialSgsi.fields.personalobjetivo_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="arearesponsable_id">{{ trans('cruds.materialSgsi.fields.arearesponsable') }}</label>
+                            <select class="form-control select2" name="arearesponsable_id" id="arearesponsable_id">
+                                @foreach($arearesponsables as $id => $arearesponsable)
+                                    <option value="{{ $id }}" {{ old('arearesponsable_id') == $id ? 'selected' : '' }}>{{ $arearesponsable }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('arearesponsable'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('arearesponsable') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.materialSgsi.fields.arearesponsable_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ trans('cruds.materialSgsi.fields.tipoimparticion') }}</label>
+                            <select class="form-control" name="tipoimparticion" id="tipoimparticion">
+                                <option value disabled {{ old('tipoimparticion', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Models\MaterialSgsi::TIPOIMPARTICION_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('tipoimparticion', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('tipoimparticion'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('tipoimparticion') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.materialSgsi.fields.tipoimparticion_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechacreacion_actualizacion">{{ trans('cruds.materialSgsi.fields.fechacreacion_actualizacion') }}</label>
+                            <input class="form-control date" type="text" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion" value="{{ old('fechacreacion_actualizacion') }}">
+                            @if($errors->has('fechacreacion_actualizacion'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('fechacreacion_actualizacion') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.materialSgsi.fields.fechacreacion_actualizacion_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="archivo">{{ trans('cruds.materialSgsi.fields.archivo') }}</label>
+                            <div class="needsclick dropzone" id="archivo-dropzone">
+                            </div>
+                            @if($errors->has('archivo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('archivo') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.materialSgsi.fields.archivo_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-danger" type="submit">
+                                {{ trans('global.save') }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
+
+        </div>
     </div>
 </div>
-
-
-
 @endsection
 
 @section('scripts')

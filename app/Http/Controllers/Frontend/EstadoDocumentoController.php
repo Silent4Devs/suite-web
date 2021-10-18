@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyEstadoDocumentoRequest;
@@ -9,70 +9,33 @@ use App\Http\Requests\UpdateEstadoDocumentoRequest;
 use App\Models\EstadoDocumento;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class EstadoDocumentoController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('estado_documento_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = EstadoDocumento::with(['team'])->select(sprintf('%s.*', (new EstadoDocumento)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'estado_documento_show';
-                $editGate = 'estado_documento_edit';
-                $deleteGate = 'estado_documento_delete';
-                $crudRoutePart = 'estado-documentos';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('estado', function ($row) {
-                return $row->estado ? $row->estado : '';
-            });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
+        $estadoDocumentos = EstadoDocumento::all();
 
         $teams = Team::get();
 
-        return view('admin.estadoDocumentos.index', compact('teams'));
+        return view('frontend.estadoDocumentos.index', compact('estadoDocumentos', 'teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('estado_documento_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.estadoDocumentos.create');
+        return view('frontend.estadoDocumentos.create');
     }
 
     public function store(StoreEstadoDocumentoRequest $request)
     {
         $estadoDocumento = EstadoDocumento::create($request->all());
 
-        return redirect()->route('admin.estado-documentos.index');
+        return redirect()->route('frontend.estado-documentos.index');
     }
 
     public function edit(EstadoDocumento $estadoDocumento)
@@ -81,14 +44,14 @@ class EstadoDocumentoController extends Controller
 
         $estadoDocumento->load('team');
 
-        return view('admin.estadoDocumentos.edit', compact('estadoDocumento'));
+        return view('frontend.estadoDocumentos.edit', compact('estadoDocumento'));
     }
 
     public function update(UpdateEstadoDocumentoRequest $request, EstadoDocumento $estadoDocumento)
     {
         $estadoDocumento->update($request->all());
 
-        return redirect()->route('admin.estado-documentos.index');
+        return redirect()->route('frontend.estado-documentos.index');
     }
 
     public function show(EstadoDocumento $estadoDocumento)
@@ -97,7 +60,7 @@ class EstadoDocumentoController extends Controller
 
         $estadoDocumento->load('team');
 
-        return view('admin.estadoDocumentos.show', compact('estadoDocumento'));
+        return view('frontend.estadoDocumentos.show', compact('estadoDocumento'));
     }
 
     public function destroy(EstadoDocumento $estadoDocumento)

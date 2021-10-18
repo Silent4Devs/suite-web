@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -15,101 +15,24 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class InformacionDocumetadaController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('informacion_documetada_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = InformacionDocumetada::with(['politicas', 'elaboro', 'reviso', 'aprobacion', 'team'])->select(sprintf('%s.*', (new InformacionDocumetada)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'informacion_documetada_show';
-                $editGate = 'informacion_documetada_edit';
-                $deleteGate = 'informacion_documetada_delete';
-                $crudRoutePart = 'informacion-documetadas';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('titulodocumento', function ($row) {
-                return $row->titulodocumento ? $row->titulodocumento : '';
-            });
-            $table->editColumn('tipodocumento', function ($row) {
-                return $row->tipodocumento ? InformacionDocumetada::TIPODOCUMENTO_SELECT[$row->tipodocumento] : '';
-            });
-            $table->editColumn('identificador', function ($row) {
-                return $row->identificador ? $row->identificador : '';
-            });
-            $table->editColumn('version', function ($row) {
-                return $row->version ? $row->version : '';
-            });
-            $table->editColumn('politicas', function ($row) {
-                $labels = [];
-
-                foreach ($row->politicas as $politica) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $politica->politicasgsi);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('contenido', function ($row) {
-                return $row->contenido ? $row->contenido : '';
-            });
-            $table->addColumn('elaboro_name', function ($row) {
-                return $row->elaboro ? $row->elaboro->name : '';
-            });
-
-            $table->addColumn('reviso_name', function ($row) {
-                return $row->reviso ? $row->reviso->name : '';
-            });
-
-            $table->addColumn('aprobacion_name', function ($row) {
-                return $row->aprobacion ? $row->aprobacion->name : '';
-            });
-
-            $table->editColumn('logotipo', function ($row) {
-                if ($photo = $row->logotipo) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
-
-                return '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'politicas', 'elaboro', 'reviso', 'aprobacion', 'logotipo']);
-
-            return $table->make(true);
-        }
+        $informacionDocumetadas = InformacionDocumetada::all();
 
         $politica_sgsis = PoliticaSgsi::get();
+
         $users = User::get();
-        $users = User::get();
-        $users = User::get();
+
         $teams = Team::get();
 
-        return view('admin.informacionDocumetadas.index', compact('politica_sgsis', 'users', 'users', 'users', 'teams'));
+        return view('frontend.informacionDocumetadas.index', compact('informacionDocumetadas', 'politica_sgsis', 'users', 'teams'));
     }
 
     public function create()
@@ -124,7 +47,7 @@ class InformacionDocumetadaController extends Controller
 
         $aprobacions = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.informacionDocumetadas.create', compact('politicas', 'elaboros', 'revisos', 'aprobacions'));
+        return view('frontend.informacionDocumetadas.create', compact('politicas', 'elaboros', 'revisos', 'aprobacions'));
     }
 
     public function store(StoreInformacionDocumetadaRequest $request)
@@ -140,7 +63,7 @@ class InformacionDocumetadaController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $informacionDocumetada->id]);
         }
 
-        return redirect()->route('admin.informacion-documetadas.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('frontend.informacion-documetadas.index');
     }
 
     public function edit(InformacionDocumetada $informacionDocumetada)
@@ -157,7 +80,7 @@ class InformacionDocumetadaController extends Controller
 
         $informacionDocumetada->load('politicas', 'elaboro', 'reviso', 'aprobacion', 'team');
 
-        return view('admin.informacionDocumetadas.edit', compact('politicas', 'elaboros', 'revisos', 'aprobacions', 'informacionDocumetada'));
+        return view('frontend.informacionDocumetadas.edit', compact('politicas', 'elaboros', 'revisos', 'aprobacions', 'informacionDocumetada'));
     }
 
     public function update(UpdateInformacionDocumetadaRequest $request, InformacionDocumetada $informacionDocumetada)
@@ -177,7 +100,7 @@ class InformacionDocumetadaController extends Controller
             $informacionDocumetada->logotipo->delete();
         }
 
-        return redirect()->route('admin.informacion-documetadas.index')->with('success', 'Editado con éxito');
+        return redirect()->route('frontend.informacion-documetadas.index');
     }
 
     public function show(InformacionDocumetada $informacionDocumetada)
@@ -186,7 +109,7 @@ class InformacionDocumetadaController extends Controller
 
         $informacionDocumetada->load('politicas', 'elaboro', 'reviso', 'aprobacion', 'team');
 
-        return view('admin.informacionDocumetadas.show', compact('informacionDocumetada'));
+        return view('frontend.informacionDocumetadas.show', compact('informacionDocumetada'));
     }
 
     public function destroy(InformacionDocumetada $informacionDocumetada)
@@ -195,7 +118,7 @@ class InformacionDocumetadaController extends Controller
 
         $informacionDocumetada->delete();
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
+        return back();
     }
 
     public function massDestroy(MassDestroyInformacionDocumetadaRequest $request)

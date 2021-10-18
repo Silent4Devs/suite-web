@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyTeamRequest;
@@ -9,72 +9,33 @@ use App\Http\Requests\UpdateTeamRequest;
 use App\Models\Team;
 use App\Models\User;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class TeamController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('team_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Team::with(['owner'])->select(sprintf('%s.*', (new Team)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'team_show';
-                $editGate = 'team_edit';
-                $deleteGate = 'team_delete';
-                $crudRoutePart = 'teams';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->addColumn('owner_name', function ($row) {
-                return $row->owner ? $row->owner->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'owner']);
-
-            return $table->make(true);
-        }
+        $teams = Team::all();
 
         $users = User::get();
 
-        return view('admin.teams.index', compact('users'));
+        return view('frontend.teams.index', compact('teams', 'users'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('team_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.teams.create');
+        return view('frontend.teams.create');
     }
 
     public function store(StoreTeamRequest $request)
     {
-        $data = $request->all();
-        $data['owner_id'] = auth()->user()->id;
-        $team = Team::create($data);
+        $team = Team::create($request->all());
 
-        return redirect()->route('admin.teams.index');
+        return redirect()->route('frontend.teams.index');
     }
 
     public function edit(Team $team)
@@ -83,14 +44,14 @@ class TeamController extends Controller
 
         $team->load('owner');
 
-        return view('admin.teams.edit', compact('team'));
+        return view('frontend.teams.edit', compact('team'));
     }
 
     public function update(UpdateTeamRequest $request, Team $team)
     {
         $team->update($request->all());
 
-        return redirect()->route('admin.teams.index');
+        return redirect()->route('frontend.teams.index');
     }
 
     public function show(Team $team)
@@ -99,7 +60,7 @@ class TeamController extends Controller
 
         $team->load('owner');
 
-        return view('admin.teams.show', compact('team'));
+        return view('frontend.teams.show', compact('team'));
     }
 
     public function destroy(Team $team)

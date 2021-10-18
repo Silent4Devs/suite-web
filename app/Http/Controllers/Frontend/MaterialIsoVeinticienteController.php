@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -14,68 +14,22 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class MaterialIsoVeinticienteController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('material_iso_veinticiente_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = MaterialIsoVeinticiente::with(['arearesponsable', 'team'])->select(sprintf('%s.*', (new MaterialIsoVeinticiente)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'material_iso_veinticiente_show';
-                $editGate = 'material_iso_veinticiente_edit';
-                $deleteGate = 'material_iso_veinticiente_delete';
-                $crudRoutePart = 'material-iso-veinticientes';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('objetivo', function ($row) {
-                return $row->objetivo ? $row->objetivo : '';
-            });
-            $table->editColumn('listaasistencia', function ($row) {
-                return $row->listaasistencia ? '<a href="' . $row->listaasistencia->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->addColumn('arearesponsable_area', function ($row) {
-                return $row->arearesponsable ? $row->arearesponsable->area : '';
-            });
-
-            $table->editColumn('tipoimparticion', function ($row) {
-                return $row->tipoimparticion ? MaterialIsoVeinticiente::TIPOIMPARTICION_SELECT[$row->tipoimparticion] : '';
-            });
-
-            $table->editColumn('materialarchivo', function ($row) {
-                return $row->materialarchivo ? '<a href="' . $row->materialarchivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'listaasistencia', 'arearesponsable', 'materialarchivo']);
-
-            return $table->make(true);
-        }
+        $materialIsoVeinticientes = MaterialIsoVeinticiente::all();
 
         $areas = Area::get();
+
         $teams = Team::get();
 
-        return view('admin.materialIsoVeinticientes.index', compact('areas', 'teams'));
+        return view('frontend.materialIsoVeinticientes.index', compact('materialIsoVeinticientes', 'areas', 'teams'));
     }
 
     public function create()
@@ -84,7 +38,7 @@ class MaterialIsoVeinticienteController extends Controller
 
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.materialIsoVeinticientes.create', compact('arearesponsables'));
+        return view('frontend.materialIsoVeinticientes.create', compact('arearesponsables'));
     }
 
     public function store(StoreMaterialIsoVeinticienteRequest $request)
@@ -103,7 +57,7 @@ class MaterialIsoVeinticienteController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $materialIsoVeinticiente->id]);
         }
 
-        return redirect()->route('admin.material-iso-veinticientes.index');
+        return redirect()->route('frontend.material-iso-veinticientes.index');
     }
 
     public function edit(MaterialIsoVeinticiente $materialIsoVeinticiente)
@@ -114,7 +68,7 @@ class MaterialIsoVeinticienteController extends Controller
 
         $materialIsoVeinticiente->load('arearesponsable', 'team');
 
-        return view('admin.materialIsoVeinticientes.edit', compact('arearesponsables', 'materialIsoVeinticiente'));
+        return view('frontend.materialIsoVeinticientes.edit', compact('arearesponsables', 'materialIsoVeinticiente'));
     }
 
     public function update(UpdateMaterialIsoVeinticienteRequest $request, MaterialIsoVeinticiente $materialIsoVeinticiente)
@@ -145,7 +99,7 @@ class MaterialIsoVeinticienteController extends Controller
             $materialIsoVeinticiente->materialarchivo->delete();
         }
 
-        return redirect()->route('admin.material-iso-veinticientes.index');
+        return redirect()->route('frontend.material-iso-veinticientes.index');
     }
 
     public function show(MaterialIsoVeinticiente $materialIsoVeinticiente)
@@ -154,7 +108,7 @@ class MaterialIsoVeinticienteController extends Controller
 
         $materialIsoVeinticiente->load('arearesponsable', 'team');
 
-        return view('admin.materialIsoVeinticientes.show', compact('materialIsoVeinticiente'));
+        return view('frontend.materialIsoVeinticientes.show', compact('materialIsoVeinticiente'));
     }
 
     public function destroy(MaterialIsoVeinticiente $materialIsoVeinticiente)
