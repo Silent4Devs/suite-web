@@ -229,11 +229,7 @@
                     },
                     {
                         data: 'porcentaje_implementacion',
-                        name: 'porcentaje_implementacion',
-                        render: function(data, type, row, meta){
-                            return`({{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}}
-                                %)`;
-                        }
+                        name: 'porcentaje_implementacion'
                     },
                     {
                         data: 'elaboro',
