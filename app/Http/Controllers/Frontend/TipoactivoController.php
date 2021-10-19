@@ -10,63 +10,26 @@ use App\Http\Requests\UpdateTipoactivoRequest;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class TipoactivoController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
-       // abort_if(Gate::denies('configuracion_tipoactivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        dd("asdad");
-        if ($request->ajax()) {
-            $query = Tipoactivo::with(['team'])->select(sprintf('%s.*', (new Tipoactivo)->table));
-            $table = Datatables::of($query);
+        abort_if(Gate::denies('tipoactivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'configuracion_tipoactivo_show';
-                $editGate = 'configuracion_tipoactivo_edit';
-                $deleteGate = 'configuracion_tipoactivo_delete';
-                $crudRoutePart = 'tipoactivos';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('tipo', function ($row) {
-                return $row->tipo ? $row->tipo : '';
-            });
-            $table->editColumn('subtipo', function ($row) {
-                return $row->subtipo ? $row->subtipo : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
+        $tipoactivos = Tipoactivo::all();
 
         $teams = Team::get();
 
-        return view('frontend.tipoactivos.index', compact('teams'));
+        return view('frontend.tipoactivos.index', compact('tipoactivos', 'teams'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tipoactivo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('frontend.tipoactivos.create');
     }
@@ -75,12 +38,12 @@ class TipoactivoController extends Controller
     {
         $tipoactivo = Tipoactivo::create($request->all());
 
-        return redirect()->route('frontend.tipoactivos.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('frontend.tipoactivos.index');
     }
 
     public function edit(Tipoactivo $tipoactivo)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tipoactivo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivo->load('team');
 
@@ -91,12 +54,12 @@ class TipoactivoController extends Controller
     {
         $tipoactivo->update($request->all());
 
-        return redirect()->route('frontend.tipoactivos.index')->with('success', 'Editado con éxito');
+        return redirect()->route('frontend.tipoactivos.index');
     }
 
     public function show(Tipoactivo $tipoactivo)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tipoactivo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivo->load('team');
 
@@ -105,11 +68,11 @@ class TipoactivoController extends Controller
 
     public function destroy(Tipoactivo $tipoactivo)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tipoactivo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivo->delete();
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
+        return back();
     }
 
     public function massDestroy(MassDestroyTipoactivoRequest $request)

@@ -1,142 +1,51 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
 
-    {{ Breadcrumbs::render('admin.comunicacion-sgis.create') }}
+            <div class="card">
+                <div class="card-header">
+                    {{ trans('global.create') }} {{ trans('cruds.comunicacionSgi.title_singular') }}
+                </div>
 
-    <style type="text/css">
-        .select2-selection--multiple{
-        overflow: hidden !important;
-        height: auto !important;
-}
-    </style>
-
-<div class="card mt-4">
-    <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong> Comunicación SGSI </h3>
-    </div>
-
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.comunicacion-sgis.store") }}" enctype="multipart/form-data" class="row">
-            @csrf
-            <div class="form-group col-12">
-                <label class="required" for="TitulodComunicado"><i class="fas fa-align-left iconos-crear"></i>
-                Título del Comunicado</label>
-                <input class="form-control {{ $errors->has('TitulodComunicado') ? 'is-invalid' : '' }}" type="text" name="titulo" id="titulo" required value="{{ old('titulo') }}">
-                @if($errors->has('dTitulodComunicado'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('TitulodComunicado') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.comunicacionSgi.fields.descripcion_helper') }}</span>
+                <div class="card-body">
+                    <form method="POST" action="{{ route("frontend.comunicacion-sgis.store") }}" enctype="multipart/form-data">
+                        @method('POST')
+                        @csrf
+                        <div class="form-group">
+                            <label class="required" for="descripcion">{{ trans('cruds.comunicacionSgi.fields.descripcion') }}</label>
+                            <input class="form-control" type="text" name="descripcion" id="descripcion" value="{{ old('descripcion', '') }}" required>
+                            @if($errors->has('descripcion'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('descripcion') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.comunicacionSgi.fields.descripcion_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="archivo">{{ trans('cruds.comunicacionSgi.fields.archivo') }}</label>
+                            <div class="needsclick dropzone" id="archivo-dropzone">
+                            </div>
+                            @if($errors->has('archivo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('archivo') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.comunicacionSgi.fields.archivo_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-danger" type="submit">
+                                {{ trans('global.save') }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
-            <div class="form-group col-12">
-                <label class="required" for="descripcion"><i class="fas fa-pencil-ruler iconos-crear"></i>
-                Contenido</label>
-                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion" required>{{ old('descripcion') }}</textarea>
-                @if($errors->has('descripcion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('descripcion') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.comunicacionSgi.fields.descripcion_helper') }}</span>
-            </div>
-
-            <div class="form-group col-md-6 col-sm-12">
-                <label for="documento"><i class="fas fa-folder-open iconos-crear"></i>Cargar Documento</label>
-                <input type="file" name="files[]" multiple class="form-control" id="documento" accept="application/pdf" value="{{ old('files[]') }}">
-            </div>
-
-
-
-            <div class="form-group col-md-6">
-                <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
-                
-                <input type="file" name="imagen" class="form-control" accept="image/*" required value="{{ old('imagen') }}">
-                    
-                @if($errors->has('imagen'))
-                    <div class="invalid-feedback">
-                         {{ $errors->first('imagen') }}
-                    </div>
-                @endif
-            </div>
-
-
-
-            <div class="form-group col-12">
-                <label class="required" for="publicar_en"><i class="fab fa-elementor iconos-crear"></i>Publicar en </label>
-                <select class="form-control {{ $errors->has('publicar_en') ? 'is-invalid' : '' }}" name="publicar_en" id="publicar_en" required>
-                    <option disabled value="{{ old('publicar_en') }}" selected>
-                        {{ old('publicar_en') }}
-                    </option>
-                        @foreach (App\Models\ComunicacionSgi::TipoSelect as $key => $label)
-                            <option value="{{ $key }}">
-                                {{ $label }}
-                            </option>
-                        @endforeach
-                </select>
-                @if ($errors->has('tipo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('publicar_en') }}
-                    </div>
-                @endif
-            </div>
-
-            <div class="col-sm-12 col-md-6 form-group">
-                <label class="required" for="publico"><i class="fas fa-people-arrows iconos-crear"></i>Público Objetivo</label>
-                <select name="empleados[]" class="select2" multiple required>
-                    @foreach($empleados as $empleado)
-                        <option value="{{$empleado->id}}">{{$empleado->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="col-sm-12 col-md-6 form-group">
-                <label class="required" for="link"><i class="fas fa-link iconos-crear"></i>Link</label>
-                <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link" id="link" value="{{ old('link') }}" required>
-                @if($errors->has('link'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('link') }}
-                    </div>
-                @endif
-            </div>
-
-            <div class="col-sm-12 col-md-6 form-group">
-                <label class="required"><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de inicio de publicación</label>
-                <input class="form-control date {{ $errors->has('fecha_programable') ? 'is-invalid' : '' }}" type="date" name="fecha_programable" value="{{ old('fecha_programable') }}" required>
-                 @if($errors->has('fecha_programable'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fecha_programable') }}
-                    </div>
-                @endif
-            </div>
-
-
-            <div class="col-sm-12 col-md-6 form-group">
-                <label><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de fin de publicación</label>
-                <input class="form-control date {{ $errors->has('fecha_programable_fin') ? 'is-invalid' : '' }}" type="date" name="fecha_programable_fin" value="{{ old('fecha_programable_fin') }}">
-                 @if($errors->has('fecha_programable_fin'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('fecha_programable_fin') }}
-                    </div>
-                @endif
-            </div>
-
-
-            <div class="form-group col-12 text-right"><br>
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-
-
-        </form>
+        </div>
     </div>
 </div>
-
-
-
 @endsection
 
 @section('scripts')
@@ -189,74 +98,5 @@
          return _results
      }
 }
-</script>
-
-<script>
-    $(document).ready(function() {
-        CKEDITOR.replace('descripcion', {
-            toolbar: [{
-                        name: 'styles',
-                        items: ['Styles', 'Format', 'Font', 'FontSize']
-                    },
-                    {
-                        name: 'colors',
-                        items: ['TextColor', 'BGColor']
-                    },
-                    {
-                        name: 'editing',
-                        groups: ['find', 'selection', 'spellchecker'],
-                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-                    }, {
-                        name: 'clipboard',
-                        groups: ['undo'],
-                        items: ['Undo', 'Redo']
-                    },
-                    {
-                        name: 'tools',
-                        items: ['Maximize']
-                    },
-                    {
-                        name: 'basicstyles',
-                        groups: ['basicstyles', 'cleanup'],
-                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
-                            'CopyFormatting', 'RemoveFormat'
-                        ]
-                    },
-                    {
-                        name: 'paragraph',
-                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
-                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote',
-                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
-                        ]
-                    },
-                    {
-                        name: 'links',
-                        items: ['Link', 'Unlink']
-                    },
-                    {
-                        name: 'insert',
-                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
-                    },
-                    '/',
-
-
-                    // {
-                    //     name: 'others',
-                    //     items: ['-']
-                    // }
-                ]
-        });
-
-    });
-
-    $(document).ready(function(){
-
-  $(".select2").select2({
-    theme:"bootstrap4",
-  });
-
-});
-
 </script>
 @endsection

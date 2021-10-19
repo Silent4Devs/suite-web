@@ -1,310 +1,243 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            @can('planificacion_control_create')
+                <div style="margin-bottom: 10px;" class="row">
+                    <div class="col-lg-12">
+                        <a class="btn btn-success" href="{{ route('frontend.planificacion-controls.create') }}">
+                            {{ trans('global.add') }} {{ trans('cruds.planificacionControl.title_singular') }}
+                        </a>
+                    </div>
+                </div>
+            @endcan
+            <div class="card">
+                <div class="card-header">
+                    {{ trans('cruds.planificacionControl.title_singular') }} {{ trans('global.list') }}
+                </div>
 
-    {{ Breadcrumbs::render('admin.planificacion-controls.index') }}
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-PlanificacionControl">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.id') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.activo') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.descripcion') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.dueno') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.vulnerabilidad') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.amenaza') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.confidencialidad') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.integridad') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.disponibilidad') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.probabilidad') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.impacto') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.planificacionControl.fields.nivelriesgo') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($planificacionControls as $key => $planificacionControl)
+                                    <tr data-entry-id="{{ $planificacionControl->id }}">
+                                        <td>
+                                            {{ $planificacionControl->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->activo ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->descripcion ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->dueno->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->vulnerabilidad ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->amenaza ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->confidencialidad ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->integridad ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->disponibilidad ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->probabilidad ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->impacto ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $planificacionControl->nivelriesgo ?? '' }}
+                                        </td>
+                                        <td>
+                                            @can('planificacion_control_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.planificacion-controls.show', $planificacionControl->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
 
-    @can('planificacion_control_create')
+                                            @can('planificacion_control_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.planificacion-controls.edit', $planificacionControl->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
 
-        <div class="mt-5 card">
-            <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Planificación y Control</strong></h3>
-            </div>
-    @endcan
+                                            @can('planificacion_control_delete')
+                                                <form action="{{ route('frontend.planificacion-controls.destroy', $planificacionControl->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
 
-    @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-PlanificacionControl">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.id') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.activo') }}
-                        </th>
-                        <th style="min-width: 500px;">
-                            {{ trans('cruds.planificacionControl.fields.descripcion') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.dueno') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.vulnerabilidad') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.amenaza') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.confidencialidad') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.integridad') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.disponibilidad') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.probabilidad') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.impacto') }}
-                        </th>
-                        <th>
-                            Nivel&nbsp;del&nbsp;riesgo
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        </td>
+
+                                    </tr>
                                 @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
-                </thead>
-            </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-
-
-
+</div>
 @endsection
 @section('scripts')
-    @parent
-    <script>
-        $(function() {
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Planificación y Control ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Planificación y Control ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Planificación y Control ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: `Planificación y Control ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
-                }
+@parent
+<script>
+    $(function () {
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+@can('planificacion_control_delete')
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButton = {
+    text: deleteButtonTrans,
+    url: "{{ route('frontend.planificacion-controls.massDestroy') }}",
+    className: 'btn-danger',
+    action: function (e, dt, node, config) {
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
+      });
 
-            ];
+      if (ids.length === 0) {
+        alert('{{ trans('global.datatables.zero_selected') }}')
 
-            @can('planificacion_control_delete')
-                let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar planificación y control',
-                url: "{{ route('admin.planificacion-controls.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
-                };
-                dtButtons.push(btnAgregar);
-            @endcan
-            @can('planificacion_control_delete')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.planificacion-controls.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+        return
+      }
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+      if (confirm('{{ trans('global.areYouSure') }}')) {
+        $.ajax({
+          headers: {'x-csrf-token': _token},
+          method: 'POST',
+          url: config.url,
+          data: { ids: ids, _method: 'DELETE' }})
+          .done(function () { location.reload() })
+      }
+    }
+  }
+  dtButtons.push(deleteButton)
+@endcan
 
-                return
-                }
+  $.extend(true, $.fn.dataTable.defaults, {
+    orderCellsTop: true,
+    order: [[ 1, 'desc' ]],
+    pageLength: 100,
+  });
+  let table = $('.datatable-PlanificacionControl:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  $('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+      table
+        .column($(this).parent().index())
+        .search(value, strict)
+        .draw()
+  });
+})
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
-
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                processing: true,
-                serverSide: true,
-                retrieve: true,
-                aaSorting: [],
-                ajax: "{{ route('admin.planificacion-controls.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'activo',
-                        name: 'activo'
-                    },
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion'
-                    },
-                    {
-                        data: 'id_reviso',
-                        name: 'id_reviso'
-                    },
-                    {
-                        data: 'vulnerabilidad',
-                        name: 'vulnerabilidad'
-                    },
-                    {
-                        data: 'amenaza',
-                        name: 'amenaza'
-                    },
-                    {
-                        data: 'confidencialidad',
-                        name: 'confidencialidad'
-                    },
-                    {
-                        data: 'integridad',
-                        name: 'integridad'
-                    },
-                    {
-                        data: 'disponibilidad',
-                        name: 'disponibilidad'
-                    },
-                    {
-                        data: 'probabilidad',
-                        name: 'probabilidad'
-                    },
-                    {
-                        data: 'impacto',
-                        name: 'impacto'
-                    },
-                    {
-                        data: 'nivelriesgo',
-                        name: 'nivelriesgo'
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [1, 'desc']
-                ]
-            };
-            let table = $('.datatable-PlanificacionControl').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
-        });
-
-    </script>
+</script>
 @endsection
