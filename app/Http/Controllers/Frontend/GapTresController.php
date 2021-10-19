@@ -1,41 +1,83 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGapTreRequest;
 use App\Http\Requests\StoreGapTreRequest;
-use App\Http\Requests\UpdateGapTreRequest;
 use App\Models\GapTre;
 use App\Models\Team;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class GapTresController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('gap_tre_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gapTres = GapTre::with(['team'])->get();
+        if ($request->ajax()) {
+            $query = GapTre::with(['team'])->select(sprintf('%s.*', (new GapTre)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'gap_tre_show';
+                $editGate = 'gap_tre_edit';
+                $deleteGate = 'gap_tre_delete';
+                $crudRoutePart = 'gap-tres';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('pregunta', function ($row) {
+                return $row->pregunta ? $row->pregunta : '';
+            });
+            $table->editColumn('valoracion', function ($row) {
+                return $row->valoracion ? GapTre::VALORACION_SELECT[$row->valoracion] : '';
+            });
+            $table->editColumn('evidencia', function ($row) {
+                return $row->evidencia ? $row->evidencia : '';
+            });
+            $table->editColumn('recomendacion', function ($row) {
+                return $row->recomendacion ? $row->recomendacion : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
 
         $teams = Team::get();
 
-        return view('frontend.gapTres.index', compact('gapTres', 'teams'));
+        return view('admin.gapTres.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('gap_tre_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.gapTres.create');
+        return view('admin.gapTres.create');
     }
 
     public function store(StoreGapTreRequest $request)
     {
         $gapTre = GapTre::create($request->all());
 
-        return redirect()->route('frontend.gap-tres.index');
+        return redirect()->route('admin.gap-tres.index');
     }
 
     public function edit(GapTre $gapTre)
@@ -44,14 +86,38 @@ class GapTresController extends Controller
 
         $gapTre->load('team');
 
-        return view('frontend.gapTres.edit', compact('gapTre'));
+        return view('admin.gapTres.edit', compact('gapTre'));
     }
 
-    public function update(UpdateGapTreRequest $request, GapTre $gapTre)
+    public function update(Request $request, $id)
     {
-        $gapTre->update($request->all());
+        if ($request->ajax()) {
+            switch ($request->name) {
+                case 'evidencia':
+                    $gapun = GapTre::findOrFail($id);
+                    $gapun->evidencia = $request->value;
+                    $gapun->save();
 
-        return redirect()->route('frontend.gap-tres.index');
+                    return response()->json(['success' => true]);
+                    break;
+                case 'recomendacion':
+                    $gapun = GapTre::findOrFail($id);
+                    $gapun->recomendacion = $request->value;
+                    $gapun->save();
+
+                    return response()->json(['success' => true]);
+                    break;
+                case 'valoracion':
+                    $gapun = GapTre::findOrFail($id);
+                    $gapun->valoracion = $request->value;
+                    $gapun->save();
+
+                    return response()->json(['success' => true]);
+                    break;
+            }
+        }
+        //$gapTre->update($request->all());
+        //return redirect()->route('admin.gap-tres.index');
     }
 
     public function show(GapTre $gapTre)
@@ -60,7 +126,7 @@ class GapTresController extends Controller
 
         $gapTre->load('team');
 
-        return view('frontend.gapTres.show', compact('gapTre'));
+        return view('admin.gapTres.show', compact('gapTre'));
     }
 
     public function destroy(GapTre $gapTre)

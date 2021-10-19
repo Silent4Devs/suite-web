@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route("frontend.organizacions.store") }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route("organizacions.store") }}" enctype="multipart/form-data">
                         @method('POST')
                         @csrf
                         <div class="form-group">
