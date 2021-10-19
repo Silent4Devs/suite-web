@@ -1,101 +1,100 @@
-@extends('layouts.frontend')
+@extends('layouts.admin')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
 
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('global.edit') }} {{ trans('cruds.materialIsoVeinticiente.title_singular') }}
-                </div>
+    {{ Breadcrumbs::render('admin.material-iso-veinticientes.create') }}
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route("frontend.material-iso-veinticientes.update", [$materialIsoVeinticiente->id]) }}" enctype="multipart/form-data">
-                        @method('PUT')
-                        @csrf
-                        <div class="form-group">
-                            <label class="required" for="objetivo">{{ trans('cruds.materialIsoVeinticiente.fields.objetivo') }}</label>
-                            <input class="form-control" type="text" name="objetivo" id="objetivo" value="{{ old('objetivo', $materialIsoVeinticiente->objetivo) }}" required>
-                            @if($errors->has('objetivo'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('objetivo') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.objetivo_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="listaasistencia">{{ trans('cruds.materialIsoVeinticiente.fields.listaasistencia') }}</label>
-                            <div class="needsclick dropzone" id="listaasistencia-dropzone">
-                            </div>
-                            @if($errors->has('listaasistencia'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('listaasistencia') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.listaasistencia_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="arearesponsable_id">{{ trans('cruds.materialIsoVeinticiente.fields.arearesponsable') }}</label>
-                            <select class="form-control select2" name="arearesponsable_id" id="arearesponsable_id">
-                                @foreach($arearesponsables as $id => $arearesponsable)
-                                    <option value="{{ $id }}" {{ (old('arearesponsable_id') ? old('arearesponsable_id') : $materialIsoVeinticiente->arearesponsable->id ?? '') == $id ? 'selected' : '' }}>{{ $arearesponsable }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('arearesponsable'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('arearesponsable') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.arearesponsable_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label>{{ trans('cruds.materialIsoVeinticiente.fields.tipoimparticion') }}</label>
-                            <select class="form-control" name="tipoimparticion" id="tipoimparticion">
-                                <option value disabled {{ old('tipoimparticion', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Models\MaterialIsoVeinticiente::TIPOIMPARTICION_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('tipoimparticion', $materialIsoVeinticiente->tipoimparticion) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('tipoimparticion'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('tipoimparticion') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.tipoimparticion_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="fechacreacion_actualizacion">{{ trans('cruds.materialIsoVeinticiente.fields.fechacreacion_actualizacion') }}</label>
-                            <input class="form-control date" type="text" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion" value="{{ old('fechacreacion_actualizacion', $materialIsoVeinticiente->fechacreacion_actualizacion) }}">
-                            @if($errors->has('fechacreacion_actualizacion'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('fechacreacion_actualizacion') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.fechacreacion_actualizacion_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="materialarchivo">{{ trans('cruds.materialIsoVeinticiente.fields.materialarchivo') }}</label>
-                            <div class="needsclick dropzone" id="materialarchivo-dropzone">
-                            </div>
-                            @if($errors->has('materialarchivo'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('materialarchivo') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.materialarchivo_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+<div class="card mt-4">
+    <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1  text-center text-white"><strong> Editar: </strong> Material ISO 27001:2013</h3>
+    </div>
+
+    <div class="card-body">
+        <form method="POST" class="row" action="{{ route("admin.material-iso-veinticientes.update", [$materialIsoVeinticiente->id]) }}" enctype="multipart/form-data">
+            @method('PUT')
+            @csrf
+            <div class="form-group col-12">
+                <label class="required" for="objetivo"><i class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.materialIsoVeinticiente.fields.objetivo') }}</label>
+                <input class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" type="text" name="objetivo" id="objetivo" value="{{ old('objetivo', $materialIsoVeinticiente->objetivo) }}" required>
+                @if($errors->has('objetivo'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('objetivo') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.objetivo_helper') }}</span>
             </div>
-
-        </div>
+            <div class="form-group col-12">
+                <label for="listaasistencia"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.materialIsoVeinticiente.fields.listaasistencia') }}</label>
+                <div class="needsclick dropzone {{ $errors->has('listaasistencia') ? 'is-invalid' : '' }}" id="listaasistencia-dropzone">
+                </div>
+                @if($errors->has('listaasistencia'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('listaasistencia') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.listaasistencia_helper') }}</span>
+            </div>
+            <div class="form-group col-12">
+                <label for="arearesponsable_id"><i class="fas fa-chart-area iconos-crear"></i>{{ trans('cruds.materialIsoVeinticiente.fields.arearesponsable') }}</label>
+                <select class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" name="arearesponsable_id" id="arearesponsable_id">
+                    @foreach($arearesponsables as $id => $arearesponsable)
+                        <option value="{{ $id }}" {{ (old('arearesponsable_id') ? old('arearesponsable_id') : $materialIsoVeinticiente->arearesponsable->id ?? '') == $id ? 'selected' : '' }}>{{ $arearesponsable }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('arearesponsable'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('arearesponsable') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.arearesponsable_helper') }}</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label><i class="fas fa-briefcase iconos-crear"></i>{{ trans('cruds.materialIsoVeinticiente.fields.tipoimparticion') }}</label>
+                <select class="form-control {{ $errors->has('tipoimparticion') ? 'is-invalid' : '' }}" name="tipoimparticion" id="tipoimparticion">
+                    <option value disabled {{ old('tipoimparticion', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach(App\Models\MaterialIsoVeinticiente::TIPOIMPARTICION_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('tipoimparticion', $materialIsoVeinticiente->tipoimparticion) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('tipoimparticion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('tipoimparticion') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.tipoimparticion_helper') }}</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="fechacreacion_actualizacion iconos-crear"><i class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.materialIsoVeinticiente.fields.fechacreacion_actualizacion') }}</label>
+                <input class="form-control date {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}" type="text" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion" value="{{ old('fechacreacion_actualizacion', $materialIsoVeinticiente->fechacreacion_actualizacion) }}">
+                @if($errors->has('fechacreacion_actualizacion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fechacreacion_actualizacion') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.fechacreacion_actualizacion_helper') }}</span>
+            </div>
+            <div class="form-group col-12">
+                <label for="materialarchivo"><i class="fas fa-file-image iconos-crear"></i></i>{{ trans('cruds.materialIsoVeinticiente.fields.materialarchivo') }}</label>
+                <div class="needsclick dropzone {{ $errors->has('materialarchivo') ? 'is-invalid' : '' }}" id="materialarchivo-dropzone">
+                </div>
+                @if($errors->has('materialarchivo'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('materialarchivo') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.materialIsoVeinticiente.fields.materialarchivo_helper') }}</span>
+            </div>
+            <div class="form-group col-12 text-right">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
+            </div>
+        </form>
     </div>
 </div>
+
+
+
 @endsection
 
 @section('scripts')

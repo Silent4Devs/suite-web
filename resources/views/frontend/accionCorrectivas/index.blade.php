@@ -1,337 +1,497 @@
-@extends('layouts.frontend')
+@extends('layouts.admin')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            @can('accion_correctiva_create')
-                <div style="margin-bottom: 10px;" class="row">
-                    <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.accion-correctivas.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.accionCorrectiva.title_singular') }}
-                        </a>
-                    </div>
+
+    {{ Breadcrumbs::render('admin.accion-correctivas.index') }}
+
+    <style>
+        .table tr th:nth-child(1) {
+            min-width: 80px !important;
+            text-align: center !important;
+        }
+
+        .table tr th:nth-child(2) {
+            min-width: 150px !important;
+            text-align: center !important;
+        }
+
+        .descripcion{
+            text-align: justify !important;
+        }
+
+
+        .comentarios{
+            text-align: justify !important;
+        }
+
+    </style>
+
+    <div class="mt-5 card">
+        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            <h3 class="mb-2 text-center text-white"><strong>Acciones Correctivas</strong></h3>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
                 </div>
-            @endcan
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('cruds.accionCorrectiva.title_singular') }} {{ trans('global.list') }}
+                <div class="col-sm-8 align-content-center">
+                    @include('layouts.errors')
+                    @include('flash::message')
                 </div>
-
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable datatable-AccionCorrectiva">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.id') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.fecharegistro') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.nombrereporta') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.puestoreporta') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.nombreregistra') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.puestoregistra') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.tema') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.causaorigen') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.descripcion') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.metodo_causa') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.solucion') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.cierre_accion') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.estatus') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.fecha_compromiso') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.fecha_verificacion') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.responsable_accion') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.nombre_autoriza') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.documentometodo') }}
-                                    </th>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($users as $key => $item)
-                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($puestos as $key => $item)
-                                                <option value="{{ $item->puesto }}">{{ $item->puesto }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($users as $key => $item)
-                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($puestos as $key => $item)
-                                                <option value="{{ $item->puesto }}">{{ $item->puesto }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <select class="search" strict="true">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach(App\Models\AccionCorrectiva::CAUSAORIGEN_SELECT as $key => $item)
-                                                <option value="{{ $item }}">{{ $item }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <select class="search" strict="true">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach(App\Models\AccionCorrectiva::METODO_CAUSA_SELECT as $key => $item)
-                                                <option value="{{ $item }}">{{ $item }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <select class="search" strict="true">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach(App\Models\AccionCorrectiva::ESTATUS_SELECT as $key => $item)
-                                                <option value="{{ $item }}">{{ $item }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($users as $key => $item)
-                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($users as $key => $item)
-                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($accionCorrectivas as $key => $accionCorrectiva)
-                                    <tr data-entry-id="{{ $accionCorrectiva->id }}">
-                                        <td>
-                                            {{ $accionCorrectiva->id ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->fecharegistro ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->nombrereporta->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->puestoreporta->puesto ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->nombreregistra->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->puestoregistra->puesto ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->tema ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ App\Models\AccionCorrectiva::CAUSAORIGEN_SELECT[$accionCorrectiva->causaorigen] ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->descripcion ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ App\Models\AccionCorrectiva::METODO_CAUSA_SELECT[$accionCorrectiva->metodo_causa] ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->solucion ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->cierre_accion ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ App\Models\AccionCorrectiva::ESTATUS_SELECT[$accionCorrectiva->estatus] ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->fecha_compromiso ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->fecha_verificacion ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->responsable_accion->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $accionCorrectiva->nombre_autoriza->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            @if($accionCorrectiva->documentometodo)
-                                                <a href="{{ $accionCorrectiva->documentometodo->getUrl() }}" target="_blank">
-                                                    {{ trans('global.view_file') }}
-                                                </a>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @can('accion_correctiva_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.accion-correctivas.show', $accionCorrectiva->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('accion_correctiva_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.accion-correctivas.edit', $accionCorrectiva->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('accion_correctiva_delete')
-                                                <form action="{{ route('frontend.accion-correctivas.destroy', $accionCorrectiva->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
-
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="col-sm-2">
                 </div>
             </div>
-
+        </div>
+        <div class="card">
+            <div class="card-body datatable-fix">
+                <table class="table table-bordered w-100 datatable-AccionCorrectiva">
+                    <thead class="thead-dark">
+                        <tr>
+                            {{-- <th style="vertical-align: top">
+                                {{ trans('cruds.accionCorrectiva.fields.id') }}
+                            </th> --}}
+                            <th style="vertical-align: top">
+                                Folio
+                            </th>
+                            <th style="vertical-align: top">
+                                Título
+                            </th>
+                            <th style="vertical-align: top">
+                                Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;registro
+                            </th>
+                            <th style="vertical-align: top">
+                                Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;recepción
+                            </th>
+                            <th style="vertical-align: top">
+                                Estatus
+                            </th>
+                            <th style="vertical-align: top">
+                                Fecha&nbsp;y&nbsp;hora&nbsp;de&nbsp;cierre&nbsp;de&nbsp;ticket
+                            </th>
+                            <th style="vertical-align: top">
+                                Reportó
+                            </th>
+                            <th style="vertical-align: top">
+                                Puesto
+                            </th>
+                            <th style="vertical-align: top">
+                                Área
+                            </th>
+                            <th style="vertical-align: top">
+                                Registró
+                            </th>
+                            <th style="vertical-align: top">
+                                Puesto
+                            </th>
+                            <th style="vertical-align: top">
+                                Área
+                            </th>
+                            <th style="vertical-align: top">
+                                Causa&nbsp;de&nbsp;origen
+                            </th>
+                            <th style="vertical-align: top; min-width:500px;">
+                                Descripción
+                            </th>
+                            <th style="vertical-align: top; min-width:500px;">
+                                Comentarios
+                            </th>
+                            {{-- <th style="vertical-align: top">
+                                Método&nbsp;utilizado&nbsp;para&nbsp;el análisis&nbsp;de&nbsp;causa&nbsp;raíz
+                            </th>
+                            <th style="vertical-align: top; min-width:500px;">
+                                Descripción&nbsp;de&nbsp;la solución
+                            </th>
+                            <th style="vertical-align: top; min-width:500px;">
+                                Descripción&nbsp;de&nbsp;la&nbsp;validación
+                                para&nbsp;el&nbsp;cierre&nbsp;de&nbsp;la&nbsp;acción
+                            </th>
+                            <th style="vertical-align: top">
+                                {{ trans('cruds.accionCorrectiva.fields.estatus') }}
+                            </th>
+                            <th style="vertical-align: top">
+                                {{ trans('cruds.accionCorrectiva.fields.fecha_compromiso') }}
+                            </th>
+                            <th style="vertical-align: top">
+                                {{ trans('cruds.accionCorrectiva.fields.fecha_verificacion') }}
+                            </th> --}}
+                            {{-- <th style="vertical-align: top">
+                                {{ trans('cruds.accionCorrectiva.fields.responsable_accion') }}
+                            </th>
+                            <th style="vertical-align: top">
+                                Responsable autorización&nbsp;AC
+                            </th> --}}
+                            {{-- <th style="vertical-align: top">
+                                {{ trans('cruds.accionCorrectiva.fields.documentometodo') }}
+                            </th> --}}
+                            <th style="vertical-align: top">
+                                Opciones
+                            </th>
+                        </tr>
+                        {{-- <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <select class="search">
+                                    <option value>{{ trans('global.all') }}</option>
+                                    @foreach ($users as $key => $item)
+                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <select class="search">
+                                    <option value>{{ trans('global.all') }}</option>
+                                    @foreach ($puestos as $key => $item)
+                                        <option value="{{ $item->puesto }}">{{ $item->puesto }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <select class="search">
+                                    <option value>{{ trans('global.all') }}</option>
+                                    @foreach ($users as $key => $item)
+                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <select class="search">
+                                    <option value>{{ trans('global.all') }}</option>
+                                    @foreach ($puestos as $key => $item)
+                                        <option value="{{ $item->puesto }}">{{ $item->puesto }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                            </td>
+                            <td>
+                                <select class="search" strict="true">
+                                    <option value>{{ trans('global.all') }}</option>
+                                    @foreach (App\Models\AccionCorrectiva::CAUSAORIGEN_SELECT as $key => $item)
+                                        <option value="{{ $key }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                            </td>
+                            <td>
+                                <select class="search" strict="true">
+                                    <option value>{{ trans('global.all') }}</option>
+                                    @foreach (App\Models\AccionCorrectiva::METODO_CAUSA_SELECT as $key => $item)
+                                        <option value="{{ $key }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                            </td>
+                            <td>
+                                <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                            </td>
+                            <td>
+                                <select class="search" strict="true">
+                                    <option value>{{ trans('global.all') }}</option>
+                                    @foreach (App\Models\AccionCorrectiva::ESTATUS_SELECT as $key => $item)
+                                        <option value="{{ $key }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <select class="search">
+                                    <option value>{{ trans('global.all') }}</option>
+                                    @foreach ($users as $key => $item)
+                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <select class="search">
+                                    <option value>{{ trans('global.all') }}</option>
+                                    @foreach ($users as $key => $item)
+                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr> --}}
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+
+
 @endsection
 @section('scripts')
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('accion_correctiva_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('frontend.accion-correctivas.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+    @parent
+    <script>
+        $(function() {
+            let dtButtons = [{
+                    extend: 'csvHtml5',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar CSV',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar Excel',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Exportar PDF',
+                    orientation: 'landscape',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    customize: function(doc) {
+                        doc.pageMargins = [5, 20, 5, 20];
+                        doc.styles.tableHeader.fontSize = 6.5;
+                        doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Acciones Correctivas ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    exportOptions: {
+                        columns: ['th:not(:last-child):visible']
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Seleccionar Columnas',
+                },
+                {
+                    extend: 'colvisGroup',
+                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    show: ':hidden',
+                    titleAttr: 'Ver todo',
+                },
+                {
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Restaurar a estado anterior',
+                }
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+            ];
+            @can('accion_correctiva_create')
+                let btnAgregar = {
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                titleAttr: 'Agregar acciones correctivas',
+                url: "{{ route('admin.accion-correctivas.create') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config){
+                let {url} = config;
+                window.location.href = url;
+                }
+                };
+                dtButtons.push(btnAgregar);
+            @endcan
+            @can('accion_correctiva_delete')
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+                let deleteButton = {
+                text: deleteButtonTrans,
+                url: "{{ route('admin.accion-correctivas.massDestroy') }}",
+                className: 'btn-danger',
+                action: function (e, dt, node, config) {
+                var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
+                return entry.id
+                });
 
-        return
-      }
+                if (ids.length === 0) {
+                alert('{{ trans('global.datatables.zero_selected') }}')
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
+                return
+                }
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  });
-  let table = $('.datatable-AccionCorrectiva:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  $('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-      table
-        .column($(this).parent().index())
-        .search(value, strict)
-        .draw()
-  });
-})
+                if (confirm('{{ trans('global.areYouSure') }}')) {
+                $.ajax({
+                headers: {'x-csrf-token': _token},
+                method: 'POST',
+                url: config.url,
+                data: {ids: ids, _method: 'DELETE'}
+                })
+                .done(function () {
+                location.reload()
+                })
+                }
+                }
+                }
+                //dtButtons.push(deleteButton)
+            @endcan
 
-</script>
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                ajax: "{{ route('admin.accion-correctivas.index') }}",
+                columnDefs: [{
+                    targets: [3, 4, 5, 14],
+                    visible: false
+                }],
+                columns: [
+                    // {
+                    //     data: 'id',
+                    //     name: 'id'
+                    // },
+                    {
+                        data: 'folio',
+                        name: 'folio'
+                    },
+                    {
+                        data: 'tema',
+                        name: 'tema'
+                    },
+                    {
+                        data: 'fecharegistro',
+                        name: 'fecharegistro'
+                    },
+                    {
+                        data: 'fecha_verificacion',
+                        name: 'fecha_verificacion'
+                    },
+                    {
+                        data: 'estatus',
+                        name: 'estatus'
+                    },
+                    {
+                        data: 'fecha_cierre',
+                        name: 'fecha_cierre'
+                    },
+                    {
+                        data: 'reporto',
+                        name: 'reporto'
+                    },
+                    {
+                        data: 'reporto_puesto',
+                        name: 'reporto_puesto'
+                    },
+                    {
+                        data: 'reporto_area',
+                        name: 'reporto_area'
+                    },
+                    {
+                        data: 'registro',
+                        name: 'registro'
+                    },
+                    {
+                        data: 'registro_puesto',
+                        name: 'registro_puesto'
+                    },
+                    {
+                        data: 'registro_area',
+                        name: 'registro_area'
+                    },
+                    {
+                        data: 'causaorigen',
+                        name: 'causaorigen',
+                    },
+                    {
+                        data: 'descripcion',
+                        name: 'descripcion',
+                        className:'descripcion'
+                    },
+                    {
+                        data: 'comentarios',
+                        name: 'comentarios',
+                        className:'comentarios'
+                    },
+                    // {
+                    //     data: 'metodo_causa',
+                    //     name: 'metodo_causa'
+                    // },
+                    // {
+                    //     data: 'solucion',
+                    //     name: 'solucion'
+                    // },
+                    // {
+                    //     data: 'cierre_accion',
+                    //     name: 'cierre_accion'
+                    // },
+                    // {
+                    //     data: 'estatus',
+                    //     name: 'estatus'
+                    // },
+                    // {
+                    //     data: 'fecha_compromiso',
+                    //     name: 'fecha_compromiso'
+                    // },
+                    // {
+                    //     data: 'fecha_verificacion',
+                    //     name: 'fecha_verificacion'
+                    // },
+                    // {
+                    //     data: 'responsable_accion_name',
+                    //     name: 'responsable_accion.name'
+                    // },
+                    // {
+                    //     data: 'nombre_autoriza_name',
+                    //     name: 'nombre_autoriza.name'
+                    // },
+                    // {
+                    //     data: 'documentometodo',
+                    //     name: 'documentometodo',
+                    //     sortable: false,
+                    //     searchable: false
+                    // },
+                    {
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}'
+                    }
+                ],
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ],
+            };
+            let table = $('.datatable-AccionCorrectiva').DataTable(dtOverrideGlobals);
+            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+            //     $($.fn.dataTable.tables(true)).DataTable()
+            //         .columns.adjust();
+            // });
+            // $('.datatable thead').on('input', '.search', function() {
+            //     let strict = $(this).attr('strict') || false
+            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
+            //     table
+            //         .column($(this).parent().index())
+            //         .search(value, strict)
+            //         .draw()
+            // });
+        });
+    </script>
 @endsection
