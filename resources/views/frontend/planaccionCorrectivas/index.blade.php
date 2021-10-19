@@ -1,151 +1,102 @@
-@extends('layouts.frontend')
+@extends('layouts.admin')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            @can('planaccion_correctiva_create')
-                <div style="margin-bottom: 10px;" class="row">
-                    <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.planaccion-correctivas.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.planaccionCorrectiva.title_singular') }}
-                        </a>
-                    </div>
-                </div>
-            @endcan
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('cruds.planaccionCorrectiva.title_singular') }} {{ trans('global.list') }}
-                </div>
-
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable datatable-PlanaccionCorrectiva">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.planaccionCorrectiva.fields.id') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.planaccionCorrectiva.fields.accioncorrectiva') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.accionCorrectiva.fields.fecharegistro') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.planaccionCorrectiva.fields.actividad') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.planaccionCorrectiva.fields.responsable') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.planaccionCorrectiva.fields.fechacompromiso') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.planaccionCorrectiva.fields.estatus') }}
-                                    </th>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($accion_correctivas as $key => $item)
-                                                <option value="{{ $item->tema }}">{{ $item->tema }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($users as $key => $item)
-                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <select class="search" strict="true">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach(App\Models\PlanaccionCorrectiva::ESTATUS_SELECT as $key => $item)
-                                                <option value="{{ $item }}">{{ $item }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($planaccionCorrectivas as $key => $planaccionCorrectiva)
-                                    <tr data-entry-id="{{ $planaccionCorrectiva->id }}">
-                                        <td>
-                                            {{ $planaccionCorrectiva->id ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $planaccionCorrectiva->accioncorrectiva->tema ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $planaccionCorrectiva->accioncorrectiva->fecharegistro ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $planaccionCorrectiva->actividad ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $planaccionCorrectiva->responsable->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $planaccionCorrectiva->fechacompromiso ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ App\Models\PlanaccionCorrectiva::ESTATUS_SELECT[$planaccionCorrectiva->estatus] ?? '' }}
-                                        </td>
-                                        <td>
-                                            @can('planaccion_correctiva_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.planaccion-correctivas.show', $planaccionCorrectiva->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('planaccion_correctiva_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.planaccion-correctivas.edit', $planaccionCorrectiva->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('planaccion_correctiva_delete')
-                                                <form action="{{ route('frontend.planaccion-correctivas.destroy', $planaccionCorrectiva->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
-
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
+@can('planaccion_correctiva_create')
+<div class="card mt-5">
+    <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+        <h3 class="mb-2  text-center text-white"><strong>Plan acción</strong></h3>
+    </div>
+    <div style="margin-bottom: 10px; margin-left:12px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ route('admin.planaccion-correctivas.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.planaccionCorrectiva.title_singular') }}
+            </a>
         </div>
     </div>
+@endcan
+<div class="card">
+    <div class="card-header">
+        {{ trans('cruds.planaccionCorrectiva.title_singular') }} {{ trans('global.list') }}
+    </div>
+
+    <div class="card-body">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PlanaccionCorrectiva">
+            <thead>
+                <tr>
+                    <th width="10">
+
+                    </th>
+                    <th>
+                        {{ trans('cruds.planaccionCorrectiva.fields.id') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.planaccionCorrectiva.fields.accioncorrectiva') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.accionCorrectiva.fields.fecharegistro') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.planaccionCorrectiva.fields.actividad') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.planaccionCorrectiva.fields.responsable') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.planaccionCorrectiva.fields.fechacompromiso') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.planaccionCorrectiva.fields.estatus') }}
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($accion_correctivas as $key => $item)
+                                <option value="{{ $item->tema }}">{{ $item->tema }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($users as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <select class="search" strict="true">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach(App\Models\PlanaccionCorrectiva::ESTATUS_SELECT as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent
@@ -153,14 +104,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('planaccion_correctiva_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('frontend.planaccion-correctivas.massDestroy') }}",
+    url: "{{ route('admin.planaccion-correctivas.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
+      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+          return entry.id
       });
 
       if (ids.length === 0) {
@@ -182,12 +133,29 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  $.extend(true, $.fn.dataTable.defaults, {
+  let dtOverrideGlobals = {
+    buttons: dtButtons,
+    processing: true,
+    serverSide: true,
+    retrieve: true,
+    aaSorting: [],
+    ajax: "{{ route('admin.planaccion-correctivas.index') }}",
+    columns: [
+      { data: 'placeholder', name: 'placeholder' },
+{ data: 'id', name: 'id' },
+{ data: 'accioncorrectiva_tema', name: 'accioncorrectiva.tema' },
+{ data: 'accioncorrectiva.fecharegistro', name: 'accioncorrectiva.fecharegistro' },
+{ data: 'actividad', name: 'actividad' },
+{ data: 'responsable_name', name: 'responsable.name' },
+{ data: 'fechacompromiso', name: 'fechacompromiso' },
+{ data: 'estatus', name: 'estatus' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  });
-  let table = $('.datatable-PlanaccionCorrectiva:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  };
+  let table = $('.datatable-PlanaccionCorrectiva').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
@@ -200,7 +168,7 @@
         .search(value, strict)
         .draw()
   });
-})
+});
 
 </script>
 @endsection
