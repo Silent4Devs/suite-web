@@ -166,7 +166,7 @@ class UsersController extends Controller
 
         $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
 
-        return view('admin.users.show', compact('user'));
+        return view('frontend.users.show', compact('user'));
     }
 
     public function destroy(User $user)
