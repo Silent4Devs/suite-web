@@ -27,6 +27,8 @@ use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
 use App\Http\Controllers\Frontend\AlcanceSgsiController;
 use App\Http\Controllers\Frontend\ComiteseguridadController;
 use App\Http\Controllers\Frontend\MinutasaltadireccionController;
+use App\Http\Controllers\Frontend\EvidenciasSgsiController;
+use App\Http\Controllers\Frontend\PoliticaSgsiController;
 
 Route::middleware([
     'web',
@@ -332,15 +334,15 @@ Route::middleware([
         Route::resource('minutasaltadireccions', MinutasaltadireccionController::class);
 
         // // Evidencias Sgsis
-        // Route::delete('evidencias-sgsis/destroy', [EvidenciasSgsiController::class,'massDestroy'])->name('evidencias-sgsis.massDestroy');
-        // Route::post('evidencias-sgsis/media', [EvidenciasSgsiController::class,'storeMedia'])->name('evidencias-sgsis.storeMedia');
-        // Route::post('evidencias-sgsis/ckmedia', [EvidenciasSgsiController::class,'storeCKEditorImages'])->name('evidencias-sgsis.storeCKEditorImages');
-        // Route::resource('evidencias-sgsis', EvidenciasSgsiController::class);
+        Route::delete('evidencias-sgsis/destroy', [EvidenciasSgsiController::class,'massDestroy'])->name('evidencias-sgsis.massDestroy');
+        Route::post('evidencias-sgsis/media', [EvidenciasSgsiController::class,'storeMedia'])->name('evidencias-sgsis.storeMedia');
+        Route::post('evidencias-sgsis/ckmedia', [EvidenciasSgsiController::class,'storeCKEditorImages'])->name('evidencias-sgsis.storeCKEditorImages');
+        Route::resource('evidencias-sgsis', EvidenciasSgsiController::class);
 
         // // Politica Sgsis
-        // Route::delete('politica-sgsis/destroy', [PoliticaSgsiController::class,'massDestroy'])->name('politica-sgsis.massDestroy');
-        // Route::get('politica-sgsis/visualizacion', [PoliticaSgsiController::class,'visualizacion'])->name('politica-sgsis/visualizacion');
-        // Route::resource('politica-sgsis', PoliticaSgsiController::class);
+        Route::delete('politica-sgsis/destroy', [PoliticaSgsiController::class,'massDestroy'])->name('politica-sgsis.massDestroy');
+        Route::get('politica-sgsis/visualizacion', [PoliticaSgsiController::class,'visualizacion'])->name('politica-sgsis/visualizacion');
+        Route::resource('politica-sgsis', PoliticaSgsiController::class);
 
         // // Roles Responsabilidades
         // Route::delete('roles-responsabilidades/destroy', [RolesResponsabilidadesController::class,'massDestroy'])->name('roles-responsabilidades.massDestroy');

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <style>
@@ -57,7 +57,7 @@
 </style>
 
 
-    {{ Breadcrumbs::render('admin.evidencias-sgsis.index') }}
+    {{-- {{ Breadcrumbs::render('frontend.evidencias-sgsis.index') }} --}}
 
     @can('evidencias_sgsi_create')
         <div class="mt-5 card">
@@ -210,7 +210,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.evidencias-sgsis.massDestroy') }}",
+                url: "{{ route('evidencias-sgsis.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -239,7 +239,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva Evidencia de Asignación de Recursos al SGSI',
-                url: "{{ route('admin.evidencias-sgsis.create') }}",
+                url: "{{ route('evidencias-sgsis.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -254,7 +254,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.evidencias-sgsis.index') }}",
+                ajax: "{{ route('evidencias-sgsis.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

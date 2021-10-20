@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPoliticaSgsiRequest;
@@ -79,7 +79,7 @@ class PoliticaSgsiController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.politicaSgsis.index', compact('politicaSgsis', 'teams', 'empleados'));
+        return view('frontend.politicaSgsis.index', compact('politicaSgsis', 'teams', 'empleados'));
     }
 
     public function create()
@@ -88,7 +88,7 @@ class PoliticaSgsiController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.politicaSgsis.create', compact('empleados'));
+        return view('frontend.politicaSgsis.create', compact('empleados'));
     }
 
     public function store(StorePoliticaSgsiRequest $request)
@@ -96,7 +96,7 @@ class PoliticaSgsiController extends Controller
         // dd($request->all());
         $politicaSgsi = PoliticaSgsi::create($request->all());
 
-        return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('politica-sgsis.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(PoliticaSgsi $politicaSgsi)
@@ -107,14 +107,14 @@ class PoliticaSgsiController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.politicaSgsis.edit', compact('politicaSgsi', 'empleados'));
+        return view('frontend.politicaSgsis.edit', compact('politicaSgsi', 'empleados'));
     }
 
     public function update(UpdatePoliticaSgsiRequest $request, PoliticaSgsi $politicaSgsi)
     {
         $politicaSgsi->update($request->all());
 
-        return redirect()->route('admin.politica-sgsis.index')->with('success', 'Editado con éxito');
+        return redirect()->route('politica-sgsis.index')->with('success', 'Editado con éxito');
     }
 
     public function show(PoliticaSgsi $politicaSgsi)
@@ -123,7 +123,7 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsi->load('team');
 
-        return view('admin.politicaSgsis.show', compact('politicaSgsi'));
+        return view('frontend.politicaSgsis.show', compact('politicaSgsi'));
     }
 
     public function destroy(PoliticaSgsi $politicaSgsi)
@@ -148,6 +148,6 @@ class PoliticaSgsiController extends Controller
 
         $organizacions = Organizacion::first();
 
-        return view('admin.politicaSgsis.visualizacion', compact('politicaSgsis'));
+        return view('frontend.politicaSgsis.visualizacion', compact('politicaSgsis'));
     }
 }

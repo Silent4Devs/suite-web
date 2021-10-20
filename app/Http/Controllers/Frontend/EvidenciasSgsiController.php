@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -83,7 +83,7 @@ class EvidenciasSgsiController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.evidenciasSgsis.index', compact('users', 'teams'));
+        return view('frontend.evidenciasSgsis.index', compact('users', 'teams'));
     }
 
     public function create()
@@ -94,7 +94,7 @@ class EvidenciasSgsiController extends Controller
         $empleados = Empleado::with('area')->get();
         $areas = Area::get();
 
-        return view('admin.evidenciasSgsis.create', compact('responsables', 'empleados', 'areas'));
+        return view('frontend.evidenciasSgsis.create', compact('responsables', 'empleados', 'areas'));
     }
 
     public function store(StoreEvidenciasSgsiRequest $request)
@@ -122,7 +122,7 @@ class EvidenciasSgsiController extends Controller
         //     Media::whereIn('id', $media)->update(['model_id' => $evidenciasSgsi->id]);
         // }
 
-        return redirect()->route('admin.evidencias-sgsis.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('evidencias-sgsis.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(EvidenciasSgsi $evidenciasSgsi)
@@ -134,7 +134,7 @@ class EvidenciasSgsiController extends Controller
         $areas = Area::get();
         $evidenciasSgsi->load('responsable', 'team');
 
-        return view('admin.evidenciasSgsis.edit', compact('responsables', 'evidenciasSgsi', 'empleados', 'areas'));
+        return view('frontend.evidenciasSgsis.edit', compact('responsables', 'evidenciasSgsi', 'empleados', 'areas'));
     }
 
     public function update(UpdateEvidenciasSgsiRequest $request, EvidenciasSgsi $evidenciasSgsi)
@@ -164,7 +164,7 @@ class EvidenciasSgsiController extends Controller
         //     $evidenciasSgsi->archivopdf->delete();
         // }
 
-        return redirect()->route('admin.evidencias-sgsis.index')->with('success', 'Editado con éxito');
+        return redirect()->route('evidencias-sgsis.index')->with('success', 'Editado con éxito');
     }
 
     public function show(EvidenciasSgsi $evidenciasSgsi)
@@ -173,7 +173,7 @@ class EvidenciasSgsiController extends Controller
 
         $evidenciasSgsi->load('responsable', 'team');
 
-        return view('admin.evidenciasSgsis.show', compact('evidenciasSgsi'));
+        return view('frontend.evidenciasSgsis.show', compact('evidenciasSgsi'));
     }
 
     public function destroy(EvidenciasSgsi $evidenciasSgsi)
