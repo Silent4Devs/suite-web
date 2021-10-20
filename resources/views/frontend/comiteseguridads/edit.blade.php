@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.comiteseguridads.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.comiteseguridads.create') }} --}}
 
 <div class="mt-4 card">
     <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" class="row" action="{{ route("admin.comiteseguridads.update", [$comiteseguridad->id]) }}" enctype="multipart/form-data">
+        <form method="POST" class="row" action="{{ route("comiteseguridads.update", [$comiteseguridad->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group col-sm-12 col-md-8 col-lg-8">

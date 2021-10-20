@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}">
     <link rel="stylesheet" href="{{ asset('orgchart/orgchart.css') }}">
@@ -392,7 +392,7 @@
                         <p class="font-bold">Atención</p>
                         <p class="text-sm">El organigrama no se pudo generar ya que no existe un nodo raíz (CEO),
                             defina uno
-                            en el apartado de empleados <a href="{{ route('admin.empleados.index') }}"><i
+                            en el apartado de empleados <a href="{{ route('empleados.index') }}"><i
                                     class="fas fa-share"></i></a></p>
                     </div>
                 </div>
@@ -532,7 +532,7 @@
             renderOrganigrama(OrgChart, orientacion);
 
             $("#cargando_participantes").hide();
-            let url_empleados = "{{ route('admin.empleados.lista') }}";
+            let url_empleados = "{{ route('empleados.lista') }}";
             let timeout = null;
             let inputSearchEmpleados = document.getElementById('participantes_search');
             $('#participantes_search').on('search', function() {
@@ -562,7 +562,7 @@
                                 let lista =
                                     `<ul class='list-group' id='empleados-lista'>`;
                                 data ? JSON.parse(data).forEach(usuario => {
-                                        lista += `<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' 
+                                        lista += `<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action'
                                     onClick='seleccionarUsuario("${usuario.id}","${usuario.name}","${usuario.email}");'>
                                     <i class='mr-2 fas fa-user-circle'></i>
                                     ${usuario.name}</button>
@@ -618,7 +618,7 @@
                 //     console.log("Exportando");
                 // }
                 // buttonExport.appendChild(buttonE);
-                let url_organigrama = "{{ route('admin.organigrama.index') }}";
+                let url_organigrama = "{{ route('organigrama.index') }}";
                 let data = {
                     "area_filter": false,
                     id
@@ -671,7 +671,7 @@
                             'exportButton': true,
                             'exportFilename': `Organigrama de ${organizacion}`,
                             'direction': orientacion,
-                            'urlExportCSV': "{{ route('admin.organigrama.exportar') }}"
+                            'urlExportCSV': "{{ route('organigrama.exportar') }}"
                         });
                         document.getElementById("contenedorOrganigrama").style.pointerEvents =
                             'all';

@@ -134,7 +134,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '{{ route('admin.selectIndicador') }}',
+            url: '{{ route('selectIndicador') }}',
             type: 'POST',
             beforeSend: function() {
                 document.getElementById('contenedor_resultado').classList.add("d-none");
@@ -182,7 +182,7 @@
                 }
 
                     GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(data.datos.resultado);
-                
+
                 console.log(data.datos.resultado);
                 var ctx = document.getElementById("resultadobarra");
                 var myChart = new Chart(ctx, {

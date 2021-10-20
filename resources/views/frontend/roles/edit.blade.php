@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css">
@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.roles.update', [$role->id]) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('frontend.roles.update', [$role->id]) }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
                 <div class="form-group">
@@ -135,7 +135,7 @@
                             )
                         }
                         setTimeout(() => {
-                            window.location.href = '/admin/roles';
+                            window.location.href = '/frontend/roles';
                         }, 1500);
                     },
                     error: function(err) {
@@ -148,7 +148,7 @@
             if (id_role != null) {
                 $.ajax({
                     type: "GET",
-                    url: `/admin/roles/${id_role}/permisos`,
+                    url: `/frontend/roles/${id_role}/permisos`,
                     beforeSend: function() {
                         console.log("cargando permisos");
                     },

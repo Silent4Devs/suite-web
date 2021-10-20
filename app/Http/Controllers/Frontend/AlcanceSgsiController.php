@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAlcanceSgsiRequest;
@@ -75,7 +75,7 @@ class AlcanceSgsiController extends Controller
         $teams = Team::get();
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.alcanceSgsis.index', compact('teams', 'empleados'));
+        return view('frontend.alcanceSgsis.index', compact('teams', 'empleados'));
     }
 
     public function create()
@@ -84,14 +84,14 @@ class AlcanceSgsiController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.alcanceSgsis.create', compact('empleados'));
+        return view('frontend.alcanceSgsis.create', compact('empleados'));
     }
 
     public function store(StoreAlcanceSgsiRequest $request)
     {
         $alcanceSgsi = AlcanceSgsi::create($request->all());
 
-        return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('frontend.alcance-sgsis.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(AlcanceSgsi $alcanceSgsi)
@@ -102,14 +102,14 @@ class AlcanceSgsiController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados'));
+        return view('frontend.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados'));
     }
 
     public function update(UpdateAlcanceSgsiRequest $request, AlcanceSgsi $alcanceSgsi)
     {
         $alcanceSgsi->update($request->all());
 
-        return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Editado con éxito');
+        return redirect()->route('alcance-sgsis.index')->with('success', 'Editado con éxito');
     }
 
     public function show(AlcanceSgsi $alcanceSgsi)
@@ -118,7 +118,7 @@ class AlcanceSgsiController extends Controller
 
         $alcanceSgsi->load('team');
 
-        return view('admin.alcanceSgsis.show', compact('alcanceSgsi'));
+        return view('frontend.alcanceSgsis.show', compact('alcanceSgsi'));
     }
 
     public function destroy(AlcanceSgsi $alcanceSgsi)

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -12,7 +12,7 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.minutasaltadireccions.index') }}
+    {{-- {{ Breadcrumbs::render('frontend.minutasaltadireccions.index') }} --}}
 
     @can('minutasaltadireccion_create')
 
@@ -23,7 +23,7 @@
             </div>
             {{-- <div style="margin-bottom: 10px;margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.minutasaltadireccions.create') }}">
+            <a class="btn btn-success" href="{{ route('minutasaltadireccions.create') }}">
                   Agregar <strong>+</strong>
             </a>
         </div>
@@ -144,7 +144,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.minutasaltadireccions.massDestroy') }}",
+                url: "{{ route('minutasaltadireccions.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -173,7 +173,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva minuta de Sesión con alta Dirección',
-                url: "{{ route('admin.minutasaltadireccions.create') }}",
+                url: "{{ route('minutasaltadireccions.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -188,7 +188,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.minutasaltadireccions.index') }}",
+                ajax: "{{ route('minutasaltadireccions.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -256,18 +256,18 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                            let urlBotonEditar = `/admin/minutasaltadireccions/${data}/edit`;
-                            let urlBotonMostrar = `/admin/minutasaltadireccions/${data}`;
-                            let urlBotonEliminar = `/admin/minutasaltadireccions/${data}`;
+                            let urlBotonEditar = `/minutasaltadireccions/${data}/edit`;
+                            let urlBotonMostrar = `/minutasaltadireccions/${data}`;
+                            let urlBotonEliminar = `/minutasaltadireccions/${data}`;
 
                             let htmlButtons = `
                                 <a href="${urlBotonEditar}" class="btn btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
                                 <a href="${urlBotonMostrar}" class="btn btn-sm" title="Visualizar"><i class="fa fa-eye"></i></a>
                                 ${row.planes.map(plan=>{
-                                    return `<a href="/admin/planes-de-accion/${plan.id}" class="btn btn-sm" title="Plan de Acción"><i class="fa fa-stream"></i></a>`;
+                                    return `<a href="/planes-de-accion/${plan.id}" class="btn btn-sm" title="Plan de Acción"><i class="fa fa-stream"></i></a>`;
                                 })}
                                 <a class="btn btn-sm " title="Visualizar revisiones"
-                                    href="/admin/minutasaltadireccions/${data}/historial-revisiones">
+                                    href="/minutasaltadireccions/${data}/historial-revisiones">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-clock-history" viewBox="0 0 16 16">
                                         <path

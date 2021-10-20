@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <style type="text/css">
@@ -73,7 +73,7 @@
                                     <a href="#"
                                        data-type="select"
                                        data-pk="{{$actividadplan->id}}"
-                                       data-url="{{route("admin.implementacions.update",  $actividadplan->id)}}"
+                                       data-url="{{route("frontend.implementacions.update",  $actividadplan->id)}}"
                                        data-title="Seleccionar estado"
                                        data-value="{{$actividadplan->estatus_id}}"
                                        class="estatus_id"

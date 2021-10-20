@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.matriz-requisito-legales.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px">
@@ -10,7 +10,7 @@
 
         <div class="card-body">
             <form method="POST" class="row"
-                action="{{ route('admin.matriz-requisito-legales.update', [$matrizRequisitoLegale->id]) }}"
+                action="{{ route('matriz-requisito-legales.update', [$matrizRequisitoLegale->id]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf

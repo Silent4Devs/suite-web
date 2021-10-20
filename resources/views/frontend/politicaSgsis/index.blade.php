@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 
@@ -43,7 +43,7 @@
 
 </style>
 
-    {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
+    {{-- {{ Breadcrumbs::render('frontend.politica-sgsis.index') }} --}}
 
     @can('politica_sgsi_create')
 
@@ -179,7 +179,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva política SGSI',
-                url: "{{ route('admin.politica-sgsis.create') }}",
+                url: "{{ route('politica-sgsis.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -192,7 +192,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.politica-sgsis.massDestroy') }}",
+                url: "{{ route('politica-sgsis.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -226,7 +226,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.politica-sgsis.index') }}",
+                ajax: "{{ route('politica-sgsis.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

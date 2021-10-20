@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\frontend;
 
 use App\Exports\EmpleadosExport;
 use App\Http\Controllers\Controller;
@@ -17,7 +17,7 @@ class OrganigramaController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('organigrama_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('organigrama_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // La construccion del arbol necesita un primer nodo (NULL)
         $organizacionTree = Empleado::with(['supervisor.children', 'supervisor.supervisor', 'area', 'children.supervisor', 'children.children'])->whereNull('supervisor_id')->first(); //Eager loading
         if ($request->ajax()) {
@@ -51,7 +51,7 @@ class OrganigramaController extends Controller
         $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas = Area::get();
 
-        return view('admin.organigrama.index', compact('organizacionTree', 'rutaImagenes', 'organizacion', 'org_foto', 'areas'));
+        return view('frontend.organigrama.index', compact('organizacionTree', 'rutaImagenes', 'organizacion', 'org_foto', 'areas'));
     }
 
     public function exportTo()

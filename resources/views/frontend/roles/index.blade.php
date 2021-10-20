@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     @can('role_create')
 
@@ -88,7 +88,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [5, 20, 5, 20];
                         // doc.styles.tableHeader.fontSize = 6.5;
-                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -126,7 +126,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar rol',
-                url: "{{ route('admin.roles.create') }}",
+                url: "{{ route('frontend.roles.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -139,19 +139,19 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.roles.massDestroy') }}",
+                url: "{{ route('frontend.roles.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -171,7 +171,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.roles.index') }}",
+                ajax: "{{ route('frontend.roles.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

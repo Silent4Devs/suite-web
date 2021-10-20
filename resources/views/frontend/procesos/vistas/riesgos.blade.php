@@ -254,7 +254,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '{{ route('admin.selectRiesgos') }}',
+            url: '{{ route('selectRiesgos') }}',
             type: 'POST',
             beforeSend: function() {
                 document.getElementById('contenedor_resultado_riesgos').classList.add("d-none");

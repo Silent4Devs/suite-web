@@ -171,7 +171,7 @@ Objetivo del SGSI.
                                 </p>
                             </div>
                             <div class="col-12 text-center fondo_secundario caja_botones">
-                                <a href="{{ route("admin.entendimiento-organizacions.index") }}" class="btn btn-info" role="button">FODA</a>
+                                <a href="{{ route("entendimiento-organizacions.index") }}" class="btn btn-info" role="button">FODA</a>
                             </div>
                             <br>
                         </div>
@@ -292,8 +292,8 @@ Objetivo del SGSI.
 
                             </div>
                             <div class="col-12 text-center fondo_secundario caja_botones">
-                                <a href="{{ route("admin.partes-interesadas.index") }}" class="btn btn-info" role="button">PARTES INTERESADAS </a>
-                                <a href="{{ route("admin.partes-interesadas.index") }}" class="btn btn-info" role="button">LISTA DE REQUISITOS  </a>
+                                <a href="{{ route("partes-interesadas.index") }}" class="btn btn-info" role="button">PARTES INTERESADAS </a>
+                                <a href="{{ route("partes-interesadas.index") }}" class="btn btn-info" role="button">LISTA DE REQUISITOS  </a>
                             </div>
                             <br>
                         </div>
@@ -421,7 +421,7 @@ Objetivo del SGSI.
 
                             </div>
                             <div class="col-12 text-center fondo_secundario caja_botones">
-                                <a href="{{ route("admin.alcance-sgsis.index") }}" class="btn btn-info" role="button">ALCANCE DEL SGSI </a>
+                                <a href="{{ route("alcance-sgsis.index") }}" class="btn btn-info" role="button">ALCANCE DEL SGSI </a>
                             </div>
                             <br>
                         </div>

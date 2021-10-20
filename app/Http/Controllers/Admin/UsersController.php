@@ -173,14 +173,12 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $delete= $user->delete();
-        if($delete){
+        $delete = $user->delete();
+        if ($delete) {
             return response()->json(['sucess', true]);
-
         }
 
         return response()->json(['error', true]);
-
     }
 
     public function massDestroy(MassDestroyUserRequest $request)

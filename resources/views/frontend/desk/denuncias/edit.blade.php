@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 
@@ -28,7 +28,7 @@
                 <section id="registro" class="caja_tab_reveldada">
                     <div class="seccion_div">
                         <form class="row" method="POST"
-                            action="{{ route('admin.desk.denuncias-update', $denuncias) }}">
+                            action="{{ route('desk.denuncias-update', $denuncias) }}">
                             @csrf
 
                             <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
@@ -261,7 +261,7 @@
                             </div>
 
                             <div class="mt-4 text-right form-group col-12">
-                                <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
+                                <a href="{{ asset('frontend/desk') }}" class="btn btn_cancelar">Cancelar</a>
                                 <input type="submit" name="" class="btn btn-success" value="Enviar">
                             </div>
                         </form>
@@ -310,7 +310,7 @@
                             </div>
 
                             <form method="POST" class="col-12"
-                                action="{{ route('admin.desk.analisis_denuncia-update', $analisis) }}">
+                                action="{{ route('desk.analisis_denuncia-update', $analisis) }}">
                                 @csrf
 
                                 <div class="col-12" style="position: relative;">
@@ -424,7 +424,7 @@
                             class="btn btn-success btn_modal_form">Agregar actividad</button>
                         @if (count($denuncias->planes))
                             <a style="position:absolute; right: 170px; top:2px;"
-                                href="{{ route('admin.planes-de-accion.show', $denuncias->planes->first()->id) }}"
+                                href="{{ route('planes-de-accion.show', $denuncias->planes->first()->id) }}"
                                 class="btn btn-success btn_modal_form"><i class="mr-2 fas fa-stream"></i> Plan De
                                 Acción</a>
                         @endif
@@ -450,7 +450,7 @@
                     <div class="modal_form_plan">
                         <div class="fondo_modal"></div>
                         <form class="card" id="form_plan_accion" method="POST"
-                            action="{{ route('admin.desk-denuncias-actividades.store') }}">
+                            action="{{ route('desk-denuncias-actividades.store') }}">
                             <input type="hidden" name="denuncia_id" value="{{ $denuncias->id }}">
                             <div class="text-center card-header" style="background-color: #00abb2;">
                                 <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-tasks"></i>Crear:
@@ -572,7 +572,7 @@
 
     $(document).ready(function() {
         window.tbl_plan = $("#tabla_plan_accion_denuncias").DataTable({
-            ajax: "{{ route('admin.desk-denuncias-actividades.index', $denuncias->id) }}",
+            ajax: "{{ route('desk-denuncias-actividades.index', $denuncias->id) }}",
             buttons: [],
             columns: [{
                     data: 'id'

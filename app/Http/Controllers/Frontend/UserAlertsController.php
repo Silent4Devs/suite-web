@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyUserAlertRequest;
@@ -68,7 +68,7 @@ class UserAlertsController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.userAlerts.index', compact('users', 'teams'));
+        return view('frontend.userAlerts.index', compact('users', 'teams'));
     }
 
     public function create()
@@ -77,7 +77,7 @@ class UserAlertsController extends Controller
 
         $users = User::all()->pluck('name', 'id');
 
-        return view('admin.userAlerts.create', compact('users'));
+        return view('frontend.userAlerts.create', compact('users'));
     }
 
     public function store(StoreUserAlertRequest $request)
@@ -85,7 +85,7 @@ class UserAlertsController extends Controller
         $userAlert = UserAlert::create($request->all());
         $userAlert->users()->sync($request->input('users', []));
 
-        return redirect()->route('admin.user-alerts.index');
+        return redirect()->route('user-alerts.index');
     }
 
     public function show(UserAlert $userAlert)
@@ -94,7 +94,7 @@ class UserAlertsController extends Controller
 
         $userAlert->load('users', 'team');
 
-        return view('admin.userAlerts.show', compact('userAlert'));
+        return view('frontend.userAlerts.show', compact('userAlert'));
     }
 
     public function destroy(UserAlert $userAlert)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
@@ -116,7 +116,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.matrizRequisitoLegales.index', compact('teams'));
+        return view('frontend.matrizRequisitoLegales.index', compact('teams'));
     }
 
     public function create()
@@ -125,7 +125,7 @@ class MatrizRequisitoLegalesController extends Controller
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.matrizRequisitoLegales.create', compact('planes_implementacion', 'empleados'));
+        return view('frontend.matrizRequisitoLegales.create', compact('planes_implementacion', 'empleados'));
     }
 
     public function store(StoreMatrizRequisitoLegaleRequest $request)
@@ -148,7 +148,7 @@ class MatrizRequisitoLegalesController extends Controller
             $matrizRequisitoLegale->planes()->sync($request->plan_accion);
         }
 
-        return redirect()->route('admin.matriz-requisito-legales.index');
+        return redirect()->route('matriz-requisito-legales.index');
     }
 
     public function edit(MatrizRequisitoLegale $matrizRequisitoLegale)
@@ -168,7 +168,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $matrizRequisitoLegale->load('team');
 
-        return view('admin.matrizRequisitoLegales.edit', compact('matrizRequisitoLegale', 'empleados', 'planes_seleccionados'));
+        return view('frontend.matrizRequisitoLegales.edit', compact('matrizRequisitoLegale', 'empleados', 'planes_seleccionados'));
     }
 
     public function update(UpdateMatrizRequisitoLegaleRequest $request, MatrizRequisitoLegale $matrizRequisitoLegale)
@@ -191,7 +191,7 @@ class MatrizRequisitoLegalesController extends Controller
             $matrizRequisitoLegale->planes()->sync($request->plan_accion);
         }
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Editado con éxito');
+        return redirect()->route('matriz-requisito-legales.index')->with('success', 'Editado con éxito');
     }
 
     public function show(MatrizRequisitoLegale $matrizRequisitoLegale)
@@ -200,7 +200,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $matrizRequisitoLegale->load('team', 'planes');
 
-        return view('admin.matrizRequisitoLegales.show', compact('matrizRequisitoLegale'));
+        return view('frontend.matrizRequisitoLegales.show', compact('matrizRequisitoLegale'));
     }
 
     public function destroy(Request $request, MatrizRequisitoLegale $matrizRequisitoLegale)
@@ -229,9 +229,9 @@ class MatrizRequisitoLegalesController extends Controller
         $modulo = $id;
         $modulo_name = 'Matríz de Requisitos Legales';
         $referencia = $modulo->nombrerequisito;
-        $urlStore = route('admin.matriz-requisito-legales.storePlanAccion', $id);
+        $urlStore = route('matriz-requisito-legales.storePlanAccion', $id);
 
-        return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
+        return view('frontend.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
 
     public function storePlanAccion(Request $request, MatrizRequisitoLegale $id)
@@ -285,6 +285,6 @@ class MatrizRequisitoLegalesController extends Controller
 
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
     }
 }

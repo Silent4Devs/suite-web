@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Documento;
@@ -29,7 +29,7 @@ class ProcesoController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_procesos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_procesos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Proceso::get();
             $table = DataTables::of($query);
@@ -72,7 +72,7 @@ class ProcesoController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.procesos.index');
+        return view('frontend.procesos.index');
     }
 
     /**
@@ -85,7 +85,7 @@ class ProcesoController extends Controller
         abort_if(Gate::denies('configuracion_procesos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso = DB::table('macroprocesos')->select('id', 'codigo', 'nombre')->get();
 
-        return view('admin.procesos.create')->with('macroprocesos', $macroproceso);
+        return view('frontend.procesos.create')->with('macroprocesos', $macroproceso);
     }
 
     public function store(Request $request)
@@ -101,7 +101,7 @@ class ProcesoController extends Controller
         $procesos = proceso::create($request->all());
         Flash::success('<h5 class="text-center">Proceso agregado satisfactoriamente</h5>');
 
-        return redirect()->route('admin.procesos.index');
+        return redirect()->route('frontend.procesos.index');
     }
 
     /**
@@ -114,7 +114,7 @@ class ProcesoController extends Controller
     {
         abort_if(Gate::denies('configuracion_procesos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.procesos.show', compact('proceso'));
+        return view('frontend.procesos.show', compact('proceso'));
     }
 
     /**
@@ -128,7 +128,7 @@ class ProcesoController extends Controller
         abort_if(Gate::denies('configuracion_procesos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso = DB::table('macroprocesos')->select('id', 'codigo', 'nombre')->get();
 
-        return view('admin.procesos.edit', compact('proceso'))->with('macroprocesos', $macroproceso);
+        return view('frontend.procesos.edit', compact('proceso'))->with('macroprocesos', $macroproceso);
     }
 
     /**
@@ -151,7 +151,7 @@ class ProcesoController extends Controller
         $proceso->update($request->all());
         Flash::success('<h5 class="text-center">Proceso actualizado satisfactoriamente</h5>');
 
-        return redirect()->route('admin.procesos.index');
+        return redirect()->route('frontend.procesos.index');
     }
 
     /**
@@ -166,12 +166,12 @@ class ProcesoController extends Controller
         $proceso->delete();
         Flash::success('<h5 class="text-center">Proceso eliminado satisfactoriamente</h5>');
 
-        return redirect()->route('admin.procesos.index');
+        return redirect()->route('frontend.procesos.index');
     }
 
     public function mapaProcesos()
     {
-        abort_if(Gate::denies('mapa_procesos_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('mapa_procesos_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos_mapa = Grupo::with(['macroprocesos' => function ($q) {
             $q->with('procesosWithDocumento');
         }])->get();
@@ -180,7 +180,7 @@ class ProcesoController extends Controller
         $procesos_mapa = Proceso::get();
         $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();
 
-        return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado'));
+        return view('frontend.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado'));
     }
 
     public function obtenerDocumentoProcesos($documento)
@@ -208,7 +208,7 @@ class ProcesoController extends Controller
         // dd($primer_analisis['id']);
         // dd($indicadores::getResultado());
 
-        return view('admin.procesos.vistas', compact('documento', 'revisiones', 'documentos_relacionados', 'versiones', 'indicadores', 'riesgos', 'analisis_collect', 'primer_analisis'));
+        return view('frontend.procesos.vistas', compact('documento', 'revisiones', 'documentos_relacionados', 'versiones', 'indicadores', 'riesgos', 'analisis_collect', 'primer_analisis'));
     }
 
     public function AjaxRequestIndicador(Request $request)

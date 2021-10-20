@@ -58,7 +58,7 @@ class GapTre extends Model
     }
 
     public function analisis_brecha()
-	{
-		return $this->belongTo(AnalisisBrecha::class);
-	}
+    {
+        return $this->belongTo(AnalisisBrecha::class);
+    }
 }

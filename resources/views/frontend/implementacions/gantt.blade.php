@@ -161,7 +161,7 @@ function loadGanttFromServer(taskId, callback) {
   $.ajax({
       type: "POST",
       headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-      url: "{{route('admin.implementacions.loadProyect')}}",
+      url: "{{route('implementacions.loadProyect')}}",
       success: function (response) {
           // prof.stop();
           ge.loadProject(response);
@@ -207,7 +207,7 @@ function saveGanttOnServer() {
 
    
 
-    url: "{{route('admin.implementacions.saveProyect')}}",
+    url: "{{route('implementacions.saveProyect')}}",
 
     data: {txt_prj},
 
