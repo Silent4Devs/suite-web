@@ -269,12 +269,24 @@
                         name: 'estatus.estado'
                     },
                     {
-                        data: 'responsable',
-                        name: 'responsable.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+
+                            
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.responsable.avatar}" title="${row.responsable.name}"></img>`;
+                            
+                            return `${row.responsable ? html: ''}`;
+                        }
                     },
                     {
-                        data: 'colaborador',
-                        name: 'colaborador.name'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+
+                            
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.colaborador.avatar}" title="${row.colaborador.name}"></img>`;
+                            
+                            return `${row.colaborador ? html: ''}`;
+                        }
                     },
                     {
                         data: 'fecha_inicio',
