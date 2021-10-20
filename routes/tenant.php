@@ -23,6 +23,10 @@ use App\Http\Controllers\Frontend\MacroprocesoController;
 use App\Http\Controllers\Frontend\RolesController;
 use App\Http\Controllers\Frontend\UsersController;
 use App\Http\Controllers\Frontend\UserAlertsController;
+use App\Http\Controllers\Frontend\PartesInteresadasController;
+use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
+use App\Http\Controllers\Frontend\AlcanceSgsiController;
+use App\Http\Controllers\Frontend\ComiteseguridadController;
 
 Route::middleware([
     'web',
@@ -296,21 +300,21 @@ Route::middleware([
         // Route::post('areas/process-csv-import', [AreasController::class, 'processCsvImport'])->name('areas.processCsvImport');
 
         // // Partes Interesadas
-        // Route::delete('partes-interesadas/destroy', [PartesInteresadasController::class, 'massDestroy'])->name('partes-interesadas.massDestroy');
-        // Route::resource('partes-interesadas', PartesInteresadasController::class);
+        Route::delete('partes-interesadas/destroy', [PartesInteresadasController::class, 'massDestroy'])->name('partes-interesadas.massDestroy');
+        Route::resource('partes-interesadas', PartesInteresadasController::class);
 
         // // Matriz Requisito Legales
-        // Route::get('matriz-requisito-legales/planes-de-accion/create/{id}', [MatrizRequisitoLegalesController::class, 'createPlanAccion'])->name('matriz-requisito-legales.createPlanAccion');
-        // Route::post('matriz-requisito-legales/planes-de-accion/store/{id}', [MatrizRequisitoLegalesController::class,'storePlanAccion'])->name('matriz-requisito-legales.storePlanAccion');
-        // Route::delete('matriz-requisito-legales/destroy', [MatrizRequisitoLegalesController::class,'massDestroy'])->name('matriz-requisito-legales.massDestroy');
-        // Route::resource('matriz-requisito-legales', MatrizRequisitoLegalesController::class);
+        Route::get('matriz-requisito-legales/planes-de-accion/create/{id}', [MatrizRequisitoLegalesController::class, 'createPlanAccion'])->name('matriz-requisito-legales.createPlanAccion');
+        Route::post('matriz-requisito-legales/planes-de-accion/store/{id}', [MatrizRequisitoLegalesController::class,'storePlanAccion'])->name('matriz-requisito-legales.storePlanAccion');
+        Route::delete('matriz-requisito-legales/destroy', [MatrizRequisitoLegalesController::class,'massDestroy'])->name('matriz-requisito-legales.massDestroy');
+        Route::resource('matriz-requisito-legales', MatrizRequisitoLegalesController::class);
 
         // // Alcance Sgsis
-        // Route::delete('alcance-sgsis/destroy', [AlcanceSgsiController::class,'massDestroy'])->name('alcance-sgsis.massDestroy');
-        // Route::resource('alcance-sgsis', AlcanceSgsiController::class);
+        Route::delete('alcance-sgsis/destroy', [AlcanceSgsiController::class,'massDestroy'])->name('alcance-sgsis.massDestroy');
+        Route::resource('alcance-sgsis', AlcanceSgsiController::class);
 
         // // Comiteseguridads
-        // Route::delete('comiteseguridads/destroy', [ComiteseguridadController::class,'massDestroy'])->name('comiteseguridads.massDestroy');
+        Route::delete('comiteseguridads/destroy', [ComiteseguridadController::class,'massDestroy'])->name('comiteseguridads.massDestroy');
 
         // Route::get('comiteseguridads/visualizacion', [ComiteseguridadController::class,'visualizacion']);
 

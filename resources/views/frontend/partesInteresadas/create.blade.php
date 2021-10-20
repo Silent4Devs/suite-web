@@ -1,10 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 
-    {{ Breadcrumbs::render('admin.partes-interesadas.create') }}
+    {{ Breadcrumbs::render('frontend.partes-interesadas.create') }}
 
-   
+
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -14,7 +14,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.partes-interesadas.store') }}" enctype="multipart/form-data"
+            <form method="POST" action="{{ route('frontend.partes-interesadas.store') }}" enctype="multipart/form-data"
                 class="row">
                 @csrf
                 {{ Form::hidden('pdf-value', 'PartesInt') }}
@@ -68,7 +68,7 @@
                         <option value disabled >Selecciona una opción</option>
                         @foreach ($clausulas as $clausula)
                             <option value="{{ $clausula->id }}">
-                                {{ $clausula->nombre }} 
+                                {{ $clausula->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -96,8 +96,8 @@
 
 
 <script type="text/javascript">
-    
-    
+
+
     $(document).ready(function() {
         $("#clausulas").select2({
             theme: "bootstrap4",

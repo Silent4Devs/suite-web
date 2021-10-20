@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.partes-interesadas.create') }}
+    {{ Breadcrumbs::render('frontend.partes-interesadas.create') }}
 
 <div class="card">
     <div class="card-header">
@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.partes-interesadas.index') }}">
+                <a class="btn btn-default" href="{{ route('frontend.partes-interesadas.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -52,7 +52,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.partes-interesadas.index') }}">
+                <a class="btn btn-default" href="{{ route('frontend.partes-interesadas.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

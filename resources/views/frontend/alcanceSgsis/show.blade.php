@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.alcance-sgsis.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.alcance-sgsis.create') }} --}}
 
 <div class="card">
     <div class="card-header">
@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.alcance-sgsis.index') }}">
+                <a class="btn btn-default" href="{{ route('alcance-sgsis.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -36,7 +36,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.alcance-sgsis.index') }}">
+                <a class="btn btn-default" href="{{ route('alcance-sgsis.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
