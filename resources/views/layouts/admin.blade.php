@@ -1491,7 +1491,7 @@
 
     @yield('scripts')
 
-    {{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }}
+    
 
 </body>
 

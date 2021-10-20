@@ -16,6 +16,7 @@ class Porcentaje
                 $gap1cont += 0;
             }
         }
+
         //$porc1 = ($gap1cont * 20) / 13;
         $gap12cont = 0;
         foreach ($gap12porcentaje as $gap12) {
@@ -27,6 +28,8 @@ class Porcentaje
                 $gap12cont += 0;
             }
         }
+
+
 
         $resultado = $gap1cont + $gap12cont;
         //$porc2 = (round($gap12cont) * 20) / 100;

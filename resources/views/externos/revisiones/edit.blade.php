@@ -90,6 +90,7 @@
                     <img src="{{ asset('img/mensaje2.png') }}">
                 </div>
             </div>
+            <a href="{{asset('admin/inicioUsuario')}}#aprobaciones" class="mt-2 btn btn-primary">Regresar</a>
         </div>
     @else
         <div class="m-0 row justify-content-center w-100" style="position: relative">
@@ -128,6 +129,8 @@
                                 <button id="rechazar" class="btn btn-outline-danger"><i class="mr-1 fas fa-thumbs-down"></i>
                                     Rechazar</button>
                             </form>
+
+
                         </div>
                     </div>
                 </div>

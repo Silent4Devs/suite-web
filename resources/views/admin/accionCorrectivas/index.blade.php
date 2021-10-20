@@ -394,8 +394,14 @@
                         name: 'fecha_cierre'
                     },
                     {
-                        data: 'reporto',
-                        name: 'reporto'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+
+                            
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto.avatar}" title="${row.reporto.name}"></img>`;
+                            
+                            return `${row.reporto ? html: ''}`;
+                        }
                     },
                     {
                         data: 'reporto_puesto',
