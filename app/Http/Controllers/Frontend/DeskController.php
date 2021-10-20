@@ -150,7 +150,7 @@ class DeskController extends Controller
 
         $categorias = CategoriaIncidente::get();
 
-        return view('fronentd.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis'));
+        return view('frontend.desk.seguridad.edit', compact('incidentesSeguridad', 'activos', 'empleados', 'sedes', 'areas', 'procesos', 'subcategorias', 'categorias', 'analisis'));
     }
 
     public function updateSeguridad(Request $request, $id_incidente)

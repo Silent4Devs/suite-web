@@ -29,7 +29,7 @@ class ProcesoController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_procesos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_procesos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Proceso::get();
             $table = DataTables::of($query);
@@ -171,7 +171,7 @@ class ProcesoController extends Controller
 
     public function mapaProcesos()
     {
-        abort_if(Gate::denies('mapa_procesos_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('mapa_procesos_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos_mapa = Grupo::with(['macroprocesos' => function ($q) {
             $q->with('procesosWithDocumento');
         }])->get();

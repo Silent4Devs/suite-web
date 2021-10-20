@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Functions\Porcentaje;
-use App\Functions\GenerateAnalisisB;
 use App\Http\Controllers\Controller;
 use App\Models\GapDo;
 use App\Models\GapTre;
@@ -21,7 +20,6 @@ class AnalisisBController extends Controller
      */
     public function index()
     {
-
         abort_if(Gate::denies('analisis_brechas_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gapuno = GapUno::orderBy('id', 'ASC')->get()->where('analisis_brechas_id', '=', request()->id);
         $gaptresVerif = GapTre::get()->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id);
@@ -62,7 +60,7 @@ class AnalisisBController extends Controller
         $gapa181 = GapDo::get()->where('control-dos', '=', 'A18.1')->where('analisis_brechas_id', '=', request()->id);
         $gapa182 = GapDo::get()->where('control-dos', '=', 'A18.2')->where('analisis_brechas_id', '=', request()->id);
         $gap1porcentaje = GapUno::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', request()->id)->skip(3)->take(12);
-        $gap12porcentaje = GapUno::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id','asc')->get()->where('analisis_brechas_id', '=', request()->id)->take(3);
+        $gap12porcentaje = GapUno::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id', 'asc')->get()->where('analisis_brechas_id', '=', request()->id)->take(3);
         $gap1satisfactorios = GapUno::select('id')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap1parcialmente = GapUno::select('id')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap1nocumple = GapUno::select('id')->where('valoracion', '=', '3')->where('analisis_brechas_id', '=', request()->id)->count();
@@ -122,9 +120,6 @@ class AnalisisBController extends Controller
             ->with('gapda152s', $gapa152)->with('gapda161s', $gapa161)->with('gapda171s', $gapa171)->with('gapda172s', $gapa172)
             ->with('gapda181s', $gapa181)->with('gapda182s', $gapa182)->with('porcentajeGap1', $porcentajeGap1)
             ->with('porcentajeGap2', $porcentajeGap2)->with('porcentajeGap3', $porcentajeGap3)->with('conteos', $conteos);
-
-
-
     }
 
     /**
@@ -199,8 +194,6 @@ class AnalisisBController extends Controller
 
     public function obtenerAnalisis()
     {
-
-
         return view('admin.procesos.vistas');
     }
 }

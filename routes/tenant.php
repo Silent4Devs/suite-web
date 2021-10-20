@@ -2,17 +2,29 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\AlcanceSgsiController;
+use App\Http\Controllers\Frontend\ComiteseguridadController;
 use App\Http\Controllers\Frontend\DeskController;
+use App\Http\Controllers\Frontend\EmpleadoController;
+use App\Http\Controllers\Frontend\EntendimientoOrganizacionController;
+use App\Http\Controllers\Frontend\GlosarioController;
+use App\Http\Controllers\Frontend\GrupoAreaController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\InicioUsuarioController;
+use App\Http\Controllers\Frontend\MacroprocesoController;
+use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
+use App\Http\Controllers\Frontend\MinutasaltadireccionController;
+use App\Http\Controllers\Frontend\OrganizacionController;
+use App\Http\Controllers\Frontend\PartesInteresadasController;
+use App\Http\Controllers\Frontend\PlanesAccionController;
+use App\Http\Controllers\Frontend\PortalComunicacionController;
+use App\Http\Controllers\Frontend\RolesController;
 use App\Http\Controllers\Frontend\SedeController;
 use App\Http\Controllers\Frontend\TipoactivoController;
-use App\Http\Controllers\Frontend\EmpleadoController;
-use App\Http\Controllers\Frontend\GrupoAreaController;
-use App\Http\Controllers\Frontend\InicioUsuarioController;
-use App\Http\Controllers\Frontend\OrganizacionController;
-use App\Http\Controllers\Frontend\PortalComunicacionController;
+use App\Http\Controllers\Frontend\UserAlertsController;
+use App\Http\Controllers\Frontend\UsersController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\ScopeSessions;
@@ -262,6 +274,7 @@ Route::middleware([
         // Route::get('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class, 'getCursos'])->name('empleados.getCursos');
         // Route::post('empleados/store/competencias', [EmpleadoController::class, 'storeWithCompetencia'])->name('empleados.storeWithCompetencia');
         // Route::post('empleados/get', [EmpleadoController::class, 'getEmpleados'])->name('empleados.get');
+        Route::post('empleados/get-lista', 'EmpleadoController@getListaEmpleados')->name('empleados.lista');
         // Route::get('empleados/get-all', [EmpleadoController::class, 'getAllEmpleados'])->name('empleados.getAll');
         Route::resource('empleados', EmpleadoController::class);
 
@@ -295,11 +308,11 @@ Route::middleware([
         Route::delete('user-alerts/destroy', [UserAlertsController::class, 'massDestroy'])->name('user-alerts.massDestroy');
         Route::resource('user-alerts', UserAlertsController::class, ['except' => ['edit', 'update']]);
 
-        // // Entendimiento Organizacions
-        // Route::delete('entendimiento-organizacions/destroy', [EntendimientoOrganizacionController::class ,'massDestroy'])->name('entendimiento-organizacions.massDestroy');
-        // Route::resource('entendimiento-organizacions', EntendimientoOrganizacionController::class);
-        // Route::post('entendimiento-organizacions/parse-csv-import', [EntendimientoOrganizacionController::class ,'parseCsvImport'])->name('entendimiento-organizacions.parseCsvImport');
-        // Route::post('areas/process-csv-import', [AreasController::class, 'processCsvImport'])->name('areas.processCsvImport');
+        // Entendimiento Organizacions
+        Route::delete('entendimiento-organizacions/destroy', [EntendimientoOrganizacionController::class, 'massDestroy'])->name('entendimiento-organizacions.massDestroy');
+        Route::resource('entendimiento-organizacions', EntendimientoOrganizacionController::class);
+        Route::post('entendimiento-organizacions/parse-csv-import', [EntendimientoOrganizacionController::class, 'parseCsvImport'])->name('entendimiento-organizacions.parseCsvImport');
+        Route::post('areas/process-csv-import', [AreasController::class, 'processCsvImport'])->name('areas.processCsvImport');
 
         // // Partes Interesadas
         Route::delete('partes-interesadas/destroy', [PartesInteresadasController::class, 'massDestroy'])->name('partes-interesadas.massDestroy');
@@ -307,30 +320,30 @@ Route::middleware([
 
         // // Matriz Requisito Legales
         Route::get('matriz-requisito-legales/planes-de-accion/create/{id}', [MatrizRequisitoLegalesController::class, 'createPlanAccion'])->name('matriz-requisito-legales.createPlanAccion');
-        Route::post('matriz-requisito-legales/planes-de-accion/store/{id}', [MatrizRequisitoLegalesController::class,'storePlanAccion'])->name('matriz-requisito-legales.storePlanAccion');
-        Route::delete('matriz-requisito-legales/destroy', [MatrizRequisitoLegalesController::class,'massDestroy'])->name('matriz-requisito-legales.massDestroy');
+        Route::post('matriz-requisito-legales/planes-de-accion/store/{id}', [MatrizRequisitoLegalesController::class, 'storePlanAccion'])->name('matriz-requisito-legales.storePlanAccion');
+        Route::delete('matriz-requisito-legales/destroy', [MatrizRequisitoLegalesController::class, 'massDestroy'])->name('matriz-requisito-legales.massDestroy');
         Route::resource('matriz-requisito-legales', MatrizRequisitoLegalesController::class);
 
         // // Alcance Sgsis
-        Route::delete('alcance-sgsis/destroy', [AlcanceSgsiController::class,'massDestroy'])->name('alcance-sgsis.massDestroy');
+        Route::delete('alcance-sgsis/destroy', [AlcanceSgsiController::class, 'massDestroy'])->name('alcance-sgsis.massDestroy');
         Route::resource('alcance-sgsis', AlcanceSgsiController::class);
 
         // // Comiteseguridads
-        Route::delete('comiteseguridads/destroy', [ComiteseguridadController::class,'massDestroy'])->name('comiteseguridads.massDestroy');
+        Route::delete('comiteseguridads/destroy', [ComiteseguridadController::class, 'massDestroy'])->name('comiteseguridads.massDestroy');
 
-        Route::get('comiteseguridads/visualizacion', [ComiteseguridadController::class,'visualizacion']);
+        Route::get('comiteseguridads/visualizacion', [ComiteseguridadController::class, 'visualizacion']);
 
         Route::resource('comiteseguridads', ComiteseguridadController::class);
 
         // // Minutasaltadireccions
-        Route::get('minutasaltadireccions/{minuta}/minuta-documento', [MinutasaltadireccionController::class,'renderViewDocument'])->name('documentos.renderViewMinuta');
-        Route::get('minutasaltadireccions/{minuta}/historial-revisiones', [MinutasaltadireccionController::class,'renderHistoryReview'])->name('documentos.renderHistoryReviewMinuta');
-        Route::get('minutasaltadireccions/planes-de-accion/create/{id}', [MinutasaltadireccionController::class,'createPlanAccion'])->name('minutasaltadireccions.createPlanAccion');
-        Route::patch('minutasaltadireccions/{minuta}/update-and-review', [MinutasaltadireccionController::class,'updateAndReview'])->name('minutasaltadireccions.updateAndReview');
-        Route::post('minutasaltadireccions/planes-de-accion/store/{id}', [MinutasaltadireccionController::class,'storePlanAccion'])->name('minutasaltadireccions.storePlanAccion');
-        Route::delete('minutasaltadireccions/destroy', [MinutasaltadireccionController::class,'massDestroy'])->name('minutasaltadireccions.massDestroy');
-        Route::post('minutasaltadireccions/media', [MinutasaltadireccionController::class,'storeMedia'])->name('minutasaltadireccions.storeMedia');
-        Route::post('minutasaltadireccions/ckmedia', [MinutasaltadireccionController::class,'storeCKEditorImages'])->name('minutasaltadireccions.storeCKEditorImages');
+        Route::get('minutasaltadireccions/{minuta}/minuta-documento', [MinutasaltadireccionController::class, 'renderViewDocument'])->name('documentos.renderViewMinuta');
+        Route::get('minutasaltadireccions/{minuta}/historial-revisiones', [MinutasaltadireccionController::class, 'renderHistoryReview'])->name('documentos.renderHistoryReviewMinuta');
+        Route::get('minutasaltadireccions/planes-de-accion/create/{id}', [MinutasaltadireccionController::class, 'createPlanAccion'])->name('minutasaltadireccions.createPlanAccion');
+        Route::patch('minutasaltadireccions/{minuta}/update-and-review', [MinutasaltadireccionController::class, 'updateAndReview'])->name('minutasaltadireccions.updateAndReview');
+        Route::post('minutasaltadireccions/planes-de-accion/store/{id}', [MinutasaltadireccionController::class, 'storePlanAccion'])->name('minutasaltadireccions.storePlanAccion');
+        Route::delete('minutasaltadireccions/destroy', [MinutasaltadireccionController::class, 'massDestroy'])->name('minutasaltadireccions.massDestroy');
+        Route::post('minutasaltadireccions/media', [MinutasaltadireccionController::class, 'storeMedia'])->name('minutasaltadireccions.storeMedia');
+        Route::post('minutasaltadireccions/ckmedia', [MinutasaltadireccionController::class, 'storeCKEditorImages'])->name('minutasaltadireccions.storeCKEditorImages');
         Route::resource('minutasaltadireccions', MinutasaltadireccionController::class);
 
         // // Evidencias Sgsis

@@ -15,7 +15,6 @@ class MassDestroyAnalisisBrechasRequest extends FormRequest
     {
         // return Gate::allows('comiteseguridad_create');
         return true;
-
     }
 
     /**

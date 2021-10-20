@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 
@@ -42,25 +42,25 @@
 
                     <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just" style="margin-top: 30px; padding: 0 30px;">
                       
-                        @include('admin.implementacions.introduccion')
+                        @include('frontend.implementacions.introduccion')
                     </div>
 
 
 
                     <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just" style="margin-top: 30px;">
-                       @include('admin.implementacions.guia')
+                       @include('frontend.implementacions.guia')
                     </div>
 
                     
                     
                     {{-- <div class="tab-pane fade" id="plan-just" role="tabpanel" aria-labelledby="plan-tab-just">
-                         @include('admin.implementacions.plantrabajo')
+                         @include('frontend.implementacions.plantrabajo')
                     </div> --}}
 
 
 
                     <div class="tab-pane fade" id="just" role="tabpanel" aria-labelledby="contact-tab-just" style="margin-top: 30px;">
-                        @include('admin.implementacions.consultoria')
+                        @include('frontend.implementacions.consultoria')
                     </div>
 
                 </div>
