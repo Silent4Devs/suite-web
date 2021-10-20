@@ -457,416 +457,416 @@ Breadcrumbs::for('EV360-Evaluacion-Cuestionario', function ($trail, $evaluacion)
 // });
 
 Breadcrumbs::for('frontend.iso27001.index', function ($trail) {
-    $trail->push('ISO 27001', route('frontend.iso27001.index'));
+    $trail->push('ISO 27001', route('iso27001.index'));
 });
 
 Breadcrumbs::for('frontend.analisis-brechas.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Contexto', route('frontend.iso27001.index') . '#contexto');
-    $trail->push('Análisis de Brechas', route('frontend.analisis-brechas.index'));
+    $trail->push('Contexto', route('iso27001.index') . '#contexto');
+    $trail->push('Análisis de Brechas', route('analisis-brechas.index'));
 });
 
 Breadcrumbs::for('frontend.planTrabajoBase.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Contexto', route('frontend.iso27001.index') . '#contexto');
-    $trail->push('Plan de Implementación', route('frontend.planTrabajoBase.index'));
+    $trail->push('Contexto', route('iso27001.index') . '#contexto');
+    $trail->push('Plan de Implementación', route('planTrabajoBase.index'));
 });
 
 Breadcrumbs::for('frontend.declaracion-aplicabilidad.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Planificación', route('frontend.iso27001.index') . '#planificacion');
-    $trail->push('Declaración de Aplicabilidad', route('frontend.declaracion-aplicabilidad.index'));
+    $trail->push('Planificación', route('iso27001.index') . '#planificacion');
+    $trail->push('Declaración de Aplicabilidad', route('declaracion-aplicabilidad.index'));
 });
 
 Breadcrumbs::for('frontend.partes-interesadas.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Contexto', route('frontend.iso27001.index') . '#contexto');
-    $trail->push('Partes Interesadas', route('frontend.partes-interesadas.index'));
+    $trail->push('Contexto', route('iso27001.index') . '#contexto');
+    $trail->push('Partes Interesadas', route('partes-interesadas.index'));
 });
 Breadcrumbs::for('frontend.partes-interesadas.create', function ($trail) {
     $trail->parent('frontend.partes-interesadas.index');
-    $trail->push('Formulario', route('frontend.partes-interesadas.create'));
+    $trail->push('Formulario', route('partes-interesadas.create'));
 });
 
 Breadcrumbs::for('frontend.matriz-requisito-legales.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Contexto', route('frontend.iso27001.index') . '#contexto');
-    $trail->push('Matriz de Requisitos Legales', route('frontend.matriz-requisito-legales.index'));
+    $trail->push('Contexto', route('iso27001.index') . '#contexto');
+    $trail->push('Matriz de Requisitos Legales', route('matriz-requisito-legales.index'));
 });
 Breadcrumbs::for('frontend.matriz-requisito-legales.create', function ($trail) {
     $trail->parent('frontend.matriz-requisito-legales.index');
-    $trail->push('Formulario', route('frontend.matriz-requisito-legales.create'));
+    $trail->push('Formulario', route('matriz-requisito-legales.create'));
 });
 
 Breadcrumbs::for('frontend.entendimiento-organizacions.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Contexto', route('frontend.iso27001.index') . '#contexto');
-    $trail->push('FODA', route('frontend.entendimiento-organizacions.index'));
+    $trail->push('Contexto', route('iso27001.index') . '#contexto');
+    $trail->push('FODA', route('entendimiento-organizacions.index'));
 });
 Breadcrumbs::for('frontend.entendimiento-organizacions.create', function ($trail) {
     $trail->parent('frontend.entendimiento-organizacions.index');
-    $trail->push('Formulario', route('frontend.entendimiento-organizacions.create'));
+    $trail->push('Formulario', route('entendimiento-organizacions.create'));
 });
 
 Breadcrumbs::for('frontend.alcance-sgsis.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Contexto', route('frontend.iso27001.index') . '#contexto');
-    $trail->push('Determinación de Alcance', route('frontend.alcance-sgsis.index'));
+    $trail->push('Contexto', route('iso27001.index') . '#contexto');
+    $trail->push('Determinación de Alcance', route('alcance-sgsis.index'));
 });
 Breadcrumbs::for('frontend.alcance-sgsis.create', function ($trail) {
     $trail->parent('frontend.alcance-sgsis.index');
-    $trail->push('Formulario', route('frontend.alcance-sgsis.create'));
+    $trail->push('Formulario', route('alcance-sgsis.create'));
 });
 
 // Breadcrumbs::for('frontend..index', function ($trail) {
 // $trail->parent('frontend.iso27001.index');                   generar reporte-------------
-// $trail->push('', route('frontend..index'));
+// $trail->push('', route('.index'));
 // });
 
 Breadcrumbs::for('frontend.comiteseguridads.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Liderazgo', route('frontend.iso27001.index') . '#liderazgo');
-    $trail->push('Conformación del Comité de Seguridad', route('frontend.comiteseguridads.index'));
+    $trail->push('Liderazgo', route('iso27001.index') . '#liderazgo');
+    $trail->push('Conformación del Comité de Seguridad', route('comiteseguridads.index'));
 });
 Breadcrumbs::for('frontend.comiteseguridads.create', function ($trail) {
     $trail->parent('frontend.comiteseguridads.index');
-    $trail->push('Formulario', route('frontend.comiteseguridads.create'));
+    $trail->push('Formulario', route('comiteseguridads.create'));
 });
 Breadcrumbs::for('frontend.comiteseguridads.visualizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('frontend.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('portal-comunicacion.index'));
     $trail->push('Comite de Seguridad');
 });
 
 Breadcrumbs::for('frontend.minutasaltadireccions.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Liderazgo', route('frontend.iso27001.index') . '#liderazgo');
-    $trail->push('Minutas de Sesiones con Alta Dirección', route('frontend.minutasaltadireccions.index'));
+    $trail->push('Liderazgo', route('iso27001.index') . '#liderazgo');
+    $trail->push('Minutas de Sesiones con Alta Dirección', route('minutasaltadireccions.index'));
 });
 Breadcrumbs::for('frontend.minutasaltadireccions.create', function ($trail) {
     $trail->parent('frontend.minutasaltadireccions.index');
-    $trail->push('Formulario', route('frontend.minutasaltadireccions.create'));
+    $trail->push('Formulario', route('minutasaltadireccions.create'));
 });
 
 Breadcrumbs::for('frontend.evidencias-sgsis.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Liderazgo', route('frontend.iso27001.index') . '#liderazgo');
-    $trail->push('Evidencia de Asignación de Recursos al SGSI', route('frontend.evidencias-sgsis.index'));
+    $trail->push('Liderazgo', route('iso27001.index') . '#liderazgo');
+    $trail->push('Evidencia de Asignación de Recursos al SGSI', route('evidencias-sgsis.index'));
 });
 Breadcrumbs::for('frontend.evidencias-sgsis.create', function ($trail) {
     $trail->parent('frontend.evidencias-sgsis.index');
-    $trail->push('Formulario', route('frontend.evidencias-sgsis.create'));
+    $trail->push('Formulario', route('evidencias-sgsis.create'));
 });
 
 Breadcrumbs::for('frontend.politica-sgsis.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Liderazgo', route('frontend.iso27001.index') . '#liderazgo');
-    $trail->push('Política SGSI', route('frontend.politica-sgsis.index'));
+    $trail->push('Liderazgo', route('iso27001.index') . '#liderazgo');
+    $trail->push('Política SGSI', route('politica-sgsis.index'));
 });
 Breadcrumbs::for('frontend.politica-sgsis.create', function ($trail) {
     $trail->parent('frontend.politica-sgsis.index');
-    $trail->push('Formulario', route('frontend.politica-sgsis.create'));
+    $trail->push('Formulario', route('politica-sgsis.create'));
 });
 
 Breadcrumbs::for('frontend.politicaSgsis.visualizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('frontend.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('portal-comunicacion.index'));
     $trail->push('Politica SGSI');
 });
 
 Breadcrumbs::for('frontend.roles-responsabilidades.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Liderazgo', route('frontend.iso27001.index') . '#liderazgo');
-    $trail->push('Roles y Responsabilidades', route('frontend.roles-responsabilidades.index'));
+    $trail->push('Liderazgo', route('iso27001.index') . '#liderazgo');
+    $trail->push('Roles y Responsabilidades', route('roles-responsabilidades.index'));
 });
 Breadcrumbs::for('frontend.roles-responsabilidades.create', function ($trail) {
     $trail->parent('frontend.roles-responsabilidades.index');
-    $trail->push('Formulario', route('frontend.roles-responsabilidades.create'));
+    $trail->push('Formulario', route('roles-responsabilidades.create'));
 });
 
 Breadcrumbs::for('frontend.amenazas.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Planificación', route('frontend.iso27001.index') . '#planificacion');
-    $trail->push('Amenazas', route('frontend.amenazas.index'));
+    $trail->push('Planificación', route('iso27001.index') . '#planificacion');
+    $trail->push('Amenazas', route('amenazas.index'));
 });
 
 Breadcrumbs::for('frontend.vulnerabilidads.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Planificación', route('frontend.iso27001.index') . '#planificacion');
-    $trail->push('Vulnerabilidades', route('frontend.vulnerabilidads.index'));
+    $trail->push('Planificación', route('iso27001.index') . '#planificacion');
+    $trail->push('Vulnerabilidades', route('vulnerabilidads.index'));
 });
 
 Breadcrumbs::for('frontend.analisis-riesgos.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Planificación', route('frontend.iso27001.index') . '#planificacion');
-    $trail->push('Matriz de Riesgos', route('frontend.analisis-riesgos.index'));
+    $trail->push('Planificación', route('iso27001.index') . '#planificacion');
+    $trail->push('Matriz de Riesgos', route('analisis-riesgos.index'));
 });
 
 Breadcrumbs::for('frontend.riesgosoportunidades.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Planificación', route('frontend.iso27001.index') . '#planificacion');
-    $trail->push('Riesgos y Oportunidades', route('frontend.riesgosoportunidades.index'));
+    $trail->push('Planificación', route('iso27001.index') . '#planificacion');
+    $trail->push('Riesgos y Oportunidades', route('riesgosoportunidades.index'));
 });
 Breadcrumbs::for('frontend.riesgosoportunidades.create', function ($trail) {
     $trail->parent('frontend.riesgosoportunidades.index');
-    $trail->push('Formulario', route('frontend.riesgosoportunidades.create'));
+    $trail->push('Formulario', route('riesgosoportunidades.create'));
 });
 
 Breadcrumbs::for('frontend.objetivosseguridads.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Planificación', route('frontend.iso27001.index') . '#planificacion');
-    $trail->push('Objetivos de Seguridad', route('frontend.objetivosseguridads.index'));
+    $trail->push('Planificación', route('iso27001.index') . '#planificacion');
+    $trail->push('Objetivos de Seguridad', route('objetivosseguridads.index'));
 });
 Breadcrumbs::for('frontend.objetivosseguridads.create', function ($trail) {
     $trail->parent('frontend.objetivosseguridads.index');
-    $trail->push('Formulario', route('frontend.objetivosseguridads.create'));
+    $trail->push('Formulario', route('objetivosseguridads.create'));
 });
 
 Breadcrumbs::for('frontend.recursos.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Soporte', route('frontend.iso27001.index') . '#soporte');
-    $trail->push('Capacitaciones', route('frontend.recursos.index'));
+    $trail->push('Soporte', route('iso27001.index') . '#soporte');
+    $trail->push('Capacitaciones', route('recursos.index'));
 });
 Breadcrumbs::for('frontend.recursos.create', function ($trail) {
     $trail->parent('frontend.recursos.index');
-    $trail->push('Formulario', route('frontend.recursos.create'));
+    $trail->push('Formulario', route('recursos.create'));
 });
 
 // Breadcrumbs::for('frontend.competencia.index', function ($trail) {
 //  	$trail->parent('frontend.iso27001.index');
-//     $trail->push('Soporte',route('frontend.iso27001.index').'#soporte');
-//  	$trail->push('Competencias', route('frontend.competencia.index'));
+//     $trail->push('Soporte',route('iso27001.index').'#soporte');
+//  	$trail->push('Competencias', route('competencia.index'));
 // });
 
 // Breadcrumbs::for('frontend.competencia.create', function ($trail) {
 //     $trail->parent('frontend.competencia.index');
-//     $trail->push('Formulario', route('frontend.competencia.create'));
+//     $trail->push('Formulario', route('competencia.create'));
 // });
 
 Breadcrumbs::for('frontend.competencia.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Competencias', route('frontend.buscarCV') . '#soporte');
+    $trail->push('Competencias', route('buscarCV') . '#soporte');
 });
 
 Breadcrumbs::for('frontend.concientizacion-sgis.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Soporte', route('frontend.iso27001.index') . '#soporte');
-    $trail->push('Concientización SGSI', route('frontend.concientizacion-sgis.index'));
+    $trail->push('Soporte', route('iso27001.index') . '#soporte');
+    $trail->push('Concientización SGSI', route('concientizacion-sgis.index'));
 });
 Breadcrumbs::for('frontend.concientizacion-sgis.create', function ($trail) {
     $trail->parent('frontend.concientizacion-sgis.index');
-    $trail->push('Formulario', route('frontend.concientizacion-sgis.create'));
+    $trail->push('Formulario', route('concientizacion-sgis.create'));
 });
 
 Breadcrumbs::for('frontend.material-sgsis.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Soporte', route('frontend.iso27001.index') . '#soporte');
-    $trail->push('Material SGSI', route('frontend.material-sgsis.index'));
+    $trail->push('Soporte', route('iso27001.index') . '#soporte');
+    $trail->push('Material SGSI', route('material-sgsis.index'));
 });
 Breadcrumbs::for('frontend.material-sgsis.create', function ($trail) {
     $trail->parent('frontend.material-sgsis.index');
-    $trail->push('Formulario', route('frontend.material-sgsis.create'));
+    $trail->push('Formulario', route('material-sgsis.create'));
 });
 
 Breadcrumbs::for('frontend.material-iso-veinticientes.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Soporte', route('frontend.iso27001.index') . '#soporte');
-    $trail->push('Material ISO 27001:2013', route('frontend.material-iso-veinticientes.index'));
+    $trail->push('Soporte', route('iso27001.index') . '#soporte');
+    $trail->push('Material ISO 27001:2013', route('material-iso-veinticientes.index'));
 });
 Breadcrumbs::for('frontend.material-iso-veinticientes.create', function ($trail) {
     $trail->parent('frontend.material-iso-veinticientes.index');
-    $trail->push('Formulario', route('frontend.material-iso-veinticientes.create'));
+    $trail->push('Formulario', route('material-iso-veinticientes.create'));
 });
 
 Breadcrumbs::for('frontend.comunicacion-sgis.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Soporte', route('frontend.iso27001.index') . '#soporte');
-    $trail->push('Comunicación SGSI', route('frontend.comunicacion-sgis.index'));
+    $trail->push('Soporte', route('iso27001.index') . '#soporte');
+    $trail->push('Comunicación SGSI', route('comunicacion-sgis.index'));
 });
 Breadcrumbs::for('frontend.comunicacion-sgis.create', function ($trail) {
     $trail->parent('frontend.comunicacion-sgis.index');
-    $trail->push('Formulario', route('frontend.comunicacion-sgis.create'));
+    $trail->push('Formulario', route('comunicacion-sgis.create'));
 });
 
 Breadcrumbs::for('frontend.politica-del-sgsi-soportes.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Soporte', route('frontend.iso27001.index') . '#soporte');
-    $trail->push('Política del SGSI', route('frontend.politica-del-sgsi-soportes.index'));
+    $trail->push('Soporte', route('iso27001.index') . '#soporte');
+    $trail->push('Política del SGSI', route('politica-del-sgsi-soportes.index'));
 });
 
 Breadcrumbs::for('frontend.control-accesos.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Soporte', route('frontend.iso27001.index') . '#soporte');
-    $trail->push('Control de Acceso', route('frontend.control-accesos.index'));
+    $trail->push('Soporte', route('iso27001.index') . '#soporte');
+    $trail->push('Control de Acceso', route('control-accesos.index'));
 });
 Breadcrumbs::for('frontend.control-accesos.create', function ($trail) {
     $trail->parent('frontend.control-accesos.index');
-    $trail->push('Formulario', route('frontend.control-accesos.create'));
+    $trail->push('Formulario', route('control-accesos.create'));
 });
 
 Breadcrumbs::for('frontend.informacion-documetadas.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Soporte', route('frontend.iso27001.index') . '#soporte');
-    $trail->push('Información Documentada', route('frontend.informacion-documetadas.index'));
+    $trail->push('Soporte', route('iso27001.index') . '#soporte');
+    $trail->push('Información Documentada', route('informacion-documetadas.index'));
 });
 Breadcrumbs::for('frontend.informacion-documetadas.create', function ($trail) {
     $trail->parent('frontend.informacion-documetadas.index');
-    $trail->push('Formulario', route('frontend.informacion-documetadas.create'));
+    $trail->push('Formulario', route('informacion-documetadas.create'));
 });
 
 Breadcrumbs::for('frontend.planificacion-controls.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Operación', route('frontend.iso27001.index') . '#operacion');
-    $trail->push('Planificación y Control', route('frontend.planificacion-controls.index'));
+    $trail->push('Operación', route('iso27001.index') . '#operacion');
+    $trail->push('Planificación y Control', route('planificacion-controls.index'));
 });
 Breadcrumbs::for('frontend.planificacion-controls.create', function ($trail) {
     $trail->parent('frontend.planificacion-controls.index');
-    $trail->push('Formulario', route('frontend.planificacion-controls.create'));
+    $trail->push('Formulario', route('planificacion-controls.create'));
 });
 
 Breadcrumbs::for('frontend.tratamiento-riesgos.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Operación', route('frontend.iso27001.index') . '#operacion');
-    $trail->push('Tratamiento de los Riesgos', route('frontend.tratamiento-riesgos.index'));
+    $trail->push('Operación', route('iso27001.index') . '#operacion');
+    $trail->push('Tratamiento de los Riesgos', route('tratamiento-riesgos.index'));
 });
 Breadcrumbs::for('frontend.tratamiento-riesgos.create', function ($trail) {
     $trail->parent('frontend.tratamiento-riesgos.index');
-    $trail->push('Formulario', route('frontend.tratamiento-riesgos.create'));
+    $trail->push('Formulario', route('tratamiento-riesgos.create'));
 });
 
 Breadcrumbs::for('frontend.indicadores-sgsis.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Evaluacion', route('frontend.iso27001.index') . '#evaluacion');
-    $trail->push('Indicadores SGSI', route('frontend.indicadores-sgsis.index'));
+    $trail->push('Evaluacion', route('iso27001.index') . '#evaluacion');
+    $trail->push('Indicadores SGSI', route('indicadores-sgsis.index'));
 });
 Breadcrumbs::for('frontend.indicadores-sgsis.create', function ($trail) {
     $trail->parent('frontend.indicadores-sgsis.index');
-    $trail->push('Formulario', route('frontend.indicadores-sgsis.create'));
+    $trail->push('Formulario', route('indicadores-sgsis.create'));
 });
 
 Breadcrumbs::for('frontend.incidentes-de-seguridads.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Evaluacion', route('frontend.iso27001.index') . '#evaluacion');
-    $trail->push('Incidentes de Seguridad', route('frontend.incidentes-de-seguridads.index'));
+    $trail->push('Evaluacion', route('iso27001.index') . '#evaluacion');
+    $trail->push('Incidentes de Seguridad', route('incidentes-de-seguridads.index'));
 });
 Breadcrumbs::for('frontend.incidentes-de-seguridads.create', function ($trail) {
     $trail->parent('frontend.incidentes-de-seguridads.index');
-    $trail->push('Formulario', route('frontend.incidentes-de-seguridads.create'));
+    $trail->push('Formulario', route('incidentes-de-seguridads.create'));
 });
 
 Breadcrumbs::for('frontend.indicadorincidentessis.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Evaluacion', route('frontend.iso27001.index') . '#evaluacion');
-    $trail->push('Indicador de Incidentes', route('frontend.indicadorincidentessis.index'));
+    $trail->push('Evaluacion', route('iso27001.index') . '#evaluacion');
+    $trail->push('Indicador de Incidentes', route('indicadorincidentessis.index'));
 });
 
 Breadcrumbs::for('frontend.auditoria-anuals.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Evaluacion', route('frontend.iso27001.index') . '#evaluacion');
-    $trail->push('Programa Anual de Auditoría', route('frontend.auditoria-anuals.index'));
+    $trail->push('Evaluacion', route('iso27001.index') . '#evaluacion');
+    $trail->push('Programa Anual de Auditoría', route('auditoria-anuals.index'));
 });
 Breadcrumbs::for('frontend.auditoria-anuals.create', function ($trail) {
     $trail->parent('frontend.auditoria-anuals.index');
-    $trail->push('Formulario', route('frontend.auditoria-anuals.create'));
+    $trail->push('Formulario', route('auditoria-anuals.create'));
 });
 
 Breadcrumbs::for('frontend.plan-auditoria.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Evaluacion', route('frontend.iso27001.index') . '#evaluacion');
-    $trail->push('Plan de Auditoría', route('frontend.plan-auditoria.index'));
+    $trail->push('Evaluacion', route('iso27001.index') . '#evaluacion');
+    $trail->push('Plan de Auditoría', route('plan-auditoria.index'));
 });
 Breadcrumbs::for('frontend.plan-auditoria.create', function ($trail) {
     $trail->parent('frontend.plan-auditoria.index');
-    $trail->push('Formulario', route('frontend.plan-auditoria.create'));
+    $trail->push('Formulario', route('plan-auditoria.create'));
 });
 
 Breadcrumbs::for('frontend.auditoria-internas.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Evaluacion', route('frontend.iso27001.index') . '#evaluacion');
-    $trail->push('Auditoría Interna', route('frontend.auditoria-internas.index'));
+    $trail->push('Evaluacion', route('iso27001.index') . '#evaluacion');
+    $trail->push('Auditoría Interna', route('auditoria-internas.index'));
 });
 Breadcrumbs::for('frontend.auditoria-internas.create', function ($trail) {
     $trail->parent('frontend.auditoria-internas.index');
-    $trail->push('Formulario', route('frontend.auditoria-internas.create'));
+    $trail->push('Formulario', route('auditoria-internas.create'));
 });
 
 Breadcrumbs::for('frontend.revision-direccions.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Evaluacion', route('frontend.iso27001.index') . '#evaluacion');
-    $trail->push('Revisión por Dirección', route('frontend.revision-direccions.index'));
+    $trail->push('Evaluacion', route('iso27001.index') . '#evaluacion');
+    $trail->push('Revisión por Dirección', route('revision-direccions.index'));
 });
 Breadcrumbs::for('frontend.revision-direccions.create', function ($trail) {
     $trail->parent('frontend.revision-direccions.index');
-    $trail->push('Formulario', route('frontend.revision-direccions.create'));
+    $trail->push('Formulario', route('revision-direccions.create'));
 });
 
 Breadcrumbs::for('frontend.accion-correctivas.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Mejora', route('frontend.iso27001.index') . '#mejora');
-    $trail->push('Acciones Correctivas', route('frontend.accion-correctivas.index'));
+    $trail->push('Mejora', route('iso27001.index') . '#mejora');
+    $trail->push('Acciones Correctivas', route('accion-correctivas.index'));
 });
 Breadcrumbs::for('frontend.accion-correctivas.create', function ($trail) {
     $trail->parent('frontend.accion-correctivas.index');
-    $trail->push('Formulario', route('frontend.accion-correctivas.create'));
+    $trail->push('Formulario', route('accion-correctivas.create'));
 });
 
 Breadcrumbs::for('frontend.registromejoras.index', function ($trail) {
     $trail->parent('frontend.iso27001.index');
-    $trail->push('Mejora', route('frontend.iso27001.index') . '#mejora');
-    $trail->push('Registro de Mejoras', route('frontend.registromejoras.index'));
+    $trail->push('Mejora', route('iso27001.index') . '#mejora');
+    $trail->push('Registro de Mejoras', route('registromejoras.index'));
 });
 Breadcrumbs::for('frontend.registromejoras.create', function ($trail) {
     $trail->parent('frontend.registromejoras.index');
-    $trail->push('Formulario', route('frontend.registromejoras.create'));
+    $trail->push('Formulario', route('registromejoras.create'));
 });
 
 Breadcrumbs::for('frontend.portal-comunicacion.reportes', function ($trail) {
-    $trail->push('Portal de comunicación', route('frontend.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('portal-comunicacion.index'));
     $trail->push('Reportes');
 });
 
 Breadcrumbs::for('frontend.portal-comunicacion.sedes-organizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('frontend.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('portal-comunicacion.index'));
     $trail->push('Sedes');
 });
 
 Breadcrumbs::for('frontend.comunicacion-sgis.show', function ($trail) {
-    $trail->push('Portal de comunicación', route('frontend.portal-comunicacion.index'));
+    $trail->push('Portal de comunicación', route('portal-comunicacion.index'));
     $trail->push('Comunicados');
 });
 
 // Breadcrumbs::for('frontend..index', function ($trail) {
 // $trail->parent('frontend.iso27001.index');
-// $trail->push('', route('frontend..index'));
+// $trail->push('', route('.index'));
 // });
 
 //##############################################################
 //#################### RECURSOS HUMANOS #######################
 //############################################################
 Breadcrumbs::for('Evaluacion360', function ($trail) {
-    $trail->push('RH - Evaluación 360 Grados', route('frontend.rh-evaluacion360.index'));
+    $trail->push('RH - Evaluación 360 Grados', route('rh-evaluacion360.index'));
 });
 
 Breadcrumbs::for('EV360-Evaluaciones', function ($trail) {
     $trail->parent('Evaluacion360');
-    $trail->push('Evaluaciones', route('frontend.ev360-evaluaciones.index'));
+    $trail->push('Evaluaciones', route('ev360-evaluaciones.index'));
 });
 
 Breadcrumbs::for('EV360-Evaluaciones-Create', function ($trail) {
     $trail->parent('EV360-Evaluaciones');
-    $trail->push('Crear Evaluación', route('frontend.ev360-evaluaciones.create'));
+    $trail->push('Crear Evaluación', route('ev360-evaluaciones.create'));
 });
 
 Breadcrumbs::for('EV360-Evaluaciones-Evaluacion', function ($trail, $evaluacion) {
     $trail->parent('EV360-Evaluaciones');
-    $trail->push('Evaluación', route('frontend.ev360-evaluaciones.evaluacion', $evaluacion->id));
+    $trail->push('Evaluación', route('ev360-evaluaciones.evaluacion', $evaluacion->id));
 });
 
 Breadcrumbs::for('EV360-Competencias', function ($trail) {
     $trail->parent('Evaluacion360');
-    $trail->push('Competencias', route('frontend.ev360-competencias.index'));
+    $trail->push('Competencias', route('ev360-competencias.index'));
 });
 Breadcrumbs::for('EV360-Competencias-Create', function ($trail) {
     $trail->parent('EV360-Competencias');
-    $trail->push('Crear Competencia', route('frontend.ev360-competencias.create'));
+    $trail->push('Crear Competencia', route('ev360-competencias.create'));
 });
 Breadcrumbs::for('EV360-Competencias-Edit', function ($trail) {
     $trail->parent('EV360-Competencias');
@@ -875,7 +875,7 @@ Breadcrumbs::for('EV360-Competencias-Edit', function ($trail) {
 
 Breadcrumbs::for('EV360-Competencias-Por-Puesto', function ($trail) {
     $trail->parent('Evaluacion360');
-    $trail->push('Competencias por puesto', route('frontend.ev360-competencias-por-puesto.index'));
+    $trail->push('Competencias por puesto', route('ev360-competencias-por-puesto.index'));
 });
 Breadcrumbs::for('EV360-Competencias-Por-Puesto-Create', function ($trail) {
     $trail->parent('EV360-Competencias-Por-Puesto');
@@ -884,11 +884,11 @@ Breadcrumbs::for('EV360-Competencias-Por-Puesto-Create', function ($trail) {
 
 Breadcrumbs::for('EV360-Objetivos', function ($trail) {
     $trail->parent('Evaluacion360');
-    $trail->push('Objetivos', route('frontend.ev360-objetivos.index'));
+    $trail->push('Objetivos', route('ev360-objetivos.index'));
 });
 Breadcrumbs::for('EV360-Objetivos-Create', function ($trail, $empleado) {
     $trail->parent('EV360-Objetivos');
-    $trail->push('Asignar Objetivo', route('frontend.ev360-objetivos-empleado.create', $empleado));
+    $trail->push('Asignar Objetivo', route('ev360-objetivos-empleado.create', $empleado));
 });
 Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
     $trail->parent('EV360-Objetivos');
@@ -901,13 +901,13 @@ Breadcrumbs::for('EV360-Evaluacion-Resumen', function ($trail, $evaluacion) {
 });
 Breadcrumbs::for('EV360-Evaluacion-Consulta-Evaluado', function ($trail, $evaluacion) {
     $trail->parent('EV360-Evaluaciones-Evaluacion', $evaluacion['evaluacion']);
-    $trail->push($evaluacion['evaluado']->name, route('frontend.ev360-evaluaciones.autoevaluacion.consulta.evaluado', ['evaluacion' => $evaluacion['evaluacion']->id, 'evaluado' => $evaluacion['evaluado']->id]));
+    $trail->push($evaluacion['evaluado']->name, route('ev360-evaluaciones.autoevaluacion.consulta.evaluado', ['evaluacion' => $evaluacion['evaluacion']->id, 'evaluado' => $evaluacion['evaluado']->id]));
 });
 Breadcrumbs::for('EV360-Evaluacion-Cuestionario', function ($trail, $evaluacion) {
     $trail->parent('EV360-Evaluaciones-Evaluacion', $evaluacion['evaluacion']);
-    $trail->push('Cuestionario', route('frontend.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion['evaluacion']->id, 'evaluado' => $evaluacion['evaluado']->id, 'evaluador' => $evaluacion['evaluador']->id]));
+    $trail->push('Cuestionario', route('ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion['evaluacion']->id, 'evaluado' => $evaluacion['evaluado']->id, 'evaluador' => $evaluacion['evaluador']->id]));
 });
 // Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
 //     $trail->parent('EV360-Objetivos');
-//     $trail->push('Editar Objetivo', route('frontend.ev360-objetivos.edit'));
+//     $trail->push('Editar Objetivo', route('ev360-objetivos.edit'));
 // });
