@@ -74,29 +74,29 @@
 
                 <div class="caja_secciones">
                     <section id="incidentes" class="caja_tab_reveldada">
-                        @include('admin.desk.seguridad.seguridad')
+                        @include('frontend.desk.seguridad.seguridad')
                     </section>
                     <section id="riesgos">
-                        @include('admin.desk.riesgos.riesgos')
+                        @include('frontend.desk.riesgos.riesgos')
                     </section>
                     <section id="quejas">
-                        @include('admin.desk.quejas.quejas')
+                        @include('frontend.desk.quejas.quejas')
                     </section>
                     <section id="denuncias">
-                        @include('admin.desk.denuncias.denuncias')
+                        @include('frontend.desk.denuncias.denuncias')
                     </section>
                     <section id="mejoras">
-                        @include('admin.desk.mejoras.mejoras')
+                        @include('frontend.desk.mejoras.mejoras')
                     </section>
                     <section id="sugerencias">
-                        @include('admin.desk.sugerencias.sugerencias')
+                        @include('frontend.desk.sugerencias.sugerencias')
                     </section>
 
 
                     <div class="text-center">
                         @can('incidentes_seguridad_access')
                             <section id="incidentes">
-                                @include('admin.desk.seguridad.seguridad')
+                                @include('frontend.desk.seguridad.seguridad')
                             </section>
                         @else
                             <div class="mt-5 row" style="margin-left: -10px">
