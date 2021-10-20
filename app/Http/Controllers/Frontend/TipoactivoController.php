@@ -20,8 +20,8 @@ class TipoactivoController extends Controller
 
     public function index(Request $request)
     {
-       // abort_if(Gate::denies('configuracion_tipoactivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        dd("asdad");
+        // abort_if(Gate::denies('configuracion_tipoactivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        dd('asdad');
         if ($request->ajax()) {
             $query = Tipoactivo::with(['team'])->select(sprintf('%s.*', (new Tipoactivo)->table));
             $table = Datatables::of($query);

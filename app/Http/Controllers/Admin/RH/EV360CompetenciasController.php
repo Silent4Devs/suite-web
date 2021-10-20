@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin\RH;
+
 // header("Access-Control-Allow-Origin: *");
 use App\Http\Controllers\Controller;
 use App\Models\Puesto;
@@ -9,8 +10,8 @@ use App\Models\RH\CompetenciaPuesto;
 use App\Models\RH\Conducta;
 use App\Models\RH\EvaluacionRepuesta;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class EV360CompetenciasController extends Controller
 {
@@ -54,7 +55,7 @@ class EV360CompetenciasController extends Controller
                 $constraint->aspectRatio();
             })->save($route);
             $competencia->update([
-                'imagen' => $imagen
+                'imagen' => $imagen,
             ]);
         }
         if ($competencia) {
@@ -113,7 +114,7 @@ class EV360CompetenciasController extends Controller
                 $constraint->aspectRatio();
             })->save($route);
             $competencia->update([
-                'imagen' => $nombre_imagen
+                'imagen' => $nombre_imagen,
             ]);
         }
         // Almacenamos la competencia en todos los puestos
@@ -199,6 +200,7 @@ class EV360CompetenciasController extends Controller
             return json_encode($niveles);
         }
     }
+
     public function obtenerUltimoNivel(Request $request)
     {
         $competencia = Competencia::find(intval($request->competencia_id));
@@ -207,6 +209,7 @@ class EV360CompetenciasController extends Controller
         } else {
             $nivel = max($competencia->opciones->pluck('ponderacion')->toArray());
         }
+
         return $nivel;
     }
 }

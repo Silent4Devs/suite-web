@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyUserRequest;
@@ -105,7 +105,7 @@ class UsersController extends Controller
             return !User::where('n_empleado', $item->n_empleado)->exists();
         })->values();
 
-        return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados'));
+        return view('frontend.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados'));
     }
 
     public function create()
@@ -122,7 +122,7 @@ class UsersController extends Controller
 
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.users.create', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
+        return view('frontend.users.create', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
     }
 
     public function store(StoreUserRequest $request)
@@ -130,7 +130,7 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('frontend.users.index');
     }
 
     public function edit(User $user)
@@ -149,7 +149,7 @@ class UsersController extends Controller
 
         $user->load('roles', 'organizacion', 'area', 'puesto', 'team');
 
-        return view('admin.users.edit', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
+        return view('frontend.users.edit', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -157,7 +157,7 @@ class UsersController extends Controller
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('frontend.users.index');
     }
 
     public function show(User $user)
@@ -166,7 +166,7 @@ class UsersController extends Controller
 
         $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
 
-        return view('admin.users.show', compact('user'));
+        return view('frontend.users.show', compact('user'));
     }
 
     public function destroy(User $user)
