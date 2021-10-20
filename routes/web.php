@@ -20,6 +20,10 @@ Auth::routes();
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa']], function () {
     Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
+    //Consulta de evaluación 
+    Route::get('recursos-humanos/evaluacion-360/{evaluacion}/{evaluado}/mis-evaluaciones', 'RH\EV360EvaluacionesController@misEvaluaciones')->name('ev360-evaluaciones.misEvaluaciones');
+    Route::get('recursos-humanos/evaluacion-360/{evaluacion}/{evaluador}/evaluaciones-mi-equipo', 'RH\EV360EvaluacionesController@evaluacionesDeMiEquipo')->name('ev360-evaluaciones.evaluacionesDeMiEquipo');
+
     Route::post('recursos-humanos/evaluacion-360/{evaluacion}/recordatorio', 'RH\EV360EvaluacionesController@enviarCorreoAEvaluadores')->name('ev360-evaluaciones.recordatorio');
     Route::post('recursos-humanos/evaluacion-360/invitacion-reunion-evaluacion', 'RH\EV360EvaluacionesController@enviarInvitacionDeEvaluacion')->name('ev360-evaluaciones.invitacion-reunion-evaluacion');
 
@@ -41,6 +45,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('recursos-humanos/evaluacion-360/autoevaluacion/objetivos/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionObjetivos')->name('ev360-evaluaciones.autoevaluacion.objetivos.get');
     Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/consulta/{evaluado}', 'RH\EV360EvaluacionesController@consultaPorEvaluado')->name('ev360-evaluaciones.autoevaluacion.consulta.evaluado');
     Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen', 'RH\EV360EvaluacionesController@resumen')->name('ev360-evaluaciones.consulta.resumen');
+    Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen/jefe/{empleado}', 'RH\EV360EvaluacionesController@resumenJefe')->name('ev360-evaluaciones.consulta.resumenJefe');
+    Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen/empleado/{empleado}', 'RH\EV360EvaluacionesController@resumenEmpleado')->name('ev360-evaluaciones.consulta.resumenEmpleado');
     Route::resource('recursos-humanos/evaluacion-360/evaluaciones', 'RH\EV360EvaluacionesController')->names([
         'index' => 'ev360-evaluaciones.index',
         'create' => 'ev360-evaluaciones.create',
@@ -101,10 +107,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@destroy')->name('ev360-conductas.destroy');
 
     Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@createByEmpleado')->name('ev360-objetivos-empleado.create');
-
+    Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/lista', 'RH\EV360ObjetivosController@show')->name('ev360-objetivos-empleado.show');
     Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@storeByEmpleado')->name('ev360-objetivos-empleado.store');
+
     Route::get('recursos-humanos/evaluacion-360/objetivos/{objetivo}/edit', 'RH\EV360ObjetivosController@edit')->name('ev360-objetivos-empleado.edit');
-    Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/{objetivo}', 'RH\EV360ObjetivosController@update')->name('ev360-objetivos-empleado.update');
+    Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/{objetivo}/editByEmpleado', 'RH\EV360ObjetivosController@editByEmpleado')->name('ev360-objetivos-empleado.editByEmpleado');
+    Route::post('recursos-humanos/evaluacion-360/objetivos/{objetivo}/empleado', 'RH\EV360ObjetivosController@updateByEmpleado')->name('ev360-objetivos-empleado.updateByEmpleado');
     Route::resource('recursos-humanos/evaluacion-360/objetivos', 'RH\EV360ObjetivosController')->names([
         'index' => 'ev360-objetivos.index',
     ])->except(['create', 'show']);

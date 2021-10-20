@@ -436,6 +436,10 @@ Breadcrumbs::for('EV360-Objetivos-Create', function ($trail, $empleado) {
     $trail->parent('EV360-Objetivos');
     $trail->push('Asignar Objetivo', route('admin.ev360-objetivos-empleado.create', $empleado));
 });
+Breadcrumbs::for('EV360-Objetivos-Show', function ($trail, $empleado) {
+    $trail->parent('EV360-Objetivos');
+    $trail->push('Vista de objetivos estratégicos', route('admin.ev360-objetivos-empleado.show', $empleado));
+});
 Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
     $trail->parent('EV360-Objetivos');
     $trail->push('Editar Objetivo', '/recursos-humanos/evaluacion-360/objetivos/*/edit');
