@@ -10,7 +10,7 @@
 
                 <div class="card-body">
 
-                    <a href="{{ route('admin.documentos.renderViewDocument', $documento_relacionado) }}" target="_blank">
+                    <a href="{{ route('frontend.documentos.renderViewDocument', $documento_relacionado) }}" target="_blank">
                         <p><strong class="text-center" style="font-size:13pt;"> {{ $documento_relacionado->codigo }} -
                                 {{ $documento_relacionado->nombre }} </strong></p>
                     </a>
@@ -67,7 +67,7 @@
                                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
                                     <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado Sedes a la
                                         organización
-                                        <a href="{{ route('admin.sedes.create') }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
+                                        <a href="{{ route('frontend.sedes.create') }}" class="item-right col-2 btn text-light" style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
 
                                     </p>
                                 </div>

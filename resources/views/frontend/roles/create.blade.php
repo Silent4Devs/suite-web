@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css">
@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <form id="formRolesCreate" method="POST" action="{{ route('admin.roles.store') }}">
+            <form id="formRolesCreate" method="POST" action="{{ route('frontend.roles.store') }}">
                 @csrf
                 <div class="form-group">
                     <label class="required" for="title"><i
@@ -131,7 +131,7 @@
                             )
                         }
                         setTimeout(() => {
-                            window.location.href = '/admin/roles';
+                            window.location.href = '/frontend/roles';
                         }, 1500);
                     },
                     error: function(err) {

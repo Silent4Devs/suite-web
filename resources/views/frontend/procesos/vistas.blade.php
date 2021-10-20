@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -389,26 +389,26 @@
                         <section class="caja_tab_reveldada" id="vista_previa" style="color:black;">
 
 
-                                @include('admin.procesos.vistas.vista_previa')
+                                @include('frontend.procesos.vistas.vista_previa')
 
 
                         </section>
                         <section class="" id="resumen">
 
-                                @include('admin.procesos.vistas.resumen')
+                                @include('frontend.procesos.vistas.resumen')
 
                         </section>
                         <section class="" id="riesgos">
-                                @include('admin.procesos.vistas.riesgos')
+                                @include('frontend.procesos.vistas.riesgos')
                         </section>
                         <section class="" id="indicadores">
-                                @include('admin.procesos.vistas.indicadores')
+                                @include('frontend.procesos.vistas.indicadores')
                         </section>
                         <section class="" id="versiones">
-                                @include('admin.procesos.vistas.versiones')
+                                @include('frontend.procesos.vistas.versiones')
                         </section>
                         <section class="" id="documentos_relacionados">
-                                @include('admin.procesos.vistas.documentos_relacionados')
+                                @include('frontend.procesos.vistas.documentos_relacionados')
                         </section>
                     </div>
                 </div>
@@ -443,35 +443,35 @@
                 {{-- <section id="vista-previa" class="d-block">
 
                     <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-                        @include('admin.procesos.vistas.vista_previa')
+                        @include('frontend.procesos.vistas.vista_previa')
                     </div>
 
                 </section>
 
                 <section id="resumen">
 
-                    @include('admin.procesos.vistas.resumen')
+                    @include('frontend.procesos.vistas.resumen')
 
                 </section>
 
                 <section id="indicadores">
 
                     <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-                        @include('admin.procesos.vistas.indicadores')
+                        @include('frontend.procesos.vistas.indicadores')
                     </div>
                 </section>
 
                 <section id="versiones">
 
                     <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-                        @include('admin.procesos.vistas.versiones')
+                        @include('frontend.procesos.vistas.versiones')
                     </div>
                 </section>
 
                 <section id="documentos_relacionados">
 
                     <div class="pt-4 ml-5 col-sm-11 card" style="box-shadow: 0px 0px 0px 2px rgba(77, 72, 77, 0.133)">
-                        @include('admin.procesos.vistas.documentos_relacionados')
+                        @include('frontend.procesos.vistas.documentos_relacionados')
                     </div>
                 </section> --}}
 
@@ -489,7 +489,7 @@
 
 
     <script type="text/javascript">
-        
+
         $(".tbody_click tr td").click(function(){
             $(".tbody_click tr").removeClass("fila_activa");
             $(".tbody_click tr:hover").addClass("fila_activa");

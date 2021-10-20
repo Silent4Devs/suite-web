@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 
@@ -374,7 +374,7 @@
                                 <p>{{ $macro_map->nombre }}</p>
                             </span>
                         @empty
-                            <a href="{{ asset('admin/macroprocesos') }}">
+                            <a href="{{ asset('frontend/macroprocesos') }}">
                                 Registrar macroprocesos
                             </a>
                         @endforelse
@@ -387,12 +387,12 @@
                                 <div class="macro_a"
                                     style="{{ $proceso_map->estatus == '2' ? 'border:2px solid yellow; color:black !important' : '' }}">
                                     <a class="{{ $proceso_map->estatus == '2' ? 'not-active' : '' }}"
-                                        href="{{ route('admin.procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
+                                        href="{{ route('frontend.procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
                                         {{ $proceso_map->nombre }}
                                     </a>
                                 </div>
                             @empty
-                                <a href="{{ asset('admin/procesos') }}" class="registre">
+                                <a href="{{ asset('frontend/procesos') }}" class="registre">
                                     Registrar procesos
                                 </a>
                             @endforelse
