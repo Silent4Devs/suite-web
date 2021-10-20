@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Macroproceso;
@@ -64,7 +64,7 @@ class MacroprocesoController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.macroprocesos.index');
+        return view('frontend.macroprocesos.index');
     }
 
     /**
@@ -78,7 +78,7 @@ class MacroprocesoController extends Controller
         $grupos = DB::table('grupos')->select('id', 'nombre')->get();
         //dd("teasdas". $organizaciones);
 
-        return view('admin.macroprocesos.create')->with('grupos', $grupos);
+        return view('frontend.macroprocesos.create')->with('grupos', $grupos);
     }
 
     /**
@@ -99,14 +99,14 @@ class MacroprocesoController extends Controller
         );
         $macroprocesos = Macroproceso::create($request->all());
         // Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
-        return redirect()->route('admin.macroprocesos.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('frontend.macroprocesos.index')->with('success', 'Guardado con éxito');
     }
 
     public function show(Macroproceso $macroproceso)
     {
         abort_if(Gate::denies('configuracion_macroproceso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.macroprocesos.show', compact('macroproceso'));
+        return view('frontend.macroprocesos.show', compact('macroproceso'));
     }
 
     public function edit(Macroproceso $macroproceso)
@@ -114,7 +114,7 @@ class MacroprocesoController extends Controller
         abort_if(Gate::denies('configuracion_macroproceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos = DB::table('grupos')->select('id', 'nombre')->get();
 
-        return view('admin.macroprocesos.edit', compact('macroproceso'))->with('grupos', $grupos);
+        return view('frontend.macroprocesos.edit', compact('macroproceso'))->with('grupos', $grupos);
     }
 
     public function update(Request $request, Macroproceso $macroproceso)
@@ -129,7 +129,7 @@ class MacroprocesoController extends Controller
         );
         $macroproceso->update($request->all());
 
-        return redirect()->route('admin.macroprocesos.index')->with('success', 'Editado con éxito');
+        return redirect()->route('frontend.macroprocesos.index')->with('success', 'Editado con éxito');
     }
 
     public function destroy(Macroproceso $macroproceso)

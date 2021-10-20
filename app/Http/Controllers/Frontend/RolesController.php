@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRoleRequest;
@@ -62,7 +62,7 @@ class RolesController extends Controller
 
         $permissions = Permission::get();
 
-        return view('admin.roles.index', compact('permissions'));
+        return view('frontend.roles.index', compact('permissions'));
     }
 
     public function create()
@@ -72,7 +72,7 @@ class RolesController extends Controller
         $permissions = Permission::all();
         $role = Role::all();
 
-        return view('admin.roles.create', compact('permissions', 'role'));
+        return view('frontend.roles.create', compact('permissions', 'role'));
     }
 
     public function validateRol(Request $request)
@@ -98,7 +98,7 @@ class RolesController extends Controller
 
         // $role = Role::create($request->all());
         // $role->permissions()->sync($request->input('permissions', []));
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('frontend.roles.index');
     }
 
     public function edit(Role $role)
@@ -107,7 +107,7 @@ class RolesController extends Controller
         $permissions = Permission::all();
         $role->load('permissions');
 
-        return view('admin.roles.edit', compact('permissions', 'role'));
+        return view('frontend.roles.edit', compact('permissions', 'role'));
     }
 
     public function update(Request $request, Role $role)
@@ -124,7 +124,7 @@ class RolesController extends Controller
         }
         // $role->update($request->all());
         // $role->permissions()->sync($request->input('permissions', []));
-        // return redirect()->route('admin.roles.index');
+        // return redirect()->route('frontend.roles.index');
     }
 
     public function show(Role $role)
@@ -132,7 +132,7 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $role->load('permissions');
 
-        return view('admin.roles.show', compact('role'));
+        return view('frontend.roles.show', compact('role'));
     }
 
     public function destroy(Role $role)
