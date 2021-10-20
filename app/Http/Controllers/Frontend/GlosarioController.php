@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGlosarioRequest;
@@ -58,42 +58,42 @@ class GlosarioController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.glosarios.index');
+        return view('glosarios.index');
     }
 
     public function create()
     {
         abort_if(Gate::denies('glosario_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.glosarios.create');
+        return view('glosarios.create');
     }
 
     public function store(StoreGlosarioRequest $request)
     {
         $glosario = Glosario::create($request->all());
 
-        return redirect()->route('admin.glosarios.index');
+        return redirect()->route('glosarios.index');
     }
 
     public function edit(Glosario $glosario)
     {
         abort_if(Gate::denies('glosario_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.glosarios.edit', compact('glosario'));
+        return view('frontend.glosarios.edit', compact('glosario'));
     }
 
     public function update(UpdateGlosarioRequest $request, Glosario $glosario)
     {
         $glosario->update($request->all());
 
-        return redirect()->route('admin.glosarios.index');
+        return redirect()->route('glosarios.index');
     }
 
     public function show(Glosario $glosario)
     {
         abort_if(Gate::denies('glosario_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.glosarios.show', compact('glosario'));
+        return view('frontend.glosarios.show', compact('glosario'));
     }
 
     public function destroy(Glosario $glosario)
