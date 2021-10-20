@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 	<div class="card">
 		<div class="text-center card-header" style="background-color: #00abb2;">
@@ -7,7 +7,7 @@
 		<div class="card-body">
 			<strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
 
-			<form class="row" method="POST" action="{{ route('admin.reportes-mejoras-store') }}">
+			<form class="row" method="POST" action="{{ route('frontend.reportes-mejoras-store') }}">
 				@csrf
 
 				<div class="mt-4 form-group col-12">
@@ -105,7 +105,7 @@
 				</div>
 
 				<div class="mt-4 text-right form-group col-12">
-					<a href="{{ asset('admin/inicioUsuario') }}" class="btn btn_cancelar">Cancelar</a>
+					<a href="{{ asset('frontend/inicioUsuario') }}" class="btn btn_cancelar">Cancelar</a>
 					<input type="submit" name="" class="btn btn-success" value="Enviar">
 				</div>
 

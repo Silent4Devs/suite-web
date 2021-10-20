@@ -132,12 +132,12 @@
                         <div class="btn-group" role="group" aria-label="Basic example">
 
                             <a class="btn btn-sm" style="border:none;" title="Visualizar Documento"
-                                href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
+                                href="{{ route('documentos.renderViewDocument', $documento) }}">
                                 <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
                             </a>
 
                             <a class="btn btn-sm " title="Visualizar revisiones" style="border:none;"
-                                href="{{ route('admin.documentos.renderHistoryReview', $documento->id) }}">
+                                href="{{ route('documentos.renderHistoryReview', $documento->id) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
                                     class="bi bi-clock-history" viewBox="0 0 16 16">
                                     <path
@@ -180,7 +180,7 @@
                                 {{ Str::limit($revision->documento ? $revision->documento->codigo : 'Sin Código Asignado', 40, '...') }}
                             </td>
                             <td>
-                                <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento->id) }}"
+                                <a href="{{ route('documentos.renderViewDocument', $revision->documento->id) }}"
                                     class="text-dark">
                                     {{ Str::limit($revision->documento ? $revision->documento->nombre : 'Sin Documento Asignado', 40, '...') }}
                                 </a>
@@ -207,7 +207,7 @@
                                 <span class="badge"
                                     style="color:white;background-color:{{ $revision->color_revisiones_estatus }}">{{ $revision->estatus_revisiones_formateado }}</span>
                             <td>
-                                <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento) }}"
+                                <a href="{{ route('documentos.renderViewDocument', $revision->documento) }}"
                                     class="btn btn-sm" style="border:none;" title="Visualizar Documento">
                                     <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
                                 </a>
@@ -219,8 +219,8 @@
                                         </a>
                                     @endif
                                     @if ($revision->estatus != $Documento::SOLICITUD_REVISION)
-                                        <a class="btn btn-sm" style="border:none;" title="Archivar"  
-                                            onClick="Archivar('{{ route('admin.revisiones.archivar') }}','{{ $revision->id }}')">
+                                        <a class="btn btn-sm" style="border:none;" title="Archivar"
+                                            onClick="Archivar('{{ route('revisiones.archivar') }}','{{ $revision->id }}')">
                                             <i class=" fas fa-archive text-success" style="font-size: 15px;"></i>
                                         </a>
                                     @endif
@@ -277,7 +277,7 @@
             //         customize: function(doc) {
             //             doc.pageMargins = [20, 60, 20, 30];
             //             // doc.styles.tableHeader.fontSize = 7.5;
-            //             // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+            //             // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
             //         }
             //     },
             //     {
@@ -314,7 +314,7 @@
             let btnArchivo = {
                 text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',
                 titleAttr: 'Archivo',
-                url: "{{ route('admin.revisiones.archivo') }}",
+                url: "{{ route('revisiones.archivo') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                     let {

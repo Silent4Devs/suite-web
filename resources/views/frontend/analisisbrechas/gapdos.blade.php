@@ -1,6 +1,6 @@
       <div class="row">
           <div class="col-12 col-md-12 col-sm-12">
-              <div class="card-header font-weight-bold  text-white" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
+              <div class="text-white card-header font-weight-bold" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
               GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN (40%)
               </div>
 
@@ -18,19 +18,19 @@
 
 
               <table
-                  class=" table table-bordered table-striped table-hover ajaxTable datatable">
+                  class="table table-bordered table-striped table-hover ajaxTable datatable">
                   <thead>
 
                   <tr>
-                      <th class="text-white text-center bg-info">Cumple satisfactoriamente</th>
+                      <th class="text-center text-white bg-info">Cumple satisfactoriamente</th>
                       <th class="font-weight-normal">Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.
                   </th>
                   <tr>
-                      <th class="text-white text-center bg-warning" >Cumple parcialmente</th>
+                      <th class="text-center text-white bg-warning" >Cumple parcialmente</th>
                       <th class="font-weight-normal">Lo que la norma requiere  (ISO27001 versión 2013)  se está haciendo de manera parcial, se está haciendo diferente, no está documentado, se definió y aprobó pero no se gestiona.
                   </th>
                   <tr>
-                      <th class="text-white text-center bg-danger"><p style="margin-top:-12px;">No cumple</p></th>
+                      <th class="text-center text-white bg-danger"><p style="margin-top:-12px;">No cumple</p></th>
                       <th class="font-weight-normal">Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.
                   </th>
                   <tr>
@@ -43,7 +43,7 @@
               </table>
 
 
-              <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-GapDo">
+              <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-GapDo">
             <thead>
                 <tr>
                     <th width="10">
@@ -127,7 +127,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.gap-dos.massDestroy') }}",
+    url: "{{ route('frontend.gap-dos.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -159,7 +159,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.gap-dos.index') }}",
+    ajax: "{{ route('frontend.gap-dos.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
@@ -180,7 +180,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 let visibleColumnsIndexes = null;
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false

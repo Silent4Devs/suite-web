@@ -12,7 +12,7 @@
 
       <div class="row">
           <div class="col-12 col-md-12 col-sm-12">
-              <div class="card-header font-weight-bold  text-white" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
+              <div class="text-white card-header font-weight-bold" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
                   GAP 01: DEFINICIÓN DE MARCO DE SEGURIDAD Y PRIVACIDAD DE LA ORGANIZACIÓN (30%)
               </div>
 
@@ -57,13 +57,13 @@
                       @can('gap_uno_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.gap-unos.create') }}">
+            <a class="btn btn-success" href="{{ route('frontend.gap-unos.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.gapUno.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
-                      <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-GapUno">
+                      <table class="table  table-bordered table-striped table-hover ajaxTable datatable datatable-GapUno">
             <thead>
                 <tr>
                     <th width="10">
@@ -133,7 +133,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.gap-unos.massDestroy') }}",
+    url: "{{ route('frontend.gap-unos.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -165,7 +165,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.gap-unos.index') }}",
+    ajax: "{{ route('frontend.gap-unos.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
@@ -184,7 +184,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 let visibleColumnsIndexes = null;
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false

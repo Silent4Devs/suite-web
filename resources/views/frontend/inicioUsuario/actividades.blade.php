@@ -79,10 +79,10 @@
                     <td class="d-flex">
                         @php
                             if (intval($task->parent_id) == 1) {
-                                $ruta = '/admin/planTrabajoBase/';
+                                $ruta = '/frontend/planTrabajoBase/';
                             }
                             else{
-                                $ruta = '/admin/planes-de-accion/'.$task->parent_id;
+                                $ruta = '/frontend/planes-de-accion/'.$task->parent_id;
                             }
                         @endphp
                         <a href="{{asset($ruta)}}"><i class="far fas fa-stream"></i></a>
@@ -135,7 +135,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {

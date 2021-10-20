@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="mb-2 col">
                             @can('declaracion_aplicabilidad_reporte')
-                                <button url="{{ route('admin.declaracion-aplicabilidad.descargar') }}"
+                                <button url="{{ route('declaracion-aplicabilidad.descargar') }}"
                                     onclik="generarReporte()" class="btn btn-sm btn-outline-primary generar-reporte">
                                     <i class="mr-1 fas fa-print"></i>
                                     Generar Reporte
@@ -85,14 +85,14 @@
 
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g5s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g5s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g5s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
                                             <td class="text-justify">
                                                 <a data-type="textarea" data-pk="{{ $g5s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g5s->id) }}"
                                                     data-title="Justificacion" data-value="{{ $g5s->justificacion }}"
                                                     class="justificacion" data-name="justificacion">
                                                 </a>
@@ -138,7 +138,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g6s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g6s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g6s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g6s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
@@ -146,7 +146,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g6s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g6s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g6s->id) }}"
                                                     data-title="Justificacion" data-value="{{ $g6s->justificacion }}"
                                                     class="justificacion" data-name="justificacion">
                                                 </a>
@@ -181,14 +181,14 @@
                                         </td>
                                         <td style="width:5%">
                                             <a href="#" data-type="select" data-pk="{{ $g62s->id }}"
-                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g62s->id) }}"
+                                                data-url="{{ route('declaracion-aplicabilidad.update', $g62s->id) }}"
                                                 data-title="Seleccionar aplica" data-value="{{ $g62s->aplica }}"
                                                 class="aplica2" data-name="aplica">
                                             </a>
                                         </td>
                                         <td class="text-justify">
                                             <a href="#" data-type="textarea" data-pk="{{ $g62s->id }}"
-                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g62s->id) }}"
+                                                data-url="{{ route('declaracion-aplicabilidad.update', $g62s->id) }}"
                                                 data-title="Justificacion" data-value="{{ $g62s->justificacion }}"
                                                 class="justificacion" data-name="justificacion">
                                             </a>
@@ -234,14 +234,14 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g71s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g71s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g71s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g71s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
                                             </td>
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g71s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g71s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g71s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g71s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -283,7 +283,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g72s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g72s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g72s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g72s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
@@ -291,7 +291,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g72s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g72s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g72s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g72s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -332,7 +332,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g73s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g73s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g73s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g73s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
@@ -340,7 +340,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g73s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g73s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g73s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g73s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -386,7 +386,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g81s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g81s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g81s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g81s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
@@ -394,7 +394,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g81s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g81s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g81s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g81s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -441,7 +441,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g82s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g82s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g82s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g82s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
@@ -449,7 +449,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g82s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g82s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g82s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g82s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -490,7 +490,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g83s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g83s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g83s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g83s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
@@ -498,7 +498,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g83s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g83s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g83s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g83s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -540,7 +540,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g91s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g91s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g91s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
@@ -548,7 +548,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g91s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g91s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g91s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -592,7 +592,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g92s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g92s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g92s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g92s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
@@ -600,7 +600,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g92s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g92s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g92s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g92s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -642,7 +642,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g93s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g93s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g93s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g93s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
@@ -650,7 +650,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g93s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g93s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g93s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g93s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -692,7 +692,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g94s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g94s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g94s->id) }}"
                                                     data-title="Seleccionar aplica" data-value="{{ $g94s->aplica }}"
                                                     class="aplica2" data-name="aplica">
                                                 </a>
@@ -700,7 +700,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g94s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g94s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g94s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g94s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -745,7 +745,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g101s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g101s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g101s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g101s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -754,7 +754,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g101s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g101s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g101s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g101s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -798,7 +798,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g111s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g111s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g111s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g111s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -807,7 +807,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g111s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g111s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g111s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g111s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -849,7 +849,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g112s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g112s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g112s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g112s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -858,7 +858,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g112s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g112s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g112s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g112s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -902,7 +902,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g121s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g121s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g121s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g121s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -911,7 +911,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g121s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g121s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g121s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g121s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -951,7 +951,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g122s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g122s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g122s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g122s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -959,7 +959,7 @@
                                             </td>
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g122s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g122s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g122s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g122s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -999,7 +999,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g123s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g123s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g123s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g123s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1008,7 +1008,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g123s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g123s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g123s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g123s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1048,7 +1048,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g124s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g124s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g124s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g124s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1057,7 +1057,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g124s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g124s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g124s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g124s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1098,7 +1098,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g125s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g125s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g125s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g125s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1107,7 +1107,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g125s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g125s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g125s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g125s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1148,7 +1148,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g126s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g126s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g126s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g126s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1157,7 +1157,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g126s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g126s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g126s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g126s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1198,7 +1198,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g127s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g127s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g127s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g127s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1207,7 +1207,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g127s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g127s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g127s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g127s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1251,7 +1251,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g131s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g131s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g131s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g131s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1260,7 +1260,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g131s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g131s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g131s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g131s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1300,7 +1300,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g132s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g132s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g132s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1309,7 +1309,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g132s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g132s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g132s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1355,7 +1355,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g141s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g141s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g141s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g141s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1364,7 +1364,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g141s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g141s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g141s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g141s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1406,7 +1406,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g142s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g142s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g142s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g142s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1415,7 +1415,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g142s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g142s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g142s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g142s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1455,7 +1455,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g143s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g143s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g143s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g143s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1464,7 +1464,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g143s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g143s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g143s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g143s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1510,7 +1510,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g151s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g151s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g151s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g151s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1519,7 +1519,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g151s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g151s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g151s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g151s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1560,7 +1560,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g152s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g152s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g152s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g152s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1569,7 +1569,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g152s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g152s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g152s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g152s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1615,7 +1615,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g161s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g161s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g161s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g161s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1624,7 +1624,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g161s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g161s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g161s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g161s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1669,7 +1669,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g171s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g171s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g171s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g171s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1678,7 +1678,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g171s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g171s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g171s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g171s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1719,7 +1719,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g172s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g172s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g172s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g172s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1728,7 +1728,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g172s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g132s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g132s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1773,7 +1773,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g181s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g181s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g181s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g181s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1782,7 +1782,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g132s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g132s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g132s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1822,7 +1822,7 @@
                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g182s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g182s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g182s->id) }}"
                                                     data-title="Seleccionar aplica"
                                                     data-value="{{ $g182s->aplica }}" class="aplica2"
                                                     data-name="aplica">
@@ -1831,7 +1831,7 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g132s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
+                                                    data-url="{{ route('declaracion-aplicabilidad.update', $g132s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g132s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
@@ -1843,7 +1843,7 @@
                             </table>
                         </div>
                         <div class="mt-2 col">
-                            <button url="{{ route('admin.declaracion-aplicabilidad.descargar') }}"
+                            <button url="{{ route('declaracion-aplicabilidad.descargar') }}"
                                 onclik="generarReporte()" class="btn btn-sm btn-outline-primary generar-reporte">
                                 <i class="mr-1 fas fa-print"></i>
                                 Generar Reporte

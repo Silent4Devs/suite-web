@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 
@@ -29,19 +29,19 @@
                 </ul>
                 <div class="pt-5 tab-content card" id="myTabContentJust">
                     <div class="tab-pane fade show active" id="intr-just" role="tabpanel" aria-labelledby="intr-tab-just">
-                        @include('admin.analisisbrechas.introduccion')
+                        @include('frontend.analisisbrechas.introduccion')
                     </div>
                     <div class="tab-pane fade" id="gap1-just" role="tabpanel" aria-labelledby="gap1-tab-just">
-                        @include('admin.analisisbrechas.gapuno')
+                        @include('frontend.analisisbrechas.gapuno')
                     </div>
                     <div class="tab-pane fade" id="gap2-just" role="tabpanel" aria-labelledby="gap2-tab-just">
-                        @include('admin.analisisbrechas.gapdos')
+                        @include('frontend.analisisbrechas.gapdos')
                     </div>
                     <div class="tab-pane fade" id="gap3-just" role="tabpanel" aria-labelledby="gap3-tab-just">
-                        @include('admin.analisisbrechas.gaptres')
+                        @include('frontend.analisisbrechas.gaptres')
                     </div>
                     <div class="tab-pane fade" id="dash-just" role="tabpanel" aria-labelledby="dash-tab-just">
-                        @include('admin.analisisbrechas.dashboardab')
+                        @include('frontend.analisisbrechas.dashboardab')
                     </div>
                 </div>
             </div>

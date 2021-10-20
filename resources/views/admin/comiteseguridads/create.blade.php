@@ -43,10 +43,8 @@
                     @foreach ($empleados as $empleado)
                         <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                             data-area="{{ $empleado->area->area }}">
-
                             {{ $empleado->name }}
                         </option>
-
                     @endforeach
                 </select>
                 @if ($errors->has(' id_asignada'))

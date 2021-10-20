@@ -1,6 +1,6 @@
 <div class="row">
           <div class="col-12 col-md-12 col-sm-12">
-              <div class="card-header font-weight-bold  text-white" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
+              <div class="text-white card-header font-weight-bold" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
               GAP 03:  MONITOREO Y MEJORA CONTINUA (30%)
               </div>
 
@@ -42,7 +42,7 @@
                             </td>
                         </tr>
                       </table>
-                      <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-GapTre">
+                      <table class="table  table-bordered table-striped table-hover ajaxTable datatable datatable-GapTre">
             <thead>
                 <tr>
                     <th width="10">
@@ -111,7 +111,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.gap-tres.massDestroy') }}",
+    url: "{{ route('frontend.gap-tres.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -143,7 +143,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.gap-tres.index') }}",
+    ajax: "{{ route('frontend.gap-tres.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
@@ -162,7 +162,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 let visibleColumnsIndexes = null;
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
