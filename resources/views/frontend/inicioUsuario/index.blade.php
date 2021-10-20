@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style type="text/css">
@@ -154,29 +154,29 @@
                 @if ($usuario->empleado)
                     <div class="caja_secciones">
                         <section id="misDatos" class="caja_tab_reveldada">
-                            @include('admin.inicioUsuario.mis-datos')
+                            @include('frontend.inicioUsuario.mis-datos')
                         </section>
                         <section id="calendario">
-                            @include('admin.inicioUsuario.calendario')
+                            @include('frontend.inicioUsuario.calendario')
                         </section>
                         <section id="actividades">
-                            @include('admin.inicioUsuario.actividades')
+                            @include('frontend.inicioUsuario.actividades')
                         </section>
                         <section id="aprobaciones">
-                            @include('admin.inicioUsuario.aprobaciones')
+                            @include('frontend.inicioUsuario.aprobaciones')
                         </section>
                         {{-- <section id="evaluaciones">
                             @include('admin.inicioUsuario.evaluaciones')
                         </section> --}}
                         <section id="capacitaciones">
-                            @include('admin.inicioUsuario.capacitaciones')
+                            @include('frontend.inicioUsuario.capacitaciones')
                         </section>
                         <section id="reportes">
-                            @include('admin.inicioUsuario.reportes')
+                            @include('frontend.inicioUsuario.reportes')
                         </section>
                     </div>
                 @else
-                    @include('admin.inicioUsuario.agenda')
+                    @include('frontend.inicioUsuario.agenda')
                 @endif
             </div>
 

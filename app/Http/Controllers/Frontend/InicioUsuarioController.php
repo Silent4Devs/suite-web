@@ -176,7 +176,7 @@ class InicioUsuarioController extends Controller
             $mis_objetivos = collect();
         }
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'auditoria_internas', 'lista_evaluaciones'));
+        return view('frontend.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'auditoria_internas', 'lista_evaluaciones'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -471,7 +471,7 @@ class InicioUsuarioController extends Controller
 
         abort_if(Gate::denies('quejas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.inicioUsuario.formularios.quejas', compact('areas', 'procesos', 'empleados', 'activos', 'sedes'));
+        return view('frontend.inicioUsuario.formularios.quejas', compact('areas', 'procesos', 'empleados', 'activos', 'sedes'));
     }
 
     public function storeQuejas(Request $request)
@@ -521,7 +521,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('inicioUsuario.index')->with('success', 'Reporte generado');
     }
 
     public function denuncias()
@@ -532,7 +532,7 @@ class InicioUsuarioController extends Controller
 
         abort_if(Gate::denies('denuncias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
+        return view('frontend.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
     }
 
     public function storeDenuncias(Request $request)
@@ -577,7 +577,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('inicioUsuario.index')->with('success', 'Reporte generado');
     }
 
     public function mejoras()
@@ -588,7 +588,7 @@ class InicioUsuarioController extends Controller
 
         abort_if(Gate::denies('mejoras_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.inicioUsuario.formularios.mejoras', compact('areas', 'procesos'));
+        return view('frontend.inicioUsuario.formularios.mejoras', compact('areas', 'procesos'));
     }
 
     public function storeMejoras(Request $request)
@@ -610,7 +610,7 @@ class InicioUsuarioController extends Controller
             'formulario' => 'mejora',
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('inicioUsuario.index')->with('success', 'Reporte generado');
     }
 
     public function sugerencias()
@@ -623,7 +623,7 @@ class InicioUsuarioController extends Controller
 
         abort_if(Gate::denies('sugerencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
+        return view('frontend.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
 
     public function storeSugerencias(Request $request)
@@ -644,7 +644,7 @@ class InicioUsuarioController extends Controller
             'formulario' => 'sugerencia',
         ]);
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('inicioUsuario.index')->with('success', 'Reporte generado');
     }
 
     public function seguridad()
@@ -664,7 +664,7 @@ class InicioUsuarioController extends Controller
         abort_if(Gate::denies('incidentes_seguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activos = Activo::get();
 
-        return view('admin.inicioUsuario.formularios.seguridad', compact('activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
+        return view('frontend.inicioUsuario.formularios.seguridad', compact('activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
     }
 
     public function storeSeguridad(Request $request)
@@ -709,7 +709,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('inicioUsuario.index')->with('success', 'Reporte generado');
     }
 
     public function evidenciaSeguridad()
@@ -730,7 +730,7 @@ class InicioUsuarioController extends Controller
 
         abort_if(Gate::denies('riesgos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
+        return view('frontend.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }
 
     public function storeRiesgos(Request $request)
@@ -776,7 +776,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('inicioUsuario.index')->with('success', 'Reporte generado');
     }
 
     public function archivarCapacitacion(Request $request)
