@@ -1,12 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
 Breadcrumbs::for('admin.iso27001.index', function ($trail) {
     $trail->push('ISO 27001', route('admin.iso27001.index'));
 });
@@ -433,8 +426,6 @@ Breadcrumbs::for('EV360-Competencias-Por-Puesto-Create', function ($trail) {
     $trail->push('Asignar competencia al puesto', 'recursos-humanos/evaluacion-360/competencias-por-puesto/*/create');
 });
 
-
-
 Breadcrumbs::for('EV360-Objetivos', function ($trail) {
     $trail->parent('Evaluacion360');
     $trail->push('Objetivos', route('admin.ev360-objetivos.index'));
@@ -447,7 +438,6 @@ Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
     $trail->parent('EV360-Objetivos');
     $trail->push('Editar Objetivo', '/recursos-humanos/evaluacion-360/objetivos/*/edit');
 });
-
 
 Breadcrumbs::for('EV360-Evaluacion-Resumen', function ($trail, $evaluacion) {
     $trail->parent('EV360-Evaluaciones-Evaluacion', $evaluacion);
@@ -465,49 +455,6 @@ Breadcrumbs::for('EV360-Evaluacion-Cuestionario', function ($trail, $evaluacion)
 //     $trail->parent('EV360-Objetivos');
 //     $trail->push('Editar Objetivo', route('admin.ev360-objetivos.edit'));
 // });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 Breadcrumbs::for('frontend.iso27001.index', function ($trail) {
     $trail->push('ISO 27001', route('frontend.iso27001.index'));
@@ -935,8 +882,6 @@ Breadcrumbs::for('EV360-Competencias-Por-Puesto-Create', function ($trail) {
     $trail->push('Asignar competencia al puesto', 'recursos-humanos/evaluacion-360/competencias-por-puesto/*/create');
 });
 
-
-
 Breadcrumbs::for('EV360-Objetivos', function ($trail) {
     $trail->parent('Evaluacion360');
     $trail->push('Objetivos', route('frontend.ev360-objetivos.index'));
@@ -949,7 +894,6 @@ Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
     $trail->parent('EV360-Objetivos');
     $trail->push('Editar Objetivo', '/recursos-humanos/evaluacion-360/objetivos/*/edit');
 });
-
 
 Breadcrumbs::for('EV360-Evaluacion-Resumen', function ($trail, $evaluacion) {
     $trail->parent('EV360-Evaluaciones-Evaluacion', $evaluacion);

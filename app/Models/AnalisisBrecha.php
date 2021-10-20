@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -9,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class AnalisisBrecha
+ * Class AnalisisBrecha.
  *
  * @property int $id
  * @property character varying $nombre
@@ -25,52 +24,50 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Collection|GapLogroTre[] $gap_logro_tres
  * @property Collection|GapLogroDo[] $gap_logro_dos
  * @property Collection|GapLogroUno[] $gap_logro_unos
- *
- * @package App\Models
  */
 class AnalisisBrecha extends Model
 {
-	use SoftDeletes;
-	protected $table = 'analisis_brechas';
+    use SoftDeletes;
+    protected $table = 'analisis_brechas';
 
-	protected $casts = [
-		'nombre' => 'string',
-		'porcentaje_implementacion' => 'string',
-		'id_elaboro' => 'int',
-		'estatus' => 'int',
-		'created_at' => 'timestamp',
-		'updated_at' => 'timestamp'
-	];
+    protected $casts = [
+        'nombre' => 'string',
+        'porcentaje_implementacion' => 'string',
+        'id_elaboro' => 'int',
+        'estatus' => 'int',
+        'created_at' => 'timestamp',
+        'updated_at' => 'timestamp',
+    ];
 
-	protected $dates = [
-		'fecha'
-	];
+    protected $dates = [
+        'fecha',
+    ];
 
-	protected $fillable = [
-		'nombre',
-		'fecha',
-		'porcentaje_implementacion',
-		'id_elaboro',
-		'estatus'
-	];
+    protected $fillable = [
+        'nombre',
+        'fecha',
+        'porcentaje_implementacion',
+        'id_elaboro',
+        'estatus',
+    ];
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'id_elaboro');
-	}
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_elaboro');
+    }
 
-	public function gap_logro_tres()
-	{
-		return $this->hasMany(GapTre::class, 'analisis_brechas_id');
-	}
+    public function gap_logro_tres()
+    {
+        return $this->hasMany(GapTre::class, 'analisis_brechas_id');
+    }
 
-	public function gap_logro_dos()
-	{
-		return $this->hasMany(GapDo::class, 'analisis_brechas_id');
-	}
+    public function gap_logro_dos()
+    {
+        return $this->hasMany(GapDo::class, 'analisis_brechas_id');
+    }
 
-	public function gap_logro_unos()
-	{
-		return $this->hasMany(GapUno::class, 'analisis_brechas_id');
-	}
+    public function gap_logro_unos()
+    {
+        return $this->hasMany(GapUno::class, 'analisis_brechas_id');
+    }
 }

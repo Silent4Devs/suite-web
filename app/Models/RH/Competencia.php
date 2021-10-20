@@ -28,6 +28,7 @@ class Competencia extends Model
         if ($this->imagen) {
             return asset('storage/competencias/img/' . $this->imagen);
         }
+
         return asset('img/star.png');
     }
 
