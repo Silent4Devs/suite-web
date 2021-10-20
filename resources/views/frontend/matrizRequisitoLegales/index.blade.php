@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 
@@ -48,7 +48,7 @@
 
 </style>
 
-    {{ Breadcrumbs::render('admin.matriz-requisito-legales.index') }}
+    {{ Breadcrumbs::render('frontend.matriz-requisito-legales.index') }}
     <div class="mt-5 card">
         @can('matriz_requisito_legale_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -206,7 +206,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva matríz de requisitos legales',
-                url: "{{ route('admin.matriz-requisito-legales.create') }}",
+                url: "{{ route('frontend.matriz-requisito-legales.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -222,7 +222,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.matriz-requisito-legales.index') }}",
+                ajax: "{{ route('frontend.matriz-requisito-legales.index') }}",
                 columnDefs:[{targets:[5,12,11,17],visible:false}],
                 columns: [{
                         data: 'id',
@@ -396,15 +396,15 @@
                        data: 'id',
                         render: function(data, type, row, meta) {
                             let urlVerMatrizRequisitoLegal =
-                                `/admin/matriz-requisito-legales/${data}`;
+                                `/frontend/matriz-requisito-legales/${data}`;
                             let urlEditarMatrizRequisitoLegal =
-                                `/admin/matriz-requisito-legales/${data}/edit`;
+                                `/frontend/matriz-requisito-legales/${data}/edit`;
                             let urlEliminarMatrizRequisitoLegal =
-                                `/admin/matriz-requisito-legales/${data}`;
+                                `/frontend/matriz-requisito-legales/${data}`;
                             let urlCrearPlanAccion =
-                                `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
+                                `/frontend/matriz-requisito-legales/planes-de-accion/create/${data}`;
                             let urlVerPlanAccion =
-                                `/admin/matriz-requisito-legales/planes-de-accion/create/${data}`;
+                                `/frontend/matriz-requisito-legales/planes-de-accion/create/${data}`;
                             let botones = `
                             <div class="btn-group">
                                 <a class="btn btn-sm" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
@@ -421,7 +421,7 @@
                                             <span class="ml-4 badge badge-dark">Planes de acción asociados</span>
                                            ${row.planes.map(plan => {
                                                return `
-                                                <a class="dropdown-item" href="/admin/planes-de-accion/${plan.id}"><i class="mr-1 fas fa-search"></i>${plan.parent} ${plan.tasks?.find(t=>Number(t.level) == 0) != undefined ? `<span class="badge badge-primary">${plan.tasks?.find(t=>Number(t.level) == 0).progress} %</span>` : `<span class="badge badge-primary">0 %</span>`}<a>
+                                                <a class="dropdown-item" href="/planes-de-accion/${plan.id}"><i class="mr-1 fas fa-search"></i>${plan.parent} ${plan.tasks?.find(t=>Number(t.level) == 0) != undefined ? `<span class="badge badge-primary">${plan.tasks?.find(t=>Number(t.level) == 0).progress} %</span>` : `<span class="badge badge-primary">0 %</span>`}<a>
                                                `;
                                            })}
                                         </div>

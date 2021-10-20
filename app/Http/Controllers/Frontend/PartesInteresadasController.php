@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
@@ -63,7 +63,7 @@ class PartesInteresadasController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.partesInteresadas.index', compact('teams'));
+        return view('frontend.partesInteresadas.index', compact('teams'));
     }
 
     public function create()
@@ -71,7 +71,7 @@ class PartesInteresadasController extends Controller
         abort_if(Gate::denies('partes_interesada_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clausulas = Clausula::all();
 
-        return view('admin.partesInteresadas.create', compact('clausulas'));
+        return view('frontend.partesInteresadas.create', compact('clausulas'));
     }
 
     public function store(StorePartesInteresadaRequest $request)
@@ -82,7 +82,7 @@ class PartesInteresadasController extends Controller
         //  $generar = new GeneratePdf();
         //$generar->Generate($request['pdf-value'], $request);
         //  $generar->Generate($request['pdf-value'], $partesInteresada);
-        return redirect()->route('admin.partes-interesadas.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('frontend.partes-interesadas.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(PartesInteresada $partesInteresada)
@@ -91,7 +91,7 @@ class PartesInteresadasController extends Controller
         $clausulas = Clausula::all();
         $partesInteresada->load('team');
 
-        return view('admin.partesInteresadas.edit', compact('partesInteresada', 'clausulas'));
+        return view('frontend.partesInteresadas.edit', compact('partesInteresada', 'clausulas'));
     }
 
     public function update(UpdatePartesInteresadaRequest $request, PartesInteresada $partesInteresada)
@@ -99,7 +99,7 @@ class PartesInteresadasController extends Controller
         $partesInteresada->update($request->all());
         $clausulas = Clausula::all();
 
-        return redirect()->route('admin.partes-interesadas.index')->with('success', 'Editado con éxito');
+        return redirect()->route('frontend.partes-interesadas.index')->with('success', 'Editado con éxito');
     }
 
     public function show(PartesInteresada $partesInteresada)
@@ -108,7 +108,7 @@ class PartesInteresadasController extends Controller
 
         $partesInteresada->load('team');
 
-        return view('admin.partesInteresadas.show', compact('partesInteresada'));
+        return view('frontend.partesInteresadas.show', compact('partesInteresada'));
     }
 
     public function destroy(PartesInteresada $partesInteresada)
