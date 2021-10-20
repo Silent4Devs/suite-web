@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
-	
+
 	@section('styles')
 		<style type="text/css">
 			.caja_titulo{
@@ -23,7 +23,7 @@
 			}
 		</style>
 	@endsection
-	{{ Breadcrumbs::render('admin.politicaSgsis.visualizacion') }}
+	{{-- {{ Breadcrumbs::render('frontend.politicaSgsis.visualizacion') }} --}}
 	<div class="card card-body" style="margin-top: -50PX;">
 		<div class="row" style="border-bottom: 2px solid #ccc;">
 			<div class="col-12 caja_titulo">
@@ -40,7 +40,7 @@
 			                }
 			            @endphp
 			            <img src="{{ asset($logotipo) }}" class="logo_organizacion_politica">
-			 
+
 			</div>
 		</div>
 		@if($politicaSgsis)

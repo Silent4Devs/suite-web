@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.evidencias-sgsis.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.evidencias-sgsis.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
@@ -11,7 +11,7 @@
 
         <div class="card-body">
             <form method="POST" class="row"
-                action="{{ route('admin.evidencias-sgsis.update', [$evidenciasSgsi->id]) }}"
+                action="{{ route('evidencias-sgsis.update', [$evidenciasSgsi->id]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
@@ -244,7 +244,7 @@
 @section('scripts')
     <script>
         Dropzone.options.archivopdfDropzone = {
-            url: '{{ route('admin.evidencias-sgsis.storeMedia') }}',
+            url: '{{ route('evidencias-sgsis.storeMedia') }}',
             maxFilesize: 2, // MB
             maxFiles: 1,
             addRemoveLinks: true,

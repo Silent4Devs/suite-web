@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.politica-sgsis.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.politica-sgsis.create') }} --}}
 
 <div class="mt-4 card">
     <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.politica-sgsis.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("politica-sgsis.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="politicasgsi"><i class="fas fa-landmark iconos-crear"></i>Política del Sistema de Gestión de Seguridad de la Información (SGSI)</label>
