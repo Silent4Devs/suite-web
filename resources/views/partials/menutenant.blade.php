@@ -30,7 +30,8 @@
         {{-- @can('mi_perfil_access') --}}
         <li class="c-sidebar-nav-item">
             {{-- <a href="{{ route('inicio-Usuario.index') }}" --}}
-                <a class="c-sidebar-nav-link {{ request()->is('inicioUsuario') || request()->is('inicioUsuario/*') ? 'active' : '' }}">
+            <a href="{{ route('inicio-Usuario.index') }}"
+                class="c-sidebar-nav-link {{ request()->is('inicioUsuario') || request()->is('inicioUsuario/*') ? 'active' : '' }}">
                 <i class="fas fa-user iconos_menu letra_blanca"></i>
                 <span class="letra_blanca"> Mi perfil</span>
             </a>
@@ -75,16 +76,14 @@
                 {{-- @endcan
                     @can('organizacion_area_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('areas.renderJerarquia') }}"
+                    {{-- <a href="{{ route('areas.renderJerarquia') }}"
                         class="c-sidebar-nav-link {{ request()->is('areas/areas-jerarquia') || request()->is('areas/areas-jerarquia') ? 'active' : '' }}">
-                        {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
-                        </i> --}}
                         <i class="fab fa-adn iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> {{ trans('cruds.area.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
                     @can('organigrama_organizacion_access') --}}
@@ -148,11 +147,11 @@
                 {{-- @endcan
             @can('documentos_publicados_respositorio_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('carpeta.index') }}"
+                    {{-- <a href="{{ route('carpeta.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('carpeta') || request()->is('carpeta/*') ? 'active' : '' }}">
                         <i class="fas fa-folder-open iconos_menu letra_blanca"></i>
                         <span class="letra_blanca"> Documentos Publicados </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan --}}
             </ul>
@@ -167,12 +166,12 @@
         </li>
         {{-- @can('agenda_access') --}}
         <li class="c-sidebar-nav-item">
-            <a href="{{ route('systemCalendar') }}"
+            {{-- <a href="{{ route('systemCalendar') }}"
                 class="c-sidebar-nav-link {{ request()->is('system-calendar') || request()->is('system-calendar/*') ? 'active' : '' }}">
                 <i class="iconos_menu letra_blanca fa-fw fas fa-calendar">
                 </i>
                 <span class="letra_blanca"> Agenda </span>
-            </a>
+            </a> --}}
         </li>
         {{-- @endcan
 @can('centro_atencion_access') --}}
@@ -239,36 +238,34 @@
             </a>
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('amenazas.index') }}"
+                    {{-- <a href="{{ route('amenazas.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('amenazas') || request()->is('amenazas/*') ? 'active' : '' }}">
                         <i class="fas fa-fire iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca" style="margin-left:5px;"> Amenazas</span>
-                    </a>
+                    </a> --}}
                 </li>
 
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('vulnerabilidads.index') }}"
+                    {{-- <a href="{{ route('vulnerabilidads.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('vulnerabilidads') || request()->is('vulnerabilidads/*') ? 'active' : '' }}">
                         <i class="fas fa-shield-alt iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> Vulnerabilidades</span>
-                    </a>
+                    </a> --}}
                 </li>
 
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('analisis-riesgos.index') }}"
+                    {{-- <a href="{{ route('analisis-riesgos.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('analisis-riesgos') || request()->is('analisis-riesgos') ? 'active' : '' }}">
-                        {{-- <i class="fas fa-puzzle-piece iconos_menu letra_blanca">
 
-                        </i> --}}
                         <i class="fas fa-table iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca">Matriz de Riesgos</span>
-                    </a>
+                    </a> --}}
                 </li>
 
             </ul>
@@ -309,7 +306,7 @@
             <span class="letra_blanca">Recursos Humanos</span>
         </li>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link {{ request()->is('recursos-humanos/*') ? 'active' : '' }}"
+            {{-- <a class="c-sidebar-nav-link {{ request()->is('recursos-humanos/*') ? 'active' : '' }}"
                 href="{{ route('rh-evaluacion360.index') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                     class="bi bi-file-earmark-person iconos_menu letra_blanca" viewBox="0 0 16 16">
@@ -318,7 +315,7 @@
                         d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z" />
                 </svg>
                 <span class="letra_blanca"> Evaluación 360 Grados </span>
-            </a>
+            </a> --}}
         </li>
 
         <li class="c-sidebar-nav-title">
@@ -352,27 +349,27 @@
                 {{-- @can('documentos_access') --}}
                 <li
                     class="c-sidebar-nav-dropdown {{ request()->is('carpeta*') ? 'c-show' : '' }} {{ request()->is('crear-documentos*') ? 'c-show' : '' }}">
-                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    {{-- <a class="c-sidebar-nav-dropdown-toggle" href="#">
                         <i class="fas fa-folder iconos_menu letra_blanca"></i>
                         <span class="letra_blanca"> Documentos </span>
-                    </a>
+                    </a> --}}
                     <ul class="c-sidebar-nav-dropdown-items">
                         {{-- @can('documentos_create') --}}
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route('documentos.index') }}"
+                            {{-- <a href="{{ route('documentos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('crear-documentos') || request()->is('crear-documentos*') ? 'active' : '' }}">
                                 <i class="fas fa-folder-plus iconos_menu letra_blanca"></i>
                                 <span class="letra_blanca"> Crear Documentos </span>
-                            </a>
+                            </a> --}}
                         </li>
                         {{-- @endcan
                         @can('carpetum_access') --}}
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route('carpeta.index') }}"
+                            {{-- <a href="{{ route('carpeta.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('carpeta') || request()->is('carpeta/*') ? 'active' : '' }}">
                                 <i class="fas fa-folder-open iconos_menu letra_blanca"></i>
                                 <span class="letra_blanca"> Gestor Documental </span>
-                            </a>
+                            </a> --}}
                         </li>
                         {{-- @endcan --}}
                     </ul>
@@ -407,14 +404,14 @@
                         {{-- @endcan
                         @can('configuracion_area_create') --}}
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route('areas.index') }}"
+                            {{-- <a href="{{ route('areas.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('areas') || request()->is('areas/*/edit') || request()->is('areas/create') ? 'active' : '' }}">
 
                                 <i class="ml-1 fab fa-adn iconos_menu letra_blanca">
 
                                 </i>
                                 <span class="letra_blanca"> Crear Áreas </span>
-                            </a>
+                            </a> --}}
                         </li>
                         {{-- @endcan --}}
                     </ul>
@@ -449,11 +446,11 @@
                         {{-- @endcan
                     @can('configuracion_activo_access') --}}
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route('activos.index') }}"
+                            {{-- <a href="{{ route('activos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('activos') || request()->is('activos/*') ? 'active' : '' }}">
                                 <i class="ml-2 fas fa-th-list iconos_menu letra_blanca" style="span-size:12pt;"></i>
                                 <span class="letra_blanca"> Inventario</span>
-                            </a>
+                            </a> --}}
                         </li>
                         {{-- @endcan --}}
                     </ul>
@@ -568,29 +565,29 @@
                 {{-- @endcan
             @can('controle_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('controles.index') }}"
+                    {{-- <a href="{{ route('controles.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('controles') || request()->is('controles/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-screwdriver iconos_menu letra_blanca"></i>
                         <span class="letra_blanca"> {{ trans('cruds.controle.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
             @can('audit_log_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('audit-logs.index') }}"
+                    {{-- <a href="{{ route('audit-logs.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('audit-logs') || request()->is('audit-logs/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-file-alt iconos_menu letra_blanca"></i>
                         <span class="letra_blanca"> {{ trans('cruds.auditLog.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
             @can('puesto_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('puestos.index') }}"
+                    {{-- <a href="{{ route('puestos.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('puestos') || request()->is('puestos/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-user-md iconos_menu letra_blanca"></i>
                         <span class="letra_blanca"> {{ trans('cruds.puesto.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
             @can('user_alert_access') --}}
@@ -606,77 +603,77 @@
                 {{-- @endcan
             @can('enlaces_ejecutar_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('enlaces-ejecutars.index') }}"
+                    {{-- <a href="{{ route('enlaces-ejecutars.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('enlaces-ejecutars') || request()->is('enlaces-ejecutars/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> {{ trans('cruds.enlacesEjecutar.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
             @can('team_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('teams.index') }}"
+                    {{-- <a href="{{ route('teams.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('teams') || request()->is('teams/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-users iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> {{ trans('cruds.team.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
             @can('estado_incidente_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('estado-incidentes.index') }}"
+                    {{-- <a href="{{ route('estado-incidentes.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('estado-incidentes') || request()->is('estado-incidentes/*') ? 'active' : '' }}">
                         <i class="fa-fw fab fa-stripe-s iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> {{ trans('cruds.estadoIncidente.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
             @can('estado_documento_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('estado-documentos.index') }}"
+                    {{-- <a href="{{ route('estado-documentos.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('estado-documentos') || request()->is('estado-documentos/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> {{ trans('cruds.estadoDocumento.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
             @can('estatus_plan_trabajo_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('estatus-plan-trabajos.index') }}"
+                    {{-- <a href="{{ route('estatus-plan-trabajos.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('estatus-plan-trabajos') || request()->is('estatus-plan-trabajos/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> {{ trans('cruds.estatusPlanTrabajo.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
             @can('plan_base_actividade_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('plan-base-actividades.index') }}"
+                    {{-- <a href="{{ route('plan-base-actividades.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('plan-base-actividades') || request()->is('plan-base-actividades/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> {{ trans('cruds.planBaseActividade.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
             @can('control_documento_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('control-documentos.index') }}"
+                    {{-- <a href="{{ route('control-documentos.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('control-documentos') || request()->is('control-documentos/*') ? 'c-active' : '' }}">
                         <i class="fa-fw fas fa-cogs c-sidebar-nav-icon"></i>
                         <span class="letra_blanca">{{ trans('cruds.controlDocumento.title') }}</span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan --}}
             </ul>
@@ -693,24 +690,24 @@
             <ul class="c-sidebar-nav-dropdown-items">
                 {{-- @can('faq_category_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('faq-categories.index') }}"
+                    {{-- <a href="{{ route('faq-categories.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('faq-categories') || request()->is('faq-categories/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-briefcase iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> {{ trans('cruds.faqCategory.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan
             @can('faq_question_access') --}}
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('faq-questions.index') }}"
+                    {{-- <a href="{{ route('faq-questions.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('faq-questions') || request()->is('faq-questions/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-question iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> {{ trans('cruds.faqQuestion.title') }} </span>
-                    </a>
+                    </a> --}}
                 </li>
                 {{-- @endcan --}}
             </ul>
