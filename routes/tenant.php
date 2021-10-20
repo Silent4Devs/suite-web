@@ -26,6 +26,7 @@ use App\Http\Controllers\Frontend\PartesInteresadasController;
 use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
 use App\Http\Controllers\Frontend\AlcanceSgsiController;
 use App\Http\Controllers\Frontend\ComiteseguridadController;
+use App\Http\Controllers\Frontend\MinutasaltadireccionController;
 
 Route::middleware([
     'web',
@@ -315,20 +316,20 @@ Route::middleware([
         // // Comiteseguridads
         Route::delete('comiteseguridads/destroy', [ComiteseguridadController::class,'massDestroy'])->name('comiteseguridads.massDestroy');
 
-        // Route::get('comiteseguridads/visualizacion', [ComiteseguridadController::class,'visualizacion']);
+        Route::get('comiteseguridads/visualizacion', [ComiteseguridadController::class,'visualizacion']);
 
-        // Route::resource('comiteseguridads', ComiteseguridadController::class);
+        Route::resource('comiteseguridads', ComiteseguridadController::class);
 
         // // Minutasaltadireccions
-        // Route::get('minutasaltadireccions/{minuta}/minuta-documento', [MinutasaltadireccionController::class,'renderViewDocument'])->name('documentos.renderViewMinuta');
-        // Route::get('minutasaltadireccions/{minuta}/historial-revisiones', [MinutasaltadireccionController::class,'renderHistoryReview'])->name('documentos.renderHistoryReviewMinuta');
-        // Route::get('minutasaltadireccions/planes-de-accion/create/{id}', [MinutasaltadireccionController::class,'createPlanAccion'])->name('minutasaltadireccions.createPlanAccion');
-        // Route::patch('minutasaltadireccions/{minuta}/update-and-review', [MinutasaltadireccionController::class,'updateAndReview'])->name('minutasaltadireccions.updateAndReview');
-        // Route::post('minutasaltadireccions/planes-de-accion/store/{id}', [MinutasaltadireccionController::class,'storePlanAccion'])->name('minutasaltadireccions.storePlanAccion');
-        // Route::delete('minutasaltadireccions/destroy', [MinutasaltadireccionController::class,'massDestroy'])->name('minutasaltadireccions.massDestroy');
-        // Route::post('minutasaltadireccions/media', [MinutasaltadireccionController::class,'storeMedia'])->name('minutasaltadireccions.storeMedia');
-        // Route::post('minutasaltadireccions/ckmedia', [MinutasaltadireccionController::class,'storeCKEditorImages'])->name('minutasaltadireccions.storeCKEditorImages');
-        // Route::resource('minutasaltadireccions', MinutasaltadireccionController::class);
+        Route::get('minutasaltadireccions/{minuta}/minuta-documento', [MinutasaltadireccionController::class,'renderViewDocument'])->name('documentos.renderViewMinuta');
+        Route::get('minutasaltadireccions/{minuta}/historial-revisiones', [MinutasaltadireccionController::class,'renderHistoryReview'])->name('documentos.renderHistoryReviewMinuta');
+        Route::get('minutasaltadireccions/planes-de-accion/create/{id}', [MinutasaltadireccionController::class,'createPlanAccion'])->name('minutasaltadireccions.createPlanAccion');
+        Route::patch('minutasaltadireccions/{minuta}/update-and-review', [MinutasaltadireccionController::class,'updateAndReview'])->name('minutasaltadireccions.updateAndReview');
+        Route::post('minutasaltadireccions/planes-de-accion/store/{id}', [MinutasaltadireccionController::class,'storePlanAccion'])->name('minutasaltadireccions.storePlanAccion');
+        Route::delete('minutasaltadireccions/destroy', [MinutasaltadireccionController::class,'massDestroy'])->name('minutasaltadireccions.massDestroy');
+        Route::post('minutasaltadireccions/media', [MinutasaltadireccionController::class,'storeMedia'])->name('minutasaltadireccions.storeMedia');
+        Route::post('minutasaltadireccions/ckmedia', [MinutasaltadireccionController::class,'storeCKEditorImages'])->name('minutasaltadireccions.storeCKEditorImages');
+        Route::resource('minutasaltadireccions', MinutasaltadireccionController::class);
 
         // // Evidencias Sgsis
         // Route::delete('evidencias-sgsis/destroy', [EvidenciasSgsiController::class,'massDestroy'])->name('evidencias-sgsis.massDestroy');

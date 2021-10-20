@@ -82,7 +82,7 @@ class PartesInteresadasController extends Controller
         //  $generar = new GeneratePdf();
         //$generar->Generate($request['pdf-value'], $request);
         //  $generar->Generate($request['pdf-value'], $partesInteresada);
-        return redirect()->route('frontend.partes-interesadas.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('partes-interesadas.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(PartesInteresada $partesInteresada)
@@ -99,7 +99,7 @@ class PartesInteresadasController extends Controller
         $partesInteresada->update($request->all());
         $clausulas = Clausula::all();
 
-        return redirect()->route('frontend.partes-interesadas.index')->with('success', 'Editado con éxito');
+        return redirect()->route('partes-interesadas.index')->with('success', 'Editado con éxito');
     }
 
     public function show(PartesInteresada $partesInteresada)

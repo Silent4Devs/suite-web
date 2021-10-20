@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <style>
         .select2-search.select2-search--inline {
@@ -9,7 +9,7 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.minutasaltadireccions.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px">
@@ -18,7 +18,7 @@
             </h3>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.minutasaltadireccions.store') }}" enctype="multipart/form-data"
+            <form method="POST" action="{{ route('minutasaltadireccions.store') }}" enctype="multipart/form-data"
                 class="row">
                 @csrf
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
@@ -174,7 +174,7 @@
                     @endif
                 </div>
                 {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                @include('admin.planesDeAccion.actividades.tabla',[
+                @include('frontend.planesDeAccion.actividades.tabla',[
                 'empleados'=>$responsablereunions
                 ])
                 {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
@@ -208,7 +208,7 @@
 
               </div>
               <div class="modal-footer">
-                <a type="button" href="{{route("admin.users.index")}}" class="btn btn-primary">Vincular</a>
+                <a type="button" href="{{route("users.index")}}" class="btn btn-primary">Vincular</a>
               </div>
             </div>
           </div>
@@ -219,7 +219,7 @@
 @section('scripts')
     <script>
         Dropzone.options.archivoDropzone = {
-            url: '{{ route('admin.minutasaltadireccions.storeMedia') }}',
+            url: '{{ route('minutasaltadireccions.storeMedia') }}',
             maxFilesize: 6, // MB
             maxFiles: 1,
             addRemoveLinks: true,
@@ -365,7 +365,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            let url = "{{ route('admin.empleados.get') }}";
+            let url = "{{ route('empleados.get') }}";
             $("#participantes_search").keyup(function() {
                 $.ajax({
                     type: "POST",

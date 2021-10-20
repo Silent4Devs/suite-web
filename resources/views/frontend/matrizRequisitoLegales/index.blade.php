@@ -206,7 +206,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva matríz de requisitos legales',
-                url: "{{ route('frontend.matriz-requisito-legales.create') }}",
+                url: "{{ route('matriz-requisito-legales.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -222,7 +222,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('frontend.matriz-requisito-legales.index') }}",
+                ajax: "{{ route('matriz-requisito-legales.index') }}",
                 columnDefs:[{targets:[5,12,11,17],visible:false}],
                 columns: [{
                         data: 'id',

@@ -14,7 +14,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("frontend.matriz-requisito-legales.store") }}" enctype="multipart/form-data" class="row">
+        <form method="POST" action="{{ route("matriz-requisito-legales.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-12">
                 <label class="required" for="nombrerequisito"> <i class="fas fa-clipboard-list iconos-crear"></i> Fundamento</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="Nombre de la ley,norma,reglamento o documento donde se encuentra el requisito"></i>
