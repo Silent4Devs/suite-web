@@ -1,8 +1,10 @@
 <div>
-    <button id="btnModalOpen" wire:click.prevent="openModal()" class="btn btn-sm btn-primary"><i
-            class="mr-2 fas fa-plus-circle"></i>
-        Crear Grupo
-    </button>
+    <div>
+        <button id="btnModalOpen" wire:click.prevent="openModal()" class="btn btn-sm btn-primary"><i
+                class="mr-2 fas fa-plus-circle"></i>
+            Crear Grupo
+        </button>
+    </div>
     <div wire:ignore.self class="modal fade" id="grupoModal" tabindex="-1" aria-labelledby="grupoModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -19,7 +21,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-lg-12">
                             <div class="form-group">
-                                <label for="nombreGrupo">Nombre: <span class="text-danger">*</span></label>
+                                <label for="nombreGrupo">Nombre del grupo: <span class="text-danger">*</span></label>
                                 <input type="text"
                                     class="form-control {{ $errors->has('nombreGrupo') ? 'is-invalid' : '' }}"
                                     id="nombre" aria-describedby="nombre" wire:model.defer="nombreGrupo"
