@@ -3191,16 +3191,16 @@
         },
         {
             "name": "laravel/dusk",
-            "version": "v6.19.0",
+            "version": "v6.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/dusk.git",
-                "reference": "b55a5720d256f3d71da7fb559a9f5b330a895cd4"
+                "reference": "c042f8d389b8fdcd9543032d1ef8dbe47c8a245f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/dusk/zipball/b55a5720d256f3d71da7fb559a9f5b330a895cd4",
-                "reference": "b55a5720d256f3d71da7fb559a9f5b330a895cd4",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/c042f8d389b8fdcd9543032d1ef8dbe47c8a245f",
+                "reference": "c042f8d389b8fdcd9543032d1ef8dbe47c8a245f",
                 "shasum": ""
             },
             "require": {
@@ -3258,22 +3258,22 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/dusk/issues",
-                "source": "https://github.com/laravel/dusk/tree/v6.19.0"
+                "source": "https://github.com/laravel/dusk/tree/v6.19.2"
             },
-            "time": "2021-10-11T15:25:08+00:00"
+            "time": "2021-10-20T10:10:26+00:00"
         },
         {
             "name": "laravel/framework",
-            "version": "v8.64.0",
+            "version": "v8.65.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "3337c029e1bb31d9712d27437cc27010ba302c9e"
+                "reference": "6db59afadca28dfdb2f719e7d79f93885ede17e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/3337c029e1bb31d9712d27437cc27010ba302c9e",
-                "reference": "3337c029e1bb31d9712d27437cc27010ba302c9e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/6db59afadca28dfdb2f719e7d79f93885ede17e4",
+                "reference": "6db59afadca28dfdb2f719e7d79f93885ede17e4",
                 "shasum": ""
             },
             "require": {
@@ -3431,20 +3431,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-10-12T13:43:13+00:00"
+            "time": "2021-10-19T13:59:41+00:00"
         },
         {
             "name": "laravel/passport",
-            "version": "v10.1.3",
+            "version": "v10.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "a5e4471dd99b7638ab5ca3ecab6cd87cf37eb410"
+                "reference": "c889d9c464fea409dffe283e9c4e7054ef7aca6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/a5e4471dd99b7638ab5ca3ecab6cd87cf37eb410",
-                "reference": "a5e4471dd99b7638ab5ca3ecab6cd87cf37eb410",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/c889d9c464fea409dffe283e9c4e7054ef7aca6f",
+                "reference": "c889d9c464fea409dffe283e9c4e7054ef7aca6f",
                 "shasum": ""
             },
             "require": {
@@ -3508,7 +3508,7 @@
                 "issues": "https://github.com/laravel/passport/issues",
                 "source": "https://github.com/laravel/passport"
             },
-            "time": "2021-04-06T14:30:45+00:00"
+            "time": "2021-10-19T15:25:10+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -3887,16 +3887,13 @@
                 "shasum": ""
             },
             "require": {
-                "ext-hash": "*",
-                "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
-                "ext-sodium": "*",
                 "lcobucci/clock": "^2.0",
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "infection/infection": "^0.21",
+                "infection/infection": "^0.20",
                 "lcobucci/coding-standard": "^6.0",
                 "mikey179/vfsstream": "^1.6.7",
                 "phpbench/phpbench": "^1.0",
@@ -3906,9 +3903,14 @@
                 "phpstan/phpstan-phpunit": "^0.12",
                 "phpstan/phpstan-strict-rules": "^0.12",
                 "phpunit/php-invoker": "^3.1",
-                "phpunit/phpunit": "^9.5"
+                "phpunit/phpunit": "^9.4"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Lcobucci\\JWT\\": "src"
@@ -4565,16 +4567,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.6.7",
+            "version": "v2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "7e8ded3cc496858b0a35c1c9355e5af79985bd0c"
+                "reference": "991e5bd8a48e450d23cd55336964f916e92a6464"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/7e8ded3cc496858b0a35c1c9355e5af79985bd0c",
-                "reference": "7e8ded3cc496858b0a35c1c9355e5af79985bd0c",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/991e5bd8a48e450d23cd55336964f916e92a6464",
+                "reference": "991e5bd8a48e450d23cd55336964f916e92a6464",
                 "shasum": ""
             },
             "require": {
@@ -4625,7 +4627,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.6.7"
+                "source": "https://github.com/livewire/livewire/tree/v2.7.2"
             },
             "funding": [
                 {
@@ -4633,7 +4635,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-25T22:50:47+00:00"
+            "time": "2021-10-20T02:27:35+00:00"
         },
         {
             "name": "maatwebsite/excel",
@@ -12924,16 +12926,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.2.2",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556"
+                "reference": "622548b623e81ca6d78b721c5e029f4ce664f170"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/069a785b2141f5bcf49f3e353548dc1cce6df556",
-                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/622548b623e81ca6d78b721c5e029f4ce664f170",
+                "reference": "622548b623e81ca6d78b721c5e029f4ce664f170",
                 "shasum": ""
             },
             "require": {
@@ -12944,7 +12946,8 @@
                 "webmozart/assert": "^1.9.1"
             },
             "require-dev": {
-                "mockery/mockery": "~1.3.2"
+                "mockery/mockery": "~1.3.2",
+                "psalm/phar": "^4.8"
             },
             "type": "library",
             "extra": {
@@ -12974,9 +12977,9 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/master"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.3.0"
             },
-            "time": "2020-09-03T19:13:55+00:00"
+            "time": "2021-10-19T17:43:47+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -15396,5 +15399,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }

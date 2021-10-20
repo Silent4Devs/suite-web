@@ -140,7 +140,16 @@
 { data: 'id', name: 'id' },
 { data: 'mejora_nombre', name: 'mejora.nombre' },
 { data: 'descripcion', name: 'descripcion' },
-{ data: 'responsable_name', name: 'responsable.name' },
+{ 
+    data: 'id',
+    render: function(data, type, row, meta) {
+
+        
+        let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.responsable.avatar}" title="${row.responsable.name}"></img>`;
+        
+        return `${row.responsable ? html: ''}`;
+    }
+},
 { data: 'fecha_compromiso', name: 'fecha_compromiso' },
 { data: 'estatus', name: 'estatus' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

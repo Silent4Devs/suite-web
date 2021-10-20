@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\PlanBaseActividade;
@@ -17,7 +17,7 @@ class GanttController extends Controller
         $responsable = User::get();
         $responsablenom = User::select('name')->where('id', '=', '3');
         //dd($planbase, $responsable, $responsablenom);
-        return view('admin.gantt.index', compact('planbase', 'responsable', ))
+        return view('frontend.gantt.index', compact('planbase', 'responsable', ))
             ->with('planbases', $planbase);
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\PlanImplementacion;
@@ -21,7 +21,7 @@ class PlanesAccionController extends Controller
             return datatables()->of($planesImplementacion)->toJson();
         }
 
-        return view('admin.planesDeAccion.index');
+        return view('frontend.planesDeAccion.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class PlanesAccionController extends Controller
     {
         $planImplementacion = new PlanImplementacion();
 
-        return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo', 'referencia'));
+        return view('frontend.planesDeAccion.create', compact('planImplementacion', 'modulo', 'referencia'));
     }
 
     /**
@@ -71,7 +71,7 @@ class PlanesAccionController extends Controller
             'elaboro_id' => auth()->user()->empleado->id,
         ]);
 
-        return redirect()->route('admin.planes-de-accion.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . 'creado');
+        return redirect()->route('planes-de-accion.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . 'creado');
     }
 
     /**
@@ -84,7 +84,7 @@ class PlanesAccionController extends Controller
     {
         $planImplementacion = PlanImplementacion::find($planImplementacion);
 
-        return view('admin.planesDeAccion.show', compact('planImplementacion'));
+        return view('frontend.planesDeAccion.show', compact('planImplementacion'));
     }
 
     /**
@@ -98,7 +98,7 @@ class PlanesAccionController extends Controller
         $planImplementacion = PlanImplementacion::find($planImplementacion);
         $referencia = null;
 
-        return view('admin.planesDeAccion.edit', compact('planImplementacion', 'referencia'));
+        return view('frontend.planesDeAccion.edit', compact('planImplementacion', 'referencia'));
     }
 
     /**
@@ -129,7 +129,7 @@ class PlanesAccionController extends Controller
             'objetivo' => $request->objetivo,
         ]);
 
-        return redirect()->route('admin.planes-de-accion.index')->with('success', 'Plan de Acción Actualizado');
+        return redirect()->route('planes-de-accion.index')->with('success', 'Plan de Acción Actualizado');
     }
 
     /**

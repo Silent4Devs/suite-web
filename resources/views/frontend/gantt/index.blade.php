@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/gantt/modules/gantt.js"></script>
@@ -18,7 +18,7 @@
             <div id="containergantt"></div>
             </div>
             <div class="col-12">
-                @include('admin.gantt.grap')
+                @include('frontend.gantt.grap')
             </div>
         </div>
     </div>

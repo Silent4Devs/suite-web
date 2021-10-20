@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\frontend;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyUserRequest;
@@ -130,7 +130,7 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('frontend.users.index');
+        return redirect()->route('users.index');
     }
 
     public function edit(User $user)
@@ -157,7 +157,7 @@ class UsersController extends Controller
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('frontend.users.index');
+        return redirect()->route('users.index');
     }
 
     public function show(User $user)

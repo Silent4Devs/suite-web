@@ -192,7 +192,7 @@
                             <div class="mt-5">
                                 @can('contexto_access')
                                     <ul>
-                                        <li><a href="{{ url('/admin/analisis-brechas') }}">
+                                        <li><a href="{{ url('/admin/analisisdebrechas') }}">
                                                 <div>
                                                     <i class="fas fa-search"></i>
                                                     Análisis de brechas
