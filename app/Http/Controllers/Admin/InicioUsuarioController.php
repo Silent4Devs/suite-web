@@ -141,31 +141,43 @@ class InicioUsuarioController extends Controller
             $contador_revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->where('estatus', Documento::SOLICITUD_REVISION)->count();
             $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $usuario->empleado->id)->get();
             //Evaluaciones
-            $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) {
+            $last_evaluacion = Evaluacion::select('id', 'nombre', 'fecha_inicio', 'fecha_fin')->latest()->first();
+            $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
                 $q->where('estatus', Evaluacion::ACTIVE)
                     ->where('fecha_inicio', '<=', Carbon::now())
-                    ->where('fecha_fin', '>', Carbon::now());
-            })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)->get();
-            $mis_evaluaciones = EvaluadoEvaluador::with('evaluacion', 'empleado_evaluado', 'evaluador')->where('evaluado_id', auth()->user()->empleado->id)->get();
-            //Objetivos
-            $mis_objetivos = Empleado::with(['objetivos' => function ($q) {
-                $q->with(['objetivo' => function ($query) {
-                    $query->with(['calificacion']);
-                }])->where('completado', false);
-            }])->find($usuario->empleado->id)->objetivos;
-            $evaluaciones_mis_objetivos = Evaluacion::whereHas('evaluados', function ($q) use ($usuario) {
-                $q->where('evaluado_id', $usuario->empleado->id);
-            })->get();
+                    ->where('fecha_fin', '>', Carbon::now())
+                    ->where('id', $last_evaluacion->id);
+            })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)
+                ->where('evaluado_id', '!=', auth()->user()->empleado->id)
+                ->where('evaluado', false)
+                ->get();
+            $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
+                $q->where('estatus', Evaluacion::ACTIVE)
+                    ->where('fecha_inicio', '<=', Carbon::now())
+                    ->where('fecha_fin', '>', Carbon::now())
+                    ->where('id', $last_evaluacion->id);
+            })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)
+                ->where('evaluado_id', auth()->user()->empleado->id)
+                ->first();
 
-            foreach ($evaluaciones_mis_objetivos as $evaluacion) {
-                $lista_evaluaciones->push([
-                    'id' => $evaluacion->id,
-                    'nombre' => $evaluacion->nombre,
-                    'fecha_inicio' => Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y'),
-                    'fecha_fin' => Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y'),
-                    'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $usuario->empleado->id),
-                ]);
-            }
+            // $mis_objetivos = Empleado::with(['objetivos' => function ($q) {
+            //     $q->with(['objetivo' => function ($query) {
+            //         $query->with(['calificacion']);
+            //     }])->where('completado', false);
+            // }])->find($usuario->empleado->id)->objetivos;
+            // $evaluaciones_mis_objetivos = Evaluacion::whereHas('evaluados', function ($q) use ($usuario) {
+            //     $q->where('evaluado_id', $usuario->empleado->id);
+            // })->get();
+            $mis_objetivos = auth()->user()->empleado->objetivos;
+            // foreach ($evaluaciones_mis_objetivos as $evaluacion) {
+            //     $lista_evaluaciones->push([
+            //         'id' => $evaluacion->id,
+            //         'nombre' => $evaluacion->nombre,
+            //         'fecha_inicio' => Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y'),
+            //         'fecha_fin' => Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y'),
+            //         'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $usuario->empleado->id),
+            //     ]);
+            // }
             // dd($lista_evaluaciones);
             // SECCION MIS DATOS
             $equipo_a_cargo = $this->obtenerEquipoACargo($usuario->empleado->children);
@@ -177,7 +189,7 @@ class InicioUsuarioController extends Controller
             $mis_objetivos = collect();
         }
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'auditoria_internas', 'lista_evaluaciones'));
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'last_evaluacion'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)

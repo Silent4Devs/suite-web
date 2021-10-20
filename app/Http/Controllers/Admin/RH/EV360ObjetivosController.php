@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\PerfilEmpleado;
+use App\Models\Puesto;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
 use Illuminate\Http\Request;
@@ -18,8 +21,10 @@ class EV360ObjetivosController extends Controller
             $empleados = Empleado::with(['objetivos', 'area', 'perfil'])->get();
             return datatables()->of($empleados)->toJson();
         }
-
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.index');
+        $areas = Area::select('id', 'area')->get();
+        $puestos = Puesto::select('id', 'puesto')->get();
+        $perfiles = PerfilEmpleado::select('id', 'nombre')->get();
+        return view('admin.recursos-humanos.evaluacion-360.objetivos.index', compact('areas', 'puestos', 'perfiles'));
     }
 
     public function create()
@@ -112,9 +117,10 @@ class EV360ObjetivosController extends Controller
     }
 
 
-    public function editByEmpleado(Request $request, $empleado)
+    public function editByEmpleado(Request $request, $empleado, $objetivo)
     {
-        $objetivo = new Objetivo;
+
+        $objetivo = Objetivo::find(intval($objetivo))->load(['tipo', 'metrica']);
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
             $q->with(['objetivo' => function ($query) {
@@ -122,21 +128,12 @@ class EV360ObjetivosController extends Controller
             }]);
         }]);
 
-        if ($request->ajax()) {
-            $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
-
-            return datatables()->of($objetivos)->toJson();
-        }
-        $tipo_seleccionado = null;
-        $metrica_seleccionada = null;
-        if ($request->ajax()) {
-        }
-
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado'));
+        return $objetivo;
     }
 
     public function edit($objetivo)
     {
+
         $objetivo = Objetivo::find($objetivo);
         $tipo_seleccionado = $objetivo->tipo_id;
         $metrica_seleccionada = $objetivo->metrica_id;
@@ -144,7 +141,7 @@ class EV360ObjetivosController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.objetivos.edit', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada'));
     }
 
-    public function update(Request $request, $objetivo)
+    public function updateByEmpleado(Request $request, $objetivo)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
@@ -156,6 +153,20 @@ class EV360ObjetivosController extends Controller
         ]);
         $objetivo = Objetivo::find($objetivo);
         $u_objetivo = $objetivo->update($request->all());
+        if ($request->hasFile('foto')) {
+            Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
+            $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $nombre_imagen = 'OBJETIVO_' .  $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $objetivo->empleado_id . '.' . $extension;
+            $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+            //Usamos image_intervention para disminuir el peso de la imagen
+            $img_intervention = Image::make($request->file('foto'));
+            $img_intervention->resize(720, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($route);
+            $objetivo->update([
+                'imagen' => $nombre_imagen
+            ]);
+        }
         if ($u_objetivo) {
             return redirect()->route('admin.ev360-objetivos.index')->with('success', 'Objetivo editado con éxito');
         } else {
@@ -163,9 +174,19 @@ class EV360ObjetivosController extends Controller
         }
     }
 
-    public function show()
+    public function show($empleado)
     {
-        # code...
+        $objetivo = new Objetivo;
+        $empleado = Empleado::find(intval($empleado));
+        $empleado->load(['objetivos' => function ($q) {
+            $q->with(['objetivo' => function ($query) {
+                $query->with(['tipo', 'metrica']);
+            }]);
+        }]);
+
+        $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+
+        return view('admin.recursos-humanos.evaluacion-360.objetivos.show', compact('empleado'));
     }
 
     public function destroy()

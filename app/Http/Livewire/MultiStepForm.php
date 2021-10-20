@@ -250,15 +250,23 @@ class MultiStepForm extends Component
             $this->validate([
                 'evaluados_objetivo' => 'required',
                 'by_manual' => 'required',
+            ], [
+                'evaluados_objetivo.required' => 'El campo público objetivo es requerido',
+                'by_manual.required' => 'El campo de selección manual por empleados es requerido'
             ]);
         } elseif ($this->evaluados_objetivo == 'area') {
             $this->validate([
                 'evaluados_objetivo' => 'required',
                 'by_area' => 'required',
+            ], [
+                'evaluados_objetivo.required' => 'El campo público objetivo es requerido',
+                'by_area.required' => 'El campo de selección por área es requerido'
             ]);
         } else {
             $this->validate([
                 'evaluados_objetivo' => 'required',
+            ], [
+                'evaluados_objetivo.required' => 'El campo público objetivo es requerido'
             ]);
         }
     }
@@ -384,7 +392,6 @@ class MultiStepForm extends Component
         } else {
             $evaluados = GruposEvaluado::find(intval($evaluados_objetivo))->empleados->pluck('id')->toArray();
         }
-
         $evaluacion = Evaluacion::create([
             'nombre' => $nombre,
             'descripcion' => $descripcion,
@@ -407,6 +414,7 @@ class MultiStepForm extends Component
             'include_objetivos' => $this->includeObjetivos ? $this->includeObjetivos : false,
         ]);
         $evaluacion->evaluados()->sync($evaluados);
+
         foreach ($evaluados as $evaluado) {
             $this->relacionarEvaluadoConEvaluadores($evaluacion, $evaluado);
         }
@@ -446,7 +454,6 @@ class MultiStepForm extends Component
                 $evaluadores->push(['id' => intval($empleado->supervisor->id), 'peso' => $this->pesoEvaluacionJefe, 'tipo' => EvaluadoEvaluador::JEFE_INMEDIATO]);
             }
         }
-
         $lista_evaluado_por_equipo_a_cargo = collect();
         if ($evaluacion->evaluado_por_equipo_a_cargo) {
             if ($empleado->children) {
@@ -465,21 +472,23 @@ class MultiStepForm extends Component
         if ($evaluacion->evaluado_por_misma_area) {
             if ($empleado->empleados_misma_area) {
                 foreach ($empleado->empleados_misma_area as $evaluador) {
-                    $lista_empleados_misma_area->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+                    if ($evaluador != $empleado->id) {
+                        $lista_empleados_misma_area->push(['id' => intval($evaluador), 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+                    }
                 }
                 if (count($lista_empleados_misma_area)) {
-                    while (count($lista_empleados_misma_area)) {
-                        if (!$evaluadores->contains('id', $lista_empleados_misma_area->random()['id'])) {
-                            $evaluadores->push($lista_empleados_misma_area->random());
-                            break;
-                        }
-                    }
+                    $evaluadores->push($lista_empleados_misma_area->random());
+                    // while (count($lista_empleados_misma_area)) {
+                    //     if (!$evaluadores->contains('id', $lista_empleados_misma_area->random()['id'])) {
+
+                    //         break;
+                    //     }
+                    // }
                 }
             }
         }
 
         $evaluadores = $evaluadores->unique('id')->toArray();
-
         foreach ($evaluadores as $evaluador) {
             EvaluadoEvaluador::create([
                 'evaluado_id' => $empleado->id,
