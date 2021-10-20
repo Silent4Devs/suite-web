@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroySedeRequest;
-use App\Http\Requests\StoreSedeRequest;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Team;
@@ -96,7 +95,6 @@ class SedeController extends Controller
 
     public function store(Request $request)
     {
-
         $client = new \GuzzleHttp\Client();
         $geocoder = new \Spatie\Geocoder\Geocoder($client);
         $geocoder->setApiKey('AIzaSyDByWqsyGQopJ8tnvFk8yp4PjcfG7zoXuo');

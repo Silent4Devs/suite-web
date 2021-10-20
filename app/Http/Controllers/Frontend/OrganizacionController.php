@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyOrganizacionRequest;
-use App\Http\Requests\StoreOrganizacionRequest;
 use App\Models\Organizacion;
 use Flash;
 use Illuminate\Http\Request;
@@ -95,8 +94,6 @@ class OrganizacionController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $organizacions->id]);
         }
-
-
 
         return redirect()->route('organizacions.index')->with('success', 'Guardado con éxito');
     }
