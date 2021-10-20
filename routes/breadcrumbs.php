@@ -426,8 +426,6 @@ Breadcrumbs::for('EV360-Competencias-Por-Puesto-Create', function ($trail) {
     $trail->push('Asignar competencia al puesto', 'recursos-humanos/evaluacion-360/competencias-por-puesto/*/create');
 });
 
-
-
 Breadcrumbs::for('EV360-Objetivos', function ($trail) {
     $trail->parent('Evaluacion360');
     $trail->push('Objetivos', route('admin.ev360-objetivos.index'));
@@ -440,7 +438,6 @@ Breadcrumbs::for('EV360-Objetivos-Edit', function ($trail) {
     $trail->parent('EV360-Objetivos');
     $trail->push('Editar Objetivo', '/recursos-humanos/evaluacion-360/objetivos/*/edit');
 });
-
 
 Breadcrumbs::for('EV360-Evaluacion-Resumen', function ($trail, $evaluacion) {
     $trail->parent('EV360-Evaluaciones-Evaluacion', $evaluacion);

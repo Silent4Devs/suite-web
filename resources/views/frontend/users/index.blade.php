@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     @can('user_create')
 
@@ -174,7 +174,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar usuario',
-                url: "{{ route('admin.users.create') }}",
+                url: "{{ route('frontend.users.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -187,7 +187,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.users.massDestroy') }}",
+                url: "{{ route('frontend.users.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -219,7 +219,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.users.index') }}",
+                ajax: "{{ route('frontend.users.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -279,9 +279,9 @@
                         data: 'id',
                         name: '{{ trans('global.actions') }}',
                         render: function(data, type, row, meta) {
-                            let urlButtonShow = `/admin/users/${data}`;
-                            let urlButtonDelete = `/admin/users/${data}`;
-                            let urlButtonEdit = `/admin/users/${data}/edit`;
+                            let urlButtonShow = `/users/${data}`;
+                            let urlButtonDelete = `/users/${data}`;
+                            let urlButtonEdit = `/users/${data}/edit`;
 
                             let htmlBotones = `
                                 <div class="btn-group">
@@ -399,7 +399,7 @@
                 console.log(n_empleado);
                 $.ajax({
                     type: "POST",
-                    url: "/admin/users/vincular",
+                    url: "/frontend/users/vincular",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },

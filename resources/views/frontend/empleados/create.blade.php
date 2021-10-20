@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -199,7 +199,7 @@
             </div>
         @endif
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.empleados.store') }}" enctype="multipart/form-data"
+            <form method="POST" action="{{ route('frontend.empleados.store') }}" enctype="multipart/form-data"
                 id="formEmpleado">
                 @csrf
                 <div class="row">
@@ -780,13 +780,13 @@
             document.getElementById('btnSiguiente').addEventListener('click', function(e) {
                 e.preventDefault();
                 $("#formEmpleado").removeAttr('action');
-                $("#formEmpleado").attr('action', '{{ route('admin.empleados.storeWithCompetencia') }}');
+                $("#formEmpleado").attr('action', '{{ route('frontend.empleados.storeWithCompetencia') }}');
                 document.getElementById('formEmpleado').submit();
             })
             document.getElementById('btnGuardar').addEventListener('click', function(e) {
                 e.preventDefault();
                 $("#formEmpleado").removeAttr('action');
-                $("#formEmpleado").attr('action', '{{ route('admin.empleados.store') }}');
+                $("#formEmpleado").attr('action', '{{ route('frontend.empleados.store') }}');
                 document.getElementById('formEmpleado').submit();
             })
             window.tblExperiencia = $('#tbl-experiencia').DataTable({
@@ -822,7 +822,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // let url = "{{ route('admin.empleados.get') }}";
+            // let url = "{{ route('frontend.empleados.get') }}";
 
 
 

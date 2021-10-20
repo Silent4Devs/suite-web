@@ -711,7 +711,6 @@ class EV360EvaluacionesController extends Controller
         $calificaciones_equipo_competencias = collect();
         foreach ($informacion_obtenida['lista_equipo_a_cargo'] as $equipo_calificaciones) {
             foreach ($equipo_calificaciones['evaluaciones'] as $evaluacion_equipo) {
-
                 foreach ($evaluacion_equipo['competencias'] as $competencia_equipo) {
                     $calificaciones_equipo_competencias->push($competencia_equipo['calificacion']);
                 }
@@ -778,7 +777,7 @@ class EV360EvaluacionesController extends Controller
             });
             $promedio_competencias = 0;
             $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() > 0 ? $evaluado->puestoRelacionado->competencias->count() : 1;
-            $lista_autoevaluacion->push(array(
+            $lista_autoevaluacion->push([
                 'tipo' => 'Autoevaluación',
                 'peso_general' => $evaluacion->peso_autoevaluacion,
                 'evaluaciones' => $filtro_autoevaluacion->map(function ($evaluador) use ($evaluacion, $evaluado) {
@@ -789,7 +788,7 @@ class EV360EvaluacionesController extends Controller
 
                     return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
                 }),
-            ));
+            ]);
 
             $calificacion = 0;
             if (count($lista_autoevaluacion->first()['evaluaciones'])) {
@@ -950,6 +949,7 @@ class EV360EvaluacionesController extends Controller
             $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
             $calificacion_final += $promedio_general_objetivos;
         }
+
         return [
             'lista_autoevaluacion' => $lista_autoevaluacion,
             'lista_jefe_inmediato' => $lista_jefe_inmediato,
@@ -964,7 +964,6 @@ class EV360EvaluacionesController extends Controller
             'evaluadores' => Empleado::find($evaluadores->pluck('evaluador_id')),
         ];
     }
-
 
     public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias)
     {
@@ -1011,31 +1010,31 @@ class EV360EvaluacionesController extends Controller
 
         foreach ($evaluados as $evaluado) {
             // $evaluado->load('area');
-            $lista_evaluados->push(array(
+            $lista_evaluados->push([
                 'evaluado' => $evaluado->name,
                 'puesto' => $evaluado->puesto,
                 'area' => $evaluado->area->area,
-                'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id)
-            ));
+                'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
+            ]);
         }
 
         foreach ($lista_evaluados as $evaluado) {
             if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 60) {
                 $inaceptable++;
-            } else if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 80) {
+            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= 80) {
                 $minimo_aceptable++;
-            } else if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 100) {
+            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= 100) {
                 $aceptable++;
-            } else if ($evaluado['informacion_evaluacion']['calificacion_final'] > 100) {
+            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] > 100) {
                 $sobresaliente++;
             }
         }
-        $calificaciones->push(array(
+        $calificaciones->push([
             'Inaceptable' => $inaceptable,
             'Mínimo Aceptable' => $minimo_aceptable,
             'Aceptable' => $aceptable,
             'Sobresaliente' => $sobresaliente,
-        ));
+        ]);
         $calificaciones = $calificaciones->first();
 
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('lista_evaluados', 'calificaciones', 'evaluacion'));
@@ -1057,6 +1056,7 @@ class EV360EvaluacionesController extends Controller
                 'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $empleado->id),
             ]);
         }
+
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.lista-evaluaciones-por-empleado', compact('lista_evaluaciones', 'empleado'));
     }
 
@@ -1081,6 +1081,7 @@ class EV360EvaluacionesController extends Controller
                 }
             }
         }
+
         return response()->json(['success' => true]);
     }
 
@@ -1089,14 +1090,13 @@ class EV360EvaluacionesController extends Controller
         Mail::to($email)->send(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
     }
 
-
     public function enviarInvitacionDeEvaluacion(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date|after:fecha_inicio',
-            'descripcion' => 'nullable|string'
+            'descripcion' => 'nullable|string',
         ]);
         $evaluacion = Evaluacion::find(intval($request->evaluacion));
         $evaluado = Empleado::find(intval($request->evaluado));

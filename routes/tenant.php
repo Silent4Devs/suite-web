@@ -10,13 +10,12 @@ use App\Http\Controllers\Frontend\SedeController;
 use App\Http\Controllers\Frontend\TipoactivoController;
 use App\Http\Controllers\Frontend\EmpleadoController;
 use App\Http\Controllers\Frontend\GrupoAreaController;
-use App\Http\Controllers\Frontend\DocumentosController;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use App\Http\Controllers\Frontend\OrganizacionController;
 use App\Http\Controllers\Frontend\InicioUsuarioController;
+use App\Http\Controllers\Frontend\OrganizacionController;
+use App\Http\Controllers\Frontend\PortalComunicacionController;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\ScopeSessions;
-use App\Http\Controllers\Frontend\PortalComunicacionController;
 use App\Http\Controllers\Frontend\PlanesAccionController;
 use App\Http\Controllers\Frontend\GlosarioController;
 use App\Http\Controllers\Frontend\MacroprocesoController;
@@ -498,9 +497,9 @@ Route::middleware([
 
         // //Grupo Areas
         Route::post('grupoarea/areas-relacionadas', [GrupoAreaController::class, 'getRelationatedAreas'])->name('grupoarea.getRelationatedAreas');
-        Route::delete('grupoarea/destroy', [GrupoAreaController::class,'massDestroy'])->name('grupoarea.massDestroy');
-        Route::post('grupoarea/parse-csv-import', [GrupoAreaController::class,'parseCsvImport'])->name('grupoarea.parseCsvImport');
-        Route::post('grupoarea/process-csv-import', [GrupoAreaController::class,'processCsvImport'])->name('grupoarea.processCsvImport');
+        Route::delete('grupoarea/destroy', [GrupoAreaController::class, 'massDestroy'])->name('grupoarea.massDestroy');
+        Route::post('grupoarea/parse-csv-import', [GrupoAreaController::class, 'parseCsvImport'])->name('grupoarea.parseCsvImport');
+        Route::post('grupoarea/process-csv-import', [GrupoAreaController::class, 'processCsvImport'])->name('grupoarea.processCsvImport');
         Route::resource('grupoarea', GrupoAreaController::class);
 
         // // Indicadores Sgsis
