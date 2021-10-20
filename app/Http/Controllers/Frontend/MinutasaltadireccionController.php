@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -90,7 +90,7 @@ class MinutasaltadireccionController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.minutasaltadireccions.index', compact('users', 'teams'));
+        return view('frontend.minutasaltadireccions.index', compact('users', 'teams'));
     }
 
     public function create()
@@ -99,7 +99,7 @@ class MinutasaltadireccionController extends Controller
         $responsablereunions = Empleado::select('id', 'name', 'foto')->with('area')->get();
         $esta_vinculado = auth()->user()->empleado ? true : false;
 
-        return view('admin.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
+        return view('frontend.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
     }
 
     public function store(StoreMinutasaltadireccionRequest $request)
@@ -140,7 +140,7 @@ class MinutasaltadireccionController extends Controller
         // Revisiones
         $this->initReviews($minutasaltadireccion);
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('minutasaltadireccions.index')->with('success', 'Guardado con éxito');
     }
 
     public function vincularParticipantes($request, $minutasaltadireccion)
@@ -283,7 +283,7 @@ class MinutasaltadireccionController extends Controller
         $actividades = array_filter($actividades, function ($actividad) {
             return intval($actividad->level) > 0;
         });
-        $pdf = \PDF::loadView('admin.minutasaltadireccions.pdf.minuta-pdf', compact('minutasaltadireccion', 'actividades'));
+        $pdf = \PDF::loadView('frontend.minutasaltadireccions.pdf.minuta-pdf', compact('minutasaltadireccion', 'actividades'));
         Storage::makeDirectory('public/minutas/en aprobacion');
         Storage::makeDirectory('public/minutas/aprobadas');
         $nombre_pdf = Str::limit($minutasaltadireccion->tema_reunion, 20, '') . '_' . $minutasaltadireccion->fechareunion . '.pdf';
@@ -305,7 +305,7 @@ class MinutasaltadireccionController extends Controller
 
         $responsablereunions = Empleado::select('id', 'name', 'foto')->get();
 
-        return view('admin.minutasaltadireccions.edit', compact('responsablereunions', 'minutasaltadireccion', 'actividades'));
+        return view('frontend.minutasaltadireccions.edit', compact('responsablereunions', 'minutasaltadireccion', 'actividades'));
     }
 
     public function processUpdate($request, Minutasaltadireccion $minutasaltadireccion, $edit = false)
@@ -349,7 +349,7 @@ class MinutasaltadireccionController extends Controller
             $minutasaltadireccion->archivo->delete();
         }
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Editado con éxito');
+        return redirect()->route('minutasaltadireccions.index')->with('success', 'Editado con éxito');
     }
 
     public function updateAndReview(Request $request, $minutasaltadireccion)
@@ -369,7 +369,7 @@ class MinutasaltadireccionController extends Controller
         // Revisiones
         $this->initReviews($minutasaltadireccion);
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Editado con éxito');
+        return redirect()->route('minutasaltadireccions.index')->with('success', 'Editado con éxito');
     }
 
     public function sendEmailRejectToBeforeReviewers($minuta)
@@ -399,7 +399,7 @@ class MinutasaltadireccionController extends Controller
 
         $minutasaltadireccion->load('responsable', 'team');
 
-        return view('admin.minutasaltadireccions.show', compact('minutasaltadireccion'));
+        return view('frontend.minutasaltadireccions.show', compact('minutasaltadireccion'));
     }
 
     public function destroy(Request $request, Minutasaltadireccion $minutasaltadireccion)
@@ -436,7 +436,7 @@ class MinutasaltadireccionController extends Controller
         $minuta = Minutasaltadireccion::find(intval($minuta));
         $revisiones = RevisionMinuta::with('minuta', 'empleado')->where('minuta_id', $minuta->id)->get();
 
-        return view('admin.minutasaltadireccions.revisiones.history-reviews', compact('minuta', 'revisiones'));
+        return view('frontend.minutasaltadireccions.revisiones.history-reviews', compact('minuta', 'revisiones'));
     }
 
     public function createPlanAccion(Minutasaltadireccion $id)
@@ -445,9 +445,9 @@ class MinutasaltadireccionController extends Controller
         $modulo = $id;
         $modulo_name = 'Matríz de Requisitos Legales';
         $referencia = $modulo->nombrerequisito;
-        $urlStore = route('admin.matriz-requisito-legales.storePlanAccion', $id);
+        $urlStore = route('matriz-requisito-legales.storePlanAccion', $id);
 
-        return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
+        return view('frontend.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
 
     public function storePlanAccion(Request $request, Minutasaltadireccion $id)
@@ -481,6 +481,6 @@ class MinutasaltadireccionController extends Controller
         $minuta = $id;
         $minuta->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('minutasaltadireccions.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
     }
 }

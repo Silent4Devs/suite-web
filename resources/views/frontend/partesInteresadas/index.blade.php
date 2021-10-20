@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.partes-interesadas.index') }}
+    {{-- {{ Breadcrumbs::render('frontend.partes-interesadas.index') }} --}}
 
 <style>
 .table tr td:nth-child(2){
@@ -73,7 +73,7 @@ width:900px !important;
 
             <div style="margin-bottom:10px; margin-left:12px;" class="row">
                 <div class="col-lg-12">
-                    <a class="btn btn-success" href="{{ route('admin.partes-interesadas.create') }}">
+                    <a class="btn btn-success" href="{{ route('frontend.partes-interesadas.create') }}">
                         Agregar <strong>+</strong>
                     </a>
                 </div>
@@ -280,7 +280,7 @@ width:900px !important;
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.partes-interesadas.massDestroy') }}",
+                url: "{{ route('partes-interesadas.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
@@ -313,7 +313,7 @@ width:900px !important;
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva parte interesada',
-                url: "{{ route('admin.partes-interesadas.create') }}",
+                url: "{{ route('partes-interesadas.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -332,7 +332,7 @@ width:900px !important;
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-                ajax: "{{ route('admin.partes-interesadas.index') }}",
+                ajax: "{{ route('partes-interesadas.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

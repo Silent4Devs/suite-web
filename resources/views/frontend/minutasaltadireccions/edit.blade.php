@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <style>
         .select2-search.select2-search--inline {
@@ -7,7 +7,7 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.minutasaltadireccions.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px">
@@ -178,7 +178,7 @@
                     @endif
                 </div>
                 {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                @include('admin.planesDeAccion.actividades.tabla',[
+                @include('frontend.planesDeAccion.actividades.tabla',[
                 'empleados'=>$responsablereunions,
                 'actividades'=>$actividades,
                 ])
@@ -203,13 +203,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('btnGuardar').addEventListener('click', function(e) {
                 let urlUpdate =
-                    "{{ route('admin.minutasaltadireccions.update', $minutasaltadireccion) }}";
+                    "{{ route('minutasaltadireccions.update', $minutasaltadireccion) }}";
                 document.getElementById('formularioEditMinutas').setAttribute('action', urlUpdate);
             });
 
             document.getElementById('btnUpdateAndReview').addEventListener('click', function(e) {
                 let urlUpdateAndReview =
-                    "{{ route('admin.minutasaltadireccions.updateAndReview', $minutasaltadireccion) }}";
+                    "{{ route('minutasaltadireccions.updateAndReview', $minutasaltadireccion) }}";
                 document.getElementById('formularioEditMinutas').setAttribute('action', urlUpdateAndReview);
             });
         });
@@ -306,7 +306,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            let url = "{{ route('admin.empleados.get') }}";
+            let url = "{{ route('empleados.get') }}";
             $("#participantes_search").keyup(function() {
                 $.ajax({
                     type: "POST",
@@ -434,7 +434,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            let url = "{{ route('admin.empleados.get') }}";
+            let url = "{{ route('empleados.get') }}";
             $("#participantes_search").keyup(function() {
                 $.ajax({
                     type: "POST",

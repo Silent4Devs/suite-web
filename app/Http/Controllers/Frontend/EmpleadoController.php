@@ -303,7 +303,7 @@ class EmpleadoController extends Controller
     {
         $empleado = $this->onlyStore($request);
 
-        return redirect()->route('admin.empleados.edit', $empleado)->with('success', 'Guardado con éxito');
+        return redirect()->route('frontend.empleados.edit', $empleado)->with('success', 'Guardado con éxito');
 
         if ($request->hasFile('files')) {
             $files = $request->file('files');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyComiteseguridadRequest;
@@ -69,7 +69,7 @@ class ComiteseguridadController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.comiteseguridads.index', compact('users', 'teams'));
+        return view('frontend.comiteseguridads.index', compact('users', 'teams'));
     }
 
     public function create()
@@ -79,7 +79,7 @@ class ComiteseguridadController extends Controller
         $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.comiteseguridads.create', compact('personaasignadas', 'empleados'));
+        return view('frontend.comiteseguridads.create', compact('personaasignadas', 'empleados'));
     }
 
     public function store(Request $request)
@@ -87,7 +87,7 @@ class ComiteseguridadController extends Controller
         $comiteseguridad = Comiteseguridad::create($request->all());
         // dd($comiteseguridad);
 
-        return redirect()->route('admin.comiteseguridads.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('frontend.comiteseguridads.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Comiteseguridad $comiteseguridad)
@@ -99,14 +99,14 @@ class ComiteseguridadController extends Controller
         $comiteseguridad->load('personaasignada', 'team');
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.comiteseguridads.edit', compact('personaasignadas', 'comiteseguridad', 'empleados'));
+        return view('frontend.comiteseguridads.edit', compact('personaasignadas', 'comiteseguridad', 'empleados'));
     }
 
     public function update(UpdateComiteseguridadRequest $request, Comiteseguridad $comiteseguridad)
     {
         $comiteseguridad->update($request->all());
 
-        return redirect()->route('admin.comiteseguridads.index')->with('success', 'Editado con éxito');
+        return redirect()->route('comiteseguridads.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Comiteseguridad $comiteseguridad)
@@ -115,7 +115,7 @@ class ComiteseguridadController extends Controller
 
         $comiteseguridad->load('personaasignada', 'team');
 
-        return view('admin.comiteseguridads.show', compact('comiteseguridad'));
+        return view('frontend.comiteseguridads.show', compact('comiteseguridad'));
     }
 
     public function destroy(Comiteseguridad $comiteseguridad)
@@ -140,6 +140,6 @@ class ComiteseguridadController extends Controller
 
         $organizacion = Organizacion::get();
 
-        return view('admin.comiteseguridads.visualizacion', compact('comiteseguridads', 'organizacion'));
+        return view('frontend.comiteseguridads.visualizacion', compact('comiteseguridads', 'organizacion'));
     }
 }

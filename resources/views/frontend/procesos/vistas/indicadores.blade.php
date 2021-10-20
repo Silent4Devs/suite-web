@@ -134,7 +134,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '{{ route('frontend.selectIndicador') }}',
+            url: '{{ route('selectIndicador') }}',
             type: 'POST',
             beforeSend: function() {
                 document.getElementById('contenedor_resultado').classList.add("d-none");

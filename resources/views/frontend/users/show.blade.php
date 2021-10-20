@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="card">
@@ -73,7 +73,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.users.index') }}">
+                <a class="btn btn-default" href="{{ route('frontend.users.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

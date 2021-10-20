@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.minutasaltadireccions.create') }} --}}
 
 <div class="card">
     <div class="card-header">
@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.minutasaltadireccions.index') }}">
+                <a class="btn btn-default" href="{{ route('minutasaltadireccions.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -72,7 +72,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.minutasaltadireccions.index') }}">
+                <a class="btn btn-default" href="{{ route('minutasaltadireccions.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

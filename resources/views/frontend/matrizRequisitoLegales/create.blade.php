@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 <style>
     .select2-search.select2-search--inline {
@@ -6,7 +6,7 @@
     }
 
 </style>
-{{ Breadcrumbs::render('admin.matriz-requisito-legales.create') }}
+{{-- {{ Breadcrumbs::render('frontend.matriz-requisito-legales.create') }} --}}
 
 <div class="mt-4 card">
     <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px">
@@ -14,7 +14,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.matriz-requisito-legales.store") }}" enctype="multipart/form-data" class="row">
+        <form method="POST" action="{{ route("matriz-requisito-legales.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-12">
                 <label class="required" for="nombrerequisito"> <i class="fas fa-clipboard-list iconos-crear"></i> Fundamento</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title="Nombre de la ley,norma,reglamento o documento donde se encuentra el requisito"></i>
