@@ -841,9 +841,9 @@ Breadcrumbs::for('frontend.comunicacion-sgis.show', function ($trail) {
 //##############################################################
 //#################### RECURSOS HUMANOS #######################
 //############################################################
-Breadcrumbs::for('Evaluacion360', function ($trail) {
-    $trail->push('RH - Evaluación 360 Grados', route('rh-evaluacion360.index'));
-});
+// Breadcrumbs::for('Evaluacion360', function ($trail) {
+//     $trail->push('RH - Evaluación 360 Grados', route('rh-evaluacion360.index'));
+// });
 
 Breadcrumbs::for('EV360-Evaluaciones', function ($trail) {
     $trail->parent('Evaluacion360');
