@@ -1,5 +1,5 @@
 
-  @extends('layouts.admin')
+  @extends('layouts.frontend')
   @section('content')
 
 <style>
@@ -49,7 +49,7 @@
 
 </style>
 
-  {{ Breadcrumbs::render('admin.entendimiento-organizacions.index') }}
+  {{ Breadcrumbs::render('entendimiento-organizacions.index') }}
 
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -194,11 +194,11 @@
             </div>
             {{-- <div class="row justify-content-end">
                 @if ($obtener_FODA)
-                    <a href="{{ route('admin.entendimiento-organizacions.edit', $obtener_FODA->id) }}"
+                    <a href="{{ route('entendimiento-organizacions.edit', $obtener_FODA->id) }}"
                         class="mr-5 btn btn-primary"><i class="fas fa-pen"></i> Editar Análisis FODA</a>
                 @else
 
-                    <a href="{{ route('admin.entendimiento-organizacions.create') }}" class="mr-5 btn btn-success"><i
+                    <a href="{{ route('entendimiento-organizacions.create') }}" class="mr-5 btn btn-success"><i
                             class="fas fa-pen"></i> Realizar Análisis FODA</a>
 
                 @endif

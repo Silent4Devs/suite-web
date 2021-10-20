@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 	<div class="pl-4 pr-4 mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -47,7 +47,7 @@
 		       			<td>{{ $incidentes->asignado ? $incidentes->asignado->name:'sin asignar'}}</td>
 		       			<td>{{ $incidentes->comentarios }}</td>
 		       			<td>
-		       				<a href="{{ route('admin.desk.seguridad-edit', $incidentes->id) }}"><i class="fas fa-edit"></i></a>
+		       				<a href="{{ route('desk.seguridad-edit', $incidentes->id) }}"><i class="fas fa-edit"></i></a>
 		       			</td>
 		   			</tr>
 	   			@endforeach

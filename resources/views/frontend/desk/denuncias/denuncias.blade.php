@@ -44,7 +44,7 @@
 </div>
 <div class="datatable-fix" style="width:100%">
     <div class="text-right mb-3">
-        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/denuncias')}}">Crear reporte</a>
+        <a class="btn btn-danger" href="{{asset('frontend/inicioUsuario/reportes/denuncias')}}">Crear reporte</a>
     </div>
 
    <table class="table tabla_denuncias">
@@ -93,7 +93,7 @@
                     <td>{{ $denuncia->denunciado->area->area }}</td>
                     <td>{{ $denuncia->denunciado->puesto }}</td>
                     <td>{{ $denuncia->descripcion }}</td>
-	       			<td><a href="{{ route('admin.desk.denuncias-edit', $denuncia->id) }}"><i class="fas fa-edit"></i></a></td>
+	       			<td><a href="{{ route('desk.denuncias-edit', $denuncia->id) }}"><i class="fas fa-edit"></i></a></td>
 	   			</tr>
    			@endforeach
    		</tbody>
@@ -176,7 +176,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar inventario de activos',
-                url: "{{ route('admin.activos.create') }}",
+                url: "{{ route('activos.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;

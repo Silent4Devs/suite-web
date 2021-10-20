@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 @section('styles')
@@ -28,7 +28,7 @@
                     <div class="seccion_div">
 
                         <form class="row" method="POST"
-                            action="{{ route('admin.desk.seguridad-update', $incidentesSeguridad) }}">
+                            action="{{ route('frontend.desk.seguridad-update', $incidentesSeguridad) }}">
                             @csrf
                             <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
                                 style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
@@ -401,7 +401,7 @@
                             </div>
 
                             <div class="mt-2 text-right form-group col-md-12">
-                                <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
+                                <a href="{{ asset('frontend/desk') }}" class="btn btn_cancelar">Cancelar</a>
                                 <input type="submit" class="btn btn-success" value="Enviar">
                             </div>
                         </form>
@@ -448,7 +448,7 @@
                             </div>
 
                             <form method="POST" class="col-md-12"
-                                action="{{ route('admin.desk.analisis_seguridad-update', $analisis) }}">
+                                action="{{ route('desk.analisis_seguridad-update', $analisis) }}">
                                 @csrf
 
                                 <div class="col-md-12" style="position: relative;">
@@ -561,7 +561,7 @@
                                 class="btn btn-success btn_modal_form">Agregar actividad</button>
                             @if (count($incidentesSeguridad->planes))
                                 <a style="position:absolute; right: 170px; top:2px;"
-                                    href="{{ route('admin.planes-de-accion.show', $incidentesSeguridad->planes->first()->id) }}"
+                                    href="{{ route('planes-de-accion.show', $incidentesSeguridad->planes->first()->id) }}"
                                     class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
                                     Acción</a>
                             @endif
@@ -588,7 +588,7 @@
                         <div class="modal_form_plan">
                             <div class="fondo_modal"></div>
                             <form class="card" id="form_plan_accion" method="POST"
-                                action="{{ route('admin.desk-seguridad-actividades.store') }}">
+                                action="{{ route('desk-seguridad-actividades.store') }}">
                                 <input type="hidden" name="seguridad_id" value="{{ $incidentesSeguridad->id }}">
                                 <div class="text-center card-header" style="background-color: #00abb2;">
                                     <strong style="font-size: 16pt; color: #fff;"><i
@@ -739,7 +739,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         window.tbl_plan = $("#tabla_plan_accion").DataTable({
-            ajax: "{{ route('admin.desk-seguridad-actividades.index', $incidentesSeguridad->id) }}",
+            ajax: "{{ route('desk-seguridad-actividades.index', $incidentesSeguridad->id) }}",
             buttons: [],
             columns: [{
                     data: 'id'

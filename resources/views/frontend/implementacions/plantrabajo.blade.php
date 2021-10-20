@@ -9,7 +9,7 @@
 <div class="row">
 
     <div class="col-12 mt-4">
-        @include('admin.implementacions.gantt')
+        @include('frontend.implementacions.gantt')
     </div>
 
 </div>
