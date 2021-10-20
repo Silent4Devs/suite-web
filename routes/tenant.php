@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\ScopeSessions;
+use App\Http\Controllers\Frontend\ProcesoController;
+use App\Http\Controllers\Frontend\OrganigramaController;
 
 Route::middleware([
     'web',
@@ -261,6 +263,7 @@ Route::middleware([
         // Route::get('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class, 'getCursos'])->name('empleados.getCursos');
         // Route::post('empleados/store/competencias', [EmpleadoController::class, 'storeWithCompetencia'])->name('empleados.storeWithCompetencia');
         // Route::post('empleados/get', [EmpleadoController::class, 'getEmpleados'])->name('empleados.get');
+        Route::post('empleados/get-lista', 'EmpleadoController@getListaEmpleados')->name('empleados.lista');
         // Route::get('empleados/get-all', [EmpleadoController::class, 'getAllEmpleados'])->name('empleados.getAll');
         Route::resource('empleados', EmpleadoController::class);
 
