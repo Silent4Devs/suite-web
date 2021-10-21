@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGapDoRequest;
@@ -69,21 +69,21 @@ class GapDosController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.gapDos.index', compact('teams'));
+        return view('frontend.gapDos.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('gap_do_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.gapDos.create');
+        return view('frontend.gapDos.create');
     }
 
     public function store(StoreGapDoRequest $request)
     {
         $gapDo = GapDo::create($request->all());
 
-        return redirect()->route('admin.gap-dos.index');
+        return redirect()->route('gap-dos.index');
     }
 
     public function edit(GapDo $gapDo)
@@ -92,7 +92,7 @@ class GapDosController extends Controller
 
         $gapDo->load('team');
 
-        return view('admin.gapDos.edit', compact('gapDo'));
+        return view('frontend.gapDos.edit', compact('gapDo'));
     }
 
     public function update(Request $request, $id)
@@ -132,7 +132,7 @@ class GapDosController extends Controller
 
         $gapDo->load('team');
 
-        return view('admin.gapDos.show', compact('gapDo'));
+        return view('frontend.gapDos.show', compact('gapDo'));
     }
 
     public function destroy(GapDo $gapDo)

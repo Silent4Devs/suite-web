@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 @can('gap_uno_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.gap-unos.create') }}">
+            <a class="btn btn-success" href="{{ route('gap-unos.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.gapUno.title_singular') }}
             </a>
         </div>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-GapUno">
+        <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-GapUno">
             <thead>
                 <tr>
                     <th width="10">
@@ -134,7 +134,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 let visibleColumnsIndexes = null;
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
