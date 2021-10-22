@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Functions\Mriesgos;
 use App\Http\Controllers\Controller;
@@ -90,7 +90,7 @@ class MatrizRiesgosController extends Controller
         $numero_matriz = MatrizRiesgo::count();
 
 
-        return view('admin.matriz-seguridad', compact('tipoactivos', 'tipoactivos', 'controles', 'teams'));
+        return view('frontend.matriz-seguridad', compact('tipoactivos', 'tipoactivos', 'controles', 'teams'));
     }*/
 
     public function create()
@@ -107,7 +107,7 @@ class MatrizRiesgosController extends Controller
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-        return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
+        return view('frontend.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
 
     public function store(StoreMatrizRiesgoRequest $request)
@@ -129,7 +129,7 @@ class MatrizRiesgosController extends Controller
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
 
-        return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with('success', 'Guardado con éxito');
+        return redirect()->route('matriz-seguridad', ['id' => $request->id_analisis])->with('success', 'Guardado con éxito');
     }
 
     public function edit(MatrizRiesgo $matrizRiesgo)
@@ -155,7 +155,7 @@ class MatrizRiesgosController extends Controller
             }
         }
 
-        return view('admin.matrizRiesgos.edit', compact('planes_seleccionados', 'matrizRiesgo', 'vulnerabilidades', 'controles', 'amenazas', 'activos', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz', 'tipoactivos', 'responsables'));
+        return view('frontend.matrizRiesgos.edit', compact('planes_seleccionados', 'matrizRiesgo', 'vulnerabilidades', 'controles', 'amenazas', 'activos', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz', 'tipoactivos', 'responsables'));
     }
 
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
@@ -170,7 +170,7 @@ class MatrizRiesgosController extends Controller
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
 
-        return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
+        return redirect()->route('matriz-seguridad', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
     }
 
     public function show(MatrizRiesgo $matrizRiesgo)
@@ -180,7 +180,7 @@ class MatrizRiesgosController extends Controller
             $matrizRiesgo->load('activo_id', 'controles');
         }*/
 
-        return view('admin.matrizRiesgos.show', compact('matrizRiesgo'));
+        return view('frontend.matrizRiesgos.show', compact('matrizRiesgo'));
     }
 
     public function destroy(MatrizRiesgo $matrizRiesgo)
@@ -413,12 +413,12 @@ class MatrizRiesgosController extends Controller
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
 
-        return view('admin.matrizRiesgos.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
+        return view('frontend.matrizRiesgos.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
 
     public function MapaCalor(Request $request)
     {
-        return view('admin.matrizRiesgos.heatchart')->with('id', $request->idAnalisis);
+        return view('frontend.matrizRiesgos.heatchart')->with('id', $request->idAnalisis);
     }
 
     public function createPlanAccion(MatrizRiesgo $id)
@@ -427,9 +427,9 @@ class MatrizRiesgosController extends Controller
         $modulo = $id;
         $modulo_name = 'Matríz de Riegos';
         $referencia = $modulo->nombrerequisito;
-        $urlStore = route('admin.matriz-requisito-legales.storePlanAccion', $id);
+        $urlStore = route('matriz-requisito-legales.storePlanAccion', $id);
 
-        return view('admin.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
+        return view('frontend.planesDeAccion.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
 
     public function storePlanAccion(Request $request, MatrizRiesgo $id)
@@ -463,7 +463,7 @@ class MatrizRiesgosController extends Controller
         $matrizRequisitoLegal = $id;
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
     }
 
     public function ControlesGet()
