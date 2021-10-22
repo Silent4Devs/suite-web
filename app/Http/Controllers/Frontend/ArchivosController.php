@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -70,7 +70,7 @@ class ArchivosController extends Controller
         $estado_documentos = EstadoDocumento::get();
         $teams = Team::get();
 
-        return view('admin.archivos.index', compact('carpeta', 'estado_documentos', 'teams'));
+        return view('frontend.archivos.index', compact('carpeta', 'estado_documentos', 'teams'));
     }
 
     public function create()
@@ -81,7 +81,7 @@ class ArchivosController extends Controller
 
         $estados = EstadoDocumento::all()->pluck('estado', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.archivos.create', compact('carpetas', 'estados'));
+        return view('frontend.archivos.create', compact('carpetas', 'estados'));
     }
 
     public function store(StoreArchivoRequest $request)
@@ -96,7 +96,7 @@ class ArchivosController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $archivo->id]);
         }
 
-        return redirect()->route('admin.archivos.index');
+        return redirect()->route('archivos.index');
     }
 
     public function edit(Archivo $archivo)
@@ -109,7 +109,7 @@ class ArchivosController extends Controller
 
         $archivo->load('carpeta', 'estado', 'team');
 
-        return view('admin.archivos.edit', compact('carpetas', 'estados', 'archivo'));
+        return view('frontend.archivos.edit', compact('carpetas', 'estados', 'archivo'));
     }
 
     public function update(UpdateArchivoRequest $request, Archivo $archivo)
@@ -128,7 +128,7 @@ class ArchivosController extends Controller
             $archivo->nombre->delete();
         }
 
-        return redirect()->route('admin.archivos.index');
+        return redirect()->route('archivos.index');
     }
 
     public function show(Archivo $archivo)
@@ -137,7 +137,7 @@ class ArchivosController extends Controller
 
         $archivo->load('carpeta', 'estado', 'team');
 
-        return view('admin.archivos.show', compact('archivo'));
+        return view('frontend.archivos.show', compact('archivo'));
     }
 
     public function destroy(Archivo $archivo)

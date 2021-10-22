@@ -2,141 +2,115 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Auth\TwoFactorController;
+use App\Http\Controllers\CargaDocs;
+use App\Http\Controllers\Frontend\AccionCorrectivaController;
+use App\Http\Controllers\Frontend\ActividadAccionCorrectivaController;
+use App\Http\Controllers\Frontend\ActividadesDenunciasController;
+use App\Http\Controllers\Frontend\ActividadesIncidentesController;
+use App\Http\Controllers\Frontend\ActividadesMejorasController;
+use App\Http\Controllers\Frontend\ActividadesQuejasController;
+use App\Http\Controllers\Frontend\ActividadesRiesgosController;
+use App\Http\Controllers\Frontend\ActividadesSugerenciasController;
+use App\Http\Controllers\Frontend\ActivosController;
+use App\Http\Controllers\Frontend\AdquirirtreintaunmilController;
+use App\Http\Controllers\Frontend\AdquirirveintidostrecientosunoController;
 use App\Http\Controllers\Frontend\AlcanceSgsiController;
+use App\Http\Controllers\Frontend\AmenazaController;
+use App\Http\Controllers\Frontend\AnalisisBController;
+use App\Http\Controllers\Frontend\AnalisisBrechaController;
+use App\Http\Controllers\Frontend\AnalisisdeRiesgosController;
+use App\Http\Controllers\Frontend\ArchivosController;
+use App\Http\Controllers\Frontend\AreasController;
+use App\Http\Controllers\Frontend\AuditLogsController;
+use App\Http\Controllers\Frontend\AuditoriaAnualController;
+use App\Http\Controllers\Frontend\AuditoriaInternaController;
+use App\Http\Controllers\Frontend\CarpetasController;
+use App\Http\Controllers\Frontend\CategoriaCapacitacionController;
 use App\Http\Controllers\Frontend\ComiteseguridadController;
+use App\Http\Controllers\Frontend\CompetenciasController;
+use App\Http\Controllers\Frontend\ComunicacionSgiController;
+use App\Http\Controllers\Frontend\ConcientizacionSgiController;
+use App\Http\Controllers\Frontend\ControlAccesoController;
+use App\Http\Controllers\Frontend\ControlDocumentosController;
+use App\Http\Controllers\Frontend\ControlesController;
+use App\Http\Controllers\Frontend\DashboardController;
+use App\Http\Controllers\Frontend\DeclaracionAplicabilidadController;
 use App\Http\Controllers\Frontend\DeskController;
+use App\Http\Controllers\Frontend\DmaicController;
 use App\Http\Controllers\Frontend\EmpleadoController;
+use App\Http\Controllers\Frontend\EnlacesEjecutarController;
 use App\Http\Controllers\Frontend\EntendimientoOrganizacionController;
+use App\Http\Controllers\Frontend\EstadoDocumentoController;
+use App\Http\Controllers\Frontend\EstadoIncidentesController;
+use App\Http\Controllers\Frontend\EstatusPlanTrabajoController;
+use App\Http\Controllers\Frontend\EvidenciasSgsiController;
+use App\Http\Controllers\Frontend\FaqCategoryController;
+use App\Http\Controllers\Frontend\FaqQuestionController;
+use App\Http\Controllers\Frontend\GanttController;
+use App\Http\Controllers\Frontend\GapDosController;
+use App\Http\Controllers\Frontend\GapTresController;
+use App\Http\Controllers\Frontend\GapUnoController;
+use App\Http\Controllers\Frontend\GlobalStructureSearchController;
 use App\Http\Controllers\Frontend\GlosarioController;
 use App\Http\Controllers\Frontend\GrupoAreaController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\ImplementacionController;
+use App\Http\Controllers\Frontend\IncidentesDeSeguridadController;
+use App\Http\Controllers\Frontend\IndicadoresSgsiController;
+use App\Http\Controllers\Frontend\IndicadorincidentessiController;
+use App\Http\Controllers\Frontend\InformacionDocumetadaController;
 use App\Http\Controllers\Frontend\InicioUsuarioController;
 use App\Http\Controllers\Frontend\MacroprocesoController;
+use App\Http\Controllers\Frontend\MarcaController;
+use App\Http\Controllers\Frontend\MaterialIsoVeinticienteController;
+use App\Http\Controllers\Frontend\MaterialSgsiController;
 use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
+use App\Http\Controllers\Frontend\MatrizRiesgosController;
 use App\Http\Controllers\Frontend\MinutasaltadireccionController;
+use App\Http\Controllers\Frontend\ModeloController;
+use App\Http\Controllers\Frontend\ObjetivosseguridadController;
+use App\Http\Controllers\Frontend\OrganigramaController;
 use App\Http\Controllers\Frontend\OrganizacionController;
+use App\Http\Controllers\Frontend\OrganizacionesController;
 use App\Http\Controllers\Frontend\PartesInteresadasController;
+use App\Http\Controllers\Frontend\PermissionsController;
+use App\Http\Controllers\Frontend\PlanaccionCorrectivaController;
+use App\Http\Controllers\Frontend\PlanAuditoriaController;
 use App\Http\Controllers\Frontend\PlanesAccionController;
+use App\Http\Controllers\Frontend\PlanificacionControlController;
+use App\Http\Controllers\Frontend\PlanMejoraController;
+use App\Http\Controllers\Frontend\PlanTrabajoBaseController;
+use App\Http\Controllers\Frontend\PoliticaDelSgsiSoporteController;
+use App\Http\Controllers\Frontend\PoliticaSgsiController;
 use App\Http\Controllers\Frontend\PortalComunicacionController;
+use App\Http\Controllers\Frontend\ProcesoController;
+use App\Http\Controllers\Frontend\PuestosController;
+use App\Http\Controllers\Frontend\RecursosController;
+use App\Http\Controllers\Frontend\RegistromejoraController;
+use App\Http\Controllers\Frontend\RevisionDireccionController;
+use App\Http\Controllers\Frontend\RevisionDocumentoController;
+use App\Http\Controllers\Frontend\RiesgosoportunidadesController;
 use App\Http\Controllers\Frontend\RolesController;
+use App\Http\Controllers\Frontend\RolesResponsabilidadesController;
 use App\Http\Controllers\Frontend\SedeController;
+use App\Http\Controllers\Frontend\SystemCalendarController;
+use App\Http\Controllers\Frontend\TeamController;
+use App\Http\Controllers\Frontend\TeamMembersController;
 use App\Http\Controllers\Frontend\TipoactivoController;
+use App\Http\Controllers\Frontend\TratamientoRiesgosController;
 use App\Http\Controllers\Frontend\UserAlertsController;
 use App\Http\Controllers\Frontend\UsersController;
+use App\Http\Controllers\Frontend\VulnerabilidadController;
+use App\Http\Controllers\NotificacionesController;
+use App\Http\Controllers\SubidaExcel;
+use App\Http\Controllers\TareasNotificacionesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\ScopeSessions;
-use App\Http\Controllers\Frontend\PortalComunicacionController;
-use App\Http\Controllers\Auth\ChangePasswordController;
-use App\Http\Controllers\NotificacionesController;
-use App\Http\Controllers\TareasNotificacionesController;
-use App\Http\Controllers\Auth\TwoFactorController;
-use App\Http\Controllers\CargaDocs;
-use App\Http\Controllers\SubidaExcel;
-use App\Http\Controllers\Frontend\ActividadesIncidentesController;
-use App\Http\Controllers\Frontend\ActividadesRiesgosController;
-use App\Http\Controllers\Frontend\ActividadesQuejasController;
-use App\Http\Controllers\Frontend\ActividadesDenunciasController;
-use App\Http\Controllers\Frontend\ActividadesMejorasController;
-use App\Http\Controllers\Frontend\ActividadesSugerenciasController;
-use App\Http\Controllers\Frontend\PlanTrabajoBaseController;
-use App\Http\Controllers\Frontend\PermissionsController;
-use App\Http\Controllers\Frontend\AnalisisBController;
-use App\Http\Controllers\Frontend\AnalisisBrechaController;
-use App\Http\Controllers\Frontend\DeclaracionAplicabilidadController;
-use App\Http\Controllers\Frontend\GanttController;
-use App\Http\Controllers\Frontend\RolesController;
-use App\Http\Controllers\Frontend\ProcesoController;
-use App\Http\Controllers\Frontend\MacroprocesoController;
-use App\Http\Controllers\Frontend\UsersController;
-use App\Http\Controllers\Frontend\OrganigramaController;
-use App\Http\Controllers\Frontend\DashboardController;
-use App\Http\Controllers\Frontend\ImplementacionController;
-use App\Http\Controllers\Frontend\PlanesAccionController;
-use App\Http\Controllers\Frontend\GlosarioController;
-use App\Http\Controllers\Frontend\UserAlertsController;
-use App\Http\Controllers\Frontend\EntendimientoOrganizacionController;
-use App\Http\Controllers\Frontend\AreasController;
-use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
-use App\Http\Controllers\Frontend\AlcanceSgsiController;
-use App\Http\Controllers\Frontend\ComiteseguridadController;
-use App\Http\Controllers\Frontend\MinutasaltadireccionController;
-use App\Http\Controllers\Frontend\PartesInteresadasController;
-use App\Http\Controllers\Frontend\PoliticaSgsiController;
-use App\Http\Controllers\Frontend\RolesResponsabilidadesController;
-use App\Http\Controllers\Frontend\EvidenciasSgsiController;
-use App\Http\Controllers\Frontend\RiesgosoportunidadesController;
-use App\Http\Controllers\Frontend\CategoriaCapacitacionController;
-use App\Http\Controllers\Frontend\RecursosController;
-use App\Http\Controllers\Frontend\ObjetivosseguridadController;
-use App\Http\Controllers\Frontend\CompetenciasController;
-use App\Http\Controllers\Frontend\AdquirirveintidostrecientosunoController;
-use App\Http\Controllers\Frontend\AdquirirtreintaunmilController;
-use App\Http\Controllers\Frontend\ConcientizacionSgiController;
-use App\Http\Controllers\Frontend\MaterialSgsiController;
-use App\Http\Controllers\Frontend\MaterialIsoVeinticienteController;
-use App\Http\Controllers\Frontend\ComunicacionSgiController;
-use App\Http\Controllers\Frontend\PoliticaDelSgsiSoporteController;
-use App\Http\Controllers\Frontend\ControlAccesoController;
-use App\Http\Controllers\Frontend\PlanificacionControlController;
-use App\Http\Controllers\Frontend\InformacionDocumetadaController;
-use App\Http\Controllers\Frontend\MarcaController;
-use App\Http\Controllers\Frontend\ActivosController;
-use App\Http\Controllers\Frontend\ModeloController;
-use App\Http\Controllers\Frontend\TratamientoRiesgosController;
-use App\Http\Controllers\Frontend\AuditoriaInternaController;
-use App\Http\Controllers\Frontend\RevisionDireccionController;
-use App\Http\Controllers\Frontend\ControlesController;
-use App\Http\Controllers\Frontend\AuditLogsController;
-use App\Http\Controllers\Frontend\OrganizacionesController;
-use App\Http\Controllers\Frontend\PuestosController;
-use App\Http\Controllers\Frontend\IndicadoresSgsiController;
-use App\Http\Controllers\Frontend\IndicadorincidentessiController;
-use App\Http\Controllers\Frontend\AuditoriaAnualController;
-use App\Http\Controllers\Frontend\PlanAuditoriaController;
-use App\Http\Controllers\Frontend\ActividadAccionCorrectivaController;
-use App\Http\Controllers\Frontend\AccionCorrectivaController;
-use App\Http\Controllers\Frontend\PlanaccionCorrectivaController;
-use App\Http\Controllers\Frontend\RegistromejoraController;
-use App\Http\Controllers\Frontend\DmaicController;
-use App\Http\Controllers\Frontend\PlanMejoraController;
-use App\Http\Controllers\Frontend\EnlacesEjecutarController;
-use App\Http\Controllers\Frontend\TeamController;
-use App\Http\Controllers\Frontend\IncidentesDeSeguridadController;
-use App\Http\Controllers\Frontend\EstadoIncidentesController;
-use App\Http\Controllers\Frontend\CarpetasController;
-use App\Http\Controllers\Frontend\EstatusPlanTrabajoController;
-use App\Http\Controllers\Frontend\ArchivosController;
-use App\Http\Controllers\Frontend\EstadoDocumentoController;
-use App\Http\Controllers\Frontend\FaqCategoryController;
-use App\Http\Controllers\Frontend\FaqQuestionController;
-use App\Http\Controllers\Frontend\SystemCalendarController;
-use App\Http\Controllers\Frontend\GlobalStructureSearchController;
-use App\Http\Controllers\Frontend\TeamMembersController;
-use App\Http\Controllers\Frontend\AmenazaController;
-use App\Http\Controllers\Frontend\VulnerabilidadController;
-use App\Http\Controllers\Frontend\AnalisisdeRiesgosController;
-use App\Http\Controllers\Frontend\MatrizRiesgosController;
-use App\Http\Controllers\Frontend\GapUnoController;
-use App\Http\Controllers\Frontend\GapDosController;
-use App\Http\Controllers\Frontend\GapTresController;
-use App\Http\Controllers\Frontend\RevisionDocumentoController;
-use App\Http\Controllers\Frontend\ControlDocumentosController;
-use App\Http\Controllers\Frontend\PlanesAccionController;
-use App\Http\Controllers\Frontend\GlosarioController;
-use App\Http\Controllers\Frontend\MacroprocesoController;
-use App\Http\Controllers\Frontend\RolesController;
-use App\Http\Controllers\Frontend\UsersController;
-use App\Http\Controllers\Frontend\UserAlertsController;
-use App\Http\Controllers\Frontend\PartesInteresadasController;
-use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
-use App\Http\Controllers\Frontend\AlcanceSgsiController;
-use App\Http\Controllers\Frontend\ComiteseguridadController;
-use App\Http\Controllers\Frontend\MinutasaltadireccionController;
-use App\Http\Controllers\Frontend\EvidenciasSgsiController;
-use App\Http\Controllers\Frontend\PoliticaSgsiController;
 
 Route::middleware([
     'web',
@@ -319,12 +293,12 @@ Route::middleware([
 
         //analisis brechas
         //Route::resource('analisis-brechas', 'AnalisisBController');
-        Route::get('analisis-brechas', [AnalisisBController::class, 'index'])->name('analisis-brechas.index');
-        Route::get('analisis-brechas/{id}', [AnalisisBController::class, 'index'])->name('analisis-brechas');
-        Route::post('analisis-brechas/update', [AnalisisBController::class, 'update']);
-        Route::delete('analisisdebrechas/destroy', [AnalisisBrechaController::class, 'massDestroy'])->name('analisisdebrechas.massDestroy');
-        Route::resource('analisisdebrechas', [AnalisisBrechaController::class]);
-        Route::get('getEmployeeData', [AnalisisBrechaController::class, 'getEmployeeData'])->name('getEmployeeData');
+        // Route::get('analisis-brechas', [AnalisisBController::class, 'index'])->name('analisis-brechas.index');
+        // Route::get('analisis-brechas/{id}', [AnalisisBController::class, 'index'])->name('analisis-brechas');
+        // Route::post('analisis-brechas/update', [AnalisisBController::class, 'update']);
+        // Route::delete('analisisdebrechas/destroy', [AnalisisBrechaController::class, 'massDestroy'])->name('analisisdebrechas.massDestroy');
+        // Route::resource('analisisdebrechas', [AnalisisBrechaController::class]);
+        // Route::get('getEmployeeData', [AnalisisBrechaController::class, 'getEmployeeData'])->name('getEmployeeData');
 
         // // Declaracion de Aplicabilidad
         // Route::get('declaracion-aplicabilidad/descargar', [DeclaracionAplicabilidadController::class, 'download'])->name('declaracion-aplicabilidad.descargar');
@@ -447,14 +421,14 @@ Route::middleware([
         Route::resource('minutasaltadireccions', MinutasaltadireccionController::class);
 
         // // Evidencias Sgsis
-        Route::delete('evidencias-sgsis/destroy', [EvidenciasSgsiController::class,'massDestroy'])->name('evidencias-sgsis.massDestroy');
-        Route::post('evidencias-sgsis/media', [EvidenciasSgsiController::class,'storeMedia'])->name('evidencias-sgsis.storeMedia');
-        Route::post('evidencias-sgsis/ckmedia', [EvidenciasSgsiController::class,'storeCKEditorImages'])->name('evidencias-sgsis.storeCKEditorImages');
+        Route::delete('evidencias-sgsis/destroy', [EvidenciasSgsiController::class, 'massDestroy'])->name('evidencias-sgsis.massDestroy');
+        Route::post('evidencias-sgsis/media', [EvidenciasSgsiController::class, 'storeMedia'])->name('evidencias-sgsis.storeMedia');
+        Route::post('evidencias-sgsis/ckmedia', [EvidenciasSgsiController::class, 'storeCKEditorImages'])->name('evidencias-sgsis.storeCKEditorImages');
         Route::resource('evidencias-sgsis', EvidenciasSgsiController::class);
 
         // // Politica Sgsis
-        Route::delete('politica-sgsis/destroy', [PoliticaSgsiController::class,'massDestroy'])->name('politica-sgsis.massDestroy');
-        Route::get('politica-sgsis/visualizacion', [PoliticaSgsiController::class,'visualizacion'])->name('politica-sgsis/visualizacion');
+        Route::delete('politica-sgsis/destroy', [PoliticaSgsiController::class, 'massDestroy'])->name('politica-sgsis.massDestroy');
+        Route::get('politica-sgsis/visualizacion', [PoliticaSgsiController::class, 'visualizacion'])->name('politica-sgsis/visualizacion');
         Route::resource('politica-sgsis', PoliticaSgsiController::class);
 
         // // Roles Responsabilidades
@@ -685,19 +659,19 @@ Route::middleware([
         // Route::delete('estado-incidentes/destroy', [EstadoIncidentesController::class,'massDestroy'])->name('estado-incidentes.massDestroy');
         // Route::resource('estado-incidentes', EstadoIncidentesController::class);
 
-        // // Estatus Plan Trabajos
-        // Route::delete('estatus-plan-trabajos/destroy', [EstatusPlanTrabajoController::class,'massDestroy'])->name('estatus-plan-trabajos.massDestroy');
-        // Route::resource('estatus-plan-trabajos', EstatusPlanTrabajoController::class);
+         // Estatus Plan Trabajos
+        Route::delete('estatus-plan-trabajos/destroy', [EstatusPlanTrabajoController::class,'massDestroy'])->name('estatus-plan-trabajos.massDestroy');
+        Route::resource('estatus-plan-trabajos', EstatusPlanTrabajoController::class);
 
-        // // Carpeta
-        // Route::delete('carpeta/destroy', [CarpetasController::class,'massDestroy'])->name('carpeta.massDestroy');
-        // Route::resource('carpeta', CarpetasController::class);
+        // Carpeta
+        Route::delete('carpeta/destroy', [CarpetasController::class,'massDestroy'])->name('carpeta.massDestroy');
+        Route::resource('carpeta', CarpetasController::class);
 
-        // // Archivos
-        // Route::delete('archivos/destroy', [ArchivosController::class,'massDestroy'])->name('archivos.massDestroy');
-        // Route::post('archivos/media', [ArchivosController::class,'storeMedia'])->name('archivos.storeMedia');
-        // Route::post('archivos/ckmedia', [ArchivosController::class,'storeCKEditorImages'])->name('archivos.storeCKEditorImages');
-        // Route::resource('archivos', ArchivosController::class);
+        // Archivos
+        Route::delete('archivos/destroy', [ArchivosController::class,'massDestroy'])->name('archivos.massDestroy');
+        Route::post('archivos/media', [ArchivosController::class,'storeMedia'])->name('archivos.storeMedia');
+        Route::post('archivos/ckmedia', [ArchivosController::class,'storeCKEditorImages'])->name('archivos.storeCKEditorImages');
+        Route::resource('archivos', ArchivosController::class);
 
         // // Estado Documentos
         // Route::delete('estado-documentos/destroy', [EstadoDocumentoController::class,'massDestroy'])->name('estado-documentos.massDestroy');
@@ -786,8 +760,8 @@ Route::middleware([
         // Route::post('team-members', [TeamMembersController::class,'invite'])->name('team-members.invite');
 
         //REPORTES CONTEXTO 27001
-        Route::get('reportes-contexto/', [ReporteContextoController::class,'index'])->name('reportes-contexto.index');
-        Route::post('reportes-contexto/create', [ReporteContextoController::class,'store'])->name('reportes-contexto.store');
+        Route::get('reportes-contexto/', [ReporteContextoController::class, 'index'])->name('reportes-contexto.index');
+        Route::post('reportes-contexto/create', [ReporteContextoController::class, 'store'])->name('reportes-contexto.store');
 
         Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
             // Change password
@@ -800,49 +774,48 @@ Route::middleware([
             }
         });
 
-            Route::get('/notificaciones', [NotificacionesController::class, 'index'])->name('notificaciones');
-            Route::get('/tareas', [TareasNotificacionesController::class, 'index'])->name('tareas');
+        Route::get('/notificaciones', [NotificacionesController::class, 'index'])->name('notificaciones');
+        Route::get('/tareas', [TareasNotificacionesController::class, 'index'])->name('tareas');
 
-            Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
-                // Two Factor Authentication
-                if (file_exists(app_path('Http/Controllers/Auth/TwoFactorController.php'))) {
-                    Route::get('two-factor', [TwoFactorController::class, 'show'])->name('twoFactor.show');
-                    Route::post('two-factor', [TwoFactorController::class, 'check'])->name('twoFactor.check');
-                    Route::get('two-factor/resend', [TwoFactorController::class,'resend'])->name('twoFactor.resend');
-                }
-            });
-                Route::view('sitemap', 'frontend.sitemap.index');
+        Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+            // Two Factor Authentication
+            if (file_exists(app_path('Http/Controllers/Auth/TwoFactorController.php'))) {
+                Route::get('two-factor', [TwoFactorController::class, 'show'])->name('twoFactor.show');
+                Route::post('two-factor', [TwoFactorController::class, 'check'])->name('twoFactor.check');
+                Route::get('two-factor/resend', [TwoFactorController::class, 'resend'])->name('twoFactor.resend');
+            }
+        });
+        Route::view('sitemap', 'frontend.sitemap.index');
 
-                Route::view('post_register', 'auth.post_register');
+        Route::view('post_register', 'auth.post_register');
 
-                Route::get('CargaDocs', [CargaDocs::class, 'index'])->name('cargadocs');
-                Route::post('CargaAmenza', [SubidaExcel::class, 'Amenaza'])->name('carga-amenaza');
-                Route::post('CargaVulnerabilidad', [SubidaExcel::class, 'Vulnerabilidad'])->name('carga-vulnerabilidad');
-                Route::post('CargaUsuario', [SubidaExcel::class, 'Usuario'])->name('carga-usuario');
-                Route::post('CargaPuesto', [SubidaExcel::class, 'Puesto'])->name('carga-puesto');
-                Route::post('CargaControl', [SubidaExcel::class, 'Control'])->name('carga-control');
-                Route::post('CargaEjecutarenlace', [SubidaExcel::class, 'Ejecutarenlace'])->name('carga-ejecutarenlace');
-                Route::post('CargaTeam', [SubidaExcel::class, 'Team'])->name('carga-team');
-                Route::post('CargaEstadoIncidente', [SubidaExcel::class, 'EstadoIncidente'])->name('carga-estadoincidente');
-                Route::post('CargaCompetencia', [SubidaExcel::class, 'Competencia'])->name('carga-competencia');
-                Route::post('CargaEvaluacion', [SubidaExcel::class, 'Evaluacion'])->name('carga-evaluacion');
-                Route::post('CargaCategoriaCapacitacion', [SubidaExcel::class, 'CategoriaCapacitacion'])->name('carga-categoriacapacitacion');
-                Route::post('CargaRevisionDireccion', [SubidaExcel::class, 'RevisionDireccion'])->name('carga-revisiondireccion');
-                Route::post('CargaCategoria', [SubidaExcel::class, 'CategoriaActivo'])->name('carga-categoria');
-                Route::post('CargaFaqCategoria', [SubidaExcel::class, 'FaqCategoria'])->name('carga-faqcategoria');
-                Route::post('CargaFaqPregunta', [SubidaExcel::class, 'FaqPregunta'])->name('carga-faqpregunta');
-                Route::post('CargaAnalisisRiesgo', [SubidaExcel::class, 'AnalisisRiesgo'])->name('carga-analisis_riego');
-                Route::post('CargaPartesInteresadas', [SubidaExcel::class, 'PartesInteresadas'])->name('carga-partes_interesadas');
-                Route::post('CargaMatrizRequisitosLegales', [SubidaExcel::class, 'MatrizRequisitosLegales'])->name('carga-matriz_requisitos_legales');
-                Route::post('CargaFoda', [SubidaExcel::class, 'Foda'])->name('carga-foda');
-                Route::post('CargaDeterminacionAlcance', [SubidaExcel::class, 'DeterminacionAlcance'])->name('carga-determinacion_alcance');
-                Route::post('CargaComiteSeguridad', [SubidaExcel::class, 'ComiteSeguridad'])->name('carga-comite_seguridad');
-                Route::post('CargaAltaDireccion', [SubidaExcel::class, 'AltaDireccion'])->name('carga-alta_direccion');
-                Route::post('CargaEvidenciaRecursos', [SubidaExcel::class, 'EvidenciaRecursos'])->name('carga-evidencia_recursos');
-                Route::post('CargaPoliticaSgsi', [SubidaExcel::class, 'PoliticaSgsi'])->name('carga-politica_sgi');
-                Route::post('CargaGrupoArea', [SubidaExcel::class, 'GrupoArea'])->name('carga-grupo_area');
-                Route::post('CargaDatosArea', [SubidaExcel::class, 'DatosArea'])->name('carga-datos_area');
-                Route::post('CargaActivos', [SubidaExcel::class, 'Activos'])->name('carga-activo_inventario');
-
+        Route::get('CargaDocs', [CargaDocs::class, 'index'])->name('cargadocs');
+        Route::post('CargaAmenza', [SubidaExcel::class, 'Amenaza'])->name('carga-amenaza');
+        Route::post('CargaVulnerabilidad', [SubidaExcel::class, 'Vulnerabilidad'])->name('carga-vulnerabilidad');
+        Route::post('CargaUsuario', [SubidaExcel::class, 'Usuario'])->name('carga-usuario');
+        Route::post('CargaPuesto', [SubidaExcel::class, 'Puesto'])->name('carga-puesto');
+        Route::post('CargaControl', [SubidaExcel::class, 'Control'])->name('carga-control');
+        Route::post('CargaEjecutarenlace', [SubidaExcel::class, 'Ejecutarenlace'])->name('carga-ejecutarenlace');
+        Route::post('CargaTeam', [SubidaExcel::class, 'Team'])->name('carga-team');
+        Route::post('CargaEstadoIncidente', [SubidaExcel::class, 'EstadoIncidente'])->name('carga-estadoincidente');
+        Route::post('CargaCompetencia', [SubidaExcel::class, 'Competencia'])->name('carga-competencia');
+        Route::post('CargaEvaluacion', [SubidaExcel::class, 'Evaluacion'])->name('carga-evaluacion');
+        Route::post('CargaCategoriaCapacitacion', [SubidaExcel::class, 'CategoriaCapacitacion'])->name('carga-categoriacapacitacion');
+        Route::post('CargaRevisionDireccion', [SubidaExcel::class, 'RevisionDireccion'])->name('carga-revisiondireccion');
+        Route::post('CargaCategoria', [SubidaExcel::class, 'CategoriaActivo'])->name('carga-categoria');
+        Route::post('CargaFaqCategoria', [SubidaExcel::class, 'FaqCategoria'])->name('carga-faqcategoria');
+        Route::post('CargaFaqPregunta', [SubidaExcel::class, 'FaqPregunta'])->name('carga-faqpregunta');
+        Route::post('CargaAnalisisRiesgo', [SubidaExcel::class, 'AnalisisRiesgo'])->name('carga-analisis_riego');
+        Route::post('CargaPartesInteresadas', [SubidaExcel::class, 'PartesInteresadas'])->name('carga-partes_interesadas');
+        Route::post('CargaMatrizRequisitosLegales', [SubidaExcel::class, 'MatrizRequisitosLegales'])->name('carga-matriz_requisitos_legales');
+        Route::post('CargaFoda', [SubidaExcel::class, 'Foda'])->name('carga-foda');
+        Route::post('CargaDeterminacionAlcance', [SubidaExcel::class, 'DeterminacionAlcance'])->name('carga-determinacion_alcance');
+        Route::post('CargaComiteSeguridad', [SubidaExcel::class, 'ComiteSeguridad'])->name('carga-comite_seguridad');
+        Route::post('CargaAltaDireccion', [SubidaExcel::class, 'AltaDireccion'])->name('carga-alta_direccion');
+        Route::post('CargaEvidenciaRecursos', [SubidaExcel::class, 'EvidenciaRecursos'])->name('carga-evidencia_recursos');
+        Route::post('CargaPoliticaSgsi', [SubidaExcel::class, 'PoliticaSgsi'])->name('carga-politica_sgi');
+        Route::post('CargaGrupoArea', [SubidaExcel::class, 'GrupoArea'])->name('carga-grupo_area');
+        Route::post('CargaDatosArea', [SubidaExcel::class, 'DatosArea'])->name('carga-datos_area');
+        Route::post('CargaActivos', [SubidaExcel::class, 'Activos'])->name('carga-activo_inventario');
     });
 });

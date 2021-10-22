@@ -1,7 +1,5 @@
 <?php
 
-
-
 Breadcrumbs::for('admin.iso27001.index', function ($trail) {
     $trail->push('ISO 27001', route('iso27001.index'));
 });

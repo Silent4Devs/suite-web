@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="card mt-4">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.estatus-plan-trabajos.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("estatus-plan-trabajos.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="estado"><i class="fas fa-file-alt iconos-crear"></i>{{ trans('cruds.estatusPlanTrabajo.fields.estado') }}</label>
