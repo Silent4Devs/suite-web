@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\AuditoriaAnual;
@@ -90,6 +90,6 @@ class SystemCalendarController extends Controller
         // dd($auditoria_internas);
         $recursos = Recurso::get();
 
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas'));
+        return view('fontend.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas'));
     }
 }
