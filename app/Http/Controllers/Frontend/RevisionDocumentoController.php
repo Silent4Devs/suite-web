@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\RevisionDocumento;
@@ -12,7 +12,7 @@ class RevisionDocumentoController extends Controller
     {
         $revisiones = RevisionDocumento::with('documento')->where('empleado_id', auth()->user()->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
 
-        return view('admin.revisiones.archivo', compact('revisiones'));
+        return view('frontend.revisiones.archivo', compact('revisiones'));
     }
 
     public function archivar(Request $request)

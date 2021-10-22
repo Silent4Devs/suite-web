@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -485,7 +485,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.matriz-riesgos.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('matriz-riesgos.store') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group text-center" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
@@ -1018,7 +1018,7 @@
                 </div>
                 <hr>
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}"
+                    <a href="{{ route('matriz-seguridad', ['id' => $id_analisis]) }}"
                         class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
@@ -1031,4 +1031,4 @@
 
 @endsection
 
-@include('admin.matrizRiesgos.scripts')
+@include('frontend.matrizRiesgos.scripts')

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -22,7 +22,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.matriz-riesgos.update', [$matrizRiesgo->id]) }}"
+            <form method="POST" action="{{ route('matriz-riesgos.update', [$matrizRiesgo->id]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
@@ -93,7 +93,7 @@
                     </div>
 
 
-                    
+
                     <div class="form-group col-md-4">
                         <label for="id_responsable"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
                         <select class="form-control {{ $errors->has('id_responsable') ? 'is-invalid' : '' }}" name="id_responsable" id="id_responsable">
@@ -575,7 +575,7 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.matriz-seguridad', ['id' => $matrizRiesgo->id_analisis]) }}"
+                    <a href="{{ route('matriz-seguridad', ['id' => $matrizRiesgo->id_analisis]) }}"
                         class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
@@ -589,4 +589,4 @@
 @endsection
 
 
-@include('admin.matrizRiesgos.scripts')
+@include('frontend.matrizRiesgos.scripts')

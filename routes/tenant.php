@@ -709,14 +709,14 @@ Route::middleware([
         // Route::get('getEmployeeData', [AnalisisdeRiesgosController::class,'getEmployeeData'])->name('getEmployeeData');
 
         // // Matriz Riesgos
-        // Route::get('matriz-riesgos/planes-de-accion/create/{id}', [MatrizRiesgosController::class,'createPlanAccion'])->name('matriz-riesgos.createPlanAccion');
-        // Route::post('matriz-riesgos/planes-de-accion/store/{id}', [MatrizRiesgosController::class,'storePlanAccion'])->name('matriz-riesgos.storePlanAccion');
-        // Route::delete('matriz-riesgos/destroy', [MatrizRiesgosController::class,'massDestroy'])->name('matriz-riesgos.massDestroy');
-        // Route::resource('matriz-riesgos', MatrizRiesgosController::class);
-        // Route::post('matriz-riesgos/parse-csv-import', [MatrizRiesgosController::class,'parseCsvImport'])->name('matriz-riesgos.parseCsvImport');
-        // Route::get('matriz-seguridad', [MatrizRiesgosController::class,'SeguridadInfo'])->name('matriz-seguridad');
-        // Route::get('matriz-seguridadMapa', [MatrizRiesgosController::class,'MapaCalor'])->name('matriz-mapa');
-        // Route::get('controles-get', [MatrizRiesgosController::class,'ControlesGet'])->name('controles-get');
+        Route::get('matriz-riesgos/planes-de-accion/create/{id}', [MatrizRiesgosController::class,'createPlanAccion'])->name('matriz-riesgos.createPlanAccion');
+        Route::post('matriz-riesgos/planes-de-accion/store/{id}', [MatrizRiesgosController::class,'storePlanAccion'])->name('matriz-riesgos.storePlanAccion');
+        Route::delete('matriz-riesgos/destroy', [MatrizRiesgosController::class,'massDestroy'])->name('matriz-riesgos.massDestroy');
+        Route::resource('matriz-riesgos', MatrizRiesgosController::class);
+        Route::post('matriz-riesgos/parse-csv-import', [MatrizRiesgosController::class,'parseCsvImport'])->name('matriz-riesgos.parseCsvImport');
+        Route::get('matriz-seguridad', [MatrizRiesgosController::class,'SeguridadInfo'])->name('matriz-seguridad');
+        Route::get('matriz-seguridadMapa', [MatrizRiesgosController::class,'MapaCalor'])->name('matriz-mapa');
+        Route::get('controles-get', [MatrizRiesgosController::class,'ControlesGet'])->name('controles-get');
 
         // // Gap Unos
         // Route::delete('gap-unos/destroy', [GapUnoController::class,'massDestroy'])->name('gap-unos.massDestroy');

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <div class="mt-5 card">
 
@@ -9,7 +9,7 @@
         @can('configuracion_sede_create')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'MatrizRiesgo', 'route' => 'admin.matriz-riesgos.parseCsvImport'])
+                    @include('csvImport.modal', ['model' => 'MatrizRiesgo', 'route' => 'matriz-riesgos.parseCsvImport'])
                 </div>
             </div>
         @endcan
@@ -32,10 +32,10 @@
             <div class="card-body datatable-fix">
                 <div class="d-flex justify-content-between">
                     <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                        href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
+                        href="{{ route('matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
                         name="action">Agregar nuevo</a>
                     <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                        href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
+                        href="{{ route('matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz">
                     <thead class="thead-dark">
@@ -144,7 +144,7 @@
                             Atención</p>
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado
                             matrices de riesgo
-                            <a href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}"><i
+                            <a href="{{ route('matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}"><i
                                     class="fas fa-share"></i></a>
                         </p>
                     </div>
@@ -232,7 +232,7 @@
                 let btnAgregar = {
                 // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 // titleAttr: 'Agregar sede',
-                // url: "{{ route('admin.matriz-riesgos.create') }}",
+                // url: "{{ route('matriz-riesgos.create') }}",
                 // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -254,7 +254,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.matriz-riesgos.massDestroy') }}",
+                url: "{{ route('matriz-riesgos.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -286,7 +286,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "/admin/matriz-seguridad?id=" + id_matriz,
+                ajax: "/matriz-seguridad?id=" + id_matriz,
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -401,7 +401,7 @@
                             let planes = JSON.parse(data);
                             let botones =
                                 planes.map(plan => {
-                                    return `<a href="/admin/planes-de-accion/${plan.id}" class="btn btn-sm" title="Visualizar Plan de Acción">
+                                    return `<a href="/planes-de-accion/${plan.id}" class="btn btn-sm" title="Visualizar Plan de Acción">
                                         <i class="fas fa-stream"></i>
                                         </a>`;
                                 });

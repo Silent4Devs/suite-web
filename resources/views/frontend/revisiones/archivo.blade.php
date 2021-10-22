@@ -1,5 +1,5 @@
 @inject('Documento', 'App\Models\Documento')
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -26,7 +26,7 @@
                                 {{ Str::limit($revision->documento ? $revision->documento->codigo : 'Sin Código Asignado', 40, '...') }}
                             </td>
                             <td>
-                                <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento->id) }}"
+                                <a href="{{ route('documentos.renderViewDocument', $revision->documento->id) }}"
                                     class="text-dark">
                                     {{ Str::limit($revision->documento ? $revision->documento->nombre : 'Sin Documento Asignado', 40, '...') }}
                                 </a>
@@ -53,7 +53,7 @@
                                 <span class="badge"
                                     style="color:white;background-color:{{ $revision->color_revisiones_estatus }}">{{ $revision->estatus_revisiones_formateado }}</span>
                             <td>
-                                <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento) }}"
+                                <a href="{{ route('documentos.renderViewDocument', $revision->documento) }}"
                                     class="btn btn-sm" style="border:none;" title="Visualizar Documento">
                                     <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
                                 </a>
@@ -66,7 +66,7 @@
                                     @endif
                                     @if ($revision->estatus != $Documento::SOLICITUD_REVISION)
                                         <a class="btn btn-sm" style="border:none;" title="Remover del archivo"
-                                            onClick="Desarchivar('{{ route('admin.revisiones.desarchivar') }}','{{ $revision->id }}')">
+                                            onClick="Desarchivar('{{ route('revisiones.desarchivar') }}','{{ $revision->id }}')">
                                             <i class=" fas fa-archive text-success" style="font-size: 15px;"></i>
                                         </a>
                                     @endif
