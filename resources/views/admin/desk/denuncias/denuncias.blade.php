@@ -43,7 +43,7 @@
     </div>
 </div>
 <div class="datatable-fix" style="width:100%">
-    <div class="text-right mb-3">
+    <div class="mb-3 text-right">
         <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/denuncias')}}">Crear reporte</a>
     </div>
 
@@ -82,7 +82,7 @@
                     <td>{{ $denuncia->fecha_cierre }}</td>
                     @if($denuncia->anonimo == 'no')
                         <td>
-                            <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $denuncia->denuncio->avatar }}" title="{{ $denuncia->denuncio->name }}">
+                            <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $denuncia->denuncio->avatar }}" title="{{ $denuncia->denuncio->name }}">
                         </td>
                         <td>{{ $denuncia->denuncio->puesto }}</td>
                         <td>{{ $denuncia->denuncio->area->area }}</td>
@@ -92,7 +92,7 @@
                         <td> -- </td>
                     @endif
                     <td>
-                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $denuncia->denunciado->avatar }}" title="{{ $denuncia->denunciado->name }}">
+                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $denuncia->denunciado->avatar }}" title="{{ $denuncia->denunciado->name }}">
                     </td>
                     <td>{{ $denuncia->denunciado->area->area }}</td>
                     <td>{{ $denuncia->denunciado->puesto }}</td>

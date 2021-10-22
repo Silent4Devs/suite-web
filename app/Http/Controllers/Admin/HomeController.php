@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\AccionCorrectiva;
-use App\Models\AuditoriaAnual;
-use App\Models\CategoriaCapacitacion;
-use App\Models\ControlDocumento;
-use App\Models\Documento;
-use App\Models\IncidentesDeSeguridad;
-use App\Models\IncidentesSeguridad;
-use App\Models\IndicadoresSgsi;
-use App\Models\PlanBaseActividade;
-use App\Models\PlanImplementacion;
+use Carbon\Carbon;
 use App\Models\Recurso;
+use App\Models\Documento;
+use App\Models\AuditoriaAnual;
 use App\Models\Registromejora;
 use App\Services\LaravelChart;
-use Carbon\Carbon;
+use App\Models\IndicadoresSgsi;
+use App\Models\AccionCorrectiva;
+use App\Models\ControlDocumento;
+use App\Models\PlanBaseActividade;
+use App\Models\PlanImplementacion;
+use DB;
+use App\Models\IncidentesSeguridad;
+use App\Models\CategoriaCapacitacion;
+use App\Models\IncidentesDeSeguridad;
 
 class HomeController
 {
     public function index()
     {
+
         $settings1 = [
             'chart_title'        => 'Actividades por colaborador',
             'chart_type'         => 'bar',
@@ -34,6 +36,7 @@ class HomeController
             'entries_number'     => '5',
             'relationship_name'  => 'colaborador',
         ];
+        // dd($settings1);
 
         $chart1 = new LaravelChart($settings1);
 
@@ -50,12 +53,17 @@ class HomeController
             'relationship_name'  => 'estado',
         ];
 
+
+        // DB::enableQueryLog();
         $total = IncidentesSeguridad::select('id')->get()->count();
         $nuevos = IncidentesSeguridad::select('id')->where('estatus', 'nuevo')->get()->count();
         $en_curso = IncidentesSeguridad::select('id')->where('estatus', 'en curso')->get()->count();
         $en_espera = IncidentesSeguridad::select('id')->where('estatus', 'en espera')->get()->count();
         $cerrados = IncidentesSeguridad::select('id')->where('estatus', 'cerrado')->get()->count();
         $cancelados = IncidentesSeguridad::select('id')->where('estatus', 'cancelado')->get()->count();
+
+         // Show results of log
+
 
         $chart2 = new LaravelChart($settings2);
 
@@ -345,6 +353,7 @@ class HomeController
             array_push($evaluaciones, $evaluacion['resultado']);
             array_push($evaluacion_nombre, $evaluacion['nombre']);
         }
+        // dd(DB::getQueryLog());
         // dd($evaluacion_nombre);
         return view('home', compact(
             'auditexterna',

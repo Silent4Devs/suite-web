@@ -113,7 +113,7 @@ class MatrizRiesgosController extends Controller
     public function store(StoreMatrizRiesgoRequest $request)
     {
         //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
-
+        // dd($request->controles_id);
         $matrizRiesgo = MatrizRiesgo::create($request->all());
 
         foreach ($request->controles_id as $item) {

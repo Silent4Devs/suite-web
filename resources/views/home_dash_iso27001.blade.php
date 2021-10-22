@@ -58,7 +58,7 @@
                             <a id="" class="btn_ver" style="margin-left: 0;" href="admin/carpeta">
                                 Carpetas
                             </a>
-                            <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/control-documentos">
+                            <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/documentos/publicados">
                                 Lista de documentos
                             </a>
                         </div>
@@ -100,7 +100,7 @@
                               <h5 class="ml-3" style="font-size: 16px">Indicadores SGSI</h5>
                           </div>
                           <canvas id="chartIndicadoresSGSI"></canvas>
-                          <a id="a_plan" class="btn_ver" href="admin/recursos">
+                          <a id="a_plan" class="btn_ver" href="admin/indicadores-sgsis">
                               Ver Detalle
                           </a>
                       </div>
