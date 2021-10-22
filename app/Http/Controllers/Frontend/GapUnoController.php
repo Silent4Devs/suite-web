@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGapUnoRequest;
@@ -63,21 +63,21 @@ class GapUnoController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.gapUnos.index', compact('teams'));
+        return view('frontend.gapUnos.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('gap_uno_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.gapUnos.create');
+        return view('frontend.gapUnos.create');
     }
 
     public function store(StoreGapUnoRequest $request)
     {
         $gapUno = GapUno::create($request->all());
 
-        return redirect()->route('admin.gap-unos.index');
+        return redirect()->route('gap-unos.index');
     }
 
     public function edit(GapUno $gapUno)
@@ -86,7 +86,7 @@ class GapUnoController extends Controller
 
         $gapUno->load('team');
 
-        return view('admin.gapUnos.edit', compact('gapUno'));
+        return view('frontend.gapUnos.edit', compact('gapUno'));
     }
 
     public function update(Request $request, $id)
@@ -127,7 +127,7 @@ class GapUnoController extends Controller
 
         $gapUno->load('team');
 
-        return view('admin.gapUnos.show', compact('gapUno'));
+        return view('frontend.gapUnos.show', compact('gapUno'));
     }
 
     public function destroy(GapUno $gapUno)

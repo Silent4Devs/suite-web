@@ -2,6 +2,33 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Frontend\AlcanceSgsiController;
+use App\Http\Controllers\Frontend\ComiteseguridadController;
+use App\Http\Controllers\Frontend\DeskController;
+use App\Http\Controllers\Frontend\EmpleadoController;
+use App\Http\Controllers\Frontend\EntendimientoOrganizacionController;
+use App\Http\Controllers\Frontend\GlosarioController;
+use App\Http\Controllers\Frontend\GrupoAreaController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\InicioUsuarioController;
+use App\Http\Controllers\Frontend\MacroprocesoController;
+use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
+use App\Http\Controllers\Frontend\MinutasaltadireccionController;
+use App\Http\Controllers\Frontend\OrganizacionController;
+use App\Http\Controllers\Frontend\PartesInteresadasController;
+use App\Http\Controllers\Frontend\PlanesAccionController;
+use App\Http\Controllers\Frontend\PortalComunicacionController;
+use App\Http\Controllers\Frontend\RolesController;
+use App\Http\Controllers\Frontend\SedeController;
+use App\Http\Controllers\Frontend\TipoactivoController;
+use App\Http\Controllers\Frontend\UserAlertsController;
+use App\Http\Controllers\Frontend\UsersController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use Stancl\Tenancy\Middleware\ScopeSessions;
+use App\Http\Controllers\Frontend\PortalComunicacionController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\CargaDocs;
@@ -22,11 +49,21 @@ use App\Http\Controllers\Frontend\AnalisisBController;
 use App\Http\Controllers\Frontend\AnalisisBrechaController;
 use App\Http\Controllers\Frontend\AnalisisdeRiesgosController;
 use App\Http\Controllers\Frontend\ArchivosController;
+use App\Http\Controllers\Frontend\DeclaracionAplicabilidadController;
+use App\Http\Controllers\Frontend\GanttController;
+use App\Http\Controllers\Frontend\ProcesoController;
+use App\Http\Controllers\Frontend\OrganigramaController;
+use App\Http\Controllers\Frontend\DashboardController;
+use App\Http\Controllers\Frontend\ImplementacionController;
 use App\Http\Controllers\Frontend\AreasController;
 use App\Http\Controllers\Frontend\AuditLogsController;
 use App\Http\Controllers\Frontend\AuditoriaAnualController;
 use App\Http\Controllers\Frontend\AuditoriaInternaController;
 use App\Http\Controllers\Frontend\CarpetasController;
+use App\Http\Controllers\Frontend\PoliticaSgsiController;
+use App\Http\Controllers\Frontend\RolesResponsabilidadesController;
+use App\Http\Controllers\Frontend\EvidenciasSgsiController;
+use App\Http\Controllers\Frontend\RiesgosoportunidadesController;
 use App\Http\Controllers\Frontend\CategoriaCapacitacionController;
 use App\Http\Controllers\Frontend\ComiteseguridadController;
 use App\Http\Controllers\Frontend\CompetenciasController;
@@ -51,6 +88,8 @@ use App\Http\Controllers\Frontend\FaqQuestionController;
 use App\Http\Controllers\Frontend\GanttController;
 use App\Http\Controllers\Frontend\GapDosController;
 use App\Http\Controllers\Frontend\GapTresController;
+use App\Http\Controllers\Frontend\RevisionDocumentoController;
+use App\Http\Controllers\Frontend\ControlDocumentosController;
 use App\Http\Controllers\Frontend\GapUnoController;
 use App\Http\Controllers\Frontend\GlobalStructureSearchController;
 use App\Http\Controllers\Frontend\GlosarioController;
@@ -293,12 +332,12 @@ Route::middleware([
 
         //analisis brechas
         //Route::resource('analisis-brechas', 'AnalisisBController');
-        // Route::get('analisis-brechas', [AnalisisBController::class, 'index'])->name('analisis-brechas.index');
-        // Route::get('analisis-brechas/{id}', [AnalisisBController::class, 'index'])->name('analisis-brechas');
-        // Route::post('analisis-brechas/update', [AnalisisBController::class, 'update']);
-        // Route::delete('analisisdebrechas/destroy', [AnalisisBrechaController::class, 'massDestroy'])->name('analisisdebrechas.massDestroy');
-        // Route::resource('analisisdebrechas', [AnalisisBrechaController::class]);
-        // Route::get('getEmployeeData', [AnalisisBrechaController::class, 'getEmployeeData'])->name('getEmployeeData');
+        Route::get('analisis-brechas', [AnalisisBController::class, 'index'])->name('analisis-brechas.index');
+        Route::get('analisis-brechas/{id}', [AnalisisBController::class, 'index'])->name('analisis-brechas');
+        Route::post('analisis-brechas/update', [AnalisisBController::class, 'update']);
+        Route::delete('analisisdebrechas/destroy', [AnalisisBrechaController::class, 'massDestroy'])->name('analisisdebrechas.massDestroy');
+        Route::resource('analisisdebrechas', AnalisisBrechaController::class);
+        Route::get('getEmployeeData', [AnalisisBrechaController::class, 'getEmployeeData'])->name('getEmployeeData');
 
         // // Declaracion de Aplicabilidad
         // Route::get('declaracion-aplicabilidad/descargar', [DeclaracionAplicabilidadController::class, 'download'])->name('declaracion-aplicabilidad.descargar');
