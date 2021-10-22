@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyEstatusPlanTrabajoRequest;
@@ -32,7 +32,7 @@ class EstatusPlanTrabajoController extends Controller
                 $deleteGate = 'estatus_plan_trabajo_delete';
                 $crudRoutePart = 'estatus-plan-trabajos';
 
-                return view('partials.datatablesActions', compact(
+                return view('frontend.partials.datatablesActions', compact(
                     'viewGate',
                     'editGate',
                     'deleteGate',
@@ -58,21 +58,21 @@ class EstatusPlanTrabajoController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.estatusPlanTrabajos.index', compact('teams'));
+        return view('frontend.estatusPlanTrabajos.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('estatus_plan_trabajo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.estatusPlanTrabajos.create');
+        return view('frontend.estatusPlanTrabajos.create');
     }
 
     public function store(StoreEstatusPlanTrabajoRequest $request)
     {
         $estatusPlanTrabajo = EstatusPlanTrabajo::create($request->all());
 
-        return redirect()->route('admin.estatus-plan-trabajos.index');
+        return redirect()->route('estatus-plan-trabajos.index');
     }
 
     public function edit(EstatusPlanTrabajo $estatusPlanTrabajo)
@@ -81,14 +81,14 @@ class EstatusPlanTrabajoController extends Controller
 
         $estatusPlanTrabajo->load('team');
 
-        return view('admin.estatusPlanTrabajos.edit', compact('estatusPlanTrabajo'));
+        return view('frontend.estatusPlanTrabajos.edit', compact('estatusPlanTrabajo'));
     }
 
     public function update(UpdateEstatusPlanTrabajoRequest $request, EstatusPlanTrabajo $estatusPlanTrabajo)
     {
         $estatusPlanTrabajo->update($request->all());
 
-        return redirect()->route('admin.estatus-plan-trabajos.index');
+        return redirect()->route('estatus-plan-trabajos.index');
     }
 
     public function show(EstatusPlanTrabajo $estatusPlanTrabajo)
@@ -97,7 +97,7 @@ class EstatusPlanTrabajoController extends Controller
 
         $estatusPlanTrabajo->load('team');
 
-        return view('admin.estatusPlanTrabajos.show', compact('estatusPlanTrabajo'));
+        return view('frontend.estatusPlanTrabajos.show', compact('estatusPlanTrabajo'));
     }
 
     public function destroy(EstatusPlanTrabajo $estatusPlanTrabajo)

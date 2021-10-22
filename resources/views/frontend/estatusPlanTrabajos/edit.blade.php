@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="card mt-4">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.estatus-plan-trabajos.update", [$estatusPlanTrabajo->id]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("estatus-plan-trabajos.update", [$estatusPlanTrabajo->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group">
