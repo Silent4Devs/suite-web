@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 @can('gap_tre_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.gap-tres.create') }}">
+            <a class="btn btn-success" href="{{ route('gap-tres.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.gapTre.title_singular') }}
             </a>
         </div>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-GapTre">
+        <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-GapTre">
             <thead>
                 <tr>
                     <th width="10">
@@ -83,7 +83,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.gap-tres.massDestroy') }}",
+    url: "{{ route('gap-tres.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -115,7 +115,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.gap-tres.index') }}",
+    ajax: "{{ route('gap-tres.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
@@ -134,7 +134,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 let visibleColumnsIndexes = null;
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false

@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\ScopeSessions;
-use App\Http\Controllers\Frontend\PortalComunicacionController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Controllers\TareasNotificacionesController;
@@ -47,23 +46,11 @@ use App\Http\Controllers\Frontend\AnalisisBController;
 use App\Http\Controllers\Frontend\AnalisisBrechaController;
 use App\Http\Controllers\Frontend\DeclaracionAplicabilidadController;
 use App\Http\Controllers\Frontend\GanttController;
-use App\Http\Controllers\Frontend\RolesController;
 use App\Http\Controllers\Frontend\ProcesoController;
-use App\Http\Controllers\Frontend\MacroprocesoController;
-use App\Http\Controllers\Frontend\UsersController;
 use App\Http\Controllers\Frontend\OrganigramaController;
 use App\Http\Controllers\Frontend\DashboardController;
 use App\Http\Controllers\Frontend\ImplementacionController;
-use App\Http\Controllers\Frontend\PlanesAccionController;
-use App\Http\Controllers\Frontend\GlosarioController;
-use App\Http\Controllers\Frontend\UserAlertsController;
-use App\Http\Controllers\Frontend\EntendimientoOrganizacionController;
 use App\Http\Controllers\Frontend\AreasController;
-use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
-use App\Http\Controllers\Frontend\AlcanceSgsiController;
-use App\Http\Controllers\Frontend\ComiteseguridadController;
-use App\Http\Controllers\Frontend\MinutasaltadireccionController;
-use App\Http\Controllers\Frontend\PartesInteresadasController;
 use App\Http\Controllers\Frontend\PoliticaSgsiController;
 use App\Http\Controllers\Frontend\RolesResponsabilidadesController;
 use App\Http\Controllers\Frontend\EvidenciasSgsiController;
@@ -124,20 +111,6 @@ use App\Http\Controllers\Frontend\GapDosController;
 use App\Http\Controllers\Frontend\GapTresController;
 use App\Http\Controllers\Frontend\RevisionDocumentoController;
 use App\Http\Controllers\Frontend\ControlDocumentosController;
-use App\Http\Controllers\Frontend\PlanesAccionController;
-use App\Http\Controllers\Frontend\GlosarioController;
-use App\Http\Controllers\Frontend\MacroprocesoController;
-use App\Http\Controllers\Frontend\RolesController;
-use App\Http\Controllers\Frontend\UsersController;
-use App\Http\Controllers\Frontend\UserAlertsController;
-use App\Http\Controllers\Frontend\PartesInteresadasController;
-use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
-use App\Http\Controllers\Frontend\AlcanceSgsiController;
-use App\Http\Controllers\Frontend\ComiteseguridadController;
-use App\Http\Controllers\Frontend\MinutasaltadireccionController;
-use App\Http\Controllers\Frontend\EvidenciasSgsiController;
-use App\Http\Controllers\Frontend\PoliticaSgsiController;
-
 Route::middleware([
     'web',
     InitializeTenancyByDomain::class,
@@ -323,7 +296,7 @@ Route::middleware([
         Route::get('analisis-brechas/{id}', [AnalisisBController::class, 'index'])->name('analisis-brechas');
         Route::post('analisis-brechas/update', [AnalisisBController::class, 'update']);
         Route::delete('analisisdebrechas/destroy', [AnalisisBrechaController::class, 'massDestroy'])->name('analisisdebrechas.massDestroy');
-        Route::resource('analisisdebrechas', [AnalisisBrechaController::class]);
+        Route::resource('analisisdebrechas', AnalisisBrechaController::class);
         Route::get('getEmployeeData', [AnalisisBrechaController::class, 'getEmployeeData'])->name('getEmployeeData');
 
         // // Declaracion de Aplicabilidad

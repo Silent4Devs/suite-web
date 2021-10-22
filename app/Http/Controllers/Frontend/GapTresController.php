@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGapTreRequest;
@@ -63,21 +63,21 @@ class GapTresController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.gapTres.index', compact('teams'));
+        return view('frontend.gapTres.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('gap_tre_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.gapTres.create');
+        return view('frontend.gapTres.create');
     }
 
     public function store(StoreGapTreRequest $request)
     {
         $gapTre = GapTre::create($request->all());
 
-        return redirect()->route('admin.gap-tres.index');
+        return redirect()->route('gap-tres.index');
     }
 
     public function edit(GapTre $gapTre)
@@ -86,7 +86,7 @@ class GapTresController extends Controller
 
         $gapTre->load('team');
 
-        return view('admin.gapTres.edit', compact('gapTre'));
+        return view('frontend.gapTres.edit', compact('gapTre'));
     }
 
     public function update(Request $request, $id)
@@ -126,7 +126,7 @@ class GapTresController extends Controller
 
         $gapTre->load('team');
 
-        return view('admin.gapTres.show', compact('gapTre'));
+        return view('frontend.gapTres.show', compact('gapTre'));
     }
 
     public function destroy(GapTre $gapTre)

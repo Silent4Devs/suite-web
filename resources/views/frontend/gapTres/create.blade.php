@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="card">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.gap-tres.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("gap-tres.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="pregunta">{{ trans('cruds.gapTre.fields.pregunta') }}</label>
