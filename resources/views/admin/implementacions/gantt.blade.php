@@ -35,7 +35,7 @@
     z-index: 9999999999 !important;
   }
 
-  
+
 
 </style>
 
@@ -69,7 +69,7 @@
  @parent
 
   {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" defer></script> --}}
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
   <script src="{{asset('gantt/libs/jquery/jquery.livequery.1.1.1.min.js')}}"></script>
   <script src="{{asset('gantt/libs/jquery/jquery.timers.js')}}"></script>
@@ -150,7 +150,7 @@ function loadGanttFromServer(taskId, callback) {
   var ret=loadFromLocalStorage();
 
   //this is the real implementation
-  
+
   //var taskId = $("#taskSelector").val();
   // var prof = new Profiler("loadServerSide");
   // prof.reset();
@@ -173,12 +173,12 @@ function loadGanttFromServer(taskId, callback) {
 
 function upload(uploadedFile) {
   var fileread = new FileReader();
-  
+
   fileread.onload = function(e) {
     var content = e.target.result;
     var intern = JSON.parse(content); // Array of Objects.
     //console.log(intern); // You can index every object
-    
+
     ge.loadProject(intern);
     ge.checkpoint(); //empty the undo stack
 
@@ -205,7 +205,7 @@ function saveGanttOnServer() {
 
     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 
-   
+
 
     url: "{{route('admin.implementacions.saveProyect')}}",
 
@@ -226,7 +226,7 @@ function saveGanttOnServer() {
           icon: 'error',
           title: 'Oops...',
           text: 'Algo ocasionó un error!',
-          
+
         })
       }
     }
@@ -292,8 +292,8 @@ function download(data, filename, type) {
     a.click();
     setTimeout(function() {
       document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);  
-    }, 0); 
+      window.URL.revokeObjectURL(url);
+    }, 0);
   }
 }
 
@@ -369,7 +369,7 @@ function loadVersionProject(url) {
         })
       }
   });
-  
+
 }
 
 function editResources(){
@@ -574,7 +574,7 @@ function showBaselineInfo (event,element){
       <button onclick="$('#workSpace').trigger('outdentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Quitar identación de tarea"><span class="teamworkIcon">.</span></button>
       <button onclick="$('#workSpace').trigger('indentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Identar tarea"><span class="teamworkIcon">:</span></button>
       <span class="ganttButtonSeparator requireCanWrite requireCanMoveUpDown"></span>
-      <button onclick="$('#workSpace').trigger('moveUpCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia abajo"><span class="teamworkIcon">k</span></button>
+      <button onclick="$('#workSpace').trigger('moveUpCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia arriba"><span class="teamworkIcon">k</span></button>
       <button onclick="$('#workSpace').trigger('moveDownCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia bajo"><span class="teamworkIcon">j</span></button>
       <span class="ganttButtonSeparator requireCanWrite requireCanDelete"></span>
       <button onclick="$('#workSpace').trigger('deleteFocused.gantt');return false;" class="button textual icon delete requireCanWrite" title="Elimina"><span class="teamworkIcon">&cent;</span></button>

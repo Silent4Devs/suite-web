@@ -105,7 +105,7 @@
                             Personal&nbsp;objetivo&nbsp;
                         </th>
                         <th>
-                            Area&nbsp;responsable
+                            Área&nbsp;responsable
                         </th>
                         <th>
                             Medio&nbsp;de&nbsp;envío&nbsp;o&nbsp;publicación

@@ -174,7 +174,7 @@
                 },
                 url: "{{ route('admin.planTrabajoBase.loadProyect') }}",
                 success: function(response) {
-                    // prof.stop();                    
+                    // prof.stop();
                     ge.loadProject(response);
                     ge.checkpoint(); //empty the undo stac
                 },
@@ -687,13 +687,13 @@
                                                         <button onclick="$('#workSpace').trigger('undo.gantt');return false;" class="button textual icon requireCanWrite" title="Deshacer"><span class="teamworkIcon">&#39;</span></button>
                                                         <button onclick="$('#workSpace').trigger('redo.gantt');return false;" class="button textual icon requireCanWrite" title="Rehacer"><span class="teamworkIcon">&middot;</span></button>
                                                         <span class="ganttButtonSeparator requireCanWrite requireCanAdd"></span>
-                                                        <button onclick="$('#workSpace').trigger('addAboveCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="Insertar debajo"><span class="teamworkIcon">l</span></button>
-                                                        <button onclick="$('#workSpace').trigger('addBelowCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="Insertar arriba"><span class="teamworkIcon">X</span></button>
+                                                        <button onclick="$('#workSpace').trigger('addAboveCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="Insertar arriba"><span class="teamworkIcon">l</span></button>
+                                                        <button onclick="$('#workSpace').trigger('addBelowCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="Insertar debajo"><span class="teamworkIcon">X</span></button>
                                                         <span class="ganttButtonSeparator requireCanWrite requireCanInOutdent"></span>
-                                                        <button onclick="$('#workSpace').trigger('outdentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Quitar identación de tarea"><span class="teamworkIcon">.</span></button>
-                                                        <button onclick="$('#workSpace').trigger('indentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Identar tarea"><span class="teamworkIcon">:</span></button>
+                                                        <button onclick="$('#workSpace').trigger('outdentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Quitar indentación"><span class="teamworkIcon">.</span></button>
+                                                        <button onclick="$('#workSpace').trigger('indentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Indentar"><span class="teamworkIcon">:</span></button>
                                                         <span class="ganttButtonSeparator requireCanWrite requireCanMoveUpDown"></span>
-                                                        <button onclick="$('#workSpace').trigger('moveUpCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia abajo"><span class="teamworkIcon">k</span></button>
+                                                        <button onclick="$('#workSpace').trigger('moveUpCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia arriba"><span class="teamworkIcon">k</span></button>
                                                         <button onclick="$('#workSpace').trigger('moveDownCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia bajo"><span class="teamworkIcon">j</span></button>
                                                         <span class="ganttButtonSeparator requireCanWrite requireCanDelete"></span>
                                                         <button onclick="$('#workSpace').trigger('deleteFocused.gantt');return false;" class="button textual icon delete requireCanWrite" title="Elimina"><span class="teamworkIcon">&cent;</span></button>

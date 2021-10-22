@@ -45,7 +45,7 @@
 
 
 <div class="datatable-fix" style="width: 100%;">
-    <div class="text-right mb-3">
+    <div class="mb-3 text-right">
         <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/quejas')}}">Crear reporte</a>
     </div>
 
@@ -87,7 +87,7 @@
                     <td>{{ $queja->fecha_cierre }}</td>
                     @if($queja->anonimo == 'no')
                         <td>
-                            <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $queja->quejo->avatar }}" title="{{ $queja->quejo->name }}">
+                            <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $queja->quejo->avatar }}" title="{{ $queja->quejo->name }}">
                         </td>
                         <td>{{ $queja->quejo->puesto }}</td>
                         <td>{{ $queja->quejo->area->area }}</td>
