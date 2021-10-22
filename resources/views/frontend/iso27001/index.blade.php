@@ -166,7 +166,7 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.iso27001.index') }}
+    {{-- {{ Breadcrumbs::render('admin.iso27001.index') }} --}}
     {{-- @dump(request()->getTargets()) --}}
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -198,43 +198,43 @@
                         <div class="mt-5">
                             {{-- @can('contexto_access') --}}
                             <ul>
-                                <li><a href="{{ url('/admin/analisis-brechas') }}">
+                                <li><a href="{{ url('/analisis-brechas') }}">
                                         <div>
                                             <i class="fas fa-search"></i>
                                             Análisis de brechas
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.planTrabajoBase.index') }}">
+                                <li><a href="{{ route('planTrabajoBase.index') }}">
                                         <div>
                                             <i class="fas fa-stream"></i>
                                             Plan de implementación
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.partes-interesadas.index') }}">
+                                <li><a href="{{ route('partes-interesadas.index') }}">
                                         <div>
                                             <i class="far fa-handshake"></i>
                                             Partes interesadas
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.matriz-requisito-legales.index') }}">
+                                <li><a href="{{ route('matriz-requisito-legales.index') }}">
                                         <div>
                                             <i class="fas fa-balance-scale"></i>
                                             Matriz de requisitos legales
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.entendimiento-organizacions.index') }}">
+                                <li><a href="{{ route('entendimiento-organizacions.index') }}">
                                         <div>
                                             <i class="far fa-list-alt"></i>
                                             Análisis FODA
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.alcance-sgsis.index') }}">
+                                <li><a href="{{ route('alcance-sgsis.index') }}">
                                         <div>
                                             <i class="fas fa-bullseye"></i>
                                             Determinación de alcance
                                         </div>
                                     </a></li>
-                                {{-- <li><a href="{{ route('admin.reportes-contexto.index') }}">
+                                {{-- <li><a href="{{ route('reportes-contexto.index') }}">
                                                 <div>
                                                     <i class="far fa-file-alt"></i>
                                                     Generar reporte
@@ -263,31 +263,31 @@
                         <div class="mt-5">
                             {{-- @can('liderazgo_access') --}}
                             <ul>
-                                <li><a href="{{ route('admin.comiteseguridads.index') }}">
+                                <li><a href="{{ route('comiteseguridads.index') }}">
                                         <div>
                                             <i class="fas fa-shield-alt"></i>
                                             Conformación del comité de seguridad
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.minutasaltadireccions.index') }}">
+                                <li><a href="{{ route('minutasaltadireccions.index') }}">
                                         <div>
                                             <i class="fas fa-columns"></i>
                                             Minutas de sesiones con alta dirección
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.evidencias-sgsis.index') }}">
+                                <li><a href="{{ route('evidencias-sgsis.index') }}">
                                         <div>
                                             <i class="far fa-window-restore"></i>
                                             Evidencias de asignación de recursos al SGSI
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.politica-sgsis.index') }}">
+                                <li><a href="{{ route('politica-sgsis.index') }}">
                                         <div>
                                             <i class="fas fa-landmark"></i>
                                             Política SGSI
                                         </div>
                                     </a></li>
-                                {{-- <li><a href="{{ route('admin.roles-responsabilidades.index') }}">
+                                {{-- <li><a href="{{ route('roles-responsabilidades.index') }}">
                                                 <div>
                                                     <i class="fas fa-user-tag"></i>
                                                     Roles y responsabilidades
@@ -329,19 +329,19 @@
                                         style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
                                     <h3 class="text-center"><strong>Análisis de riesgos</strong></h3>
                                     <ul>
-                                        <li><a href="{{ route('admin.amenazas.index') }}">
+                                        <li><a href="{{ route('amenazas.index') }}">
                                                 <div>
                                                     <i class="fas fa-fire"></i>
                                                     Amenazas
                                                 </div>
                                             </a></li>
-                                        <li><a href="{{ route('admin.vulnerabilidads.index') }}">
+                                        <li><a href="{{ route('vulnerabilidads.index') }}">
                                                 <div>
                                                     <i class="fas fa-shield-alt"></i>
                                                     Vulnerabilidades
                                                 </div>
                                             </a></li>
-                                        <li><a href="{{ route('admin.analisis-riesgos.index') }}">
+                                        <li><a href="{{ route('analisis-riesgos.index') }}">
                                                 <div>
                                                     <i class="fas fa-table"></i>
                                                     Matriz de Riesgos
@@ -349,19 +349,19 @@
                                             </a></li>
                                     </ul>
                                 </div>
-                                <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
+                                <li><a href="{{ route('declaracion-aplicabilidad.index') . '#declaracion' }}">
                                         <div>
                                             <i class="far fa-file"></i>
                                             Declaración de aplicabilidad
                                         </div>
                                     </a></li>
-                                {{-- <li><a href="{{ route('admin.riesgosoportunidades.index') }}">
+                                {{-- <li><a href="{{ route('riesgosoportunidades.index') }}">
                                                 <div>
                                                     <i class="fas fa-asterisk"></i>
                                                     Riesgos y oportunidades
                                                 </div>
                                             </a></li> --}}
-                                <li><a href="{{ route('admin.objetivosseguridads.index') }}">
+                                <li><a href="{{ route('objetivosseguridads.index') }}">
                                         <div>
                                             <i class="fas fa-lock"></i>
                                             Objetivos de seguridad
@@ -403,13 +403,13 @@
                                         style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
                                     <h3 class="text-center"><strong>Capacitaciones</strong></h3>
                                     <ul>
-                                        <li><a href="{{ asset('admin/categoria-capacitacion') }}">
+                                        <li><a href="{{ asset('categoria-capacitacion') }}">
                                                 <div>
                                                     <i class="fas fa-layer-group"></i>
                                                     Crear Categorias
                                                 </div>
                                             </a></li>
-                                        <li><a href="{{ route('admin.recursos.index') }}">
+                                        <li><a href="{{ route('recursos.index') }}">
                                                 <div>
                                                     <i class="fas fa-graduation-cap"></i>
                                                     Crear Capacitación
@@ -417,43 +417,43 @@
                                             </a></li>
                                     </ul>
                                 </div>
-                                <li><a href="{{ route('admin.buscarCV') }}">
+                                <li><a href="{{ route('buscarCV') }}">
                                         <div>
                                             <i class="fas fa-flag-checkered"></i>
                                             Competencias
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.concientizacion-sgis.index') }}">
+                                <li><a href="{{ route('concientizacion-sgis.index') }}">
                                         <div>
                                             <i class="fas fa-book-reader"></i>
                                             Concientización SGI
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.material-sgsis.index') }}">
+                                <li><a href="{{ route('material-sgsis.index') }}">
                                         <div>
                                             <i class="fas fa-cubes"></i>
                                             Material SGSI
                                         </div>
                                     </a></li>
-                                {{-- <li><a href="{{ route('admin.material-iso-veinticientes.index') }}">
+                                {{-- <li><a href="{{ route('material-iso-veinticientes.index') }}">
                                                 <div>
                                                     <i class="far fa-object-ungroup"></i>
                                                     Material ISO 27001: 2013
                                                 </div>
                                             </a></li> --}}
-                                <li><a href="{{ route('admin.comunicacion-sgis.index') }}">
+                                <li><a href="{{ route('comunicacion-sgis.index') }}">
                                         <div>
                                             <i class="far fa-comments"></i>
                                             Comunicación SGI
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.control-accesos.index') }}">
+                                <li><a href="{{ route('control-accesos.index') }}">
                                         <div>
                                             <i class="fas fa-vote-yea"></i>
                                             Control de Accesos
                                         </div>
                                     </a></li>
-                                <li><a href="{{ asset('admin/documentos/publicados') }}">
+                                <li><a href="{{ asset('documentos/publicados') }}">
                                         <div>
                                             <i class="far fa-folder-open"></i>
                                             Infomación Documentada
@@ -483,13 +483,13 @@
                         <div class="mt-5">
                             {{-- - @can('operacion_access') --}}
                             <ul>
-                                <li><a href="{{ route('admin.planificacion-controls.index') }}">
+                                <li><a href="{{ route('planificacion-controls.index') }}">
                                         <div>
                                             <i class="fas fa-clipboard-list"></i>
                                             Planificación y Control
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.tratamiento-riesgos.index') }}">
+                                <li><a href="{{ route('tratamiento-riesgos.index') }}">
                                         <div>
                                             <i class="fas fa-viruses"></i>
                                             Tratamiento de riesgos
@@ -519,43 +519,43 @@
                         <div class="mt-5">
                             {{-- @can('evaluacion_access') --}}
                             <ul>
-                                <li><a href="{{ route('admin.indicadores-sgsis.index') }}">
+                                <li><a href="{{ route('indicadores-sgsis.index') }}">
                                         <div>
                                             <i class="fas fa-list-ul"></i>
                                             Indicadores SGSI
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.desk.index') }}">
+                                <li><a href="{{ route('desk.index') }}">
                                         <div>
                                             <i class="fas fa-lock"></i>
                                             Incidentes de Seguridad
                                         </div>
                                     </a></li>
-                                {{-- <li><a href="{{ route('admin.indicadorincidentessis.index') }}">
+                                {{-- <li><a href="{{ route('indicadorincidentessis.index') }}">
                                                 <div>
                                                     <i class="fas fa-file-contract"></i>
                                                     Indicador Incidentes
                                                 </div>
                                             </a></li> --}}
-                                <li><a href="{{ route('admin.auditoria-anuals.index') }}">
+                                <li><a href="{{ route('auditoria-anuals.index') }}">
                                         <div>
                                             <i class="far fa-calendar-alt"></i>
                                             Programa Anual de Auditoria
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.plan-auditoria.index') }}">
+                                <li><a href="{{ route('plan-auditoria.index') }}">
                                         <div>
                                             <i class="fas fa-clipboard-list"></i>
                                             Plan de Auditoria
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.auditoria-internas.index') }}">
+                                <li><a href="{{ route('auditoria-internas.index') }}">
                                         <div>
                                             <i class="fas fa-network-wired"></i>
                                             Auditoria Interna
                                         </div>
                                     </a></li>
-                                <li><a href="{{ route('admin.revision-direccions.index') }}">
+                                <li><a href="{{ route('revision-direccions.index') }}">
                                         <div>
                                             <i class="fas fa-tasks"></i>
                                             Revisión por dirección
@@ -585,20 +585,20 @@
                         <div class="mt-5">
                             {{-- @can('mejora_access') --}}
                             <ul>
-                                <li><a href="{{ route('admin.accion-correctivas.index') }}">
+                                <li><a href="{{ route('accion-correctivas.index') }}">
                                         <div>
                                             <i class="far fa-thumbs-down"></i>
                                             Acción Correctiva
                                         </div>
                                     </a></li>
                                 <li>
-                                    {{-- <a href="{{ route('admin.registromejoras.index') }}">
+                                    {{-- <a href="{{ route('registromejoras.index') }}">
                                                 <div>
                                                     <i class="far fa-thumbs-up"></i>
                                                     Registro Mejora
                                                 </div>
                                             </a> --}}
-                                    <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
+                                    <a href="{{ asset('inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
                                         <div>
                                             <i class="fas fa-rocket"></i> Registro Mejora
                                         </div>

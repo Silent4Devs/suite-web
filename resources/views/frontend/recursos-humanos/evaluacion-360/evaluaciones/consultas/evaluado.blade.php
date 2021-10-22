@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     {{ Breadcrumbs::render('EV360-Evaluaciones-Create') }}
@@ -109,7 +109,7 @@
                 <span>{{ $lista_autoevaluacion->first()['tipo'] }}</span>
                 <span>{{ $lista_autoevaluacion->first()['peso_general'] }}%</span>
                 @forelse ($lista_autoevaluacion->first()['evaluaciones'] as $evaluador)
-                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'autoevaluacion'])
+                    @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'autoevaluacion'])
                 @empty
                     <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
                         para la evaluación
@@ -121,7 +121,7 @@
                 <span>{{ $lista_jefe_inmediato->first()['tipo'] }}</span>
                 <span>{{ $lista_jefe_inmediato->first()['peso_general'] }}%</span>
                 @forelse ($lista_jefe_inmediato->first()['evaluaciones'] as $evaluador)
-                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'jefe'])
+                    @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'jefe'])
                 @empty
                     <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
                         para la evaluación
@@ -133,7 +133,7 @@
                 <span>{{ $lista_equipo_a_cargo->first()['tipo'] }}</span>
                 <span>{{ $lista_equipo_a_cargo->first()['peso_general'] }}%</span>
                 @forelse ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluador)
-                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'equipo'])
+                    @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'equipo'])
                 @empty
                     <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
                         para la evaluación
@@ -145,7 +145,7 @@
                 <span>{{ $lista_misma_area->first()['tipo'] }}</span>
                 <span>{{ $lista_misma_area->first()['peso_general'] }}%</span>
                 @forelse ($lista_misma_area->first()['evaluaciones'] as $evaluador)
-                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'misma_area'])
+                    @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',['tipo'=>'misma_area'])
                 @empty
                     <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No aplica
                         para la evaluación

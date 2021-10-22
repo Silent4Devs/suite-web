@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <style>
         span.errors {
@@ -75,7 +75,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="formEvaluacionCreate" action="" method="post">
-                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones._form')
+                        @include('frontend.recursos-humanos.evaluacion-360.evaluaciones._form')
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -162,7 +162,7 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Construir evaluacion',
-                url: "{{ route('admin.ev360-evaluaciones.create') }}",
+                url: "{{ route('ev360-evaluaciones.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                     // $('#evaluacionModal').modal('show');
@@ -180,7 +180,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.ev360-evaluaciones.index') }}",
+                ajax: "{{ route('ev360-evaluaciones.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id',
@@ -228,15 +228,15 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                            let urlShow = `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}`;
+                            let urlShow = `/recursos-humanos/evaluacion-360/evaluaciones/${data}`;
                             let urlEdit =
-                                `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}/edit`;
+                                `/recursos-humanos/evaluacion-360/evaluaciones/${data}/edit`;
                             let urlDelete =
-                                `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}`;
+                                `/recursos-humanos/evaluacion-360/evaluaciones/${data}`;
                             let urlEvaluacion =
-                                `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
+                                `/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
                             let urlResumen = `
-                                /admin/recursos-humanos/evaluacion-360/evaluacion/${data}/resumen
+                                /recursos-humanos/evaluacion-360/evaluacion/${data}/resumen
                                 `;
                             let html = `
                                 <div class="btn-group" style="background: white;">

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     {{ Breadcrumbs::render('EV360-Evaluaciones-Create') }}
@@ -8,10 +8,10 @@
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Evaluación </h3>
         </div>
         <div class="card-body">
-            <form id="formGrupo" method="POST" action="{{ route('admin.ev360-evaluaciones.store') }}"
+            <form id="formGrupo" method="POST" action="{{ route('frontend.ev360-evaluaciones.store') }}"
                 class="mt-3 row">
                 @csrf
-                @include('admin.recursos-humanos.evaluacion-360.evaluaciones._form')
+                @include('frontend.recursos-humanos.evaluacion-360.evaluaciones._form')
                 <div class="d-flex justify-content-end w-100">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button type="submit" class="btn btn-danger">Guardar</button>

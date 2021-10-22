@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\RH;
+namespace App\Http\Controllers\Frontend\RH;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
@@ -30,7 +30,7 @@ class EV360EvaluacionesController extends Controller
             return datatables()->of($evaluaciones)->toJson();
         }
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.index', compact('areas', 'empleados'));
+        return view('frontend.recursos-humanos.evaluacion-360.evaluaciones.index', compact('areas', 'empleados'));
     }
 
     public function create()
@@ -39,7 +39,7 @@ class EV360EvaluacionesController extends Controller
         $areas = Area::all();
         $empleados = Empleado::all();
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.create', compact('evaluacion', 'areas', 'empleados'));
+        return view('frontend.recursos-humanos.evaluacion-360.evaluaciones.create', compact('evaluacion', 'areas', 'empleados'));
     }
 
     public function store(Request $request)
@@ -346,7 +346,7 @@ class EV360EvaluacionesController extends Controller
             }
         }); //Filtro para obtener solo las competencias evaluadas al momento de la creación de la evaluacion
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.cuestionario', compact('evaluacion', 'preguntas', 'evaluado', 'evaluador', 'total_preguntas', 'preguntas_contestadas', 'preguntas_no_contestadas', 'progreso', 'finalizo_tiempo', 'objetivos', 'progreso_objetivos', 'objetivos_evaluados', 'objetivos_no_evaluados', 'esta_evaluado', 'competencias_por_puesto_nivel_esperado'));
+        return view('frontend.recursos-humanos.evaluacion-360.evaluaciones.cuestionario', compact('evaluacion', 'preguntas', 'evaluado', 'evaluador', 'total_preguntas', 'preguntas_contestadas', 'preguntas_no_contestadas', 'progreso', 'finalizo_tiempo', 'objetivos', 'progreso_objetivos', 'objetivos_evaluados', 'objetivos_no_evaluados', 'esta_evaluado', 'competencias_por_puesto_nivel_esperado'));
     }
 
     public function evaluacion(Evaluacion $evaluacion)
@@ -366,7 +366,7 @@ class EV360EvaluacionesController extends Controller
         $contestadas = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->where('evaluado', true)->count();
         $progreso = floatval(number_format((($contestadas / $total_evaluaciones) * 100), 2));
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.evaluacion', compact('evaluacion', 'competencias', 'competencias_seleccionadas', 'competencias_seleccionadas_text', 'total_evaluaciones', 'contestadas', 'progreso', 'objetivos', 'objetivos_seleccionados', 'objetivos_seleccionados_text'));
+        return view('frontend.recursos-humanos.evaluacion-360.evaluaciones.evaluacion', compact('evaluacion', 'competencias', 'competencias_seleccionadas', 'competencias_seleccionadas_text', 'total_evaluaciones', 'contestadas', 'progreso', 'objetivos', 'objetivos_seleccionados', 'objetivos_seleccionados_text'));
     }
 
     public function getParticipantes(Request $request, $evaluacion)
@@ -699,7 +699,7 @@ class EV360EvaluacionesController extends Controller
         }])->find(intval($evaluado));
 
         // dd($evaluadores_objetivos);
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final'));
+        return view('frontend.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -995,6 +995,6 @@ class EV360EvaluacionesController extends Controller
         ));
         $calificaciones = $calificaciones->first();
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('lista_evaluados', 'calificaciones', 'evaluacion'));
+        return view('frontend.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('lista_evaluados', 'calificaciones', 'evaluacion'));
     }
 }

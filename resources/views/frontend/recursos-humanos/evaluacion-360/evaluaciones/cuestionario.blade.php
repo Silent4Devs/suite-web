@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <style>
         span.errors {
@@ -188,7 +188,7 @@
                                                         <span>{{ $idx + 1 }}.- {!! $competencia->competencia->nombre !!}</span>
                                                         <span style="cursor: pointer; font-size: 10px;"
                                                             title="Visualizar competencia"
-                                                            onclick="event.preventDefault();VisualizarSignificado(this,'{{ route('admin.ev360-competencias.informacionCompetencia', $competencia->competencia->id) }}')"><i
+                                                            onclick="event.preventDefault();VisualizarSignificado(this,'{{ route('ev360-competencias.informacionCompetencia', $competencia->competencia->id) }}')"><i
                                                                 class="ml-2 fas fa-eye"></i></span>
                                                     </div>
                                                     @if ($evaluacion->autoevaluacion)
@@ -212,7 +212,7 @@
                                                     <div
                                                         class="col-{{ $evaluacion->autoevaluacion ? ($evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->id ? '4' : '6') : '6') : '6' }} justify-content-between">
                                                         <select class="form-control" name="respuesta"
-                                                            onchange="event.preventDefault();GuardarRepuesta(this,'{{ route('admin.ev360-competencias.guardarRespuestaCompetencia', $competencia->competencia->id) }}')">
+                                                            onchange="event.preventDefault();GuardarRepuesta(this,'{{ route('ev360-competencias.guardarRespuestaCompetencia', $competencia->competencia->id) }}')">
                                                             <option value="" disabled selected>
                                                                 -- Selecciona una calificación --
                                                             </option>
@@ -321,7 +321,7 @@
                                                                     <span class="text-danger">*</span>
                                                                 </label>
                                                                 <input
-                                                                    onchange="event.preventDefault();saveMetaAlcanzada(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('admin.ev360-evaluaciones.objetivos.storeMetaAlcanzada') }}','{{ $objetivo->id }}')"
+                                                                    onchange="event.preventDefault();saveMetaAlcanzada(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('ev360-evaluaciones.objetivos.storeMetaAlcanzada') }}','{{ $objetivo->id }}')"
                                                                     value="{{ $objetivo->calificacion }}"
                                                                     class="form-control" type="number"
                                                                     placeholder="Ingresa la meta alcanzada">
@@ -331,7 +331,7 @@
                                                     <div class="col-12">
                                                         <label class="m-0">Comentarios Adicionales</label>
                                                         <textarea
-                                                            onchange="event.preventDefault();saveMetaAlcanzadaDescripcion(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('admin.ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion') }}')"
+                                                            onchange="event.preventDefault();saveMetaAlcanzadaDescripcion(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion') }}')"
                                                             placeholder="Comentarios adicionales" class="m-0 form-control"
                                                             type="text"> {{ $objetivo->meta_alcanzada }}</textarea>
                                                     </div>
@@ -423,9 +423,9 @@
                         </div>
 
                         <div class="mt-3 d-flex justify-content-end">
-                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn_cancelar">Salir</a>
+                            <a href="{{ route('inicio-Usuario.index') }}" class="btn btn_cancelar">Salir</a>
                             <button
-                                onclick="event.preventDefault();FinalizarEvaluacion('{{ route('admin.ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}')"
+                                onclick="event.preventDefault();FinalizarEvaluacion('{{ route('ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}')"
                                 class="btn btn-danger">Finalizar</button>
                         </div>
                     @endif
@@ -568,10 +568,10 @@
                                 <div class="text-center col-sm-1 col-lg-1 d-flex justify-content-center align-items-center" style="font-weight:bold;
                                 font-size:12px;">
                                     <p>${opcion.ponderacion}</p>
-                                </div>    
+                                </div>
                                 <div class="px-0 py-2 col-sm-11 col-lg-11" style="font-size: 11px;">
                                     ${opcion.definicion}
-                                </div>    
+                                </div>
                             </div>
                             `;
                         });
@@ -751,7 +751,7 @@
                 evaluador,
                 evaluacion
             }
-            let url = "{{ route('admin.ev360-evaluaciones.autoevaluacion.competencias.get') }}";
+            let url = "{{ route('ev360-evaluaciones.autoevaluacion.competencias.get') }}";
 
             $.ajax({
                 headers: {
@@ -786,7 +786,7 @@
                 evaluador,
                 evaluacion
             }
-            let url = "{{ route('admin.ev360-evaluaciones.autoevaluacion.objetivos.get') }}";
+            let url = "{{ route('ev360-evaluaciones.autoevaluacion.objetivos.get') }}";
 
             $.ajax({
                 headers: {
