@@ -396,11 +396,10 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
+                        let reporto = JSON.parse(row.reporto);
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${reporto?.avatar}" title="${reporto?.name}"></img>`;
 
-                            
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto.avatar}" title="${row.reporto.name}"></img>`;
-                            
-                            return `${row.reporto ? html: ''}`;
+                            return `${reporto ? html: ''}`;
                         }
                     },
                     {

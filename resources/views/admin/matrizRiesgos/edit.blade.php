@@ -93,7 +93,7 @@
                     </div>
 
 
-                    
+
                     <div class="form-group col-md-4">
                         <label for="id_responsable"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
                         <select class="form-control {{ $errors->has('id_responsable') ? 'is-invalid' : '' }}" name="id_responsable" id="id_responsable">
@@ -125,6 +125,7 @@
                     </div>
 
                 </div>
+
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
@@ -590,3 +591,5 @@
 
 
 @include('admin.matrizRiesgos.scripts')
+
+

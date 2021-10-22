@@ -63,6 +63,10 @@ class StoreMatrizRiesgoRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'controles_id'         => [
+                'required',
+                'array',
+            ],
         ];
     }
 }

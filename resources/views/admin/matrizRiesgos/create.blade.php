@@ -488,7 +488,7 @@
             <form method="POST" action="{{ route('admin.matriz-riesgos.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="form-group text-center" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
 
@@ -504,7 +504,7 @@
                         <select class="sedeSelect form-control" name="id_sede" id="id_sede">
                             <option value="">Seleccione una opción</option>
                             @foreach ($sedes as $sede)
-                                <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
+                                <option {{old('id_sede') == $sede->id ? ' selected="selected"' : ''}} value="{{ $sede->id }}">{{ $sede->sede }}</option>
                             @endforeach
                         </select>
                         @if ($errors->has('id_sede'))
@@ -551,7 +551,7 @@
                         <select class="responsableSelect form-control" name="id_responsable" id="id_responsable">
                             <option value="">Seleccione una opción</option>
                             @foreach ($responsables as $responsable)
-                                <option value="{{ $responsable->id }}">{{ $responsable->name }}
+                                <option data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}" data-area="{{ $responsable->area->area }}">{{ $responsable->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -562,7 +562,7 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    {{-- <div class="form-group col-md-4 col-sm-12">
                         <label for="id_puesto"><i class="fas fa-user-tag iconos-crear"></i>Puesto </label>
                         <input class="form-control {{ $errors->has('id_puesto') ? 'is-invalid' : '' }}" type="text"
                             id="id_puesto" value="" disabled>
@@ -582,6 +582,17 @@
                                 {{ $errors->first('id_area') }}
                             </div>
                         @endif
+                    </div> --}}
+
+                    <div class="form-group col-md-4">
+                        <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="id_puesto" readonly></div>
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                        <div class="form-control" id="id_area" readonly></div>
+
                     </div>
 
                 </div>
@@ -657,7 +668,7 @@
                     <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
                 </div>
                 <hr>
-                <div class="form-group text-center" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
                     EVALUACIÓN DE RIESGO INICIAL
                 </div>
 
@@ -897,7 +908,7 @@
 <!-- hasta aqui -->
                 </div>
                 <hr>
-                <div class="form-group text-center" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
                     EVALUACIÓN DEL RIESGO RESIDUAL
                 </div>
 
