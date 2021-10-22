@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCarpetumRequest;
@@ -63,21 +63,21 @@ class CarpetasController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.carpeta.index', compact('teams'));
+        return view('frontend.carpeta.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('carpetum_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.carpeta.create');
+        return view('frontend.carpeta.create');
     }
 
     public function store(StoreCarpetumRequest $request)
     {
         $carpetum = Carpetum::create($request->all());
 
-        return redirect()->route('admin.carpeta.index');
+        return redirect()->route('carpeta.index');
     }
 
     public function edit(Carpetum $carpetum)
@@ -86,14 +86,14 @@ class CarpetasController extends Controller
 
         $carpetum->load('team');
 
-        return view('admin.carpeta.edit', compact('carpetum'));
+        return view('frontend.carpeta.edit', compact('carpetum'));
     }
 
     public function update(UpdateCarpetumRequest $request, Carpetum $carpetum)
     {
         $carpetum->update($request->all());
 
-        return redirect()->route('admin.carpeta.index');
+        return redirect()->route('carpeta.index');
     }
 
     public function show(Carpetum $carpetum)
@@ -102,7 +102,7 @@ class CarpetasController extends Controller
 
         $carpetum->load('team');
 
-        return view('admin.carpeta.show', compact('carpetum'));
+        return view('frontend.carpeta.show', compact('carpetum'));
     }
 
     public function destroy(Carpetum $carpetum)
