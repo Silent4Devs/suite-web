@@ -22,14 +22,12 @@
 
     </div>
 
-
-
     <ul class="c-sidebar-nav dark_mode1" style="margin-top: -10px;">
 
         <li class="c-sidebar-nav-title">
             <span class="letra_blanca">Menu</span>
         </li>
-        @can('mi_perfil_access')
+        {{-- @can('mi_perfil_access')--}}
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('inicio-Usuario.index') }}#datos"
                     class="c-sidebar-nav-link {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') ? 'active' : '' }}">
@@ -37,7 +35,7 @@
                     <span class="letra_blanca"> Mi perfil</span>
                 </a>
             </li>
-        @endcan
+       {{--}} @endcan--}}
         <li class="c-sidebar-nav-item">
             <a href="{{ route('portal-comunicacion.index') }}"
                 class="c-sidebar-nav-link {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'active' : '' }}">
@@ -243,23 +241,23 @@
             </a>
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
-                    {{--<a href="{{ route('amenazas.index') }}"
+                    {{-- <a href="{{ route('amenazas.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('admin/amenazas') || request()->is('admin/amenazas/*') ? 'active' : '' }}">
                         <i class="fas fa-fire iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca" style="margin-left:5px;"> Amenazas</span>
-                    </a>--}}
+                    </a> --}}
                 </li>
 
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route('vulnerabilidads.index') }}"
+                    {{-- <a href="{{ route('vulnerabilidads.index') }}"
                         class="c-sidebar-nav-link {{ request()->is('admin/vulnerabilidads') || request()->is('admin/vulnerabilidads/*') ? 'active' : '' }}">
                         <i class="fas fa-shield-alt iconos_menu letra_blanca">
 
                         </i>
                         <span class="letra_blanca"> Vulnerabilidades</span>
-                    </a>
+                    </a> --}}
                 </li>
 
                 @can('configuracion_procesos_access') {{-- este acceso no correspnde --}}
@@ -315,7 +313,7 @@
             <span class="letra_blanca">Recursos Humanos</span>
         </li>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/*') ? 'active' : '' }}"
+            {{--<a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/*') ? 'active' : '' }}"
                 href="{{ route('rh-evaluacion360.index') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                     class="bi bi-file-earmark-person iconos_menu letra_blanca" viewBox="0 0 16 16">
@@ -324,7 +322,7 @@
                         d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z" />
                 </svg>
                 <span class="letra_blanca"> Evaluación 360 Grados </span>
-            </a>
+            </a>--}}
         </li>
 
         <li class="c-sidebar-nav-title">
