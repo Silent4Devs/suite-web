@@ -698,18 +698,18 @@ Route::middleware([
         // Route::delete('estado-incidentes/destroy', [EstadoIncidentesController::class,'massDestroy'])->name('estado-incidentes.massDestroy');
         // Route::resource('estado-incidentes', EstadoIncidentesController::class);
 
-         // Estatus Plan Trabajos
-        Route::delete('estatus-plan-trabajos/destroy', [EstatusPlanTrabajoController::class,'massDestroy'])->name('estatus-plan-trabajos.massDestroy');
+        // Estatus Plan Trabajos
+        Route::delete('estatus-plan-trabajos/destroy', [EstatusPlanTrabajoController::class, 'massDestroy'])->name('estatus-plan-trabajos.massDestroy');
         Route::resource('estatus-plan-trabajos', EstatusPlanTrabajoController::class);
 
         // Carpeta
-        Route::delete('carpeta/destroy', [CarpetasController::class,'massDestroy'])->name('carpeta.massDestroy');
+        Route::delete('carpeta/destroy', [CarpetasController::class, 'massDestroy'])->name('carpeta.massDestroy');
         Route::resource('carpeta', CarpetasController::class);
 
         // Archivos
-        Route::delete('archivos/destroy', [ArchivosController::class,'massDestroy'])->name('archivos.massDestroy');
-        Route::post('archivos/media', [ArchivosController::class,'storeMedia'])->name('archivos.storeMedia');
-        Route::post('archivos/ckmedia', [ArchivosController::class,'storeCKEditorImages'])->name('archivos.storeCKEditorImages');
+        Route::delete('archivos/destroy', [ArchivosController::class, 'massDestroy'])->name('archivos.massDestroy');
+        Route::post('archivos/media', [ArchivosController::class, 'storeMedia'])->name('archivos.storeMedia');
+        Route::post('archivos/ckmedia', [ArchivosController::class, 'storeCKEditorImages'])->name('archivos.storeCKEditorImages');
         Route::resource('archivos', ArchivosController::class);
 
         // // Estado Documentos
