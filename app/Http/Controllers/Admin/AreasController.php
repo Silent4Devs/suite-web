@@ -192,14 +192,9 @@ class AreasController extends Controller
         abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $numero_grupos = Grupo::count();
 
-        $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+        $areasTree = Area::exists(); //Eager loading
+        // dd($areasTree);
 
-        if ($request->ajax()) {
-            // La construccion del arbol necesita un primer nodo (NULL)
-            $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
-
-            return $areasTree->toJson();
-        }
 
         $rutaImagenes = asset('storage/empleados/imagenes/');
         $grupos = Grupo::with('areas')->get();
@@ -209,5 +204,15 @@ class AreasController extends Controller
         $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
 
         return view('admin.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos', 'numero_grupos', 'areas_sin_grupo'));
+    }
+
+    public function obtenerJerarquia(Request $request)
+    {
+        abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+        return json_encode($areasTree);
+        // dd($areasTree);
+
     }
 }
