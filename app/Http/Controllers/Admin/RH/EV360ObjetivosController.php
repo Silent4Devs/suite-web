@@ -189,8 +189,32 @@ class EV360ObjetivosController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.objetivos.show', compact('empleado'));
     }
 
-    public function destroy()
+    public function indexCopiar($empleado)
     {
-        # code...
+
+        $empleado = Empleado::select('id', 'name')->with('objetivos')->find(intval($empleado));
+        // $objetivos_empleado = $empleado->objetivos;
+        $empleados = Empleado::select('id', 'name', 'genero')->get()->except($empleado);
+
+        return response()->json(['empleados' => $empleados]);
+    }
+
+    public function storeCopiaObjetivos(Request $request)
+    {
+        $request->validate([
+            'empleado_destinatario' => 'required',
+            'empleado_destino' => 'required',
+        ]);
+
+        $empleado = Empleado::select('id', 'name')->with('objetivos')->find(intval($request->empleado_destinatario));
+        $objetivos_empleado = $empleado->objetivos;
+        foreach ($objetivos_empleado as $objetivo) {
+            ObjetivoEmpleado::create([
+                'objetivo_id' => $objetivo->id,
+                'empleado_id' => $request->empleado_destino,
+            ]);
+        }
+
+        return response()->json(['success' => true]);
     }
 }
