@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     {{ Breadcrumbs::render('EV360-Evaluaciones-Create') }}

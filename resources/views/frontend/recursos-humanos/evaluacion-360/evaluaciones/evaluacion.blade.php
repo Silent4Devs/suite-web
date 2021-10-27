@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     {{ Breadcrumbs::render('EV360-Evaluaciones-Evaluacion') }}
@@ -132,7 +132,7 @@
                                                         nueva fecha de finalización</button>
                                                 @else
                                                     <button id="btnCerrarEvaluacion"
-                                                        onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('admin.ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
+                                                        onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
                                                         class="btn btn-sm" style="background: #c53030;color: #fff;"><i
                                                             class="mr-2 fas fa-calendar-times"></i>Cerrar
                                                         Evaluación</button>
@@ -209,9 +209,9 @@
                                             </div>
                                             <div class="modal-body">
                                                 <form id="formIniciarEvaluacion"
-                                                    action="{{ route('admin.ev360-evaluaciones.iniciarEvaluacion', $evaluacion) }}"
+                                                    action="{{ route('ev360-evaluaciones.iniciarEvaluacion', $evaluacion) }}"
                                                     method="POST">
-                                                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form')
+                                                    @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form')
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
@@ -239,9 +239,9 @@
                                             </div>
                                             <div class="modal-body">
                                                 <form id="formPostergarEvaluacion"
-                                                    action="{{ route('admin.ev360-evaluaciones.postergarEvaluacion', $evaluacion) }}"
+                                                    action="{{ route('ev360-evaluaciones.postergarEvaluacion', $evaluacion) }}"
                                                     method="POST">
-                                                    @include('admin.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form_postergar')
+                                                    @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form_postergar')
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
@@ -271,7 +271,7 @@
                                 </div>
                                 @if ($evaluacion->estatus == App\Models\RH\Evaluacion::DRAFT)
                                     <form action="" method="POST">
-                                        @include('admin.recursos-humanos.evaluacion-360.evaluaciones.vinculacion._form_vinculacion')
+                                        @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.vinculacion._form_vinculacion')
                                     </form>
                                 @else
                                     <h5 class="my-3"><i class="mr-2 fas fa-check"></i>Competencias seleccionadas
@@ -484,7 +484,7 @@
                 let data = e.params.data;
                 let competencia_id = data.id;
                 let url =
-                    "{{ route('admin.ev360-evaluaciones.relatedCompetenciaWithEvaluacion', $evaluacion->id) }}"
+                    "{{ route('ev360-evaluaciones.relatedCompetenciaWithEvaluacion', $evaluacion->id) }}"
                 $.ajax({
                     headers: {
                         "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
@@ -510,7 +510,7 @@
                 let data = e.params.data;
                 let competencia_id = data.id;
                 let url =
-                    "{{ route('admin.ev360-evaluaciones.deleteRelatedCompetenciaWithEvaluacion', $evaluacion->id) }}"
+                    "{{ route('ev360-evaluaciones.deleteRelatedCompetenciaWithEvaluacion', $evaluacion->id) }}"
                 $.ajax({
                     headers: {
                         "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
@@ -537,7 +537,7 @@
                 let data = e.params.data;
                 let objetivo_id = data.id;
                 let url =
-                    "{{ route('admin.ev360-evaluaciones.relatedObjetivoWithEvaluacion', $evaluacion->id) }}"
+                    "{{ route('ev360-evaluaciones.relatedObjetivoWithEvaluacion', $evaluacion->id) }}"
                 $.ajax({
                     headers: {
                         "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
@@ -563,7 +563,7 @@
                 let data = e.params.data;
                 let objetivo_id = data.id;
                 let url =
-                    "{{ route('admin.ev360-evaluaciones.deleteRelatedObjetivoWithEvaluacion', $evaluacion->id) }}"
+                    "{{ route('ev360-evaluaciones.deleteRelatedObjetivoWithEvaluacion', $evaluacion->id) }}"
                 $.ajax({
                     headers: {
                         "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
@@ -596,7 +596,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.ev360-evaluaciones.getParticipantes', $evaluacion) }}",
+                ajax: "{{ route('ev360-evaluaciones.getParticipantes', $evaluacion) }}",
                 columns: [{
                         data: 'name',
                         name: 'name',
@@ -613,11 +613,11 @@
                                 data.forEach((element, idx) => {
                                     if (idx <= 2) {
                                         html +=
-                                            `                                        
+                                            `
                                         <img style="" src="${@json(asset('storage/empleados/imagenes/'))}/${element.evaluador.avatar}"
                                             class="rounded-circle" alt="${element.evaluador.name}"
                                             title="${element.evaluador.name}" width="40" height="37">
-                                            ${element.evaluado?'<i class="fas fa-check-circle" style="position:relative;top:0;left:-20px;z-index:1;color: #3ff556;text-shadow: 1px 1px 0px black;"></i>':''}                                
+                                            ${element.evaluado?'<i class="fas fa-check-circle" style="position:relative;top:0;left:-20px;z-index:1;color: #3ff556;text-shadow: 1px 1px 0px black;"></i>':''}
                                         `
                                     }
                                     seleccionados.push(element.evaluador.id);
@@ -665,7 +665,7 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             let urlShow =
-                                `/admin/recursos-humanos/evaluacion-360/evaluacion/${@json($evaluacion->id)}/consulta/${data}`;
+                                `/recursos-humanos/evaluacion-360/evaluacion/${@json($evaluacion->id)}/consulta/${data}`;
                             let html = `
                                 <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-arrow-right"></i></a>
                             `;
@@ -685,7 +685,7 @@
             window.ListaEvaluadores = function(evaluadores_seleccionados, evaluado, evaluacion) {
                 let seleccionados = JSON.parse(evaluadores_seleccionados);
                 console.log(seleccionados, evaluado, evaluacion);
-                let url = "{{ route('admin.empleados.getAll') }}"
+                let url = "{{ route('empleados.getAll') }}"
                 $.ajax({
                     type: "GET",
                     url: url,
@@ -699,7 +699,7 @@
                         JSON.parse(response).forEach(element => {
                             html +=
                                 `<li class="list-group-item ${seleccionados.includes(element.id)?'active':''}">${element.name}${evaluado==element.id?'<span class="ml-2 badge badge-light">Autoevaluación</span>':''}
-                                ${seleccionados.includes(element.id)?`<span onclick="event.preventDefault();QuitarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Quitar" style="float: right;cursor: pointer;"><i class="text-white fas fa-trash-alt"></i></span>`:`<span onclick="event.preventDefault();AgregarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Añadir" style="float: right;cursor: pointer;"><i class="text-dark fas fa-plus-circle"></i></span>`}    
+                                ${seleccionados.includes(element.id)?`<span onclick="event.preventDefault();QuitarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Quitar" style="float: right;cursor: pointer;"><i class="text-white fas fa-trash-alt"></i></span>`:`<span onclick="event.preventDefault();AgregarEvaluador('${evaluado}','${element.id}',${evaluacion})" title="Añadir" style="float: right;cursor: pointer;"><i class="text-dark fas fa-plus-circle"></i></span>`}
                                 </li>`;
                         });
                         html += '</ul></div>';
@@ -712,7 +712,7 @@
                 });
             }
             window.QuitarEvaluador = function(evaluado, evaluador, evaluacion) {
-                let url = "{{ route('admin.ev360-evaluaciones.evaluadores.remover') }}";
+                let url = "{{ route('ev360-evaluaciones.evaluadores.remover') }}";
                 let evaluado_evaluador = {
                     evaluado,
                     evaluador,
@@ -761,7 +761,7 @@
 
             }
             window.AgregarEvaluador = function(evaluado, evaluador, evaluacion) {
-                let url = "{{ route('admin.ev360-evaluaciones.evaluadores.agregar') }}";
+                let url = "{{ route('ev360-evaluaciones.evaluadores.agregar') }}";
                 let evaluado_evaluador = {
                     evaluado,
                     evaluador,

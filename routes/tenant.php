@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\ScopeSessions;
-use App\Http\Controllers\Frontend\PortalComunicacionController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\CargaDocs;
@@ -43,7 +42,6 @@ use App\Http\Controllers\Frontend\ActividadesSugerenciasController;
 use App\Http\Controllers\Frontend\ActivosController;
 use App\Http\Controllers\Frontend\AdquirirtreintaunmilController;
 use App\Http\Controllers\Frontend\AdquirirveintidostrecientosunoController;
-use App\Http\Controllers\Frontend\AlcanceSgsiController;
 use App\Http\Controllers\Frontend\AmenazaController;
 use App\Http\Controllers\Frontend\AnalisisBController;
 use App\Http\Controllers\Frontend\AnalisisBrechaController;
@@ -65,91 +63,54 @@ use App\Http\Controllers\Frontend\RolesResponsabilidadesController;
 use App\Http\Controllers\Frontend\EvidenciasSgsiController;
 use App\Http\Controllers\Frontend\RiesgosoportunidadesController;
 use App\Http\Controllers\Frontend\CategoriaCapacitacionController;
-use App\Http\Controllers\Frontend\ComiteseguridadController;
 use App\Http\Controllers\Frontend\CompetenciasController;
 use App\Http\Controllers\Frontend\ComunicacionSgiController;
 use App\Http\Controllers\Frontend\ConcientizacionSgiController;
 use App\Http\Controllers\Frontend\ControlAccesoController;
 use App\Http\Controllers\Frontend\ControlDocumentosController;
 use App\Http\Controllers\Frontend\ControlesController;
-use App\Http\Controllers\Frontend\DashboardController;
-use App\Http\Controllers\Frontend\DeclaracionAplicabilidadController;
-use App\Http\Controllers\Frontend\DeskController;
 use App\Http\Controllers\Frontend\DmaicController;
-use App\Http\Controllers\Frontend\EmpleadoController;
 use App\Http\Controllers\Frontend\EnlacesEjecutarController;
-use App\Http\Controllers\Frontend\EntendimientoOrganizacionController;
 use App\Http\Controllers\Frontend\EstadoDocumentoController;
 use App\Http\Controllers\Frontend\EstadoIncidentesController;
 use App\Http\Controllers\Frontend\EstatusPlanTrabajoController;
-use App\Http\Controllers\Frontend\EvidenciasSgsiController;
 use App\Http\Controllers\Frontend\FaqCategoryController;
 use App\Http\Controllers\Frontend\FaqQuestionController;
-use App\Http\Controllers\Frontend\GanttController;
 use App\Http\Controllers\Frontend\GapDosController;
 use App\Http\Controllers\Frontend\GapTresController;
 use App\Http\Controllers\Frontend\RevisionDocumentoController;
-use App\Http\Controllers\Frontend\ControlDocumentosController;
 use App\Http\Controllers\Frontend\GapUnoController;
 use App\Http\Controllers\Frontend\GlobalStructureSearchController;
-use App\Http\Controllers\Frontend\GlosarioController;
-use App\Http\Controllers\Frontend\GrupoAreaController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\ImplementacionController;
 use App\Http\Controllers\Frontend\IncidentesDeSeguridadController;
 use App\Http\Controllers\Frontend\IndicadoresSgsiController;
 use App\Http\Controllers\Frontend\IndicadorincidentessiController;
 use App\Http\Controllers\Frontend\InformacionDocumetadaController;
-use App\Http\Controllers\Frontend\InicioUsuarioController;
-use App\Http\Controllers\Frontend\MacroprocesoController;
 use App\Http\Controllers\Frontend\MarcaController;
 use App\Http\Controllers\Frontend\MaterialIsoVeinticienteController;
 use App\Http\Controllers\Frontend\MaterialSgsiController;
-use App\Http\Controllers\Frontend\MatrizRequisitoLegalesController;
 use App\Http\Controllers\Frontend\MatrizRiesgosController;
-use App\Http\Controllers\Frontend\MinutasaltadireccionController;
 use App\Http\Controllers\Frontend\ModeloController;
 use App\Http\Controllers\Frontend\ObjetivosseguridadController;
-use App\Http\Controllers\Frontend\OrganigramaController;
-use App\Http\Controllers\Frontend\OrganizacionController;
 use App\Http\Controllers\Frontend\OrganizacionesController;
-use App\Http\Controllers\Frontend\PartesInteresadasController;
 use App\Http\Controllers\Frontend\PermissionsController;
 use App\Http\Controllers\Frontend\PlanaccionCorrectivaController;
 use App\Http\Controllers\Frontend\PlanAuditoriaController;
-use App\Http\Controllers\Frontend\PlanesAccionController;
 use App\Http\Controllers\Frontend\PlanificacionControlController;
 use App\Http\Controllers\Frontend\PlanMejoraController;
 use App\Http\Controllers\Frontend\PlanTrabajoBaseController;
 use App\Http\Controllers\Frontend\PoliticaDelSgsiSoporteController;
-use App\Http\Controllers\Frontend\PoliticaSgsiController;
-use App\Http\Controllers\Frontend\PortalComunicacionController;
-use App\Http\Controllers\Frontend\ProcesoController;
 use App\Http\Controllers\Frontend\PuestosController;
 use App\Http\Controllers\Frontend\RecursosController;
 use App\Http\Controllers\Frontend\RegistromejoraController;
 use App\Http\Controllers\Frontend\RevisionDireccionController;
-use App\Http\Controllers\Frontend\RevisionDocumentoController;
-use App\Http\Controllers\Frontend\RiesgosoportunidadesController;
-use App\Http\Controllers\Frontend\RolesController;
-use App\Http\Controllers\Frontend\RolesResponsabilidadesController;
-use App\Http\Controllers\Frontend\SedeController;
 use App\Http\Controllers\Frontend\SystemCalendarController;
 use App\Http\Controllers\Frontend\TeamController;
 use App\Http\Controllers\Frontend\TeamMembersController;
-use App\Http\Controllers\Frontend\TipoactivoController;
 use App\Http\Controllers\Frontend\TratamientoRiesgosController;
-use App\Http\Controllers\Frontend\UserAlertsController;
-use App\Http\Controllers\Frontend\UsersController;
 use App\Http\Controllers\Frontend\VulnerabilidadController;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Controllers\SubidaExcel;
 use App\Http\Controllers\TareasNotificacionesController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use Stancl\Tenancy\Middleware\ScopeSessions;
 
 Route::middleware([
     'web',
@@ -168,33 +129,33 @@ Route::middleware([
         Route::delete('organizacions/destroy', [OrganizacionController::class, 'massDestroy'])->name('organizacions.massDestroy');
         Route::post('organizacions/ckmedia', [OrganizacionController::class, 'storeCKEditorImages'])->name('organizacions.storeCKEditorImages');
 
-        // Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
+        Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
-        // Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/participantes', 'RH\EV360EvaluacionesController@getParticipantes')->name('ev360-evaluaciones.getParticipantes');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia', 'RH\EV360EvaluacionesController@relatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.relatedCompetenciaWithEvaluacion');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedCompetenciaWithEvaluacion');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo', 'RH\EV360EvaluacionesController@relatedObjetivoWithEvaluacion')->name('ev360-evaluaciones.relatedObjetivoWithEvaluacion');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedObjetivoWithEvaluacion');
-        // Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion', 'RH\EV360EvaluacionesController@evaluacion')->name('ev360-evaluaciones.evaluacion');
-        // Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}', 'RH\EV360EvaluacionesController@contestarCuestionario')->name('ev360-evaluaciones.contestarCuestionario');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}/cerrar', 'RH\EV360EvaluacionesController@finalizarEvaluacion')->name('ev360-evaluaciones.finalizarEvaluacion');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada-descripcion/store', 'RH\EV360EvaluacionesController@storeMetaAlcanzadaDescripcion')->name('ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada/store', 'RH\EV360EvaluacionesController@storeMetaAlcanzada')->name('ev360-evaluaciones.objetivos.storeMetaAlcanzada');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/iniciar', 'RH\EV360EvaluacionesController@iniciarEvaluacion')->name('ev360-evaluaciones.iniciarEvaluacion');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/postergar', 'RH\EV360EvaluacionesController@postergarEvaluacion')->name('ev360-evaluaciones.postergarEvaluacion');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/cerrar', 'RH\EV360EvaluacionesController@cerrarEvaluacion')->name('ev360-evaluaciones.cerrarEvaluacion');
-        // Route::post('recursos-humanos/evaluacion-360/autoevaluacion/competencias/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionCompetencias')->name('ev360-evaluaciones.autoevaluacion.competencias.get');
-        // Route::post('recursos-humanos/evaluacion-360/autoevaluacion/objetivos/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionObjetivos')->name('ev360-evaluaciones.autoevaluacion.objetivos.get');
-        // Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/consulta/{evaluado}', 'RH\EV360EvaluacionesController@consultaPorEvaluado')->name('ev360-evaluaciones.autoevaluacion.consulta.evaluado');
-        // Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen', 'RH\EV360EvaluacionesController@resumen')->name('ev360-evaluaciones.consulta.resumen');
-        // Route::resource('recursos-humanos/evaluacion-360/evaluaciones', 'RH\EV360EvaluacionesController')->names([
-        //     'index' => 'ev360-evaluaciones.index',
-        //     'create' => 'ev360-evaluaciones.create',
-        //     'store' => 'ev360-evaluaciones.store',
-        //     'show' => 'ev360-evaluaciones.show',
-        //     'edit' => 'ev360-evaluaciones.edit',
-        //     'update' => 'ev360-evaluaciones.update',
-        // ]);
+        Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/participantes', 'RH\EV360EvaluacionesController@getParticipantes')->name('ev360-evaluaciones.getParticipantes');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia', 'RH\EV360EvaluacionesController@relatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.relatedCompetenciaWithEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedCompetenciaWithEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo', 'RH\EV360EvaluacionesController@relatedObjetivoWithEvaluacion')->name('ev360-evaluaciones.relatedObjetivoWithEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedObjetivoWithEvaluacion');
+        Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion', 'RH\EV360EvaluacionesController@evaluacion')->name('ev360-evaluaciones.evaluacion');
+        Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}', 'RH\EV360EvaluacionesController@contestarCuestionario')->name('ev360-evaluaciones.contestarCuestionario');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}/cerrar', 'RH\EV360EvaluacionesController@finalizarEvaluacion')->name('ev360-evaluaciones.finalizarEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada-descripcion/store', 'RH\EV360EvaluacionesController@storeMetaAlcanzadaDescripcion')->name('ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada/store', 'RH\EV360EvaluacionesController@storeMetaAlcanzada')->name('ev360-evaluaciones.objetivos.storeMetaAlcanzada');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/iniciar', 'RH\EV360EvaluacionesController@iniciarEvaluacion')->name('ev360-evaluaciones.iniciarEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/postergar', 'RH\EV360EvaluacionesController@postergarEvaluacion')->name('ev360-evaluaciones.postergarEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/cerrar', 'RH\EV360EvaluacionesController@cerrarEvaluacion')->name('ev360-evaluaciones.cerrarEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/autoevaluacion/competencias/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionCompetencias')->name('ev360-evaluaciones.autoevaluacion.competencias.get');
+        Route::post('recursos-humanos/evaluacion-360/autoevaluacion/objetivos/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionObjetivos')->name('ev360-evaluaciones.autoevaluacion.objetivos.get');
+        Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/consulta/{evaluado}', 'RH\EV360EvaluacionesController@consultaPorEvaluado')->name('ev360-evaluaciones.autoevaluacion.consulta.evaluado');
+        Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen', 'RH\EV360EvaluacionesController@resumen')->name('ev360-evaluaciones.consulta.resumen');
+        Route::resource('recursos-humanos/evaluacion-360/evaluaciones', 'RH\EV360EvaluacionesController')->names([
+            'index' => 'ev360-evaluaciones.index',
+            'create' => 'ev360-evaluaciones.create',
+            'store' => 'ev360-evaluaciones.store',
+            'show' => 'ev360-evaluaciones.show',
+            'edit' => 'ev360-evaluaciones.edit',
+            'update' => 'ev360-evaluaciones.update',
+        ]);
 
         // Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/remover', 'RH\EvaluadoEvaluadorController@remover')->name('ev360-evaluaciones.evaluadores.remover');
         // Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/agregar', 'RH\EvaluadoEvaluadorController@agregar')->name('ev360-evaluaciones.evaluadores.agregar');
