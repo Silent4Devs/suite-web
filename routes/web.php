@@ -130,28 +130,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
     Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 
-    Route::get('inicioUsuario', 'inicioUsuarioController@index')->name('inicio-Usuario.index');
+    Route::get('inicioUsuario', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
 
-    Route::get('inicioUsuario/reportes/quejas', 'inicioUsuarioController@quejas')->name('reportes-quejas');
-    Route::post('inicioUsuario/reportes/quejas', 'inicioUsuarioController@storeQuejas')->name('reportes-quejas-store');
+    Route::get('inicioUsuario/reportes/quejas', 'InicioUsuarioController@quejas')->name('reportes-quejas');
+    Route::post('inicioUsuario/reportes/quejas', 'InicioUsuarioController@storeQuejas')->name('reportes-quejas-store');
 
-    Route::get('inicioUsuario/reportes/denuncias', 'inicioUsuarioController@denuncias')->name('reportes-denuncias');
-    Route::post('inicioUsuario/reportes/denuncias', 'inicioUsuarioController@storeDenuncias')->name('reportes-denuncias-store');
+    Route::get('inicioUsuario/reportes/denuncias', 'InicioUsuarioController@denuncias')->name('reportes-denuncias');
+    Route::post('inicioUsuario/reportes/denuncias', 'InicioUsuarioController@storeDenuncias')->name('reportes-denuncias-store');
 
-    Route::get('inicioUsuario/reportes/mejoras', 'inicioUsuarioController@mejoras')->name('reportes-mejoras');
-    Route::post('inicioUsuario/reportes/mejoras', 'inicioUsuarioController@storeMejoras')->name('reportes-mejoras-store');
+    Route::get('inicioUsuario/reportes/mejoras', 'InicioUsuarioController@mejoras')->name('reportes-mejoras');
+    Route::post('inicioUsuario/reportes/mejoras', 'InicioUsuarioController@storeMejoras')->name('reportes-mejoras-store');
 
-    Route::get('inicioUsuario/reportes/sugerencias', 'inicioUsuarioController@sugerencias')->name('reportes-sugerencias');
-    Route::post('inicioUsuario/reportes/sugerencias', 'inicioUsuarioController@storeSugerencias')->name('reportes-sugerencias-store');
+    Route::get('inicioUsuario/reportes/sugerencias', 'InicioUsuarioController@sugerencias')->name('reportes-sugerencias');
+    Route::post('inicioUsuario/reportes/sugerencias', 'InicioUsuarioController@storeSugerencias')->name('reportes-sugerencias-store');
 
-    Route::get('inicioUsuario/reportes/seguridad', 'inicioUsuarioController@seguridad')->name('reportes-seguridad');
-    Route::post('inicioUsuario/reportes/seguridad/media', 'inicioUsuarioController@storeMedia')->name('reportes-seguridad.storeMedia');
-    Route::post('inicioUsuario/reportes/seguridad', 'inicioUsuarioController@storeSeguridad')->name('reportes-seguridad-store');
+    Route::get('inicioUsuario/reportes/seguridad', 'InicioUsuarioController@seguridad')->name('reportes-seguridad');
+    Route::post('inicioUsuario/reportes/seguridad/media', 'InicioUsuarioController@storeMedia')->name('reportes-seguridad.storeMedia');
+    Route::post('inicioUsuario/reportes/seguridad', 'InicioUsuarioController@storeSeguridad')->name('reportes-seguridad-store');
 
-    Route::get('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@riesgos')->name('reportes-riesgos');
-    Route::post('inicioUsuario/reportes/riesgos', 'inicioUsuarioController@storeRiesgos')->name('reportes-riesgos-store');
+    Route::get('inicioUsuario/reportes/riesgos', 'InicioUsuarioController@riesgos')->name('reportes-riesgos');
+    Route::post('inicioUsuario/reportes/riesgos', 'InicioUsuarioController@storeRiesgos')->name('reportes-riesgos-store');
 
-    Route::post('inicioUsuario/capacitaciones/archivar', 'inicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
+    Route::post('inicioUsuario/capacitaciones/archivar', 'InicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
 
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
@@ -488,6 +488,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('areas/grupo', 'AreasController@obtenerAreasPorGrupo')->name('areas.obtenerAreasPorGrupo');
     Route::post('areas/parse-csv-import', 'AreasController@parseCsvImport')->name('areas.parseCsvImport');
     Route::get('areas/jerarquia', 'AreasController@renderJerarquia')->name('areas.renderJerarquia');
+    Route::get('areas/jerarquia/lista', 'AreasController@obtenerJerarquia')->name('areas.obtenerJerarquia');
     Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
     Route::resource('areas', 'AreasController');
 

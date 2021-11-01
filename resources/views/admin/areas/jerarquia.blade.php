@@ -518,7 +518,7 @@
             <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: #00abb2;"
                 src="{{ $org_foto }}">
         </div> --}}
-        @if (is_null($areasTree))
+        @if (!$areasTree)
 
 
             <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
@@ -738,7 +738,7 @@
                 });
 
                 function renderOrganigrama(OrgChart, orientacion, id = null, area_filter = false, area_id = null) {
-                    let areasTree = @json($areasTree);                    
+                    let areasTree = @json($areasTree);
                     let repositorioImagenes = @json($rutaImagenes);
                     let organizacion = @json($organizacion);
                     let chartContainer = document.querySelector('#chart-container');
@@ -748,7 +748,7 @@
                     div.classList.add('sidenav');
                     chartContainer.appendChild(div);
 
-                    let url_organigrama = "{{ route('admin.areas.renderJerarquia') }}";
+                    let url_organigrama = "{{ route('admin.areas.obtenerJerarquia') }}";
 
                     $.ajax({
                         type: "GET",
@@ -771,7 +771,7 @@
                             container.appendChild(img);
                         },
                         success: function(response) {
-                            console.log(response);
+                            console.log(JSON.parse(response));
                             let container = document.querySelector('.imagen-search');
                             container.src = "";
                             document.querySelector('.texto-search').innerHTML = "";

@@ -210,10 +210,15 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                        let reporto = JSON.parse(row.participantes);
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${participantes?.avatar}" title="${participantes?.name}"></img>`;
+                        console.log(row)
+                        let participantes = row.empleados;
+                        let html="";
+                        participantes.forEach(element => {
+                           html += `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${element?.avatar}" title="${element?.name}"></img>`;
 
-                            return `${participantes ? html: ''}`;
+                        });
+
+                            return html
                         }
                     },
                     {

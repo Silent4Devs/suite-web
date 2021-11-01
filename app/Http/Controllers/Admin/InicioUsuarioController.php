@@ -166,7 +166,7 @@ class InicioUsuarioController extends Controller
                     'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $usuario->empleado->id),
                 ]);
             }
-            // dd($lista_evaluaciones);
+            // dd($revisiones);
             // SECCION MIS DATOS
             $equipo_a_cargo = $this->obtenerEquipoACargo($usuario->empleado->children);
             $equipo_a_cargo = Empleado::find($equipo_a_cargo);
