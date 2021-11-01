@@ -39,6 +39,6 @@
             </div>
         @endforeach
         {{-- <button type="button" wire:click.prevent="store()" class="btn btn-success btn-sm">Enviar</button> --}}
-
+            
     </div>
 {{-- </form> --}}
