@@ -77,7 +77,7 @@
                         <th class="text-center" colspan="10">
                             Resultados de la evaluación
                         </th>
-                        <th class="text-center" colspan="{{ count($competencias_evaluadas) }}">
+                        <th class="text-center" colspan="{{ $competencias_evaluadas }}">
                             Competencias
                         </th>
                         <th class="text-center" colspan="{{ $objetivos_evaluados }}">
@@ -250,8 +250,8 @@
                                         <div
                                             style="width: {{ $avance_porcentaje }}%;max-width: 100%;height: 100%;background: #56de4d;">
                                         </div>
-                                        <span
-                                            style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;text-align: left;">{{ $objetivo_info['nombre'] }}
+                                        <span title="{{ $objetivo_info['nombre'] }}"
+                                            style="position: absolute;margin-left: auto;margin-right: auto;top: 13px;left: 6px;text-align: left;">{{ Str::limit($objetivo_info['nombre'], 20, '...') }}
                                             <strong>({{ $avance_porcentaje }}%)</strong>
                                         </span>
                                     @else

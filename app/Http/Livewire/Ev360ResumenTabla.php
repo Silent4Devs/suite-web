@@ -33,7 +33,7 @@ class Ev360ResumenTabla extends Component
 
     public function render()
     {
-        $evaluacion = Evaluacion::with('evaluados')->find(intval($this->evaluacion));
+        $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados')->find(intval($this->evaluacion));
         $evaluados = $evaluacion->evaluados;
         $this->lista_evaluados = collect();
         $calificaciones = collect();
@@ -50,6 +50,7 @@ class Ev360ResumenTabla extends Component
                 'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
             ]);
         }
+        // dd($this->lista_evaluados);
 
         foreach ($this->lista_evaluados as $evaluado) {
             if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 60) {

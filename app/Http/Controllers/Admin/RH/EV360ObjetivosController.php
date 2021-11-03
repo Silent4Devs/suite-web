@@ -192,11 +192,16 @@ class EV360ObjetivosController extends Controller
     public function indexCopiar($empleado)
     {
 
-        $empleado = Empleado::select('id', 'name')->with('objetivos')->find(intval($empleado));
-        // $objetivos_empleado = $empleado->objetivos;
-        $empleados = Empleado::select('id', 'name', 'genero')->get()->except($empleado);
-
-        return response()->json(['empleados' => $empleados]);
+        $empleado = Empleado::select('id', 'name')->with(['objetivos' => function ($query) {
+            return $query->with('objetivo');
+        }])->find(intval($empleado));
+        $objetivos_empleado = $empleado->objetivos;
+        if (count($objetivos_empleado)) {
+            $empleados = Empleado::select('id', 'name', 'genero')->get()->except($empleado->id);
+            return response()->json(['empleados' => $empleados, 'hasObjetivos' => true, 'objetivos' => $objetivos_empleado]);
+        } else {
+            return response()->json(['hasObjetivos' => false]);
+        }
     }
 
     public function storeCopiaObjetivos(Request $request)

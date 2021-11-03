@@ -114,6 +114,7 @@
                     <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
                     <button type="button" id="btnGuardarCopia" class="btn btn-success">Guardar</button>
                 </div>
+                @include('layouts.loader')
             </div>
         </div>
     </div>
@@ -249,7 +250,7 @@
                                 <a href="${urlAsignar}" title="Editar" class="btn btn-sm btn-primary">
                                 <i class="fas fa-user-tag"></i> Agregar    
                                 </a>
-                                <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${row.data}')" title="Copiar Objetivos" class="ml-2 text-white btn btn-sm" style="background:#11bb55">
+                                <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos" class="ml-2 text-white btn btn-sm" style="background:#11bb55">
                                 <i class="fas fa-copy"></i>Copiar</button>
                                 <a href="${urlShow}" title="Visualizar" class="ml-2 text-white btn btn-sm" style="background:#1da79f">
                                 <i class="fas fa-eye"></i> Ver    
@@ -311,12 +312,20 @@
                     type: "GET",
                     url: url,
                     dataType: "JSON",
+                    beforeSend: function() {
+                        toastr.info('Obteniendo información, espere un momento...');
+                    },
                     success: function(response) {
                         let {
-                            empleados
+                            hasObjetivos
                         } = response;
-                        let modalContent = document.getElementById('contenidoModal');
-                        let contenidoHTMLGenerado = `
+                        if (hasObjetivos) {
+                            let {
+                                empleados,
+                                objetivos,
+                            } = response;
+                            let modalContent = document.getElementById('contenidoModal');
+                            let contenidoHTMLGenerado = `
                         <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
                             <div class="row w-100">
                                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -328,14 +337,23 @@
                                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                     </p>
                                     <p class="m-0" style="font-size: 14px; color:#1E3A8A ">De la lista de abajo selecciona al empleado al que se copiarán los objetivos del siguiente empleado: <strong id="nombre_empleado" data-destinatario="${empleado_id}">${nombre_empleado}</strong></p>
+                                    <div>
+                                        <ul class="list-group" style="max-height: 100px;overflow: auto;">
+                                            ${objetivos.map(objetivo => {
+                                                return `<li class="list-group-item"><img src="${objetivo.objetivo.imagen_ruta}" class="mr-2" style="clip-path: circle(10px at 50% 50%);height: 20px;">${objetivo.objetivo.nombre}</li>`;
+                                            }).join("")}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <form class="form-group">
+                        <form id="formCopiaObjetivos" class="form-group">
                             <div class="row">
                                 <div class="col-12">
+                                    <input type="hidden" value="${empleado_id}" name="empleado_destinatario">
                                     <label><i class="mr-2 fas fa-user"></i>Selecciona al empleado</label>
-                                    <select class="form-control empleados-select">
+                                    <select class="form-control empleados-select" name="empleado_destino">
+                                        <option value="">-- Selecciona un empleado --</option>
                                         ${empleados.map(empleado => {
                                             return `<option data-avatar="${empleado.avatar}" value="${empleado.id}">${empleado.name}</option>`;
                                         }).join(',')}
@@ -344,38 +362,73 @@
                             </div>    
                         </form>
                         `;
-                        modalContent.innerHTML = contenidoHTMLGenerado;
-                        console.log(response);
-                        $('#modalCopiarObjetivos').modal('show');
+                            modalContent.innerHTML = contenidoHTMLGenerado;
+                            console.log(response);
+                            $('#modalCopiarObjetivos').modal('show');
 
-                        $('.empleados-select').select2({
-                            theme: 'bootstrap4',
-                            templateResult: stateSelection,
-                            templateSelection: stateSelection
-                        });
+                            $('.empleados-select').select2({
+                                theme: 'bootstrap4',
+                                templateResult: stateSelection,
+                                templateSelection: stateSelection
+                            });
 
-                        function stateSelection(opt) {
-                            if (!opt.id) {
-                                return opt.text;
-                            }
+                            function stateSelection(opt) {
+                                if (!opt.id) {
+                                    return opt.text;
+                                }
 
-                            var optimage = $(opt.element).attr('data-avatar');
-                            var $opt = $(
-                                '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
-                                optimage +
-                                '" class="img-fluid rounded-circle" width="30" height="30"/>' +
-                                opt.text + '</span>'
-                            );
-                            return $opt;
-                        };
+                                var optimage = $(opt.element).attr('data-avatar');
+                                var $opt = $(
+                                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
+                                    optimage +
+                                    '" class="img-fluid rounded-circle" width="30" height="30"/>' +
+                                    opt.text + '</span>'
+                                );
+                                return $opt;
+                            };
+                        } else {
+                            toastr.info('Este usuario no tiene objetivos asignados');
+                        }
+                    },
+                    error: function(request, status, error) {
+                        toastr.error(error);
                     }
                 });
             };
 
             document.getElementById('btnGuardarCopia').addEventListener('click', function(e) {
                 e.preventDefault();
+                let formData = new FormData(document.getElementById('formCopiaObjetivos'));
+                mostrarValidando();
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/recursos-humanos/evaluacion-360/objetivos/copiar",
+                    data: formData,
+                    dataType: "JSON",
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success('Objetivos transferidos');
+                            $('#modalCopiarObjetivos').modal('hide');
+                        }
 
+                        ocultarValidando();
+                    },
+                    error: function(request, status, error) {
+                        ocultarValidando();
+                        toastr.error(error);
+                    }
+                });
             });
         })
+
+        function mostrarValidando() {
+            document.getElementById('displayAlmacenandoUniversal').style.display = 'grid';
+        }
+
+        function ocultarValidando() {
+            document.getElementById('displayAlmacenandoUniversal').style.display = 'none';
+        }
     </script>
 @endsection

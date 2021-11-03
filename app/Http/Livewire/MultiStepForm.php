@@ -435,6 +435,9 @@ class MultiStepForm extends Component
         }
         if ($idx == 0) {
             if ($this->sendEmail) {
+                $evaluacion->update([
+                    'email_sended' => true
+                ]);
                 $this->enviarCorreoAEvaluadores($evaluacion, $evaluadores);
             }
         }
