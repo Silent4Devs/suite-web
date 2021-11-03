@@ -61,4 +61,9 @@ class GapUno extends Model
         $this->two_factor_expires_at = null;
         $this->save();
     }
+
+    public function analisis_brecha()
+	{
+		return $this->belongTo(AnalisisBrecha::class);
+	}
 }

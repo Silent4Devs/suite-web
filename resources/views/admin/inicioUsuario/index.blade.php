@@ -75,6 +75,10 @@
             z-index: 1;
         }
 
+        .caja_botones_menu a{
+            outline: none;
+        }
+
     </style>
 
     @include('partials.flashMessages')
@@ -119,17 +123,17 @@
         <div class="col-lg-12 row caja_botones_secciones">
             @if ($usuario->empleado)
                 <div class="col-12 caja_botones_menu">
-                    <a href="#" data-tabs="mis-datos" class="btn_activo"><i class="fas fa-user-circle"></i>
+                    <a href="#" id="datos" data-tabs="s_misDatos" class=""><i class="fas fa-user-circle"></i>
                         Mis Datos</a>
-                    <a href="#" data-tabs="calendario"><i class="fas fa-calendar-alt"></i>
+                    <a href="#" id="calendario" data-tabs="s_calendario"><i class="fas fa-calendar-alt"></i>
                         Calendario</a>
-                    <a href="#" data-tabs="actividades">
+                    <a href="#" id="actividades" data-tabs="s_actividades">
                         @if ($contador_actividades)
                             <span>{{ $contador_actividades }}</span>
                         @endif
                         <i class="fas fa-stopwatch"></i>Actividades
                     </a>
-                    <a href="#" data-tabs="aprobaciones">
+                    <a href="#" id="aprobaciones" data-tabs="s_aprobaciones">
                         @if ($contador_revisiones)
                             <span>{{ $contador_revisiones }}</span>
                         @endif
@@ -141,37 +145,37 @@
                         @endif
                         <i class="fas fa-check"></i>Evaluaciones
                     </a> --}}
-                    <a href="#" data-tabs="capacitaciones">
+                    <a href="#" id="capacitaciones" data-tabs="s_capacitaciones">
                         @if ($contador_recursos)
                             <span>{{ $contador_recursos }}</span>
                         @endif
                         <i class="fas fa-chalkboard-teacher"></i>Capacitaciones
                     </a>
-                    <a href="#" data-tabs="reportes"><i class="fas fa-clipboard-list"></i>Reportes</a>
+                    <a href="#" id="reportes" data-tabs="s_reportes"><i class="fas fa-clipboard-list"></i>Reportes</a>
                 </div>
             @endif
             <div class="caja_caja_secciones">
                 @if ($usuario->empleado)
                     <div class="caja_secciones">
-                        <section id="misDatos" class="caja_tab_reveldada">
+                        <section id="s_misDatos" data-id="datos" class="">
                             @include('admin.inicioUsuario.mis-datos')
                         </section>
-                        <section id="calendario">
+                        <section id="s_calendario" data-id="calendario">
                             @include('admin.inicioUsuario.calendario')
                         </section>
-                        <section id="actividades">
+                        <section id="s_actividades" data-id="actividades">
                             @include('admin.inicioUsuario.actividades')
                         </section>
-                        <section id="aprobaciones">
+                        <section id="s_aprobaciones" data-id="aprobaciones">
                             @include('admin.inicioUsuario.aprobaciones')
                         </section>
                         {{-- <section id="evaluaciones">
                             @include('admin.inicioUsuario.evaluaciones')
                         </section> --}}
-                        <section id="capacitaciones">
+                        <section id="s_capacitaciones" data-id="capacitaciones">
                             @include('admin.inicioUsuario.capacitaciones')
                         </section>
-                        <section id="reportes">
+                        <section id="s_reportes" data-id="reportes">
                             @include('admin.inicioUsuario.reportes')
                         </section>
                     </div>
@@ -186,5 +190,30 @@
 
 
 @section('scripts')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            let tabs=document.querySelectorAll('.tabs');
+            tabs.forEach(tab => {
+                if(tab.classList.contains('btn_activo')){
+                    tab.classList.remove('btn_activo')
+                }
+            });
+            let cajas=document.querySelectorAll('.caja');
+            cajas.forEach(caja => {
+                if(caja.classList.contains('caja_tab_reveldada')){
+                    caja.classList.remove('caja_tab_reveldada')
+                }
+            });
+
+            let idActual=window.location.hash.replace('#','');
+            document.getElementById(idActual).classList.add('btn_activo');
+            document.querySelector(`[data-id="${idActual}"]`).classList.add('caja_tab_reveldada');
+            setTimeout(() => {
+                window.scrollTo(0,0);
+                console.log('scroll')
+            }, 1 );
+        })
+    </script>
 
 @endsection

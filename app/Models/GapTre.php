@@ -57,8 +57,8 @@ class GapTre extends Model
         $this->save();
     }
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
+    public function analisis_brecha()
+	{
+		return $this->belongTo(AnalisisBrecha::class);
+	}
 }
