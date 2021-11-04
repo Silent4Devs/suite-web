@@ -247,6 +247,7 @@
 
         </div>
         <div id="plan_trabajo_workspace">
+            <p><i class="mr-2 fas fa-calendar"></i>Última modificación: <span id="ultima_modificacion"></span></p>
             <div class="caja_caja_secciones">
                 <div class="caja_secciones ">
                     <section id="original_gantt" class="caja_tab_reveldada">

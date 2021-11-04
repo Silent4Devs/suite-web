@@ -1,6 +1,6 @@
 {{-- <form wire:submit.prevent="store" enctype="multipart/form-data"> --}}
     <div class="row">
-        <div class="form-group col-sm-2">
+        <div class="mb-0 form-group col-sm-3">
             <div class="form-group">
                 <label for="evaluacion"><i class="fas fa-file-signature iconos-crear"></i>Evaluación</label>
                 <input class="form-control {{ $errors->has('evaluacion') ? 'is-invalid' : '' }}" type="text"
@@ -13,7 +13,7 @@
                 <span class="help-block"></span>
             </div>
         </div>
-        <div class="form-group col-md-2 col-sm-2">
+        <div class="mb-0 form-group col-md-3">
             <label for="fecha"><i class="far fa-calendar-alt iconos-crear"></i>Fecha</label>
             <input class="form-control date {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="date" name="fecha"
                 id="fecha" value="{{ old('fecha') }}" wire:model="fecha">
@@ -28,7 +28,7 @@
             <span class="help-block">{{ trans('cruds.planBaseActividade.fields.fecha_inicio_helper') }}</span>
         </div>
         @foreach ($customFields as $key => $customField)
-            <div class="form-group col-sm-4">
+            <div class="mb-0 form-group col-sm-3">
                 <div class="form-group">
                     <label for="formSlugs.{{ $key }}.{{ $customField->variable }}"><i
                             class="fab fa-diaspora iconos-crear"></i>{{ ucfirst(substr($customField->variable, 1)) }}</label>
@@ -39,6 +39,6 @@
             </div>
         @endforeach
         {{-- <button type="button" wire:click.prevent="store()" class="btn btn-success btn-sm">Enviar</button> --}}
-            
+
     </div>
 {{-- </form> --}}

@@ -19,10 +19,12 @@ class OrganigramaController extends Controller
     {
         abort_if(Gate::denies('organigrama_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // La construccion del arbol necesita un primer nodo (NULL)
-        $organizacionTree = Empleado::with(['supervisor.children', 'supervisor.supervisor', 'area', 'children.supervisor', 'children.children'])->whereNull('supervisor_id')->first(); //Eager loading
+        $organizacionTree = Empleado::exists();
         if ($request->ajax()) {
             if ($request->area_filter == 'true') {
-                $treeByArea = Empleado::with(['area', 'children' => function ($q) use ($request) {
+                $treeByArea = Empleado::select('id', 'name','area_id','foto','puesto_id','antiguedad','email','telefono','estatus','n_registro','n_empleado','genero','telefono_movil')->with(['area'=>function($queryC){
+                    return $queryC->select('id','area');
+                },'children' => function ($q) use ($request) {
                     $q->where('area_id', $request->area_id);
                 }, 'children.children' => function ($q) use ($request) {
                     $q->where('area_id', $request->area_id);
@@ -32,11 +34,23 @@ class OrganigramaController extends Controller
             } else {
                 if ($request->id == null) {
                     // La construccion del arbol necesita un primer nodo (NULL)
-                    $organizacionTree = Empleado::with(['supervisor.children', 'supervisor.supervisor', 'area', 'children.supervisor', 'children.children'])->whereNull('supervisor_id')->first(); //Eager loading
+                    $organizacionTree = Empleado::select('id', 'name','area_id','foto','puesto_id','antiguedad','email','telefono','estatus','n_registro','n_empleado','genero','telefono_movil')->with(['supervisor.children','supervisor.supervisor'=>function($queryC){
+                        return $queryC->select('id', 'name','foto','puesto_id','genero');
+                    }, 'area'=>function($queryC){
+                        return $queryC->select('id','area');
+                    }, 'children.supervisor'=>function($queryC){
+                        return $queryC->select('id', 'name','foto','puesto_id','genero');
+                    },'children.children'])->whereNull('supervisor_id')->first(); //Eager loading
 
                     return $organizacionTree->toJson();
                 } else {
-                    $organizacionTree = Empleado::with(['supervisor.children', 'supervisor.supervisor', 'area', 'children.supervisor', 'children.children'])->where('id', '=', $request->id)->first(); //Eager loading
+                    $organizacionTree = Empleado::select('id', 'name','area_id','foto','puesto_id','antiguedad','email','telefono','estatus','n_registro','n_empleado','genero','telefono_movil')->with(['supervisor.children','supervisor.supervisor'=>function($queryC){
+                        return $queryC->select('id', 'name','foto','puesto_id','genero');
+                    }, 'area'=>function($queryC){
+                        return $queryC->select('id','area');
+                    }, 'children.supervisor'=>function($queryC){
+                        return $queryC->select('id', 'name','foto','puesto_id','genero');
+                    },'children.children'])->where('id', '=', $request->id)->first(); //Eager loading
                     if ($organizacionTree != null) {
                         return $organizacionTree->toJson();
                     } else {

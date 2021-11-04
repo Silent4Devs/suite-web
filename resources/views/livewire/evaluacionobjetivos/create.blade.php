@@ -8,6 +8,6 @@
             <i class="fas fa-spinner fa-pulse" wire:loading wire:target="store"></i>
             <span wire:loading.remove wire:target="store">Guardar</span>
             <span wire:loading wire:target="store">Guardando</span>
-        </button>
+       </button>
     </div>
 </div>
