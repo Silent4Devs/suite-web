@@ -378,7 +378,8 @@
                 dataType: "JSON",
                 success: function(response) {
                     $('#workSpace').trigger('refreshTasks.gantt');
-                    toastr.success('Tarea actualizada con éxito');
+                    document.getElementById('ultima_modificacion').innerHTML=response.ultima_modificacion;
+                    // toastr.success('Tarea actualizada con éxito');
                 }
             });
         }

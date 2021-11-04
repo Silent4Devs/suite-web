@@ -346,7 +346,7 @@
                                                 imagenes +=
                                                     `<div class="caja-imagen-asignado">
                                                     <img class="rounded-circle" title="${assigs[contador].name}"
-                                                        src="{{ asset('storage/empleados/imagenes') }}/${foto}" />                                                    
+                                                        src="{{ asset('storage/empleados/imagenes') }}/${foto}" />
                                             </div>
                                             <span class="btn_empleados" onmouseover="renderCard(this, '${encodeURIComponent(JSON.stringify(assigs))}')">+${assigs.length - 4}</span>
                                             `;
@@ -386,22 +386,22 @@
                                                 </td>
                                                 <td class="${key} td_estatus_select">
                                                     <select class="estatus_select">
-                                                        <option class="STATUS_ACTIVE" value="STATUS_ACTIVE" 
+                                                        <option class="STATUS_ACTIVE" value="STATUS_ACTIVE"
                                                             ${key == 'STATUS_ACTIVE' ? 'selected':''}><span>En proceso</span></option>
-                                                        <option class="STATUS_DONE" value="STATUS_DONE" 
+                                                        <option class="STATUS_DONE" value="STATUS_DONE"
                                                             ${key == 'STATUS_DONE' ? 'selected':''}><span>Completado</span></option>
-                                                        <option class="STATUS_FAILED" value="STATUS_FAILED" 
+                                                        <option class="STATUS_FAILED" value="STATUS_FAILED"
                                                             ${key == 'STATUS_FAILED' ? 'selected':''}><span>Retraso</span></option>
-                                                        <option class="STATUS_SUSPENDED" value="STATUS_SUSPENDED" 
+                                                        <option class="STATUS_SUSPENDED" value="STATUS_SUSPENDED"
                                                             ${key == 'STATUS_SUSPENDED' ? 'selected':''}><span>Suspendida</span></option>
-                                                        <option class="STATUS_UNDEFINED" value="STATUS_UNDEFINED" 
+                                                        <option class="STATUS_UNDEFINED" value="STATUS_UNDEFINED"
                                                             ${key == 'STATUS_UNDEFINED' ? 'selected':''}><span>Sin iniciar</span></option>
                                                     </select>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                </li>    
+                                </li>
                                 `;
                         });
                         html += `</div></ul>`;
@@ -462,7 +462,7 @@
 									<ul class="list-group">
 										<div class="contenedor_lista">
 											${renderResources(response,actividad_correspondiente)}
-										</div>								
+										</div>
 									</ul>
 								</div>
 								<div class="modal-footer">
@@ -627,6 +627,17 @@
         function changeStatusInKanban(tarea_correspondiente, response, valor_nuevo, element = null) {
             if (!isParent(tarea_correspondiente, response.tasks)) {
                 if (valor_nuevo == 'STATUS_DONE') {
+                    if (tarea_correspondiente.isSuspended) {
+                        tarea_correspondiente.isSuspended = false;
+                    } else {
+                        tarea_correspondiente['isSuspended'] = false;
+
+                    }
+                    if (tarea_correspondiente.isFailed) {
+                        tarea_correspondiente.isFailed = false;
+                    } else {
+                        tarea_correspondiente['isFailed'] = false;
+                    }
                     tarea_correspondiente.status = valor_nuevo;
                     tarea_correspondiente.progress = 100; // set progress in 100
                     calculateAverageOnNodes(response.tasks);
@@ -646,6 +657,17 @@
                         cancelButtonText: 'No'
                     }).then((result) => {
                         if (result.isConfirmed) {
+                            if (tarea_correspondiente.isSuspended) {
+                                tarea_correspondiente.isSuspended = false;
+                            } else {
+                                tarea_correspondiente['isSuspended'] = false;
+
+                            }
+                            if (tarea_correspondiente.isFailed) {
+                                tarea_correspondiente.isFailed = false;
+                            } else {
+                                tarea_correspondiente['isFailed'] = false;
+                            }
                             tarea_correspondiente.status = valor_nuevo;
                             tarea_correspondiente.progress = 0; // set progress in 0
                             calculateAverageOnNodes(response.tasks);
@@ -657,7 +679,21 @@
                     })
 
                 } else if (valor_nuevo == 'STATUS_SUSPENDED') {
-                    //
+                    if (tarea_correspondiente.isSuspended) {
+                        tarea_correspondiente.isSuspended = true;
+                    } else {
+                        tarea_correspondiente['isSuspended'] = true;
+
+                    }
+                    if (tarea_correspondiente.isFailed) {
+                        tarea_correspondiente.isFailed = false;
+                    } else {
+                        tarea_correspondiente['isFailed'] = false;
+                    }
+                    calculateAverageOnNodes(response.tasks);
+                    calculateStatus(response.tasks);
+                    saveOnServer(response);
+                    renderKanban(response);
                 } else if (valor_nuevo == 'STATUS_FAILED') {
                     if (tarea_correspondiente.end - Date.now() >= 0) {
                         toastr.info('Esta actividad no puede ser puesta en retraso');
@@ -666,6 +702,17 @@
                             element.value = tarea_correspondiente.status;
                         }
                     } else {
+                        if (tarea_correspondiente.isSuspended) {
+                            tarea_correspondiente.isSuspended = false;
+                        } else {
+                            tarea_correspondiente['isSuspended'] = false;
+
+                        }
+                        if (tarea_correspondiente.isFailed) {
+                            tarea_correspondiente.isFailed = true;
+                        } else {
+                            tarea_correspondiente['isFailed'] = true;
+                        }
                         tarea_correspondiente.status = valor_nuevo;
                         calculateAverageOnNodes(response.tasks);
                         calculateStatus(response.tasks);
@@ -693,6 +740,17 @@
                         },
                         preConfirm: (progress) => {
                             if (Number(progress) >= 1 && Number(progress) <= 99) {
+                                if (tarea_correspondiente.isSuspended) {
+                                    tarea_correspondiente.isSuspended = false;
+                                } else {
+                                    tarea_correspondiente['isSuspended'] = false;
+
+                                }
+                                if (tarea_correspondiente.isFailed) {
+                                    tarea_correspondiente.isFailed = false;
+                                } else {
+                                    tarea_correspondiente['isFailed'] = false;
+                                }
                                 tarea_correspondiente.status = valor_nuevo;
                                 tarea_correspondiente.progress = Number(progress);
                                 calculateAverageOnNodes(response.tasks);

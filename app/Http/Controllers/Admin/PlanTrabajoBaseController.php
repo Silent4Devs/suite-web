@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Empleado;
-use App\Models\PlanImplementacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\PlanImplementacion;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,7 +47,7 @@ class PlanTrabajoBaseController extends Controller
 
         if (PlanImplementacion::find(1)) {
             $tasks = isset($project['tasks']) ? $project['tasks'] : [];
-            PlanImplementacion::find(1)->update([
+           $plan_implementacion= PlanImplementacion::find(1)->update([
                 'tasks' => $tasks,
                 'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
                 'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
@@ -55,9 +56,10 @@ class PlanTrabajoBaseController extends Controller
                 'selectedRow' => isset($project['selectedRow']) ? $project['selectedRow'] : 0,
                 'zoom' => isset($project['zoom']) ? $project['zoom'] : '1M',
             ]);
+            $plan_implementacion=PlanImplementacion::find(1);
         } else {
             $tasks = isset($project['tasks']) ? $project['tasks'] : [];
-            PlanImplementacion::create([
+            $plan_implementacion=PlanImplementacion::create([
                 'tasks' => $tasks,
                 'canAdd' => isset($project['canAdd']) ? $project['canAdd'] : true,
                 'canWrite' => isset($project['canWrite']) ? $project['canWrite'] : true,
@@ -68,7 +70,7 @@ class PlanTrabajoBaseController extends Controller
             ]);
         }
 
-        return response()->json(['success' => true], 200);
+        return response()->json(['success' => true,'ultima_modificacion'=>Carbon::parse($plan_implementacion->updated_at)->format('d/m/Y g:i:s A')], 200);
     }
 
     public function loadProyect()
