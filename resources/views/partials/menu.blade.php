@@ -314,7 +314,7 @@
             </a>
         </li> --}}
 
-        <li class="c-sidebar-nav-title">
+        {{-- <li class="c-sidebar-nav-title">
             <font class="letra_blanca">Recursos Humanos</font>
         </li>
         <li class="c-sidebar-nav-item">
@@ -328,7 +328,7 @@
                 </svg>
                 <font class="letra_blanca"> Evaluación 360 Grados </font>
             </a>
-        </li>
+        </li> --}}
 
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca">Normas</font>
