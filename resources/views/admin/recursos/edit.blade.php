@@ -20,7 +20,7 @@
 
     <div class="card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Capacitación </h3>
+            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong>Transferencia de Conocimiento</h3>
         </div>
         <div id="errores_alert"></div>
         <div class="card-body">
@@ -761,7 +761,7 @@
             });
 
             window.seleccionarUsuario = function(id, name, email) {
-               
+
                 $("#participantes_search").val(name);
                 $("#id_empleado").val(id);
                 $("#email").val(email);
