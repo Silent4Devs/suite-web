@@ -108,7 +108,7 @@
                                         <span class="btn-lista-acciones"><i class="fa fa-edit"></i></span>
                                         <div class="list-group lista-acciones lista-toggle">
                                             <a type="button"
-                                                href="{{ route('frontend.ev360-objetivos-empleado.create', $empleado) }}"
+                                                href="{{ route('ev360-objetivos-empleado.create', $empleado) }}"
                                                 class="list-group-item list-group-item-action text-muted"
                                                 aria-current="true"><i class="fas fa-dot-circle"></i>
                                                 Objetivos
@@ -122,7 +122,7 @@
                             <h5 class="text-center"><i class="mr-2 fas fa-chart-bar"></i>Reportes de mis evaluaciones
                             </h5>
                             @foreach ($lista_evaluaciones as $evaluacion)
-                                <a href="{{ route('frontend.ev360-evaluaciones.autoevaluacion.consulta.evaluado', [
+                                <a href="{{ route('ev360-evaluaciones.autoevaluacion.consulta.evaluado', [
     'evaluacion' => $evaluacion['id'],
     'evaluado' => $usuario->empleado->id,
 ]) }}"
@@ -218,7 +218,7 @@
                                                 @endif
                                             </small>
                                             <a
-                                                href="{{ route('frontend.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}"><i
+                                                href="{{ route('ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}"><i
                                                     class="fas fa-link" style="font-size:11px;"></i></a>
                                             @if ($evaluacion->evaluacion->include_competencias)
                                                 <div class="progress">

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     {{-- @can('planes_accion_access') --}}
     <style>
@@ -362,7 +362,7 @@
                     Comunicación </strong></h3>
         </div>
 
-        @include('partials.flashMessages')
+        @include('frontend.partials.flashMessages')
 
         <div class="card-body">
             <div class="row">
@@ -431,13 +431,13 @@
                     </div>
                 </div>
                 <div class="col-lg-3 caja_btn_silent">
-                    <a class="btn-silent" href="{{ asset('admin/organizacions') }}"><i class="mr-2 fas fa-gopuram"></i> <span>Organización</span></a>
-                    <a class="btn-silent" href="{{ asset('admin/organigrama') }}"><i class="mr-2 fas fa-sitemap"></i> <span>Organigrama</span></a>
-                    <a class="btn-silent" href="{{ asset('admin/documentos/publicados') }}"><i class="mr-2 fas fa-folder"></i> <span>Documentos</span></a>
-                    <a class="btn-silent" href="{{ asset('admin/politica-sgsis/visualizacion') }}"><i class="mr-2 fas fa-file"></i> <span>Política SGSI</span></a>
-                    <a class="btn-silent" href="{{ asset('admin/comiteseguridads/visualizacion') }}"><i class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
-                    <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}"><i class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
-                    <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}"><i class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
+                    <a class="btn-silent" href="{{ asset('organizacions') }}"><i class="mr-2 fas fa-gopuram"></i> <span>Organización</span></a>
+                    <a class="btn-silent" href="{{ asset('organigrama') }}"><i class="mr-2 fas fa-sitemap"></i> <span>Organigrama</span></a>
+                    <a class="btn-silent" href="{{ asset('documentos/publicados') }}"><i class="mr-2 fas fa-folder"></i> <span>Documentos</span></a>
+                    <a class="btn-silent" href="{{ asset('politica-sgsis/visualizacion') }}"><i class="mr-2 fas fa-file"></i> <span>Política SGSI</span></a>
+                    <a class="btn-silent" href="{{ asset('comiteseguridads/visualizacion') }}"><i class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
+                    <a class="btn-silent" href="{{ asset('sedes/organizacion') }}"><i class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
+                    <a class="btn-silent" href="{{ asset('portal-comunicacion/reportes') }}"><i class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
                 </div>
 
 
@@ -467,7 +467,7 @@
                                 <p class="w-100" style="text-align: justify;">
                                     {!! Str::limit($comunicacionSgi->descripcion, 200, '...') !!}
                                 </p>
-                                <a href="{{ asset('admin/comunicacion-sgis/'.$comunicacionSgi->id) }}">Leer más</a>
+                                <a href="{{ asset('comunicacion-sgis/'.$comunicacionSgi->id) }}">Leer más</a>
                             </div>
                         </div>
                         @empty
@@ -487,7 +487,7 @@
                     <h2 class="mt-5 titulo-seccion"><i class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
 
                     {{-- @foreach ($documentos_publicados as $documento)
-                        <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
+                        <a href="{{ route('documentos.renderViewDocument', $documento->id) }}"
                             class="list-group-item cards text-dark">
                             <i class="mr-1 fas fa-file-pdf text-danger"></i>
                             {{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
@@ -509,7 +509,7 @@
                     @forelse($documentos_publicados as $documento)
                         <div class="doc_publicado">
                             <div class="icon_doc">
-                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}" title="Ver documento">
+                                <a href="{{ route('documentos.renderViewDocument', $documento->id) }}" title="Ver documento">
                                     <i class="fas fa-file-pdf"></i>
                                 </a>
                             </div>
@@ -535,7 +535,7 @@
                             <div class="opciones_doc">
                                 <h6><strong>Responsable:</strong></h6>
                                 <img src="{{asset('storage/empleados/imagenes/'.$documento->responsable->foto)}}" class="img_empleado" title="{{$documento->responsable->name}}"><br/>
-                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver documento</a>
+                                <a href="{{ route('documentos.renderViewDocument', $documento->id) }}">Ver documento</a>
                             </div>
                         </div>
 

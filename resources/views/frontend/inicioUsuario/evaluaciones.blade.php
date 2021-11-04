@@ -33,7 +33,7 @@
                     </td>
                     <td>
                         <a
-                            href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->evaluador, 'evaluador' => $evaluacion->empleado_evaluado]) }}"><i
+                            href="{{ route('ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->evaluador, 'evaluador' => $evaluacion->empleado_evaluado]) }}"><i
                                 class="fas fa-arrow-right"></i></a>
                     </td>
                 </tr>

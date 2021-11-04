@@ -79,10 +79,10 @@
                     <td class="d-flex">
                         @php
                             if (intval($task->parent_id) == 1) {
-                                $ruta = '/frontend/planTrabajoBase/';
+                                $ruta = 'planTrabajoBase/';
                             }
                             else{
-                                $ruta = '/frontend/planes-de-accion/'.$task->parent_id;
+                                $ruta = 'planes-de-accion/'.$task->parent_id;
                             }
                         @endphp
                         <a href="{{asset($ruta)}}"><i class="far fas fa-stream"></i></a>

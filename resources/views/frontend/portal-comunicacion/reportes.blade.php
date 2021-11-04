@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 	
 	@section('styles')
@@ -46,7 +46,7 @@
 		    }
 		</style>
 	@endsection
-	{{ Breadcrumbs::render('admin.portal-comunicacion.reportes') }}
+	{{ Breadcrumbs::render('portal-comunicacion.reportes') }}
 	<div class="card card-body" style="margin-top: -50PX;">
 		<div class="row" style="border-bottom: 2px solid #ccc;">
 			<div class="col-12 caja_titulo">
@@ -68,22 +68,22 @@
 		</div>
 		<div class="row" style="">
 			<div style="text-align: center;" class="mt-5">
-			    <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}" class="cards_reportes">
+			    <a href="{{ asset('inicioUsuario/reportes/seguridad') }}" class="cards_reportes">
 			        <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
 			    </a>
-			    <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}" class="cards_reportes">
+			    <a href="{{ asset('inicioUsuario/reportes/riesgos') }}" class="cards_reportes">
 			        <i class="fas fa-shield-virus"></i> Riesgo Identificado
 			    </a>
-			    <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="cards_reportes">
+			    <a href="{{ asset('inicioUsuario/reportes/quejas') }}" class="cards_reportes">
 			        <i class="fas fa-frown"></i> Realizar queja
 			    </a>
-			    <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="cards_reportes">
+			    <a href="{{ asset('inicioUsuario/reportes/denuncias') }}" class="cards_reportes">
 			        <i class="fas fa-hand-paper"></i> Realizar denuncia
 			    </a>
-			    <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
+			    <a href="{{ asset('inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
 			        <i class="fas fa-rocket"></i> Reportar mejora
 			    </a>
-			    <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
+			    <a href="{{ asset('inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
 			        <i class="fas fa-lightbulb"></i> Realizar sugerencia
 			    </a>
 			</div>

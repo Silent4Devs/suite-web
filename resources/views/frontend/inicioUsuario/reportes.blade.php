@@ -22,22 +22,22 @@
 </style>
 
 <div style="text-align: center;" class="mt-5">
-    <a href="{{ asset('frontend/inicioUsuario/reportes/seguridad') }}" class="cards_reportes">
+    <a href="{{ asset('inicioUsuario/reportes/seguridad') }}" class="cards_reportes">
         <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
     </a>
-    <a href="{{ asset('frontend/inicioUsuario/reportes/riesgos') }}" class="cards_reportes">
+    <a href="{{ asset('inicioUsuario/reportes/riesgos') }}" class="cards_reportes">
         <i class="fas fa-shield-virus"></i> Riesgo Identificado
     </a>
-    <a href="{{ asset('frontend/inicioUsuario/reportes/quejas') }}" class="cards_reportes">
+    <a href="{{ asset('inicioUsuario/reportes/quejas') }}" class="cards_reportes">
         <i class="fas fa-frown"></i> Realizar queja
     </a>
-    <a href="{{ asset('frontend/inicioUsuario/reportes/denuncias') }}" class="cards_reportes">
+    <a href="{{ asset('inicioUsuario/reportes/denuncias') }}" class="cards_reportes">
         <i class="fas fa-hand-paper"></i> Realizar denuncia
     </a>
-    <a href="{{ asset('frontend/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
+    <a href="{{ asset('inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
         <i class="fas fa-rocket"></i> Reportar mejora
     </a>
-    <a href="{{ asset('frontend/inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
+    <a href="{{ asset('inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
         <i class="fas fa-lightbulb"></i> Realizar sugerencia
     </a>
 </div>
