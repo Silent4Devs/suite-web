@@ -500,7 +500,7 @@
                     <li class="c-sidebar-nav-dropdown">
                         <a class="c-sidebar-nav-dropdown-toggle" href="#">
                             <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
-                            <font class="letra_blanca "> Capacitaciones </font>
+                            <font class="letra_blanca "> Conocimientos </font>
                         </a>
                         <ul class="c-sidebar-nav-dropdown-items">
                             @can('configuracion_macroproceso_access')
@@ -519,7 +519,7 @@
                                         class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
                                         <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
                                             style="font-size:12pt;"></i>
-                                        <font class="letra_blanca"> Crear capacitaciones</font>
+                                        <font class="letra_blanca"> Crear conocimientos</font>
                                     </a>
                                 </li>
                             @endcan

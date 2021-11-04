@@ -378,7 +378,8 @@
                 dataType: "JSON",
                 success: function(response) {
                     $('#workSpace').trigger('refreshTasks.gantt');
-                    toastr.success('Tarea actualizada con éxito');
+                    document.getElementById('ultima_modificacion').innerHTML=response.ultima_modificacion;
+                    // toastr.success('Tarea actualizada con éxito');
                 }
             });
         }
@@ -667,6 +668,17 @@
                     let id_tbody = s_status.closest('tbody').getAttribute('id');
                     if (!isParent(tarea_correspondiente, response.tasks)) {
                         if (valor_nuevo == 'STATUS_DONE') {
+                            if (tarea_correspondiente.isSuspended) {
+                                tarea_correspondiente.isSuspended = false;
+                            } else {
+                                tarea_correspondiente['isSuspended'] = false;
+
+                            }
+                            if (tarea_correspondiente.isFailed) {
+                                tarea_correspondiente.isFailed = false;
+                            } else {
+                                tarea_correspondiente['isFailed'] = false;
+                            }
                             tarea_correspondiente.status = valor_nuevo;
                             tarea_correspondiente.progress = 100; // set progress in 100
                             calculateAverageOnNodes(response.tasks);
@@ -686,6 +698,17 @@
                                 cancelButtonText: 'No'
                             }).then((result) => {
                                 if (result.isConfirmed) {
+                                    if (tarea_correspondiente.isSuspended) {
+                                        tarea_correspondiente.isSuspended = false;
+                                    } else {
+                                        tarea_correspondiente['isSuspended'] = false;
+
+                                    }
+                                    if (tarea_correspondiente.isFailed) {
+                                        tarea_correspondiente.isFailed = false;
+                                    } else {
+                                        tarea_correspondiente['isFailed'] = false;
+                                    }
                                     tarea_correspondiente.status = valor_nuevo;
                                     tarea_correspondiente.progress = 0; // set progress in 0
                                     calculateAverageOnNodes(response.tasks);
@@ -696,12 +719,37 @@
                             })
 
                         } else if (valor_nuevo == 'STATUS_SUSPENDED') {
-                            //
+                            if (tarea_correspondiente.isSuspended) {
+                                tarea_correspondiente.isSuspended = true;
+                            } else {
+                                tarea_correspondiente['isSuspended'] = true;
+
+                            }
+                            if (tarea_correspondiente.isFailed) {
+                                tarea_correspondiente.isFailed = false;
+                            } else {
+                                tarea_correspondiente['isFailed'] = false;
+                            }
+                            calculateAverageOnNodes(response.tasks);
+                            calculateStatus(response.tasks);
+                            saveOnServer(response);
+                            renderTable(response, id_tbody);
                         } else if (valor_nuevo == 'STATUS_FAILED') {
                             if (tarea_correspondiente.end - Date.now() >= 0) {
                                 toastr.info('Esta actividad no puede ser puesta en retraso');
                                 s_status.value = tarea_correspondiente.status;
                             } else {
+                                if (tarea_correspondiente.isSuspended) {
+                                    tarea_correspondiente.isSuspended = false;
+                                } else {
+                                    tarea_correspondiente['isSuspended'] = false;
+
+                                }
+                                if (tarea_correspondiente.isFailed) {
+                                    tarea_correspondiente.isFailed = true;
+                                } else {
+                                    tarea_correspondiente['isFailed'] = true;
+                                }
                                 tarea_correspondiente.status = valor_nuevo;
                                 calculateAverageOnNodes(response.tasks);
                                 calculateStatus(response.tasks);
@@ -729,6 +777,17 @@
                                 },
                                 preConfirm: (progress) => {
                                     if (Number(progress) >= 1 && Number(progress) <= 99) {
+                                        if (tarea_correspondiente.isSuspended) {
+                                            tarea_correspondiente.isSuspended = false;
+                                        } else {
+                                            tarea_correspondiente['isSuspended'] = false;
+
+                                        }
+                                        if (tarea_correspondiente.isFailed) {
+                                            tarea_correspondiente.isFailed = false;
+                                        } else {
+                                            tarea_correspondiente['isFailed'] = false;
+                                        }
                                         tarea_correspondiente.status = valor_nuevo;
                                         tarea_correspondiente.progress = Number(progress);
                                         calculateAverageOnNodes(response.tasks);
@@ -1030,17 +1089,21 @@
         }
 
         function changeStatusByProgress(task) {
-            if (task.end < Math.floor(Date.now())&&task.progress<=50) {
+            // if (task.end < Math.floor(Date.now())&&task.progress<=50) {
+            //     task.status = "STATUS_FAILED";
+            // } else {
+            if (Number(task.progress) == 100 && !task.isFailed && !task.isSuspended) {
+                task.status = "STATUS_DONE";
+            } else if (Number(task.progress) >= 1 && Number(task.progress) <= 99 && !task.isFailed && !task.isSuspended) {
+                task.status = "STATUS_ACTIVE";
+            } else if (Number(task.progress) == 0 && !task.isFailed && !task.isSuspended) {
+                task.status = "STATUS_UNDEFINED";
+            } else if (task.isFailed) {
                 task.status = "STATUS_FAILED";
-            } else {
-                if (Number(task.progress) == 100) {
-                    task.status = "STATUS_DONE";
-                } else if (Number(task.progress) >= 1 && Number(task.progress) <= 99) {
-                    task.status = "STATUS_ACTIVE";
-                } else if (Number(task.progress) == 0) {
-                    task.status = "STATUS_UNDEFINED";
-                }
+            } else if (task.isSuspended) {
+                task.status = "STATUS_SUSPENDED";
             }
+            // }
         }
 
         function getRow(task, tasks) {

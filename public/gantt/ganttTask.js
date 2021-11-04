@@ -696,17 +696,17 @@ Task.prototype.isLocallyBlockedByDependencies = function () {
 //<%---------- TASK CHANGE STATUS BY PROGRESS ---------------------- --%>
 
 Task.prototype.changeStatusByProgress = function () {
-  if (this.end < Math.floor(Date.now())&&this.progress<=50) {
-    this.status = "STATUS_FAILED";
-  } else {
-    if (Number(this.progress) == 100) {
-      this.status = "STATUS_DONE";
-    } else if (Number(this.progress) >= 1 && Number(this.progress) <= 99) {
-      this.status = "STATUS_ACTIVE";
-    } else if (Number(this.progress) == 0) {
-      this.status = "STATUS_UNDEFINED";
+    if (Number(this.progress) == 100 && !this.isFailed && !this.isSuspended) {
+        this.status = "STATUS_DONE";
+    } else if (Number(this.progress) >= 1 && Number(this.progress) <= 99 && !this.isFailed && !this.isSuspended) {
+        this.status = "STATUS_ACTIVE";
+    } else if (Number(this.progress) == 0 && !this.isFailed && !this.isSuspended) {
+        this.status = "STATUS_UNDEFINED";
+    } else if (this.isFailed) {
+        this.status = "STATUS_FAILED";
+    } else if (this.isSuspended) {
+        this.status = "STATUS_SUSPENDED";
     }
-  }
 }
 
 
