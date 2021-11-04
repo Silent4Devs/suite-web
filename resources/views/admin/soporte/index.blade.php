@@ -215,19 +215,6 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>Enrique Cáliz</td>
-							<td>Consultor Estratégico Jr.</td>
-							<td>5578232000 Ext. 146</td>
-							<td>enrique.caliz@silent4business.com</td>
-						</tr>
-						<tr>
-							<td>Erika Rosales</td>
-							<td>Especialista de Consultoría Estratégica</td>
-							<td>5578232000 Ext. 146</td>
-							<td>erika.rosales@silent4business.com</td>
-						</tr>
-
-						<tr>
 							<td>Alejandro Said Pacheco Salas</td>
 							<td>Consultor Estratégico Jr.</td>
 							<td>5578232000 Ext. 146</td>
