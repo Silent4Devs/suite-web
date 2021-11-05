@@ -236,8 +236,8 @@
                 title: 'Actividad: {{ $it_plan_base->actividad }}',
                 category: 'allday',
                 dueDateClass: '',
-                start: '{{ \Carbon\Carbon::createFromFormat('d-m-Y', $it_plan_base->fecha_inicio)->format('Y-m-d') }}',
-                end: '{{ \Carbon\Carbon::createFromFormat('d-m-Y', $it_plan_base->fecha_fin)->format('Y-m-d') }}',
+                start: '{{ \Carbon\Carbon::parse($it_plan_base->fecha_inicio)->format('Y-m-d') }}',
+                end: '{{ \Carbon\Carbon::parse($it_plan_base->fecha_fin)->format('Y-m-d') }}',
                 isReadOnly : true,
                 },
             @endforeach
@@ -249,31 +249,32 @@
                 title: 'Tipo: {{ $it_auditorias_anual->tipo }}',
                 category: 'allday',
                 dueDateClass: '',
-                start: '{{ \Carbon\Carbon::createFromFormat('d-m-Y', $it_auditorias_anual->fechainicio)->format('Y-m-d') }}',
+                start: '{{ \Carbon\Carbon::parse($it_auditorias_anual->fechainicio)->format('Y-m-d') }}',
                 end: '',
                 isReadOnly : true,
                 },
             @endforeach
 
-            @if ($recursos->count() > 1)
-            
-            
-                @foreach ($recursos as $it_recursos)
-                    {
-                
-                    id: 'recursos{{ $it_recursos->id }}',
-                    calendarId: '3',
-                    title: 'Tipo: {{ $it_recursos->cursoscapacitaciones }}',
-                    category: 'allday',
-                    dueDateClass: '',
-                    start: '{{ \Carbon\Carbon::createFromFormat('d/m/Y', $it_recursos->fecha_curso)->format('Y-m-d') }}',
-                    end: '',
-                    isReadOnly : true,
-                    },
-                
-                @endforeach
-            
-            @endif
+            @if ($recursos->count() )
+
+
+            @forelse ($recursos as $it_recursos)
+
+                {
+
+                id: 'recursos{{ $it_recursos->id }}',
+                calendarId: '3',
+                title: 'Tipo: {{ $it_recursos->cursoscapacitaciones }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{ \Carbon\Carbon::parse($it_recursos->fecha_curso)->format('Y-m-d') }}',
+                end: '',
+                isReadOnly : true,
+                },
+
+            @endforeach
+
+@endif
 
 
 
