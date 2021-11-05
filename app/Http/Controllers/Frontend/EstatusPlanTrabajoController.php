@@ -9,19 +9,56 @@ use App\Http\Requests\UpdateEstatusPlanTrabajoRequest;
 use App\Models\EstatusPlanTrabajo;
 use App\Models\Team;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class EstatusPlanTrabajoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('estatus_plan_trabajo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $estatusPlanTrabajos = EstatusPlanTrabajo::all();
+        if ($request->ajax()) {
+            $query = EstatusPlanTrabajo::with(['team'])->select(sprintf('%s.*', (new EstatusPlanTrabajo)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'estatus_plan_trabajo_show';
+                $editGate = 'estatus_plan_trabajo_edit';
+                $deleteGate = 'estatus_plan_trabajo_delete';
+                $crudRoutePart = 'estatus-plan-trabajos';
+
+                return view('frontend.partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('estado', function ($row) {
+                return $row->estado ? $row->estado : '';
+            });
+            $table->editColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
 
         $teams = Team::get();
 
-        return view('frontend.estatusPlanTrabajos.index', compact('estatusPlanTrabajos', 'teams'));
+        return view('frontend.estatusPlanTrabajos.index', compact('teams'));
     }
 
     public function create()
@@ -35,7 +72,7 @@ class EstatusPlanTrabajoController extends Controller
     {
         $estatusPlanTrabajo = EstatusPlanTrabajo::create($request->all());
 
-        return redirect()->route('frontend.estatus-plan-trabajos.index');
+        return redirect()->route('estatus-plan-trabajos.index');
     }
 
     public function edit(EstatusPlanTrabajo $estatusPlanTrabajo)
@@ -51,7 +88,7 @@ class EstatusPlanTrabajoController extends Controller
     {
         $estatusPlanTrabajo->update($request->all());
 
-        return redirect()->route('frontend.estatus-plan-trabajos.index');
+        return redirect()->route('estatus-plan-trabajos.index');
     }
 
     public function show(EstatusPlanTrabajo $estatusPlanTrabajo)

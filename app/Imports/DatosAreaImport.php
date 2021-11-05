@@ -9,10 +9,10 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class DatosAreaImport implements ToModel
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         return new Area([
@@ -37,6 +37,7 @@ class DatosAreaImport implements ToModel
 
         return $area_bd->id;
     }
+
     public function obtenerGrupoPorNombre($grupo)
     {
         $grupo_bd = Grupo::select('id', 'nombre')->where('nombre', $grupo)->first();

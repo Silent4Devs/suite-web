@@ -9,19 +9,61 @@ use App\Http\Requests\UpdateCarpetumRequest;
 use App\Models\Carpetum;
 use App\Models\Team;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class CarpetasController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        abort_if(Gate::denies('carpetum_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(
+        //     Gate::denies('carpetum_access')
+        //         && Gate::denies('documentos_publicados_respositorio_access')
+        //         && Gate::denies('documentos_aprobacion_respositorio_access')
+        //         && Gate::denies('documentos_obsoletos_respositorio_access')
+        //         && Gate::denies('documentos_versiones_anteriores_respositorio_access'),
+        //     Response::HTTP_FORBIDDEN,
+        //     '403 Forbidden'
+        // );
 
-        $carpeta = Carpetum::all();
+        if ($request->ajax()) {
+            $query = Carpetum::with(['team'])->select(sprintf('%s.*', (new Carpetum)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'carpetum_show';
+                $editGate = 'carpetum_edit';
+                $deleteGate = 'carpetum_delete';
+                $crudRoutePart = 'carpeta';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('nombre', function ($row) {
+                return $row->nombre ? $row->nombre : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
 
         $teams = Team::get();
 
-        return view('frontend.carpeta.index', compact('carpeta', 'teams'));
+        return view('frontend.carpeta.index', compact('teams'));
     }
 
     public function create()
@@ -35,7 +77,7 @@ class CarpetasController extends Controller
     {
         $carpetum = Carpetum::create($request->all());
 
-        return redirect()->route('frontend.carpeta.index');
+        return redirect()->route('carpeta.index');
     }
 
     public function edit(Carpetum $carpetum)
@@ -51,7 +93,7 @@ class CarpetasController extends Controller
     {
         $carpetum->update($request->all());
 
-        return redirect()->route('frontend.carpeta.index');
+        return redirect()->route('carpeta.index');
     }
 
     public function show(Carpetum $carpetum)

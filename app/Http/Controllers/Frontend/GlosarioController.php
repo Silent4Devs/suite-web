@@ -8,31 +8,71 @@ use App\Http\Requests\StoreGlosarioRequest;
 use App\Http\Requests\UpdateGlosarioRequest;
 use App\Models\Glosario;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class GlosarioController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('glosario_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $glosarios = Glosario::all();
+        if ($request->ajax()) {
+            $query = Glosario::query()->select(sprintf('%s.*', (new Glosario)->table));
+            $table = Datatables::of($query);
 
-        return view('frontend.glosarios.index', compact('glosarios'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'glosario_show';
+                $editGate = 'glosario_edit';
+                $deleteGate = 'glosario_delete';
+                $crudRoutePart = 'glosarios';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('concepto', function ($row) {
+                return $row->concepto ? $row->concepto : '';
+            });
+            $table->editColumn('definicion', function ($row) {
+                return $row->definicion ? $row->definicion : '';
+            });
+            $table->editColumn('explicacion', function ($row) {
+                return $row->explicacion ? $row->explicacion : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
+
+        return view('glosarios.index');
     }
 
     public function create()
     {
         abort_if(Gate::denies('glosario_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.glosarios.create');
+        return view('glosarios.create');
     }
 
     public function store(StoreGlosarioRequest $request)
     {
         $glosario = Glosario::create($request->all());
 
-        return redirect()->route('frontend.glosarios.index');
+        return redirect()->route('glosarios.index');
     }
 
     public function edit(Glosario $glosario)
@@ -46,7 +86,7 @@ class GlosarioController extends Controller
     {
         $glosario->update($request->all());
 
-        return redirect()->route('frontend.glosarios.index');
+        return redirect()->route('glosarios.index');
     }
 
     public function show(Glosario $glosario)

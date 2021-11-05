@@ -1,91 +1,138 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
 
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('global.create') }} {{ trans('cruds.evidenciasSgsi.title_singular') }}
-                </div>
+    {{-- {{ Breadcrumbs::render('frontend.evidencias-sgsis.create') }} --}}
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route("frontend.evidencias-sgsis.store") }}" enctype="multipart/form-data">
-                        @method('POST')
-                        @csrf
-                        <div class="form-group">
-                            <label class="required" for="objetivodocumento">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento') }}</label>
-                            <input class="form-control" type="text" name="objetivodocumento" id="objetivodocumento" value="{{ old('objetivodocumento', '') }}" required>
-                            @if($errors->has('objetivodocumento'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('objetivodocumento') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="responsable_id">{{ trans('cruds.evidenciasSgsi.fields.responsable') }}</label>
-                            <select class="form-control select2" name="responsable_id" id="responsable_id">
-                                @foreach($responsables as $id => $responsable)
-                                    <option value="{{ $id }}" {{ old('responsable_id') == $id ? 'selected' : '' }}>{{ $responsable }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('responsable'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('responsable') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.responsable_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="arearesponsable">{{ trans('cruds.evidenciasSgsi.fields.arearesponsable') }}</label>
-                            <input class="form-control" type="text" name="arearesponsable" id="arearesponsable" value="{{ old('arearesponsable', '') }}">
-                            @if($errors->has('arearesponsable'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('arearesponsable') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.arearesponsable_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="fechadocumento">{{ trans('cruds.evidenciasSgsi.fields.fechadocumento') }}</label>
-                            <input class="form-control date" type="text" name="fechadocumento" id="fechadocumento" value="{{ old('fechadocumento') }}">
-                            @if($errors->has('fechadocumento'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('fechadocumento') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.fechadocumento_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="archivopdf">{{ trans('cruds.evidenciasSgsi.fields.archivopdf') }}</label>
-                            <div class="needsclick dropzone" id="archivopdf-dropzone">
-                            </div>
-                            @if($errors->has('archivopdf'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('archivopdf') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.archivopdf_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
-                        </div>
-                    </form>
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+          <h3 class="mb-1 text-center text-white"> <strong>Registrar:</strong> Evidencias de Asignación de Recursos al SGSI</h3>
+    </div>
+
+    <div class="card-body">
+        <form method="POST" action="{{ route("evidencias-sgsis.store") }}" enctype="multipart/form-data" class="row">
+            @csrf
+            <div class="form-group col-md-12">
+                <label class="required" for="nombredocumento"><i class="fas fa-file iconos-crear"></i>Nombre del documento</label>
+                <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}" type="text" name="nombredocumento" id="nombredocumento" value="{{ old('nombredocumento', '') }}" required>
+                @if($errors->has('nombredocumento'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('nombredocumento') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="required" for="objetivodocumento"><i class="fas fa-file-alt iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento') }}</label>
+                <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" type="text" name="objetivodocumento" id="objetivodocumento" value="{{ old('objetivodocumento', '') }}" required></textarea>
+                @if($errors->has('objetivodocumento'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('objetivodocumento') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
+                <select class="form-control {{ $errors->has('empleados') ? 'is-invalid' : '' }}" name="responsable_evidencia_id" id="responsable_evidencia_id">
+                    <option value="">Seleccione una opción</option>
+                    @foreach ($empleados as $empleado)
+                    <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}" data-area="{{ $empleado->area->area }}">
+                        {{ $empleado->name }}
+                    </option>
+
+                    @endforeach
+                </select>
+                @if ($errors->has('empleados'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('responsable_evidencia_id') }}
                 </div>
+                @endif
+            </div>
+            <div class="form-group col-md-4">
+                <label for="id_puesto_reviso"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                <div class="form-control" id="puesto_reviso" readonly></div>
+
+            </div>
+            <div class="form-group col-md-4">
+                <label for="id_area_reviso"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                <div class="form-control" id="area_reviso" readonly></div>
+
+            </div>
+            {{-- <div class="form-group col-md-6">
+                <label for="arearesponsable"><i class="fas fa-street-view iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.arearesponsable') }}</label>
+                <input class="form-control {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" type="text" name="arearesponsable" id="arearesponsable" value="{{ old('arearesponsable', '') }}">
+                @if($errors->has('arearesponsable'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('arearesponsable') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.arearesponsable_helper') }}</span>
+            </div> --}}
+
+
+            <div class="form-group col-md-12 col-sm-12 col-lg-6">
+                <label for="area_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
+                <select class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}" name="area_id" id="area_id">
+                    @foreach ($areas as $area)
+                    <option value="{{ $area->id }}">
+                        {{ $area->area}}
+                    </option>
+
+                    @endforeach
+                </select>
+                @if ($errors->has('area'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('area') }}
+                </div>
+                @endif
             </div>
 
-        </div>
+            <div class="form-group col-md-6">
+                <label for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del documento</label>
+                <input class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date" name="fechadocumento" id="fechadocumento" value="{{ old('fechadocumento') }}">
+                @if($errors->has('fechadocumento'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fechadocumento') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.fechadocumento_helper') }}</span>
+            </div>
+            <div class="col-sm-12 form-group">
+                <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documento</label>
+                <div class="custom-file">
+                    <input type="file" name="files[]" multiple class="form-control" id="evidencia">
+
+                </div>
+            </div>
+            {{-- <div class="form-group col-12">
+                <label for="archivopdf"><i class="far fa-file-pdf iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.archivopdf') }}</label>
+                <div class="needsclick dropzone {{ $errors->has('archivopdf') ? 'is-invalid' : '' }}" id="archivopdf-dropzone">
+                </div>
+                @if($errors->has('archivopdf'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('archivopdf') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.archivopdf_helper') }}</span>
+            </div> --}}
+            <div class="text-right form-group col-12">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
+            </div>
+        </form>
     </div>
 </div>
+
+
+
 @endsection
 
 @section('scripts')
 <script>
     Dropzone.options.archivopdfDropzone = {
-    url: '{{ route('admin.evidencias-sgsis.storeMedia') }}',
+    url: '{{ route('evidencias-sgsis.storeMedia') }}',
     maxFilesize: 2, // MB
     maxFiles: 1,
     addRemoveLinks: true,
@@ -133,4 +180,34 @@
      }
 }
 </script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+        let cumple = document.getElementById('responsable_evidencia_id');
+        cumple.addEventListener('change', function(e) {
+            let respuesta = e.target.value;
+            if (respuesta == 'No') {
+                $("#plan_accion_select").show(1000);
+            } else {
+                $("#plan_accion_select").hide(1000);
+            }
+        })
+
+        let responsable = document.querySelector('#responsable_evidencia_id');
+        let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+        let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+
+        document.getElementById('puesto_reviso').innerHTML = puesto_init;
+        document.getElementById('area_reviso').innerHTML = area_init;
+        responsable.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('puesto_reviso').innerHTML = puesto;
+            document.getElementById('area_reviso').innerHTML = area;
+        })
+    });
+
+</script>
+
 @endsection

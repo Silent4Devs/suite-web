@@ -1,30 +1,95 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRegistromejoraRequest;
 use App\Http\Requests\StoreRegistromejoraRequest;
 use App\Http\Requests\UpdateRegistromejoraRequest;
+use App\Models\Empleado;
 use App\Models\Registromejora;
 use App\Models\Team;
 use App\Models\User;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class RegistromejoraController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('registromejora_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $registromejoras = Registromejora::all();
+        if ($request->ajax()) {
+            $query = Registromejora::with(['nombre_reporta', 'responsableimplementacion', 'valida', 'team'])->select(sprintf('%s.*', (new Registromejora)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'registromejora_show';
+                $editGate = 'registromejora_edit';
+                $deleteGate = 'registromejora_delete';
+                $crudRoutePart = 'registromejoras';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->addColumn('nombre_reporta_name', function ($row) {
+                return $row->nombre_reporta ? $row->nombre_reporta->name : '';
+            });
+
+            $table->editColumn('nombre', function ($row) {
+                return $row->nombre ? $row->nombre : '';
+            });
+            $table->editColumn('prioridad', function ($row) {
+                return $row->prioridad ? Registromejora::PRIORIDAD_SELECT[$row->prioridad] : '';
+            });
+            $table->editColumn('clasificacion', function ($row) {
+                return $row->clasificacion ? $row->clasificacion : '';
+            });
+            $table->editColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : '';
+            });
+            $table->addColumn('responsableimplementacion_name', function ($row) {
+                return $row->responsableimplementacion ? $row->responsableimplementacion->name : '';
+            });
+
+            $table->editColumn('participantes', function ($row) {
+                return $row->participantes ? $row->participantes : '';
+            });
+            $table->editColumn('recursos', function ($row) {
+                return $row->recursos ? $row->recursos : '';
+            });
+            $table->editColumn('beneficios', function ($row) {
+                return $row->beneficios ? $row->beneficios : '';
+            });
+            $table->addColumn('valida_name', function ($row) {
+                return $row->valida ? $row->valida->name : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'nombre_reporta', 'responsableimplementacion', 'valida']);
+
+            return $table->make(true);
+        }
 
         $users = User::get();
-
+        $users = User::get();
+        $users = User::get();
         $teams = Team::get();
 
-        return view('frontend.registromejoras.index', compact('registromejoras', 'users', 'teams'));
+        return view('admin.registromejoras.index', compact('users', 'users', 'users', 'teams'));
     }
 
     public function create()
@@ -37,14 +102,16 @@ class RegistromejoraController extends Controller
 
         $validas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.registromejoras.create', compact('nombre_reportas', 'responsableimplementacions', 'validas'));
+        $empleados = Empleado::with('area')->get();
+
+        return view('admin.registromejoras.create', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'empleados'));
     }
 
     public function store(StoreRegistromejoraRequest $request)
     {
         $registromejora = Registromejora::create($request->all());
 
-        return redirect()->route('frontend.registromejoras.index');
+        return redirect()->route('admin.registromejoras.index');
     }
 
     public function edit(Registromejora $registromejora)
@@ -59,14 +126,16 @@ class RegistromejoraController extends Controller
 
         $registromejora->load('nombre_reporta', 'responsableimplementacion', 'valida', 'team');
 
-        return view('frontend.registromejoras.edit', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'registromejora'));
+        $empleados = Empleado::with('area')->get();
+
+        return view('admin.registromejoras.edit', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'registromejora', 'empleados'));
     }
 
     public function update(UpdateRegistromejoraRequest $request, Registromejora $registromejora)
     {
         $registromejora->update($request->all());
 
-        return redirect()->route('frontend.registromejoras.index');
+        return redirect()->route('admin.registromejoras.index');
     }
 
     public function show(Registromejora $registromejora)
@@ -75,7 +144,7 @@ class RegistromejoraController extends Controller
 
         $registromejora->load('nombre_reporta', 'responsableimplementacion', 'valida', 'team', 'mejoraDmaics', 'mejoraPlanMejoras');
 
-        return view('frontend.registromejoras.show', compact('registromejora'));
+        return view('admin.registromejoras.show', compact('registromejora'));
     }
 
     public function destroy(Registromejora $registromejora)
