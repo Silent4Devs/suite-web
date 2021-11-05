@@ -23,6 +23,16 @@
         display: inline-block;
     }
 
+    .cuadro_info{
+        width:200px;
+        padding:20px 0;
+        background-color:#f1f1f1;
+        border-radius:6px;
+        text-align:center;
+
+    }
+
+
 </style>
 
 
@@ -58,7 +68,7 @@
                                 }
                             @endphp
                             <tr
-                                onclick='graficasclick(event, {{ $indicador->id }}, {{ $indicador->rojo }}, {{ $indicador->amarillo }}, {{ $indicador->verde }}, {{ $i }}, {{ $indicador->meta}})'>
+                                onclick='graficasclick(event, {{ $indicador->id }}, {{ $indicador->rojo }}, {{ $indicador->amarillo }}, {{ $indicador->verde }}, {{ $i }}, {{ $indicador->meta }})'>
                                 <td>{{ $indicador->id }}</td>
                                 <td>{{ $indicador->nombre }}</td>
                                 <td>{{ $indicador->descripcion }}</td>
@@ -71,7 +81,7 @@
                                         @else
                                             <span class="dotred"></span>
                                     @endif
-                                    {{ $i }}
+                                    {{ $i }}{{ $indicador->unidadmedida}}
                                 </td>
                                 <td>{{ $indicador->meta }}</td>
                             </tr>
@@ -86,10 +96,25 @@
         </div>
     </div>
 
+
+
     <div class="mt-5 col-sm-5">
 
         <div class="d-flex justify-content-center">
-            <div style="" id="resultado" style="width:100%;">
+            <div  id="resultado" id="prueba">
+
+                    {{-- <div class="d-flex justify-content-center">
+                        <div class="card-body" style="box-shadow: 0px 0px 0px 1px #424242;">
+                            @if ($i >= $indicador->verde)
+                            <span class="cuadroverde"></span>
+                        @elseif($i >= $indicador->amarillo && $i < $indicador->verde)
+                                <span class="cuadroyellow"></span>
+                            @else
+                                <span class="cuadrored"></span>
+                        @endif
+                                <h4 class="">%Resultado</h4>
+                        </div>
+                    </div> --}}
 
             </div>
 
@@ -104,11 +129,15 @@
     <div class="col-sm-12">
         <canvas id="resultadobarra" style="width:100%; height:300px;"></canvas>
     </div>
+
 </div>
+<canvas id="resultadotest" style="width:50px!important;">
+</canvas>
 
+{{-- <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script> --}}
 
-<script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-gauge@0.3.0/dist/chartjs-gauge.min.js"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {
@@ -129,7 +158,7 @@
                 amarillo: amarillo,
                 verde: verde,
                 resultado: resultado,
-                meta:meta,
+                meta: meta,
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -164,25 +193,77 @@
                 //speedometer
                 // Element inside which you want to see the chart
                 let element = document.querySelector('#resultado')
-                let limiteInf = parseInt(data.datos.amarillo);
-                console.log(limiteInf);
-                let limiteSup = parseInt(data.datos.verde);
-                console.log(limiteSup);
+
+                element.innerHTML += `<div class="cuadro_info"><h4>Riesgos %</h4> <h4>${data.datos.resultado * 100 / data.datos.meta}</h4></div>`
+
+
+                // let limiteInf = parseInt(data.datos.amarillo);
+                // console.log(limiteInf);
+                // let limiteSup = parseInt(data.datos.verde);
+                // console.log(limiteSup);
 
                 // Properties of the gauge
-                let gaugeOptions = {
-                    hasNeedle: true,
-                    needleColor: 'black',
-                    needleStartValue: 0,
-                    needleUpdateSpeed: 1000,
-                    arcColors: ["rgb(255,84,84)", "rgb(239,214,19)", "rgb(61,204,91)"],
-                    arcDelimiters: [limiteInf, limiteSup],
-                    rangeLabel: ['0', data.datos.meta],
-                    centralLabel: data.datos.resultado,
+                let limiteInf = 1;
+                if (data.datos.amarillo > 0 && data.datos.amarillo < 100) {
+                    limiteInf = data.datos.amarillo
+                } else if (data.datos.amarillo >= 100) {
+                    limiteInf = 99
                 }
+                let limiteSup = 1;
+                if (data.datos.verde > 0 && data.datos.verde < 100) {
+                    limiteSup = data.datos.verde
+                } else if (data.datos.verde >= 100) {
+                    limiteSup = 99
+                }
+                console.log(limiteInf, limiteSup)
+                // let gaugeOptions = {
+                //     hasNeedle: true,
+                //     needleColor: 'black',
+                //     needleStartValue: 0,
+                //     needleUpdateSpeed: 5000,
+                //     arcColors: ["rgb(255,84,84)", "rgb(239,214,19)", "rgb(61,204,91)"],
+                //     arcDelimiters: [limiteInf, limiteSup],
+                //     rangeLabel: ['0', data.datos.meta],
+                //     centralLabel: data.datos.resultado,
+                // }
 
-                    GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(data.datos.resultado);
-                
+                // GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(data.datos.resultado);
+
+                var ctx = document.getElementById("resultadotest").getContext("2d");
+
+                // var chart = new Chart(ctx, {
+                //     type: 'gauge',
+                //     data: {
+                //         datasets: [{
+                //             value: data.datos.resultado,
+                //             minValue: 0,
+                //             data: [data.datos.rojo, data.datos.amarillo, data.datos.verde],
+                //             backgroundColor: [ 'red','yellow','green'],
+                //         }]
+                //     },
+                //     options: {
+                //         needle: {
+                //             radiusPercentage: 2,
+                //             widthPercentage: 3.2,
+                //             lengthPercentage: 80,
+                //             color: 'rgba(0, 0, 0, 1)'
+                //         },
+                //         valueLabel: {
+                //             display: true,
+                //             formatter: (value) => {
+                //                 return '$' + Math.round(value);
+                //             },
+                //             color: 'rgba(255, 255, 255, 1)',
+                //             backgroundColor: 'rgba(0, 0, 0, 1)',
+                //             borderRadius: 5,
+                //             padding: {
+                //                 top: 10,
+                //                 bottom: 10
+                //             }
+                //         }
+                //     }
+                // });
+
                 console.log(data.datos.resultado);
                 var ctx = document.getElementById("resultadobarra");
                 var myChart = new Chart(ctx, {
@@ -316,6 +397,7 @@
 </script>
 
 
+
 <script>
     function mostrar() {
         div = document.getElementById('resultadobarra');
@@ -327,3 +409,5 @@
         div.style.display = 'none';
     }
 </script>
+
+

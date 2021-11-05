@@ -29,7 +29,7 @@ class RecursosController extends Controller
         abort_if(Gate::denies('recurso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Recurso::with(['participantes', 'team', 'categoria_capacitacion'])->select(sprintf('%s.*', (new Recurso)->table))->orderByDesc('id');
+            $query = Recurso::with(['empleados', 'team', 'categoria_capacitacion'])->select(sprintf('%s.*', (new Recurso)->table))->orderByDesc('id');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -58,13 +58,7 @@ class RecursosController extends Controller
             });
 
             $table->editColumn('participantes', function ($row) {
-                $labels = [];
-
-                foreach ($row->empleados as $participante) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $participante->name);
-                }
-
-                return implode(' ', $labels);
+               return $row->empleados ? $row->empleados : '';
             });
             $table->editColumn('instructor', function ($row) {
                 return $row->instructor ? $row->instructor : '';

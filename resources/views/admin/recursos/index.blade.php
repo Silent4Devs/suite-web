@@ -7,7 +7,7 @@
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Capacitaciones</strong></h3>
+                <h3 class="mb-2 text-center text-white"><strong>Transferencia de Conocimiento</strong></h3>
             </div>
     @endcan
 
@@ -210,10 +210,15 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                        let reporto = JSON.parse(row.participantes);
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${participantes?.avatar}" title="${participantes?.name}"></img>`;
+                        console.log(row)
+                        let participantes = row.empleados;
+                        let html="";
+                        participantes.forEach(element => {
+                           html += `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${element?.avatar}" title="${element?.name}"></img>`;
 
-                            return `${participantes ? html: ''}`;
+                        });
+
+                            return html
                         }
                     },
                     {

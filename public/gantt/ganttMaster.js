@@ -308,7 +308,16 @@ GanttMaster.prototype.saveChangesOnServer = function () {
       },
       success: function (response) {
         if (response.success) {
-          toastr.success('Guardado con éxito');
+            if(document.getElementById('ultima_modificacion')){
+                var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                var today  = new Date();
+                var date=today.toLocaleDateString("en-US");
+                var time=today.toLocaleTimeString("en-US");
+                document.getElementById('ultima_modificacion').innerHTML=date+' '+time;
+                
+            }else{
+                toastr.success('Guardado con éxito');
+            }
         }
         if (response.error) {
           toastr.error('Ocurrio un error al guardar el cambio');
@@ -515,7 +524,7 @@ GanttMaster.prototype.addTask = function (task, row) {
     }
   }
 
-  //trigger addedTask event  
+  //trigger addedTask event
   $(this.element).trigger("addedTask.gantt", task);
   return ret;
 };

@@ -204,7 +204,11 @@ class MatrizRiesgosController extends Controller
         // dd($request->all());
         /*$query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         dd($query);*/
-        abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //  $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots' => function ($query) {
+        //     return $query->with('declaracion_aplicabilidad');
+        // }])->where('id_analisis', '=', $request['id'])->get();
+        // dd($query);
         if ($request->ajax()) {
             $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots' => function ($query) {
                 return $query->with('declaracion_aplicabilidad');
@@ -318,7 +322,10 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('nivelriesgo', function ($row) {
                 if (is_null($row->nivelriesgo)) {
                     return null ? $row->nivelriesgo : '';
-                } else {
+                } elseif($row->nivelriesgo==0){
+                    return 'cero';
+                }
+                 else {
                     return $row->nivelriesgo ? $row->nivelriesgo : '';
                 }
             });

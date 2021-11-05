@@ -103,7 +103,7 @@ class InicioUsuarioController extends Controller
         $auditorias_anual = AuditoriaAnual::get();
         $auditoria_internas = new AuditoriaInterna;
         $empleado = auth()->user()->empleado;
-        $recursos = new Recurso;
+        $recursos = collect();
         if ($usuario->empleado) {
             $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
                 $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);
@@ -166,7 +166,7 @@ class InicioUsuarioController extends Controller
                     'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $usuario->empleado->id),
                 ]);
             }
-            // dd($lista_evaluaciones);
+            // dd($revisiones);
             // SECCION MIS DATOS
             $equipo_a_cargo = $this->obtenerEquipoACargo($usuario->empleado->children);
             $equipo_a_cargo = Empleado::find($equipo_a_cargo);
@@ -176,7 +176,7 @@ class InicioUsuarioController extends Controller
             $supervisor = null;
             $mis_objetivos = collect();
         }
-
+    
         return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'auditoria_internas', 'lista_evaluaciones'));
     }
 
