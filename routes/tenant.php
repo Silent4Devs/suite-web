@@ -68,6 +68,7 @@ use App\Http\Controllers\Frontend\ComunicacionSgiController;
 use App\Http\Controllers\Frontend\ConcientizacionSgiController;
 use App\Http\Controllers\Frontend\ControlAccesoController;
 use App\Http\Controllers\Frontend\ControlDocumentosController;
+use App\Http\Controllers\Frontend\DocumentosController;
 use App\Http\Controllers\Frontend\ControlesController;
 use App\Http\Controllers\Frontend\DmaicController;
 use App\Http\Controllers\Frontend\EnlacesEjecutarController;

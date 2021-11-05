@@ -123,17 +123,17 @@
         <div class="col-lg-12 row caja_botones_secciones">
             @if ($usuario->empleado)
                 <div class="col-12 caja_botones_menu">
-                    <a href="#" id="datos" data-tabs="s_misDatos" class=""><i class="fas fa-user-circle"></i>
+                    <a href="#" id="b_misDatos" onclick="almacenarMenuEnLocalStorage('misDatos')" data-tabs="s_misDatos" class=""><i class="fas fa-user-circle"></i>
                         Mis Datos</a>
-                    <a href="#" id="calendario" data-tabs="s_calendario"><i class="fas fa-calendar-alt"></i>
+                    <a href="#" id="b_calendario" onclick="almacenarMenuEnLocalStorage('calendario')" data-tabs="s_calendario"><i class="fas fa-calendar-alt"></i>
                         Calendario</a>
-                    <a href="#" id="actividades" data-tabs="s_actividades">
+                    <a href="#" id="b_actividades" onclick="almacenarMenuEnLocalStorage('actividades')" data-tabs="s_actividades">
                         @if ($contador_actividades)
                             <span>{{ $contador_actividades }}</span>
                         @endif
                         <i class="fas fa-stopwatch"></i>Actividades
                     </a>
-                    <a href="#" id="aprobaciones" data-tabs="s_aprobaciones">
+                    <a href="#" id="b_aprobaciones" onclick="almacenarMenuEnLocalStorage('aprobaciones')" data-tabs="s_aprobaciones">
                         @if ($contador_revisiones)
                             <span>{{ $contador_revisiones }}</span>
                         @endif
@@ -145,13 +145,13 @@
                         @endif
                         <i class="fas fa-check"></i>Evaluaciones
                     </a> --}}
-                    <a href="#" id="capacitaciones" data-tabs="s_capacitaciones">
+                    <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')" data-tabs="s_capacitaciones">
                         @if ($contador_recursos)
                             <span>{{ $contador_recursos }}</span>
                         @endif
                         <i class="fas fa-chalkboard-teacher"></i>Capacitaciones
                     </a>
-                    <a href="#" id="reportes" data-tabs="s_reportes"><i class="fas fa-clipboard-list"></i>Reportes</a>
+                    <a href="#" id="b_reportes" onclick="almacenarMenuEnLocalStorage('reportes')" data-tabs="s_reportes"><i class="fas fa-clipboard-list"></i>Reportes</a>
                 </div>
             @endif
             <div class="caja_caja_secciones">
@@ -193,27 +193,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function(){
-            let tabs=document.querySelectorAll('.tabs');
-            tabs.forEach(tab => {
-                if(tab.classList.contains('btn_activo')){
-                    tab.classList.remove('btn_activo')
-                }
-            });
-            let cajas=document.querySelectorAll('.caja');
-            cajas.forEach(caja => {
-                if(caja.classList.contains('caja_tab_reveldada')){
-                    caja.classList.remove('caja_tab_reveldada')
-                }
-            });
+            seleccionarMenuAlIniciar();
 
-            let idActual=window.location.hash.replace('#','');
-            document.getElementById(idActual).classList.add('btn_activo');
-            document.querySelector(`[data-id="${idActual}"]`).classList.add('caja_tab_reveldada');
-            setTimeout(() => {
-                window.scrollTo(0,0);
-                console.log('scroll')
-            }, 1 );
         })
+
+        function seleccionarMenuAlIniciar() {
+            let tabSeleccionada = localStorage.getItem('mi-perfil-menu');
+            if (tabSeleccionada) {
+               document.querySelector(`section#s_${tabSeleccionada}`).classList.add('caja_tab_reveldada')
+               document.querySelector(`a#b_${tabSeleccionada}`).classList.add('btn_activo')
+            } else {
+                document.querySelector(`section#s_misDatos`).classList.add('caja_tab_reveldada')
+                document.querySelector(`a#b_misDatos`).classList.add('btn_activo')
+
+            }
+        }
+
+        function almacenarMenuEnLocalStorage(menuSeleccionado) {
+            localStorage.setItem('mi-perfil-menu', menuSeleccionado);
+        }
+
     </script>
 
 @endsection

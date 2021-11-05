@@ -59,7 +59,7 @@ class LoginController extends Controller
                 }
             }
 
-            return '/admin/inicioUsuario';
+            return '/admin/inicioUsuario#datos';
         }
 
         return '/admin';

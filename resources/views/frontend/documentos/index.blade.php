@@ -139,14 +139,14 @@
                                     @can('documentos_edit')
                                         @if ($documento->estatus != '2')
                                             <a class="btn btn-sm " title="Editar"
-                                                href="{{ route('admin.documentos.edit', $documento->id) }}">
+                                                href="{{ route('documentos.edit', $documento->id) }}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                         @endif
                                     @endcan
                                     @can('documentos_show')
                                         <a class="btn btn-sm" title="Visualizar Documento"
-                                            href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
+                                            href="{{ route('documentos.renderViewDocument', $documento) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                                 class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
                                                 <path
@@ -158,7 +158,7 @@
                                     @endcan
                                     @can('documentos_history_reviews', Model::class)
                                         <a class="btn btn-sm " title="Visualizar revisiones"
-                                            href="{{ route('admin.documentos.renderHistoryReview', $documento->id) }}">
+                                            href="{{ route('documentos.renderHistoryReview', $documento->id) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                                 class="bi bi-clock-history" viewBox="0 0 16 16">
                                                 <path
@@ -172,7 +172,7 @@
                                     @can('documentos_versiones')
                                         @if ($documento->version >= 1)
                                             <a class="btn btn-sm " title="Visualizar versionamiento"
-                                                href="{{ route('admin.documentos.renderHistoryVersions', $documento->id) }}">
+                                                href="{{ route('documentos.renderHistoryVersions', $documento->id) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-back" viewBox="0 0 16 16">
                                                     <path
@@ -183,7 +183,7 @@
                                     @endcan
                                     @can('documentos_delete')
                                         <button data-tipo="{{ $documento->tipo }}" title="Hacer obsoleto"
-                                            onclick="hacerObsoleto(this,'{{ route('admin.documentos.destroy', $documento) }}','{{ $documento->id }}');return false;"
+                                            onclick="hacerObsoleto(this,'{{ route('documentos.destroy', $documento) }}','{{ $documento->id }}');return false;"
                                             class="btn btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                                 class="bi bi-trash" viewBox="0 0 16 16">

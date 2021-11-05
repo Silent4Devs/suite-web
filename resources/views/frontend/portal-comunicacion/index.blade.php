@@ -362,7 +362,7 @@
                     Comunicación </strong></h3>
         </div>
 
-        @include('frontend.partials.flashMessages')
+        @include('partials.flashMessages')
 
         <div class="card-body">
             <div class="row">

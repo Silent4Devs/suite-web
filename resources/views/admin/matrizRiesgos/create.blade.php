@@ -519,7 +519,7 @@
                         <select class="procesoSelect form-control" name="id_proceso" id="id_proceso">
                             <option value="">Seleccione una opción</option>
                             @foreach ($procesos as $proceso)
-                                <option value="{{ $proceso->id }}">{{ $proceso->codigo }} / {{ $proceso->nombre }}
+                                <option {{old('id_proceso') == $proceso->id ? ' selected="selected"' : ''}} value="{{ $proceso->id }}">{{ $proceso->codigo }} / {{ $proceso->nombre }}
                                 </option>
                             @endforeach
                         </select>
@@ -535,7 +535,7 @@
                         <select class="responsableSelect form-control" name="activo_id" id="activo_id">
                             <option value="">Seleccione una opción</option>
                             @foreach ($activos as $activo)
-                                <option value="{{ $activo->id }}">{{ $activo->nombreactivo }}
+                                <option {{old('activo_id') == $activo->id ? ' selected="selected"' : ''}} value="{{ $activo->id }}">{{ $activo->nombreactivo }}
                                 </option>
                             @endforeach
                         </select>
@@ -551,7 +551,7 @@
                         <select class="responsableSelect form-control" name="id_responsable" id="id_responsable">
                             <option value="">Seleccione una opción</option>
                             @foreach ($responsables as $responsable)
-                                <option data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}" data-area="{{ $responsable->area->area }}">{{ $responsable->name }}
+                                <option  data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}" data-area="{{ $responsable->area->area }}">{{ $responsable->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -603,7 +603,7 @@
                         <select class="procesoSelect form-control" name="id_amenaza" id="id_amenaza">
                             <option value="">Seleccione una opción</option>
                             @foreach ($amenazas as $amenaza)
-                                <option value="{{ $amenaza->id }}">{{ $amenaza->nombre }}
+                                <option {{old('id_amenaza') == $amenaza->id ? ' selected="selected"' : ''}} value="{{ $amenaza->id }}">{{ $amenaza->nombre }}
                                 </option>
                             @endforeach
                         </select>
@@ -620,7 +620,7 @@
                         <select class="procesoSelect form-control" name="id_vulnerabilidad" id="id_vulnerabilidad">
                             <option value="">Seleccione una opción</option>
                             @foreach ($vulnerabilidades as $vulnerabilidad)
-                                <option value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
+                                <option {{old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : ''}} value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
                                 </option>
                             @endforeach
                         </select>

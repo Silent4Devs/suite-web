@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("frontend.sedes.update", [$sede->id]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("sedes.update", [$sede->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
 

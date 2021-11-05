@@ -174,6 +174,7 @@
                 },
                 url: "{{ route('admin.planTrabajoBase.loadProyect') }}",
                 success: function(response) {
+                    document.getElementById("ultima_modificacion").innerHTML=moment(response.updated_at).format("DD-MM-YYYY hh:mm:ss A")
                     // prof.stop();
                     ge.loadProject(response);
                     ge.checkpoint(); //empty the undo stac
@@ -867,17 +868,17 @@
                                                         <tr>
                                                         <td  colspan="2">
                                                         <label for="status" class="">Estatus</label><br>
-                                                         {{-- <select id="status" name="status" class="taskStatus" status="(#=obj.status#)"  onchange="$(this).attr('STATUS',$(this).val());">
+                                                         <select readonly disabled style="color:black; text-align:center" id="status" name="status" class="taskStatus" status="(#=obj.status#)"  onchange="$(this).attr('STATUS',$(this).val());">
             <option value="STATUS_ACTIVE" class="taskStatus" status="STATUS_ACTIVE" >En Proceso</option>
             <option value="STATUS_WAITING" class="taskStatus" status="STATUS_WAITING" >En Espera</option>
             <option value="STATUS_SUSPENDED" class="taskStatus" status="STATUS_SUSPENDED" >Suspendida</option>
             <option value="STATUS_DONE" class="taskStatus" status="STATUS_DONE" >Completada</option>
             <option value="STATUS_FAILED" class="taskStatus" status="STATUS_FAILED" >Con Retraso</option>
             <option value="STATUS_UNDEFINED" class="taskStatus" status="STATUS_UNDEFINED" >Sin Iniciar</option>
-            </select> --}}
+            </select>
 
 
-                                                        <div class="taskDivStatus" status="(#=obj.status#)" >(#=obj.status#)</div>
+                                                        {{-- <div class="taskDivStatus" status="(#=obj.status#)" >(#=obj.status#)</div> --}}
 
 
                                                         </td>

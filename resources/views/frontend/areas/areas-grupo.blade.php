@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -87,7 +87,7 @@
                                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
                                 <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado áreas a la
                                     organización
-                                    <a href="{{ route('admin.grupoarea.index') }}" class="item-right col-2 btn text-light"
+                                    <a href="{{ route('grupoarea.index') }}" class="item-right col-2 btn text-light"
                                         style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
                                 </p>
                             </div>

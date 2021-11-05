@@ -367,7 +367,7 @@
                                 case 9:
                                     return `<div class="bg-warning"><div>MEDIO</div></div>`;
                                     break;
-                                case 0:
+                                case 'cero':
                                     return `<div class="bg-success"><div>BAJO</div></div>`;
                                     break;
                                 case null:

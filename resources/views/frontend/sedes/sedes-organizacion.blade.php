@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('frontend.portal-comunicacion.sedes-organizacion') }}
+ {{-- {{ Breadcrumbs::render('portal-comunicacion.sedes-organizacion') }}--}}
 
     <div class="mt-5 card">
 

@@ -11,9 +11,8 @@
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
                     </p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de llenar 
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Para visualizar registros actuales mantener actualizada la página
                     </p>
-
                 </div>
             </div>
         </div>

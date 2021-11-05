@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/colores.css') }}">
     <link rel="stylesheet" href="{{ asset('orgchart/orgchart.css') }}">
@@ -532,7 +532,7 @@
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado áreas a la
                             organización
-                            <a href="{{ route('admin.grupoarea.index') }}" class="item-right col-2 btn text-light"
+                            <a href="{{ route('grupoarea.index') }}" class="item-right col-2 btn text-light"
                                 style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
 
                         </p>
@@ -686,7 +686,7 @@
                                             <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Atención</p>
                                             <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado áreas a la
                                                 organización
-                                                <a href="{{ route('admin.grupoarea.index') }}"
+                                                <a href="{{ route('grupoarea.index') }}"
                                                     class="item-right col-2 btn text-light"
                                                     style="background-color:rgb(85, 217, 226); float:right">Agregar</a>
                                             </p>
@@ -704,7 +704,7 @@
                                 </h3>
                                 <ul class="mt-3 list-group">
                                     @foreach ($areas_sin_grupo as $area)
-                                        <a href="{{ route('admin.areas.edit', $area) }}"
+                                        <a href="{{ route('areas.edit', $area) }}"
                                             class="mb-1 list-group-item list-group-item-action" title="Asignar Grupo"><i
                                                 class="fab fa-adn "></i> {{ $area->area }}</a>
                                     @endforeach
@@ -748,7 +748,7 @@
                     div.classList.add('sidenav');
                     chartContainer.appendChild(div);
 
-                    let url_organigrama = "{{ route('admin.areas.renderJerarquia') }}";
+                    let url_organigrama = "{{ route('areas.renderJerarquia') }}";
 
                     $.ajax({
                         type: "GET",
@@ -792,7 +792,7 @@
                                 'exportButton': true,
                                 'exportFilename': `Organigrama de ${organizacion}`,
                                 'direction': orientacion,
-                                'urlExportCSV': "{{ route('admin.organigrama.exportar') }}"
+                                'urlExportCSV': "{{ route('organigrama.exportar') }}"
                             });
                         }
                     });
