@@ -48,7 +48,7 @@
 
 </style>
 
-    {{ Breadcrumbs::render('frontend.matriz-requisito-legales.index') }}
+{{-- {{ Breadcrumbs::render('frontend.matriz-requisito-legales.index') }}  --}}
     <div class="mt-5 card">
         @can('matriz_requisito_legale_create')
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">

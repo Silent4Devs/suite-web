@@ -367,7 +367,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('admin.planTrabajoBase.loadProyect') }}",
+                url: "{{ route('planTrabajoBase.loadProyect') }}",
                 success: function(response) {
                     renderTable(response);
                 }
@@ -378,7 +378,7 @@
         function saveOnServer(response) {
             $.ajax({
                 type: "post",
-                url: "{{ route('admin.planTrabajoBase.saveProyect') }}",
+                url: "{{ route('planTrabajoBase.saveProyect') }}",
                 data: {
                     _token: "{{ csrf_token() }}",
                     prj: JSON.stringify(response),

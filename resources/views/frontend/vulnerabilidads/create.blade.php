@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.vulnerabilidads.index') !!}">Vulnerabilidad</a>
+            <a href="{!! route('vulnerabilidads.index') !!}">Vulnerabilidad</a>
         </li>
         <li class="breadcrumb-item active">Crear</li>
     </ol>
@@ -13,9 +13,9 @@
         </div>
         <div class="card-body">
             <div class="card-body">
-                {!! Form::open(['route' => 'admin.vulnerabilidads.store']) !!}
+                {!! Form::open(['route' => 'vulnerabilidads.store']) !!}
 
-                @include('admin.vulnerabilidads.fields')
+                @include('frontend.vulnerabilidads.fields')
 
                 {!! Form::close() !!}
             </div>

@@ -3,7 +3,7 @@
 
 
 
-    {{ Breadcrumbs::render('frontend.declaracion-aplicabilidad.index') }}
+{{-- {{ Breadcrumbs::render('frontend.declaracion-aplicabilidad.index') }} --}}
 
     <div class="mt-5 card" id="d-aplicabilidad">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">

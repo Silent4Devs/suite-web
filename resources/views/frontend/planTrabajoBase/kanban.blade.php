@@ -270,7 +270,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('admin.planTrabajoBase.loadProyect') }}",
+                url: "{{ route('planTrabajoBase.loadProyect') }}",
                 success: function(response) {
                     renderKanban(response);
                 }
@@ -729,7 +729,7 @@
         function saveStatusOnServer(response) {
             $.ajax({
                 type: "post",
-                url: "{{ route('admin.planTrabajoBase.saveStatus') }}",
+                url: "{{ route('planTrabajoBase.saveStatus') }}",
                 data: {
                     _token: "{{ csrf_token() }}",
                     estatuses: JSON.stringify(response),

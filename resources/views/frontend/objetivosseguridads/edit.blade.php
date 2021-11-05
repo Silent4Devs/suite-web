@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <style>
         .dotverde {
@@ -104,7 +104,7 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.objetivosseguridads.create') }}
+{{-- {{ Breadcrumbs::render('frontend.objetivosseguridads.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
@@ -113,7 +113,7 @@
 
         <div class="card-body">
             <form method="POST" class="row"
-                action="{{ route('admin.objetivosseguridads.update', [$objetivosseguridad->id]) }}"
+                action="{{ route('objetivosseguridads.update', [$objetivosseguridad->id]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf

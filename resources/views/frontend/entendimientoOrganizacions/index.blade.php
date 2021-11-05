@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 
-{{ Breadcrumbs::render('frontend.entendimiento-organizacions.index') }}
+{{--{{ Breadcrumbs::render('frontend.entendimiento-organizacions.index') }} --}}
 
     @can('entendimiento_organizacion_create')
         <div class="mt-5 card">

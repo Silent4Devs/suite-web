@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{ route('admin.vulnerabilidads.index') }}">Vulnerabilidad</a>
+            <a href="{{ route('vulnerabilidads.index') }}">Vulnerabilidad</a>
         </li>
         <li class="breadcrumb-item active">Detalle</li>
     </ol>
@@ -15,10 +15,10 @@
                     <div class="card">
                         <div class="card-header">
                             <strong>Vulnerabilidad</strong>
-                            <a href="{{ route('admin.vulnerabilidads.index') }}" class="btn btn-light">Volver</a>
+                            <a href="{{ route('vulnerabilidads.index') }}" class="btn btn-light">Volver</a>
                         </div>
                         <div class="card-body">
-                            @include('admin.vulnerabilidads.show_fields')
+                            @include('frontend.vulnerabilidads.show_fields')
                         </div>
                     </div>
                 </div>

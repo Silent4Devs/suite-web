@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateVulnerabilidadRequest;
@@ -73,7 +73,7 @@ class VulnerabilidadController extends AppBaseController
             return $table->make(true);
         }
 
-        return view('admin.vulnerabilidads.index');
+        return view('frontend.vulnerabilidads.index');
     }
 
     /**
@@ -85,7 +85,7 @@ class VulnerabilidadController extends AppBaseController
     {
         $amenazas = Amenaza::get();
 
-        return view('admin.vulnerabilidads.create', compact('amenazas'));
+        return view('frontend.vulnerabilidads.create', compact('amenazas'));
     }
 
     /**
@@ -103,7 +103,7 @@ class VulnerabilidadController extends AppBaseController
 
         Flash::success('Vulnerabilidad añadida satistactoriamente.');
 
-        return redirect(route('admin.vulnerabilidads.index'));
+        return redirect(route('vulnerabilidads.index'));
     }
 
     /**
@@ -120,10 +120,10 @@ class VulnerabilidadController extends AppBaseController
         if (empty($vulnerabilidad)) {
             Flash::error('Vulnerabilidad not found');
 
-            return redirect(route('admin.vulnerabilidads.index'));
+            return redirect(route('vulnerabilidads.index'));
         }
 
-        return view('admin.vulnerabilidads.show')->with('vulnerabilidad', $vulnerabilidad);
+        return view('frontend.vulnerabilidads.show')->with('vulnerabilidad', $vulnerabilidad);
     }
 
     /**
@@ -145,7 +145,7 @@ class VulnerabilidadController extends AppBaseController
 
         $amenazas = Amenaza::get();
 
-        return view('admin.vulnerabilidads.edit', compact('amenazas'))->with('vulnerabilidad', $vulnerabilidad);
+        return view('frontend.vulnerabilidads.edit', compact('amenazas'))->with('vulnerabilidad', $vulnerabilidad);
     }
 
     /**
@@ -163,14 +163,14 @@ class VulnerabilidadController extends AppBaseController
         if (empty($vulnerabilidad)) {
             Flash::error('Vulnerabilidad not found');
 
-            return redirect(route('admin.vulnerabilidads.index'));
+            return redirect(route('vulnerabilidads.index'));
         }
 
         $vulnerabilidad = $this->vulnerabilidadRepository->update($request->all(), $id);
 
         Flash::success('Vulnerabilidad actualizada satistactoriamente.');
 
-        return redirect(route('admin.vulnerabilidads.index'));
+        return redirect(route('vulnerabilidads.index'));
     }
 
     /**
@@ -189,13 +189,13 @@ class VulnerabilidadController extends AppBaseController
         if (empty($vulnerabilidad)) {
             Flash::error('Vulnerabilidad not found');
 
-            return redirect(route('admin.vulnerabilidads.index'));
+            return redirect(route('vulnerabilidads.index'));
         }
 
         $this->vulnerabilidadRepository->delete($id);
 
         Flash::success('Vulnerabilidad eliminada satistactoriamente.');
 
-        return redirect(route('admin.vulnerabilidads.index'));
+        return redirect(route('vulnerabilidads.index'));
     }
 }

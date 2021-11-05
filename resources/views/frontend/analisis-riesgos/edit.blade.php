@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisis-riesgos.index') !!}">Análisis de Riesgo</a>
+            <a href="{!! route('analisis-riesgos.index') !!}">Análisis de Riesgo</a>
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
@@ -13,7 +13,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.analisis-riesgos.update', [$analisis->id]) }}"
+            <form method="POST" action="{{ route('analisis-riesgos.update', [$analisis->id]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
@@ -160,7 +160,7 @@
             if (elaboroID) {
                 $.ajax({
                     type: "GET",
-                    url: "{{ url('admin/getEmployeeData') }}?id=" + elaboroID,
+                    url: "{{ url('getEmployeeData') }}?id=" + elaboroID,
                     success: function(res) {
                         if (res) {
                             $("#id_puesto").empty();

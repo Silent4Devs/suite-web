@@ -1,23 +1,23 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-{{ Breadcrumbs::render('admin.vulnerabilidads.index') }}
+{{-- {{ Breadcrumbs::render('frontend.vulnerabilidads.index') }} --}}
 
-    <div class="mt-5 card">
+     <div class="mt-5 card">
 
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Vulnerabilidades</strong></h3>
         </div>
         <div style="margin-bottom: 10px; margin-left:10px;" class="row">
             <div class="col-lg-12">
-                @include('csvImport.modal', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
+                @include('csvImport.modal', ['model' => 'Vulnerabilidad', 'route' => 'vulnerabilidads.parseCsvImport'])
             </div>
         </div>
 
         @include('flash::message')
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            @include('admin.vulnerabilidads.table')
+            @include('frontend.vulnerabilidads.table')
         </div>
     </div>
 
@@ -98,7 +98,7 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar Vulnerabilidad',
-                url: "{{ route('admin.vulnerabilidads.create') }}",
+                url: "{{ route('vulnerabilidads.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                     let {
@@ -121,7 +121,7 @@
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.vulnerabilidads.massDestroy') }}",
+                url: "{{ route('vulnerabilidads.massDestroy') }}",
                 className: 'btn-danger',
                 action: function(e, dt, node, config) {
                     var ids = $.map(dt.rows({
@@ -162,7 +162,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.vulnerabilidads.index') }}",
+                ajax: "{{ route('vulnerabilidads.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

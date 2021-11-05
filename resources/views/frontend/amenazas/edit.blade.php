@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.amenazas.index') !!}">Amenaza</a>
+            <a href="{!! route('amenazas.index') !!}">Amenaza</a>
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
@@ -12,9 +12,9 @@
             <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Amenaza</h3>
         </div>
         <div class="card-body">
-            {!! Form::model($amenaza, ['route' => ['admin.amenazas.update', $amenaza->id], 'method' => 'patch']) !!}
+            {!! Form::model($amenaza, ['route' => ['amenazas.update', $amenaza->id], 'method' => 'patch']) !!}
 
-            @include('admin.amenazas.fields')
+            @include('frontend.amenazas.fields')
 
             {!! Form::close() !!}
         </div>

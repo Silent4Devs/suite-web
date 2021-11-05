@@ -249,7 +249,7 @@
                  headers: {
                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                  },
-                 url: "{{ route('admin.planTrabajoBase.loadProyect') }}",
+                 url: "{{ route('planTrabajoBase.loadProyect') }}",
                  success: function(response) {
                      renderCalendar(response);
                  }

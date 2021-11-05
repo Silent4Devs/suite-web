@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
@@ -19,7 +19,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('entendimiento_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //$obtener_FODA = EntendimientoOrganizacion::first();
         // $query = EntendimientoOrganizacion::with('empleado')->get();
         // dd($query);
@@ -78,7 +78,7 @@ class EntendimientoOrganizacionController extends Controller
         $empleado = Empleado::get();
         $teams = Team::get();
 
-        return view('admin.entendimientoOrganizacions.index', compact('obtener_FODA', 'teams', 'empleado'));
+        return view('frontend.entendimientoOrganizacions.index', compact('obtener_FODA', 'teams', 'empleado'));
     }
 
     public function create()
@@ -87,7 +87,7 @@ class EntendimientoOrganizacionController extends Controller
         $entendimientoOrganizacion = new EntendimientoOrganizacion;
         $empleados = Empleado::get();
 
-        return view('admin.entendimientoOrganizacions.create', compact('entendimientoOrganizacion', 'empleados'));
+        return view('frontend.entendimientoOrganizacions.create', compact('entendimientoOrganizacion', 'empleados'));
     }
 
     public function store(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
@@ -104,7 +104,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $entendimientoOrganizacion->create($request->all());
 
-        return redirect()->route('admin.entendimiento-organizacions.index')->with('success', 'Análisis FODA creado correctamente');
+        return redirect()->route('entendimiento-organizacions.index')->with('success', 'Análisis FODA creado correctamente');
     }
 
     public function edit(EntendimientoOrganizacion $entendimientoOrganizacion)
@@ -113,7 +113,7 @@ class EntendimientoOrganizacionController extends Controller
 
         $empleados = Empleado::get();
 
-        return view('admin.entendimientoOrganizacions.edit', compact('entendimientoOrganizacion', 'empleados'));
+        return view('frontend.entendimientoOrganizacions.edit', compact('entendimientoOrganizacion', 'empleados'));
     }
 
     public function update(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
@@ -131,7 +131,7 @@ class EntendimientoOrganizacionController extends Controller
 
         $entendimientoOrganizacion->update($request->all());
 
-        return redirect()->route('admin.entendimiento-organizacions.index')->with('success', 'Análisis FODA actualizado correctamente');
+        return redirect()->route('entendimiento-organizacions.index')->with('success', 'Análisis FODA actualizado correctamente');
     }
 
     public function show(EntendimientoOrganizacion $entendimientoOrganizacion)
@@ -141,7 +141,7 @@ class EntendimientoOrganizacionController extends Controller
         $empleados = Empleado::get();
         $obtener_FODA = $entendimientoOrganizacion;
 
-        return view('admin.entendimientoOrganizacions.show', compact('empleados', 'obtener_FODA'));
+        return view('frontend.entendimientoOrganizacions.show', compact('empleados', 'obtener_FODA'));
     }
 
     public function destroy(EntendimientoOrganizacion $entendimientoOrganizacion)
@@ -164,7 +164,7 @@ class EntendimientoOrganizacionController extends Controller
     // {
     //     abort_if(Gate::denies('entendimiento_organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    //     return view('admin.entendimiento-organizacion.edit');
+    //     return view('frontend.entendimiento-organizacion.edit');
     // }
 
     // public function massDestroy(MassDestroyAreaRequest $request)

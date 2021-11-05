@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Controllers\Traits\CsvImportTrait;
@@ -66,7 +66,7 @@ class AmenazaController extends AppBaseController
             return $table->make(true);
         }
 
-        return view('admin.amenazas.index');
+        return view('frontend.amenazas.index');
     }
 
     /**
@@ -76,7 +76,7 @@ class AmenazaController extends AppBaseController
      */
     public function create()
     {
-        return view('admin.amenazas.create');
+        return view('frontend.amenazas.create');
     }
 
     /**
@@ -94,7 +94,7 @@ class AmenazaController extends AppBaseController
 
         Flash::success('Amenaza añadida satisfactoriamente.');
 
-        return redirect(route('admin.amenazas.index'));
+        return redirect(route('amenazas.index'));
     }
 
     /**
@@ -106,7 +106,7 @@ class AmenazaController extends AppBaseController
      */
     public function show(Amenaza $amenaza)
     {
-        return view('admin.amenazas.show')->with('amenaza', $amenaza);
+        return view('frontend.amenazas.show')->with('amenaza', $amenaza);
     }
 
     /**
@@ -123,10 +123,10 @@ class AmenazaController extends AppBaseController
         if (empty($amenaza)) {
             Flash::error('Amenaza not found');
 
-            return redirect(route('admin.amenazas.index'));
+            return redirect(route('amenazas.index'));
         }
 
-        return view('admin.amenazas.edit')->with('amenaza', $amenaza);
+        return view('frontend.amenazas.edit')->with('amenaza', $amenaza);
     }
 
     /**
@@ -151,7 +151,7 @@ class AmenazaController extends AppBaseController
 
         Flash::success('Amenaza actualizada.');
 
-        return redirect(route('admin.amenazas.index'));
+        return redirect(route('amenazas.index'));
     }
 
     /**
@@ -175,7 +175,7 @@ class AmenazaController extends AppBaseController
 
         Flash::success('Amenaza eliminada satisfactoriamente.');
 
-        return redirect(route('admin.amenazas.index'));
+        return redirect(route('amenazas.index'));
     }
 
     public function massDestroy(Request $request)
