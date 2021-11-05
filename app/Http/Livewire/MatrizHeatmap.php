@@ -367,6 +367,7 @@ class MatrizHeatmap extends Component
 
     public function callQuery($id, $valor)
     {
+        // dd($id);
         $matriz_riesgos = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', $id);
 
         if ($this->sede_id != '') {
@@ -397,6 +398,7 @@ class MatrizHeatmap extends Component
 
     public function callQueryResidual($id, $valor)
     {
+        dd($id);
         $matriz_riesgos_residual = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad_residual', 'impacto_residual', 'nivelriesgo_residual')->with(['controles'])->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', $id)->get();
         if ($matriz_riesgos_residual->count() == 0) {
             $this->callAlert('warning', 'No se encontro registro con este nivel de riesgo residual', false, 'Por favor ingrese un nuevo valor');

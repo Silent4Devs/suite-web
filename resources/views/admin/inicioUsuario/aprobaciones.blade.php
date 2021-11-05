@@ -180,10 +180,14 @@
                                 {{ Str::limit($revision->documento ? $revision->documento->codigo : 'Sin Código Asignado', 40, '...') }}
                             </td>
                             <td>
+                                @if ($revision->documento)
                                 <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento->id) }}"
                                     class="text-dark">
                                     {{ Str::limit($revision->documento ? $revision->documento->nombre : 'Sin Documento Asignado', 40, '...') }}
                                 </a>
+                                @else
+                                Sin revisión
+                                @endif
                             </td>
                             <td>{{ $revision->version }}</td>
                             <td style="text-transform: capitalize;">
@@ -207,10 +211,12 @@
                                 <span class="badge"
                                     style="color:white;background-color:{{ $revision->color_revisiones_estatus }}">{{ $revision->estatus_revisiones_formateado }}</span>
                             <td>
+                                @if ($revision->documento)
                                 <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento) }}"
                                     class="btn btn-sm" style="border:none;" title="Visualizar Documento">
                                     <i class="fas fa-eye text-dark" style="font-size: 15px;"></i>
                                 </a>
+                                @endif
                                 @if ($revision->before_level_all_answered)
                                     @if ($revision->estatus == $Documento::SOLICITUD_REVISION)
                                         <a href="{{ route('revisiones.revisar', $revision) }}" class="btn btn-sm"
@@ -219,7 +225,7 @@
                                         </a>
                                     @endif
                                     @if ($revision->estatus != $Documento::SOLICITUD_REVISION)
-                                        <a class="btn btn-sm" style="border:none;" title="Archivar"  
+                                        <a class="btn btn-sm" style="border:none;" title="Archivar"
                                             onClick="Archivar('{{ route('admin.revisiones.archivar') }}','{{ $revision->id }}')">
                                             <i class=" fas fa-archive text-success" style="font-size: 15px;"></i>
                                         </a>
@@ -277,7 +283,7 @@
             //         customize: function(doc) {
             //             doc.pageMargins = [20, 60, 20, 30];
             //             // doc.styles.tableHeader.fontSize = 7.5;
-            //             // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+            //             // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
             //         }
             //     },
             //     {

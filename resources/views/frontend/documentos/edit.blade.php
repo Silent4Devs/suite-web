@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <style>
         .exists {
@@ -88,12 +88,12 @@
                 <h5 class="p-2 text-white">Editar Documento</h5>
             </div>
             <form id="formEditarDocumento" data-id-documento="{{ $documentoActual->id }}" method="POST"
-                action="{{ route('admin.documentos.update', $documentoActual) }}" enctype="multipart/form-data">
+                action="{{ route('documentos.update', $documentoActual) }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
-                @include('admin.documentos._form')
+                @include('frontend.documentos._form')
                 <div class="text-right form-group col-12">
-                <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route('documentos.index') }}" class="btn_cancelar">Cancelar</a>
                 <input type="submit" class="btn btn-danger" value="Actualizar">
                 @can('documentos_publish')
                     <button id="publicar" class="btn btn-danger">Publicar</button>
@@ -119,7 +119,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </h5>
-                            <form action="{{ route('admin.documentos.publish') }}" id="formPublish"
+                            <form action="{{ route('documentos.publish') }}" id="formPublish"
                                 enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-lg-6">
@@ -237,7 +237,7 @@
                 guardarDocumento = data;
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.documentos.update', $documentoActual) }}",
+                    url: "{{ route('documentos.update', $documentoActual) }}",
                     data: data,
                     processData: false,
                     contentType: false,
@@ -336,7 +336,7 @@
                             console.log(datosRevisores);
                             $.ajax({
                                 type: "POST",
-                                url: "{{ route('admin.documentos.updateDocumentWhenPublish', $documentoActual) }}",
+                                url: "{{ route('documentos.updateDocumentWhenPublish', $documentoActual) }}",
                                 data: guardarDocumento,
                                 processData: false,
                                 contentType: false,
@@ -352,7 +352,7 @@
                                                 .attr(
                                                     'content')
                                         },
-                                        url: "{{ route('admin.documentos.publish') }}",
+                                        url: "{{ route('documentos.publish') }}",
                                         data: {
                                             datosRevisores,
                                             documentoCreado
@@ -373,7 +373,7 @@
                             );
                             setTimeout(() => {
                                 window.location.href =
-                                    "{{ route('admin.documentos.index') }}";
+                                    "{{ route('documentos.index') }}";
                             }, 1500);
                         }
                     })

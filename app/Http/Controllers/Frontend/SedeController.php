@@ -121,7 +121,7 @@ class SedeController extends Controller
             'foto_sedes' => $image,
         ]);
 
-        return redirect()->route('frontend.sedes.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('sedes.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Sede $sede)
@@ -172,7 +172,7 @@ class SedeController extends Controller
             'foto_sedes' => $image,
         ]);
 
-        return redirect()->route('frontend.sedes.index')->with('success', 'Editado con éxito');
+        return redirect()->route('sedes.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Sede $sede)

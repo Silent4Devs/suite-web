@@ -98,11 +98,6 @@
                     </div>
                 @endif
             </div>
-            <div class="col-sm-12 col-12 col-lg-6">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere eum eius rerum, aperiam veniam quibusdam
-                    cum suscipit dignissimos velit necessitatibus qui vero illum delectus itaque aliquid consequuntur optio
-                    eos sit. </p>
-            </div>
         </div>
     </div>
 @endsection

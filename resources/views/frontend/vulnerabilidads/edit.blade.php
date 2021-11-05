@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.vulnerabilidads.index') !!}">Vulnerabilidades</a>
+            <a href="{!! route('vulnerabilidads.index') !!}">Vulnerabilidades</a>
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
@@ -12,9 +12,9 @@
             <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Vulnerabilidad</h3>
         </div>
         <div class="card-body">
-            {!! Form::model($vulnerabilidad, ['route' => ['admin.vulnerabilidads.update', $vulnerabilidad->id], 'method' => 'patch']) !!}
+            {!! Form::model($vulnerabilidad, ['route' => ['vulnerabilidads.update', $vulnerabilidad->id], 'method' => 'patch']) !!}
 
-            @include('admin.vulnerabilidads.editfields')
+            @include('frontend.vulnerabilidads.editfields')
 
             {!! Form::close() !!}
         </div>

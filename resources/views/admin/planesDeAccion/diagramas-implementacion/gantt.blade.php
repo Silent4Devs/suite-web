@@ -129,6 +129,7 @@
                 url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
                 success: function(response) {
                     ge.loadProject(response);
+                    document.getElementById("ultima_modificacion").innerHTML=moment(response.updated_at).format("DD-MM-YYYY hh:mm:ss A")
                     ge.checkpoint(); //empty the undo stac
                 },
                 error: function(response) {
@@ -702,18 +703,22 @@
                                                             </tr>
 
                                                             <tr>
-                                                            <td  colspan="2">
-                                                            <label for="status" class="">Estatus</label><br>
-                                                            {{-- <select id="status" name="status" class="taskStatus" status="(#=obj.status#)"  onchange="$(this).attr('STATUS',$(this).val());">
+                                                             <td  colspan="2">
+                                                        <label for="status" class="">Estatus</label><br>
+                                                         <select readonly disabled style="color:black; text-align:center" id="status" name="status" class="taskStatus" status="(#=obj.status#)"  onchange="$(this).attr('STATUS',$(this).val());">
             <option value="STATUS_ACTIVE" class="taskStatus" status="STATUS_ACTIVE" >En Proceso</option>
             <option value="STATUS_WAITING" class="taskStatus" status="STATUS_WAITING" >En Espera</option>
             <option value="STATUS_SUSPENDED" class="taskStatus" status="STATUS_SUSPENDED" >Suspendida</option>
             <option value="STATUS_DONE" class="taskStatus" status="STATUS_DONE" >Completada</option>
             <option value="STATUS_FAILED" class="taskStatus" status="STATUS_FAILED" >Con Retraso</option>
             <option value="STATUS_UNDEFINED" class="taskStatus" status="STATUS_UNDEFINED" >Sin Iniciar</option>
-            </select> --}}
-                                                            <div class="taskDivStatus" status="(#=obj.status#)" >(#=obj.status#)</div>
-                                                            </td>
+            </select>
+
+
+                                                        {{-- <div class="taskDivStatus" status="(#=obj.status#)" >(#=obj.status#)</div> --}}
+
+
+                                                        </td>
 
                                                             <td valign="top" nowrap>
                                                             <label>Progreso(%)</label><br>

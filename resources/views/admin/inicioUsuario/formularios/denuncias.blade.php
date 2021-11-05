@@ -137,7 +137,7 @@
 				</div>
 
 				<div class="mt-4 text-right form-group col-12">
-					<a href="{{ asset('admin/inicioUsuario') }}" class="btn btn_cancelar">Cancelar</a>
+					<a href="{{ asset('admin/inicioUsuario') }}#reportes" class="btn btn_cancelar">Cancelar</a>
 					<button class="btn btn-success">Enviar</button>
 				</div>
 
