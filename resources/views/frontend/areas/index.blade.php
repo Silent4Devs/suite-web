@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <div class="mt-5 card">
         @can('configuracion_area_create')
@@ -7,7 +7,7 @@
             </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'Area', 'route' => 'admin.areas.parseCsvImport'])
+                    @include('csvImport.modal', ['model' => 'Area', 'route' => 'areas.parseCsvImport'])
                 </div>
             </div>
         @endcan
@@ -83,7 +83,7 @@
                     <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización comenzando
                         por la de más alta jerarquía y dé
                         clic en finalizar
-                        <a href="{{ route('admin.areas.renderJerarquia') }}" class="item-right col-2 btn text-light"
+                        <a href="{{ route('areas.renderJerarquia') }}" class="item-right col-2 btn text-light"
                             style="background-color:rgb(85, 217, 226); float:right">Finalizar</a>
                     </p>
 
@@ -196,7 +196,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar area',
-                url: "{{ route('admin.areas.create') }}",
+                url: "{{ route('areas.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -218,7 +218,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.areas.massDestroy') }}",
+                url: "{{ route('areas.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -267,7 +267,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.areas.index') }}",
+                ajax: "{{ route('areas.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

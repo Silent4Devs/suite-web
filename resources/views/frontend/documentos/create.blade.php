@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <style>
         .exists {
@@ -88,12 +88,12 @@
             <div class="mb-4 text-center" style="background: #098f94; border-radius: 5px;">
                 <h5 class="p-2 text-white">Crear Documento</h5>
             </div>
-            <form id="formCrearDocumento" method="POST" action="{{ route('admin.documentos.store') }}"
+            <form id="formCrearDocumento" method="POST" action="{{ route('documentos.store') }}"
                 enctype="multipart/form-data">
                 @csrf
-                @include('admin.documentos._form')
+                @include('frontend.documentos._form')
                 <div class="text-right form-group col-12">
-                <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route('documentos.index') }}" class="btn_cancelar">Cancelar</a>
                 <input type="submit" class="btn btn-danger" value="Guardar">
                 @can('documentos_publish')
                     <button id="publicar" class="btn btn-danger">Publicar</button>
@@ -117,7 +117,7 @@
                                     aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button></h5>
-                            <form action="{{ route('admin.documentos.publish') }}" id="formPublish"
+                            <form action="{{ route('documentos.publish') }}" id="formPublish"
                                 enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-lg-6">
@@ -255,7 +255,7 @@
                 let codigo = e.target.value;
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.documentos.checkCode') }}",
+                    url: "{{ route('documentos.checkCode') }}",
                     data: {
                         _token: "{{ csrf_token() }}",
                         codigo
@@ -314,7 +314,7 @@
                 guardarDocumento = data;
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.documentos.store') }}",
+                    url: "{{ route('documentos.store') }}",
                     data: data,
                     processData: false,
                     contentType: false,
@@ -410,7 +410,7 @@
                             let datosRevisores = $(formReviewers).serialize();
                             $.ajax({
                                 type: "POST",
-                                url: "{{ route('admin.documentos.storeDocumentWhenPublish') }}",
+                                url: "{{ route('documentos.storeDocumentWhenPublish') }}",
                                 data: guardarDocumento,
                                 processData: false,
                                 contentType: false,
@@ -426,7 +426,7 @@
                                                 .attr(
                                                     'content')
                                         },
-                                        url: "{{ route('admin.documentos.publish') }}",
+                                        url: "{{ route('documentos.publish') }}",
                                         data: {
                                             datosRevisores,
                                             documentoCreado
@@ -447,7 +447,7 @@
                             );
                             setTimeout(() => {
                                 window.location.href =
-                                    "{{ route('admin.documentos.index') }}";
+                                    "{{ route('documentos.index') }}";
                             }, 1500);
                         }
                     })

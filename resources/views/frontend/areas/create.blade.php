@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <div class="mt-4 card">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             @endif
-            <form method="POST" action="{{ route('admin.areas.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('areas.store') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="row">

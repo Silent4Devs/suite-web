@@ -8,7 +8,7 @@
         @can('configuracion_sede_create')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'Sede', 'route' => 'frontend.sedes.parseCsvImport'])
+                    @include('csvImport.modal', ['model' => 'Sede', 'route' => 'sedes.parseCsvImport'])
                 </div>
             </div>
         @endcan
@@ -74,7 +74,7 @@
                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Aún no se han agregado
                             Sedes a la
                             organización
-                            <a href="{{ route('frontend.sedes.create') }}"><i class="fas fa-share"></i></a>
+                            <a href="{{ route('sedes.create') }}"><i class="fas fa-share"></i></a>
                         </p>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar sede',
-                url: "{{ route('frontend.sedes.create') }}",
+                url: "{{ route('sedes.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -186,7 +186,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('frontend.sedes.massDestroy') }}",
+                url: "{{ route('sedes.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -218,7 +218,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('frontend.sedes.index') }}",
+                ajax: "{{ route('sedes.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
