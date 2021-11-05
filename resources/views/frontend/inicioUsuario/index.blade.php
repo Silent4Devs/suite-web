@@ -97,7 +97,7 @@
             <h6>Documentos Publicados ({{ count($documentos_publicados) }})</h6>
             <ul class="list-group">
                 @foreach ($documentos_publicados as $documento)
-                    <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
+                    <a href="{{ route('documentos.renderViewDocument', $documento->id) }}"
                         class="list-group-item cards text-dark">
                         <i class="mr-1 fas fa-file-pdf text-danger"></i>
                         {{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
@@ -157,26 +157,26 @@
                             @include('frontend.inicioUsuario.mis-datos')
                         </section>
                         <section id="calendario">
-                            @include('frontend.inicioUsuario.calendario')
+                            @include('inicioUsuario.calendario')
                         </section>
                         <section id="actividades">
-                            @include('frontend.inicioUsuario.actividades')
+                            @include('inicioUsuario.actividades')
                         </section>
                         <section id="aprobaciones">
                             @include('frontend.inicioUsuario.aprobaciones')
                         </section>
                         {{-- <section id="evaluaciones">
-                            @include('admin.inicioUsuario.evaluaciones')
+                            @include('inicioUsuario.evaluaciones')
                         </section> --}}
                         <section id="capacitaciones">
-                            @include('frontend.inicioUsuario.capacitaciones')
+                            @include('inicioUsuario.capacitaciones')
                         </section>
                         <section id="reportes">
-                            @include('frontend.inicioUsuario.reportes')
+                            @include('inicioUsuario.reportes')
                         </section>
                     </div>
                 @else
-                    @include('frontend.inicioUsuario.agenda')
+                    @include('inicioUsuario.agenda')
                 @endif
             </div>
 

@@ -200,7 +200,7 @@ Route::middleware([
 
         Route::view('iso27001', 'frontend.iso27001.index')->name('iso27001.index');
         Route::view('soporte', 'frontend.soporte.index')->name('soporte.index');
-        // Route::get('portal-comunicacion/reportes', [PortalComunicacionController::class, 'reportes'])->name('portal-comunicacion.reportes');
+        Route::get('portal-comunicacion/reportes', [PortalComunicacionController::class, 'reportes'])->name('portal-comunicacion.reportes');
         Route::resource('portal-comunicacion', PortalComunicacionController::class);
 
         // // Route::post('plantTrabajoBase/bloqueo/mostrar', 'LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');
