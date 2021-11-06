@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -104,7 +104,7 @@
 
 
 
-    {{ Breadcrumbs::render('admin.material-sgsis.index') }}
+{{-- {{ Breadcrumbs::render('frontend.material-sgsis.index') }} --}}
 
     @can('material_sgsi_create')
 
@@ -114,7 +114,7 @@
             </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.material-sgsis.create') }}">
+            <a class="btn btn-success" href="{{ route('material-sgsis.create') }}">
                     Agregar <strong>+</strong>
             </a>
         </div>
@@ -275,7 +275,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar material SGSI',
-                url: "{{ route('admin.material-sgsis.create') }}",
+                url: "{{ route('material-sgsis.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -288,7 +288,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.material-sgsis.massDestroy') }}",
+                url: "{{ route('material-sgsis.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -320,7 +320,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.material-sgsis.index') }}",
+                ajax: "{{ route('material-sgsis.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

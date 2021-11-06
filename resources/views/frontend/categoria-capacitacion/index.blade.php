@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     @can('recurso_create')
 
@@ -8,7 +8,7 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.recursos.index') }}
+    {{ Breadcrumbs::render('frontend.recursos.index') }}
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -112,7 +112,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar curso y capacitación',
-                url: "{{ route('admin.categoria-capacitacion.create') }}",
+                url: "{{ route('categoria-capacitacion.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -128,7 +128,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.categoria-capacitacion.index') }}",
+                ajax: "{{ route('categoria-capacitacion.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',

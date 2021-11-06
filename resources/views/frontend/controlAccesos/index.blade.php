@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <style>
@@ -86,7 +86,7 @@
     }
 </style>
 
-    {{ Breadcrumbs::render('admin.control-accesos.index') }}
+{{-- {{ Breadcrumbs::render('frontend.control-accesos.index') }} --}}
 
     @can('control_acceso_create')
 
@@ -210,7 +210,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar control de acceso',
-                url: "{{ route('admin.control-accesos.create') }}",
+                url: "{{ route('control-accesos.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -223,7 +223,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.control-accesos.massDestroy') }}",
+                url: "{{ route('control-accesos.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -255,7 +255,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.control-accesos.index') }}",
+                ajax: "{{ route('control-accesos.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

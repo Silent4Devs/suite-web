@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.control-accesos.create') }}
+{{--  {{ Breadcrumbs::render('frontend.control-accesos.create') }} --}}
 
 <div class="card">
     <div class="card-header">
@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.control-accesos.index') }}">
+                <a class="btn btn-default" href="{{ route('control-accesos.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -48,7 +48,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.control-accesos.index') }}">
+                <a class="btn btn-default" href="{{ route('control-accesos.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

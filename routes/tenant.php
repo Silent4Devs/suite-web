@@ -447,7 +447,7 @@ Route::middleware([
         Route::get('evaluaciones-objetivosInsertar', [ObjetivosseguridadController::class,'evaluacionesInsert'])->name('evaluacionesobjetivosInsert');
         Route::get('evaluaciones-objetivosShow', [ObjetivosseguridadController::class,'evaluacionesShow'])->name('evaluacionesobjetivosShow');
 
-        // Route::resource('categoria-capacitacion', CategoriaCapacitacionController::class);
+        Route::resource('categoria-capacitacion', CategoriaCapacitacionController::class);
 
         // Recursos
         Route::delete('recursos/destroy', [RecursosController::class,'massDestroy'])->name('recursos.massDestroy');

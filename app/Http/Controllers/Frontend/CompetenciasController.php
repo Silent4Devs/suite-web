@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -79,7 +79,7 @@ class CompetenciasController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.competencia.index', compact('users', 'teams'));
+        return view('frontend.competencia.index', compact('users', 'teams'));
     }
 
     public function create()
@@ -88,7 +88,7 @@ class CompetenciasController extends Controller
 
         $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.competencia.create', compact('nombrecolaboradors'));
+        return view('frontend.competencia.create', compact('nombrecolaboradors'));
     }
 
     public function store(StoreCompetenciumRequest $request)
@@ -103,7 +103,7 @@ class CompetenciasController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $competencium->id]);
         }
 
-        return redirect()->route('admin.competencia.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('competencia.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Competencium $competencium)
@@ -114,7 +114,7 @@ class CompetenciasController extends Controller
 
         $competencium->load('nombrecolaborador', 'team');
 
-        return view('admin.competencia.edit', compact('nombrecolaboradors', 'competencium'));
+        return view('frontend.competencia.edit', compact('nombrecolaboradors', 'competencium'));
     }
 
     public function update(UpdateCompetenciumRequest $request, Competencium $competencium)
@@ -137,7 +137,7 @@ class CompetenciasController extends Controller
             }
         }
 
-        return redirect()->route('admin.competencia.index')->with('success', 'Editado con éxito');
+        return redirect()->route('frontend.competencia.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Competencium $competencium)
@@ -146,7 +146,7 @@ class CompetenciasController extends Controller
 
         $competencium->load('nombrecolaborador', 'team');
 
-        return view('admin.competencia.show', compact('competencium'));
+        return view('frontend.competencia.show', compact('competencium'));
     }
 
     public function destroy(Competencium $competencium)
@@ -183,6 +183,6 @@ class CompetenciasController extends Controller
 
         $areas = Area::get();
 
-        return view('admin.competencia.buscarCV', compact('areas'));
+        return view('frontend.competencia.buscarCV', compact('areas'));
     }
 }

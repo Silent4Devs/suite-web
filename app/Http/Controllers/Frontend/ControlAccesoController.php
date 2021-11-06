@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -23,7 +23,7 @@ class ControlAccesoController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('control_acceso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('control_acceso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = ControlAcceso::with(['team', 'documentos_controlA'])->select(sprintf('%s.*', (new ControlAcceso)->table))->orderByDesc('id');
@@ -68,7 +68,7 @@ class ControlAccesoController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.controlAccesos.index', compact('teams'));
+        return view('frontend.controlAccesos.index', compact('teams'));
     }
 
     public function create()
@@ -76,7 +76,7 @@ class ControlAccesoController extends Controller
         abort_if(Gate::denies('control_acceso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = DocumentoControlAcceso::get();
 
-        return view('admin.controlAccesos.create', compact('documentos'));
+        return view('frontend.controlAccesos.create', compact('documentos'));
     }
 
     public function store(StoreControlAccesoRequest $request)
@@ -103,7 +103,7 @@ class ControlAccesoController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $controlAcceso->id]);
         }
 
-        return redirect()->route('admin.control-accesos.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('control-accesos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(ControlAcceso $controlAcceso)
@@ -112,7 +112,7 @@ class ControlAccesoController extends Controller
         $documentos = DocumentoControlAcceso::get();
         $controlAcceso->load('team');
 
-        return view('admin.controlAccesos.edit', compact('controlAcceso', 'documentos'));
+        return view('frontend.controlAccesos.edit', compact('controlAcceso', 'documentos'));
     }
 
     public function update(UpdateControlAccesoRequest $request, ControlAcceso $controlAcceso)
@@ -130,7 +130,7 @@ class ControlAccesoController extends Controller
             }
         }
 
-        return redirect()->route('admin.control-accesos.index')->with('success', 'Editado con éxito');
+        return redirect()->route('control-accesos.index')->with('success', 'Editado con éxito');
     }
 
     public function show(ControlAcceso $controlAcceso)
@@ -139,7 +139,7 @@ class ControlAccesoController extends Controller
 
         $controlAcceso->load('team');
 
-        return view('admin.controlAccesos.show', compact('controlAcceso'));
+        return view('frontend.controlAccesos.show', compact('controlAcceso'));
     }
 
     public function destroy(ControlAcceso $controlAcceso)

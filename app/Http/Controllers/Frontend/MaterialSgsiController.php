@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -23,7 +23,7 @@ class MaterialSgsiController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('material_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('material_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd(MaterialSgsi::with('arearesponsable', 'team','documentos_material')->get());
         if ($request->ajax()) {
             $query = MaterialSgsi::with(['arearesponsable', 'team', 'documentos_material'])->select(sprintf('%s.*', (new MaterialSgsi)->table))->orderByDesc('id');
@@ -83,7 +83,7 @@ class MaterialSgsiController extends Controller
         $areas = Area::get();
         $teams = Team::get();
 
-        return view('admin.materialSgsis.index', compact('areas', 'teams'));
+        return view('frontend.materialSgsis.index', compact('areas', 'teams'));
     }
 
     public function create()
@@ -93,7 +93,7 @@ class MaterialSgsiController extends Controller
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
         $documentos = DocumentoMaterialSgsi::get();
 
-        return view('admin.materialSgsis.create', compact('arearesponsables', 'documentos'));
+        return view('frontend.materialSgsis.create', compact('arearesponsables', 'documentos'));
     }
 
     public function store(Request $request)
@@ -118,7 +118,7 @@ class MaterialSgsiController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $materialSgsi->id]);
         }
 
-        return redirect()->route('admin.material-sgsis.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('material-sgsis.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(MaterialSgsi $materialSgsi)
@@ -129,7 +129,7 @@ class MaterialSgsiController extends Controller
         $documentos = DocumentoMaterialSgsi::get();
         $materialSgsi->load('arearesponsable', 'team');
 
-        return view('admin.materialSgsis.edit', compact('arearesponsables', 'materialSgsi', 'documentos'));
+        return view('frontend.materialSgsis.edit', compact('arearesponsables', 'materialSgsi', 'documentos'));
     }
 
     public function update(UpdateMaterialSgsiRequest $request, MaterialSgsi $materialSgsi)
@@ -147,7 +147,7 @@ class MaterialSgsiController extends Controller
             }
         }
 
-        return redirect()->route('admin.material-sgsis.index')->with('success', 'Editado con éxito');
+        return redirect()->route('material-sgsis.index')->with('success', 'Editado con éxito');
     }
 
     public function show(MaterialSgsi $materialSgsi)
@@ -156,7 +156,7 @@ class MaterialSgsiController extends Controller
 
         $materialSgsi->load('arearesponsable', 'team');
 
-        return view('admin.materialSgsis.show', compact('materialSgsi'));
+        return view('frontend.materialSgsis.show', compact('materialSgsi'));
     }
 
     public function destroy(MaterialSgsi $materialSgsi)

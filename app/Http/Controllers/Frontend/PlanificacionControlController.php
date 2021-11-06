@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPlanificacionControlRequest;
@@ -19,7 +19,7 @@ class PlanificacionControlController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('planificacion_control_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('planificacion_control_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = PlanificacionControl::with(['dueno', 'team'])->select(sprintf('%s.*', (new PlanificacionControl)->table))->orderByDesc('id');
@@ -93,7 +93,7 @@ class PlanificacionControlController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.planificacionControls.index', compact('users', 'teams'));
+        return view('frontend.planificacionControls.index', compact('users', 'teams'));
     }
 
     public function create()
@@ -103,14 +103,14 @@ class PlanificacionControlController extends Controller
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.planificacionControls.create', compact('duenos', 'empleados'));
+        return view('frontend.planificacionControls.create', compact('duenos', 'empleados'));
     }
 
     public function store(StorePlanificacionControlRequest $request)
     {
         $planificacionControl = PlanificacionControl::create($request->all());
 
-        return redirect()->route('admin.planificacion-controls.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('planificacion-controls.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(PlanificacionControl $planificacionControl)
@@ -123,14 +123,14 @@ class PlanificacionControlController extends Controller
 
         $planificacionControl->load('dueno', 'team');
 
-        return view('admin.planificacionControls.edit', compact('duenos', 'planificacionControl', 'empleados'));
+        return view('frontend.planificacionControls.edit', compact('duenos', 'planificacionControl', 'empleados'));
     }
 
     public function update(UpdatePlanificacionControlRequest $request, PlanificacionControl $planificacionControl)
     {
         $planificacionControl->update($request->all());
 
-        return redirect()->route('admin.planificacion-controls.index')->with('success', 'Editado con éxito');
+        return redirect()->route('planificacion-controls.index')->with('success', 'Editado con éxito');
     }
 
     public function show(PlanificacionControl $planificacionControl)
@@ -139,7 +139,7 @@ class PlanificacionControlController extends Controller
 
         $planificacionControl->load('dueno', 'team');
 
-        return view('admin.planificacionControls.show', compact('planificacionControl'));
+        return view('frontend.planificacionControls.show', compact('planificacionControl'));
     }
 
     public function destroy(PlanificacionControl $planificacionControl)

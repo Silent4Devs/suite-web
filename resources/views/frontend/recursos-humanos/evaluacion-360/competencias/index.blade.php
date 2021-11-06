@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Competencias') }}
@@ -106,7 +106,7 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar competencia',
-                url: "{{ route('admin.ev360-competencias.create') }}",
+                url: "{{ route('ev360-competencias.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                     let {
@@ -123,7 +123,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.ev360-competencias.index') }}",
+                ajax: "{{ route('ev360-competencias.index') }}",
                 columns: [{
                         data: 'id'
                     }, {
@@ -138,13 +138,13 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             let urlBtnEditar =
-                                `/admin/recursos-humanos/evaluacion-360/competencias/${data}/edit`;
+                                `/recursos-humanos/evaluacion-360/competencias/${data}/edit`;
                             // let urlBtnEvaluacionEstatus =
-                            //     `/admin/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
+                            //     `/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
                             let urlBtnVisualizar =
-                                `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
+                                `/recursos-humanos/evaluacion-360/competencias/${data}`;
                             let urlBtnEliminar =
-                                `/admin/recursos-humanos/evaluacion-360/competencias/${data}`;
+                                `/recursos-humanos/evaluacion-360/competencias/${data}`;
 
                             let botones = `
                                 <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>

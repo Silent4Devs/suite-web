@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.comunicacion-sgis.create') }}
+{{-- {{ Breadcrumbs::render('frontend.comunicacion-sgis.create') }}  --}}
 
     <style type="text/css">
         .select2-selection--multiple{
@@ -16,7 +16,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.comunicacion-sgis.store") }}" enctype="multipart/form-data" class="row">
+        <form method="POST" action="{{ route("comunicacion-sgis.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-12">
                 <label class="required" for="TitulodComunicado"><i class="fas fa-align-left iconos-crear"></i>
@@ -142,7 +142,7 @@
 @section('scripts')
 <script>
     Dropzone.options.archivoDropzone = {
-    url: '{{ route('admin.comunicacion-sgis.storeMedia') }}',
+    url: '{{ route('comunicacion-sgis.storeMedia') }}',
     maxFilesize: 4, // MB
     maxFiles: 1,
     addRemoveLinks: true,

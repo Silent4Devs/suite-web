@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.concientizacion-sgis.create') }}
+    {{ Breadcrumbs::render('frontend.concientizacion-sgis.create') }}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
@@ -10,7 +10,7 @@
 
         <div class="card-body">
             <form method="POST" class="row"
-                action="{{ route('admin.concientizacion-sgis.update', [$concientizacionSgi->id]) }}"
+                action="{{ route('concientizacion-sgis.update', [$concientizacionSgi->id]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
@@ -195,7 +195,7 @@
 @section('scripts')
     <script>
         Dropzone.options.archivoDropzone = {
-            url: '{{ route('admin.concientizacion-sgis.storeMedia') }}',
+            url: '{{ route('concientizacion-sgis.storeMedia') }}',
             maxFilesize: 4, // MB
             maxFiles: 1,
             addRemoveLinks: true,

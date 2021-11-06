@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     {{ Breadcrumbs::render('EV360-Competencias-Create') }}
@@ -8,10 +8,10 @@
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Competencia </h3>
         </div>
         <div class="card-body">
-            <form id="formCompetenciaCreate" method="POST" action="{{ route('admin.ev360-competencias.store') }}"
+            <form id="formCompetenciaCreate" method="POST" action="{{ route('ev360-competencias.store') }}"
                 class="mt-3 row">
                 @csrf
-                @include('admin.recursos-humanos.evaluacion-360.competencias._form')
+                @include('frontend.recursos-humanos.evaluacion-360.competencias._form')
                 <div class="d-flex justify-content-end w-100">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button type="submit" class="btn btn-danger">Guardar</button>

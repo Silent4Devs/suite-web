@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <style>
@@ -56,7 +56,7 @@
 
 </style>
 
-    {{ Breadcrumbs::render('admin.comunicacion-sgis.index') }}
+{{-- {{ Breadcrumbs::render('frontend.comunicacion-sgis.index') }} --}}
 
     @can('comunicacion_sgi_create')
 
@@ -180,7 +180,7 @@
 
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar comunicación SGSI',
-                url: "{{ route('admin.comunicacion-sgis.create') }}",
+                url: "{{ route('comunicacion-sgis.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -198,7 +198,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.comunicacion-sgis.massDestroy') }}",
+                url: "{{ route('comunicacion-sgis.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -230,7 +230,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.comunicacion-sgis.index') }}",
+                ajax: "{{ route('comunicacion-sgis.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

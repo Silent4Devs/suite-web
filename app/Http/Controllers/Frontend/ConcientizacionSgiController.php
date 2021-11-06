@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -24,7 +24,7 @@ class ConcientizacionSgiController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('concientizacion_sgi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('concientizacion_sgi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = ConcientizacionSgi::with(['arearesponsable', 'team', 'documentos_concientizacion'])->select(sprintf('%s.*', (new ConcientizacionSgi)->table))->orderByDesc('id');
@@ -81,7 +81,7 @@ class ConcientizacionSgiController extends Controller
         $areas = Area::get();
         $teams = Team::get();
 
-        return view('admin.concientizacionSgis.index', compact('areas', 'teams'));
+        return view('frontend.concientizacionSgis.index', compact('areas', 'teams'));
     }
 
     public function create()
@@ -91,7 +91,7 @@ class ConcientizacionSgiController extends Controller
         $arearesponsables = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
         $documentos = DocumentoConcientizacionSgis::get();
 
-        return view('admin.concientizacionSgis.create', compact('arearesponsables', 'documentos'));
+        return view('frontend.concientizacionSgis.create', compact('arearesponsables', 'documentos'));
     }
 
     public function store(StoreConcientizacionSgiRequest $request)
@@ -114,7 +114,7 @@ class ConcientizacionSgiController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $concientizacionSgi->id]);
         }
 
-        return redirect()->route('admin.concientizacion-sgis.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('concientizacion-sgis.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(ConcientizacionSgi $concientizacionSgi)
@@ -125,7 +125,7 @@ class ConcientizacionSgiController extends Controller
         $documentos = DocumentoConcientizacionSgis::get();
         $concientizacionSgi->load('arearesponsable', 'team');
 
-        return view('admin.concientizacionSgis.edit', compact('arearesponsables', 'concientizacionSgi', 'documentos'));
+        return view('frontend.concientizacionSgis.edit', compact('arearesponsables', 'concientizacionSgi', 'documentos'));
     }
 
     public function update(UpdateConcientizacionSgiRequest $request, ConcientizacionSgi $concientizacionSgi)
@@ -156,7 +156,7 @@ class ConcientizacionSgiController extends Controller
         //     $concientizacionSgi->archivo->delete();
         // }
 
-        return redirect()->route('admin.concientizacion-sgis.index')->with('success', 'Editado con éxito');
+        return redirect()->route('concientizacion-sgis.index')->with('success', 'Editado con éxito');
     }
 
     public function show(ConcientizacionSgi $concientizacionSgi)
@@ -165,7 +165,7 @@ class ConcientizacionSgiController extends Controller
 
         $concientizacionSgi->load('arearesponsable', 'team');
 
-        return view('admin.concientizacionSgis.show', compact('concientizacionSgi'));
+        return view('frontend.concientizacionSgis.show', compact('concientizacionSgi'));
     }
 
     public function destroy(ConcientizacionSgi $concientizacionSgi)

@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.control-accesos.create') }}
+{{-- {{ Breadcrumbs::render('frontend.control-accesos.create') }} --}}
 
 <div class="card mt-4">
     <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" class="row" action="{{ route("admin.control-accesos.update", [$controlAcceso->id]) }}" enctype="multipart/form-data">
+        <form method="POST" class="row" action="{{ route("control-accesos.update", [$controlAcceso->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group col-md-12">
@@ -118,7 +118,7 @@
 @section('scripts')
 <script>
     Dropzone.options.archivoDropzone = {
-    url: '{{ route('admin.control-accesos.storeMedia') }}',
+    url: '{{ route('control-accesos.storeMedia') }}',
     maxFilesize: 4, // MB
     maxFiles: 1,
     addRemoveLinks: true,

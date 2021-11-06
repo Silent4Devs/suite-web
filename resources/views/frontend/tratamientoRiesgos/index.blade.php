@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.tratamiento-riesgos.index') }}
+{{--  {{ Breadcrumbs::render('frontend.tratamiento-riesgos.index') }}  --}}
 
     @can('tratamiento_riesgo_create')
 
@@ -190,7 +190,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar tratamiento de los riesgos',
-                url: "{{ route('admin.tratamiento-riesgos.create') }}",
+                url: "{{ route('tratamiento-riesgos.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -203,7 +203,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.tratamiento-riesgos.massDestroy') }}",
+                url: "{{ route('tratamiento-riesgos.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -235,7 +235,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.tratamiento-riesgos.index') }}",
+                ajax: "{{ route('tratamiento-riesgos.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

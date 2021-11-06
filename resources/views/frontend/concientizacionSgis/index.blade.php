@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <style>
@@ -73,7 +73,7 @@
     }
 </style>
 
-    {{ Breadcrumbs::render('admin.concientizacion-sgis.index') }}
+{{-- {{ Breadcrumbs::render('frontend.concientizacion-sgis.index') }}  --}}
 
     @can('concientizacion_sgi_create')
 
@@ -83,7 +83,7 @@
             </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.concientizacion-sgis.create') }}">
+            <a class="btn btn-success" href="{{ route('concientizacion-sgis.create') }}">
                       Agregar <strong>+</strong>
             </a>
         </div>
@@ -244,7 +244,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar objetivo de seguridad',
-                url: "{{ route('admin.concientizacion-sgis.create') }}",
+                url: "{{ route('concientizacion-sgis.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -257,7 +257,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.concientizacion-sgis.massDestroy') }}",
+                url: "{{ route('concientizacion-sgis.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -289,7 +289,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.concientizacion-sgis.index') }}",
+                ajax: "{{ route('concientizacion-sgis.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
