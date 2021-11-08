@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.plan-auditoria.create') }}
+    <!-- {{ Breadcrumbs::render('frontend.plan-auditoria.create') }} -->
 
 <div class="card">
     <div class="card-header">
@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.plan-auditoria.index') }}">
+                <a class="btn btn-default" href="{{ route('plan-auditoria.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -94,7 +94,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.plan-auditoria.index') }}">
+                <a class="btn btn-default" href="{{ route('plan-auditoria.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

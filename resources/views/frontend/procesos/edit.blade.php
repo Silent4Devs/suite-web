@@ -10,7 +10,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('frontend.procesos.update', $proceso) }}" class="row">
+            <form method="POST" action="{{ route('procesos.update', $proceso) }}" class="row">
                 @csrf
                 @method('PATCH')
                 <div class="col-md-12 col-sm-12">

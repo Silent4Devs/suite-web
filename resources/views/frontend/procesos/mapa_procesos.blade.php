@@ -374,7 +374,7 @@
                                 <p>{{ $macro_map->nombre }}</p>
                             </span>
                         @empty
-                            <a href="{{ asset('frontend/macroprocesos') }}">
+                            <a href="{{ asset('macroprocesos') }}">
                                 Registrar macroprocesos
                             </a>
                         @endforelse
@@ -387,12 +387,12 @@
                                 <div class="macro_a"
                                     style="{{ $proceso_map->estatus == '2' ? 'border:2px solid yellow; color:black !important' : '' }}">
                                     <a class="{{ $proceso_map->estatus == '2' ? 'not-active' : '' }}"
-                                        href="{{ route('frontend.procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
+                                        href="{{ route('procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
                                         {{ $proceso_map->nombre }}
                                     </a>
                                 </div>
                             @empty
-                                <a href="{{ asset('frontend/procesos') }}" class="registre">
+                                <a href="{{ asset('procesos') }}" class="registre">
                                     Registrar procesos
                                 </a>
                             @endforelse

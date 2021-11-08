@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <div class="mt-4 card">
@@ -7,7 +7,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" class="row" action="{{ route('admin.activos.update', [$activo->id]) }}"
+            <form method="POST" class="row" action="{{ route('activos.update', [$activo->id]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
@@ -497,7 +497,7 @@
                     headers: {
                         "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
                     },
-                    url: "{{ route('admin.marcas.store') }}",
+                    url: "{{ route('marcas.store') }}",
                     data: {
                         nombre
                     },
@@ -508,7 +508,7 @@
                             $('.selecmarca').select2('destroy');
                             $('.selecmarca').select2({
                                 ajax: {
-                                    url: "{{ route('admin.marcas.getMarcas') }}",
+                                    url: "{{ route('marcas.getMarcas') }}",
                                     dataType: "json",
                                 },
                                 theme: "bootstrap4"
@@ -547,7 +547,7 @@
                     headers: {
                         "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
                     },
-                    url: "{{ route('admin.modelos.store') }}",
+                    url: "{{ route('modelos.store') }}",
                     data: {
                         nombre
                     },
@@ -559,7 +559,7 @@
                             $('.selecmodelo').select2('destroy');
                             $('.selecmodelo').select2({
                                 ajax: {
-                                    url: "{{ route('admin.modelos.getModelos', $activo->modelo) }}",
+                                    url: "{{ route('modelos.getModelos', $activo->modelo) }}",
                                     dataType: "json",
                                 },
                                 theme: "bootstrap4"
@@ -594,7 +594,7 @@
         $(document).ready(function() {
             $('#marca').select2({
                 ajax: {
-                    url: "{{ route('admin.marcas.getMarcas') }}",
+                    url: "{{ route('marcas.getMarcas') }}",
                     dataType: "json",
                 },
 
@@ -612,7 +612,7 @@
 
             $('#modelo').select2({
                 ajax: {
-                    url: "{{ route('admin.modelos.getModelos') }}",
+                    url: "{{ route('modelos.getModelos') }}",
                     dataType: "json",
                 },
 

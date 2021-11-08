@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyTeamRequest;
@@ -17,7 +17,7 @@ class TeamController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('team_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('team_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Team::with(['owner'])->select(sprintf('%s.*', (new Team)->table));
@@ -58,14 +58,14 @@ class TeamController extends Controller
 
         $users = User::get();
 
-        return view('admin.teams.index', compact('users'));
+        return view('frontend.teams.index', compact('users'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('team_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.teams.create');
+        return view('frontend.teams.create');
     }
 
     public function store(StoreTeamRequest $request)
@@ -74,7 +74,7 @@ class TeamController extends Controller
         $data['owner_id'] = auth()->user()->id;
         $team = Team::create($data);
 
-        return redirect()->route('admin.teams.index');
+        return redirect()->route('teams.index');
     }
 
     public function edit(Team $team)
@@ -83,14 +83,14 @@ class TeamController extends Controller
 
         $team->load('owner');
 
-        return view('admin.teams.edit', compact('team'));
+        return view('frontend.teams.edit', compact('team'));
     }
 
     public function update(UpdateTeamRequest $request, Team $team)
     {
         $team->update($request->all());
 
-        return redirect()->route('admin.teams.index');
+        return redirect()->route('teams.index');
     }
 
     public function show(Team $team)
@@ -99,7 +99,7 @@ class TeamController extends Controller
 
         $team->load('owner');
 
-        return view('admin.teams.show', compact('team'));
+        return view('frontend.teams.show', compact('team'));
     }
 
     public function destroy(Team $team)

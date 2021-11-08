@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
+{{-- {{ Breadcrumbs::render('frontend.accion-correctivas.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -33,7 +33,7 @@
                             <div class="collapse show" id="collapseExample">
                                 <div class="card card-body">
                                     <div id="test-nl-1" class="content">
-                                        @include('admin.accionCorrectivas.editform1')
+                                        @include('frontend.accionCorrectivas.editform1')
 
                                         <a class="btn btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
                                             role="button">
@@ -46,7 +46,7 @@
                             <div class="collapse show" id="collapseExample">
                                 <div class="card card-body">
                                     <div id="test-nl-1" class="content">
-                                        @include('admin.accionCorrectivas.editform1')
+                                        @include('frontend.accionCorrectivas.editform1')
 
                                         <a class="btn btn-primary" onclick="closetabcollap1next()" id="nextcollapseForm1"
                                             role="button">
@@ -58,18 +58,18 @@
                         @endif
                         <div class="collapse" id="collapseplan">
                             <div class="card card-body">
-                                @include('admin.accionCorrectivas.editform2')
+                                @include('frontend.accionCorrectivas.editform2')
                             </div>
                         </div>
                         @if (empty($tab))
                             <div class="collapse" id="collapseactividad">
                                 <div class="card card-body">
-                                    @include('admin.accionCorrectivas.edit_planaccion')
+                                    @include('frontend.accionCorrectivas.edit_planaccion')
                                 </div>
                             @else
                                 <div class="collapse show" id="collapseactividad">
                                     <div class="card card-body">
-                                        @include('admin.accionCorrectivas.edit_planaccion')
+                                        @include('frontend.accionCorrectivas.edit_planaccion')
                                     </div>
                                 </div>
                         @endif
@@ -144,7 +144,7 @@
     <script>
         var uploadedDocumentomeToDoMap = {}
         Dropzone.options.documentometodoDropzone = {
-            url: "{{ route('admin.accion-correctivas.storeMedia') }}",
+            url: "{{ route('accion-correctivas.storeMedia') }}",
             maxFilesize: 4, // MB
             maxFiles: 1,
             addRemoveLinks: true,

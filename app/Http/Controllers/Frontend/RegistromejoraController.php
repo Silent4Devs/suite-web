@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRegistromejoraRequest;
@@ -19,7 +19,7 @@ class RegistromejoraController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('registromejora_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('registromejora_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Registromejora::with(['nombre_reporta', 'responsableimplementacion', 'valida', 'team'])->select(sprintf('%s.*', (new Registromejora)->table));
@@ -89,7 +89,7 @@ class RegistromejoraController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.registromejoras.index', compact('users', 'users', 'users', 'teams'));
+        return view('frontend.registromejoras.index', compact('users', 'users', 'users', 'teams'));
     }
 
     public function create()
@@ -104,14 +104,14 @@ class RegistromejoraController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.registromejoras.create', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'empleados'));
+        return view('frontend.registromejoras.create', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'empleados'));
     }
 
     public function store(StoreRegistromejoraRequest $request)
     {
         $registromejora = Registromejora::create($request->all());
 
-        return redirect()->route('admin.registromejoras.index');
+        return redirect()->route('registromejoras.index');
     }
 
     public function edit(Registromejora $registromejora)
@@ -128,14 +128,14 @@ class RegistromejoraController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.registromejoras.edit', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'registromejora', 'empleados'));
+        return view('frontend.registromejoras.edit', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'registromejora', 'empleados'));
     }
 
     public function update(UpdateRegistromejoraRequest $request, Registromejora $registromejora)
     {
         $registromejora->update($request->all());
 
-        return redirect()->route('admin.registromejoras.index');
+        return redirect()->route('registromejoras.index');
     }
 
     public function show(Registromejora $registromejora)
@@ -144,7 +144,7 @@ class RegistromejoraController extends Controller
 
         $registromejora->load('nombre_reporta', 'responsableimplementacion', 'valida', 'team', 'mejoraDmaics', 'mejoraPlanMejoras');
 
-        return view('admin.registromejoras.show', compact('registromejora'));
+        return view('frontend.registromejoras.show', compact('registromejora'));
     }
 
     public function destroy(Registromejora $registromejora)

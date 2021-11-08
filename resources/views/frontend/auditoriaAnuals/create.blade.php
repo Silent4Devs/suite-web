@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.auditoria-anuals.create') }}
+    <!-- {{ Breadcrumbs::render('frontend.auditoria-anuals.create') }} -->
 
 <div class="mt-4 card">
     <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.auditoria-anuals.store") }}" enctype="multipart/form-data" class="row">
+        <form method="POST" action="{{ route("auditoria-anuals.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-md-6">
                 <label class="required"><i class="fas fa-list iconos-crear"></i>{{ trans('cruds.auditoriaAnual.fields.tipo') }}</label>

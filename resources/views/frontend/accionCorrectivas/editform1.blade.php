@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('admin.accion-correctivas.update', [$accionCorrectiva->id]) }}"
+<form method="POST" action="{{ route('accion-correctivas.update', [$accionCorrectiva->id]) }}"
     enctype="multipart/form-data" class="row">
     @method('PUT')
     @csrf

@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.accion-correctivas.index') }}
+{{-- {{ Breadcrumbs::render('frontend.accion-correctivas.index') }} --}}
 
     <style>
         .table tr th:nth-child(1) {
@@ -311,7 +311,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar acciones correctivas',
-                url: "{{ route('admin.accion-correctivas.create') }}",
+                url: "{{ route('accion-correctivas.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -324,7 +324,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.accion-correctivas.massDestroy') }}",
+                url: "{{ route('accion-correctivas.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
@@ -359,7 +359,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.accion-correctivas.index') }}",
+                ajax: "{{ route('accion-correctivas.index') }}",
                 columnDefs: [{
                     targets: [3, 4, 5, 14],
                     visible: false

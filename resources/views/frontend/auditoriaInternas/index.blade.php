@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.auditoria-internas.index') }}
+{{-- {{ Breadcrumbs::render('frontend.auditoria-internas.index') }} --}}
     
     @can('auditoria_interna_create')
 
@@ -13,7 +13,7 @@
 
         {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="ml-4 row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.auditoria-internas.create') }}">
+            <a class="btn btn-success" href="{{ route('auditoria-internas.create') }}">
                     Agregar <strong>+</strong>
             </a>
         </div>
@@ -159,7 +159,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar auditoría interna',
-                url: "{{ route('admin.auditoria-internas.create') }}",
+                url: "{{ route('auditoria-internas.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -172,7 +172,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.auditoria-internas.massDestroy') }}",
+                url: "{{ route('auditoria-internas.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -204,7 +204,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.auditoria-internas.index') }}",
+                ajax: "{{ route('auditoria-internas.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

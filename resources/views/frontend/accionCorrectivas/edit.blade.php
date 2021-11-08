@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
+{{-- {{ Breadcrumbs::render('frontend.accion-correctivas.create') }} --}}
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
@@ -41,7 +41,7 @@
                             <div>
 
                                 <div id="test-nl-1" class="mt-3 content">
-                                    @include('admin.accionCorrectivas.editform1')
+                                    @include('frontend.accionCorrectivas.editform1')
 
                                 </div>
 
@@ -51,14 +51,14 @@
                         <section id="contenido2">
                             <div>
                                 <div class="mt-2 ml-2">
-                                    @include('admin.accionCorrectivas.editform2')
+                                    @include('frontend.accionCorrectivas.editform2')
                                 </div>
                             </div>
                         </section>
 
                         <section id="contenido3">
                             <div class="mt-2 ml-2">
-                                @include('admin.accionCorrectivas.editform3')
+                                @include('frontend.accionCorrectivas.editform3')
                             </div>
                         </section>
 
@@ -136,7 +136,7 @@
             <script type="text/javascript">
                 $(document).ready(function() {
                     window.tbl_plan = $("#tabla_plan_accion").DataTable({
-                        ajax: "{{ route('admin.accion-correctiva-actividades.index', $accionCorrectiva->id) }}",
+                        ajax: "{{ route('accion-correctiva-actividades.index', $accionCorrectiva->id) }}",
                         buttons: [],
                         columns: [{
                                 data: 'id'

@@ -9,7 +9,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('frontend.macroprocesos.store') }}" class="row">
+            <form method="POST" action="{{ route('macroprocesos.store') }}" class="row">
                 @csrf
                 <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">

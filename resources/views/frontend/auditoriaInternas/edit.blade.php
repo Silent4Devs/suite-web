@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <style type="text/css">
@@ -15,7 +15,7 @@
 
 </style>
 
-    {{ Breadcrumbs::render('admin.auditoria-internas.create') }}
+    <!-- {{ Breadcrumbs::render('frontend.auditoria-internas.create') }} -->
 
 <div class="card mt-4">
     <div class="col-md-10 col-sm-9 py-3 card-body azul_silent align-self-center" style="margin-top: -40px;">
@@ -23,7 +23,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" class="row" action="{{ route("admin.auditoria-internas.update", [$auditoriaInterna->id]) }}" enctype="multipart/form-data">
+        <form method="POST" class="row" action="{{ route("auditoria-internas.update", [$auditoriaInterna->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group col-12">
@@ -245,7 +245,7 @@
 
 <script>
     Dropzone.options.logotipoDropzone = {
-    url: '{{ route('admin.auditoria-internas.storeMedia') }}',
+    url: '{{ route('auditoria-internas.storeMedia') }}',
     maxFilesize: 4, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,

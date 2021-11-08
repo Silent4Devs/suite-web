@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     @can('controle_create')
 
@@ -11,13 +11,13 @@
 
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    {{-- <a class="btn btn-success" href="{{ route('admin.controles.create') }}">
+                    {{-- <a class="btn btn-success" href="{{ route('controles.create') }}">
                 Agregar <strong>+</strong>
             </a>
             <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                 {{ trans('global.app_csvImport') }}
             </button> --}}
-                    @include('csvImport.modal', ['model' => 'Controle', 'route' => 'admin.controles.parseCsvImport'])
+                    @include('csvImport.modal', ['model' => 'Controle', 'route' => 'controles.parseCsvImport'])
                 </div>
             </div>
         @endcan
@@ -135,7 +135,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar control',
-                url: "{{ route('admin.controles.create') }}",
+                url: "{{ route('controles.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -157,7 +157,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.controles.massDestroy') }}",
+                url: "{{ route('controles.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -189,7 +189,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.controles.index') }}",
+                ajax: "{{ route('controles.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

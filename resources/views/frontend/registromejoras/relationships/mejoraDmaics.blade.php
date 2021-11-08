@@ -1,7 +1,7 @@
 @can('dmaic_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.dmaics.create') }}">
+            <a class="btn btn-success" href="{{ route('dmaics.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.dmaic.title_singular') }}
             </a>
         </div>
@@ -82,19 +82,19 @@
                             </td>
                             <td>
                                 @can('dmaic_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.dmaics.show', $dmaic->id) }}">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('dmaics.show', $dmaic->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('dmaic_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.dmaics.edit', $dmaic->id) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('dmaics.edit', $dmaic->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('dmaic_delete')
-                                    <form action="{{ route('admin.dmaics.destroy', $dmaic->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('dmaics.destroy', $dmaic->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -120,7 +120,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.dmaics.massDestroy') }}",
+    url: "{{ route('dmaics.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyIndicadoresSgsiRequest;
@@ -19,7 +19,7 @@ class IndicadoresSgsiController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('indicadores_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('indicadores_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = IndicadoresSgsi::orderByDesc('id')->get();
@@ -91,7 +91,7 @@ class IndicadoresSgsiController extends Controller
         /*$users = User::get();
         $teams = Team::get();*/
 
-        return view('admin.indicadoresSgsis.index');
+        return view('frontend.indicadoresSgsis.index');
     }
 
     public function create()
@@ -101,14 +101,14 @@ class IndicadoresSgsiController extends Controller
         $responsables = Empleado::get();
         $procesos = Proceso::get();
 
-        return view('admin.indicadoresSgsis.create', compact('responsables', 'procesos'));
+        return view('frontend.indicadoresSgsis.create', compact('responsables', 'procesos'));
     }
 
     public function store(Request $request)
     {
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
-        //return redirect()->route('admin.indicadores-sgsis.index');
-        return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with('success', 'Guardado con éxito');
+        //return redirect()->route('indicadores-sgsis.index');
+        return redirect()->route('indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with('success', 'Guardado con éxito');
     }
 
     public function edit(IndicadoresSgsi $indicadoresSgsi)
@@ -116,20 +116,20 @@ class IndicadoresSgsiController extends Controller
         $procesos = Proceso::get();
         $responsables = Empleado::get();
 
-        return view('admin.indicadoresSgsis.edit', compact('procesos', 'indicadoresSgsi', 'responsables'));
+        return view('frontend.indicadoresSgsis.edit', compact('procesos', 'indicadoresSgsi', 'responsables'));
     }
 
     public function update(Request $request, IndicadoresSgsi $indicadoresSgsi)
     {
         $indicadoresSgsi->update($request->all());
 
-        //return redirect()->route('admin.indicadores-sgsis.index');
-        return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
+        //return redirect()->route('indicadores-sgsis.index');
+        return redirect()->route('indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
     }
 
     public function show(IndicadoresSgsi $indicadoresSgsi)
     {
-        return view('admin.indicadoresSgsis.show', compact('indicadoresSgsi'));
+        return view('frontend.indicadoresSgsis.show', compact('indicadoresSgsi'));
     }
 
     public function destroy(IndicadoresSgsi $indicadoresSgsi)
@@ -220,7 +220,7 @@ class IndicadoresSgsiController extends Controller
 
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
-        return view('admin.indicadoresSgsis.evaluacion')
+        return view('frontend.indicadoresSgsis.evaluacion')
             ->with('indicadoresSgsis', $indicadoresSgsis);
     }
 
@@ -230,7 +230,7 @@ class IndicadoresSgsiController extends Controller
 
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
-        return view('admin.indicadoresSgsis.evaluacion')
+        return view('frontend.indicadoresSgsis.evaluacion')
             ->with('indicadoresSgsis', $indicadoresSgsis);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
@@ -20,7 +20,7 @@ class ControlesController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('controle_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('controle_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Controle::with(['team'])->select(sprintf('%s.*', (new Controle)->table));
@@ -61,21 +61,21 @@ class ControlesController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.controles.index', compact('teams'));
+        return view('frontend.controles.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('controle_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.controles.create');
+        return view('frontend.controles.create');
     }
 
     public function store(StoreControleRequest $request)
     {
         $controle = Controle::create($request->all());
 
-        return redirect()->route('admin.controles.index');
+        return redirect()->route('controles.index');
     }
 
     public function edit(Controle $controle)
@@ -84,14 +84,14 @@ class ControlesController extends Controller
 
         $controle->load('team');
 
-        return view('admin.controles.edit', compact('controle'));
+        return view('frontend.controles.edit', compact('controle'));
     }
 
     public function update(UpdateControleRequest $request, Controle $controle)
     {
         $controle->update($request->all());
 
-        return redirect()->route('admin.controles.index');
+        return redirect()->route('controles.index');
     }
 
     public function show(Controle $controle)
@@ -100,7 +100,7 @@ class ControlesController extends Controller
 
         $controle->load('team');
 
-        return view('admin.controles.show', compact('controle'));
+        return view('frontend.controles.show', compact('controle'));
     }
 
     public function destroy(Controle $controle)

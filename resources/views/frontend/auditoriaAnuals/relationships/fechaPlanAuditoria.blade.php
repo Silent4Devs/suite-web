@@ -1,7 +1,7 @@
 @can('plan_auditorium_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.plan-auditoria.create') }}">
+            <a class="btn btn-success" href="{{ route('plan-auditoria.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.planAuditorium.title_singular') }}
             </a>
         </div>
@@ -104,19 +104,19 @@
                             </td>
                             <td>
                                 @can('plan_auditorium_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.plan-auditoria.show', $planAuditorium->id) }}">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('plan-auditoria.show', $planAuditorium->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('plan_auditorium_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.plan-auditoria.edit', $planAuditorium->id) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('plan-auditoria.edit', $planAuditorium->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('plan_auditorium_delete')
-                                    <form action="{{ route('admin.plan-auditoria.destroy', $planAuditorium->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('plan-auditoria.destroy', $planAuditorium->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -142,7 +142,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.plan-auditoria.massDestroy') }}",
+    url: "{{ route('plan-auditoria.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {

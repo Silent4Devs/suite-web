@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     @can('enlaces_ejecutar_create')
         <div class="mt-5 card">
@@ -124,7 +124,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar enlace a ejecutar',
-                url: "{{ route('admin.enlaces-ejecutars.create') }}",
+                url: "{{ route('enlaces-ejecutars.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -137,7 +137,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.enlaces-ejecutars.massDestroy') }}",
+                url: "{{ route('enlaces-ejecutars.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -169,7 +169,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.enlaces-ejecutars.index') }}",
+                ajax: "{{ route('enlaces-ejecutars.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

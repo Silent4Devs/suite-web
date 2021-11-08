@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
@@ -13,7 +13,7 @@ class AuditLogsController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('audit_log_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('audit_log_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = AuditLog::query()->select(sprintf('%s.*', (new AuditLog)->table));
@@ -61,13 +61,13 @@ class AuditLogsController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.auditLogs.index');
+        return view('frontend.auditLogs.index');
     }
 
     public function show(AuditLog $auditLog)
     {
         abort_if(Gate::denies('audit_log_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.auditLogs.show', compact('auditLog'));
+        return view('frontend.auditLogs.show', compact('auditLog'));
     }
 }

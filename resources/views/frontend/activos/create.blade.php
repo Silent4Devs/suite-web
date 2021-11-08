@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <div class="mt-4 card">
@@ -7,7 +7,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.activos.store') }}" enctype="multipart/form-data" class="row">
+            <form method="POST" action="{{ route('activos.store') }}" enctype="multipart/form-data" class="row">
                 @csrf
                 <div class="form-group col-md-12">
                     <label class="required " for="nombreactivo_id"><i class="fas fa-chart-line iconos-crear"></i>Nombre del
@@ -465,7 +465,7 @@
                         headers: {
                             "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
                         },
-                        url: "{{ route('admin.marcas.store') }}",
+                        url: "{{ route('marcas.store') }}",
                         data: {
                             nombre
                         },
@@ -476,7 +476,7 @@
                                 $('.selecmarca').select2('destroy');
                                 $('.selecmarca').select2({
                                     ajax: {
-                                        url: "{{ route('admin.marcas.getMarcas') }}",
+                                        url: "{{ route('marcas.getMarcas') }}",
                                         dataType: "json",
                                     },
                                     theme: "bootstrap4"
@@ -516,7 +516,7 @@
                         headers: {
                             "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
                         },
-                        url: "{{ route('admin.modelos.store') }}",
+                        url: "{{ route('modelos.store') }}",
                         data: {
                             nombre
                         },
@@ -529,7 +529,7 @@
                                 $('.selecmodelo').select2('destroy');
                                 $('.selecmodelo').select2({
                                     ajax: {
-                                        url: "{{ route('admin.modelos.getModelos') }}",
+                                        url: "{{ route('modelos.getModelos') }}",
                                         dataType: "json",
                                     },
                                     theme: "bootstrap4"
@@ -564,7 +564,7 @@
             $(document).ready(function() {
                 $('.selecmarca').select2({
                     ajax: {
-                        url: "{{ route('admin.marcas.getMarcas') }}",
+                        url: "{{ route('marcas.getMarcas') }}",
                         dataType: "json",
                     },
                     theme: "bootstrap4"
@@ -573,7 +573,7 @@
 
                 $('.selecmodelo').select2({
                     ajax: {
-                        url: "{{ route('admin.modelos.getModelos') }}",
+                        url: "{{ route('modelos.getModelos') }}",
                         dataType: "json",
                     },
                     theme: "bootstrap4"

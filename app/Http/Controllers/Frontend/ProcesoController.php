@@ -101,7 +101,7 @@ class ProcesoController extends Controller
         $procesos = proceso::create($request->all());
         Flash::success('<h5 class="text-center">Proceso agregado satisfactoriamente</h5>');
 
-        return redirect()->route('frontend.procesos.index');
+        return redirect()->route('procesos.index');
     }
 
     /**
@@ -151,7 +151,7 @@ class ProcesoController extends Controller
         $proceso->update($request->all());
         Flash::success('<h5 class="text-center">Proceso actualizado satisfactoriamente</h5>');
 
-        return redirect()->route('frontend.procesos.index');
+        return redirect()->route('procesos.index');
     }
 
     /**
@@ -166,7 +166,7 @@ class ProcesoController extends Controller
         $proceso->delete();
         Flash::success('<h5 class="text-center">Proceso eliminado satisfactoriamente</h5>');
 
-        return redirect()->route('frontend.procesos.index');
+        return redirect()->route('procesos.index');
     }
 
     public function mapaProcesos()

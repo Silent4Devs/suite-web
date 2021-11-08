@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="card mt-4">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.controles.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("controles.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="numero"><i class="fas fa-list-ol iconos-crear"></i>{{ trans('cruds.controle.fields.numero') }}</label>

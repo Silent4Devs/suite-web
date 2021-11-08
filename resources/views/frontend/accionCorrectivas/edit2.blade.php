@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="card">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.accion-correctivas.update", [$accionCorrectiva->id]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("accion-correctivas.update", [$accionCorrectiva->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group">
@@ -236,7 +236,7 @@
 @section('scripts')
 <script>
     Dropzone.options.documentometodoDropzone = {
-    url: '{{ route('admin.accion-correctivas.storeMedia') }}',
+    url: '{{ route('accion-correctivas.storeMedia') }}',
     maxFilesize: 4, // MB
     maxFiles: 1,
     addRemoveLinks: true,

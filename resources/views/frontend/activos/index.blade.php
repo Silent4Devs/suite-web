@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <div class="mt-5 card">
         @can('configuracion_activo_create')
@@ -197,7 +197,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar inventario de activos',
-                url: "{{ route('admin.activos.create') }}",
+                url: "{{ route('activos.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -210,7 +210,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.activos.massDestroy') }}",
+                url: "{{ route('activos.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -242,7 +242,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.activos.index') }}",
+                ajax: "{{ route('activos.index') }}",
                 columnDefs:[{targets:[7,8,9,10,11,12,13,14,15,16,17],visible:false}],
                 columns: [{
                         data: 'id',

@@ -8,7 +8,7 @@
                                     class="btn btn-success btn_modal_form">Agregar actividad</button>
                                 @if (count($accionCorrectiva->planes))
                                     <a style="position:absolute; right: 170px; top:2px;"
-                                        href="{{ route('admin.planes-de-accion.show', $accionCorrectiva->planes->first()->id) }}"
+                                        href="{{ route('planes-de-accion.show', $accionCorrectiva->planes->first()->id) }}"
                                         class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
                                         Acción</a>
                                 @endif
@@ -36,7 +36,7 @@
                         <div class="modal_form_plan">
                             <div class="fondo_modal"></div>
                             <form class="card" id="form_plan_accion" method="POST"
-                                action="{{ route('admin.accion-correctiva-actividades.store') }}">
+                                action="{{ route('accion-correctiva-actividades.store') }}">
                                 <input type="hidden" name="accion_correctiva_id" value="{{ $accionCorrectiva->id }}">
                                 <div class="text-center card-header" style="background-color: #00abb2;">
                                     <strong style="font-size: 16pt; color: #fff;"><i

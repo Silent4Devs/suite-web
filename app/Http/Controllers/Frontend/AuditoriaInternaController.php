@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -23,7 +23,7 @@ class AuditoriaInternaController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('auditoria_interna_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('auditoria_interna_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = AuditoriaInterna::with(['clausulas', 'lider', 'equipo', 'team'])->get();
@@ -109,7 +109,7 @@ class AuditoriaInternaController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.auditoriaInternas.index', compact('controles', 'users', 'users', 'teams'));
+        return view('frontend.auditoriaInternas.index', compact('controles', 'users', 'users', 'teams'));
     }
 
     public function create()
@@ -122,7 +122,7 @@ class AuditoriaInternaController extends Controller
 
         $equipoauditorias = Empleado::all();
 
-        return view('admin.auditoriaInternas.create', compact('clausulas', 'auditorliders', 'equipoauditorias'));
+        return view('frontend.auditoriaInternas.create', compact('clausulas', 'auditorliders', 'equipoauditorias'));
     }
 
     public function store(Request $request)
@@ -137,7 +137,7 @@ class AuditoriaInternaController extends Controller
         $auditoriaInterna->equipo()->sync($request->equipo);
         $auditoriaInterna->clausulas()->sync($request->clausulas);
 
-        return redirect()->route('admin.auditoria-internas.index');
+        return redirect()->route('auditoria-internas.index');
     }
 
     public function edit(AuditoriaInterna $auditoriaInterna)
@@ -152,7 +152,7 @@ class AuditoriaInternaController extends Controller
 
         $equipoauditorias = Empleado::all();
 
-        return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'));
+        return view('frontend.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'));
     }
 
     public function update(UpdateAuditoriaInternaRequest $request, AuditoriaInterna $auditoriaInterna)
@@ -166,7 +166,7 @@ class AuditoriaInternaController extends Controller
         $auditoriaInterna->equipo()->sync($request->equipo);
         $auditoriaInterna->clausulas()->sync($request->clausulas);
 
-        return redirect()->route('admin.auditoria-internas.index');
+        return redirect()->route('auditoria-internas.index');
     }
 
     public function show(AuditoriaInterna $auditoriaInterna)
@@ -175,7 +175,7 @@ class AuditoriaInternaController extends Controller
 
         $auditoriaInterna->load('clausulas', 'auditorlider', 'equipoauditoria', 'team');
 
-        return view('admin.auditoriaInternas.show', compact('auditoriaInterna'));
+        return view('frontend.auditoriaInternas.show', compact('auditoriaInterna'));
     }
 
     public function destroy(AuditoriaInterna $auditoriaInterna)

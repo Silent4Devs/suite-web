@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -26,7 +26,7 @@ class RecursosController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('recurso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('recurso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Recurso::with(['participantes', 'team', 'categoria_capacitacion'])->select(sprintf('%s.*', (new Recurso)->table));
@@ -91,7 +91,7 @@ class RecursosController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.recursos.index', compact('users', 'teams'));
+        return view('frontend.recursos.index', compact('users', 'teams'));
     }
 
     public function create()
@@ -101,7 +101,7 @@ class RecursosController extends Controller
         $participantes = User::all()->pluck('name', 'id');
         $categorias = CategoriaCapacitacion::get();
 
-        return view('admin.recursos.create', compact('participantes', 'categorias'));
+        return view('frontend.recursos.create', compact('participantes', 'categorias'));
     }
 
     public function store(StoreRecursoRequest $request)
@@ -136,7 +136,7 @@ class RecursosController extends Controller
         //         return response()->json(['error' => true]);
         //     }
         // }
-        return redirect()->route('admin.recursos.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('recursos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Recurso $recurso)
@@ -148,7 +148,7 @@ class RecursosController extends Controller
         $recurso->load('participantes', 'team');
         $categorias = CategoriaCapacitacion::get();
 
-        return view('admin.recursos.edit', compact('participantes', 'recurso', 'categorias'));
+        return view('frontend.recursos.edit', compact('participantes', 'recurso', 'categorias'));
     }
 
     public function update(UpdateRecursoRequest $request, Recurso $recurso)
@@ -188,7 +188,7 @@ class RecursosController extends Controller
                 return response()->json(['error' => true]);
             }
 
-            // return redirect()->route('admin.recursos.index');
+            // return redirect()->route('recursos.index');
         }
     }
 
@@ -198,7 +198,7 @@ class RecursosController extends Controller
 
         $recurso->load('participantes', 'team');
 
-        return view('admin.recursos.show', compact('recurso'));
+        return view('frontend.recursos.show', compact('recurso'));
     }
 
     public function destroy(Recurso $recurso)
