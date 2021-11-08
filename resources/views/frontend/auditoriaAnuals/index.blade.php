@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -14,7 +14,7 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.auditoria-anuals.index') }}
+    <!-- {{ Breadcrumbs::render('frontend.auditoria-anuals.index') }} -->
 
     @can('auditoria_anual_create')
 
@@ -164,7 +164,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar programa anual de auditoría',
-                url: "{{ route('admin.auditoria-anuals.create') }}",
+                url: "{{ route('auditoria-anuals.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -177,7 +177,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.auditoria-anuals.massDestroy') }}",
+                url: "{{ route('auditoria-anuals.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -209,7 +209,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.auditoria-anuals.index') }}",
+                ajax: "{{ route('auditoria-anuals.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

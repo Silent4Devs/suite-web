@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivoRequest;
@@ -24,7 +24,7 @@ class ActivosController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_activo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_activo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Activo::with(['tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team'])->select(sprintf('%s.*', (new Activo)->table));
@@ -126,7 +126,7 @@ class ActivosController extends Controller
         $sedes = Sede::get();
         $teams = Team::get();
 
-        return view('admin.activos.index', compact('tipoactivos', 'tipoactivos', 'users', 'sedes', 'teams'));
+        return view('frontend.activos.index', compact('tipoactivos', 'tipoactivos', 'users', 'sedes', 'teams'));
     }
 
     public function create()
@@ -149,7 +149,7 @@ class ActivosController extends Controller
 
         $modelos = Modelo::get();
 
-        return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos'));
+        return view('frontend.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos'));
     }
 
     public function store(StoreActivoRequest $request)
@@ -211,7 +211,7 @@ class ActivosController extends Controller
 
         ]);
 
-        return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('activos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Activo $activo)
@@ -240,7 +240,7 @@ class ActivosController extends Controller
 
         $modelo_seleccionado = Modelo::select('id', 'nombre')->find($activo->modelo);
 
-        return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'activo', 'empleados', 'area', 'marcas', 'modelos', 'marca_seleccionada', 'modelo_seleccionado'));
+        return view('frontend.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'activo', 'empleados', 'area', 'marcas', 'modelos', 'marca_seleccionada', 'modelo_seleccionado'));
     }
 
     public function update(UpdateActivoRequest $request, Activo $activo)
@@ -280,7 +280,7 @@ class ActivosController extends Controller
         ]);
         //  dd($activo);
 
-        return redirect()->route('admin.activos.index')->with('success', 'Editado con éxito');
+        return redirect()->route('activos.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Activo $activo)
@@ -289,7 +289,7 @@ class ActivosController extends Controller
 
         $activo->load('tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team', 'activoIncidentesDeSeguridads');
 
-        return view('admin.activos.show', compact('activo'));
+        return view('frontend.activos.show', compact('activo'));
     }
 
     public function destroy(Activo $activo)

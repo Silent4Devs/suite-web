@@ -17,7 +17,7 @@ class UserAlertsController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('user_alert_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('user_alert_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = UserAlert::with(['users', 'team'])->select(sprintf('%s.*', (new UserAlert)->table));

@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.roles-responsabilidades.index') }}
+{{-- {{ Breadcrumbs::render('frontend.roles-responsabilidades.index') }} --}}
 
     @can('roles_responsabilidade_create')
 
@@ -11,7 +11,7 @@
             </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.roles-responsabilidades.create') }}">
+            <a class="btn btn-success" href="{{ route('roles-responsabilidades.create') }}">
                   Agregar <strong>+</strong>
             </a>
         </div>
@@ -159,7 +159,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.roles-responsabilidades.massDestroy') }}",
+                url: "{{ route('roles-responsabilidades.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -188,7 +188,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nuevo rol y responsabilidad',
-                url: "{{ route('admin.roles-responsabilidades.create') }}",
+                url: "{{ route('roles-responsabilidades.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -203,7 +203,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.roles-responsabilidades.index') }}",
+                ajax: "{{ route('roles-responsabilidades.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

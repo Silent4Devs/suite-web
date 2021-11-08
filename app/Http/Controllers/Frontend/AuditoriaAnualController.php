@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAuditoriaAnualRequest;
@@ -19,7 +19,7 @@ class AuditoriaAnualController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('auditoria_anual_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('auditoria_anual_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = AuditoriaAnual::with(['auditorlider', 'team'])->select(sprintf('%s.*', (new AuditoriaAnual)->table))->orderByDesc('id');
@@ -74,7 +74,7 @@ class AuditoriaAnualController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.auditoriaAnuals.index', compact('users', 'teams'));
+        return view('frontend.auditoriaAnuals.index', compact('users', 'teams'));
     }
 
     public function create()
@@ -84,14 +84,14 @@ class AuditoriaAnualController extends Controller
         $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::get();
 
-        return view('admin.auditoriaAnuals.create', compact('auditorliders', 'empleados'));
+        return view('frontend.auditoriaAnuals.create', compact('auditorliders', 'empleados'));
     }
 
     public function store(StoreAuditoriaAnualRequest $request)
     {
         $auditoriaAnual = AuditoriaAnual::create($request->all());
 
-        return redirect()->route('admin.auditoria-anuals.index');
+        return redirect()->route('auditoria-anuals.index');
     }
 
     public function edit(AuditoriaAnual $auditoriaAnual)
@@ -104,14 +104,14 @@ class AuditoriaAnualController extends Controller
 
         $empleados = Empleado::get();
 
-        return view('admin.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual', 'empleados'));
+        return view('frontend.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual', 'empleados'));
     }
 
     public function update(UpdateAuditoriaAnualRequest $request, AuditoriaAnual $auditoriaAnual)
     {
         $auditoriaAnual->update($request->all());
 
-        return redirect()->route('admin.auditoria-anuals.index');
+        return redirect()->route('auditoria-anuals.index');
     }
 
     public function show(AuditoriaAnual $auditoriaAnual)
@@ -120,7 +120,7 @@ class AuditoriaAnualController extends Controller
 
         $auditoriaAnual->load('auditorlider', 'team', 'fechaPlanAuditoria');
 
-        return view('admin.auditoriaAnuals.show', compact('auditoriaAnual'));
+        return view('frontend.auditoriaAnuals.show', compact('auditoriaAnual'));
     }
 
     public function destroy(AuditoriaAnual $auditoriaAnual)

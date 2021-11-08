@@ -3,7 +3,7 @@
 
 
         <form method="POST" class="col-12"
-            action="{{ route('admin.accion-correctivas.storeAnalisis', $accionCorrectiva->id) }}">
+            action="{{ route('accion-correctivas.storeAnalisis', $accionCorrectiva->id) }}">
             @csrf
             <div class="px-1 py-2 mx-3 mt-3 mb-4 rounded shadow"
                 style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">

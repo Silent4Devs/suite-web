@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('frontend.roles.update', [$role->id]) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('roles.update', [$role->id]) }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
                 <div class="form-group">
@@ -135,7 +135,7 @@
                             )
                         }
                         setTimeout(() => {
-                            window.location.href = '/frontend/roles';
+                            window.location.href = '/roles';
                         }, 1500);
                     },
                     error: function(err) {
@@ -148,7 +148,7 @@
             if (id_role != null) {
                 $.ajax({
                     type: "GET",
-                    url: `/frontend/roles/${id_role}/permisos`,
+                    url: `/roles/${id_role}/permisos`,
                     beforeSend: function() {
                         console.log("cargando permisos");
                     },

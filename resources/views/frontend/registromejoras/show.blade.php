@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     
-    {{ Breadcrumbs::render('admin.registromejoras.create') }}
+{{-- {{ Breadcrumbs::render('frontend.registromejoras.create') }} --}}
 
 <div class="card">
     <div class="card-header">
@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.registromejoras.index') }}">
+                <a class="btn btn-default" href="{{ route('registromejoras.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -108,7 +108,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.registromejoras.index') }}">
+                <a class="btn btn-default" href="{{ route('registromejoras.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -134,10 +134,10 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="mejora_dmaics">
-            @includeIf('admin.registromejoras.relationships.mejoraDmaics', ['dmaics' => $registromejora->mejoraDmaics])
+            @includeIf('frontend.registromejoras.relationships.mejoraDmaics', ['dmaics' => $registromejora->mejoraDmaics])
         </div>
         <div class="tab-pane" role="tabpanel" id="mejora_plan_mejoras">
-            @includeIf('admin.registromejoras.relationships.mejoraPlanMejoras', ['planMejoras' => $registromejora->mejoraPlanMejoras])
+            @includeIf('frontend.registromejoras.relationships.mejoraPlanMejoras', ['planMejoras' => $registromejora->mejoraPlanMejoras])
         </div>
     </div>
 </div>

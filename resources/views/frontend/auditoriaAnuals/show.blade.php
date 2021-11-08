@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
    
-    {{ Breadcrumbs::render('admin.auditoria-anuals.create') }}
+    <!-- {{ Breadcrumbs::render('frontend.auditoria-anuals.create') }} -->
 
 <div class="card">
     <div class="card-header">
@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.auditoria-anuals.index') }}">
+                <a class="btn btn-default" href="{{ route('auditoria-anuals.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -68,7 +68,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.auditoria-anuals.index') }}">
+                <a class="btn btn-default" href="{{ route('auditoria-anuals.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -89,7 +89,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="fecha_plan_auditoria">
-            @includeIf('admin.auditoriaAnuals.relationships.fechaPlanAuditoria', ['planAuditoria' => $auditoriaAnual->fechaPlanAuditoria])
+            @includeIf('frontend.auditoriaAnuals.relationships.fechaPlanAuditoria', ['planAuditoria' => $auditoriaAnual->fechaPlanAuditoria])
         </div>
     </div>
 </div>

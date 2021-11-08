@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyEnlacesEjecutarRequest;
@@ -17,7 +17,7 @@ class EnlacesEjecutarController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('enlaces_ejecutar_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('enlaces_ejecutar_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = EnlacesEjecutar::with(['team'])->select(sprintf('%s.*', (new EnlacesEjecutar)->table));
@@ -61,21 +61,21 @@ class EnlacesEjecutarController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.enlacesEjecutars.index', compact('teams'));
+        return view('frontend.enlacesEjecutars.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('enlaces_ejecutar_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.enlacesEjecutars.create');
+        return view('frontend.enlacesEjecutars.create');
     }
 
     public function store(StoreEnlacesEjecutarRequest $request)
     {
         $enlacesEjecutar = EnlacesEjecutar::create($request->all());
 
-        return redirect()->route('admin.enlaces-ejecutars.index');
+        return redirect()->route('enlaces-ejecutars.index');
     }
 
     public function edit(EnlacesEjecutar $enlacesEjecutar)
@@ -84,14 +84,14 @@ class EnlacesEjecutarController extends Controller
 
         $enlacesEjecutar->load('team');
 
-        return view('admin.enlacesEjecutars.edit', compact('enlacesEjecutar'));
+        return view('frontend.enlacesEjecutars.edit', compact('enlacesEjecutar'));
     }
 
     public function update(UpdateEnlacesEjecutarRequest $request, EnlacesEjecutar $enlacesEjecutar)
     {
         $enlacesEjecutar->update($request->all());
 
-        return redirect()->route('admin.enlaces-ejecutars.index');
+        return redirect()->route('enlaces-ejecutars.index');
     }
 
     public function show(EnlacesEjecutar $enlacesEjecutar)
@@ -100,7 +100,7 @@ class EnlacesEjecutarController extends Controller
 
         $enlacesEjecutar->load('team');
 
-        return view('admin.enlacesEjecutars.show', compact('enlacesEjecutar'));
+        return view('frontend.enlacesEjecutars.show', compact('enlacesEjecutar'));
     }
 
     public function destroy(EnlacesEjecutar $enlacesEjecutar)

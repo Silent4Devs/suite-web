@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
+    {{ Breadcrumbs::render('frontend.indicadores-sgsis.create') }}
 
 <div class="card">
     <div class="card-header">
@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.indicadores-sgsis.index') }}">
+                <a class="btn btn-default" href="{{ route('indicadores-sgsis.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -92,7 +92,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.indicadores-sgsis.index') }}">
+                <a class="btn btn-default" href="{{ route('indicadores-sgsis.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

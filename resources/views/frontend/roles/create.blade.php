@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <form id="formRolesCreate" method="POST" action="{{ route('frontend.roles.store') }}">
+            <form id="formRolesCreate" method="POST" action="{{ route('roles.store') }}">
                 @csrf
                 <div class="form-group">
                     <label class="required" for="title"><i
@@ -131,7 +131,7 @@
                             )
                         }
                         setTimeout(() => {
-                            window.location.href = '/frontend/roles';
+                            window.location.href = '/roles';
                         }, 1500);
                     },
                     error: function(err) {

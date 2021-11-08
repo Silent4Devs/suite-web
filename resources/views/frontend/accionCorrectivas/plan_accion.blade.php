@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -40,7 +40,7 @@
                         <div class="collapse show" id="collapseactividad">
                             <div class="card card-body">
 
-                                <form method="POST" action="{{ route("admin.planaccion-correctivas.store") }}"
+                                <form method="POST" action="{{ route("planaccion-correctivas.store") }}"
                                       enctype="multipart/form-data" class="row">
                                 @csrf
                                 <!--
@@ -135,7 +135,7 @@
                                     </div>
                                     <div class="text-right form-group col-12">
 
-                                        <a class="btn btn-danger" href="{{ route("admin.accion-correctivas.index") }}">Cancelar</a>
+                                        <a class="btn btn-danger" href="{{ route("accion-correctivas.index") }}">Cancelar</a>
                                         <button class="btn btn-success " type="submit">
                                             {{ trans('global.save') }}
                                         </button>
@@ -151,7 +151,7 @@
 
 
                 <div id="test-nl-1" class="content">
-                    @include('admin.accionCorrectivas.tabla_planaccion')
+                    @include('frontend.accionCorrectivas.tabla_planaccion')
 
                 </div>
             </div>

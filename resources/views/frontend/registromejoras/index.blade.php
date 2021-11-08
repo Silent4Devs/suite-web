@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.registromejoras.index') }}
+{{-- {{ Breadcrumbs::render('frontend.registromejoras.index') }} --}}
     
     @can('registromejora_create')
         <div class="mt-5 card">
@@ -191,7 +191,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar registro de mejoras',
-                url: "{{ route('admin.registromejoras.create') }}",
+                url: "{{ route('registromejoras.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -204,7 +204,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.registromejoras.massDestroy') }}",
+                url: "{{ route('registromejoras.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -236,7 +236,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.registromejoras.index') }}",
+                ajax: "{{ route('registromejoras.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

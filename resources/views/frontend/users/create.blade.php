@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("frontend.users.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("users.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="required" for="name"><i class="fas fa-user iconos-crear"></i>{{ trans('cruds.user.fields.name') }}</label>

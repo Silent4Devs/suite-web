@@ -10,7 +10,7 @@
             <div class="form-group">
                 <center>
                     <h4>Vista del Rol de <strong>{{ $role->title }}</strong> <a title="Editar rol: {{ $role->title }}"
-                            href="{{ route('frontend.roles.edit', $role) }}"><i class="fas fa-edit text-dark"
+                            href="{{ route('roles.edit', $role) }}"><i class="fas fa-edit text-dark"
                                 style="font-size: 12px"></i></a></h4>
                 </center>
                 <p class="text-muted"><i class="fas fa-info-circle"></i> Permisos</p>
@@ -31,7 +31,7 @@
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('frontend.roles.index') }}">
+                    <a class="btn btn-default" href="{{ route('roles.index') }}">
                         {{ trans('global.back_to_list') }}
                     </a>
                 </div>

@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
+{{-- {{ Breadcrumbs::render('frontend.accion-correctivas.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -37,7 +37,7 @@
                                 <div>
 
                                     <div id="test-nl-1" class="mt-5 content">
-                                        @include('admin.accionCorrectivas.createform1')
+                                        @include('frontend.accionCorrectivas.createform1')
 
                                     </div>
 
@@ -47,7 +47,7 @@
                             <section id="contenido2">
                                 <div>
                                     <div class="mt-5 ml-2">
-                                        @include('admin.accionCorrectivas.createform2')
+                                        @include('frontend.accionCorrectivas.createform2')
                                     </div>
                                 </div>
                             </section>
@@ -117,7 +117,7 @@
 
                 <script>
                     Dropzone.options.documentometodoDropzone = {
-                        url: "{{ route('admin.accion-correctivas.storeMedia') }}",
+                        url: "{{ route('accion-correctivas.storeMedia') }}",
                         maxFilesize: 4, // MB
                         maxFiles: 1,
                         addRemoveLinks: true,

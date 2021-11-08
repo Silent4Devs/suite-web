@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.registromejoras.create') }}
+{{-- {{ Breadcrumbs::render('frontend.registromejoras.create') }} --}}
 
 <div class="mt-4 card">
     <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.registromejoras.store") }}" enctype="multipart/form-data" class="row">
+        <form method="POST" action="{{ route("registromejoras.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-md-6">
                 <label for="nombre_reporta_id"><i class="fas fa-user-tag iconos-crear"></i>{{ trans('cruds.registromejora.fields.nombre_reporta') }}</label>

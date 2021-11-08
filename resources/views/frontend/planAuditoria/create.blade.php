@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.plan-auditoria.create') }}
+    <!-- {{ Breadcrumbs::render('frontend.plan-auditoria.create') }} -->
 
 <div class="mt-4 card">
     <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.plan-auditoria.store") }}" enctype="multipart/form-data" class="row">
+        <form method="POST" action="{{ route("plan-auditoria.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             {{ Form::hidden('pdf-value', 'planAuditoria')}}
             {{-- <div class="form-group col-12">

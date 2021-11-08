@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
@@ -20,7 +20,7 @@ class PuestosController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('puesto_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('puesto_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Puesto::with(['team'])->select(sprintf('%s.*', (new Puesto)->table));
@@ -61,21 +61,21 @@ class PuestosController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.puestos.index', compact('teams'));
+        return view('frontend.puestos.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('puesto_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.puestos.create');
+        return view('frontend.puestos.create');
     }
 
     public function store(StorePuestoRequest $request)
     {
         $puesto = Puesto::create($request->all());
 
-        return redirect()->route('admin.puestos.index');
+        return redirect()->route('puestos.index');
     }
 
     public function edit(Puesto $puesto)
@@ -84,14 +84,14 @@ class PuestosController extends Controller
 
         $puesto->load('team');
 
-        return view('admin.puestos.edit', compact('puesto'));
+        return view('frontend.puestos.edit', compact('puesto'));
     }
 
     public function update(UpdatePuestoRequest $request, Puesto $puesto)
     {
         $puesto->update($request->all());
 
-        return redirect()->route('admin.puestos.index');
+        return redirect()->route('puestos.index');
     }
 
     public function show(Puesto $puesto)
@@ -100,7 +100,7 @@ class PuestosController extends Controller
 
         $puesto->load('team');
 
-        return view('admin.puestos.show', compact('puesto'));
+        return view('frontend.puestos.show', compact('puesto'));
     }
 
     public function destroy(Puesto $puesto)

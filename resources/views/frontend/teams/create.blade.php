@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="card mt-4">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.teams.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("teams.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="required" for="name"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.team.fields.name') }}</label>

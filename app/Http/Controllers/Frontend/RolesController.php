@@ -15,7 +15,7 @@ class RolesController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Role::with(['permissions'])->select(sprintf('%s.*', (new Role)->table));
@@ -98,7 +98,7 @@ class RolesController extends Controller
 
         // $role = Role::create($request->all());
         // $role->permissions()->sync($request->input('permissions', []));
-        return redirect()->route('frontend.roles.index');
+        return redirect()->route('roles.index');
     }
 
     public function edit(Role $role)
@@ -124,7 +124,7 @@ class RolesController extends Controller
         }
         // $role->update($request->all());
         // $role->permissions()->sync($request->input('permissions', []));
-        // return redirect()->route('frontend.roles.index');
+        // return redirect()->route('roles.index');
     }
 
     public function show(Role $role)

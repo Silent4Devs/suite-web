@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
+{{-- {{ Breadcrumbs::render('frontend.accion-correctivas.create') }} --}}
 
 <div class="card">
     <div class="card-header">
@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.accion-correctivas.index') }}">
+                <a class="btn btn-default" href="{{ route('accion-correctivas.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -168,7 +168,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.accion-correctivas.index') }}">
+                <a class="btn btn-default" href="{{ route('accion-correctivas.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -189,7 +189,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="accioncorrectiva_planaccion_correctivas">
-            @includeIf('admin.accionCorrectivas.relationships.accioncorrectivaPlanaccionCorrectivas', ['planaccionCorrectivas' => $accionCorrectiva->accioncorrectivaPlanaccionCorrectivas])
+            @includeIf('frontend.accionCorrectivas.relationships.accioncorrectivaPlanaccionCorrectivas', ['planaccionCorrectivas' => $accionCorrectiva->accioncorrectivaPlanaccionCorrectivas])
         </div>
     </div>
 </div>

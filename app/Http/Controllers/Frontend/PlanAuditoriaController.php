@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
@@ -20,7 +20,7 @@ class PlanAuditoriaController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('plan_auditorium_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('plan_auditorium_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = PlanAuditorium::with(['fecha', 'auditados', 'team'])->select(sprintf('%s.*', (new PlanAuditorium)->table));
@@ -94,7 +94,7 @@ class PlanAuditoriaController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.planAuditoria.index', compact('auditoria_anuals', 'users', 'teams'));
+        return view('frontend.planAuditoria.index', compact('auditoria_anuals', 'users', 'teams'));
     }
 
     public function create()
@@ -105,7 +105,7 @@ class PlanAuditoriaController extends Controller
 
         $auditados = User::all()->pluck('name', 'id');
 
-        return view('admin.planAuditoria.create', compact('fechas', 'auditados'));
+        return view('frontend.planAuditoria.create', compact('fechas', 'auditados'));
     }
 
     public function store(StorePlanAuditoriumRequest $request)
@@ -115,7 +115,7 @@ class PlanAuditoriaController extends Controller
         $generar->Generate($request['pdf-value'], $planAuditorium);
         $planAuditorium->auditados()->sync($request->input('auditados', []));
 
-        return redirect()->route('admin.plan-auditoria.index');
+        return redirect()->route('plan-auditoria.index');
     }
 
     public function edit(PlanAuditorium $planAuditorium)
@@ -128,7 +128,7 @@ class PlanAuditoriaController extends Controller
 
         $planAuditorium->load('fecha', 'auditados', 'team');
 
-        return view('admin.planAuditoria.edit', compact('fechas', 'auditados', 'planAuditorium'));
+        return view('frontend.planAuditoria.edit', compact('fechas', 'auditados', 'planAuditorium'));
     }
 
     public function update(UpdatePlanAuditoriumRequest $request, PlanAuditorium $planAuditorium)
@@ -136,7 +136,7 @@ class PlanAuditoriaController extends Controller
         $planAuditorium->update($request->all());
         $planAuditorium->auditados()->sync($request->input('auditados', []));
 
-        return redirect()->route('admin.plan-auditoria.index');
+        return redirect()->route('plan-auditoria.index');
     }
 
     public function show(PlanAuditorium $planAuditorium)
@@ -145,7 +145,7 @@ class PlanAuditoriaController extends Controller
 
         $planAuditorium->load('fecha', 'auditados', 'team');
 
-        return view('admin.planAuditoria.show', compact('planAuditorium'));
+        return view('frontend.planAuditoria.show', compact('planAuditorium'));
     }
 
     public function destroy(PlanAuditorium $planAuditorium)

@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('admin.accion-correctivas.store') }}" enctype="multipart/form-data"
+<form method="POST" action="{{ route('accion-correctivas.store') }}" enctype="multipart/form-data"
     class="row" id="formulario">
     @csrf
 

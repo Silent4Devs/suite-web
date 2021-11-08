@@ -1,7 +1,7 @@
 @can('planaccion_correctiva_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.planaccion-correctivas.create') }}">
+            <a class="btn btn-success" href="{{ route('planaccion-correctivas.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.planaccionCorrectiva.title_singular') }}
             </a>
         </div>
@@ -76,19 +76,19 @@
                             </td>
                             <td>
                                 @can('planaccion_correctiva_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.planaccion-correctivas.show', $planaccionCorrectiva->id) }}">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('planaccion-correctivas.show', $planaccionCorrectiva->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('planaccion_correctiva_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.planaccion-correctivas.edit', $planaccionCorrectiva->id) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('planaccion-correctivas.edit', $planaccionCorrectiva->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('planaccion_correctiva_delete')
-                                    <form action="{{ route('admin.planaccion-correctivas.destroy', $planaccionCorrectiva->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('planaccion-correctivas.destroy', $planaccionCorrectiva->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -114,7 +114,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.planaccion-correctivas.massDestroy') }}",
+    url: "{{ route('planaccion-correctivas.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {

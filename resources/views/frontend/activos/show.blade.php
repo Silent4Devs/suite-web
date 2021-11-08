@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="card">
@@ -9,7 +9,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.activos.index') }}">
+                <a class="btn btn-default" href="{{ route('activos.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -66,7 +66,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.activos.index') }}">
+                <a class="btn btn-default" href="{{ route('activos.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -87,7 +87,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="activo_incidentes_de_seguridads">
-            @includeIf('admin.activos.relationships.activoIncidentesDeSeguridads', ['incidentesDeSeguridads' => $activo->activoIncidentesDeSeguridads])
+            @includeIf('frontend.activos.relationships.activoIncidentesDeSeguridads', ['incidentesDeSeguridads' => $activo->activoIncidentesDeSeguridads])
         </div>
     </div>
 </div>

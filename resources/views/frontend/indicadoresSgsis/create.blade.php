@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -105,9 +105,9 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
+    <!-- {{ Breadcrumbs::render('frontend.indicadores-sgsis.create') }} -->
 
-    <form method="POST" action="{{ route('admin.indicadores-sgsis.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('indicadores-sgsis.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="mt-4 card">
             <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">

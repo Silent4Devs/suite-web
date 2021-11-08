@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="card mt-4">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.user-alerts.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("user-alerts.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="required" for="alert_text"><i class="fas fa-user-clock iconos-crear"></i>{{ trans('cruds.userAlert.fields.alert_text') }}</label>

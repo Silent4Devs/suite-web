@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}">
@@ -10,7 +10,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.macroprocesos.update', $macroproceso) }}" class="row">
+            <form method="POST" action="{{ route('macroprocesos.update', $macroproceso) }}" class="row">
                 @csrf
                 @method('PATCH')
                 <div class="col-md-12 col-sm-12">

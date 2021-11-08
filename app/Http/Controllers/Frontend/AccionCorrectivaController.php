@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
@@ -30,7 +30,7 @@ class AccionCorrectivaController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('accion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('accion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
         // dd($query);
         if ($request->ajax()) {
@@ -127,7 +127,7 @@ class AccionCorrectivaController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.accionCorrectivas.index', compact('users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
+        return view('frontend.accionCorrectivas.index', compact('users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
     }
 
     public function create()
@@ -154,7 +154,7 @@ class AccionCorrectivaController extends Controller
 
         $activos = Tipoactivo::get();
 
-        return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'empleados', 'areas', 'procesos', 'activos'));
+        return view('frontend.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'empleados', 'areas', 'procesos', 'activos'));
     }
 
     public function store(Request $request)
@@ -187,8 +187,8 @@ class AccionCorrectivaController extends Controller
              $generar->Generate($request['pdf-value'], $accionCorrectiva);      */
 
         Flash::success('Registro guardado exitosamente');
-        // return redirect('admin/plan-correctiva?param=' . $accionCorrectiva->id);
-        return redirect()->route('admin.accion-correctivas.edit', $accionCorrectiva);
+        // return redirect('plan-correctiva?param=' . $accionCorrectiva->id);
+        return redirect()->route('accion-correctivas.edit', $accionCorrectiva);
     }
 
     public function edit(AccionCorrectiva $accionCorrectiva)
@@ -229,7 +229,7 @@ class AccionCorrectivaController extends Controller
         // $Count = $PlanAccion->count();
         // dd($accionCorrectiva);
 
-        return view('admin.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
+        return view('frontend.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
     }
 
     public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
@@ -248,7 +248,7 @@ class AccionCorrectivaController extends Controller
             $accionCorrectiva->documentometodo->delete();
         }
 
-        return redirect()->route('admin.accion-correctivas.index');
+        return redirect()->route('accion-correctivas.index');
     }
 
     public function show(AccionCorrectiva $accionCorrectiva)
@@ -257,7 +257,7 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->load('nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas');
 
-        return view('admin.accionCorrectivas.show', compact('accionCorrectiva'));
+        return view('frontend.accionCorrectivas.show', compact('accionCorrectiva'));
     }
 
     public function destroy(AccionCorrectiva $accionCorrectiva)
@@ -305,6 +305,6 @@ class AccionCorrectivaController extends Controller
             $analisis = AnalisisAccionCorrectiva::create(array_merge($request->all(), ['accion_correctiva_id'=>$accion]));
         }
 
-        return redirect()->route('admin.accion-correctivas.edit', $accion);
+        return redirect()->route('accion-correctivas.edit', $accion);
     }
 }

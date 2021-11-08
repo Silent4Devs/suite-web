@@ -1,4 +1,4 @@
-<form method="POST" action="{{url('admin/plan-correctivas-storeedit')}}" enctype="multipart/form-data"
+<form method="POST" action="{{url('plan-correctivas-storeedit')}}" enctype="multipart/form-data"
       class="row">
     @csrf
 
@@ -71,7 +71,7 @@
     </div>
     <div class="form-group col-12 text-right">
 
-        <a class="btn btn-danger" href="{{ route("admin.accion-correctivas.index") }}">Cancelar</a>
+        <a class="btn btn-danger" href="{{ route("accion-correctivas.index") }}">Cancelar</a>
         <button class="btn btn-success " type="submit">
             {{ trans('global.save') }}
         </button>
@@ -98,7 +98,7 @@
             <td><a href="#"
                    data-type="text"
                    data-pk="{{$item->id}}"
-                   data-url="{{route("admin.planaccion-correctivas.update", $item->id)}}"
+                   data-url="{{route("planaccion-correctivas.update", $item->id)}}"
                    data-title="Actividad"
                    data-value="{{$item->actividad}}"
                    class="actividad"
@@ -108,7 +108,7 @@
                 <a href="#"
                    data-type="combodate"
                    data-pk="{{$item->id}}"
-                   data-url="{{route("admin.planaccion-correctivas.update", $item->id)}}"
+                   data-url="{{route("planaccion-correctivas.update", $item->id)}}"
                    data-title="Seleccione fecha"
                    data-value="{{$item->fechacompromiso}}"
                    class="fechacompromiso"
@@ -118,7 +118,7 @@
             <td><a href="#"
                    data-type="select"
                    data-pk="{{$item->id}}"
-                   data-url="{{route("admin.planaccion-correctivas.update", $item->id)}}"
+                   data-url="{{route("planaccion-correctivas.update", $item->id)}}"
                    data-title="Seleccionar estatus"
                    data-value="{{$item->estatus}}"
                    class="estatus"
@@ -129,7 +129,7 @@
                 <a href="#"
                    data-type="select"
                    data-pk="{{$item->id}}"
-                   data-url="{{route("admin.planaccion-correctivas.update", $item->id)}}"
+                   data-url="{{route("planaccion-correctivas.update", $item->id)}}"
                    data-title="Seleccionar responsable"
                    data-value="{{$item->responsable_id}}"
                    class="responsable"

@@ -174,7 +174,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar usuario',
-                url: "{{ route('frontend.users.create') }}",
+                url: "{{ route('users.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -187,7 +187,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('frontend.users.massDestroy') }}",
+                url: "{{ route('users.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -219,7 +219,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('frontend.users.index') }}",
+                ajax: "{{ route('users.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -399,7 +399,7 @@
                 console.log(n_empleado);
                 $.ajax({
                     type: "POST",
-                    url: "/frontend/users/vincular",
+                    url: "users/vincular",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },

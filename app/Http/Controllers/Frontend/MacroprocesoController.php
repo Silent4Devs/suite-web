@@ -20,7 +20,7 @@ class MacroprocesoController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('configuracion_macroproceso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_macroproceso_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($query = Macroproceso::get());
         if ($request->ajax()) {
             $query = Macroproceso::get();
@@ -99,7 +99,7 @@ class MacroprocesoController extends Controller
         );
         $macroprocesos = Macroproceso::create($request->all());
         // Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
-        return redirect()->route('frontend.macroprocesos.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('macroprocesos.index')->with('success', 'Guardado con éxito');
     }
 
     public function show(Macroproceso $macroproceso)
@@ -129,7 +129,7 @@ class MacroprocesoController extends Controller
         );
         $macroproceso->update($request->all());
 
-        return redirect()->route('frontend.macroprocesos.index')->with('success', 'Editado con éxito');
+        return redirect()->route('macroprocesos.index')->with('success', 'Editado con éxito');
     }
 
     public function destroy(Macroproceso $macroproceso)

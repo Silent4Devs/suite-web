@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -105,9 +105,9 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.indicadores-sgsis.create') }}
+    <!-- {{ Breadcrumbs::render('frontend.indicadores-sgsis.create') }} -->
 
-    <form method="POST" action="{{ route('admin.indicadores-sgsis.update', [$indicadoresSgsi->id]) }}"
+    <form method="POST" action="{{ route('indicadores-sgsis.update', [$indicadoresSgsi->id]) }}"
         enctype="multipart/form-data">
         @method('PUT')
         @csrf
