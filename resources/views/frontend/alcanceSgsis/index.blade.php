@@ -122,7 +122,7 @@ text-align: center !important;
 
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('frontend.alcance-sgsis.create') }}">
+            <a class="btn btn-success" href="{{ route('alcance-sgsis.create') }}">
                   Agregar <strong>+</strong>
             </a>
         </div>
@@ -258,7 +258,7 @@ text-align: center !important;
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('frontend.alcance-sgsis.massDestroy') }}",
+                url: "{{ route('alcance-sgsis.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -288,7 +288,7 @@ text-align: center !important;
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar alcance SGSIS',
-                url: "{{ route('frontend.alcance-sgsis.create') }}",
+                url: "{{ route('alcance-sgsis.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -303,7 +303,7 @@ text-align: center !important;
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('frontend.alcance-sgsis.index') }}",
+                ajax: "{{ route('alcance-sgsis.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

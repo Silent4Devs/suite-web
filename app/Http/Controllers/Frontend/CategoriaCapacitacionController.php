@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoriaCapacitacion;
@@ -49,7 +49,7 @@ class CategoriaCapacitacionController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.categoria-capacitacion.index');
+        return view('frontend.categoria-capacitacion.index');
     }
 
     /**
@@ -59,7 +59,7 @@ class CategoriaCapacitacionController extends Controller
      */
     public function create()
     {
-        return view('admin.categoria-capacitacion.create');
+        return view('frontend.categoria-capacitacion.create');
     }
 
     /**
@@ -75,7 +75,7 @@ class CategoriaCapacitacionController extends Controller
         ], ['nombre.unique' => 'Esta categoria ya ha sido utilizada']);
         CategoriaCapacitacion::create($request->all());
 
-        return redirect()->route('admin.categoria-capacitacion.index');
+        return redirect()->route('categoria-capacitacion.index');
     }
 
     /**
@@ -86,7 +86,7 @@ class CategoriaCapacitacionController extends Controller
      */
     public function show(CategoriaCapacitacion $categoriaCapacitacion)
     {
-        return view('admin.categoria-capacitacion.show', compact('categoriaCapacitacion'));
+        return view('frontend.categoria-capacitacion.show', compact('categoriaCapacitacion'));
     }
 
     /**
@@ -97,7 +97,7 @@ class CategoriaCapacitacionController extends Controller
      */
     public function edit(CategoriaCapacitacion $categoriaCapacitacion)
     {
-        return view('admin.categoria-capacitacion.edit', compact('categoriaCapacitacion'));
+        return view('frontend.categoria-capacitacion.edit', compact('categoriaCapacitacion'));
     }
 
     /**
@@ -114,7 +114,7 @@ class CategoriaCapacitacionController extends Controller
         ], ['nombre.unique' => 'Esta categoria ya ha sido utilizada']);
         $categoriaCapacitacion->update($request->all());
 
-        return redirect()->route('admin.categoria-capacitacion.index');
+        return redirect()->route('categoria-capacitacion.index');
     }
 
     /**
@@ -127,6 +127,6 @@ class CategoriaCapacitacionController extends Controller
     {
         $categoriaCapacitacion->delete();
 
-        return redirect()->route('admin.categoria-capacitacion.index');
+        return redirect()->route('categoria-capacitacion.index');
     }
 }

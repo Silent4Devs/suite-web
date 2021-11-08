@@ -1,17 +1,17 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.concientizacion-sgis.create') }}
+    {{ Breadcrumbs::render('frontend.concientizacion-sgis.create') }}
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.concientizacionSgi.title') }}
+    {{--{{ trans('global.show') }} {{ trans('cruds.concientizacionSgi.title') }} --}}
     </div>
 
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.concientizacion-sgis.index') }}">
+                <a class="btn btn-default" href="{{ route('concientizacion-sgis.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -80,7 +80,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.concientizacion-sgis.index') }}">
+                <a class="btn btn-default" href="{{ route('concientizacion-sgis.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

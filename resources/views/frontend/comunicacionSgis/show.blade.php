@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     @section('styles')
@@ -58,7 +58,7 @@
         </style>
     @endsection
 
-    {{ Breadcrumbs::render('admin.comunicacion-sgis.show') }}
+    {{--  {{ Breadcrumbs::render('frontend.comunicacion-sgis.show') }} --}}
 
 
 

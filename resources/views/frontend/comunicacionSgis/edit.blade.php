@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.comunicacion-sgis.create') }}
+{{-- {{ Breadcrumbs::render('frontend.comunicacion-sgis.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
@@ -10,7 +10,7 @@
 
         <div class="card-body">
             <form method="POST" class="row"
-                action="{{ route('admin.comunicacion-sgis.update', [$comunicacionSgi->id]) }}"
+                action="{{ route('comunicacion-sgis.update', [$comunicacionSgi->id]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
@@ -280,7 +280,7 @@
 @section('scripts')
     <script>
         Dropzone.options.archivoDropzone = {
-            url: '{{ route('admin.comunicacion-sgis.storeMedia') }}',
+            url: '{{ route('comunicacion-sgis.storeMedia') }}',
             maxFilesize: 4, // MB
             maxFiles: 1,
             addRemoveLinks: true,

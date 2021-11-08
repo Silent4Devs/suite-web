@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.objetivosseguridads.create') }}
+{{--  {{ Breadcrumbs::render('frontend.objetivosseguridads.create') }} --}}
 
     <div class="card mt-4">
         <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">

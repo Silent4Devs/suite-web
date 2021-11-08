@@ -26,7 +26,7 @@ class EvidenciasSgsiController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('evidencias_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('evidencias_sgsi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = EvidenciasSgsi::with(['responsable', 'team', 'empleado', 'area', 'evidencia_sgsi'])->select(sprintf('%s.*', (new EvidenciasSgsi)->table))->orderByDesc('id');

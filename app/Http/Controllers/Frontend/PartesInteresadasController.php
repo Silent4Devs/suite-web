@@ -19,7 +19,7 @@ class PartesInteresadasController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('partes_interesada_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('partes_interesada_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = PartesInteresada::with(['team', 'clausulas'])->select(sprintf('%s.*', (new PartesInteresada)->table))->orderByDesc('id');

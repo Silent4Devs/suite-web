@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.material-sgsis.create') }}
+{{-- {{ Breadcrumbs::render('frontend.material-sgsis.create') }} --}}
 
 <div class="card mt-4">
     <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.material-sgsis.store") }}" enctype="multipart/form-data" class="row">
+        <form method="POST" action="{{ route("material-sgsis.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-12">
                 <label class="required" for="nombre"><i class="fas fa-file  iconos-crear"></i>Nombre del material de capacitación</label>
@@ -130,7 +130,7 @@
 @section('scripts')
 <script>
     Dropzone.options.archivoDropzone = {
-    url: '{{ route('admin.material-sgsis.storeMedia') }}',
+    url: '{{ route('material-sgsis.storeMedia') }}',
     maxFilesize: 4, // MB
     maxFiles: 1,
     addRemoveLinks: true,

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyTratamientoRiesgoRequest;
@@ -20,7 +20,7 @@ class TratamientoRiesgosController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('tratamiento_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('tratamiento_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = TratamientoRiesgo::with(['control', 'responsable', 'team'])->select(sprintf('%s.*', (new TratamientoRiesgo)->table))->orderByDesc('id');
@@ -94,7 +94,7 @@ class TratamientoRiesgosController extends Controller
         $users = User::get();
         $teams = Team::get();
 
-        return view('admin.tratamientoRiesgos.index', compact('controles', 'users', 'teams'));
+        return view('frontend.tratamientoRiesgos.index', compact('controles', 'users', 'teams'));
     }
 
     public function create()
@@ -106,7 +106,7 @@ class TratamientoRiesgosController extends Controller
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.tratamientoRiesgos.create', compact('controls', 'responsables', 'empleados'));
+        return view('frontend.tratamientoRiesgos.create', compact('controls', 'responsables', 'empleados'));
     }
 
     public function store(StoreTratamientoRiesgoRequest $request)
@@ -114,7 +114,7 @@ class TratamientoRiesgosController extends Controller
         // dd($request);
         $tratamientoRiesgo = TratamientoRiesgo::create($request->all());
         // dd($tratamientoRiesgo);
-        return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('tratamiento-riesgos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(TratamientoRiesgo $tratamientoRiesgo)
@@ -129,14 +129,14 @@ class TratamientoRiesgosController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        return view('admin.tratamientoRiesgos.edit', compact('controls', 'responsables', 'tratamientoRiesgo', 'empleados'));
+        return view('frontend.tratamientoRiesgos.edit', compact('controls', 'responsables', 'tratamientoRiesgo', 'empleados'));
     }
 
     public function update(UpdateTratamientoRiesgoRequest $request, TratamientoRiesgo $tratamientoRiesgo)
     {
         $tratamientoRiesgo->update($request->all());
 
-        return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Editado con éxito');
+        return redirect()->route('tratamiento-riesgos.index')->with('success', 'Editado con éxito');
     }
 
     public function show(TratamientoRiesgo $tratamientoRiesgo)
@@ -145,7 +145,7 @@ class TratamientoRiesgosController extends Controller
 
         $tratamientoRiesgo->load('control', 'responsable', 'team');
 
-        return view('admin.tratamientoRiesgos.show', compact('tratamientoRiesgo'));
+        return view('frontend.tratamientoRiesgos.show', compact('tratamientoRiesgo'));
     }
 
     public function destroy(TratamientoRiesgo $tratamientoRiesgo)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyObjetivosseguridadRequest;
@@ -18,7 +18,7 @@ class ObjetivosseguridadController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('objetivosseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('objetivosseguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = Objetivosseguridad::get();
             $table = Datatables::of($query);
@@ -80,7 +80,7 @@ class ObjetivosseguridadController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.objetivosseguridads.index', compact('teams'));
+        return view('frontend.objetivosseguridads.index', compact('teams'));
     }
 
     public function create()
@@ -88,15 +88,15 @@ class ObjetivosseguridadController extends Controller
         abort_if(Gate::denies('objetivosseguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsables = Empleado::get();
 
-        return view('admin.objetivosseguridads.create', compact('responsables'));
+        return view('frontend.objetivosseguridads.create', compact('responsables'));
     }
 
     public function store(Request $request)
     {
         // dd($request);
         $objetivosseguridad = Objetivosseguridad::create($request->all());
-        //return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
-        return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with('success', 'Guardado con éxito');
+        //return redirect()->route('objetivosseguridads.index')->with("success", 'Guardado con éxito');
+        return redirect()->route('objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with('success', 'Guardado con éxito');
     }
 
     public function edit(Objetivosseguridad $objetivosseguridad)
@@ -105,14 +105,14 @@ class ObjetivosseguridadController extends Controller
 
         $responsables = Empleado::get();
 
-        return view('admin.objetivosseguridads.edit', compact('objetivosseguridad', 'responsables'));
+        return view('frontend.objetivosseguridads.edit', compact('objetivosseguridad', 'responsables'));
     }
 
     public function update(UpdateObjetivosseguridadRequest $request, Objetivosseguridad $objetivosseguridad)
     {
         $objetivosseguridad->update($request->all());
 
-        return redirect()->route('admin.objetivosseguridads.index')->with('success', 'Editado con éxito');
+        return redirect()->route('objetivosseguridads.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Objetivosseguridad $objetivosseguridad)
@@ -121,7 +121,7 @@ class ObjetivosseguridadController extends Controller
 
         $objetivosseguridad->load('team');
 
-        return view('admin.objetivosseguridads.show', compact('objetivosseguridad'));
+        return view('frontend.objetivosseguridads.show', compact('objetivosseguridad'));
     }
 
     public function destroy(Objetivosseguridad $objetivosseguridad)
@@ -175,7 +175,7 @@ class ObjetivosseguridadController extends Controller
 
         $objetivos = Objetivosseguridad::find($id['id']);
 
-        return view('admin.objetivosseguridads.evaluacion')
+        return view('frontend.objetivosseguridads.evaluacion')
             ->with('objetivos', $objetivos);
     }
 
@@ -185,7 +185,7 @@ class ObjetivosseguridadController extends Controller
 
         $objetivos = Objetivosseguridad::find($id['id']);
 
-        return view('admin.objetivosseguridads.evaluacion')
+        return view('frontend.objetivosseguridads.evaluacion')
             ->with('objetivos', $objetivos);
     }
 }

@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{ route('admin.analisis-riesgos.index') }}">Análisis de Riesgo</a>
+            <a href="{{ route('analisis-riesgos.index') }}">Análisis de Riesgo</a>
         </li>
         <li class="breadcrumb-item active">Detalles</li>
     </ol>
@@ -15,10 +15,10 @@
                     <div class="card">
                         <div class="card-header">
                             <strong>Detalles</strong>
-                            <a href="{{ route('admin.analisis-riesgos.index') }}" class="btn btn-light">Volver</a>
+                            <a href="{{ route('analisis-riesgos.index') }}" class="btn btn-light">Volver</a>
                         </div>
                         <div class="card-body">
-                            @include('admin.analisis-riesgos.show_fields')
+                            @include('frontend.analisis-riesgos.show_fields')
                         </div>
                     </div>
                 </div>

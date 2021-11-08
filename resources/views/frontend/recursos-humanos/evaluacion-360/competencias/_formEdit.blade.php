@@ -1,6 +1,6 @@
 <div>
     <div class="container">
-        @include('admin.recursos-humanos.evaluacion-360.competencias._form')
+        @include('frontend.recursos-humanos.evaluacion-360.competencias._form')
     </div>
     <div class="d-flex justify-content-center">
         <div style="width: 300px">

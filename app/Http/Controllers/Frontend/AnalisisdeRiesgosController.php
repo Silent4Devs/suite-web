@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\AnalisisDeRiesgo;
@@ -81,7 +81,7 @@ class AnalisisdeRiesgosController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.analisis-riesgos.index');
+        return view('frontend.analisis-riesgos.index');
     }
 
     /**
@@ -95,7 +95,7 @@ class AnalisisdeRiesgosController extends Controller
 
         //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.analisis-riesgos.create', compact('empleados'));
+        return view('frontend.analisis-riesgos.create', compact('empleados'));
     }
 
     /**
@@ -111,12 +111,12 @@ class AnalisisdeRiesgosController extends Controller
             case 'Seguridad de la información':
                 Flash::success('<h5 class="text-center">Análisis de riesgo agregado</h5>');
 
-                return redirect()->route('admin.matriz-seguridad', ['id' => $analisis->id]);
+                return redirect()->route('matriz-seguridad', ['id' => $analisis->id]);
                 break;
             default:
                 Flash::error('<h5 class="text-center">Ocurrio un error intente de nuevo</h5>');
 
-                return redirect()->route('admin.analisis-riesgos.index');
+                return redirect()->route('analisis-riesgos.index');
         }
     }
 
@@ -130,7 +130,7 @@ class AnalisisdeRiesgosController extends Controller
     {
         $analisis = AnalisisDeRiesgo::find($id);
 
-        return view('admin.analisis-riesgos.show', compact('analisis'));
+        return view('frontend.analisis-riesgos.show', compact('analisis'));
     }
 
     /**
@@ -144,7 +144,7 @@ class AnalisisdeRiesgosController extends Controller
         $empleados = Empleado::get();
         $analisis = AnalisisDeRiesgo::find($id);
 
-        return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
+        return view('frontend.analisis-riesgos.edit', compact('empleados', 'analisis'));
     }
 
     /**
@@ -167,7 +167,7 @@ class AnalisisdeRiesgosController extends Controller
             'estatus' =>  $request->estatus,
         ]);
 
-        return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Editado con éxito');
+        return redirect()->route('analisis-riesgos.index')->with('success', 'Editado con éxito');
     }
 
     /**

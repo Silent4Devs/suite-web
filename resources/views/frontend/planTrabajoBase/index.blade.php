@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <style>
         body {
@@ -218,7 +218,7 @@
 
     </style>
 
-    {{ Breadcrumbs::render('admin.planTrabajoBase.index') }}
+{{--  {{ Breadcrumbs::render('frontend.planTrabajoBase.index') }} --}}
 
 
     <div class="mt-5 mb-5">
@@ -250,19 +250,19 @@
             <div class="caja_caja_secciones">
                 <div class="caja_secciones ">
                     <section id="original_gantt" class="caja_tab_reveldada">
-                        @include('admin.planTrabajoBase.gantt')
+                        @include('frontend.planTrabajoBase.gantt')
                     </section>
 
                     <section id="tabla_gantt">
-                        @include('admin.planTrabajoBase.tabla')
+                        @include('frontend.planTrabajoBase.tabla')
                     </section>
 
                     <section id="calendario_gantt">
-                        @include('admin.planTrabajoBase.calendario')
+                        @include('frontend.planTrabajoBase.calendario')
                     </section>
 
                     <section id="kanban_gantt">
-                        @include('admin.planTrabajoBase.kanban')
+                        @include('frontend.planTrabajoBase.kanban')
                     </section>
                 </div>
             </div>
@@ -314,7 +314,7 @@
         function obtenerBloqueo() {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.getLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.getLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}",
                     "user_id": "{{ auth()->user()->id }}",
@@ -355,7 +355,7 @@
         function ponerBloqueo() {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.setLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.setLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}"
                 },
@@ -368,7 +368,7 @@
         function estaBloqueado(event) {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.isLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.isLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}"
                 },
@@ -381,7 +381,7 @@
                         //     removerBloqueo();
                         // } else {
                         //     event.preventDefault();
-                        //     window.location = "{{ route('admin.planTrabajoBase.index') }}";
+                        //     window.location = "{{ route('planTrabajoBase.index') }}";
                         // }
 
                     } else if (response.blocked) {
@@ -396,7 +396,7 @@
         function removerBloqueo() {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.lockedPlan.removeLockedToPlanTrabajo') }}",
+                url: "{{ route('lockedPlan.removeLockedToPlanTrabajo') }}",
                 data: {
                     _token: "{{ csrf_token() }}"
                 },

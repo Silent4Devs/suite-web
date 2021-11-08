@@ -22,7 +22,7 @@ class MatrizRequisitoLegalesController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('matriz_requisito_legale_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('matriz_requisito_legale_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($query = MatrizRequisitoLegale::with(['team','evidencias_matriz','empleado'])->get());
         // dd(MatrizRequisitoLegale::with('planes', 'evidencias_matriz', 'empleado')->get());
         if ($request->ajax()) {

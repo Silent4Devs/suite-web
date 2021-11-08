@@ -21,7 +21,7 @@ class DeclaracionAplicabilidadController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('declaracion_aplicabilidad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('declaracion_aplicabilidad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gapa5 = DeclaracionAplicabilidad::get()->where('control-uno', '=', 'A5');
         $gapa6 = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A6.1');
         $gapa62 = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A6.2');

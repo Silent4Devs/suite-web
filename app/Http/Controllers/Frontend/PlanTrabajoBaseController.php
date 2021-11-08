@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
@@ -14,7 +14,7 @@ class PlanTrabajoBaseController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gantt_path = 'storage/gantt/';
         $path = public_path($gantt_path);
         $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
@@ -36,7 +36,7 @@ class PlanTrabajoBaseController extends Controller
         $empleados = Empleado::select('name')->get();
         $name_file_gantt = 'gantt_inicial.json';
 
-        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
+        return view('frontend.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
     }
 
     public function saveImplementationProyect(Request $request)

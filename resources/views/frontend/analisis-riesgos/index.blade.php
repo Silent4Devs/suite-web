@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
+{{-- {{ Breadcrumbs::render('frontend.analisis-riesgos.index') }} --}}
 
     @can('matriz_riesgo_create')
 
@@ -43,7 +43,7 @@
 
             {{-- <div style="margin-bottom:10px; margin-left:12px;" class="row">
                   <div class="col-lg-12">
-                      <a class="btn btn-success" href="{{ route('admin.matriz-riesgos.create') }}">
+                      <a class="btn btn-success" href="{{ route('matriz-riesgos.create') }}">
                           Agregar Riesgo
                       </a>
                   </div>
@@ -168,7 +168,7 @@
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.analisis-riesgos.massDestroy') }}",
+                url: "{{ route('analisis-riesgos.massDestroy') }}",
                 className: 'btn-danger',
                 action: function(e, dt, node, config) {
                     var ids = $.map(dt.rows({
@@ -207,7 +207,7 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nuevo analisis de riesgos',
-                url: "{{ route('admin.analisis-riesgos.create') }}",
+                url: "{{ route('analisis-riesgos.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                     let {
@@ -228,7 +228,7 @@
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-                ajax: "{{ route('admin.analisis-riesgos.index') }}",
+                ajax: "{{ route('analisis-riesgos.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

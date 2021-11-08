@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -25,7 +25,7 @@ class ComunicacionSgiController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('comunicacion_sgi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('comunicacion_sgi_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = ComunicacionSgi::with(['team', 'documentos_comunicacion', 'imagenes_comunicacion'])->select(sprintf('%s.*', (new ComunicacionSgi)->table))->orderByDesc('id');
@@ -66,7 +66,7 @@ class ComunicacionSgiController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.comunicacionSgis.index', compact('teams'));
+        return view('frontend.comunicacionSgis.index', compact('teams'));
     }
 
     public function create()
@@ -76,7 +76,7 @@ class ComunicacionSgiController extends Controller
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
 
-        return view('admin.comunicacionSgis.create', compact('empleados', 'documentos', 'imagenes'));
+        return view('frontend.comunicacionSgis.create', compact('empleados', 'documentos', 'imagenes'));
     }
 
     public function store(Request $request)
@@ -136,7 +136,7 @@ class ComunicacionSgiController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $comunicacionSgi->id]);
         }
 
-        return redirect()->route('admin.comunicacion-sgis.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('comunicacion-sgis.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(ComunicacionSgi $comunicacionSgi)
@@ -147,7 +147,7 @@ class ComunicacionSgiController extends Controller
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
 
-        return view('admin.comunicacionSgis.edit', compact('comunicacionSgi', 'documentos', 'imagenes', 'empleados'));
+        return view('frontend.comunicacionSgis.edit', compact('comunicacionSgi', 'documentos', 'imagenes', 'empleados'));
     }
 
     public function update(UpdateComunicacionSgiRequest $request, ComunicacionSgi $comunicacionSgi)
@@ -216,7 +216,7 @@ class ComunicacionSgiController extends Controller
             $comunicacionSgi->archivo->delete();
         }
 
-        return redirect()->route('admin.comunicacion-sgis.index')->with('success', 'Editado con éxito');
+        return redirect()->route('comunicacion-sgis.index')->with('success', 'Editado con éxito');
     }
 
     public function show(ComunicacionSgi $comunicacionSgi)
@@ -225,7 +225,7 @@ class ComunicacionSgiController extends Controller
 
         $comunicacionSgi->load('team', 'documentos_comunicacion', 'imagenes_comunicacion');
 
-        return view('admin.comunicacionSgis.show', compact('comunicacionSgi'));
+        return view('frontend.comunicacionSgis.show', compact('comunicacionSgi'));
     }
 
     public function destroy(ComunicacionSgi $comunicacionSgi)

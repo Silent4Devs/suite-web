@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.material-sgsis.create') }}
+{{-- {{ Breadcrumbs::render('frontend.material-sgsis.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
@@ -10,7 +10,7 @@
 
         <div class="card-body">
             <form method="POST" class="row"
-                action="{{ route('admin.material-sgsis.update', [$materialSgsi->id]) }}" enctype="multipart/form-data">
+                action="{{ route('material-sgsis.update', [$materialSgsi->id]) }}" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="form-group col-12">
@@ -225,7 +225,7 @@
 @section('scripts')
     <script>
         Dropzone.options.archivoDropzone = {
-            url: '{{ route('admin.material-sgsis.storeMedia') }}',
+            url: '{{ route('material-sgsis.storeMedia') }}',
             maxFilesize: 4, // MB
             maxFiles: 1,
             addRemoveLinks: true,
