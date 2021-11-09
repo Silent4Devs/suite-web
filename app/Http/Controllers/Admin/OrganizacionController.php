@@ -23,15 +23,11 @@ class OrganizacionController extends Controller
     {
         abort_if(Gate::denies('organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacion::first();
-        if( $organizacions->logotipo==null){
-            $logotipo = 'img/logotipo-tabantaj.png';
-        }else{
-            $logotipo_organizacion = $organizacions->logotipo;
-            if ($logotipo_organizacion) {
-                $logotipo = 'images/' . $logotipo_organizacion;
-            }
+        $logotipo_organizacion = $organizacions->logotipo;
+        $logotipo = 'img/logotipo-tabantaj.png';
+        if ($logotipo_organizacion) {
+            $logotipo = 'images/' . $logotipo_organizacion;
         }
-
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
