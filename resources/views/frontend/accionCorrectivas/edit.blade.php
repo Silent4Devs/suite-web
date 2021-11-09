@@ -1,291 +1,367 @@
-@extends('layouts.frontend')
+@extends('layouts.admin')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
 
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('global.edit') }} {{ trans('cruds.accionCorrectiva.title_singular') }}
+    {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
+
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios_centro_atencion.css') }}">
+@endsection
+
+<div class="mt-4 card">
+    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+        <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Acción Correctiva </h3>
+    </div>
+    @include('layouts.errors')
+    @include('flash::message')
+    <div class="card-body">
+
+        <div class="container">
+            <div class="row">
+
+                <div class="caja_botones_menu">
+                    <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-diagnoses"
+                            style="font-size:30px;" style="text-decoration:none;"></i>Acción Correctiva</a>
+                    <a href="#" data-tabs="contenido2"><i class="mr-2 fab fa-medapps" style="font-size:30px;"
+                            style="text-decoration:none;"></i> Ánalisis de causa raíz</a>
+                    <a href="#" data-tabs="contenido3"><i class="mr-2 fas fa-file-alt" style="font-size:30px;"
+                            style="text-decoration:none;"></i>Plan de acción</a>
                 </div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route("frontend.accion-correctivas.update", [$accionCorrectiva->id]) }}" enctype="multipart/form-data">
-                        @method('PUT')
-                        @csrf
-                        <div class="form-group">
-                            <label for="fecharegistro">{{ trans('cruds.accionCorrectiva.fields.fecharegistro') }}</label>
-                            <input class="form-control date" type="text" name="fecharegistro" id="fecharegistro" value="{{ old('fecharegistro', $accionCorrectiva->fecharegistro) }}">
-                            @if($errors->has('fecharegistro'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('fecharegistro') }}
+
+                {{-- <button id="acollapseExample" data-toggle="collapse" onclick="closetabcollap1()"
+                            data-target="#collapseExample" class="btn btn-danger">Acción Correctiva</button>
+                        <button id="acollapseplan" data-toggle="collapse" onclick="closetabcollap2()"
+                            data-target="#collapseplan" class="btn btn-primary">Análisis de causa raíz</button>
+                        <button id="acollapseactividad" data-toggle="collapse" onclick="" data-target="#"
+                            class="btn btn-primary">Plan de acción</button> --}}
+                <div class="caja_caja_secciones">
+                    <div class="caja_secciones">
+
+                        <section id="contenido1" class="caja_tab_reveldada">
+                            <div>
+
+                                <div id="test-nl-1" class="mt-3 content">
+                                    @include('admin.accionCorrectivas.editform1')
+
                                 </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.fecharegistro_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="nombrereporta_id">{{ trans('cruds.accionCorrectiva.fields.nombrereporta') }}</label>
-                            <select class="form-control select2" name="nombrereporta_id" id="nombrereporta_id">
-                                @foreach($nombrereportas as $id => $nombrereporta)
-                                    <option value="{{ $id }}" {{ (old('nombrereporta_id') ? old('nombrereporta_id') : $accionCorrectiva->nombrereporta->id ?? '') == $id ? 'selected' : '' }}>{{ $nombrereporta }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('nombrereporta'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('nombrereporta') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.nombrereporta_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="puestoreporta_id">{{ trans('cruds.accionCorrectiva.fields.puestoreporta') }}</label>
-                            <select class="form-control select2" name="puestoreporta_id" id="puestoreporta_id">
-                                @foreach($puestoreportas as $id => $puestoreporta)
-                                    <option value="{{ $id }}" {{ (old('puestoreporta_id') ? old('puestoreporta_id') : $accionCorrectiva->puestoreporta->id ?? '') == $id ? 'selected' : '' }}>{{ $puestoreporta }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('puestoreporta'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('puestoreporta') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.puestoreporta_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="nombreregistra_id">{{ trans('cruds.accionCorrectiva.fields.nombreregistra') }}</label>
-                            <select class="form-control select2" name="nombreregistra_id" id="nombreregistra_id">
-                                @foreach($nombreregistras as $id => $nombreregistra)
-                                    <option value="{{ $id }}" {{ (old('nombreregistra_id') ? old('nombreregistra_id') : $accionCorrectiva->nombreregistra->id ?? '') == $id ? 'selected' : '' }}>{{ $nombreregistra }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('nombreregistra'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('nombreregistra') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.nombreregistra_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="puestoregistra_id">{{ trans('cruds.accionCorrectiva.fields.puestoregistra') }}</label>
-                            <select class="form-control select2" name="puestoregistra_id" id="puestoregistra_id">
-                                @foreach($puestoregistras as $id => $puestoregistra)
-                                    <option value="{{ $id }}" {{ (old('puestoregistra_id') ? old('puestoregistra_id') : $accionCorrectiva->puestoregistra->id ?? '') == $id ? 'selected' : '' }}>{{ $puestoregistra }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('puestoregistra'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('puestoregistra') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.puestoregistra_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="tema">{{ trans('cruds.accionCorrectiva.fields.tema') }}</label>
-                            <textarea class="form-control" name="tema" id="tema">{{ old('tema', $accionCorrectiva->tema) }}</textarea>
-                            @if($errors->has('tema'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('tema') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.tema_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label>{{ trans('cruds.accionCorrectiva.fields.causaorigen') }}</label>
-                            <select class="form-control" name="causaorigen" id="causaorigen">
-                                <option value disabled {{ old('causaorigen', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Models\AccionCorrectiva::CAUSAORIGEN_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('causaorigen', $accionCorrectiva->causaorigen) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('causaorigen'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('causaorigen') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.causaorigen_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="descripcion">{{ trans('cruds.accionCorrectiva.fields.descripcion') }}</label>
-                            <textarea class="form-control" name="descripcion" id="descripcion">{{ old('descripcion', $accionCorrectiva->descripcion) }}</textarea>
-                            @if($errors->has('descripcion'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('descripcion') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.descripcion_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label>{{ trans('cruds.accionCorrectiva.fields.metodo_causa') }}</label>
-                            <select class="form-control" name="metodo_causa" id="metodo_causa">
-                                <option value disabled {{ old('metodo_causa', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Models\AccionCorrectiva::METODO_CAUSA_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('metodo_causa', $accionCorrectiva->metodo_causa) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('metodo_causa'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('metodo_causa') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.metodo_causa_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="solucion">{{ trans('cruds.accionCorrectiva.fields.solucion') }}</label>
-                            <textarea class="form-control" name="solucion" id="solucion">{{ old('solucion', $accionCorrectiva->solucion) }}</textarea>
-                            @if($errors->has('solucion'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('solucion') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.solucion_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="cierre_accion">{{ trans('cruds.accionCorrectiva.fields.cierre_accion') }}</label>
-                            <textarea class="form-control" name="cierre_accion" id="cierre_accion">{{ old('cierre_accion', $accionCorrectiva->cierre_accion) }}</textarea>
-                            @if($errors->has('cierre_accion'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('cierre_accion') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.cierre_accion_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label>{{ trans('cruds.accionCorrectiva.fields.estatus') }}</label>
-                            <select class="form-control" name="estatus" id="estatus">
-                                <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Models\AccionCorrectiva::ESTATUS_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('estatus', $accionCorrectiva->estatus) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('estatus'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('estatus') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.estatus_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="fecha_compromiso">{{ trans('cruds.accionCorrectiva.fields.fecha_compromiso') }}</label>
-                            <input class="form-control date" type="text" name="fecha_compromiso" id="fecha_compromiso" value="{{ old('fecha_compromiso', $accionCorrectiva->fecha_compromiso) }}">
-                            @if($errors->has('fecha_compromiso'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('fecha_compromiso') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.fecha_compromiso_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="fecha_verificacion">{{ trans('cruds.accionCorrectiva.fields.fecha_verificacion') }}</label>
-                            <input class="form-control date" type="text" name="fecha_verificacion" id="fecha_verificacion" value="{{ old('fecha_verificacion', $accionCorrectiva->fecha_verificacion) }}">
-                            @if($errors->has('fecha_verificacion'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('fecha_verificacion') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.fecha_verificacion_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="responsable_accion_id">{{ trans('cruds.accionCorrectiva.fields.responsable_accion') }}</label>
-                            <select class="form-control select2" name="responsable_accion_id" id="responsable_accion_id">
-                                @foreach($responsable_accions as $id => $responsable_accion)
-                                    <option value="{{ $id }}" {{ (old('responsable_accion_id') ? old('responsable_accion_id') : $accionCorrectiva->responsable_accion->id ?? '') == $id ? 'selected' : '' }}>{{ $responsable_accion }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('responsable_accion'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('responsable_accion') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.responsable_accion_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre_autoriza_id">{{ trans('cruds.accionCorrectiva.fields.nombre_autoriza') }}</label>
-                            <select class="form-control select2" name="nombre_autoriza_id" id="nombre_autoriza_id">
-                                @foreach($nombre_autorizas as $id => $nombre_autoriza)
-                                    <option value="{{ $id }}" {{ (old('nombre_autoriza_id') ? old('nombre_autoriza_id') : $accionCorrectiva->nombre_autoriza->id ?? '') == $id ? 'selected' : '' }}>{{ $nombre_autoriza }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('nombre_autoriza'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('nombre_autoriza') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.nombre_autoriza_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="documentometodo">{{ trans('cruds.accionCorrectiva.fields.documentometodo') }}</label>
-                            <div class="needsclick dropzone" id="documentometodo-dropzone">
+
                             </div>
-                            @if($errors->has('documentometodo'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('documentometodo') }}
+                        </section>
+
+                        <section id="contenido2">
+                            <div>
+                                <div class="mt-2 ml-2">
+                                    @include('admin.accionCorrectivas.editform2')
                                 </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.documentometodo_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
-                        </div>
-                    </form>
+                            </div>
+                        </section>
+
+                        <section id="contenido3">
+                            <div class="mt-2 ml-2">
+                                @include('admin.accionCorrectivas.editform3')
+                            </div>
+                        </section>
+
+                    </div>
                 </div>
+
+
             </div>
 
-        </div>
-    </div>
-</div>
-@endsection
+        @endsection
 
-@section('scripts')
-<script>
-    Dropzone.options.documentometodoDropzone = {
-    url: '{{ route('admin.accion-correctivas.storeMedia') }}',
-    maxFilesize: 4, // MB
-    maxFiles: 1,
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 4
-    },
-    success: function (file, response) {
-      $('form').find('input[name="documentometodo"]').remove()
-      $('form').append('<input type="hidden" name="documentometodo" value="' + response.name + '">')
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      if (file.status !== 'error') {
-        $('form').find('input[name="documentometodo"]').remove()
-        this.options.maxFiles = this.options.maxFiles + 1
-      }
-    },
-    init: function () {
-@if(isset($accionCorrectiva) && $accionCorrectiva->documentometodo)
-      var file = {!! json_encode($accionCorrectiva->documentometodo) !!}
-          this.options.addedfile.call(this, file)
-      file.previewElement.classList.add('dz-complete')
-      $('form').append('<input type="hidden" name="documentometodo" value="' + file.file_name + '">')
-      this.options.maxFiles = this.options.maxFiles - 1
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
 
-         return _results
-     }
-}
-</script>
-@endsection
+
+        @section('scripts')
+            <script type="text/javascript">
+                const formatDate = (current_datetime) => {
+                    let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+                        current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+                        ":" + current_datetime.getSeconds();
+                    return formatted_date;
+                }
+
+                function cambioOpciones() {
+                    var combo = document.getElementById('opciones');
+                    var opcion = combo.value;
+                    if (opcion == "cerrado") {
+                        var fecha = new Date();
+                        document.getElementById('solucion').value = fecha.toLocaleString().replaceAll("/", "-");
+                    } else {
+                        document.getElementById('solucion').value = "";
+                    }
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    let select_activos = document.querySelector('.areas_multiselect #activos');
+                    select_activos.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let texto_activos = document.querySelector('.areas_multiselect #texto_activos');
+
+                        texto_activos.value += `${this.value}, `;
+
+                    });
+                });
+                document.addEventListener('DOMContentLoaded', function() {
+                    let select_activos = document.querySelector('.procesos_multiselect #activos');
+                    select_activos.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let texto_activos = document.querySelector(
+                            '.procesos_multiselect #texto_activos');
+
+                        texto_activos.value += `${this.value}, `;
+
+                    });
+                });
+                document.addEventListener('DOMContentLoaded', function() {
+                    let select_activos = document.querySelector('.activos_multiselect #activos');
+                    select_activos.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let texto_activos = document.querySelector(
+                            '.activos_multiselect #texto_activos');
+
+                        texto_activos.value += `${this.value}, `;
+
+                    });
+                });
+            </script>
+            <script type="text/javascript">
+                $(document).on('change', '#select_metodos', function(event) {
+                    $(".caja_oculta_dinamica").removeClass("d-block");
+                    var metodo_v = $("#select_metodos option:selected").attr('data-metodo');
+                    $(document.getElementById(metodo_v)).addClass("d-block");
+                });
+            </script>
+
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    window.tbl_plan = $("#tabla_plan_accion").DataTable({
+                        ajax: "{{ route('admin.accion-correctiva-actividades.index', $accionCorrectiva->id) }}",
+                        buttons: [],
+                        columns: [{
+                                data: 'id'
+                            },
+                            {
+                                data: 'actividad'
+                            },
+                            {
+                                data: 'fecha_inicio'
+                            },
+                            {
+                                data: 'fecha_fin'
+                            },
+                            {
+                                data: 'prioridad'
+                            },
+                            {
+                                data: 'tipo'
+                            },
+                            {
+                                data: 'id',
+                                render: function(data, type, row, meta) {
+                                    let lista = '<ul>';
+                                    row.responsables.forEach(responsable => {
+                                        lista += `<li>${responsable.name}</li>`;
+                                    })
+                                    lista += '</ul>';
+
+                                    return lista;
+                                }
+                            },
+                            {
+                                data: 'comentarios'
+                            },
+                        ]
+                    });
+                });
+            </script>
+
+            <script type="text/javascript">
+                $(".btn_modal_form").click(function() {
+                    $(".modal_form_plan").addClass("modal_vista_plan");
+                    $(".select2").select2({
+                        theme: 'bootstrap4'
+                    });
+                });
+                $(".modal_form_plan .btn.btn_cancelar").click(function() {
+                    $(".modal_form_plan").removeClass("modal_vista_plan");
+                });
+
+                $(".fondo_modal").click(function() {
+                    $(".modal_form_plan").removeClass("modal_vista_plan");
+                });
+
+                $(".btn_enviar_form_modal").click(function(e) {
+                    e.preventDefault();
+                    let datos = $('#form_plan_accion').serialize();
+                    let url = document.getElementById('form_plan_accion').getAttribute('action')
+
+                    $.ajax({
+                        type: "post",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: url,
+                        data: datos,
+                        beforeSend: function() {
+                            toastr.info('Validando y Guardando');
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $(".modal_form_plan").removeClass("modal_vista_plan");
+                                tbl_plan.ajax.reload();
+                                limpiarCampos();
+                                Swal.fire('Actividad Creada', 'La actividad ha sido creada con éxito',
+                                    'success');
+                            }
+                        },
+                        error: function(request, status, error) {
+                            document.querySelectorAll('.errors').forEach(error => {
+                                error.innerHTML = "";
+                            });
+                            $.each(request.responseJSON.errors, function(indexInArray, valueOfElement) {
+                                console.log(valueOfElement, indexInArray);
+                                $(`span.error_${indexInArray}`).text(valueOfElement[0]);
+
+                            });
+                        }
+                    });
+                });
+
+
+                function limpiarCampos() {
+
+                    document.getElementById('actividad').value = "";
+                    document.getElementById('fecha_inicio').value = "";
+                    document.getElementById('fecha_fin').value = "";
+                    document.getElementById('prioridad').value = "";
+                    document.getElementById('tipo').value = "";
+                    document.getElementById('responsables').value = "";
+                    document.getElementById('comentarios').value = "";
+
+                }
+            </script>
+
+            <script type="text/javascript">
+                $(document).on('change', '#select_categoria', function(event) {
+                    $("#select_subcategorias option").addClass("d-none");
+                    var categoria_selected = $("#select_categoria option:selected").attr('id');
+                    $(document.getElementsByClassName(categoria_selected)).removeClass("d-none");
+                });
+            </script>
+
+            <script type="text/javascript">
+                var prioridad = 0;
+                var impacto = 0;
+                var urgencia = 0;
+                var prioridad_nombre = '';
+
+                urgencia = new Number($('#select_urgencia option:selected').attr('data-urgencia'));
+                impacto = new Number($('#select_impacto option:selected').attr('data-impacto'));
+                prioridad = urgencia + impacto;
+                if (prioridad <= 2) {
+                    prioridad_nombre = 'Baja';
+                }
+                if (prioridad >= 3) {
+                    prioridad_nombre = 'Media';
+                }
+                if (prioridad >= 5) {
+                    prioridad_nombre = 'Alta';
+                }
+                $("#prioridad").html(prioridad_nombre);
+
+
+
+                $(document).on('change', '#select_urgencia', function(event) {
+                    urgencia = new Number($('#select_urgencia option:selected').attr('data-urgencia'));
+
+                    prioridad = urgencia + impacto;
+
+
+
+                    if (prioridad <= 2) {
+                        prioridad_nombre = 'Baja';
+                    }
+                    if (prioridad >= 3) {
+                        prioridad_nombre = 'Media';
+                    }
+                    if (prioridad >= 5) {
+                        prioridad_nombre = 'Alta';
+                    }
+
+                    $("#prioridad").html(prioridad_nombre);
+                });
+                $(document).on('change', '#select_impacto', function(event) {
+                    impacto = new Number($('#select_impacto option:selected').attr('data-impacto'));
+
+                    prioridad = urgencia + impacto;
+
+                    if (prioridad <= 2) {
+                        prioridad_nombre = 'Baja';
+                    }
+                    if (prioridad >= 3) {
+                        prioridad_nombre = 'Media';
+                    }
+                    if (prioridad >= 5) {
+                        prioridad_nombre = 'Alta';
+                    }
+
+                    $("#prioridad").html(prioridad_nombre);
+                });
+            </script>
+
+            <script>
+                const formatDate = (current_datetime) => {
+                    let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +
+                        current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() +
+                        ":" + current_datetime.getSeconds();
+                    return formatted_date;
+                }
+
+                function cambioOpciones() {
+                    var combo = document.getElementById('opciones');
+                    var opcion = combo.value;
+                    if (opcion == "cerrado") {
+                        var fecha = new Date();
+                        document.getElementById('solucion').value = formatDate(fecha);
+                    } else {
+                        document.getElementById('solucion').value = "";
+                    }
+                }
+            </script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function(e) {
+
+                    let reporto = document.querySelector('#id_reporto');
+                    let area_init = reporto.options[reporto.selectedIndex].getAttribute('data-area');
+                    let puesto_init = reporto.options[reporto.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('reporto_puesto').innerHTML = puesto_init
+                    document.getElementById('reporto_area').innerHTML = area_init
+
+                    let registro = document.querySelector('#id_registro');
+                    let area = registro.options[registro.selectedIndex].getAttribute('data-area');
+                    let puesto = registro.options[registro.selectedIndex].getAttribute('data-puesto');
+                    document.getElementById('registro_puesto').innerHTML = puesto
+                    document.getElementById('registro_area').innerHTML = area
+
+
+                    reporto.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let area = this.options[this.selectedIndex].getAttribute('data-area');
+                        let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                        document.getElementById('reporto_puesto').innerHTML = puesto
+                        document.getElementById('reporto_area').innerHTML = area
+                    })
+                    registro.addEventListener('change', function(e) {
+                        e.preventDefault();
+                        let area = this.options[this.selectedIndex].getAttribute('data-area');
+                        let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                        document.getElementById('registro_puesto').innerHTML = puesto
+                        document.getElementById('registro_area').innerHTML = area
+                    })
+
+                });
+            </script>
+
+        @endsection

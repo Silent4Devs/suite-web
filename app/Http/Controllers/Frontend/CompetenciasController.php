@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyCompetenciumRequest;
 use App\Http\Requests\StoreCompetenciumRequest;
 use App\Http\Requests\UpdateCompetenciumRequest;
+use App\Models\Area;
 use App\Models\Competencium;
 use App\Models\Team;
 use App\Models\User;
@@ -14,22 +15,71 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class CompetenciasController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('competencium_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $competencia = Competencium::all();
+        if ($request->ajax()) {
+            $query = Competencium::with(['nombrecolaborador', 'team'])->select(sprintf('%s.*', (new Competencium)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'competencium_show';
+                $editGate = 'competencium_edit';
+                $deleteGate = 'competencium_delete';
+                $crudRoutePart = 'competencia';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->addColumn('nombrecolaborador_name', function ($row) {
+                return $row->nombrecolaborador ? $row->nombrecolaborador->name : '';
+            });
+
+            $table->editColumn('perfilpuesto', function ($row) {
+                return $row->perfilpuesto ? $row->perfilpuesto : '';
+            });
+            $table->editColumn('certificados', function ($row) {
+                if (!$row->certificados) {
+                    return '';
+                }
+
+                $links = [];
+
+                foreach ($row->certificados as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'nombrecolaborador', 'certificados']);
+
+            return $table->make(true);
+        }
 
         $users = User::get();
-
         $teams = Team::get();
 
-        return view('frontend.competencia.index', compact('competencia', 'users', 'teams'));
+        return view('admin.competencia.index', compact('users', 'teams'));
     }
 
     public function create()
@@ -38,7 +88,7 @@ class CompetenciasController extends Controller
 
         $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.competencia.create', compact('nombrecolaboradors'));
+        return view('admin.competencia.create', compact('nombrecolaboradors'));
     }
 
     public function store(StoreCompetenciumRequest $request)
@@ -53,7 +103,7 @@ class CompetenciasController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $competencium->id]);
         }
 
-        return redirect()->route('frontend.competencia.index');
+        return redirect()->route('admin.competencia.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Competencium $competencium)
@@ -64,7 +114,7 @@ class CompetenciasController extends Controller
 
         $competencium->load('nombrecolaborador', 'team');
 
-        return view('frontend.competencia.edit', compact('nombrecolaboradors', 'competencium'));
+        return view('admin.competencia.edit', compact('nombrecolaboradors', 'competencium'));
     }
 
     public function update(UpdateCompetenciumRequest $request, Competencium $competencium)
@@ -87,7 +137,7 @@ class CompetenciasController extends Controller
             }
         }
 
-        return redirect()->route('frontend.competencia.index');
+        return redirect()->route('admin.competencia.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Competencium $competencium)
@@ -96,7 +146,7 @@ class CompetenciasController extends Controller
 
         $competencium->load('nombrecolaborador', 'team');
 
-        return view('frontend.competencia.show', compact('competencium'));
+        return view('admin.competencia.show', compact('competencium'));
     }
 
     public function destroy(Competencium $competencium)
@@ -105,7 +155,7 @@ class CompetenciasController extends Controller
 
         $competencium->delete();
 
-        return back();
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyCompetenciumRequest $request)
@@ -125,5 +175,14 @@ class CompetenciasController extends Controller
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function buscarcv(Request $request)
+    {
+        // dd($request->all());
+
+        $areas = Area::get();
+
+        return view('admin.competencia.buscarCV', compact('areas'));
     }
 }

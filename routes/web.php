@@ -223,8 +223,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('analisisdebrechas', 'AnalisisBrechaController');
     Route::get('getEmployeeData', 'AnalisisBrechaController@getEmployeeData')->name('getEmployeeData');
 
-
-
     // Declaracion de Aplicabilidad
     Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
     Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');

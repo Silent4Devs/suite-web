@@ -26,8 +26,6 @@ class CreateAnalisisBrechasTable extends Migration
         });
     }
 
-
-
     /**
      * Reverse the migrations.
      *

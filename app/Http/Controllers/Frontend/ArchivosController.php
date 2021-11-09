@@ -15,24 +15,62 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class ArchivosController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('archivo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $archivos = Archivo::all();
+        if ($request->ajax()) {
+            $query = Archivo::with(['carpeta', 'estado', 'team'])->select(sprintf('%s.*', (new Archivo)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'archivo_show';
+                $editGate = 'archivo_edit';
+                $deleteGate = 'archivo_delete';
+                $crudRoutePart = 'archivos';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->addColumn('carpeta_nombre', function ($row) {
+                return $row->carpeta ? $row->carpeta->nombre : '';
+            });
+
+            $table->editColumn('nombre', function ($row) {
+                return $row->nombre ? '<a href="' . $row->nombre->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
+            $table->addColumn('estado_estado', function ($row) {
+                return $row->estado ? $row->estado->estado : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'carpeta', 'nombre', 'estado']);
+
+            return $table->make(true);
+        }
 
         $carpeta = Carpetum::get();
-
         $estado_documentos = EstadoDocumento::get();
-
         $teams = Team::get();
 
-        return view('frontend.archivos.index', compact('archivos', 'carpeta', 'estado_documentos', 'teams'));
+        return view('frontend.archivos.index', compact('carpeta', 'estado_documentos', 'teams'));
     }
 
     public function create()
@@ -58,7 +96,7 @@ class ArchivosController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $archivo->id]);
         }
 
-        return redirect()->route('frontend.archivos.index');
+        return redirect()->route('archivos.index');
     }
 
     public function edit(Archivo $archivo)
@@ -90,7 +128,7 @@ class ArchivosController extends Controller
             $archivo->nombre->delete();
         }
 
-        return redirect()->route('frontend.archivos.index');
+        return redirect()->route('archivos.index');
     }
 
     public function show(Archivo $archivo)
