@@ -8,7 +8,7 @@
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
 
-                    @include('csvImport.modal', ['model' => 'Grupo', 'route' => 'admin.grupoarea.parseCsvImport'])
+                    @include('csvImport.modal', ['model' => 'Grupo', 'route' => 'grupoarea.parseCsvImport'])
                 </div>
             </div>
         @endcan
@@ -24,7 +24,7 @@
                     <span class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue los grupos de las áreas, al finalizar
                         dé
                         clic en siguiente </span>
-                    <a href="{{ route('admin.areas.index') }}" class="item-right col-2 btn text-light"
+                    <a href="{{ route('areas.index') }}" class="item-right col-2 btn text-light"
                         style="background-color:rgb(85, 217, 226); float:right">Siguiente</a>
                 </div>
             </div>
@@ -133,7 +133,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar Grupo Area',
-                url: "{{ route('admin.grupoarea.create') }}",
+                url: "{{ route('grupoarea.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -155,7 +155,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.grupoarea.massDestroy') }}",
+                url: "{{ route('grupoarea.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -187,7 +187,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.grupoarea.index') }}",
+                ajax: "{{ route('grupoarea.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -215,13 +215,13 @@
                         render: function(data, type, row, meta) {
                             const opciones = `
                             @can('configuracion_grupoarea_edit')
-                                <a href="/admin/grupoarea/${data}/edit" class="btn btn-sm"><i class="fas fa-edit" title="Editar"></i></a>
+                                <a href="/grupoarea/${data}/edit" class="btn btn-sm"><i class="fas fa-edit" title="Editar"></i></a>
                             @endcan
                             @can('configuracion_grupoarea_show')
-                                <a href="/admin/grupoarea/${data}/show" class="btn btn-sm"><i class="fas fa-eye" title="Visualizar"></i></a>
+                                <a href="/grupoarea/${data}/show" class="btn btn-sm"><i class="fas fa-eye" title="Visualizar"></i></a>
                             @endcan
                             @can('configuracion_grupoarea_delete')
-                                <button onclick="Eliminar('/admin/grupoarea/${data}','${data}')" class="btn btn-sm text-danger"><i class="fas fa-trash"
+                                <button onclick="Eliminar('/grupoarea/${data}','${data}')" class="btn btn-sm text-danger"><i class="fas fa-trash"
                                         title="Eliminar"></i></button>
                             @endcan
                             `;
@@ -237,7 +237,7 @@
             let table = $('.datatable-GrupoArea').DataTable(dtOverrideGlobals);
 
             async function obtenerAreasRelacionadas(grupo_id) {
-                let api = await fetch("{{ route('admin.grupoarea.getRelationatedAreas') }}", {
+                let api = await fetch("{{ route('grupoarea.getRelationatedAreas') }}", {
                     method: 'POST', // *GET, POST, PUT, DELETE, etc.
                     mode: 'cors', // no-cors, *cors, same-origin
                     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
