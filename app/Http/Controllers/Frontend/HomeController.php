@@ -348,7 +348,7 @@ class HomeController
             array_push($evaluacion_nombre, $evaluacion['nombre']);
         }
         // dd($evaluacion_nombre);
-        return view('frontend.home', compact(
+        return view('frontend.hometenant', compact(
             'auditexterna',
             'auditinterna',
             'actividadsininici',

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="mt-4 card">
@@ -8,7 +8,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.grupoarea.update", [$grupoarea->id]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("grupoarea.update", [$grupoarea->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
 
