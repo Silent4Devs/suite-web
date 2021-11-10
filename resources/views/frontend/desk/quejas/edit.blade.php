@@ -316,7 +316,7 @@
 
 
                             <div class="mt-4 text-right form-group col-12">
-                                <a href="{{ asset('frontend/desk') }}" class="btn btn_cancelar">Cancelar</a>
+                                <a href="{{ asset('desk') }}" class="btn btn_cancelar">Cancelar</a>
                                 <input type="submit" class="btn btn-success" value="Enviar">
                             </div>
                         </form>

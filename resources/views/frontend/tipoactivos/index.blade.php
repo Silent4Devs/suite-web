@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <div class="mt-5 card">
         @can('configuracion_tipoactivo_create')
@@ -8,7 +8,7 @@
 
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'Tipoactivo', 'route' => 'admin.tipoactivos.parseCsvImport'])
+                    @include('csvImport.modal', ['model' => 'Tipoactivo', 'route' => 'tipoactivos.parseCsvImport'])
                 </div>
             </div>
         @endcan
@@ -130,7 +130,7 @@
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar categoría de activos',
-                url: "{{ route('admin.tipoactivos.create') }}",
+                url: "{{ route('tipoactivos.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -152,7 +152,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.tipoactivos.massDestroy') }}",
+                url: "{{ route('tipoactivos.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -184,7 +184,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.tipoactivos.index') }}",
+                ajax: "{{ route('tipoactivos.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

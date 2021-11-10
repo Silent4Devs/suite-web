@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     {{-- @can('planes_accion_access') --}}
     <div class="mt-5 card">
@@ -128,7 +128,7 @@
                 }
             ];
 
-            let url = "{{ route('admin.planes-de-accion.index') }}"
+            let url = "{{ route('planes-de-accion.index') }}"
             let tblPlanesAccion = $('#tblPlanesAccion').DataTable({
                 buttons: dtButtons,
                 ajax: url,
@@ -221,12 +221,12 @@
                     data: 'id',
                     render: function(data, type, row, meta) {
                         let urlVerPlanAccion = "";
-                        let urlEditarPlanAccion = `/admin/planes-de-accion/${data}/edit`;
-                        let urlEliminarPlanAccion = `/admin/planes-de-accion/${data}`;
+                        let urlEditarPlanAccion = `/planes-de-accion/${data}/edit`;
+                        let urlEliminarPlanAccion = `/planes-de-accion/${data}`;
                         if (data == 1) {
-                            urlVerPlanAccion = "{{ route('admin.planTrabajoBase.index') }}";
+                            urlVerPlanAccion = "{{ route('planTrabajoBase.index') }}";
                         } else {
-                            urlVerPlanAccion = `/admin/planes-de-accion/${data}`;
+                            urlVerPlanAccion = `/planes-de-accion/${data}`;
                         }
                         let botones = `   
                             <div class="btn-group">

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <div class="mt-5 card">
@@ -118,7 +118,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.audit-logs.index') }}",
+                ajax: "{{ route('audit-logs.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

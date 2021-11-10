@@ -51,19 +51,19 @@
                                         </td>
                                         <td>
                                             @can('area_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.areas.show', $area->id) }}">
+                                                <a class="btn btn-xs btn-primary" href="{{ route('areas.show', $area->id) }}">
                                                     {{ trans('global.view') }}
                                                 </a>
                                             @endcan
 
                                             @can('area_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.areas.edit', $area->id) }}">
+                                                <a class="btn btn-xs btn-info" href="{{ route('areas.edit', $area->id) }}">
                                                     {{ trans('global.edit') }}
                                                 </a>
                                             @endcan
 
                                             @can('area_delete')
-                                                <form action="{{ route('frontend.areas.destroy', $area->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                <form action="{{ route('areas.destroy', $area->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">

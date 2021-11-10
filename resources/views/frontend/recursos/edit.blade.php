@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <style>
@@ -16,7 +16,7 @@
 
 </style>
 
-    {{ Breadcrumbs::render('admin.recursos.create') }}
+    {{ Breadcrumbs::render('frontend.recursos.create') }}
 
     <div class="card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -65,7 +65,7 @@
                                             Información general de la capacitación</span>
                                     </div>
                                     <form id="form-informacion-general" class="mt-3 row" method="POST"
-                                        action="{{ route('admin.recursos.update', [$recurso->id]) }}"
+                                        action="{{ route('recursos.update', [$recurso->id]) }}"
                                         enctype="multipart/form-data">
                                         @method('PUT')
                                         @csrf
@@ -230,7 +230,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <form method="POST" action="{{ route('admin.recursos.suscribir') }}"
+                                    <form method="POST" action="{{ route('recursos.suscribir') }}"
                                         class="mt-3 row" id="form-participantes" enctype="multipart/form-data">
                                         <div class="pl-3 row w-100">
                                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
@@ -292,7 +292,7 @@
                                     </div>
                                     <div class="mt-3 form-group col-12">
                                         <form id="form_calificar_participantes"
-                                            action="{{ route('admin.recursos.calificar') }}" method="POST"
+                                            action="{{ route('recursos.calificar') }}" method="POST"
                                             enctype="multipart/form-data">
                                             <div class="row">
                                                 <input type="hidden" id="id_empleado_calificacion" name="id_empleado">
@@ -365,7 +365,7 @@
                     // "pageLength": 5,
                     buttons: [],
                     ajax: {
-                        url: `/admin/recursos/${id_recurso}/participantes/`,
+                        url: `/recursos/${id_recurso}/participantes/`,
                         type: "GET"
                     },
                     columns: [{
@@ -467,7 +467,7 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url = "{{ route('admin.recursos.cancelar') }}";
+                    let url = "{{ route('recursos.cancelar') }}";
                     let id_recurso = "{{ $recurso->id }}";
                     $.ajax({
                         type: "POST",
@@ -612,7 +612,7 @@
                 $('.nav-tabs > .nav-item > .active').parent().prev('li').find('a').trigger('click');
             });
 
-            let index_page = "{{ route('admin.recursos.index') }}";
+            let index_page = "{{ route('recursos.index') }}";
             $("#guardando_capacitacion").hide();
             $("#guardando_capacitacion_1").hide();
             $(".btn-general").click(function(e) {
@@ -672,7 +672,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            let url = "{{ route('admin.empleados.get') }}";
+            let url = "{{ route('empleados.get') }}";
             $("#participantes_search").keyup(function() {
                 $.ajax({
                     type: "POST",
