@@ -90,7 +90,7 @@
 
 <div class="datatable-fix" style="width: 100%;">
     <div class="text-right mb-3">
-        <a class="btn btn-danger" href="{{asset('frontend/inicioUsuario/reportes/seguridad')}}">Crear reporte</a>
+        <a class="btn btn-danger" href="{{asset('inicioUsuario/reportes/seguridad')}}">Crear reporte</a>
     </div>
     <table class="table tabla_incidentes_seguridad">
         <thead>
@@ -136,7 +136,7 @@
 	       			<td>{{ $incidentes->asignado ? $incidentes->asignado->name:'sin asignar'}}</td>
 	       			<td>{{ $incidentes->comentarios }}</td>
 	       			<td>
-	       				<a href="{{ route('frontend.desk.seguridad-edit', $incidentes->id) }}"><i class="fas fa-edit"></i></a>
+	       				<a href="{{ route('desk.seguridad-edit', $incidentes->id) }}"><i class="fas fa-edit"></i></a>
 
 	       				@if ($incidentes->estatus == 'cerrado' or $incidentes->estatus == 'cancelado')
 		       					<button class="btn archivar" data-id={{ $incidentes->id }}>
@@ -227,14 +227,14 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Archivo',
                     action: function(e, dt, node, config) {
-                        window.location.href = '/frontend/desk/seguridad-archivo';
+                        window.location.href = '/desk/seguridad-archivo';
                     }
                 }
 
             ];
             if (!$.fn.dataTable.isDataTable('.tabla_incidentes_seguridad')) {
                 let tabla_incidentes = $(".tabla_incidentes_seguridad").DataTable({
-                    ajax: '/frontend/desk/seguridad',
+                    ajax: '/desk/seguridad',
                     buttons: dtButtons,
                     columns: [
                         // {data: 'id'},
@@ -310,12 +310,12 @@
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/frontend/desk/${data}/seguridad-edit/" class="btn archivar"><i class="fas fa-edit"></i></a>`;
+                				<a href="/desk/${data}/seguridad-edit/" class="btn archivar"><i class="fas fa-edit"></i></a>`;
 
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='Archivar("/frontend/desk/${data}/archivar"); return false;' >
+                                    html += `<button class="btn archivar" onclick='Archivar("/desk/${data}/archivar"); return false;' >
 				       						<i class="fas fa-archive"></i></a>
 				       					</button>
 				       					</div>`;

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
 <div class="mt-4 card">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.tipoactivos.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("tipoactivos.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="required" for="tipo"><i class="fas fa-layer-group iconos-crear"></i>Categoría</label>

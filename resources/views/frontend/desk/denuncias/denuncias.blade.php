@@ -44,7 +44,7 @@
 </div>
 <div class="datatable-fix" style="width:100%">
     <div class="text-right mb-3">
-        <a class="btn btn-danger" href="{{asset('frontend/inicioUsuario/reportes/denuncias')}}">Crear reporte</a>
+        <a class="btn btn-danger" href="{{asset('inicioUsuario/reportes/denuncias')}}">Crear reporte</a>
     </div>
 
    <table class="table tabla_denuncias">

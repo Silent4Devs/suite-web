@@ -28,7 +28,7 @@
                     <div class="seccion_div">
 
                         <form class="row" method="POST"
-                            action="{{ route('frontend.desk.seguridad-update', $incidentesSeguridad) }}">
+                            action="{{ route('desk.seguridad-update', $incidentesSeguridad) }}">
                             @csrf
                             <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
                                 style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">

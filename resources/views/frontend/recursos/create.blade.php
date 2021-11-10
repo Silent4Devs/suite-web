@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.recursos.create') }}
+{{-- {{ Breadcrumbs::render('frontend.recursos.create') }}  --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -37,7 +37,7 @@
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Información general de la capacitación</span>
                             </div>
-                            <form id="form-informacion-general" method="POST" action="{{ route('admin.recursos.store') }}"
+                            <form id="form-informacion-general" method="POST" action="{{ route('recursos.store') }}"
                                 enctype="multipart/form-data" class="mt-3 row">
                                 @csrf
                                 <div class="pl-3 row w-100">
@@ -274,7 +274,7 @@
                 $('.nav-tabs > .nav-item > .active').parent().prev('li').find('a').trigger('click');
             });
 
-            let index_page = "{{ route('admin.recursos.index') }}";
+            let index_page = "{{ route('recursos.index') }}";
             $("#guardando_capacitacion").hide();
             $("#btn-general").click(function(e) {
                 e.preventDefault();
@@ -312,7 +312,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            let url = "{{ route('admin.empleados.get') }}";
+            let url = "{{ route('empleados.get') }}";
             $("#participantes_search").keyup(function() {
                 $.ajax({
                     type: "POST",

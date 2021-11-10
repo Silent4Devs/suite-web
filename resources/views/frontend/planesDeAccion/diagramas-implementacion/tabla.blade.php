@@ -359,7 +359,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
+                url: "{{ route('planes-de-accion.loadProject', $planImplementacion) }}",
                 success: function(response) {
                     renderTable(response);
                 }
@@ -370,7 +370,7 @@
         function saveOnServer(response) {
             $.ajax({
                 type: "post",
-                url: "{{ route('admin.planes-de-accion.saveProject', $planImplementacion) }}",
+                url: "{{ route('planes-de-accion.saveProject', $planImplementacion) }}",
                 data: {
                     _token: "{{ csrf_token() }}",
                     prj: JSON.stringify(response),

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <style>
         body {
@@ -247,19 +247,19 @@
             <div class="caja_caja_secciones">
                 <div class="caja_secciones">
                     <section id="original_gantt" class="caja_tab_reveldada">
-                        @include('admin.planesDeAccion.diagramas-implementacion.gantt')
+                        @include('frontend.planesDeAccion.diagramas-implementacion.gantt')
                     </section>
 
                     <section id="tabla_gantt">
-                        @include('admin.planesDeAccion.diagramas-implementacion.tabla')
+                        @include('frontend.planesDeAccion.diagramas-implementacion.tabla')
                     </section>
 
                     <section id="calendario_gantt">
-                        @include('admin.planesDeAccion.diagramas-implementacion.calendario')
+                        @include('frontend.planesDeAccion.diagramas-implementacion.calendario')
                     </section>
 
                     <section id="kanban_gantt">
-                        @include('admin.planesDeAccion.diagramas-implementacion.kanban')
+                        @include('frontend.planesDeAccion.diagramas-implementacion.kanban')
                     </section>
                 </div>
             </div>

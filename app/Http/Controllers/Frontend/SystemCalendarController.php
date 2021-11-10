@@ -20,7 +20,7 @@ class SystemCalendarController extends Controller
     //         'field'      => 'alcance',
     //         'prefix'     => '',
     //         'suffix'     => '',
-    //         'route'      => 'admin.auditoria-internas.edit',
+    //         'route'      => 'auditoria-internas.edit',
     //     ],
     //     [
     //         'model'      => '\App\Models\PlanaccionCorrectiva',
@@ -28,7 +28,7 @@ class SystemCalendarController extends Controller
     //         'field'      => 'actividad',
     //         'prefix'     => '',
     //         'suffix'     => '',
-    //         'route'      => 'admin.planaccion-correctivas.edit',
+    //         'route'      => 'planaccion-correctivas.edit',
     //     ],
     //     [
     //         'model'      => '\App\Models\PlanMejora',
@@ -36,7 +36,7 @@ class SystemCalendarController extends Controller
     //         'field'      => 'descripcion',
     //         'prefix'     => '',
     //         'suffix'     => '',
-    //         'route'      => 'admin.plan-mejoras.edit',
+    //         'route'      => 'plan-mejoras.edit',
     //     ],
     //     [
     //         'model'      => '\App\Models\PlanBaseActividade',
@@ -44,13 +44,13 @@ class SystemCalendarController extends Controller
     //         'field'      => 'actividad',
     //         'prefix'     => '',
     //         'suffix'     => '',
-    //         'route'      => 'admin.plan-base-actividades.edit',
+    //         'route'      => 'plan-base-actividades.edit',
     //     ],
     // ];
 
     public function index()
     {
-        abort_if(Gate::denies('agenda_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('agenda_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $implementaciones = PlanImplementacion::get();
         $actividades = collect();
 
@@ -90,6 +90,6 @@ class SystemCalendarController extends Controller
         // dd($auditoria_internas);
         $recursos = Recurso::get();
 
-        return view('fontend.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas'));
+        return view('frontend.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas'));
     }
 }

@@ -687,11 +687,11 @@ Route::middleware([
         // Route::resource('faq-questions', FaqQuestionController::class);
 
         Route::get('system-calendar', [SystemCalendarController::class, 'index'])->name('systemCalendar');
-        // Route::get('global-search', [GlobalSearchController::class,'search'])->name('globalSearch');
-        // Route::post('global-structure-search', [GlobalStructureSearchController::class,'globalSearch'])->name('globalStructureSearch');
-        // Route::get('user-alerts/read', [UserAlertsController::class,'read']);
-        // Route::get('team-members', [TeamMembersController::class,'index'])->name('team-members.index');
-        // Route::post('team-members', [TeamMembersController::class,'invite'])->name('team-members.invite');
+        Route::get('global-search', [GlobalSearchController::class,'search'])->name('globalSearch');
+        Route::post('global-structure-search', [GlobalStructureSearchController::class,'globalSearch'])->name('globalStructureSearch');
+        Route::get('user-alerts/read', [UserAlertsController::class,'read']);
+        Route::get('team-members', [TeamMembersController::class,'index'])->name('team-members.index');
+        Route::post('team-members', [TeamMembersController::class,'invite'])->name('team-members.invite');
 
         //amenzas
         Route::resource('amenazas', AmenazaController::class);
@@ -754,11 +754,11 @@ Route::middleware([
         // Route::delete('control-documentos/destroy', [ControlDocumentosController::class,'massDestroy'])->name('control-documentos.massDestroy');
         // Route::resource('control-documentos', ControlDocumentosController::class, ['except' => ['create']]);
 
-        // Route::get('system-calendar', [SystemCalendarController::class,'index'])->name('systemCalendar');
-        // Route::get('global-search', [GlobalSearchController::class,'search'])->name('globalSearch');
-        // Route::get('user-alerts/read', [UserAlertsController::class,'read']);
-        // Route::get('team-members', [TeamMembersController::class,'index'])->name('team-members.index');
-        // Route::post('team-members', [TeamMembersController::class,'invite'])->name('team-members.invite');
+        Route::get('system-calendar', [SystemCalendarController::class,'index'])->name('systemCalendar');
+        Route::get('global-search', [GlobalSearchController::class,'search'])->name('globalSearch');
+        Route::get('user-alerts/read', [UserAlertsController::class,'read']);
+        Route::get('team-members', [TeamMembersController::class,'index'])->name('team-members.index');
+        Route::post('team-members', [TeamMembersController::class,'invite'])->name('team-members.invite');
 
         //REPORTES CONTEXTO 27001
         Route::get('reportes-contexto/', [ReporteContextoController::class, 'index'])->name('reportes-contexto.index');

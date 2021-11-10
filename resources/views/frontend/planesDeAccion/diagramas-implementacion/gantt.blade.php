@@ -19,7 +19,7 @@
         used on a complete and flexible project management solution.<br> Get your projects done! Give <a
             href="http://twproject.com" target="_blank">Twproject a try now</a>.
     </div>
-    <div id="workSpace" data-url-save="{{ route('admin.planes-de-accion.saveProject', $planImplementacion) }}"
+    <div id="workSpace" data-url-save="{{ route('planes-de-accion.saveProject', $planImplementacion) }}"
         data-url-assigs={{ asset('storage/empleados/imagenes') }}
         style="padding:0px; overflow-y:auto; overflow-x:hidden;border:1px solid #e5e5e5;position:relative;margin:0 5px">
     </div>
@@ -126,7 +126,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('admin.planes-de-accion.loadProject', $planImplementacion) }}",
+                url: "{{ route('planes-de-accion.loadProject', $planImplementacion) }}",
                 success: function(response) {
                     ge.loadProject(response);
                     ge.checkpoint(); //empty the undo stac
@@ -169,7 +169,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('admin.planes-de-accion.saveProject', $planImplementacion) }}",
+                url: "{{ route('planes-de-accion.saveProject', $planImplementacion) }}",
                 data: {
                     prj
                 },
@@ -212,7 +212,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('admin.planTrabajoBase.checkChanges') }}",
+                url: "{{ route('planTrabajoBase.checkChanges') }}",
                 data: {
                     txt_prj
                 },
@@ -559,7 +559,7 @@
                                                             <button onclick="ge.splitter.resize(100);return false;" class="button textual icon"><span class="teamworkIcon">R</span></button>
                                                             <span class="ganttButtonSeparator"></span>
                                                             <button onclick="ge.element.toggleClass('colorByStatus' );return false;" class="button textual icon"><span class="teamworkIcon">&sect;</span></button>
-                                                            <button class="button textual requireWrite" title="Editar recursos"><a href="{{ route('admin.empleados.index') }}"><span class="teamworkIcon">M</span></a></button>
+                                                            <button class="button textual requireWrite" title="Editar recursos"><a href="{{ route('empleados.index') }}"><span class="teamworkIcon">M</span></a></button>
                                                             &nbsp; &nbsp; &nbsp; &nbsp;
                                                             <button onclick="saveGanttOnServer();" class="button textual icon icons_propios_gantt guardar " title="Guardar"><i class="fas fa-save"></i></button>
                                                             <div class="ml-2 btn-group dropright">                                                                 
