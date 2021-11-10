@@ -10,12 +10,7 @@
             @php
                 use App\Models\Organizacion;
                 $organizacion = Organizacion::first();
-                $logotipo = 'img/logo_policromatico_2.png';
-                if ($organizacion) {
-                    if ($organizacion->logotipo) {
-                        $logotipo = 'images/' . $organizacion->logotipo;
-                    }
-                }
+                $logotipo = $organizacion->logotipo;
             @endphp
             <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
         </div>
