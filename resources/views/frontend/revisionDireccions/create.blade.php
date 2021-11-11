@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.revision-direccions.create') }}
+{{-- {{ Breadcrumbs::render('frontend.revision-direccions.create') }} --}}
 
 <div class="card mt-4">
     <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.revision-direccions.store") }}" enctype="multipart/form-data" class="row">
+        <form method="POST" action="{{ route("revision-direccions.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-md-6">
                 <label for="estadorevisionesprevias"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.revisionDireccion.fields.estadorevisionesprevias') }}</label>

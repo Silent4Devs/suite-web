@@ -157,26 +157,26 @@
                             @include('frontend.inicioUsuario.mis-datos')
                         </section>
                         <section id="calendario">
-                            @include('inicioUsuario.calendario')
+                            @include('frontend.inicioUsuario.calendario')
                         </section>
                         <section id="actividades">
-                            @include('inicioUsuario.actividades')
+                            @include('frontend.inicioUsuario.actividades')
                         </section>
                         <section id="aprobaciones">
                             @include('frontend.inicioUsuario.aprobaciones')
                         </section>
                         {{-- <section id="evaluaciones">
-                            @include('inicioUsuario.evaluaciones')
+                            @include('frontend.inicioUsuario.evaluaciones')
                         </section> --}}
                         <section id="capacitaciones">
-                            @include('inicioUsuario.capacitaciones')
+                            @include('frontend.inicioUsuario.capacitaciones')
                         </section>
                         <section id="reportes">
-                            @include('inicioUsuario.reportes')
+                            @include('frontend.inicioUsuario.reportes')
                         </section>
                     </div>
                 @else
-                    @include('inicioUsuario.agenda')
+                    @include('frontend.inicioUsuario.agenda')
                 @endif
             </div>
 

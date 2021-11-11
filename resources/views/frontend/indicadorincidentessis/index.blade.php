@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.indicadorincidentessis.index') }}
+{{-- {{ Breadcrumbs::render('frontend.indicadorincidentessis.index') }} --}}
 
 <div class="card mt-5">
     <div class="col-md-10 col-sm-9 py-3 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
