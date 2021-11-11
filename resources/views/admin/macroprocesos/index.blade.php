@@ -143,12 +143,12 @@
                         visible: false
                     },
                     {
-                        data: 'codigo',
-                        name: 'codigo'
-                    },
-                    {
                         data: 'nombre',
                         name: 'nombre'
+                    },
+                    {
+                        data: 'codigo',
+                        name: 'codigo'
                     },
                     {
                         data: 'grupo',
