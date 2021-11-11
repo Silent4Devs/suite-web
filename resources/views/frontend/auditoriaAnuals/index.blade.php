@@ -14,7 +14,7 @@
 
     </style>
 
-    <!-- {{ Breadcrumbs::render('frontend.auditoria-anuals.index') }} -->
+{{-- {{ Breadcrumbs::render('frontend.auditoria-anuals.index') }} --}}
 
     @can('auditoria_anual_create')
 

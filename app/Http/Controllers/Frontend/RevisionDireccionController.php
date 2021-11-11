@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRevisionDireccionRequest;
@@ -17,7 +17,7 @@ class RevisionDireccionController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('revision_direccion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('revision_direccion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = RevisionDireccion::with(['team'])->select(sprintf('%s.*', (new RevisionDireccion)->table));
@@ -73,21 +73,21 @@ class RevisionDireccionController extends Controller
 
         $teams = Team::get();
 
-        return view('admin.revisionDireccions.index', compact('teams'));
+        return view('frontend.revisionDireccions.index', compact('teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('revision_direccion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.revisionDireccions.create');
+        return view('frontend.revisionDireccions.create');
     }
 
     public function store(StoreRevisionDireccionRequest $request)
     {
         $revisionDireccion = RevisionDireccion::create($request->all());
 
-        return redirect()->route('admin.revision-direccions.index');
+        return redirect()->route('revision-direccions.index');
     }
 
     public function edit(RevisionDireccion $revisionDireccion)
@@ -96,14 +96,14 @@ class RevisionDireccionController extends Controller
 
         $revisionDireccion->load('team');
 
-        return view('admin.revisionDireccions.edit', compact('revisionDireccion'));
+        return view('frontend.revisionDireccions.edit', compact('revisionDireccion'));
     }
 
     public function update(UpdateRevisionDireccionRequest $request, RevisionDireccion $revisionDireccion)
     {
         $revisionDireccion->update($request->all());
 
-        return redirect()->route('admin.revision-direccions.index');
+        return redirect()->route('revision-direccions.index');
     }
 
     public function show(RevisionDireccion $revisionDireccion)
@@ -112,7 +112,7 @@ class RevisionDireccionController extends Controller
 
         $revisionDireccion->load('team');
 
-        return view('admin.revisionDireccions.show', compact('revisionDireccion'));
+        return view('frontend.revisionDireccions.show', compact('revisionDireccion'));
     }
 
     public function destroy(RevisionDireccion $revisionDireccion)
