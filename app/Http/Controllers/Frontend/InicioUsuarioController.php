@@ -134,6 +134,7 @@ class InicioUsuarioController extends Controller
         $contador_revisiones = 0;
         $evaluaciones = new EvaluadoEvaluador;
         $mis_evaluaciones = new EvaluadoEvaluador;
+        $lista_evaluaciones = collect();
         if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
 
@@ -155,7 +156,7 @@ class InicioUsuarioController extends Controller
             $evaluaciones_mis_objetivos = Evaluacion::whereHas('evaluados', function ($q) use ($usuario) {
                 $q->where('evaluado_id', $usuario->empleado->id);
             })->get();
-            $lista_evaluaciones = collect();
+            
             foreach ($evaluaciones_mis_objetivos as $evaluacion) {
                 $lista_evaluaciones->push([
                     'id' => $evaluacion->id,

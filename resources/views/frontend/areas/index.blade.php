@@ -13,69 +13,11 @@
         @endcan
 
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table  table-bordered table-striped table-hover datatable datatable-Area">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.area.fields.id') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.area.fields.area') }}
-                                    </th>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($areas as $key => $area)
-                                    <tr data-entry-id="{{ $area->id }}">
-                                        <td>
-                                            {{ $area->id ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $area->area ?? '' }}
-                                        </td>
-                                        <td>
-                                            @can('area_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('areas.show', $area->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('area_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('areas.edit', $area->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('area_delete')
-                                                <form action="{{ route('areas.destroy', $area->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
-
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
                     </div>
                 </div>
                 <div class="col-11">
@@ -90,34 +32,38 @@
                 </div>
             </div>
         </div>
-
-        @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-Area">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            Nombre de Área
-                        </th>
-                        <th>
-                            Grupo
-                        </th>
-                        <th>
-                            Reporta a
-                        </th>
-                        <th>
-                            Descripción
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-            </table>
+                @include('partials.flashMessages')
+                <div class="card-body datatable-fix">
+                    <table class="table table-bordered w-100 datatable-Area">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Nombre de Área
+                                </th>
+                                <th>
+                                    Grupo
+                                </th>
+                                <th>
+                                    Reporta a
+                                </th>
+                                <th>
+                                    Descripción
+                                </th>
+                                <th>
+                                    Opciones
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>      
+                </div>
+            </div>
         </div>
+
+        
     </div>
 @endsection
 @section('scripts')
@@ -192,7 +138,7 @@
 
             ];
 
-            @can('configuracion_area_create')
+         
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar area',
@@ -213,7 +159,7 @@
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
-            @endcan
+            
             @can('configuracion_area_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
