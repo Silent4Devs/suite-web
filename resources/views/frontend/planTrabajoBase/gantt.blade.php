@@ -436,37 +436,36 @@
 
 
         //-------------------------------------------  Open a black popup for managing resources. This is only an axample of implementation (usually resources come from server) ------------------------------------------------------
-        function loadVersionProject(url) {
-            let path = @json($path_asset);
-            let url_gantt = `${path}/${url}`;
-            $.ajax({
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: url_gantt,
-                beforeSend: function(param) {
-                    let c_version_actual_gantt = document.querySelector("#version_actual_gantt");
-                    c_version_actual_gantt.innerHTML =
-                        `<i class="fas fa-circle-notch fa-spin"></i> Cambiando archivo...`;
-                },
-                success: function(response) {
-                    // prof.stop();
-                    let c_version_actual_gantt = document.querySelector("#version_actual_gantt");
-                    c_version_actual_gantt.innerHTML = url;
-                    ge.loadProject(response);
-                    ge.checkpoint(); //empty the undo stac
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: `Tu proyecto: ${url.replaceAll('_',' ').replaceAll('.json','')} ha sido cargado`,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
-            });
+        // function loadVersionProject(url) {
+        //     let url_gantt = `${path}/${url}`;
+        //     $.ajax({
+        //         type: "POST",
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         url: url_gantt,
+        //         beforeSend: function(param) {
+        //             let c_version_actual_gantt = document.querySelector("#version_actual_gantt");
+        //             c_version_actual_gantt.innerHTML =
+        //                 `<i class="fas fa-circle-notch fa-spin"></i> Cambiando archivo...`;
+        //         },
+        //         success: function(response) {
+        //             // prof.stop();
+        //             let c_version_actual_gantt = document.querySelector("#version_actual_gantt");
+        //             c_version_actual_gantt.innerHTML = url;
+        //             ge.loadProject(response);
+        //             ge.checkpoint(); //empty the undo stac
+        //             Swal.fire({
+        //                 position: 'top-end',
+        //                 icon: 'success',
+        //                 title: `Tu proyecto: ${url.replaceAll('_',' ').replaceAll('.json','')} ha sido cargado`,
+        //                 showConfirmButton: false,
+        //                 timer: 1500
+        //             })
+        //         }
+        //     });
 
-        }
+        // }
 
         function editResources() {
 
@@ -722,14 +721,7 @@
                                                         aria-haspopup="true" aria-expanded="false" title="Cargar proyecto">
                                                         <i class="fas fa-folder"></i>
                                                         </button>
-                                                        <div class="dropdown-menu" style="max-height: 100px; overflow: auto">
-                                                        @foreach ($archivos_gantt as $archivo_gantt)
-                                                        <button class="dropdown-item" target="_blank" onclick="loadVersionProject('{{ basename($archivo_gantt) }}')" style="text-transform:capitalize">
-                                                        <i class="far fa-file-code text-primary"></i>
-                                                        {{ str_replace('.json', '', str_replace('_', ' ', basename($archivo_gantt))) }}
-                                                        </button>
-                                                        @endforeach
-                                                        </div>
+                                                        
                                                         </div>
                                                         </div>
 

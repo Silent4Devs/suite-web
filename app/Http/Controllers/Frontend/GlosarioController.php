@@ -16,7 +16,7 @@ class GlosarioController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('glosario_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('glosario_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Glosario::query()->select(sprintf('%s.*', (new Glosario)->table));
@@ -31,7 +31,7 @@ class GlosarioController extends Controller
                 $deleteGate = 'glosario_delete';
                 $crudRoutePart = 'glosarios';
 
-                return view('partials.datatablesActions', compact(
+                return view('frontend.partials.datatablesActions', compact(
                     'viewGate',
                     'editGate',
                     'deleteGate',
@@ -58,14 +58,14 @@ class GlosarioController extends Controller
             return $table->make(true);
         }
 
-        return view('glosarios.index');
+        return view('frontend.glosarios.index');
     }
 
     public function create()
     {
         abort_if(Gate::denies('glosario_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('glosarios.create');
+        return view('frontend.glosarios.create');
     }
 
     public function store(StoreGlosarioRequest $request)

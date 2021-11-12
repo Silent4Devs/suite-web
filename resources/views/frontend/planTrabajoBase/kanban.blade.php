@@ -257,7 +257,6 @@
         });
 
         function initKanban() {
-            // let url = '{{ asset('storage/gantt/') }}/{{ $name_file_gantt }}';
             // $.ajax({
             //     type: "get",
             //     url: url,

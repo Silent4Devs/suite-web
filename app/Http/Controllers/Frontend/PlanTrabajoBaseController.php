@@ -15,28 +15,29 @@ class PlanTrabajoBaseController extends Controller
     public function index()
     {
         //abort_if(Gate::denies('implementacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gantt_path = 'storage/gantt/';
-        $path = public_path($gantt_path);
-        $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
-        $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
-        $write_empleados = $json_code;
-        file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
+        // $gantt_path = 'storage/gantt/';
+        // $path = public_path($gantt_path);
+        // $json_code = json_decode(file_get_contents($path . '/gantt_inicial.json'), true);
+        // $json_code['resources'] = Empleado::select('id', 'name', 'foto', 'genero')->get()->toArray();
+        // $write_empleados = $json_code;
+        // file_put_contents($path . '/gantt_inicial.json', json_encode($write_empleados));
 
-        $files = glob('storage/gantt/versiones/gantt_inicial*.json');
-        $archivos_gantt = [];
+        // $files = glob('storage/gantt/versiones/gantt_inicial*.json');
+        // $archivos_gantt = [];
 
-        sort($files, SORT_NATURAL | SORT_FLAG_CASE);
-        foreach ($files as $clave => $valor) {
-            array_push($archivos_gantt, $valor);
-        }
+        // sort($files, SORT_NATURAL | SORT_FLAG_CASE);
+        // foreach ($files as $clave => $valor) {
+        //     array_push($archivos_gantt, $valor);
+        // }
 
-        $path_asset = asset('storage/gantt/versiones/');
-        $gant_readed = end($archivos_gantt);
-        $file_gant = json_decode(file_get_contents($gant_readed), true);
+        // $path_asset = asset('storage/gantt/versiones/');
+        // $gant_readed = end($archivos_gantt);
+        // $file_gant = json_decode(file_get_contents($gant_readed), true);
         $empleados = Empleado::select('name')->get();
-        $name_file_gantt = 'gantt_inicial.json';
+        // $name_file_gantt = 'gantt_inicial.json';
 
-        return view('frontend.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
+        return view('frontend.planTrabajoBase.index', compact('empleados'));
+        // return view('frontend.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt'));
     }
 
     public function saveImplementationProyect(Request $request)

@@ -1,4 +1,4 @@
-@extends('layouts.admin_glosario')
+@extends('layouts.frontend_glosario')
 @section('content')
 <style type="text/css">
             table {
@@ -82,7 +82,7 @@
         <!--
                                                                     <div style="margin-bottom: 10px;" class="row">
                                                                         <div class="col-lg-12">
-                                                                            <a class="btn btn-success" href="{{ route('admin.glosarios.create') }}">
+                                                                            <a class="btn btn-success" href="{{ route('glosarios.create') }}">
                                                                                 {{ trans('global.add') }} {{ trans('cruds.glosario.title_singular') }}
                                                                             </a>
                                                                         </div>

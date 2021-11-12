@@ -7,6 +7,7 @@
 		<div class="card-body">
 			<strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
 
+			@if (auth()->user()->empleado)
 			<form class="row" method="POST" action="{{ route('reportes-mejoras-store') }}">
 				@csrf
 
@@ -110,6 +111,10 @@
 				</div>
 
 			</form>
+			@else
+			<h1>El usuario no a sido vinculado con un empleado</h1>
+			@endif
+
 		</div>
 	</div>
 @endsection
