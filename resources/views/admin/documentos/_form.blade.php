@@ -163,12 +163,26 @@
             <span class="text-danger proceso_error error-ajax"></span>
         </div>
     </div>
-    <div class="col-sm-12 col-lg-2">
+    <div class="col-sm-12 col-lg-2" x-data="{estaBloqueado:true}" x-init="estaBloqueado= true" >
         <div class="form-group">
-            <label for="version">Versión:</label>
-            <p class="m-0"
-                style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669">
-                {{ $documentoActual->version == null ? '1' : intval($documentoActual->version) }}</p>
+            <template x-if="estaBloqueado">
+                <div>
+                    <label for="version">Versión:</label>
+                    <input readonly class="m-0 form-control" type="number" name="version"
+                        {{-- style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669" --}}
+                        value="{{ $documentoActual->version == null ? '1' : intval($documentoActual->version) }}"/>
+                </div>
+            </template>
+            <template x-if="!estaBloqueado">
+                <div>
+                    <label for="version">Versión:</label>
+                    <input class="m-0 form-control" type="number" name="version"
+                        {{-- style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669" --}}
+                        value="{{ $documentoActual->version == null ? '1' : intval($documentoActual->version) }}"/>
+                </div>
+            </template>
+            <input type="checkbox" id="estaBloqueado" style="display:none">
+            <label for="estaBloqueado" x-on:click="estaBloqueado=!estaBloqueado"><i class="fas" x-bind:class="!estaBloqueado?'fa-lock':'fa-unlock'"></i></label>
         </div>
     </div>
     <div class="col-sm-12 col-lg-3">
