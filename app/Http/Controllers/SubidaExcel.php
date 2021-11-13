@@ -28,6 +28,7 @@ use App\Imports\RevisionDIreccionImport;
 use App\Imports\TeamImport;
 use App\Imports\UsuarioImport;
 use App\Imports\VulnerabilidadImport;
+use App\Imports\EmpleadoImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SubidaExcel extends Controller
@@ -128,19 +129,19 @@ class SubidaExcel extends Controller
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
-    public function FaqCategoria()
-    {
-        Excel::import(new FaqCategoriaImport, request()->file('faqcategoria'));
+    // public function FaqCategoria()
+    // {
+    //     Excel::import(new FaqCategoriaImport, request()->file('faqcategoria'));
 
-        return redirect('CargaDocs')->with('success', 'All good!');
-    }
+    //     return redirect('CargaDocs')->with('success', 'All good!');
+    // }
 
-    public function FaqPregunta()
-    {
-        Excel::import(new FaqPreguntaImport, request()->file('faqpregunta'));
+    // public function FaqPregunta()
+    // {
+    //     Excel::import(new FaqPreguntaImport, request()->file('faqpregunta'));
 
-        return redirect('CargaDocs')->with('success', 'All good!');
-    }
+    //     return redirect('CargaDocs')->with('success', 'All good!');
+    // }
 
     public function AnalisisRiesgo()
     {
@@ -222,6 +223,13 @@ class SubidaExcel extends Controller
     public function Activos()
     {
         Excel::import(new ActivoImport, request()->file('activo_inventario'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
+    public function Empleado()
+    {
+        Excel::import(new EmpleadoImport, request()->file('empleado'));
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
