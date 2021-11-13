@@ -228,6 +228,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
     Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
 
+    //Panel declaracion
+    Route::get('panel-declaracion', 'DeclaracionAplicabilidadController@renderPanel')->name('panel-declaracion.PanelDeclaracion');
+
     //gantt
     Route::get('gantt', 'GanttController@index');
     Route::post('gantt/update', 'GanttController@update');
@@ -1004,8 +1007,8 @@ Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion
 Route::post('CargaCategoriaCapacitacion', 'SubidaExcel@CategoriaCapacitacion')->name('carga-categoriacapacitacion');
 Route::post('CargaRevisionDireccion', 'SubidaExcel@RevisionDireccion')->name('carga-revisiondireccion');
 Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
-Route::post('CargaFaqCategoria', 'SubidaExcel@FaqCategoria')->name('carga-faqcategoria');
-Route::post('CargaFaqPregunta', 'SubidaExcel@FaqPregunta')->name('carga-faqpregunta');
+// Route::post('CargaFaqCategoria', 'SubidaExcel@FaqCategoria')->su('carga-faqcategoria');
+// Route::post('CargaFaqPregunta', 'SubidaExcel@FaqPregunta')->name('carga-faqpregunta');
 Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');
 Route::post('CargaPartesInteresadas', 'SubidaExcel@PartesInteresadas')->name('carga-partes_interesadas');
 Route::post('CargaMatrizRequisitosLegales', 'SubidaExcel@MatrizRequisitosLegales')->name('carga-matriz_requisitos_legales');
@@ -1018,3 +1021,4 @@ Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politi
 Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area');
 Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
 Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
+Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
