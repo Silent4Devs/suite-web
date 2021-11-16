@@ -1,8 +1,6 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
+
 
 namespace App\Models;
 
