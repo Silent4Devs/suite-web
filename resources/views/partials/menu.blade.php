@@ -9,10 +9,19 @@
         <div class="caja_img_logo">
             @php
                 use App\Models\Organizacion;
-                $organizacion = Organizacion::first();
-                $logotipo = $organizacion->logotipo;
+                $organizacion = Organizacion::select('id', 'logotipo')->first();
+
+                if(!empty($organizacion)){
+                    $logotipo = $organizacion->logotipo;
+                    @endphp
+                    <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
+                    @php
+                }else{
+                    @endphp
+                    <img src="{{ asset('img/logo_policromatico_2.png')}}" class="img_logo" style="width: 110%;">
+                    @php
+                }
             @endphp
-            <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
         </div>
 
     </div>
