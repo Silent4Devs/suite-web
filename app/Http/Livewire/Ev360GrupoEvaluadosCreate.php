@@ -44,7 +44,7 @@ class Ev360GrupoEvaluadosCreate extends Component
 
     public function render()
     {
-        $lista_empleados = Empleado::all();
+        $lista_empleados = Empleado::get();
 
         return view('livewire.ev360-grupo-evaluados-create', ['lista_empleados' => $lista_empleados]);
     }

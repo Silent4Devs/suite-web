@@ -2,13 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\RH\Competencia;
-use App\Models\RH\TipoCompetencia;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\RH\Competencia;
+use App\Models\RH\TipoCompetencia;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Ev360TablaCompetencias extends Component
 {
+    use LivewireAlert;
     use WithPagination;
     public $showTable = false;
     public $search = '';
