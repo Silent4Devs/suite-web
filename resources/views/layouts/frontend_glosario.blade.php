@@ -872,7 +872,7 @@
 </head>
 
 <body class="">
-    @include('partials.menutenant')
+    @include('partials.menu')
     <div class="c-wrapper">
         <header class="px-3 c-header c-header-fixed" style="border: none;">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
@@ -1217,7 +1217,7 @@
                 },
                 order: [],
                 scrollX: true,
-                pageLength: 5,P
+                pageLength: 5,
                 lengthMenu: [
                     [5, 10, 20, 50, 100, -1],
                     [5, 10, 20, 50, 100, "Todos"]

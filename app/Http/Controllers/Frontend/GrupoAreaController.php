@@ -51,7 +51,7 @@ class GrupoAreaController extends Controller
             // 'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
         ]);
         // Flash::success('<h5 class="text-center">Grupo agregado satisfactoriamente</h5>');
-        return redirect()->route('grupoarea.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('frontend.grupoarea.index')->with('success', 'Guardado con éxito');
     }
 
     public function show(Grupo $grupoarea)
@@ -82,7 +82,7 @@ class GrupoAreaController extends Controller
         );
         $grupoarea->update($request->all());
         // Flash::success('<h5 class="text-center">Grupo actualizado satisfactoriamente</h5>');
-        return redirect()->route('grupoarea.index')->with('success', 'Editado con éxito');
+        return redirect()->route('frontend.grupoarea.index')->with('success', 'Editado con éxito');
     }
 
     public function destroy(Grupo $grupoarea)
