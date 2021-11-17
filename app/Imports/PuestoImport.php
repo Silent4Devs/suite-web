@@ -16,16 +16,7 @@ class PuestoImport implements ToModel
     {
         return new Puesto([
             'puesto' => $row[0],
-            'descripcion'=> isset($row[1])?$row[1]:null,
+            'descripcion' => $row[1],
         ]);
     }
-
-    public function rules(): array
-    {
-        return [
-            'puesto' => 'required|string|min:2|max:255',
-            'descripcion' => 'required|string',
-        ];
-    }
-
 }

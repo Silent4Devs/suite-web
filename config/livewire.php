@@ -1,6 +1,6 @@
 <?php
-/*use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;*/
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 return [
 
@@ -57,13 +57,12 @@ return [
     |
     */
 
-    'middleware_group'  => 'web',
-    //multitenant
-    /*'middleware_group' => [
+    //'middleware_group'  => 'web',
+    'middleware_group' => [
         'web',
         'universal',
         InitializeTenancyByDomain::class, // or whatever tenancy middleware you use
-    ],*/
+    ],
 
     /*
     |--------------------------------------------------------------------------

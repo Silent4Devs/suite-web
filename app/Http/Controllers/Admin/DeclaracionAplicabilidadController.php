@@ -279,13 +279,4 @@ class DeclaracionAplicabilidadController extends Controller
             'logotipo'
         ));*/
     }
-
-    public function PanelDeclaracion()
-    {
-
-        return view('admin.panelDeclaracion');
-
-    }
-
-    
 }

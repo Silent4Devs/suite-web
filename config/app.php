@@ -181,6 +181,7 @@ return [
         // Jenssegers\Date\DAteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Geocoder\GeocoderServiceProvider::class,
+        App\Providers\TenancyServiceProvider::class, // <-- here
 
 
     ],

@@ -2,17 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Proceso;
-use Livewire\Component;
 use App\Models\Empleado;
-use App\Models\VariablesIndicador;
 use App\Models\EvaluacionIndicador;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\Proceso;
+use App\Models\VariablesIndicador;
+use Livewire\Component;
 
 class IndicadoresSgsiComponent extends Component
 {
-    use LivewireAlert;
-
     public $nombre;
     public $description;
     public $formula;

@@ -2,18 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Proceso;
-use Livewire\Component;
-use App\Models\MatrizRiesgo;
 use App\Models\AnalisisDeRiesgo;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\Area;
+use App\Models\MatrizRiesgo;
+use App\Models\Proceso;
+use App\Models\Sede;
+use Livewire\Component;
 
 class MatrizHeatmap extends Component
 {
-    use LivewireAlert;
-
     public $id_analisis;
     public $control;
     public $matriz;
@@ -82,8 +79,6 @@ class MatrizHeatmap extends Component
         $this->proceso_id = '';
         $this->changer = '';
         $this->listados = [];
-        $this->changer_residual = '';
-        $this->listados_residual = [];
         //$this->conteo = '';
         $this->callAlert('info', 'Los filtros se han restablecido', true, 'La información volvio a su estado original');
     }
@@ -108,13 +103,15 @@ class MatrizHeatmap extends Component
         $sedes = Sede::select('id', 'sede')->get();
         $areas = Area::select('id', 'area')->get();
         $procesos = Proceso::select('id', 'nombre')->get();
+        // $mapas = AnalisisDeRiesgo::select('id', 'nombre')->get();
+        // dd($this->mapas);
 
         $muy_alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['54', '81']);
         $alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['27', '36']);
         $medio = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '9');
         $bajo = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
-        $muy_alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo_residual', ['54', '81']);
-        $alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo_residual', ['27', '36']);
+        $muy_alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['54', '81']);
+        $alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['27', '36']);
         $medio_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '9');
         $bajo_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '0');
         //querys contador en grafica
@@ -178,7 +175,7 @@ class MatrizHeatmap extends Component
             }
         }
 
-        //$matriz_riesgos = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
+        $matriz_riesgos = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
 
         foreach ($matriz_query->get() as $key => $value) {
             switch ($value->probabilidad) {
@@ -247,7 +244,6 @@ class MatrizHeatmap extends Component
                     }
                     break;
             }
-
         }
 
         foreach ($matriz_query_r->get() as $key => $value_r) {
@@ -269,7 +265,7 @@ class MatrizHeatmap extends Component
                     }
                     break;
                 case 3:
-                    switch ($value_r->impacto_residual) {
+                    switch ($value->impacto_residual) {
                         case 0:
                             $this->baja_bajo_r++;
                             break;
@@ -285,7 +281,7 @@ class MatrizHeatmap extends Component
                     }
                     break;
                 case 6:
-                    switch ($value_r->impacto_residual) {
+                    switch ($value->impacto_residual) {
                         case 0:
                             $this->media_bajo_r++;
                             break;
@@ -301,7 +297,7 @@ class MatrizHeatmap extends Component
                     }
                     break;
                 case 9:
-                    switch ($value_r->impacto_residual) {
+                    switch ($value->impacto_residual) {
                         case 0:
                             $this->alta_bajo_r++;
                             break;
@@ -317,9 +313,6 @@ class MatrizHeatmap extends Component
                     }
                     break;
             }
-
-
-
         }
 
         return view('livewire.matriz-heatmap', [
@@ -405,29 +398,13 @@ class MatrizHeatmap extends Component
 
     public function callQueryResidual($id, $valor)
     {
-        $matriz_riesgos_residual = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad_residual', 'impacto_residual', 'nivelriesgo_residual')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', $id);
-
-        if ($this->sede_id != '') {
-            $matriz_riesgos_residual->Where('id_sede', '=', $this->sede_id);
-        }
-
-        if ($this->area_id != '') {
-            $matriz_riesgos_residual->Where('id_area', '=', $this->area_id);
-        }
-
-        if ($this->proceso_id != '') {
-            $matriz_riesgos_residual->Where('id_proceso', '=', $this->proceso_id);
-        }
-
-        //dd($matriz_riesgos->toSql());
-
+        dd($id);
+        $matriz_riesgos_residual = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad_residual', 'impacto_residual', 'nivelriesgo_residual')->with(['controles'])->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', $id)->get();
         if ($matriz_riesgos_residual->count() == 0) {
-            $this->callAlert('warning', 'No se encontro registro con este nivel de riesgo', false, 'Por favor ingrese un nuevo valor');
-            $this->changer_residual = '';
-            $this->listados_residual = [];
+            $this->callAlert('warning', 'No se encontro registro con este nivel de riesgo residual', false, 'Por favor ingrese un nuevo valor');
         } else {
             $this->changer_residual = '';
-            $this->listados_residual = $matriz_riesgos_residual->get();
+            $this->listados_residual = $matriz_riesgos_residual;
             $this->changer_residual = $valor;
             $this->cleanData();
         }

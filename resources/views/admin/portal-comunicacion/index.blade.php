@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     {{-- @can('planes_accion_access') --}}
     <style>

@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Flash;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\StoreOrganizacionRequest;
-use App\Http\Requests\UpdateOrganizacionRequest;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyOrganizacionRequest;
+use App\Http\Requests\StoreOrganizacionRequest;
+use App\Http\Requests\UpdateOrganizacionRequest;
+use App\Models\Organizacion;
+use Flash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Intervention\Image\Facades\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrganizacionController extends Controller
 {
@@ -23,11 +22,12 @@ class OrganizacionController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $organizacions = Organizacion::first();
-
-
-
+        $logotipo_organizacion = $organizacions->logotipo;
+        $logotipo = 'img/logotipo-tabantaj.png';
+        if ($logotipo_organizacion) {
+            $logotipo = 'images/' . $logotipo_organizacion;
+        }
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
@@ -37,8 +37,7 @@ class OrganizacionController extends Controller
         } else {
             $empty = true;
             $count = Organizacion::get()->count();
-            $logotipo=$organizacions->logotipo;
-            // dd($organizacions);
+
             return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo);
         }
     }
@@ -79,32 +78,21 @@ class OrganizacionController extends Controller
                 'logotipo' => 'mimetypes:image/jpeg,image/bmp,image/png',
             ]);
         }
-        // if ($request->file('logotipo') != null or !empty($request->file('logotipo'))) {
-        //     $extension = pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_EXTENSION);
-        //     $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-        //     $new_name_image = 'UID_' . $organizacions->id . '_' . $name_image . '.' . $extension;
-        //     Storage::makeDirectory("public/images");
-        //     $route = public_path("storage/images");
-        //     // $route = asset('images/'.$new_name_image);
-        //     $image = $new_name_image;
-        //     //Usamos image_intervention para disminuir el peso de la imagen
-        //     $img_intervention = Image::make($request->file('logotipo'));
-        //     $img_intervention->resize(256, null, function ($constraint) {
-        //         $constraint->aspectRatio();
-        //     })->save($route);
-        //     $organizacions->update(['logotipo' => $image]);
-        // }
-
-        $file = $request->file('logotipo');
-        if ($file != null) {
-            Storage::makeDirectory("public/images");
-            $ruta=public_path("storage/images");
-            $nombre = $file->getClientOriginalName();
-            $file->move($ruta, $file->getClientOriginalName());
-            $organizacions->logotipo = $nombre;
-            $organizacions->save();
+        $image = 'silent4business.png';
+        if ($request->file('logotipo') != null or !empty($request->file('logotipo'))) {
+            $extension = pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_EXTENSION);
+            $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+            $new_name_image = 'UID_' . $organizacions->id . '_' . $name_image . '.' . $extension;
+            $route = public_path() . '/images/' . $new_name_image;
+            $image = $new_name_image;
+            //Usamos image_intervention para disminuir el peso de la imagen
+            $img_intervention = Image::make($request->file('logotipo'));
+            $img_intervention->resize(256, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($route);
         }
 
+        $organizacions->update(['logotipo' => $image]);
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $organizacions->id]);
         }
@@ -132,10 +120,8 @@ class OrganizacionController extends Controller
         }
         $file = $request->file('logotipo');
         if ($file != null) {
-            Storage::makeDirectory("public/images");
-            $ruta=public_path("storage/images");
             $nombre = $file->getClientOriginalName();
-            $file->move($ruta, $file->getClientOriginalName());
+            $file->move(base_path('/public/images/'), $file->getClientOriginalName());
             $organizacions = Organizacion::find(request()->org_id);
             $organizacions->logotipo = $nombre;
             $organizacions->save();

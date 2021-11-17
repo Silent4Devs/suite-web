@@ -30,9 +30,9 @@ class Ev360EvaluadosSelect extends Component
 
     public function render()
     {
-        $grupos_evaluados = GruposEvaluado::get();
-        $empleados = Empleado::get();
-        $areas = Area::get();
+        $grupos_evaluados = GruposEvaluado::all();
+        $empleados = Empleado::all();
+        $areas = Area::all();
 
         return view('livewire.ev360-evaluados-select', ['grupos_evaluados' => $grupos_evaluados, 'areas' => $areas, 'empleados' => $empleados]);
     }

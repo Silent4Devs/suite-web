@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    {{ Breadcrumbs::render('EV360-Evaluacion-Consulta-Evaluado', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado]) }}
+    {{ Breadcrumbs::render('EV360-Evaluacion-Consulta-Evaluado', ['evaluacion' => $evaluacion,'evaluado'=>$evaluado]) }}
 
     <style>
         .fs-consulta {
@@ -25,7 +25,12 @@
                     @php
                         use App\Models\Organizacion;
                         $organizacion = Organizacion::first();
-                        $logotipo = $organizacion->logotipo;
+                        $logotipo = 'img/logo_policromatico_2.png';
+                        if ($organizacion) {
+                            if ($organizacion->logotipo) {
+                                $logotipo = 'images/' . $organizacion->logotipo;
+                            }
+                        }
                     @endphp
                     <img src="{{ asset($logotipo) }}" class="img-fluid" alt="" width="70">
                 </div>

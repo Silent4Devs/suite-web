@@ -156,7 +156,8 @@
                     </div>
                 </div>
 
-                <div class="form-group col-sm-6"><i class="fas fa-tasks iconos-crear"></i>{!! Form::label('alta_direccion', 'Minutas Alta Dirección') !!}
+                <div class="form-group col-sm-6">
+                    <i class="fas fa-vote-yea iconos-crear"></i>{!! Form::label('alta_direccion', 'Minutas Alta Dirección') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-alta_direccion', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="alta_direccion" required>
@@ -195,13 +196,19 @@
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                     <i class="fas fa-chalkboard-teacher iconos-crear"></i>{!! Form::label('categoriacapacitacion', 'Conocimientos') !!}
+                    <i class="fas fa-chess-knight iconos-crear"></i>{!! Form::label('categoriacapacitacion', 'Capacitaciones') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-categoriacapacitacion', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="categoriacapacitacion" required>
                         {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
                         {!! Form::close() !!}
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        {{-- <span class="mb-1 text-center text-">Evaluaciones</span> --}}
                     </div>
                 </div>
 
@@ -217,22 +224,14 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 col-sm-12">
-                    <div class="card vrd-agua">
-                        {{-- <span class="mb-1 text-center text-">Evaluaciones</span> --}}
-                    </div>
-                </div>
 
 
-
-
-
-                {{-- <div class="py-1 text-center form-group col-12" style="background-color:#1BB0B0; border-radius:100px; color: white;">Activos</div> --}}
+                <div class="py-1 text-center form-group col-12" style="background-color:#1BB0B0; border-radius:100px; color: white;">Activos</div>
 
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                    <i class="ml-2 fas fa-layer-group iconos-crear"></i>{!! Form::label('categoria', 'Categoría') !!}
+                    <i class="fas fa-chess-knight iconos-crear"></i>{!! Form::label('categoria', 'Categoría') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-categoria', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="categoria" required>
@@ -271,6 +270,17 @@
                     </div>
                 </div>
 
+                 <!-- Categoria Field -->
+                 <div class="form-group col-sm-6">
+                    <i class="fa-fw fas fa-screwdriver iconos-crear"></i>{!! Form::label('control', 'Controles') !!}
+                    <div>
+                        {!! Form::open(['route' => 'carga-control', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-sm" type="file" name="control" required>
+                        {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
+                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::close() !!}
+                    </div>
+                </div>
 
                 {{-- <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
@@ -310,7 +320,7 @@
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                     <i class="fa-fw fas fa-briefcase iconos-crear"></i>{!! Form::label('roles', 'Roles') !!}
+                    <i class="fa-fw fab fa-stripe-s iconos-crear"></i>{!! Form::label('roles', 'Roles') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-estadoincidente', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="roles" required>
@@ -322,20 +332,20 @@
 
 
 
-                {{-- <div class="py-1 text-center form-group col-12" style="background-color:#1BB0B0; border-radius:100px; color: white;">Preguntas Frecuentes</div> --}}
+                <div class="py-1 text-center form-group col-12" style="background-color:#1BB0B0; border-radius:100px; color: white;">Preguntas Frecuentes</div>
 
 
                 <!-- Categoria Field -->
-                {{-- <div class="form-group col-sm-6">
+                <div class="form-group col-sm-6">
                     <i class="fa-fw fas fa-briefcase iconos-crear"></i>{!! Form::label('faqcategoria', 'Categoría') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-faqcategoria', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="faqcategoria" required>
-                        {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!} --}}
+                        {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
                         {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
-                        {{-- {!! Form::close() !!} --}}
-                    {{-- </div>
-                </div> --}}
+                        {!! Form::close() !!}
+                    </div>
+                </div>
 
                 {{-- <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
@@ -355,7 +365,7 @@
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                    <i class="fas fa-puzzle-piece iconos_menu iconos-crear"></i>{!! Form::label('grupo_area', 'Áreas/Crear grupo') !!}
+                    <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('grupo_area', 'Áreas/Crear grupo') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-grupo_area', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="grupo_area" required>
@@ -383,19 +393,19 @@
                         <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
-                </div>--}}
+                </div>
                 <div class="form-group col-sm-6">
-                    <i class="fas fa-user-tie iconos-crear"></i>{!! Form::label('empleado', 'Empleado') !!}
+                    <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('area_empleado', 'Áreas/Empleado') !!}
                     <div>
-                        {!! Form::open(['route' => 'carga-empleado', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-sm" type="file" name="empleado" required>
-                        {!! Form::submit('Cargar excel', ['class' => 'btn text-white','style'=>'background-color:#b2b0b0']) !!}
-                        {{-- <button class="btn btn-secondary btn-sm">Descargar Formato</button> --}}
+                        {!! Form::open(['route' => 'carga-area_empleado', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
+                        <input class="btn btn-primary btn-sm" type="file" name="area_empleado" required>
+                        {!! Form::submit('cargar excel', ['class' => 'btn btn-primary']) !!}
+                        <button class="btn btn-secondary btn-sm">Descargar Formato</button>
                         {!! Form::close() !!}
                     </div>
-                </div> 
+                </div> --}}
                 <div class="form-group col-sm-6">
-                    <i class="fa-fw fas fa-laptop iconos-crear"></i>{!! Form::label('activo_inventario', 'Activos/Inventario') !!}
+                    <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('activo_inventario', 'Activos/Inventario') !!}
                     <div>
                         {!! Form::open(['route' => 'carga-activo_inventario', 'method' => 'post',  'enctype' => 'multipart/form-data']) !!}
                         <input class="btn btn-sm" type="file" name="activo_inventario" required>
