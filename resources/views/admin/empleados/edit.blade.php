@@ -468,15 +468,23 @@
                                             <div class="form-group col-sm-6">
                                                 <label for="sede_id"><i
                                                         class="fas fa-building iconos-crear"></i>Sede</label>
+                                                        @if ($sedes)
                                                 <select
                                                     class="form-control select2 {{ $errors->has('sedes') ? 'is-invalid' : '' }}"
                                                     name="sede_id" id="sede_id">
                                                     @foreach ($sedes as $sede_actual)
-                                                        <option value="{{ $sede_actual->id }}"
-                                                            {{ old('sede_id', $sede_actual->id) == $sede->id ? 'selected' : '' }}>
-                                                            {{ $sede_actual->sede }}</option>
+                                                    @if ($sede)
+                                                    <option value="{{ $sede_actual->id }}"
+                                                        {{ old('sede_id', $sede_actual->id) == $sede->id ? 'selected' : '' }}>
+                                                        {{ $sede_actual->sede }}</option>
+                                                    @else
+                                                    <option value="{{ $sede_actual->id }}">
+                                                        {{ $sede_actual->sede }}</option>
+                                                    @endif
+
                                                     @endforeach
                                                 </select>
+                                                      @endif
                                                 @if ($errors->has('sede_id'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('sede_id') }}
