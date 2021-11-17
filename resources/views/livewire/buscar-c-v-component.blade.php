@@ -27,7 +27,8 @@
     <div class="row" style="margin-bottom:30px;">
         <div class="col-sm-12 col-md-6">
             <label class="required" for="tipoactivo_id"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-            <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" wire:model.debounce.800ms="area_id">
+            <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}"
+                wire:model.debounce.800ms="area_id">
                 <option value="">Seleccione el área</option>
                 @foreach ($areas as $area)
                     <option value="{{ $area->id }}">
@@ -38,8 +39,8 @@
 
         <div class="col-sm-12 col-md-6">
             <label class="required" for="tipoactivo_id"><i class="fas fa-user-tie iconos-crear"></i>Empleado</label>
-            <select class="form-control {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}" wire:model.debounce.800ms="empleado_id"
-                id="tipoactivo_id">
+            <select class="form-control {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}"
+                wire:model.debounce.800ms="empleado_id" id="tipoactivo_id">
                 <option value="">Seleccione el nombre del empleado</option>
                 @foreach ($empleados as $empleado)
                     <option value="{{ $empleado->id }}">
@@ -50,16 +51,10 @@
     </div>
 
 
-
     @php
         use App\Models\Organizacion;
         $organizacion = Organizacion::first();
-        $logotipo = 'img/logo_policromatico_2.png';
-        if ($organizacion) {
-            if ($organizacion->logotipo) {
-                $logotipo = 'images/' . $organizacion->logotipo;
-            }
-        }
+        $logotipo = $organizacion->logotipo;
     @endphp
 
     @if ($empleado_id != '')
@@ -222,17 +217,21 @@
                     <h6 style="font-weight:bold;"><i class="fas fa-folder-open iconos-crear"></i>Documentos</h6>
                     <br>
                     @foreach ($empleadoget->empleado_documentos as $documentos)
-                    <ul>
-                    <a href="{{ asset('storage/documentos_empleados/') . '/' . $documentos->documentos }}"  style="text-decoration:none" target="_blank" alt=""><span><i class="fas fa-file iconos-crear"></i>{{$documentos->documentos}}</span></a>
-                    </ul>
+                        <ul>
+                            <a href="{{ asset('storage/documentos_empleados/') . '/' . $documentos->documentos }}"
+                                style="text-decoration:none" target="_blank" alt=""><span><i
+                                        class="fas fa-file iconos-crear"></i>{{ $documentos->documentos }}</span></a>
+                        </ul>
                     @endforeach
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <h6 style="font-weight:bold;"><i class="fas fa-folder-open iconos-crear"></i>Certificados</h6>
                     <br>
-                    @foreach ($empleadoget->empleado_certificaciones as $certificaciones )
+                    @foreach ($empleadoget->empleado_certificaciones as $certificaciones)
                         <ul>
-                            <a href="{{ asset('storage/certificados_empleados/') . '/' . $certificaciones->documento }}"  style="text-decoration:none" target="_blank" alt=""><span><i class="fas fa-file iconos-crear"></i>{{$certificaciones->documento}}</span></a>
+                            <a href="{{ asset('storage/certificados_empleados/') . '/' . $certificaciones->documento }}"
+                                style="text-decoration:none" target="_blank" alt=""><span><i
+                                        class="fas fa-file iconos-crear"></i>{{ $certificaciones->documento }}</span></a>
                         </ul>
                     @endforeach
                 </div>

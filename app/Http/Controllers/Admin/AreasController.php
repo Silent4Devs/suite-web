@@ -181,7 +181,7 @@ class AreasController extends Controller
 
     public function obtenerAreasPorGrupo()
     {
-        $grupos = Grupo::with('areas')->get();
+        $grupos = Grupo::with('areas')->orderByDesc('id')->get();
         $numero_grupos = Grupo::count();
 
         return view('admin.areas.areas-grupo', compact('grupos', 'numero_grupos'));
@@ -197,7 +197,7 @@ class AreasController extends Controller
 
 
         $rutaImagenes = asset('storage/empleados/imagenes/');
-        $grupos = Grupo::with('areas')->get();
+        $grupos = Grupo::with('areas')->orderBy('id')->get();
         $organizacionDB = Organizacion::first();
         $organizacion = !is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
         $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
