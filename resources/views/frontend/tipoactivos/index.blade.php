@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
     <div class="mt-5 card">
-        @can('configuracion_tipoactivo_create')
+    {{-- @can('configuracion_tipoactivo_create') --}}
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Categorías de Activos</strong></h3>
             </div>
@@ -11,7 +11,7 @@
                     @include('csvImport.modal', ['model' => 'Tipoactivo', 'route' => 'tipoactivos.parseCsvImport'])
                 </div>
             </div>
-        @endcan
+            {{-- @endcan --}}
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -126,7 +126,7 @@
 
             ];
 
-            @can('configuracion_tipoactivo_create')
+            {{-- @can('configuracion_tipoactivo_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar categoría de activos',
@@ -147,8 +147,8 @@
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
-            @endcan
-            @can('configuracion_tipoactivo_delete')
+                {{-- @endcan --}}
+                {{-- @can('configuracion_tipoactivo_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -176,7 +176,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
