@@ -64,37 +64,37 @@ class TipoactivoController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_tipoactivo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('frontend.tipoactivos.create');
     }
 
-    public function store(StoreTipoactivoRequest $request)
+    public function store(Request $request)
     {
         $tipoactivo = Tipoactivo::create($request->all());
 
-        return redirect()->route('frontend.tipoactivos.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('tipoactivos.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Tipoactivo $tipoactivo)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_tipoactivo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivo->load('team');
 
-        return view('frontend.tipoactivos.edit', compact('tipoactivo'));
+        return view('tipoactivos.edit', compact('tipoactivo'));
     }
 
     public function update(UpdateTipoactivoRequest $request, Tipoactivo $tipoactivo)
     {
         $tipoactivo->update($request->all());
 
-        return redirect()->route('frontend.tipoactivos.index')->with('success', 'Editado con éxito');
+        return redirect()->route('tipoactivos.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Tipoactivo $tipoactivo)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('configuracion_tipoactivo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivo->load('team');
 
@@ -103,7 +103,7 @@ class TipoactivoController extends Controller
 
     public function destroy(Tipoactivo $tipoactivo)
     {
-        abort_if(Gate::denies('configuracion_tipoactivo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_tipoactivo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tipoactivo->delete();
 
