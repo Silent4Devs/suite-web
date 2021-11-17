@@ -37,7 +37,7 @@ class EmpleadoImport implements ToModel
                 'cumpleaños'=> $birthday,
                 'resumen'=> isset($row[16])?$row[16]:null,
 
-        
+
         ]);
     }
 
@@ -64,5 +64,5 @@ class EmpleadoImport implements ToModel
     }
 
 
-    
+
 }

@@ -224,7 +224,7 @@ class EmpleadoController extends Controller
             'genero' =>  $request->genero,
             'n_empleado' =>  $request->n_empleado,
             'n_registro' =>  $request->n_registro,
-            'sede_id' =>  $request->sede_id,
+            // 'sede_id' =>  $request->sede_id,
             'resumen' =>  $request->resumen,
             'cumpleaños' => $request->cumpleaños,
             'direccion' => $request->direccion,
@@ -502,13 +502,17 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::findOrfail($id);
-        // dd($empleado);
+
         $empleados = Empleado::get();
+
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
+
         $areas = Area::get();
-        $area = Area::findOrfail($empleado->area_id);
+
+        $area = Area::find($empleado->area_id);
         $sedes = Sede::get();
-        $sede = Sede::findOrfail($empleado->sede_id);
+
+        $sede = Sede::find($empleado->sede_id);
         $experiencias = ExperienciaEmpleados::get();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
