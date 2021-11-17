@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8bf85f8a7ba37457d01183b7e913bc4",
+    "content-hash": "666f8096298ee3755ee4ace388750884",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -2030,16 +2030,16 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v5.5.1",
+            "version": "v5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6"
+                "reference": "cf814442ce0e9eebe5317d61b63ccda4b85de67a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/83b609028194aa042ea33b5af2d41a7427de80e6",
-                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/cf814442ce0e9eebe5317d61b63ccda4b85de67a",
+                "reference": "cf814442ce0e9eebe5317d61b63ccda4b85de67a",
                 "shasum": ""
             },
             "require": {
@@ -2081,9 +2081,9 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v5.5.1"
+                "source": "https://github.com/firebase/php-jwt/tree/v5.5.0"
             },
-            "time": "2021-11-08T20:18:51+00:00"
+            "time": "2021-11-04T16:21:41+00:00"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
@@ -2926,26 +2926,22 @@
         },
         {
             "name": "jantinnerezo/livewire-alert",
-            "version": "2.2.1",
+            "version": "2.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jantinnerezo/livewire-alert.git",
-                "reference": "3f955ecf2e1782fbad00fba8acad4489b2d9bad2"
+                "reference": "245c495c3a89e6a16096eb67bba7cac31bd94e6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jantinnerezo/livewire-alert/zipball/3f955ecf2e1782fbad00fba8acad4489b2d9bad2",
-                "reference": "3f955ecf2e1782fbad00fba8acad4489b2d9bad2",
+                "url": "https://api.github.com/repos/jantinnerezo/livewire-alert/zipball/245c495c3a89e6a16096eb67bba7cac31bd94e6d",
+                "reference": "245c495c3a89e6a16096eb67bba7cac31bd94e6d",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "^5.5 || ^6.0 || ^7.0 || ^8.0",
                 "livewire/livewire": "^2.0",
-                "php": "^7.4|^8.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^6.15",
-                "phpunit/phpunit": "^9.5"
+                "php": "^7.1|^7.2|^7.3|^7.4|^8.0"
             },
             "type": "library",
             "extra": {
@@ -2982,7 +2978,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jantinnerezo/livewire-alert/issues",
-                "source": "https://github.com/jantinnerezo/livewire-alert/tree/2.2.1"
+                "source": "https://github.com/jantinnerezo/livewire-alert/tree/2.1.8"
             },
             "funding": [
                 {
@@ -2990,7 +2986,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-11-09T12:09:07+00:00"
+            "time": "2021-10-27T18:00:13+00:00"
         },
         {
             "name": "jenssegers/date",
@@ -3264,16 +3260,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.70.2",
+            "version": "v8.69.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "dec9524cd0f9fa35a6eb8e25d0b40f8bbc8ec225"
+                "reference": "545181da688db64fed6d8427e55f630a90ca0d32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/dec9524cd0f9fa35a6eb8e25d0b40f8bbc8ec225",
-                "reference": "dec9524cd0f9fa35a6eb8e25d0b40f8bbc8ec225",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/545181da688db64fed6d8427e55f630a90ca0d32",
+                "reference": "545181da688db64fed6d8427e55f630a90ca0d32",
                 "shasum": ""
             },
             "require": {
@@ -3432,7 +3428,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-11-09T22:48:33+00:00"
+            "time": "2021-11-02T13:53:22+00:00"
         },
         {
             "name": "laravel/passport",
@@ -7783,6 +7779,178 @@
             "time": "2020-11-03T10:36:20+00:00"
         },
         {
+            "name": "stancl/jobpipeline",
+            "version": "v1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stancl/jobpipeline.git",
+                "reference": "906caa0872dc1b377b449832961598c09a42adb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stancl/jobpipeline/zipball/906caa0872dc1b377b449832961598c09a42adb2",
+                "reference": "906caa0872dc1b377b449832961598c09a42adb2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6.0|^7.11|^8.0"
+            },
+            "require-dev": {
+                "ext-redis": "*",
+                "orchestra/testbench": "^4.0|^5.2|^6.0",
+                "spatie/valuestore": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Stancl\\JobPipeline\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Samuel Štancl",
+                    "email": "samuel.stancl@gmail.com"
+                }
+            ],
+            "description": "Turn any series of jobs into Laravel listeners.",
+            "support": {
+                "issues": "https://github.com/stancl/jobpipeline/issues",
+                "source": "https://github.com/stancl/jobpipeline/tree/v1.5.0"
+            },
+            "time": "2020-11-15T15:11:12+00:00"
+        },
+        {
+            "name": "stancl/tenancy",
+            "version": "v3.4.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/archtechx/tenancy.git",
+                "reference": "b58b068434718c00679ee0dffad371b13fc33e13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/archtechx/tenancy/zipball/b58b068434718c00679ee0dffad371b13fc33e13",
+                "reference": "b58b068434718c00679ee0dffad371b13fc33e13",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "facade/ignition-contracts": "^1.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "ramsey/uuid": "^3.7|^4.0",
+                "stancl/jobpipeline": "^1.0",
+                "stancl/virtualcolumn": "^1.0"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^2.10",
+                "laravel/framework": "^6.0|^7.0|^8.0",
+                "league/flysystem-aws-s3-v3": "~1.0",
+                "orchestra/testbench-browser-kit": "^4.0|^5.0|^6.0",
+                "spatie/valuestore": "^1.2.5",
+                "vlucas/phpdotenv": "^3.3|^4.0|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Stancl\\Tenancy\\TenancyServiceProvider"
+                    ],
+                    "aliases": {
+                        "Tenancy": "Stancl\\Tenancy\\Facades\\Tenancy",
+                        "GlobalCache": "Stancl\\Tenancy\\Facades\\GlobalCache"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stancl\\Tenancy\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Samuel Štancl",
+                    "email": "samuel.stancl@gmail.com"
+                }
+            ],
+            "description": "Automatic multi-tenancy for your Laravel application.",
+            "keywords": [
+                "laravel",
+                "multi-database",
+                "multi-tenancy",
+                "tenancy"
+            ],
+            "support": {
+                "issues": "https://github.com/archtechx/tenancy/issues",
+                "source": "https://github.com/archtechx/tenancy/tree/v3.4.5"
+            },
+            "funding": [
+                {
+                    "url": "https://tenancyforlaravel.com/donate",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/stancl",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-11-03T09:21:51+00:00"
+        },
+        {
+            "name": "stancl/virtualcolumn",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stancl/virtualcolumn.git",
+                "reference": "cdec7c6ade3cb3a599e69e407b876d73d115b737"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stancl/virtualcolumn/zipball/cdec7c6ade3cb3a599e69e407b876d73d115b737",
+                "reference": "cdec7c6ade3cb3a599e69e407b876d73d115b737",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^6.0|^7.11|^8.0",
+                "illuminate/support": "^6.0|^7.11|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0|^5.2|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Stancl\\VirtualColumn\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Samuel Štancl",
+                    "email": "samuel.stancl@gmail.com"
+                }
+            ],
+            "description": "Eloquent virtual column.",
+            "support": {
+                "issues": "https://github.com/stancl/virtualcolumn/issues",
+                "source": "https://github.com/stancl/virtualcolumn/tree/v1.1.0"
+            },
+            "time": "2020-09-08T16:49:16+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.3.0",
             "source": {
@@ -10449,16 +10617,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v5.4.0",
+            "version": "v5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "d4394d044ed69a8f244f3445bcedf8a0d7fe2403"
+                "reference": "accaddf133651d4b5cf81a119f25296736ffc850"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/d4394d044ed69a8f244f3445bcedf8a0d7fe2403",
-                "reference": "d4394d044ed69a8f244f3445bcedf8a0d7fe2403",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/accaddf133651d4b5cf81a119f25296736ffc850",
+                "reference": "accaddf133651d4b5cf81a119f25296736ffc850",
                 "shasum": ""
             },
             "require": {
@@ -10481,7 +10649,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.4-dev"
+                    "dev-master": "5.3-dev"
                 }
             },
             "autoload": {
@@ -10511,7 +10679,7 @@
             ],
             "support": {
                 "issues": "https://github.com/vlucas/phpdotenv/issues",
-                "source": "https://github.com/vlucas/phpdotenv/tree/v5.4.0"
+                "source": "https://github.com/vlucas/phpdotenv/tree/v5.3.1"
             },
             "funding": [
                 {
@@ -10523,7 +10691,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-10T01:08:39+00:00"
+            "time": "2021-10-02T19:24:42+00:00"
         },
         {
             "name": "voku/portable-ascii",
@@ -10787,16 +10955,16 @@
         },
         {
             "name": "yajra/laravel-datatables-editor",
-            "version": "v1.25.0",
+            "version": "v1.24.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables-editor.git",
-                "reference": "096282402265a7a3aad06ce88df33d13968a3a5f"
+                "reference": "8418f7f2fb4fb73e095687c464a50d92e9f1f357"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables-editor/zipball/096282402265a7a3aad06ce88df33d13968a3a5f",
-                "reference": "096282402265a7a3aad06ce88df33d13968a3a5f",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables-editor/zipball/8418f7f2fb4fb73e095687c464a50d92e9f1f357",
+                "reference": "8418f7f2fb4fb73e095687c464a50d92e9f1f357",
                 "shasum": ""
             },
             "require": {
@@ -10846,7 +11014,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables-editor/issues",
-                "source": "https://github.com/yajra/laravel-datatables-editor/tree/v1.25.0"
+                "source": "https://github.com/yajra/laravel-datatables-editor/tree/v1.24.2"
             },
             "funding": [
                 {
@@ -10858,7 +11026,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-11-08T02:57:13+00:00"
+            "time": "2021-08-13T01:43:33+00:00"
         },
         {
             "name": "yajra/laravel-datatables-fractal",
@@ -11170,16 +11338,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.1.12",
+            "version": "2.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "6e3c2b122e0ec41a7e885fcaf19fa15e2e0819a0"
+                "reference": "ddc81bb4718747cc93330ccf832e6be8a6c1d015"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/6e3c2b122e0ec41a7e885fcaf19fa15e2e0819a0",
-                "reference": "6e3c2b122e0ec41a7e885fcaf19fa15e2e0819a0",
+                "url": "https://api.github.com/repos/composer/composer/zipball/ddc81bb4718747cc93330ccf832e6be8a6c1d015",
+                "reference": "ddc81bb4718747cc93330ccf832e6be8a6c1d015",
                 "shasum": ""
             },
             "require": {
@@ -11248,7 +11416,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.1.12"
+                "source": "https://github.com/composer/composer/tree/2.1.11"
             },
             "funding": [
                 {
@@ -11264,7 +11432,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-09T15:02:04+00:00"
+            "time": "2021-11-02T11:10:26+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -11944,16 +12112,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.12.4",
+            "version": "v1.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "a214b593d50ad4c581c922d5ee604ffe0fab4d01"
+                "reference": "f335277677188b79d12f4caad88577cf76e54dfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/a214b593d50ad4c581c922d5ee604ffe0fab4d01",
-                "reference": "a214b593d50ad4c581c922d5ee604ffe0fab4d01",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/f335277677188b79d12f4caad88577cf76e54dfa",
+                "reference": "f335277677188b79d12f4caad88577cf76e54dfa",
                 "shasum": ""
             },
             "require": {
@@ -12000,7 +12168,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2021-11-09T17:42:55+00:00"
+            "time": "2021-11-05T13:35:24+00:00"
         },
         {
             "name": "league/container",
@@ -13939,16 +14107,16 @@
         },
         {
             "name": "sebastian/exporter",
-            "version": "4.0.4",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "65e8b7db476c5dd267e65eea9cab77584d3cfff9"
+                "reference": "d89cc98761b8cb5a1a235a6b703ae50d34080e65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/65e8b7db476c5dd267e65eea9cab77584d3cfff9",
-                "reference": "65e8b7db476c5dd267e65eea9cab77584d3cfff9",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/d89cc98761b8cb5a1a235a6b703ae50d34080e65",
+                "reference": "d89cc98761b8cb5a1a235a6b703ae50d34080e65",
                 "shasum": ""
             },
             "require": {
@@ -13997,14 +14165,14 @@
                 }
             ],
             "description": "Provides the functionality to export PHP variables for visualization",
-            "homepage": "https://www.github.com/sebastianbergmann/exporter",
+            "homepage": "http://www.github.com/sebastianbergmann/exporter",
             "keywords": [
                 "export",
                 "exporter"
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/exporter/issues",
-                "source": "https://github.com/sebastianbergmann/exporter/tree/4.0.4"
+                "source": "https://github.com/sebastianbergmann/exporter/tree/4.0.3"
             },
             "funding": [
                 {
@@ -14012,7 +14180,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-11T14:18:36+00:00"
+            "time": "2020-09-28T05:24:23+00:00"
         },
         {
             "name": "sebastian/global-state",

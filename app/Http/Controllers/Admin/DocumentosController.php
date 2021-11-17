@@ -78,7 +78,6 @@ class DocumentosController extends Controller
             'aprobo_id' => 'required|exists:empleados,id',
             'reviso_id' => 'required|exists:empleados,id',
             'responsable_id' => 'required|exists:empleados,id',
-            'version'=>'required|numeric'
         ], [
             'codigo.unique' => 'El código de documento ya ha sido tomado',
             'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
@@ -140,7 +139,7 @@ class DocumentosController extends Controller
             'estatus' => $estatus,
             'macroproceso_id' => $macroproceso,
             'proceso_id' => $proceso,
-            'version' => $request->version,
+            'version' => 0,
             'fecha' => $request->fecha,
             'archivo' => $nombre_compuesto,
             'elaboro_id' => $request->elaboro_id,

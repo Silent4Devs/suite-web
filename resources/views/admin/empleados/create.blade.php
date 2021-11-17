@@ -470,7 +470,6 @@
                                                 <select
                                                     class="form-control select2 {{ $errors->has('sede') ? 'is-invalid' : '' }}"
                                                     name="sede_id" id="sede_id">
-                                                    <option selected value="" disabled>-- Selecciona Sede --</option>
                                                     @foreach ($sedes as $sede)
                                                         <option value="{{ $sede->id }}"
                                                             {{ old('sede_id') == $sede->id ? 'selected' : '' }}>
@@ -484,8 +483,6 @@
                                                 @endif
                                             </div>
                                         </div>
-
-
 
                                         <div class="row">
                                             <div class="form-group col-sm-12 col-md-6 ">

@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+ * Created by Reliese Model.
+ */
 
 namespace App\Models;
 
@@ -38,7 +40,6 @@ class Organizacion extends Model
     use SoftDeletes;
     protected $table = 'organizacions';
 
-
     protected $casts = [
         'telefono' => 'int',
         'team_id' => 'int',
@@ -59,15 +60,6 @@ class Organizacion extends Model
         'antecedentes',
         'logotipo',
     ];
-
-    public function getLogotipoAttribute($value){
-
-        $logotipo =asset('img/logo_policromatico_2.png');
-        if($value){
-            $logotipo=asset('storage/images/'.$value);
-        }
-       return $logotipo;
-    }
 
     public function team()
     {

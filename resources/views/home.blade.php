@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     <style>
@@ -203,11 +203,11 @@
 
             <button onclick="printJS({
                 printable: 'impreso_row',
-                type: 'html',
+                type: 'html', 
                 css: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
                 css: '{{asset('css/print_dashboard.css')}}',
                 })">
-                <i class="mr-2 fas fa-print"></i>
+                <i class="fas fa-print mr-2"></i>
                 Imprimir
             </button>
         </div>

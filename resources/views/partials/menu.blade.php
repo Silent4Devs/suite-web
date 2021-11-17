@@ -9,19 +9,15 @@
         <div class="caja_img_logo">
             @php
                 use App\Models\Organizacion;
-                $organizacion = Organizacion::select('id', 'logotipo')->first();
-
-                if(!empty($organizacion)){
-                    $logotipo = $organizacion->logotipo;
-                    @endphp
-                    <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
-                    @php
-                }else{
-                    @endphp
-                    <img src="{{ asset('img/logo_policromatico_2.png')}}" class="img_logo" style="width: 110%;">
-                    @php
+                $organizacion = Organizacion::first();
+                $logotipo = 'img/logo_policromatico_2.png';
+                if ($organizacion) {
+                    if ($organizacion->logotipo) {
+                        $logotipo = 'images/' . $organizacion->logotipo;
+                    }
                 }
             @endphp
+            <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
         </div>
 
     </div>
@@ -576,7 +572,7 @@
                             </a>
                         </li>
                     @endcan
-                    {{-- @can('controle_access')
+                    @can('controle_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.controles.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/controles') || request()->is('admin/controles/*') ? 'active' : '' }}">
@@ -584,7 +580,7 @@
                                 <font class="letra_blanca"> {{ trans('cruds.controle.title') }} </font>
                             </a>
                         </li>
-                    @endcan --}}
+                    @endcan
                     @can('audit_log_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.audit-logs.index') }}"

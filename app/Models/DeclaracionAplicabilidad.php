@@ -22,6 +22,8 @@ class DeclaracionAplicabilidad extends Model
         'anexo_indice',
         'control',
         'descripcion_control',
+        'aplica',
+        'justificacion',
         'created_at',
         'updated_at',
     ];

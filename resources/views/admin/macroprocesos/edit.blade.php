@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="form-group col-sm-4">
-                    <label class="required" for="codigo"><i class="fas fa-barcode iconos-crear"></i>
+                    <label class="required" for="codigo"><i class="fas  fa-barcode iconos-crear"></i>
                         Código</label>
                     <input class="form-control {{ $errors->has('codigo') ? 'is-invalid' : '' }}" type="text" name="codigo"
                         id="codigo" value="{{ old('codigo', $macroproceso->codigo) }}" required>
@@ -69,7 +69,7 @@
                     <label class="required" for="descripcion"><i class="fas fa-sticky-note iconos-crear"></i>
                         Descripción</label>
                     <textarea rows="3" class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion"
-                        id="descripcion" required>{{ old('descripcion', $macroproceso->descripcion) }}</textarea>
+                        id="descripcion" value="{{ old('descripcion', $macroproceso->descripcion) }}" required></textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
