@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
     <div class="mt-5 card">
-        @can('configuracion_grupoarea_create')
+    {{-- @can('configuracion_grupoarea_create') --}}
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong> Grupos de Áreas</strong></h3>
             </div>
@@ -11,7 +11,7 @@
                     @include('csvImport.modal', ['model' => 'Grupo', 'route' => 'grupoarea.parseCsvImport'])
                 </div>
             </div>
-        @endcan
+            {{-- @endcan --}}
         <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
             <div class="row w-100">
                 <div class="text-center col-1 align-items-center d-flex justify-content-center">
@@ -129,7 +129,7 @@
 
             ];
 
-            @can('configuracion_grupoarea_create')
+            {{--@can('configuracion_grupoarea_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar Grupo Area',
@@ -150,8 +150,8 @@
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
-            @endcan
-            @can('configuracion_grupoarea_delete')
+                {{--  @endcan --}}
+                {{--   @can('configuracion_grupoarea_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -179,7 +179,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{--  @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -214,16 +214,16 @@
                         name: 'Opciones',
                         render: function(data, type, row, meta) {
                             const opciones = `
-                            @can('configuracion_grupoarea_edit')
+                            {{--@can('configuracion_grupoarea_edit')--}}
                                 <a href="/grupoarea/${data}/edit" class="btn btn-sm"><i class="fas fa-edit" title="Editar"></i></a>
-                            @endcan
-                            @can('configuracion_grupoarea_show')
+                                {{-- @endcan--}}
+                                {{-- @can('configuracion_grupoarea_show')--}}
                                 <a href="/grupoarea/${data}/show" class="btn btn-sm"><i class="fas fa-eye" title="Visualizar"></i></a>
-                            @endcan
-                            @can('configuracion_grupoarea_delete')
+                                {{-- @endcan--}}
+                                {{-- @can('configuracion_grupoarea_delete')--}}
                                 <button onclick="Eliminar('/grupoarea/${data}','${data}')" class="btn btn-sm text-danger"><i class="fas fa-trash"
                                         title="Eliminar"></i></button>
-                            @endcan
+                                        {{--  @endcan--}}
                             `;
                             return opciones;
                         }

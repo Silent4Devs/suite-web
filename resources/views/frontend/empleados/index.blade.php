@@ -148,7 +148,7 @@
                 }
 
             ];
-            @can('configuracion_empleados_create')
+                {{-- @can('configuracion_empleados_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
@@ -162,9 +162,9 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            //@endcan
+                {{-- @endcan --}}
 
-            @can('configuracion_empleados_delete')
+                {{-- @can('configuracion_empleados_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -192,7 +192,7 @@
                 }
                 }
                 // dtButtons.push(deleteButton)
-            //@endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
