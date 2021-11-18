@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyUserAlertRequest;
-use App\Http\Requests\StoreUserAlertRequest;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\UserAlert;
@@ -32,10 +30,7 @@ class UserAlertsController extends Controller
                 $deleteGate = 'user_alert_delete';
                 $crudRoutePart = 'user-alerts';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -73,14 +68,14 @@ class UserAlertsController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('user_alert_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('user_alert_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $users = User::all()->pluck('name', 'id');
 
         return view('frontend.userAlerts.create', compact('users'));
     }
 
-    public function store(StoreUserAlertRequest $request)
+    public function store(Request $request)
     {
         $userAlert = UserAlert::create($request->all());
         $userAlert->users()->sync($request->input('users', []));
@@ -90,7 +85,7 @@ class UserAlertsController extends Controller
 
     public function show(UserAlert $userAlert)
     {
-        abort_if(Gate::denies('user_alert_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('user_alert_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $userAlert->load('users', 'team');
 
@@ -99,14 +94,14 @@ class UserAlertsController extends Controller
 
     public function destroy(UserAlert $userAlert)
     {
-        abort_if(Gate::denies('user_alert_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('user_alert_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $userAlert->delete();
 
         return back();
     }
 
-    public function massDestroy(MassDestroyUserAlertRequest $request)
+    public function massDestroy(Request $request)
     {
         UserAlert::whereIn('id', request('ids'))->delete();
 

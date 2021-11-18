@@ -34,10 +34,7 @@ class MacroprocesoController extends Controller
                 $deleteGate = 'recurso_delete';
                 $crudRoutePart = 'macroprocesos';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -74,7 +71,7 @@ class MacroprocesoController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('configuracion_macroproceso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_macroproceso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos = DB::table('grupos')->select('id', 'nombre')->get();
         //dd("teasdas". $organizaciones);
 
@@ -104,14 +101,14 @@ class MacroprocesoController extends Controller
 
     public function show(Macroproceso $macroproceso)
     {
-        abort_if(Gate::denies('configuracion_macroproceso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_macroproceso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('frontend.macroprocesos.show', compact('macroproceso'));
     }
 
     public function edit(Macroproceso $macroproceso)
     {
-        abort_if(Gate::denies('configuracion_macroproceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('configuracion_macroproceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos = DB::table('grupos')->select('id', 'nombre')->get();
 
         return view('frontend.macroprocesos.edit', compact('macroproceso'))->with('grupos', $grupos);
@@ -134,7 +131,7 @@ class MacroprocesoController extends Controller
 
     public function destroy(Macroproceso $macroproceso)
     {
-        abort_if(Gate::denies('configuracion_macroproceso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_macroproceso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

@@ -170,7 +170,7 @@
                 }
 
             ];
-            @can('user_create')
+            {{-- @can('user_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar usuario',
@@ -182,8 +182,8 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('user_delete')
+                {{-- @endcan --}}
+                    {{-- @can('user_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -211,7 +211,7 @@
                 }
                 }
                 // dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

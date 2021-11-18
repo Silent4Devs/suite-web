@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-    @can('controle_create')
+{{-- @can('controle_create') --}}
 
 
         <div class="mt-5 card">
@@ -20,7 +20,7 @@
                     @include('csvImport.modal', ['model' => 'Controle', 'route' => 'controles.parseCsvImport'])
                 </div>
             </div>
-        @endcan
+            {{-- @endcan --}}
 
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Controle">
@@ -131,7 +131,7 @@
 
             ];
 
-            @can('controle_create')
+            {{-- @can('controle_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar control',
@@ -152,8 +152,8 @@
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
-            @endcan
-            @can('controle_delete')
+                {{-- @endcan --}}
+                    {{-- @can('controle_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -181,7 +181,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

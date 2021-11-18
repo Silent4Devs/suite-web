@@ -1,4 +1,4 @@
-@can('user_alert_create')
+{{-- @can('user_alert_create') --}}
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('user-alerts.create') }}">
@@ -6,7 +6,7 @@
             </a>
         </div>
     </div>
-@endcan
+    {{-- @endcan --}}
 
 <div class="card">
     <div class="card-header">
@@ -65,20 +65,20 @@
                                 {{ $userAlert->created_at ?? '' }}
                             </td>
                             <td>
-                                @can('user_alert_show')
+                            {{--   @can('user_alert_show') --}}
                                     <a class="btn btn-xs btn-primary" href="{{ route('user-alerts.show', $userAlert->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
-                                @endcan
+                                    {{--  @endcan --}}
 
 
-                                @can('user_alert_delete')
+                                        {{--  @can('user_alert_delete') --}}
                                     <form action="{{ route('user-alerts.destroy', $userAlert->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
-                                @endcan
+                                    {{--  @endcan --}}
 
                             </td>
 
@@ -95,7 +95,7 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('user_alert_delete')
+  {{-- @can('user_alert_delete') --}}
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
@@ -123,7 +123,7 @@
     }
   }
   dtButtons.push(deleteButton)
-@endcan
+  {{-- @endcan --}}
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,

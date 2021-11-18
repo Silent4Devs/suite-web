@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyEnlacesEjecutarRequest;
-use App\Http\Requests\StoreEnlacesEjecutarRequest;
-use App\Http\Requests\UpdateEnlacesEjecutarRequest;
 use App\Models\EnlacesEjecutar;
 use App\Models\Team;
 use Gate;
@@ -66,12 +63,12 @@ class EnlacesEjecutarController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('enlaces_ejecutar_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('enlaces_ejecutar_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('frontend.enlacesEjecutars.create');
     }
 
-    public function store(StoreEnlacesEjecutarRequest $request)
+    public function store(Request $request)
     {
         $enlacesEjecutar = EnlacesEjecutar::create($request->all());
 
@@ -80,14 +77,14 @@ class EnlacesEjecutarController extends Controller
 
     public function edit(EnlacesEjecutar $enlacesEjecutar)
     {
-        abort_if(Gate::denies('enlaces_ejecutar_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('enlaces_ejecutar_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $enlacesEjecutar->load('team');
 
         return view('frontend.enlacesEjecutars.edit', compact('enlacesEjecutar'));
     }
 
-    public function update(UpdateEnlacesEjecutarRequest $request, EnlacesEjecutar $enlacesEjecutar)
+    public function update(Request $request, EnlacesEjecutar $enlacesEjecutar)
     {
         $enlacesEjecutar->update($request->all());
 
@@ -96,7 +93,7 @@ class EnlacesEjecutarController extends Controller
 
     public function show(EnlacesEjecutar $enlacesEjecutar)
     {
-        abort_if(Gate::denies('enlaces_ejecutar_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('enlaces_ejecutar_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $enlacesEjecutar->load('team');
 
@@ -105,14 +102,14 @@ class EnlacesEjecutarController extends Controller
 
     public function destroy(EnlacesEjecutar $enlacesEjecutar)
     {
-        abort_if(Gate::denies('enlaces_ejecutar_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('enlaces_ejecutar_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $enlacesEjecutar->delete();
 
         return back();
     }
 
-    public function massDestroy(MassDestroyEnlacesEjecutarRequest $request)
+    public function massDestroy(Request $request)
     {
         EnlacesEjecutar::whereIn('id', request('ids'))->delete();
 

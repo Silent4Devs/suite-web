@@ -28,10 +28,7 @@ class AuditLogsController extends Controller
                 $deleteGate = 'audit_log_delete';
                 $crudRoutePart = 'audit-logs';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -66,7 +63,7 @@ class AuditLogsController extends Controller
 
     public function show(AuditLog $auditLog)
     {
-        abort_if(Gate::denies('audit_log_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('audit_log_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('frontend.auditLogs.show', compact('auditLog'));
     }

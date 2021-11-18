@@ -3,9 +3,9 @@
 
 {{-- {{ Breadcrumbs::render('frontend.auditoria-internas.index') }} --}}
     
-    @can('auditoria_interna_create')
+{{-- @can('auditoria_interna_create')
 
-    @endcan
+    {{-- @endcan --}}
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Auditoría Interna</strong></h3>
@@ -155,7 +155,7 @@
                 }
 
             ];
-            @can('auditoria_interna_create')
+            {{-- @can('auditoria_interna_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar auditoría interna',
@@ -167,8 +167,8 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('auditoria_interna_delete')
+                {{--  @endcan --}}
+                    {{-- @can('auditoria_interna_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -196,7 +196,7 @@
                 }
                 }
                 // dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

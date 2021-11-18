@@ -65,10 +65,7 @@ class EmpleadoController extends Controller
                 $deleteGate = 'configuracion_empleados_delete';
                 $crudRoutePart = 'empleados';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
