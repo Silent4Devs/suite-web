@@ -204,7 +204,7 @@ class EmpleadoController extends Controller
             'antiguedad' => 'required',
             'estatus' => 'required',
             'email' => 'required|email',
-            'sede_id' => 'required|exists:sedes,id',
+            // 'sede_id' => 'required|exists:sedes,id',
             'perfil_empleado_id' => 'required|exists:perfil_empleados,id',
 
         ], [
