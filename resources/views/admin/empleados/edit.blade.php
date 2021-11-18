@@ -226,7 +226,7 @@
                                                 <input
                                                     class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}"
                                                     type="text" name="n_empleado" id="n_empleado"
-                                                    value="{{ old('n_empleado', $empleado->n_empleado) }}" readonly>
+                                                    value="{{ old('n_empleado', $empleado->n_empleado) }}">
                                                 @if ($errors->has('n_empleado'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('n_empleado') }}
