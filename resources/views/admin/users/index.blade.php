@@ -1,5 +1,16 @@
 @extends('layouts.admin')
 @section('content')
+
+<style>
+    .table tr td:nth-child(1){
+        min-width:200px !important;
+    }
+
+    .table tr td:nth-child(4){
+        min-width:200px !important;
+    }
+
+</style>
     @can('user_create')
 
 
@@ -13,9 +24,9 @@
             <table class="table table-bordered w-100 datatable-User">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="vertical-align: top">
+                        {{-- <th style="vertical-align: top">
                             {{ trans('cruds.user.fields.id') }}
-                        </th>
+                        </th> --}}
                         <th style="vertical-align: top">
                             {{ trans('cruds.user.fields.name') }}
                         </th>
@@ -221,10 +232,6 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.users.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
                         data: 'name',
                         name: 'name'
                     },
@@ -306,7 +313,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <span><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</span>
+                                                <p><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</p>
                                                 <select name="n_empleado" id="n_empleado${data}" class="select2">
                                                     <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>
                                                     @foreach ($empleados as $empleado)
