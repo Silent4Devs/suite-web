@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-    @can('role_create')
+{{-- @can('role_create') --}}
 
 
 
@@ -8,7 +8,7 @@
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Roles</strong></h3>
             </div>
-        @endcan
+            {{-- @endcan --}}
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable datatable-Role">
                 <thead class="thead-dark">
@@ -122,7 +122,7 @@
                 }
 
             ];
-            @can('role_create')
+            {{-- @can('role_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar rol',
@@ -134,8 +134,8 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('role_delete')
+                {{--  @endcan --}}
+                    {{-- @can('role_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -163,7 +163,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

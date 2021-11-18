@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyUserRequest;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Organizacione;
@@ -39,10 +36,7 @@ class UsersController extends Controller
             //     $deleteGate    = 'user_delete';
             //     $crudRoutePart = 'users';
             //     $empleados = Empleado::get();
-            //     return view('partials.datatablesActions', compact(
-            //         'viewGate',
-            //         'editGate',
-            //         'deleteGate',
+            //     return view('partials.datatablesActionsFrontend', compact(
             //         'crudRoutePart',
             //         'row',
             //         'empleados'
@@ -110,7 +104,7 @@ class UsersController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::all()->pluck('title', 'id');
 
@@ -125,7 +119,7 @@ class UsersController extends Controller
         return view('frontend.users.create', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
@@ -135,7 +129,7 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-        abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::all()->pluck('title', 'id');
 
@@ -152,7 +146,7 @@ class UsersController extends Controller
         return view('frontend.users.edit', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
@@ -162,7 +156,7 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
 
@@ -171,14 +165,14 @@ class UsersController extends Controller
 
     public function destroy(User $user)
     {
-        abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user->delete();
 
         return back();
     }
 
-    public function massDestroy(MassDestroyUserRequest $request)
+    public function massDestroy(Request $request)
     {
         User::whereIn('id', request('ids'))->delete();
 

@@ -42,10 +42,7 @@ class ProcesoController extends Controller
                 $deleteGate = 'recurso_delete';
                 $crudRoutePart = 'procesos';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -82,7 +79,7 @@ class ProcesoController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('configuracion_procesos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('configuracion_procesos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso = DB::table('macroprocesos')->select('id', 'codigo', 'nombre')->get();
 
         return view('frontend.procesos.create')->with('macroprocesos', $macroproceso);
@@ -112,7 +109,7 @@ class ProcesoController extends Controller
      */
     public function show(Proceso $proceso)
     {
-        abort_if(Gate::denies('configuracion_procesos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('configuracion_procesos_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('frontend.procesos.show', compact('proceso'));
     }
@@ -125,7 +122,7 @@ class ProcesoController extends Controller
      */
     public function edit(Proceso $proceso)
     {
-        abort_if(Gate::denies('configuracion_procesos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('configuracion_procesos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso = DB::table('macroprocesos')->select('id', 'codigo', 'nombre')->get();
 
         return view('frontend.procesos.edit', compact('proceso'))->with('macroprocesos', $macroproceso);
@@ -162,7 +159,7 @@ class ProcesoController extends Controller
      */
     public function destroy(Proceso $proceso)
     {
-        abort_if(Gate::denies('configuracion_procesos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('configuracion_procesos_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proceso->delete();
         Flash::success('<h5 class="text-center">Proceso eliminado satisfactoriamente</h5>');
 

@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-    @can('recurso_create')
+{{-- @can('recurso_create') --}}
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -8,7 +8,7 @@
                 @include('flash::message')
             </div>
 
-        @endcan
+            {{-- @endcan --}}
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered tbl-categorias w-100">
@@ -112,7 +112,7 @@
 
             ];
 
-            @can('recurso_create')
+            {{-- @can('recurso_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar macroproceso',
@@ -124,7 +124,7 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

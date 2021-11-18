@@ -33,10 +33,7 @@ class TipoactivoController extends Controller
                 $deleteGate = 'configuracion_tipoactivo_delete';
                 $crudRoutePart = 'tipoactivos';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));

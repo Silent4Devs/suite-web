@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-    @can('puesto_create')
+{{-- @can('puesto_create') --}}
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -17,7 +17,7 @@
                     @include('csvImport.modal', ['model' => 'Puesto', 'route' => 'puestos.parseCsvImport'])
                 </div>
             </div>
-        @endcan
+            {{--  @endcan --}}
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Puesto">
                 <thead class="thead-dark">
@@ -127,7 +127,7 @@
 
             ];
 
-            @can('puesto_create')
+            {{--  @can('puesto_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar area',
@@ -148,8 +148,8 @@
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
-            @endcan
-            @can('puesto_delete')
+                {{--  @endcan --}}
+                    {{-- @can('puesto_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -177,7 +177,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

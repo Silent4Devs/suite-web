@@ -38,10 +38,7 @@ class AreasController extends Controller
                 $deleteGate = 'configuracion_area_delete';
                 $crudRoutePart = 'areas';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));

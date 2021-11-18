@@ -333,24 +333,24 @@ Route::middleware([
         // //Route::post('users/get', 'UsersController@getUsers')->name('users.get');
         Route::resource('users', UsersController::class);
 
-        // // Empleados
-        // Route::post('empleados/store/{empleado}/competencias-resumen', [EmpleadoController::class, 'storeResumen'])->name('empleados.storeResumen');
-        // Route::post('empleados/store/{empleado}/competencias-certificaciones', [EmpleadoController::class, 'storeCertificaciones'])->name('empleados.storeCertificaciones');
-        // Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', [EmpleadoController::class, 'deleteCertificaciones'])->name('empleados.deleteCertificaciones');
-        // Route::post('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class, 'storeCursos'])->name('empleados.storeCursos');
-        // Route::delete('empleados/delete/{curso}/competencias-cursos', [EmpleadoController::class, 'deleteCursos'])->name('empleados.deleteCursos');
-        // Route::post('empleados/store/{empleado}/competencias-experiencia', [EmpleadoController::class, 'storeExperiencia'])->name('empleados.storeExperiencia');
-        // Route::delete('empleados/delete/{educacion}/competencias-educacion', [EmpleadoController::class, 'deleteEducacion'])->name('empleados.deleteEducacion');
-        // Route::post('empleados/store/{empleado}/competencias-educacion', [EmpleadoController::class, 'storeEducacion'])->name('empleados.storeEducacion');
-        // Route::delete('empleados/delete/{experiencia}/competencias-experiencia', [EmpleadoController::class, 'deleteExperiencia'])->name('empleados.deleteExperiencia');
-        // Route::get('empleados/store/{empleado}/competencias-certificaciones', [EmpleadoController::class, 'getCertificaciones'])->name('empleados.getCertificaciones');
-        // Route::get('empleados/store/{empleado}/competencias-educacion', [EmpleadoController::class, 'getEducacion'])->name('empleados.getEducacion');
-        // Route::get('empleados/store/{empleado}/competencias-experiencia', [EmpleadoController::class, 'getExperiencia'])->name('empleados.getExperiencia');
-        // Route::get('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class, 'getCursos'])->name('empleados.getCursos');
-        // Route::post('empleados/store/competencias', [EmpleadoController::class, 'storeWithCompetencia'])->name('empleados.storeWithCompetencia');
-        // Route::post('empleados/get', [EmpleadoController::class, 'getEmpleados'])->name('empleados.get');
+        // Empleados
+        Route::post('empleados/store/{empleado}/competencias-resumen', [EmpleadoController::class, 'storeResumen'])->name('empleados.storeResumen');
+        Route::post('empleados/store/{empleado}/competencias-certificaciones', [EmpleadoController::class, 'storeCertificaciones'])->name('empleados.storeCertificaciones');
+        Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', [EmpleadoController::class, 'deleteCertificaciones'])->name('empleados.deleteCertificaciones');
+        Route::post('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class, 'storeCursos'])->name('empleados.storeCursos');
+        Route::delete('empleados/delete/{curso}/competencias-cursos', [EmpleadoController::class, 'deleteCursos'])->name('empleados.deleteCursos');
+        Route::post('empleados/store/{empleado}/competencias-experiencia', [EmpleadoController::class, 'storeExperiencia'])->name('empleados.storeExperiencia');
+        Route::delete('empleados/delete/{educacion}/competencias-educacion', [EmpleadoController::class, 'deleteEducacion'])->name('empleados.deleteEducacion');
+        Route::post('empleados/store/{empleado}/competencias-educacion', [EmpleadoController::class, 'storeEducacion'])->name('empleados.storeEducacion');
+        Route::delete('empleados/delete/{experiencia}/competencias-experiencia', [EmpleadoController::class, 'deleteExperiencia'])->name('empleados.deleteExperiencia');
+        Route::get('empleados/store/{empleado}/competencias-certificaciones', [EmpleadoController::class, 'getCertificaciones'])->name('empleados.getCertificaciones');
+        Route::get('empleados/store/{empleado}/competencias-educacion', [EmpleadoController::class, 'getEducacion'])->name('empleados.getEducacion');
+        Route::get('empleados/store/{empleado}/competencias-experiencia', [EmpleadoController::class, 'getExperiencia'])->name('empleados.getExperiencia');
+        Route::get('empleados/store/{empleado}/competencias-cursos', [EmpleadoController::class, 'getCursos'])->name('empleados.getCursos');
+        Route::post('empleados/store/competencias', [EmpleadoController::class, 'storeWithCompetencia'])->name('empleados.storeWithCompetencia');
+        Route::post('empleados/get', [EmpleadoController::class, 'getEmpleados'])->name('empleados.get');
         Route::post('empleados/get-lista', 'EmpleadoController@getListaEmpleados')->name('empleados.lista');
-        // Route::get('empleados/get-all', [EmpleadoController::class, 'getAllEmpleados'])->name('empleados.getAll');
+        Route::get('empleados/get-all', [EmpleadoController::class, 'getAllEmpleados'])->name('empleados.getAll');
         Route::resource('empleados', EmpleadoController::class);
 
         Route::get('organigrama/exportar', [OrganigramaController::class, 'exportTo'])->name('organigrama.exportar');
