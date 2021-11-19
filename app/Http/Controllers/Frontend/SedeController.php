@@ -97,7 +97,7 @@ class SedeController extends Controller
     {
         $client = new \GuzzleHttp\Client();
         $geocoder = new \Spatie\Geocoder\Geocoder($client);
-        $geocoder->setApiKey('AIzaSyDByWqsyGQopJ8tnvFk8yp4PjcfG7zoXuo');
+        $geocoder->setApiKey('AIzaSyCMtPStAiDXhsaYws3HhCAqwHa2UbsPIPE');
         $result = $geocoder->getCoordinatesForAddress($request->direccion);
         $request['latitude'] = $result['lat'];
         $request['longitud'] = $result['lng'];
