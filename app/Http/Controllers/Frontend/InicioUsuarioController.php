@@ -470,7 +470,7 @@ class InicioUsuarioController extends Controller
 
         $sedes = Sede::get();
 
-        abort_if(Gate::denies('quejas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('quejas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('frontend.inicioUsuario.formularios.quejas', compact('areas', 'procesos', 'empleados', 'activos', 'sedes'));
     }
@@ -531,7 +531,7 @@ class InicioUsuarioController extends Controller
 
         $sedes = Sede::get();
 
-        abort_if(Gate::denies('denuncias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('denuncias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('frontend.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
     }
@@ -622,7 +622,7 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::get();
 
-        abort_if(Gate::denies('sugerencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('sugerencias_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('frontend.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
@@ -662,7 +662,7 @@ class InicioUsuarioController extends Controller
 
         $subcategorias = SubcategoriaIncidente::get();
 
-        abort_if(Gate::denies('incidentes_seguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('incidentes_seguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activos = Activo::get();
 
         return view('frontend.inicioUsuario.formularios.seguridad', compact('activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
@@ -729,7 +729,7 @@ class InicioUsuarioController extends Controller
 
         $sedes = Sede::get();
 
-        abort_if(Gate::denies('riesgos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('riesgos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('frontend.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }

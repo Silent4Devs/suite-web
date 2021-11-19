@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyIncidentesDeSeguridadRequest;
@@ -19,7 +19,7 @@ class IncidentesDeSeguridadController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('incidentes_de_seguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('incidentes_de_seguridad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = IncidentesDeSeguridad::with(['activos', 'estado', 'team'])->select(sprintf('%s.*', (new IncidentesDeSeguridad)->table));
@@ -86,7 +86,7 @@ class IncidentesDeSeguridadController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('incidentes_de_seguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('incidentes_de_seguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activos = Activo::all()->pluck('descripcion', 'id');
 
@@ -105,7 +105,7 @@ class IncidentesDeSeguridadController extends Controller
 
     public function edit(IncidentesDeSeguridad $incidentesDeSeguridad)
     {
-        abort_if(Gate::denies('incidentes_de_seguridad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('incidentes_de_seguridad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activos = Activo::all()->pluck('descripcion', 'id');
 
@@ -126,7 +126,7 @@ class IncidentesDeSeguridadController extends Controller
 
     public function show(IncidentesDeSeguridad $incidentesDeSeguridad)
     {
-        abort_if(Gate::denies('incidentes_de_seguridad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('incidentes_de_seguridad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $incidentesDeSeguridad->load('activos', 'estado', 'team');
 
@@ -135,7 +135,7 @@ class IncidentesDeSeguridadController extends Controller
 
     public function destroy(IncidentesDeSeguridad $incidentesDeSeguridad)
     {
-        abort_if(Gate::denies('incidentes_de_seguridad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('incidentes_de_seguridad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $incidentesDeSeguridad->delete();
 

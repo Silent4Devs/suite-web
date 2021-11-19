@@ -126,7 +126,7 @@
 	       			<td>{{ $incidentes->descripción }}</td>
 	       			<td>{{ $incidentes->activos_afectados }}</td>
 	       			<td>{{ $incidentes->fecha }}</td>
-	       			<td>{{ $incidentes->reporto->name }}</td>
+	       			<td>{{ $incidentes->reporto?$incidentes->reporto->name:'Sin definir'}}</td>
 	       			<td>{{ $incidentes->reporto->email }}</td>
 	       			<td>{{ $incidentes->reporto->telefono }}</td>
 	       			<td>{{ $incidentes->categoria }}</td>

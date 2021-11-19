@@ -11,7 +11,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            ID
+                            IDs
                         </th>
                         <th>
                             Nombre

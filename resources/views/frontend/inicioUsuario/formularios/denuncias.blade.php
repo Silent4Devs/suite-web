@@ -13,7 +13,7 @@
 		<div class="card-body">
 			<strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
 
-			<form class="row" method="POST" action="{{ route('frontend.reportes-denuncias-store') }}" enctype="multipart/form-data">
+			<form class="row" method="POST" action="{{ route('reportes-denuncias-store') }}" enctype="multipart/form-data">
 				@csrf
 				<div class="mt-4 form-group col-12 tipo_datos">
 					<label class="form-label"><strong>Su denuncia será:</strong></label><br>
@@ -26,34 +26,31 @@
 						<b>Datos generales:</b>
 						<p>Al enviar este formulario, el receptor podrá ver sus datos de contacto</p>
 					</div>
-
-
-					<div class="mt-0 form-group col-4">
-						<label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
-						<div class="form-control">{{ auth()->user()->empleado->name }}</div>
+						<div class="mt-2 form-group col-4">
+						<label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+						<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->name:"Sin definir" }}</div>
 					</div>
 
-					<div class="mt-0 form-group col-4">
-						<label class="form-label"><i class="fas fa-user-tag iconos-crear"></i>Puesto</label>
-						<div class="form-control">{{ auth()->user()->empleado->puesto }}</div>
+					<div class="mt-2 form-group col-4">
+						<label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+						<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->puesto:"Sin definir" }}</div>
 					</div>
 
-					<div class="mt-0 form-group col-4">
-						<label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i></i>Área</label>
-						<div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
+					<div class="mt-2 form-group col-4">
+						<label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área</label>
+						<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->area->area:"Sin definir" }}</div>
 					</div>
 
-					<div class="mt-4 form-group col-6">
-						<label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico</label>
-						<div class="form-control">{{ auth()->user()->empleado->email }}</div>
+					<div class="mt-2 form-group col-6">
+						<label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electrónico</label>
+						<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->email:"Sin definir" }}</div>
 					</div>
 
-					<div class="mt-4 form-group col-6">
-						<label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
-						<div class="form-control">{{ auth()->user()->empleado->telefono }}</div>
+					<div class="mt-2 form-group col-6">
+						<label class="form-label"><i class="fas fa-phone iconos-crear"></i> Teléfono</label>
+						<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->telefono:"Sin definir" }}</div>
 					</div>
-				</div>
-
+	
 				<div class="mt-4 form-group col-12">
 					<b>¿A quién denuncia?</b>
 				</div>

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css">
 
@@ -14,7 +14,7 @@
 		<div class="card-body">
 			<strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
 
-			<form method="POST" action="{{ route('admin.reportes-seguridad-store') }}" class="row"  enctype="multipart/form-data">
+			<form method="POST" action="{{ route('reportes-seguridad-store') }}" class="row"  enctype="multipart/form-data">
 				@csrf
 
 				<div class="mt-4 form-group col-12">
@@ -25,27 +25,27 @@
 
 				<div class="mt-2 form-group col-4">
 					<label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-					<div class="form-control">{{ auth()->user()->empleado->name }}</div>
+					<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->name:"Sin definir" }}</div>
 				</div>
 
 				<div class="mt-2 form-group col-4">
 					<label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-					<div class="form-control">{{ auth()->user()->empleado->puesto }}</div>
+					<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->puesto:"Sin definir" }}</div>
 				</div>
 
 				<div class="mt-2 form-group col-4">
 					<label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área</label>
-					<div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
+					<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->area->area:"Sin definir" }}</div>
 				</div>
 
 				<div class="mt-2 form-group col-6">
 					<label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electrónico</label>
-					<div class="form-control">{{ auth()->user()->empleado->email }}</div>
+					<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->email:"Sin definir" }}</div>
 				</div>
 
 				<div class="mt-2 form-group col-6">
 					<label class="form-label"><i class="fas fa-phone iconos-crear"></i> Teléfono</label>
-					<div class="form-control">{{ auth()->user()->empleado->telefono }}</div>
+					<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->telefono:"Sin definir" }}</div>
 				</div>
 
 				<div class="mt-4 form-group col-12">
@@ -138,7 +138,7 @@
 
 
 				<div class="mt-2 text-right form-group col-12">
-					<a href="{{ asset('admin/inicioUsuario') }}" class="btn btn_cancelar">Cancelar</a>
+					<a href="{{ asset('inicioUsuario') }}" class="btn btn_cancelar">Cancelar</a>
 					<input type="submit" name="" class="btn btn-success" value="Enviar" id="btn_enviar">
 				</div>
 			</form>
@@ -158,7 +158,7 @@
 		let archivos = [];
 		let contador = 1;
     Dropzone.options.archivoDropzone = {
-	    url: '{{ route('admin.material-sgsis.storeMedia') }}',
+	    url: '{{ route('material-sgsis.storeMedia') }}',
 	    maxFilesize: 4, // MB
 	    maxFiles: 5,
 	    addRemoveLinks: true,
