@@ -174,7 +174,7 @@ class ProcesoController extends Controller
         abort_if(Gate::denies('mapa_procesos_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos_mapa = Grupo::with(['macroprocesos' => function ($q) {
             $q->with('procesosWithDocumento');
-        }])->get();
+        }])->orderBy('id')->get();
 
         $macros_mapa = Macroproceso::get();
         $procesos_mapa = Proceso::get();
