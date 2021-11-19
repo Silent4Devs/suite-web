@@ -17,30 +17,30 @@
 	                </label>
 	            </div>
 
-				<div class="mt-2 form-group col-4">
-					<label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-					<div class="form-control">{{ auth()->user()->empleado->name }}</div>
-				</div>
+					<div class="mt-2 form-group col-4">
+						<label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+						<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->name:"Sin definir" }}</div>
+					</div>
 
-				<div class="mt-2 form-group col-4">
-					<label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-					<div class="form-control">{{ auth()->user()->empleado->puesto }}</div>
-				</div>
+					<div class="mt-2 form-group col-4">
+						<label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+						<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->puesto:"Sin definir" }}</div>
+					</div>
 
-				<div class="mt-2 form-group col-4">
-					<label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i></i>Área</label>
-					<div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
-				</div>
+					<div class="mt-2 form-group col-4">
+						<label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área</label>
+						<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->area->area:"Sin definir" }}</div>
+					</div>
 
-				<div class="mt-2 form-group col-md-6">
-					<label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico</label>
-					<div class="form-control">{{ auth()->user()->empleado->email }}</div>
-				</div>
+					<div class="mt-2 form-group col-6">
+						<label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electrónico</label>
+						<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->email:"Sin definir" }}</div>
+					</div>
 
-				<div class="mt-2 form-group col-md-6">
-					<label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
-					<div class="form-control">{{ auth()->user()->empleado->telefono }}</div>
-				</div>
+					<div class="mt-2 form-group col-6">
+						<label class="form-label"><i class="fas fa-phone iconos-crear"></i> Teléfono</label>
+						<div class="form-control">{{ auth()->user()->empleado?auth()->user()->empleado->telefono:"Sin definir" }}</div>
+					</div>
 
 				<div class="mt-4 form-group col-12">
 	                <label class="form-label">

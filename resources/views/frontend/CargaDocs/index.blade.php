@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 
 @section('content')
 
@@ -6,7 +6,7 @@
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.amenazas.index') !!}">Inicio</a>
+            <a href="{!! route('frontend.amenazas.index') !!}">Inicio</a>
         </li>
         <li class="breadcrumb-item active">Carga de Documentos</li>
     </ol>
