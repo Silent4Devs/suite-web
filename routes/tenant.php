@@ -520,13 +520,13 @@ Route::middleware([
         Route::delete('activos/destroy', [ActivosController::class,'massDestroy'])->name('activos.massDestroy');
         Route::resource('activos', ActivosController::class);
 
-        // // Marca
-        // Route::get('marcas/get-marcas', [MarcaController::class,'getMarcas'])->name('marcas.getMarcas');
-        // Route::resource('marcas', MarcaController::class);
+        // Marca
+        Route::get('marcas/get-marcas', [MarcaController::class,'getMarcas'])->name('marcas.getMarcas');
+        Route::resource('marcas', MarcaController::class);
 
-        // // Modelo
-        // Route::get('modelos/get-modelos/{id?}', [ModeloController::class,'getModelos'])->name('modelos.getModelos');
-        // Route::resource('modelos', ModeloController::class);
+        // Modelo
+        Route::get('modelos/get-modelos/{id?}', [ModeloController::class,'getModelos'])->name('modelos.getModelos');
+        Route::resource('modelos', ModeloController::class);
 
         // Tratamiento Riesgos
         Route::delete('tratamiento-riesgos/destroy', [TratamientoRiesgosController::class,'massDestroy'])->name('tratamiento-riesgos.massDestroy');
