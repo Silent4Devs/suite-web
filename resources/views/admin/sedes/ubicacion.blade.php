@@ -98,8 +98,8 @@
 
         function initMap() {
             var coord = {
-                lat: sede.latitude,
-                lng: sede.longitud
+                lat: parseFloat(sede.latitude),
+                lng: parseFloat(sede.longitud)
             };
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 18,
@@ -211,7 +211,7 @@
             }
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDByWqsyGQopJ8tnvFk8yp4PjcfG7zoXuo&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMtPStAiDXhsaYws3HhCAqwHa2UbsPIPE&callback=initMap"
         async>
     </script>
 
