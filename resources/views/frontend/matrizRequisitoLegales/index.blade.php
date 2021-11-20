@@ -50,11 +50,11 @@
 
 {{-- {{ Breadcrumbs::render('frontend.matriz-requisito-legales.index') }}  --}}
     <div class="mt-5 card">
-        @can('matriz_requisito_legale_create')
+    {{-- @can('matriz_requisito_legale_create') --}}
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Matriz de Requisitos Legales</strong></h3>
             </div>
-        @endcan
+            {{-- @endcan --}}
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table datatable-MatrizRequisitoLegale">
@@ -202,7 +202,7 @@
                 }
 
             ];
-            @can('matriz_requisito_legale_create')
+            {{-- @can('matriz_requisito_legale_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva matríz de requisitos legales',
@@ -214,7 +214,7 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

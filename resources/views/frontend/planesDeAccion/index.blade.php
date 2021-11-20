@@ -94,7 +94,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         doc.styles.tableHeader.fontSize = 8.5;
-                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10 
+                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -171,7 +171,7 @@
                                     html = `<span class="badge badge-danger">${progress} %</span>`;
                                 }
                                 return html;
-                            }                    
+                            }
                         }
                         return "<span class='badge badge-primary'>Sin progreso calculable</span>"
                     }
@@ -228,7 +228,7 @@
                         } else {
                             urlVerPlanAccion = `/planes-de-accion/${data}`;
                         }
-                        let botones = `   
+                        let botones = `
                             <div class="btn-group">
                                 <a class="btn" href="${urlEditarPlanAccion}" title="Editar Plan de Acción"><i class="fas fa-edit"></i></a>
                                 <a class="btn" href="${urlVerPlanAccion}" title="Visualizar Plan de Acción"><i class="fas fa-stream"></i></a>

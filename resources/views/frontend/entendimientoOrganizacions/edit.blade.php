@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('frontend.entendimiento-organizacions.create') }}
+{{-- {{ Breadcrumbs::render('frontend.entendimiento-organizacions.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body bg-primary align-self-center" style="margin-top: -40px;">
@@ -10,7 +10,7 @@
 
         <div class="card-body">
             <form method="POST"
-                action="{{ route('frontend.entendimiento-organizacions.update', $entendimientoOrganizacion) }}" class="row">
+                action="{{ route('entendimiento-organizacions.update', $entendimientoOrganizacion) }}" class="row">
                 @csrf
                 @method('PATCH')
                 @include('frontend.entendimientoOrganizacions._form', [

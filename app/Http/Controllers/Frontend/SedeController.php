@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\CsvImportTrait;
-use App\Http\Requests\MassDestroySedeRequest;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Team;
@@ -17,7 +15,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SedeController extends Controller
 {
-    use CsvImportTrait;
+   // use CsvImportTrait;
 
     public function index(Request $request)
     {
@@ -36,10 +34,7 @@ class SedeController extends Controller
                 $deleteGate = 'configuracion_sede_delete';
                 $crudRoutePart = 'sedes';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -193,7 +188,7 @@ class SedeController extends Controller
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroySedeRequest $request)
+    public function massDestroy(Request $request)
     {
         Sede::whereIn('id', request('ids'))->delete();
 

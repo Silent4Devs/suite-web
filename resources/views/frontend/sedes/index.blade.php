@@ -5,13 +5,13 @@
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Sedes</strong></h3>
         </div>
-        @can('configuracion_sede_create')
+        {{-- @can('configuracion_sede_create') --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', ['model' => 'Sede', 'route' => 'sedes.parseCsvImport'])
                 </div>
             </div>
-        @endcan
+            {{-- @endcan --}}
         @if ($numero_sedes > 0)
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
                 <div class="row w-100">
@@ -160,7 +160,7 @@
 
             ];
 
-            @can('configuracion_sede_create')
+            {{-- @can('configuracion_sede_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar sede',
@@ -181,8 +181,8 @@
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
-            @endcan
-            @can('configuracion_sede_delete')
+                {{-- @endcan --}}
+                    {{-- @can('configuracion_sede_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -210,7 +210,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

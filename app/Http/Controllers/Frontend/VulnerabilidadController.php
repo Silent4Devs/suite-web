@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\CreateVulnerabilidadRequest;
-use App\Http\Requests\UpdateVulnerabilidadRequest;
 use App\Models\Amenaza;
 use App\Models\Vulnerabilidad;
 use App\Repositories\VulnerabilidadRepository;
@@ -45,7 +43,7 @@ class VulnerabilidadController extends AppBaseController
                 $deleteGate = 'user_delete';
                 $crudRoutePart = 'vulnerabilidads';
 
-                return view('partials.datatablesActions', compact(
+                return view('partials.datatablesActionsFrontend', compact(
                     'viewGate',
                     'editGate',
                     'deleteGate',
@@ -95,7 +93,7 @@ class VulnerabilidadController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateVulnerabilidadRequest $request)
+    public function store(Request $request)
     {
         $input = $request->all();
 
@@ -156,7 +154,7 @@ class VulnerabilidadController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateVulnerabilidadRequest $request)
+    public function update($id, Request $request)
     {
         $vulnerabilidad = $this->vulnerabilidadRepository->find($id);
 
