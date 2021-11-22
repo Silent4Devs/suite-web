@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyComiteseguridadRequest;
-use App\Http\Requests\UpdateComiteseguridadRequest;
 use App\Models\Comiteseguridad;
 use App\Models\Empleado;
 use App\Models\Organizacion;
@@ -36,10 +34,7 @@ class ComiteseguridadController extends Controller
                 $deleteGate = 'comiteseguridad_delete';
                 $crudRoutePart = 'comiteseguridads';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -74,7 +69,7 @@ class ComiteseguridadController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('comiteseguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('comiteseguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
@@ -87,12 +82,12 @@ class ComiteseguridadController extends Controller
         $comiteseguridad = Comiteseguridad::create($request->all());
         // dd($comiteseguridad);
 
-        return redirect()->route('frontend.comiteseguridads.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('comiteseguridads.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Comiteseguridad $comiteseguridad)
     {
-        abort_if(Gate::denies('comiteseguridad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('comiteseguridad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $personaasignadas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -102,7 +97,7 @@ class ComiteseguridadController extends Controller
         return view('frontend.comiteseguridads.edit', compact('personaasignadas', 'comiteseguridad', 'empleados'));
     }
 
-    public function update(UpdateComiteseguridadRequest $request, Comiteseguridad $comiteseguridad)
+    public function update(Request $request, Comiteseguridad $comiteseguridad)
     {
         $comiteseguridad->update($request->all());
 
@@ -111,7 +106,7 @@ class ComiteseguridadController extends Controller
 
     public function show(Comiteseguridad $comiteseguridad)
     {
-        abort_if(Gate::denies('comiteseguridad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('comiteseguridad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $comiteseguridad->load('personaasignada', 'team');
 
@@ -120,14 +115,14 @@ class ComiteseguridadController extends Controller
 
     public function destroy(Comiteseguridad $comiteseguridad)
     {
-        abort_if(Gate::denies('comiteseguridad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('comiteseguridad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $comiteseguridad->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyComiteseguridadRequest $request)
+    public function massDestroy(Request $request)
     {
         Comiteseguridad::whereIn('id', request('ids'))->delete();
 

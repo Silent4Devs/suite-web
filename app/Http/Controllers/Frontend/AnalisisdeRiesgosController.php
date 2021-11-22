@@ -33,10 +33,7 @@ class AnalisisdeRiesgosController extends Controller
                 $deleteGate = 'user_delete';
                 $crudRoutePart = 'analisis-riesgos';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));

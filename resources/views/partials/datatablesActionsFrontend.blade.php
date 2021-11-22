@@ -51,7 +51,7 @@
                 let user_id = element.closest('tr').firstChildElement;
                 $.ajax({
                     type: "POST",
-                    url: "/admin/users/vincular",
+                    url: "/users/vincular",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -74,7 +74,7 @@
     @if (isset($planes))
         @if ($planes)
             @foreach ($planes as $plan)
-                <a href="{{ route('admin.planes-de-accion.loadProject', $plan->id) }}"
+                <a href="{{ route('planes-de-accion.loadProject', $plan->id) }}"
                     title="Plan de acción vinculado" class="btn btn-sm"><i class="fas fa-stream"></i></a>
             @endforeach
         @endif
@@ -82,16 +82,16 @@
     @endif
 
    
-        <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.' . $crudRoutePart . '.show', $row->id) }}">
+        <a class="mr-2 rounded btn btn-sm" href="{{ route('' . $crudRoutePart . '.show', $row->id) }}">
             {{-- {{ trans('global.view') }} --}} <i class="fas fa-eye" data-toggle="tooltip" data-placement="top" title="Ver"></i>
         </a>
     
-        <a class="mr-2 rounded btn btn-sm" href="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}">
+        <a class="mr-2 rounded btn btn-sm" href="{{ route('' . $crudRoutePart . '.edit', $row->id) }}">
             {{-- {{ trans('global.edit') }} --}} <i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i>
         </a>
    
 
-        <form action="{{ route('admin.' . $crudRoutePart . '.destroy', $row->id) }}" method="POST"
+        <form action="{{ route('' . $crudRoutePart . '.destroy', $row->id) }}" method="POST"
             class="{{ $row->id }}">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">

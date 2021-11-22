@@ -3,7 +3,7 @@
 
 
 
-{{ Breadcrumbs::render('frontend.entendimiento-organizacions.create') }}
+{{-- {{ Breadcrumbs::render('frontend.entendimiento-organizacions.create') }} --}}
 
 <div class="mt-4 card">
     <div class="py-3 col-md-10 col-sm-9 card-body bg-primary align-self-center" style="margin-top: -40px;">

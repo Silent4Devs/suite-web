@@ -113,7 +113,7 @@ text-align: center !important;
 </style>
 
     {{-- {{ Breadcrumbs::render('frontend.alcance-sgsis.index') }} --}}
-    @can('alcance_sgsi_create')
+    {{-- @can('alcance_sgsi_create') --}}
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -127,7 +127,7 @@ text-align: center !important;
             </a>
         </div>
     </div> --}}
-        @endcan
+        {{-- @endcan --}}
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -254,7 +254,7 @@ text-align: center !important;
                 }
 
             ];
-            @can('alcance_sgsi_delete')
+            {{-- @can('alcance_sgsi_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -282,9 +282,9 @@ text-align: center !important;
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
-            @can('alcance_sgsi_create')
+                    {{-- @can('alcance_sgsi_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar alcance SGSIS',
@@ -296,7 +296,7 @@ text-align: center !important;
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
+                {{-- @endcan --}}
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,

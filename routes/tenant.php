@@ -559,11 +559,11 @@ Route::middleware([
         Route::post('areas/process-csv-import', [AreasController::class, 'processCsvImport'])->name('areas.processCsvImport');
         Route::resource('areas', AreasController::class);
 
-        // // Organizaciones
-        // Route::delete('organizaciones/destroy', [OrganizacionesController::class,'massDestroy'])->name('organizaciones.massDestroy');
-        // Route::post('organizaciones/parse-csv-import', [OrganizacionesController::class,'parseCsvImport'])->name('organizaciones.parseCsvImport');
-        // Route::post('organizaciones/process-csv-import', [OrganizacionesController::class,'processCsvImport'])->name('organizaciones.processCsvImport');
-        // Route::resource('organizaciones', OrganizacionesController::class);
+        // Organizaciones
+        Route::delete('organizaciones/destroy', [OrganizacionesController::class,'massDestroy'])->name('organizaciones.massDestroy');
+        Route::post('organizaciones/parse-csv-import', [OrganizacionesController::class,'parseCsvImport'])->name('organizaciones.parseCsvImport');
+        Route::post('organizaciones/process-csv-import', [OrganizacionesController::class,'processCsvImport'])->name('organizaciones.processCsvImport');
+        Route::resource('organizaciones', OrganizacionesController::class);
 
         // // Tipoactivos
         Route::delete('tipoactivos/destroy', [TipoactivoController::class, 'massDestroy'])->name('tipoactivos.massDestroy');

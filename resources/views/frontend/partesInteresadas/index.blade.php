@@ -69,16 +69,16 @@ width:900px !important;
             </div>
         </div>
 
-        {{-- @can('partes_interesada_create')
+        {{-- @can('partes_interesada_create') --}}
 
             <div style="margin-bottom:10px; margin-left:12px;" class="row">
                 <div class="col-lg-12">
-                    <a class="btn btn-success" href="{{ route('frontend.partes-interesadas.create') }}">
+                    <a class="btn btn-success" href="{{ route('partes-interesadas.create') }}">
                         Agregar <strong>+</strong>
                     </a>
                 </div>
             </div>
-        @endcan --}}
+            {{--@endcan --}}
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -276,7 +276,7 @@ width:900px !important;
                 }
 
             ];
-            @can('partes_interesada_delete')
+            {{-- @can('partes_interesada_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -307,9 +307,9 @@ width:900px !important;
                 }
                 }
                 //dtButtons.push(deleteButton);
-            @endcan
+                {{-- @endcan --}}
 
-            @can('partes_interesada_create')
+                    {{-- @can('partes_interesada_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva parte interesada',
@@ -321,7 +321,7 @@ width:900px !important;
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: [dtButtons],

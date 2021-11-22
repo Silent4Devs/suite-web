@@ -36,10 +36,7 @@ class EntendimientoOrganizacionController extends Controller
                 $deleteGate = 'entendimiento_organizacion_delete';
                 $crudRoutePart = 'entendimiento-organizacions';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -83,7 +80,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('entendimiento_organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('entendimiento_organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entendimientoOrganizacion = new EntendimientoOrganizacion;
         $empleados = Empleado::get();
 
@@ -109,7 +106,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function edit(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('entendimiento_organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::get();
 
@@ -136,7 +133,7 @@ class EntendimientoOrganizacionController extends Controller
 
     public function show(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('entendimiento_organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::get();
         $obtener_FODA = $entendimientoOrganizacion;
@@ -146,14 +143,14 @@ class EntendimientoOrganizacionController extends Controller
 
     public function destroy(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
-        abort_if(Gate::denies('entendimiento_organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('entendimiento_organizacion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $entendimientoOrganizacion->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyEntendimientoOrganizacionRequest $request)
+    public function massDestroy(Request $request)
     {
         EntendimientoOrganizacion::whereIn('id', request('ids'))->delete();
 

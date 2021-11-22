@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyAlcanceSgsiRequest;
-use App\Http\Requests\StoreAlcanceSgsiRequest;
-use App\Http\Requests\UpdateAlcanceSgsiRequest;
 use App\Models\AlcanceSgsi;
 use App\Models\Empleado;
 use App\Models\Team;
@@ -33,10 +30,7 @@ class AlcanceSgsiController extends Controller
                 $deleteGate = 'alcance_sgsi_delete';
                 $crudRoutePart = 'alcance-sgsis';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -80,23 +74,23 @@ class AlcanceSgsiController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('alcance_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('alcance_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::with('area')->get();
 
         return view('frontend.alcanceSgsis.create', compact('empleados'));
     }
 
-    public function store(StoreAlcanceSgsiRequest $request)
+    public function store(Request $request)
     {
         $alcanceSgsi = AlcanceSgsi::create($request->all());
 
-        return redirect()->route('frontend.alcance-sgsis.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('alcance-sgsis.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(AlcanceSgsi $alcanceSgsi)
     {
-        abort_if(Gate::denies('alcance_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('alcance_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $alcanceSgsi->load('team');
 
@@ -105,7 +99,7 @@ class AlcanceSgsiController extends Controller
         return view('frontend.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados'));
     }
 
-    public function update(UpdateAlcanceSgsiRequest $request, AlcanceSgsi $alcanceSgsi)
+    public function update(Request $request, AlcanceSgsi $alcanceSgsi)
     {
         $alcanceSgsi->update($request->all());
 
@@ -114,7 +108,7 @@ class AlcanceSgsiController extends Controller
 
     public function show(AlcanceSgsi $alcanceSgsi)
     {
-        abort_if(Gate::denies('alcance_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('alcance_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $alcanceSgsi->load('team');
 
@@ -123,14 +117,14 @@ class AlcanceSgsiController extends Controller
 
     public function destroy(AlcanceSgsi $alcanceSgsi)
     {
-        abort_if(Gate::denies('alcance_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('alcance_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $alcanceSgsi->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyAlcanceSgsiRequest $request)
+    public function massDestroy(Request $request)
     {
         AlcanceSgsi::whereIn('id', request('ids'))->delete();
 

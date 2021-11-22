@@ -2,7 +2,7 @@
 @section('content')
 
 
-    {{ Breadcrumbs::render('frontend.partes-interesadas.create') }}
+{{-- {{ Breadcrumbs::render('frontend.partes-interesadas.create') }} --}}
 
 
 
@@ -14,7 +14,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('frontend.partes-interesadas.store') }}" enctype="multipart/form-data"
+            <form method="POST" action="{{ route('partes-interesadas.store') }}" enctype="multipart/form-data"
                 class="row">
                 @csrf
                 {{ Form::hidden('pdf-value', 'PartesInt') }}

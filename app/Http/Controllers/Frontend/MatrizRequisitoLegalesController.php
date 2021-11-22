@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
-use App\Http\Requests\StoreMatrizRequisitoLegaleRequest;
-use App\Http\Requests\UpdateMatrizRequisitoLegaleRequest;
 use App\Models\Empleado;
 use App\Models\EvidenciaMatrizRequisitoLegale;
 use App\Models\MatrizRequisitoLegale;
@@ -38,10 +35,7 @@ class MatrizRequisitoLegalesController extends Controller
             // //     $deleteGate    = 'matriz_requisito_legale_delete';
             // //     $crudRoutePart = 'matriz-requisito-legales';
 
-            // //     return view('partials.datatablesActions', compact(
-            // //         'viewGate',
-            // //         'editGate',
-            // //         'deleteGate',
+            // //     return view('partials.datatablesActionsFrontend', compact(
             // //         'crudRoutePart',
             // //         'row'
             // //     ));
@@ -121,14 +115,14 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('matriz_requisito_legale_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('matriz_requisito_legale_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
         $empleados = Empleado::with('area')->get();
 
         return view('frontend.matrizRequisitoLegales.create', compact('planes_implementacion', 'empleados'));
     }
 
-    public function store(StoreMatrizRequisitoLegaleRequest $request)
+    public function store(Request $request)
     {
         $matrizRequisitoLegale = MatrizRequisitoLegale::create($request->all());
         if ($request->hasFile('files')) {
@@ -153,7 +147,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function edit(MatrizRequisitoLegale $matrizRequisitoLegale)
     {
-        abort_if(Gate::denies('matriz_requisito_legale_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('matriz_requisito_legale_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRequisitoLegale->load('team', 'planes', 'evidencias_matriz');
         // dd($matrizRequisitoLegale);
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
@@ -171,7 +165,7 @@ class MatrizRequisitoLegalesController extends Controller
         return view('frontend.matrizRequisitoLegales.edit', compact('matrizRequisitoLegale', 'empleados', 'planes_seleccionados'));
     }
 
-    public function update(UpdateMatrizRequisitoLegaleRequest $request, MatrizRequisitoLegale $matrizRequisitoLegale)
+    public function update(Request $request, MatrizRequisitoLegale $matrizRequisitoLegale)
     {
         $matrizRequisitoLegale->update($request->all());
         $files = $request->file('files');
@@ -196,7 +190,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function show(MatrizRequisitoLegale $matrizRequisitoLegale)
     {
-        abort_if(Gate::denies('matriz_requisito_legale_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('matriz_requisito_legale_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $matrizRequisitoLegale->load('team', 'planes');
 
@@ -205,7 +199,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function destroy(Request $request, MatrizRequisitoLegale $matrizRequisitoLegale)
     {
-        abort_if(Gate::denies('matriz_requisito_legale_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('matriz_requisito_legale_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $eliminado = $matrizRequisitoLegale->delete();
             if ($eliminado) {
@@ -216,7 +210,7 @@ class MatrizRequisitoLegalesController extends Controller
         }
     }
 
-    public function massDestroy(MassDestroyMatrizRequisitoLegaleRequest $request)
+    public function massDestroy(Request $request)
     {
         MatrizRequisitoLegale::whereIn('id', request('ids'))->delete();
 

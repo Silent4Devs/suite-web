@@ -3,7 +3,7 @@
 
 {{-- {{ Breadcrumbs::render('frontend.analisis-riesgos.index') }} --}}
 
-    @can('matriz_riesgo_create')
+{{-- @can('matriz_riesgo_create') --}}
 
         <style>
             th {
@@ -48,7 +48,7 @@
                       </a>
                   </div>
               </div> --}}
-        @endcan
+              {{-- @endcan --}}
 
 
         <div class="card-body datatable-fix">
