@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyComunicacionSgiRequest;
-use App\Http\Requests\UpdateComunicacionSgiRequest;
 use App\Models\ComunicacionSgi;
 use App\Models\DocumentoComunicacionSgis;
 use App\Models\Empleado;
@@ -40,10 +38,7 @@ class ComunicacionSgiController extends Controller
                 $deleteGate = 'comunicacion_sgi_delete';
                 $crudRoutePart = 'comunicacion-sgis';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -71,7 +66,7 @@ class ComunicacionSgiController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('comunicacion_sgi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('comunicacion_sgi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
@@ -141,7 +136,7 @@ class ComunicacionSgiController extends Controller
 
     public function edit(ComunicacionSgi $comunicacionSgi)
     {
-        abort_if(Gate::denies('comunicacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+      //  abort_if(Gate::denies('comunicacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::get();
         $documentos = DocumentoComunicacionSgis::get();
@@ -150,7 +145,7 @@ class ComunicacionSgiController extends Controller
         return view('frontend.comunicacionSgis.edit', compact('comunicacionSgi', 'documentos', 'imagenes', 'empleados'));
     }
 
-    public function update(UpdateComunicacionSgiRequest $request, ComunicacionSgi $comunicacionSgi)
+    public function update(Request $request, ComunicacionSgi $comunicacionSgi)
     {
         $request->validate([
             'descripcion' => 'required',
@@ -221,7 +216,7 @@ class ComunicacionSgiController extends Controller
 
     public function show(ComunicacionSgi $comunicacionSgi)
     {
-        abort_if(Gate::denies('comunicacion_sgi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('comunicacion_sgi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $comunicacionSgi->load('team', 'documentos_comunicacion', 'imagenes_comunicacion');
 
@@ -230,14 +225,14 @@ class ComunicacionSgiController extends Controller
 
     public function destroy(ComunicacionSgi $comunicacionSgi)
     {
-        abort_if(Gate::denies('comunicacion_sgi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('comunicacion_sgi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $comunicacionSgi->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyComunicacionSgiRequest $request)
+    public function massDestroy(Request $request)
     {
         ComunicacionSgi::whereIn('id', request('ids'))->delete();
 
@@ -246,7 +241,7 @@ class ComunicacionSgiController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('comunicacion_sgi_create') && Gate::denies('comunicacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('comunicacion_sgi_create') && Gate::denies('comunicacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new ComunicacionSgi();
         $model->id = $request->input('crud_id', 0);

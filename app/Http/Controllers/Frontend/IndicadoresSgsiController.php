@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyIndicadoresSgsiRequest;
 use App\Models\Empleado;
 use App\Models\IndicadoresSgsi;
 use App\Models\Proceso;
@@ -34,10 +33,7 @@ class IndicadoresSgsiController extends Controller
                 $deleteGate = 'indicadores_sgsi_delete';
                 $crudRoutePart = 'indicadores-sgsis';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -96,7 +92,7 @@ class IndicadoresSgsiController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('indicadores_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('indicadores_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = Empleado::get();
         $procesos = Proceso::get();
@@ -134,14 +130,14 @@ class IndicadoresSgsiController extends Controller
 
     public function destroy(IndicadoresSgsi $indicadoresSgsi)
     {
-        abort_if(Gate::denies('indicadores_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('indicadores_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $indicadoresSgsi->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyIndicadoresSgsiRequest $request)
+    public function massDestroy(Request $request)
     {
         IndicadoresSgsi::whereIn('id', request('ids'))->delete();
 

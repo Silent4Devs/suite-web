@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 
-    <!-- {{ Breadcrumbs::render('frontend.auditoria-internas.create') }} -->
+    {{-- <!-- {{ Breadcrumbs::render('frontend.auditoria-internas.create') }} --> --}}
 
 <div class="card">
     <div class="card-header">

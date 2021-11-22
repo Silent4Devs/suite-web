@@ -3,13 +3,13 @@
 
 {{--  {{ Breadcrumbs::render('frontend.objetivosseguridads.index') }} --}}
 
-    @can('objetivosseguridad_create')
+    {{-- @can('objetivosseguridad_create') --}}
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Objetivos de Seguridad</strong></h3>
             </div>
-        @endcan
+        {{-- @endcan --}}
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -141,7 +141,7 @@
 
             ];
 
-            @can('objetivosseguridad_create')
+            {{-- @can('objetivosseguridad_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar objetivo de seguridad',
@@ -153,8 +153,8 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('objetivosseguridad_delete')
+                {{--  @endcan --}}
+                    {{-- @can('objetivosseguridad_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -182,7 +182,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{--  @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

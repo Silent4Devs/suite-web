@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyPlanAuditoriumRequest;
-use App\Http\Requests\StorePlanAuditoriumRequest;
-use App\Http\Requests\UpdatePlanAuditoriumRequest;
 use App\Models\AuditoriaAnual;
 use App\Models\PlanAuditorium;
 use App\Models\Team;
@@ -35,10 +32,7 @@ class PlanAuditoriaController extends Controller
                 $deleteGate = 'plan_auditorium_delete';
                 $crudRoutePart = 'plan-auditoria';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -99,7 +93,7 @@ class PlanAuditoriaController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('plan_auditorium_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('plan_auditorium_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $fechas = AuditoriaAnual::all()->pluck('fechainicio', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -108,7 +102,7 @@ class PlanAuditoriaController extends Controller
         return view('frontend.planAuditoria.create', compact('fechas', 'auditados'));
     }
 
-    public function store(StorePlanAuditoriumRequest $request)
+    public function store(Request $request)
     {
         $planAuditorium = PlanAuditorium::create($request->all());
         $generar = new GeneratePdf();
@@ -120,7 +114,7 @@ class PlanAuditoriaController extends Controller
 
     public function edit(PlanAuditorium $planAuditorium)
     {
-        abort_if(Gate::denies('plan_auditorium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('plan_auditorium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $fechas = AuditoriaAnual::all()->pluck('fechainicio', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -131,7 +125,7 @@ class PlanAuditoriaController extends Controller
         return view('frontend.planAuditoria.edit', compact('fechas', 'auditados', 'planAuditorium'));
     }
 
-    public function update(UpdatePlanAuditoriumRequest $request, PlanAuditorium $planAuditorium)
+    public function update(Request $request, PlanAuditorium $planAuditorium)
     {
         $planAuditorium->update($request->all());
         $planAuditorium->auditados()->sync($request->input('auditados', []));
@@ -141,7 +135,7 @@ class PlanAuditoriaController extends Controller
 
     public function show(PlanAuditorium $planAuditorium)
     {
-        abort_if(Gate::denies('plan_auditorium_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('plan_auditorium_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planAuditorium->load('fecha', 'auditados', 'team');
 
@@ -150,14 +144,14 @@ class PlanAuditoriaController extends Controller
 
     public function destroy(PlanAuditorium $planAuditorium)
     {
-        abort_if(Gate::denies('plan_auditorium_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('plan_auditorium_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planAuditorium->delete();
 
         return back();
     }
 
-    public function massDestroy(MassDestroyPlanAuditoriumRequest $request)
+    public function massDestroy(Request $request)
     {
         PlanAuditorium::whereIn('id', request('ids'))->delete();
 

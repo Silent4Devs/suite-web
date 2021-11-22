@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyTratamientoRiesgoRequest;
-use App\Http\Requests\StoreTratamientoRiesgoRequest;
-use App\Http\Requests\UpdateTratamientoRiesgoRequest;
 use App\Models\Controle;
 use App\Models\Empleado;
 use App\Models\Team;
@@ -35,10 +32,7 @@ class TratamientoRiesgosController extends Controller
                 $deleteGate = 'tratamiento_riesgo_delete';
                 $crudRoutePart = 'tratamiento-riesgos';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -99,7 +93,7 @@ class TratamientoRiesgosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('tratamiento_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('tratamiento_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $controls = Controle::all()->pluck('control', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -109,7 +103,7 @@ class TratamientoRiesgosController extends Controller
         return view('frontend.tratamientoRiesgos.create', compact('controls', 'responsables', 'empleados'));
     }
 
-    public function store(StoreTratamientoRiesgoRequest $request)
+    public function store(Request $request)
     {
         // dd($request);
         $tratamientoRiesgo = TratamientoRiesgo::create($request->all());
@@ -119,7 +113,7 @@ class TratamientoRiesgosController extends Controller
 
     public function edit(TratamientoRiesgo $tratamientoRiesgo)
     {
-        abort_if(Gate::denies('tratamiento_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('tratamiento_riesgo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $controls = Controle::all()->pluck('control', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -132,7 +126,7 @@ class TratamientoRiesgosController extends Controller
         return view('frontend.tratamientoRiesgos.edit', compact('controls', 'responsables', 'tratamientoRiesgo', 'empleados'));
     }
 
-    public function update(UpdateTratamientoRiesgoRequest $request, TratamientoRiesgo $tratamientoRiesgo)
+    public function update(Request $request, TratamientoRiesgo $tratamientoRiesgo)
     {
         $tratamientoRiesgo->update($request->all());
 
@@ -141,7 +135,7 @@ class TratamientoRiesgosController extends Controller
 
     public function show(TratamientoRiesgo $tratamientoRiesgo)
     {
-        abort_if(Gate::denies('tratamiento_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('tratamiento_riesgo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tratamientoRiesgo->load('control', 'responsable', 'team');
 
@@ -150,14 +144,14 @@ class TratamientoRiesgosController extends Controller
 
     public function destroy(TratamientoRiesgo $tratamientoRiesgo)
     {
-        abort_if(Gate::denies('tratamiento_riesgo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('tratamiento_riesgo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tratamientoRiesgo->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyTratamientoRiesgoRequest $request)
+    public function massDestroy(Request $request)
     {
         TratamientoRiesgo::whereIn('id', request('ids'))->delete();
 

@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('frontend.concientizacion-sgis.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.concientizacion-sgis.create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">

@@ -497,8 +497,8 @@ Route::middleware([
         Route::post('comunicacion-sgis/ckmedia', [ComunicacionSgiController::class,'storeCKEditorImages'])->name('comunicacion-sgis.storeCKEditorImages');
         Route::resource('comunicacion-sgis', ComunicacionSgiController::class);
 
-        // // Politica Del Sgsi Soportes
-        // Route::resource('politica-del-sgsi-soportes', PoliticaDelSgsiSoporteController::class, ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+        // Politica Del Sgsi Soportes
+        Route::resource('politica-del-sgsi-soportes', PoliticaDelSgsiSoporteController::class, ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
         // Control Accesos
         Route::delete('control-accesos/destroy', [ControlAccesoController::class,'massDestroy'])->name('control-accesos.massDestroy');

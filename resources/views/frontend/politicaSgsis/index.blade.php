@@ -45,13 +45,13 @@
 
     {{-- {{ Breadcrumbs::render('frontend.politica-sgsis.index') }} --}}
 
-    @can('politica_sgsi_create')
+    {{-- @can('politica_sgsi_create') --}}
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Política SGSI</strong></h3>
             </div>
-        @endcan
+        {{-- @endcan --}}
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -175,7 +175,7 @@
                 }
 
             ];
-            @can('politica_sgsi_create')
+            {{--  @can('politica_sgsi_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva política SGSI',
@@ -187,8 +187,8 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('politica_sgsi_delete')
+                {{--  @endcan --}}
+                {{--  @can('politica_sgsi_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -216,7 +216,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{--  @endcan --}}
 
 
 

@@ -3,9 +3,9 @@
 
 {{-- {{ Breadcrumbs::render('frontend.indicadores-sgsis.index') }} --}}
 
-    @can('indicadores_sgsi_create')
+    {{-- @can('indicadores_sgsi_create')
 
-    @endcan
+    @endcan --}}
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Indicadores SGSI</strong></h3>
@@ -232,7 +232,7 @@
 
             ];
 
-            @can('indicadores_sgsi_delete')
+            {{--@can('indicadores_sgsi_delete') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar indicador SGSI',
@@ -244,8 +244,8 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('indicadores_sgsi_delete')
+                {{-- @endcan --}}
+                    {{-- @can('indicadores_sgsi_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -273,7 +273,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

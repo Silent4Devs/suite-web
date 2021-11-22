@@ -14,7 +14,7 @@
 
     {{-- {{ Breadcrumbs::render('frontend.minutasaltadireccions.index') }} --}}
 
-    @can('minutasaltadireccion_create')
+    {{-- @can('minutasaltadireccion_create') --}}
 
 
         <div class="mt-5 card">
@@ -28,7 +28,7 @@
             </a>
         </div>
     </div> --}}
-        @endcan
+        {{-- @endcan --}}
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -140,7 +140,7 @@
                 }
 
             ];
-            @can('minutasaltadireccion_delete')
+            {{-- @can('minutasaltadireccion_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -168,8 +168,8 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
-            @can('minutasaltadireccion_create')
+                {{-- @endcan --}}
+                    {{-- @can('minutasaltadireccion_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar nueva minuta de Sesión con alta Dirección',
@@ -181,7 +181,7 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
+                {{-- @endcan --}}
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,

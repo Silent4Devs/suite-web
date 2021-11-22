@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('frontend.indicadores-sgsis.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.indicadores-sgsis.create') }} --}}
 
 <div class="card">
     <div class="card-header">

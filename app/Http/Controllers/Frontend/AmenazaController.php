@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Controllers\Traits\CsvImportTrait;
-use App\Http\Requests\CreateAmenazaRequest;
-use App\Http\Requests\UpdateAmenazaRequest;
 use App\Models\Amenaza;
 use App\Repositories\AmenazaRepository;
 use Flash;
@@ -39,7 +37,7 @@ class AmenazaController extends AppBaseController
                 $deleteGate = 'user_delete';
                 $crudRoutePart = 'amenazas';
 
-                return view('partials.datatablesActions', compact(
+                return view('partials.datatablesActionsFrontend', compact(
                     'viewGate',
                     'editGate',
                     'deleteGate',
@@ -86,7 +84,7 @@ class AmenazaController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateAmenazaRequest $request)
+    public function store(Request $request)
     {
         $input = $request->all();
 
@@ -137,7 +135,7 @@ class AmenazaController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateAmenazaRequest $request)
+    public function update($id, Request $request)
     {
         $amenaza = $this->amenazaRepository->find($id);
 
