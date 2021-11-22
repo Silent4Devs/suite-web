@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Frontend;
 use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
-use App\Http\Requests\UpdateAccionCorrectivaRequest;
 use App\Models\AccionCorrectiva;
 use App\Models\AnalisisAccionCorrectiva;
 use App\Models\Area;
@@ -46,10 +44,7 @@ class AccionCorrectivaController extends Controller
                 $deleteGate = 'accion_correctiva_delete';
                 $crudRoutePart = 'accion-correctivas';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -132,7 +127,7 @@ class AccionCorrectivaController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('accion_correctiva_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('accion_correctiva_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $nombrereportas = User::get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -193,7 +188,7 @@ class AccionCorrectivaController extends Controller
 
     public function edit(AccionCorrectiva $accionCorrectiva)
     {
-        abort_if(Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $nombrereportas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -232,7 +227,7 @@ class AccionCorrectivaController extends Controller
         return view('frontend.accionCorrectivas.edit', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
     }
 
-    public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
+    public function update(Request $request, AccionCorrectiva $accionCorrectiva)
     {
         $accionCorrectiva->update($request->all());
         //dd($accionCorrectiva);
@@ -253,7 +248,7 @@ class AccionCorrectivaController extends Controller
 
     public function show(AccionCorrectiva $accionCorrectiva)
     {
-        abort_if(Gate::denies('accion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('accion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $accionCorrectiva->load('nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas');
 
@@ -262,7 +257,7 @@ class AccionCorrectivaController extends Controller
 
     public function destroy(AccionCorrectiva $accionCorrectiva)
     {
-        abort_if(Gate::denies('accion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('accion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $accionCorrectiva->delete();
 
@@ -271,7 +266,7 @@ class AccionCorrectivaController extends Controller
         return back();
     }
 
-    public function massDestroy(MassDestroyAccionCorrectivaRequest $request)
+    public function massDestroy(Request $request)
     {
         AccionCorrectiva::whereIn('id', request('ids'))->delete();
 
@@ -280,7 +275,7 @@ class AccionCorrectivaController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('accion_correctiva_create') && Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('accion_correctiva_create') && Gate::denies('accion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new AccionCorrectiva();
         $model->id = $request->input('crud_id', 0);

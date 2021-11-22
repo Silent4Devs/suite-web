@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyControlAccesoRequest;
-use App\Http\Requests\StoreControlAccesoRequest;
-use App\Http\Requests\UpdateControlAccesoRequest;
 use App\Models\ControlAcceso;
 use App\Models\DocumentoControlAcceso;
 use App\Models\Team;
@@ -38,10 +35,7 @@ class ControlAccesoController extends Controller
                 $deleteGate = 'control_acceso_delete';
                 $crudRoutePart = 'control-accesos';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -73,13 +67,13 @@ class ControlAccesoController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('control_acceso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('control_acceso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = DocumentoControlAcceso::get();
 
         return view('frontend.controlAccesos.create', compact('documentos'));
     }
 
-    public function store(StoreControlAccesoRequest $request)
+    public function store(Request $request)
     {
         // dd($request->all());
         $controlAcceso = ControlAcceso::create($request->all());
@@ -108,14 +102,14 @@ class ControlAccesoController extends Controller
 
     public function edit(ControlAcceso $controlAcceso)
     {
-        abort_if(Gate::denies('control_acceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('control_acceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = DocumentoControlAcceso::get();
         $controlAcceso->load('team');
 
         return view('frontend.controlAccesos.edit', compact('controlAcceso', 'documentos'));
     }
 
-    public function update(UpdateControlAccesoRequest $request, ControlAcceso $controlAcceso)
+    public function update(Request $request, ControlAcceso $controlAcceso)
     {
         $controlAcceso->update($request->all());
         $files = $request->file('files');
@@ -135,7 +129,7 @@ class ControlAccesoController extends Controller
 
     public function show(ControlAcceso $controlAcceso)
     {
-        abort_if(Gate::denies('control_acceso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('control_acceso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $controlAcceso->load('team');
 
@@ -144,14 +138,14 @@ class ControlAccesoController extends Controller
 
     public function destroy(ControlAcceso $controlAcceso)
     {
-        abort_if(Gate::denies('control_acceso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('control_acceso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $controlAcceso->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyControlAccesoRequest $request)
+    public function massDestroy(Request $request)
     {
         ControlAcceso::whereIn('id', request('ids'))->delete();
 
@@ -160,7 +154,7 @@ class ControlAccesoController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('control_acceso_create') && Gate::denies('control_acceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('control_acceso_create') && Gate::denies('control_acceso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new ControlAcceso();
         $model->id = $request->input('crud_id', 0);

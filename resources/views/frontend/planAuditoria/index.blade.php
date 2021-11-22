@@ -1,11 +1,11 @@
 @extends('layouts.frontend')
 @section('content')
 
-{{-- {{ Breadcrumbs::render('frontend.plan-auditoria.index') }} --}} 
-    
-    @can('plan_auditorium_create')
+{{-- {{ Breadcrumbs::render('frontend.plan-auditoria.index') }} --}}
 
-    @endcan
+    {{-- @can('plan_auditorium_create')
+
+    @endcan --}}
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
             <h3 class="mb-2 text-center text-white"><strong>Plan de Auditoría</strong></h3>
@@ -140,7 +140,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -175,7 +175,7 @@
 
             ];
 
-            @can('plan_auditorium_create')
+            {{-- @can('plan_auditorium_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar plan de auditoría',
@@ -187,8 +187,8 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('plan_auditorium_delete')
+                {{-- @endcan --}}
+                    {{-- @can('plan_auditorium_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -198,13 +198,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -216,7 +216,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{--  @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

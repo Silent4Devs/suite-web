@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyEvidenciasSgsiRequest;
-use App\Http\Requests\StoreEvidenciasSgsiRequest;
-use App\Http\Requests\UpdateEvidenciasSgsiRequest;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\EvidenciaSgsiPdf;
@@ -41,10 +38,7 @@ class EvidenciasSgsiController extends Controller
                 $deleteGate = 'evidencias_sgsi_delete';
                 $crudRoutePart = 'evidencias-sgsis';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -88,7 +82,7 @@ class EvidenciasSgsiController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('evidencias_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('evidencias_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
@@ -97,7 +91,7 @@ class EvidenciasSgsiController extends Controller
         return view('frontend.evidenciasSgsis.create', compact('responsables', 'empleados', 'areas'));
     }
 
-    public function store(StoreEvidenciasSgsiRequest $request)
+    public function store(Request $request)
     {
         // dd($request->all());
         $evidenciasSgsi = EvidenciasSgsi::create($request->all());
@@ -127,7 +121,7 @@ class EvidenciasSgsiController extends Controller
 
     public function edit(EvidenciasSgsi $evidenciasSgsi)
     {
-        abort_if(Gate::denies('evidencias_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('evidencias_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
@@ -137,7 +131,7 @@ class EvidenciasSgsiController extends Controller
         return view('frontend.evidenciasSgsis.edit', compact('responsables', 'evidenciasSgsi', 'empleados', 'areas'));
     }
 
-    public function update(UpdateEvidenciasSgsiRequest $request, EvidenciasSgsi $evidenciasSgsi)
+    public function update(Request $request, EvidenciasSgsi $evidenciasSgsi)
     {
         $evidenciasSgsi->update($request->all());
         $files = $request->file('files');
@@ -169,7 +163,7 @@ class EvidenciasSgsiController extends Controller
 
     public function show(EvidenciasSgsi $evidenciasSgsi)
     {
-        abort_if(Gate::denies('evidencias_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('evidencias_sgsi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $evidenciasSgsi->load('responsable', 'team');
 
@@ -178,14 +172,14 @@ class EvidenciasSgsiController extends Controller
 
     public function destroy(EvidenciasSgsi $evidenciasSgsi)
     {
-        abort_if(Gate::denies('evidencias_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('evidencias_sgsi_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $evidenciasSgsi->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyEvidenciasSgsiRequest $request)
+    public function massDestroy(Request $request)
     {
         EvidenciasSgsi::whereIn('id', request('ids'))->delete();
 
@@ -194,7 +188,7 @@ class EvidenciasSgsiController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('evidencias_sgsi_create') && Gate::denies('evidencias_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('evidencias_sgsi_create') && Gate::denies('evidencias_sgsi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new EvidenciasSgsi();
         $model->id = $request->input('crud_id', 0);

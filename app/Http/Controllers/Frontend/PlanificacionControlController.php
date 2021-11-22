@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyPlanificacionControlRequest;
-use App\Http\Requests\StorePlanificacionControlRequest;
-use App\Http\Requests\UpdatePlanificacionControlRequest;
 use App\Models\Empleado;
 use App\Models\PlanificacionControl;
 use App\Models\Team;
@@ -34,7 +31,7 @@ class PlanificacionControlController extends Controller
                 $deleteGate = 'planificacion_control_delete';
                 $crudRoutePart = 'planificacion-controls';
 
-                return view('partials.datatablesActions', compact(
+                return view('partials.datatablesActionsFrontend', compact(
                     'viewGate',
                     'editGate',
                     'deleteGate',
@@ -98,7 +95,7 @@ class PlanificacionControlController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('planificacion_control_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('planificacion_control_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
@@ -106,7 +103,7 @@ class PlanificacionControlController extends Controller
         return view('frontend.planificacionControls.create', compact('duenos', 'empleados'));
     }
 
-    public function store(StorePlanificacionControlRequest $request)
+    public function store(Request $request)
     {
         $planificacionControl = PlanificacionControl::create($request->all());
 
@@ -115,7 +112,7 @@ class PlanificacionControlController extends Controller
 
     public function edit(PlanificacionControl $planificacionControl)
     {
-        abort_if(Gate::denies('planificacion_control_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('planificacion_control_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -126,7 +123,7 @@ class PlanificacionControlController extends Controller
         return view('frontend.planificacionControls.edit', compact('duenos', 'planificacionControl', 'empleados'));
     }
 
-    public function update(UpdatePlanificacionControlRequest $request, PlanificacionControl $planificacionControl)
+    public function update(Request $request, PlanificacionControl $planificacionControl)
     {
         $planificacionControl->update($request->all());
 
@@ -135,7 +132,7 @@ class PlanificacionControlController extends Controller
 
     public function show(PlanificacionControl $planificacionControl)
     {
-        abort_if(Gate::denies('planificacion_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('planificacion_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planificacionControl->load('dueno', 'team');
 
@@ -144,14 +141,14 @@ class PlanificacionControlController extends Controller
 
     public function destroy(PlanificacionControl $planificacionControl)
     {
-        abort_if(Gate::denies('planificacion_control_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('planificacion_control_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planificacionControl->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyPlanificacionControlRequest $request)
+    public function massDestroy(Request $request)
     {
         PlanificacionControl::whereIn('id', request('ids'))->delete();
 

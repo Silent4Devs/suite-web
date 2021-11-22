@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyAuditoriaAnualRequest;
-use App\Http\Requests\StoreAuditoriaAnualRequest;
-use App\Http\Requests\UpdateAuditoriaAnualRequest;
 use App\Models\AuditoriaAnual;
 use App\Models\Empleado;
 use App\Models\Team;
@@ -34,10 +31,7 @@ class AuditoriaAnualController extends Controller
                 $deleteGate = 'auditoria_anual_delete';
                 $crudRoutePart = 'auditoria-anuals';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -79,7 +73,7 @@ class AuditoriaAnualController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('auditoria_anual_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('auditoria_anual_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::get();
@@ -87,7 +81,7 @@ class AuditoriaAnualController extends Controller
         return view('frontend.auditoriaAnuals.create', compact('auditorliders', 'empleados'));
     }
 
-    public function store(StoreAuditoriaAnualRequest $request)
+    public function store(Request $request)
     {
         $auditoriaAnual = AuditoriaAnual::create($request->all());
 
@@ -96,7 +90,7 @@ class AuditoriaAnualController extends Controller
 
     public function edit(AuditoriaAnual $auditoriaAnual)
     {
-        abort_if(Gate::denies('auditoria_anual_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('auditoria_anual_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -107,7 +101,7 @@ class AuditoriaAnualController extends Controller
         return view('frontend.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual', 'empleados'));
     }
 
-    public function update(UpdateAuditoriaAnualRequest $request, AuditoriaAnual $auditoriaAnual)
+    public function update(Request $request, AuditoriaAnual $auditoriaAnual)
     {
         $auditoriaAnual->update($request->all());
 
@@ -116,7 +110,7 @@ class AuditoriaAnualController extends Controller
 
     public function show(AuditoriaAnual $auditoriaAnual)
     {
-        abort_if(Gate::denies('auditoria_anual_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('auditoria_anual_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditoriaAnual->load('auditorlider', 'team', 'fechaPlanAuditoria');
 
@@ -125,14 +119,14 @@ class AuditoriaAnualController extends Controller
 
     public function destroy(AuditoriaAnual $auditoriaAnual)
     {
-        abort_if(Gate::denies('auditoria_anual_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('auditoria_anual_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditoriaAnual->delete();
 
         return back();
     }
 
-    public function massDestroy(MassDestroyAuditoriaAnualRequest $request)
+    public function massDestroy(Request $request)
     {
         AuditoriaAnual::whereIn('id', request('ids'))->delete();
 

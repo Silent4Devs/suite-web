@@ -106,7 +106,7 @@
 
 {{-- {{ Breadcrumbs::render('frontend.material-sgsis.index') }} --}}
 
-    @can('material_sgsi_create')
+    {{-- @can('material_sgsi_create') --}}
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -119,7 +119,7 @@
             </a>
         </div>
     </div> --}}
-        @endcan
+        {{-- @endcan --}}
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -271,7 +271,7 @@
 
             ];
 
-            @can('material_sgsi_create')
+            {{-- @can('material_sgsi_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar material SGSI',
@@ -283,8 +283,8 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('material_sgsi_delete')
+                {{--  @endcan --}}
+                    {{--  @can('material_sgsi_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -312,7 +312,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

@@ -105,7 +105,7 @@
 
     </style>
 
-    <!-- {{ Breadcrumbs::render('frontend.indicadores-sgsis.create') }} -->
+    {{-- <!-- {{ Breadcrumbs::render('frontend.indicadores-sgsis.create') }} --> --}}
 
     <form method="POST" action="{{ route('indicadores-sgsis.store') }}" enctype="multipart/form-data">
         @csrf

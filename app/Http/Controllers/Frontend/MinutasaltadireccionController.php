@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyMinutasaltadireccionRequest;
-use App\Http\Requests\StoreMinutasaltadireccionRequest;
 use App\Mail\Minutas\MinutaConfirmacionSolicitud;
 use App\Mail\Minutas\MinutaRechazoPorEdicion;
 use App\Mail\Minutas\SolicitudDeAprobacion;
@@ -48,7 +46,7 @@ class MinutasaltadireccionController extends Controller
             //     $deleteGate    = 'minutasaltadireccion_delete';
             //     $crudRoutePart = 'minutasaltadireccions';
             //     $planes = Minutasaltadireccion::find($row->id)->planes;
-            //     return view('partials.datatablesActions', compact(
+            //     return view('partials.datatablesActionsFrontend', compact(
             //         'viewGate',
             //         'editGate',
             //         'deleteGate',
@@ -95,14 +93,14 @@ class MinutasaltadireccionController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('minutasaltadireccion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('minutasaltadireccion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsablereunions = Empleado::select('id', 'name', 'foto')->with('area')->get();
         $esta_vinculado = auth()->user()->empleado ? true : false;
 
         return view('frontend.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
     }
 
-    public function store(StoreMinutasaltadireccionRequest $request)
+    public function store(Request $request)
     {
         $request->validate([
             'objetivoreunion' => 'required',
@@ -296,7 +294,7 @@ class MinutasaltadireccionController extends Controller
 
     public function edit(Minutasaltadireccion $minutasaltadireccion)
     {
-        abort_if(Gate::denies('minutasaltadireccion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('minutasaltadireccion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $minutasaltadireccion->load('participantes', 'planes');
         $actividades = $minutasaltadireccion->planes->first()->tasks;
         $actividades = array_filter($actividades, function ($actividad) {
@@ -395,7 +393,7 @@ class MinutasaltadireccionController extends Controller
 
     public function show(Minutasaltadireccion $minutasaltadireccion)
     {
-        abort_if(Gate::denies('minutasaltadireccion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('minutasaltadireccion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $minutasaltadireccion->load('responsable', 'team');
 
@@ -404,7 +402,7 @@ class MinutasaltadireccionController extends Controller
 
     public function destroy(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
-        abort_if(Gate::denies('minutasaltadireccion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+      //  abort_if(Gate::denies('minutasaltadireccion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $minutasaltadireccion->delete();
 
@@ -412,7 +410,7 @@ class MinutasaltadireccionController extends Controller
         }
     }
 
-    public function massDestroy(MassDestroyMinutasaltadireccionRequest $request)
+    public function massDestroy(Request $request)
     {
         Minutasaltadireccion::whereIn('id', request('ids'))->delete();
 
@@ -421,7 +419,7 @@ class MinutasaltadireccionController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('minutasaltadireccion_create') && Gate::denies('minutasaltadireccion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+      //  abort_if(Gate::denies('minutasaltadireccion_create') && Gate::denies('minutasaltadireccion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Minutasaltadireccion();
         $model->id = $request->input('crud_id', 0);

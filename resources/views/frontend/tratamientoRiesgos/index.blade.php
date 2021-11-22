@@ -3,13 +3,13 @@
 
 {{--  {{ Breadcrumbs::render('frontend.tratamiento-riesgos.index') }}  --}}
 
-    @can('tratamiento_riesgo_create')
+    {{-- @can('tratamiento_riesgo_create') --}}
 
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Tratamiento de los Riesgos</strong></h3>
             </div>
-    @endcan
+    {{-- @endcan --}}
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -186,7 +186,7 @@
 
             ];
 
-            @can('tratamiento_riesgo_delete')
+            {{--  @can('tratamiento_riesgo_delete') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar tratamiento de los riesgos',
@@ -198,8 +198,8 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('tratamiento_riesgo_delete')
+                {{-- @endcan --}}
+                    {{-- @can('tratamiento_riesgo_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
@@ -227,7 +227,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

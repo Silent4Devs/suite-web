@@ -156,7 +156,7 @@ class InicioUsuarioController extends Controller
             $evaluaciones_mis_objetivos = Evaluacion::whereHas('evaluados', function ($q) use ($usuario) {
                 $q->where('evaluado_id', $usuario->empleado->id);
             })->get();
-            
+
             foreach ($evaluaciones_mis_objetivos as $evaluacion) {
                 $lista_evaluaciones->push([
                     'id' => $evaluacion->id,
@@ -611,7 +611,7 @@ class InicioUsuarioController extends Controller
             'formulario' => 'mejora',
         ]);
 
-        return redirect()->route('inicioUsuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('frontend.inicioUsuario.index')->with('success', 'Reporte generado');
     }
 
     public function sugerencias()

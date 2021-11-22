@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('frontend.concientizacion-sgis.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.concientizacion-sgis.create') }} --}}
 
 <div class="card">
     <div class="card-header">
