@@ -396,15 +396,15 @@
                        data: 'id',
                         render: function(data, type, row, meta) {
                             let urlVerMatrizRequisitoLegal =
-                                `/frontend/matriz-requisito-legales/${data}`;
+                                `/matriz-requisito-legales/${data}`;
                             let urlEditarMatrizRequisitoLegal =
-                                `/frontend/matriz-requisito-legales/${data}/edit`;
+                                `/matriz-requisito-legales/${data}/edit`;
                             let urlEliminarMatrizRequisitoLegal =
-                                `/frontend/matriz-requisito-legales/${data}`;
+                                `/matriz-requisito-legales/${data}`;
                             let urlCrearPlanAccion =
-                                `/frontend/matriz-requisito-legales/planes-de-accion/create/${data}`;
+                                `/matriz-requisito-legales/planes-de-accion/create/${data}`;
                             let urlVerPlanAccion =
-                                `/frontend/matriz-requisito-legales/planes-de-accion/create/${data}`;
+                                `/matriz-requisito-legales/planes-de-accion/create/${data}`;
                             let botones = `
                             <div class="btn-group">
                                 <a class="btn btn-sm" style="color:#212529;" href="${urlEditarMatrizRequisitoLegal}" title="Editar Matríz de Requisito Legal"><i class="fas fa-edit"></i></a>
