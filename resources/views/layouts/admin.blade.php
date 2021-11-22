@@ -7,7 +7,7 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('tabantaj/css/app.css') }}" rel="stylesheet">
     <title>{{ trans('panel.site_title') }}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -21,15 +21,15 @@
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet"/>-->
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css"
           rel="tylesheet"/>-->
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
+    <link href="{{ asset('tabantaj/css/custom.css') }}" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('tabantaj/img/favicon_tabantaj_v2.png') }}">
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"/>-->
     <!--<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>-->
     <!--<link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet"/>-->
     <!--<link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet"/>-->
-    <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('tabantaj/vendor/file-manager/css/file-manager.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('tabantaj/css/dark_mode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('tabantaj/css/yearpicker.css') }}">
     <!-- x-editable -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
         rel="stylesheet" />
@@ -1062,7 +1062,7 @@
     {{-- @include('partials.footer') --}}
     </div>
 
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('tabantaj/js/app.js') }}"></script>
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -1072,7 +1072,7 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
 
-    <script src="{{ asset('push/bin/push.min.js') }}"></script>
+    <script src="{{ asset('tabantaj/push/bin/push.min.js') }}"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
     </script> --}}
     {{-- <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script> --}}
@@ -1098,8 +1098,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
-    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
-    <script src="{{ asset('js/yearpicker.js') }}"></script>
+    <script src="{{ asset('tabantaj/vendor/file-manager/js/file-manager.js') }}"></script>
+    <script src="{{ asset('tabantaj/js/yearpicker.js') }}"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.0.0/js/dataTables.fixedColumns.min.js"></script>
@@ -1112,7 +1112,7 @@
     </script>
     <script src="//unpkg.com/alpinejs" defer></script>
 
-    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('tabantaj/js/main.js') }}"></script>
 
     <!-- x editable -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js">
@@ -1488,7 +1488,7 @@
 
     @yield('scripts')
 
-    
+
 
 </body>
 
