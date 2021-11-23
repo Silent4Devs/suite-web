@@ -9,6 +9,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (env('APP_ENV') === 'production') {
+            $this->app['request']->server->set('HTTPS','on'); // Force HTTPS
+
+            URL::forceScheme('https');
+        }
+
         Carbon::setLocale(config('app.locale'));
         Paginator::useBootstrap();
         Session::extend('Custom', function ($app) {
