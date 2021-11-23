@@ -39,7 +39,6 @@
         "phpoffice/phpword": "^0.18.1",
         "pusher/pusher-php-server": "^4.1",
         "renatomarinho/laravel-page-speed": "^2.0",
-        "sentry/sentry-laravel": "^2.10",
         "spatie/calendar-links": "^1.6",
         "spatie/geocoder": "^3.10",
         "spatie/laravel-medialibrary": "^8.7",
