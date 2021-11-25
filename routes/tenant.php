@@ -732,10 +732,10 @@ Route::middleware([
         // Route::delete('gap-tres/destroy', [GapTresController::class,'@massDestroy'])->name('gap-tres.massDestroy');
         // Route::resource('gap-tres', GapTresController::class);
 
-        // //Revisiones Documentos
-        // Route::get('/revisiones/archivo', [RevisionDocumentoController::class,'archivo'])->name('revisiones.archivo');
-        // Route::post('/revisiones/archivar', [RevisionDocumentoController::class,'archivar'])->name('revisiones.archivar');
-        // Route::post('/revisiones/desarchivar', [RevisionDocumentoController::class,'desarchivar'])->name('revisiones.desarchivar');
+        //Revisiones Documentos
+        Route::get('/revisiones/archivo', [RevisionDocumentoController::class,'archivo'])->name('revisiones.archivo');
+        Route::post('/revisiones/archivar', [RevisionDocumentoController::class,'archivar'])->name('revisiones.archivar');
+        Route::post('/revisiones/desarchivar', [RevisionDocumentoController::class,'desarchivar'])->name('revisiones.desarchivar');
 
         // //Documentos
         Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');

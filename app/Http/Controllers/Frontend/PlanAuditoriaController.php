@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use JakubOnderka\PhpParallelLint\TextOutputColored;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -18,9 +19,12 @@ class PlanAuditoriaController extends Controller
     public function index(Request $request)
     {
         //abort_if(Gate::denies('plan_auditorium_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $query = PlanAuditorium::with([ 'auditados', 'team'])->get();
+        dd($query);
 
         if ($request->ajax()) {
-            $query = PlanAuditorium::with(['fecha', 'auditados', 'team'])->select(sprintf('%s.*', (new PlanAuditorium)->table));
+            $query = PlanAuditorium::with([ 'auditados', 'team'])->get();
+            //$query = PlanAuditorium::with([ 'auditados', 'team'])->select(sprintf('%s.*', (new PlanAuditorium)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

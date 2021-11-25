@@ -688,6 +688,16 @@
                 </ul>
             </li>
         @endcan
+        @can('configuracion_procesos_access') {{-- este acceso no corresponde --}}
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.tenant.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('tenant') || request()->is('tenant/*') ? 'active' : '' }}">
+                    <i class="fas fa-file-upload iconos_menu letra_blanca"></i>
+
+                    <font class="letra_blanca">Tenant</font>
+                </a>
+            </li>
+        @endcan
         {{-- @can('faq_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -722,7 +732,7 @@
                 </ul>
             </li>
         @endcan --}}
-        @if (\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') && \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
+        {{-- @if (\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') && \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
             <li class="c-sidebar-nav-item">
                 <a class="{{ request()->is('admin/team-members') || request()->is('admin/team-members/*') ? 'active' : '' }} c-sidebar-nav-link"
                     href="{{ route('admin.team-members.index') }}">
@@ -731,7 +741,7 @@
                     <span>{{ trans('global.team-members') }}</span>
                 </a>
             </li>
-        @endif
+        @endif --}}
         {{-- @can('sitemap_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ url('sitemap') }}" class="c-sidebar-nav-link">
