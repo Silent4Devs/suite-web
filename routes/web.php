@@ -18,6 +18,13 @@ Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@ed
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa']], function () {
+    //Multitenat
+    Route::post('tenant','TenantController@store')->name("tenant.store");
+    Route::resource('tenant', 'TenantController')->except(["store"]);
+    // Route::get('tenant/create', 'TenantController@create')->name('tenant.create');
+    Route::delete('tenant/destroy', 'TenantController@massDestroy')->name('tenant.massDestroy');
+
+
     Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
     Route::post('recursos-humanos/evaluacion-360/{evaluacion}/recordatorio', 'RH\EV360EvaluacionesController@enviarCorreoAEvaluadores')->name('ev360-evaluaciones.recordatorio');
@@ -1018,3 +1025,6 @@ Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politi
 Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area');
 Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
 Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
+
+
+

@@ -611,7 +611,7 @@ class InicioUsuarioController extends Controller
             'formulario' => 'mejora',
         ]);
 
-        return redirect()->route('frontend.inicioUsuario.index')->with('success', 'Reporte generado');
+        return redirect()->route('inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
     public function sugerencias()

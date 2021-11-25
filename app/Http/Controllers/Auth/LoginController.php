@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Svg\Tag\Path;
 
 class LoginController extends Controller
 {
@@ -59,10 +60,11 @@ class LoginController extends Controller
                 }
             }
 
-            return '/inicioUsuario#datos';
+            return '/admin/inicioUsuario#datos';
+
         }
 
-        return '/';
+        return '/admin';
     }
 
     protected function authenticated(Request $request, $user)

@@ -11,6 +11,7 @@
     <div class="card-body">
         <form method="POST" class="row" action="{{ route("revision-direccions.update", [$revisionDireccion->id]) }}" enctype="multipart/form-data">
             @method('PUT')
+            @csrf
             <div class="form-group col-md-6">
                 <label for="estadorevisionesprevias"><i class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.revisionDireccion.fields.estadorevisionesprevias') }}</label>
                 <input class="form-control {{ $errors->has('estadorevisionesprevias') ? 'is-invalid' : '' }}" type="text" name="estadorevisionesprevias" id="estadorevisionesprevias" value="{{ old('estadorevisionesprevias', $revisionDireccion->estadorevisionesprevias) }}">
