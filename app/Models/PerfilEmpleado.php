@@ -11,7 +11,21 @@ class PerfilEmpleado extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'perfil_empleados';
-    protected $guarded = ['id'];
+    // protected $guarded = ['id'];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'created_at',
+        'updated_at',
+    ];
+
+
 
     public function empleados()
     {

@@ -32,8 +32,6 @@ class DeclaracionAplicabilidadAprobadores extends Model
 		'declaracion_id' => 'int',
 		'aprobadores_id' => 'int',
 		'estatus' => 'int',
-		'created_at' => 'timestamp without time zone',
-		'updated_at' => 'timestamp without time zone'
 	];
 
 	protected $dates = [

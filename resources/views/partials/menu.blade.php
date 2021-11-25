@@ -526,6 +526,16 @@
                             @endcan
                         </ul>
                     </li>
+                    @can('configuracion_sede_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.paneldeclaracion.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*/edit') || request()->is('admin/sedes/create') ? 'active' : '' }}">
+                            <i class="ml-2 fas fa-file iconos_menu letra_blanca"></i>
+
+                            <font class="letra_blanca">Controles</font>
+                        </a>
+                    </li>
+                    @endcan
 
                     @can('configuracion_empleados_access')
                         {{-- <li class="c-sidebar-nav-item">
@@ -599,9 +609,19 @@
                             <a href="{{ route('admin.puestos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/puestos') || request()->is('admin/puestos/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-user-md iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> {{ trans('cruds.puesto.title') }} </font>
+                                <font class="letra_blanca">{{ trans('cruds.puesto.title') }} </font>
                             </a>
                         </li>
+                    @endcan
+                    @can('configuracion_sede_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.perfiles.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/perfiles') || request()->is('admin/perfiles/*') || request()->is('admin/perfiles/create') ? 'active' : '' }}">
+                            <i class="fas fa-briefcase iconos_menu letra_blanca"></i>
+
+                            <font class="letra_blanca">Perfiles</font>
+                        </a>
+                    </li>
                     @endcan
                     @can('user_alert_access')
                         <li class="c-sidebar-nav-item">

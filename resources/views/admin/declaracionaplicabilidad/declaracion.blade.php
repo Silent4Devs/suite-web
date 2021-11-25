@@ -57,6 +57,7 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th>RESPONSABLE</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -96,6 +97,9 @@
                                                     data-title="Justificacion" data-value="{{ $g5s->justificacion }}"
                                                     class="justificacion" data-name="justificacion">
                                                 </a>
+                                            </td>
+                                            <td>
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -207,6 +211,7 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th>RESPONSABLE</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -246,6 +251,9 @@
                                                     data-value="{{ $g71s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
                                                 </a>
+                                            </td>
+                                            <td>
+
                                             </td>
                                         </tr>
                                     @endforeach

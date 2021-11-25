@@ -182,7 +182,7 @@ class AnalisisBrechaController extends Controller
      */
     public function update(Request $request, AnalisisBrecha $analisisBrecha)
     {
-        $analisisBrecha = AnalisisDeRiesgo::find($id);
+        $analisisBrecha = AnalisisBrecha::find($id);
 
         $analisisBrecha->update([
             'nombre' =>  $request->nombre,
