@@ -225,11 +225,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Declaracion de Aplicabilidad
     Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
+    Route::get('declaracion-aplicabilidad/{id}', 'DeclaracionAplicabilidadController@index')->name('declaracion-aplicabilidad');
     Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
     Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
+    Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
 
     //Panel declaracion
-    Route::get('panel-declaracion', 'DeclaracionAplicabilidadController@renderPanel')->name('panel-declaracion.PanelDeclaracion');
+    Route::post('paneldeclaracion/responsables','PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
+    Route::post('paneldeclaracion/aprobadores','PanelDeclaracionController@relacionarAprobador')->name('paneldeclaracion.aprobadores');
+    Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
+    Route::resource('paneldeclaracion', 'PanelDeclaracionController');
 
     //gantt
     Route::get('gantt', 'GanttController@index');
@@ -510,6 +515,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('puestos/parse-csv-import', 'PuestosController@parseCsvImport')->name('puestos.parseCsvImport');
     Route::post('puestos/process-csv-import', 'PuestosController@processCsvImport')->name('puestos.processCsvImport');
     Route::resource('puestos', 'PuestosController');
+
+
+    // Perfiles
+    Route::delete('perfiles/destroy', 'PerfilController@massDestroy')->name('perfiles.massDestroy');
+    Route::post('perfiles/parse-csv-import', 'PerfilController@parseCsvImport')->name('perfiles.parseCsvImport');
+    Route::post('perfiles/process-csv-import', 'PerfilController@processCsvImport')->name('perfiles.processCsvImport');
+    Route::resource('perfiles', 'PerfilController');
 
     // Sedes
     Route::delete('sedes/destroy', 'SedeController@massDestroy')->name('sedes.massDestroy');
