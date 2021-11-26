@@ -181,7 +181,7 @@ class AreasController extends Controller
 
     public function obtenerAreasPorGrupo()
     {
-        $grupos = Grupo::with('areas')->get();
+        $grupos = Grupo::with('areas')->orderByDesc('id')->get();
         $numero_grupos = Grupo::count();
 
         return view('admin.areas.areas-grupo', compact('grupos', 'numero_grupos'));
@@ -192,22 +192,27 @@ class AreasController extends Controller
         abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $numero_grupos = Grupo::count();
 
-        $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+        $areasTree = Area::exists(); //Eager loading
+        // dd($areasTree);
 
-        if ($request->ajax()) {
-            // La construccion del arbol necesita un primer nodo (NULL)
-            $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
-
-            return $areasTree->toJson();
-        }
 
         $rutaImagenes = asset('storage/empleados/imagenes/');
-        $grupos = Grupo::with('areas')->get();
+        $grupos = Grupo::with('areas')->orderBy('id')->get();
         $organizacionDB = Organizacion::first();
         $organizacion = !is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
         $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
 
         return view('admin.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos', 'numero_grupos', 'areas_sin_grupo'));
+    }
+
+    public function obtenerJerarquia(Request $request)
+    {
+        abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+        return json_encode($areasTree);
+        // dd($areasTree);
+
     }
 }

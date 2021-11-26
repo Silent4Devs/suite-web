@@ -1,5 +1,21 @@
 <div class="card">
     <div class="card-body">
+
+        <div class="px-1 py-2 mx-3 mb-4 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
+                    </p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Para visualizar registros actuales mantener actualizada la página
+                    </p>
+                </div>
+            </div>
+        </div>
         <h5 class="ml-3" style="font-size: 16px">Controles</h5>
         <div class="row">
 
@@ -11,7 +27,7 @@
                         <tr>
 
                             <td>Total de controles</td>
-                            <td>{{$conteoAplica}}</td>
+                            <td>{{ $conteoAplica }}</td>
 
 
                         </tr>
@@ -19,14 +35,14 @@
                         <tr>
 
                             <td>Aplica</td>
-                            <td>{{$conteoAplica}}</td>
+                            <td>{{ $conteoAplica }}</td>
 
                         </tr>
                     </tbody>
                     <tr>
 
                         <td>No aplica</td>
-                        <td>{{$conteoAplica + $conteoNoaplica}}</td>
+                        <td>{{ $conteoAplica + $conteoNoaplica }}</td>
 
                     </tr>
                     </tbody>
@@ -226,7 +242,8 @@
             type: 'bar',
             data: {
                 labels: ["A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17",
-                    "A18"],
+                    "A18"
+                ],
                 datasets: [{
                     label: '# Controles por dominio',
                     data: [
@@ -237,12 +254,12 @@
                         {{ $A9 + $A9No }},
                         {{ $A10 + $A10No }},
                         {{ $A11 + $A11No }},
-                        {{ $A12 + $A12No  }},
+                        {{ $A12 + $A12No }},
                         {{ $A13 + $A13No }},
                         {{ $A14 + $A14No }},
                         {{ $A15 + $A15No }},
                         {{ $A16 + $A16No }},
-                        {{ $A17 + $A17No}},
+                        {{ $A17 + $A17No }},
                         {{ $A18 + $A18No }},
                     ],
 

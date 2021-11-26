@@ -31,10 +31,10 @@ class AccionCorrectivaController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('accion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
+        // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados','reporto'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
         // dd($query);
         if ($request->ajax()) {
-            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'empleados'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id');
+            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'empleados', 'reporto'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -84,7 +84,7 @@ class AccionCorrectivaController extends Controller
             });
 
             $table->addColumn('reporto', function ($row) {
-                return $row->reporto ? $row->reporto->name : '';
+                return $row->reporto ? $row->reporto : '';
             });
 
             $table->addColumn('reporto_puesto', function ($row) {

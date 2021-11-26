@@ -20,7 +20,7 @@
 
     <div class="card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Capacitación </h3>
+            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong>Transferencia de Conocimiento</h3>
         </div>
         <div id="errores_alert"></div>
         <div class="card-body">
@@ -209,7 +209,7 @@
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Participantes</span>
                                     </div>
-                                    <div class="px-1 py-2 mx-3 mb-4 col-12 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;margin-top: 15px;">
+                                    <div class="px-1 py-2 mx-3 mb-4 rounded shadow col-12" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;margin-top: 15px;">
                                         <div class="row w-100">
                                             <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                                 <div class="w-100">
@@ -672,26 +672,26 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            let url = "{{ route('admin.empleados.get') }}";
-            $("#participantes_search").keyup(function() {
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: 'nombre=' + $(this).val(),
-                    beforeSend: function() {
-                        $("#cargando_participantes").show();
-                    },
-                    success: function(data) {
-                        $("#cargando_participantes").hide();
-                        $("#participantes_sugeridos").show();
-                        let sugeridos = document.querySelector(
-                            "#participantes_sugeridos");
-                        sugeridos.innerHTML = data;
+            // let url = "{{ route('admin.empleados.get') }}";
+            // $("#participantes_search").keyup(function() {
+            //     $.ajax({
+            //         type: "POST",
+            //         url: url,
+            //         data: 'nombre=' + $(this).val(),
+            //         beforeSend: function() {
+            //             $("#cargando_participantes").show();
+            //         },
+            //         success: function(data) {
+            //             $("#cargando_participantes").hide();
+            //             $("#participantes_sugeridos").show();
+            //             let sugeridos = document.querySelector(
+            //                 "#participantes_sugeridos");
+            //             sugeridos.innerHTML = data;
 
-                        $("#participantes_search").css("background", "#FFF");
-                    }
-                });
-            });
+            //             $("#participantes_search").css("background", "#FFF");
+            //         }
+            //     });
+            // });
 
             // CKEDITOR.replace('descripcion', {
             //     toolbar: [{
@@ -706,6 +706,68 @@
             //         items: ['Link', 'Unlink']
             //     }, ]
             // });
+            $("#cargando_participantes").hide();
+            let url_empleados = "{{ route('admin.empleados.lista') }}";
+            let timeout = null;
+            let inputSearchEmpleados = document.getElementById('participantes_search');
+            $('#participantes_search').on('search', function() {
+                $("#participantes_sugeridos").hide();
+            });
+            $("#participantes_search").keyup(function() {
+                // Clear the timeout if it has already been set.
+                // This will prevent the previous task from executing
+                // if it has been less than <MILLISECONDS>
+                clearTimeout(timeout);
+                // Make a new timeout set to go off in 1000ms (1 second)
+                // let textEscrito = $(this).val();
+                if (inputSearchEmpleados.value.trim() != '') {
+                    timeout = setTimeout(function() {
+                        $.ajax({
+                            type: "POST",
+                            url: url_empleados,
+                            data: 'nombre=' + inputSearchEmpleados.value,
+                            beforeSend: function() {
+                                $("#cargando_participantes").show();
+                            },
+                            success: function(data) {
+                                $("#cargando_participantes").hide();
+                                $("#participantes_sugeridos").show();
+                                let sugeridos = document.querySelector(
+                                    "#participantes_sugeridos");
+                                let lista =
+                                    `<ul class='list-group' id='empleados-lista'>`;
+                                data ? JSON.parse(data).forEach(usuario => {
+                                        lista += `<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action'
+                                    onClick='seleccionarUsuario("${usuario.id}","${usuario.name}","${usuario.email}");'>
+                                    <i class='mr-2 fas fa-user-circle'></i>
+                                    ${usuario.name}</button>
+                                `;
+                                    }) : lista +=
+                                    '<li class="list-group-item list-group-item-action">Sin coincidencias encontradas</li>';
+                                lista += `</ul>`;
+                                console.log(lista);
+                                sugeridos.innerHTML = lista;
+                                $("#participantes_search").css("background", "#FFF");
+                            }
+                        });
+                        // if (inputSearchEmpleados.value == '') {
+                        //     orientacion = localStorage.getItem('orientationOrgChart');
+                        //     renderOrganigrama(OrgChart, orientacion, null);
+                        // }
+                    }, 500);
+                } else {
+                    $("#participantes_sugeridos").hide();
+                }
+            });
+
+            window.seleccionarUsuario = function(id, name, email) {
+
+                $("#participantes_search").val(name);
+                $("#id_empleado").val(id);
+                $("#email").val(email);
+                $("#participantes_sugeridos").hide();
+            }
+
         });
         //To select country name
         function seleccionarUsuario(user) {

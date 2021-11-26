@@ -32,7 +32,7 @@
                               <h5 class="ml-3" style="font-size: 16px">Plan Base ISO 27001</h5>
                           </div>
                           <canvas id="chartActividades"></canvas>
-                          <a id="a_plan" class="btn_ver" href="admin/planTrabajoBase">
+                          <a id="a_plan" class="btn_ver" href="/planTrabajoBase">
                               Ver Detalle
                           </a>
                       </div>
@@ -55,10 +55,10 @@
                         </div>
                         <canvas id="chartDocu"></canvas>
                         <div style="display: inline-flex; justify-content: center;">
-                            <a id="" class="btn_ver" style="margin-left: 0;" href="admin/carpeta">
+                            <a id="" class="btn_ver" style="margin-left: 0;" href="/carpeta">
                                 Carpetas
                             </a>
-                            <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/control-documentos">
+                            <a id="" class="btn_ver" style="margin-left: 5px;" href="/control-documentos">
                                 Lista de documentos
                             </a>
                         </div>
@@ -80,7 +80,7 @@
                               <h5 class="ml-3" style="font-size: 16px">Capacitación</h5>
                           </div>
                           <canvas id="chartCapaci"></canvas>
-                          <a id="a_plan" class="btn_ver" href="admin/recursos">
+                          <a id="a_plan" class="btn_ver" href="/recursos">
                               Ver Detalle
                           </a>
                       </div>
@@ -100,7 +100,7 @@
                               <h5 class="ml-3" style="font-size: 16px">Indicadores SGSI</h5>
                           </div>
                           <canvas id="chartIndicadoresSGSI"></canvas>
-                          <a id="a_plan" class="btn_ver" href="admin/recursos">
+                          <a id="a_plan" class="btn_ver" href="/indicadores-sgsis">
                               Ver Detalle
                           </a>
                       </div>
@@ -126,7 +126,7 @@
                           </div>
                           <div class="w-100" style="min-height: 385px">
                               <canvas id="incidentechart"></canvas>
-                              {{-- <a id="a_plan" class="btn_ver" href="admin/incidentes-de-seguridads">
+                              {{-- <a id="a_plan" class="btn_ver" href="/incidentes-de-seguridads">
                                   Ver Detalle
                               </a> --}}
                           </div>
@@ -152,7 +152,7 @@
                       <h5 class="ml-3" style="font-size: 16px">Auditorias</h5>
                   </div>
                   <canvas id="chartAuditoria"></canvas>
-                  <a id="a_plan" class="btn_ver" href="admin/auditoria-anuals">
+                  <a id="a_plan" class="btn_ver" href="/auditoria-anuals">
                       Ver Detalle
                   </a>
               </div>
@@ -173,10 +173,10 @@
                   </div>
                   <canvas id="myChart"></canvas>
                   <div style="display: inline-flex; justify-content: center;">
-                      <a id="" class="btn_ver" style="margin-left: 0;" href="admin/accion-correctivas">
+                      <a id="" class="btn_ver" style="margin-left: 0;" href="/accion-correctivas">
                           Ver Detalle
                       </a>
-                      <a id="" class="btn_ver" style="margin-left: 5px;" href="admin/registromejoras">
+                      <a id="" class="btn_ver" style="margin-left: 5px;" href="/registromejoras">
                           Ver Detalle
                       </a>
                   </div>

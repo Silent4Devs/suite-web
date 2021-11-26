@@ -94,7 +94,6 @@ class PlanAuditoriaController extends Controller
 
     public function store(StorePlanAuditoriumRequest $request)
     {
-
         $planAuditorium = PlanAuditorium::create($request->all());
         // $generar = new GeneratePdf();
         // $generar->Generate($request['pdf-value'], $planAuditorium);
@@ -114,7 +113,7 @@ class PlanAuditoriaController extends Controller
 
         $equipoauditorias = Empleado::get();
 
-        return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium','equipo_seleccionado'));
+        return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium', 'equipo_seleccionado'));
     }
 
     public function update(UpdatePlanAuditoriumRequest $request, PlanAuditorium $planAuditorium)

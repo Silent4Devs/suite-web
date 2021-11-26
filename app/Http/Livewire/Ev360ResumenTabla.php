@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use Livewire\Component;
 use App\Models\Empleado;
 use App\Models\RH\Competencia;
 use App\Models\RH\Evaluacion;
-use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\ObjetivoRespuesta;
 use Illuminate\Pagination\Paginator;
@@ -16,6 +16,7 @@ use Livewire\WithPagination;
 
 class Ev360ResumenTabla extends Component
 {
+    use LivewireAlert;
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 

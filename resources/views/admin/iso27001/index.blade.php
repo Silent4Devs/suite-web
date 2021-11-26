@@ -384,23 +384,23 @@
                                         <li ><a href="#" data-ventana="capacitacion" data-ruta="Capacitaciones" class="btn_ventana_menu">
                                                 <div>
                                                     <i class="fas fa-chalkboard-teacher"></i>
-                                                    Capacitaciones
+                                                    Transferencia de Conocimiento
                                                 </div>
                                             </a></li>
                                             <div class="ventana_menu" id="capacitacion" style="color:#008186 !important">
                                                 <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitacion" style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
-                                                    <h3 class="text-center"><strong>Capacitaciones</strong></h3>
+                                                    <h3 class="text-center"><strong>Conocimientos</strong></h3>
                                                 <ul>
                                                     <li><a href="{{ asset('admin/categoria-capacitacion') }}">
                                                         <div>
                                                             <i class="fas fa-layer-group"></i>
-                                                            Crear Categorias
+                                                            Crear Categorías
                                                         </div>
                                                     </a></li>
                                                     <li><a href="{{ route('admin.recursos.index') }}">
                                                         <div>
                                                             <i class="fas fa-graduation-cap"></i>
-                                                            Crear Capacitación
+                                                            Crear Conocimientos
                                                         </div>
                                                     </a></li>
                                                 </ul>

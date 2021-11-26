@@ -174,7 +174,7 @@ class ProcesoController extends Controller
         abort_if(Gate::denies('mapa_procesos_organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos_mapa = Grupo::with(['macroprocesos' => function ($q) {
             $q->with('procesosWithDocumento');
-        }])->get();
+        }])->orderBy('id')->get();
 
         $macros_mapa = Macroproceso::get();
         $procesos_mapa = Proceso::get();
@@ -192,7 +192,8 @@ class ProcesoController extends Controller
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento->id)->get();
         // dd($revisiones);
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
-        $indicadores = IndicadoresSgsi::get();
+        $indicadores = IndicadoresSgsi::where('id_proceso',$proceso->id)->get();
+        // dd($indicadores);
         $riesgos = MatrizRiesgo::with(['analisis_de_riesgo'=>function ($q) {
             $q->select('id', 'nombre');
         }])->where('id_proceso', $proceso->id)->get();
@@ -221,10 +222,12 @@ class ProcesoController extends Controller
 
         $barras = '<canvas id="resultadobarra" width="900" height="750"></canvas>';
 
+
         $evaluaciones = EvaluacionIndicador::select('fecha', 'resultado')->where('id_indicador', $input['id'])->get();
         foreach ($evaluaciones as $evaluacion) {
             $evaluacion->fecha = Carbon::parse($evaluacion->fecha)->format('d-m-Y');
         }
+
 
         $porcentaje = number_format(($input['resultado'] * 100) / $input['meta'], 2);
 

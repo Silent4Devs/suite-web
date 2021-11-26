@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Functions;
-
 
 class GenerateAnalisisB
 {
@@ -71,13 +69,11 @@ class GenerateAnalisisB
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
 
-
         ];
     }
 
     public function TraerDatosDos($analisis_id)
     {
-
         return [
 
             [
@@ -994,7 +990,6 @@ class GenerateAnalisisB
             ],
 
         ];
-
     }
 
     public function TraerDatosTres($analisis_id)
@@ -1061,6 +1056,5 @@ class GenerateAnalisisB
                     'analisis_brechas_id' => $analisis_id,
                 ],
             ];
-
-}
+    }
 }

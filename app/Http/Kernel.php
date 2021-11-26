@@ -21,7 +21,7 @@ class Kernel extends HttpKernel
         \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
         //\RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
         //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class, // Note: This middleware invokes "RemoveComments::class" before it runs.
-
+        \App\Http\Middleware\XFrameHeadersMiddleware::class,
     ];
 
     protected $middlewareGroups = [
@@ -40,6 +40,8 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\AuthGates::class,
+        ],
+        'universal' => [
 
         ],
     ];

@@ -203,11 +203,11 @@
 
             <button onclick="printJS({
                 printable: 'impreso_row',
-                type: 'html', 
+                type: 'html',
                 css: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
                 css: '{{asset('css/print_dashboard.css')}}',
                 })">
-                <i class="fas fa-print mr-2"></i>
+                <i class="mr-2 fas fa-print"></i>
                 Imprimir
             </button>
         </div>

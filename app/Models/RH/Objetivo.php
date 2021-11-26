@@ -13,12 +13,12 @@ class Objetivo extends Model
     protected $appends = ['imagen_ruta'];
     protected $guarded = ['id'];
 
-
     public function getImagenRutaAttribute()
     {
         if ($this->imagen) {
             return asset('storage/objetivos/img/' . $this->imagen);
         }
+
         return asset('img/bullseye.png');
     }
 

@@ -370,11 +370,10 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
+                            console.log(row)
+                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.empleado?.avatar}" title="${row.empleado?.name}"></img>`;
 
-                            
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reviso.avatar}" title="${row.reviso.name}"></img>`;
-                            
-                            return `${row.reviso ? html: ''}`;
+                            return `${row.empleado ? html: ''}`;
                         }
                     },
                     {

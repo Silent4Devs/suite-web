@@ -103,7 +103,7 @@ class InicioUsuarioController extends Controller
         $auditorias_anual = AuditoriaAnual::get();
         $auditoria_internas = new AuditoriaInterna;
         $empleado = auth()->user()->empleado;
-        $recursos = new Recurso;
+        $recursos = collect();
         if ($usuario->empleado) {
             $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
                 $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);

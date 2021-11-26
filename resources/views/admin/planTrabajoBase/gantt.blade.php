@@ -174,7 +174,8 @@
                 },
                 url: "{{ route('admin.planTrabajoBase.loadProyect') }}",
                 success: function(response) {
-                    // prof.stop();                    
+                    document.getElementById("ultima_modificacion").innerHTML=moment(response.updated_at).format("DD-MM-YYYY hh:mm:ss A")
+                    // prof.stop();
                     ge.loadProject(response);
                     ge.checkpoint(); //empty the undo stac
                 },
@@ -687,13 +688,13 @@
                                                         <button onclick="$('#workSpace').trigger('undo.gantt');return false;" class="button textual icon requireCanWrite" title="Deshacer"><span class="teamworkIcon">&#39;</span></button>
                                                         <button onclick="$('#workSpace').trigger('redo.gantt');return false;" class="button textual icon requireCanWrite" title="Rehacer"><span class="teamworkIcon">&middot;</span></button>
                                                         <span class="ganttButtonSeparator requireCanWrite requireCanAdd"></span>
-                                                        <button onclick="$('#workSpace').trigger('addAboveCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="Insertar debajo"><span class="teamworkIcon">l</span></button>
-                                                        <button onclick="$('#workSpace').trigger('addBelowCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="Insertar arriba"><span class="teamworkIcon">X</span></button>
+                                                        <button onclick="$('#workSpace').trigger('addAboveCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="Insertar arriba"><span class="teamworkIcon">l</span></button>
+                                                        <button onclick="$('#workSpace').trigger('addBelowCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanAdd" title="Insertar debajo"><span class="teamworkIcon">X</span></button>
                                                         <span class="ganttButtonSeparator requireCanWrite requireCanInOutdent"></span>
-                                                        <button onclick="$('#workSpace').trigger('outdentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Quitar identación de tarea"><span class="teamworkIcon">.</span></button>
-                                                        <button onclick="$('#workSpace').trigger('indentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Identar tarea"><span class="teamworkIcon">:</span></button>
+                                                        <button onclick="$('#workSpace').trigger('outdentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Quitar indentación"><span class="teamworkIcon">.</span></button>
+                                                        <button onclick="$('#workSpace').trigger('indentCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanInOutdent" title="Indentar"><span class="teamworkIcon">:</span></button>
                                                         <span class="ganttButtonSeparator requireCanWrite requireCanMoveUpDown"></span>
-                                                        <button onclick="$('#workSpace').trigger('moveUpCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia abajo"><span class="teamworkIcon">k</span></button>
+                                                        <button onclick="$('#workSpace').trigger('moveUpCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia arriba"><span class="teamworkIcon">k</span></button>
                                                         <button onclick="$('#workSpace').trigger('moveDownCurrentTask.gantt');return false;" class="button textual icon requireCanWrite requireCanMoveUpDown" title="Mover hacia bajo"><span class="teamworkIcon">j</span></button>
                                                         <span class="ganttButtonSeparator requireCanWrite requireCanDelete"></span>
                                                         <button onclick="$('#workSpace').trigger('deleteFocused.gantt');return false;" class="button textual icon delete requireCanWrite" title="Elimina"><span class="teamworkIcon">&cent;</span></button>
@@ -867,17 +868,17 @@
                                                         <tr>
                                                         <td  colspan="2">
                                                         <label for="status" class="">Estatus</label><br>
-                                                         {{-- <select id="status" name="status" class="taskStatus" status="(#=obj.status#)"  onchange="$(this).attr('STATUS',$(this).val());">
+                                                         <select readonly disabled style="color:black; text-align:center" id="status" name="status" class="taskStatus" status="(#=obj.status#)"  onchange="$(this).attr('STATUS',$(this).val());">
             <option value="STATUS_ACTIVE" class="taskStatus" status="STATUS_ACTIVE" >En Proceso</option>
             <option value="STATUS_WAITING" class="taskStatus" status="STATUS_WAITING" >En Espera</option>
             <option value="STATUS_SUSPENDED" class="taskStatus" status="STATUS_SUSPENDED" >Suspendida</option>
             <option value="STATUS_DONE" class="taskStatus" status="STATUS_DONE" >Completada</option>
             <option value="STATUS_FAILED" class="taskStatus" status="STATUS_FAILED" >Con Retraso</option>
             <option value="STATUS_UNDEFINED" class="taskStatus" status="STATUS_UNDEFINED" >Sin Iniciar</option>
-            </select> --}}
+            </select>
 
 
-                                                        <div class="taskDivStatus" status="(#=obj.status#)" >(#=obj.status#)</div>
+                                                        {{-- <div class="taskDivStatus" status="(#=obj.status#)" >(#=obj.status#)</div> --}}
 
 
                                                         </td>

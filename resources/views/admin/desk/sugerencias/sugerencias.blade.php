@@ -44,7 +44,7 @@
 </div>
 
 <div class="datatable-fix" style="width: 100%;">
-    <div class="text-right mb-3">
+    <div class="mb-3 text-right">
         <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/sugerencias')}}">Crear reporte</a>
     </div>
 
@@ -73,7 +73,7 @@
                     <td>{{ $sugerencia->created_at }}</td>
                     <td>{{ $sugerencia->fecha_cierre }}</td>
 	       			<td>
-                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}{{ $sugerencia->sugirio->avatar }}" title="{{ $sugerencia->sugirio->name }}">
+                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $sugerencia->sugirio->avatar }}" title="{{ $sugerencia->sugirio->name }}">
                     </td>
 	       			<td>{{ $sugerencia->sugirio->email }}</td>
 	       			<td>{{ $sugerencia->sugirio->telefono }}</td>

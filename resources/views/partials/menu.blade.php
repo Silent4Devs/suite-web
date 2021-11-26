@@ -1,10 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/dark_mode.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/menu.css') }}">
 
-
-
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style=" border: none;">
-
     <div class="bg-transparent c-sidebar-brand d-md-down-none caja_caja_img_logo">
 
         <!-- <div class="text-center dark_mode1" style="padding-top: 20px;">-->
@@ -12,15 +9,19 @@
         <div class="caja_img_logo">
             @php
                 use App\Models\Organizacion;
-                $organizacion = Organizacion::first();
-                $logotipo = 'img/logo_policromatico_2.png';
-                if ($organizacion) {
-                    if ($organizacion->logotipo) {
-                        $logotipo = 'images/' . $organizacion->logotipo;
-                    }
+                $organizacion = Organizacion::select('id', 'logotipo')->first();
+
+                if(!empty($organizacion)){
+                    $logotipo = $organizacion->logotipo;
+                    @endphp
+                    <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
+                    @php
+                }else{
+                    @endphp
+                    <img src="{{ asset('img/logo_policromatico_2.png')}}" class="img_logo" style="width: 110%;">
+                    @php
                 }
             @endphp
-            <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
         </div>
 
     </div>
@@ -529,6 +530,46 @@
                             </ul>
                         </li>
                     @endcan
+
+                    <li class="c-sidebar-nav-dropdown">
+                        <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                            <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca "> Conocimientos </font>
+                        </a>
+                        <ul class="c-sidebar-nav-dropdown-items">
+                            @can('configuracion_macroproceso_access')
+                                <li class="c-sidebar-nav-item">
+                                    <a href="{{ asset('admin/categoria-capacitacion') }}"
+                                        class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
+                                        <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca"
+                                            style="font-size:12pt;"></i>
+                                        <font class="letra_blanca"> Crear categorías</font>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('configuracion_procesos_access')
+                                <li class="c-sidebar-nav-item">
+                                    <a href="{{ asset('admin/recursos') }}"
+                                        class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
+                                        <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
+                                            style="font-size:12pt;"></i>
+                                        <font class="letra_blanca"> Crear conocimientos</font>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @can('configuracion_sede_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.paneldeclaracion.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*/edit') || request()->is('admin/sedes/create') ? 'active' : '' }}">
+                            <i class="ml-2 fas fa-file iconos_menu letra_blanca"></i>
+
+                            <font class="letra_blanca">Controles</font>
+                        </a>
+                    </li>
+                    @endcan
+
                     @can('configuracion_empleados_access')
                         {{-- <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.empleados.index') }}"
@@ -578,7 +619,7 @@
                             </a>
                         </li>
                     @endcan
-                    @can('controle_access')
+                    {{-- @can('controle_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.controles.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/controles') || request()->is('admin/controles/*') ? 'active' : '' }}">
@@ -586,7 +627,7 @@
                                 <font class="letra_blanca"> {{ trans('cruds.controle.title') }} </font>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                     @can('audit_log_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.audit-logs.index') }}"
@@ -601,9 +642,19 @@
                             <a href="{{ route('admin.puestos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/puestos') || request()->is('admin/puestos/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-user-md iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> {{ trans('cruds.puesto.title') }} </font>
+                                <font class="letra_blanca">{{ trans('cruds.puesto.title') }} </font>
                             </a>
                         </li>
+                    @endcan
+                    @can('configuracion_sede_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.perfiles.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/perfiles') || request()->is('admin/perfiles/*') || request()->is('admin/perfiles/create') ? 'active' : '' }}">
+                            <i class="fas fa-briefcase iconos_menu letra_blanca"></i>
+
+                            <font class="letra_blanca">Perfiles</font>
+                        </a>
+                    </li>
                     @endcan
                     @can('user_alert_access')
                         <li class="c-sidebar-nav-item">

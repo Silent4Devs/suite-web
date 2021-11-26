@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ActivoImport;
 use App\Imports\AlcanceSgsiImport;
 use App\Imports\AmenazaImport;
 use App\Imports\AnalisisDeRiesgoImport;
@@ -10,6 +11,7 @@ use App\Imports\CategoriaCapacitacionImport;
 use App\Imports\ComiteseguridadImport;
 use App\Imports\CompetenciaImport;
 use App\Imports\ControlImport;
+use App\Imports\DatosAreaImport;
 use App\Imports\EjecutarenlaceImport;
 use App\Imports\EntendimientoOrganizacionImport;
 use App\Imports\EstadoIncidenteImport;
@@ -26,8 +28,7 @@ use App\Imports\RevisionDIreccionImport;
 use App\Imports\TeamImport;
 use App\Imports\UsuarioImport;
 use App\Imports\VulnerabilidadImport;
-use App\Imports\ActivoImport;
-use App\Imports\DatosAreaImport;
+use App\Imports\EmpleadoImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SubidaExcel extends Controller
@@ -128,19 +129,19 @@ class SubidaExcel extends Controller
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
-    public function FaqCategoria()
-    {
-        Excel::import(new FaqCategoriaImport, request()->file('faqcategoria'));
+    // public function FaqCategoria()
+    // {
+    //     Excel::import(new FaqCategoriaImport, request()->file('faqcategoria'));
 
-        return redirect('CargaDocs')->with('success', 'All good!');
-    }
+    //     return redirect('CargaDocs')->with('success', 'All good!');
+    // }
 
-    public function FaqPregunta()
-    {
-        Excel::import(new FaqPreguntaImport, request()->file('faqpregunta'));
+    // public function FaqPregunta()
+    // {
+    //     Excel::import(new FaqPreguntaImport, request()->file('faqpregunta'));
 
-        return redirect('CargaDocs')->with('success', 'All good!');
-    }
+    //     return redirect('CargaDocs')->with('success', 'All good!');
+    // }
 
     public function AnalisisRiesgo()
     {
@@ -211,15 +212,24 @@ class SubidaExcel extends Controller
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
+
     public function DatosArea()
     {
         Excel::import(new DatosAreaImport, request()->file('datos_area'));
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
+
     public function Activos()
     {
         Excel::import(new ActivoImport, request()->file('activo_inventario'));
+
+        return redirect('CargaDocs')->with('success', 'All good!');
+    }
+
+    public function Empleado()
+    {
+        Excel::import(new EmpleadoImport, request()->file('empleado'));
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }

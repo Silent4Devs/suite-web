@@ -19,6 +19,7 @@ class EV360ObjetivosController extends Controller
     {
         if ($request->ajax()) {
             $empleados = Empleado::with(['objetivos', 'area', 'perfil'])->get();
+
             return datatables()->of($empleados)->toJson();
         }
         $areas = Area::select('id', 'area')->get();
@@ -75,7 +76,7 @@ class EV360ObjetivosController extends Controller
             if ($request->hasFile('foto')) {
                 Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $nombre_imagen = 'OBJETIVO_' .  $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $empleado->id . '.' . $extension;
+                $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $empleado->id . '.' . $extension;
                 $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
                 //Usamos image_intervention para disminuir el peso de la imagen
                 $img_intervention = Image::make($request->file('foto'));
@@ -83,7 +84,7 @@ class EV360ObjetivosController extends Controller
                     $constraint->aspectRatio();
                 })->save($route);
                 $objetivo->update([
-                    'imagen' => $nombre_imagen
+                    'imagen' => $nombre_imagen,
                 ]);
             }
             ObjetivoEmpleado::create([

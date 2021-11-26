@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Empleado;
 use Livewire\Component;
+use App\Models\Empleado;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class BuscarCVComponent extends Component
 {
+    use LivewireAlert;
+
     public $areas;
     public $empleado_id = '';
     public $area_id = '';

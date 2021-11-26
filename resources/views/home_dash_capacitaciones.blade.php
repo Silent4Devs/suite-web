@@ -242,7 +242,7 @@
                             <p class="ml-3">{{ count($categorias_arr) }} categoría(s)</p>
                         </div>
                         <canvas id="chart_categorias"></canvas>
-                        <a id="a_plan" class="btn_ver" href="admin/recursos">
+                        <a id="a_plan" class="btn_ver" href="frontend/recursos">
                             Ver Detalle
                         </a>
                     </div>
@@ -256,7 +256,7 @@
                             <p class="ml-3">{{ count($tipos_total_arr) }} tipos</p>
                         </div>
                         <canvas id="chart_tipos"></canvas>
-                        <a id="a_plan" class="btn_ver" href="admin/recursos">
+                        <a id="a_plan" class="btn_ver" href="frontend/recursos">
                             Ver Detalle
                         </a>
                     </div>
@@ -410,7 +410,7 @@
         function renderInformacionParticipantes(id_recurso) {
             $.ajax({
                 type: "POST",
-                url: `/admin/recursos/${id_recurso}/participantes/get/`,
+                url: `recursos/${id_recurso}/participantes/get/`,
                 beforeSend: function() {
                     $("#cargando_informacion_capacitacion").show();
                 },
@@ -552,7 +552,7 @@
                                 <p></p>
                             </div>
                             <canvas id="chart_alumnos_capaci"></canvas>
-                            <a id="a_plan" class="btn_ver" href="admin/recursos">
+                            <a id="a_plan" class="btn_ver" href="frontend/recursos">
                                 Ver Detalle
                             </a>
                         </div>
@@ -566,7 +566,7 @@
                                         <p></p>
                                     </div>
                                     <canvas id="chart_alumnos_aprovados"></canvas>
-                                    <a id="a_plan" class="btn_ver" href="admin/recursos">
+                                    <a id="a_plan" class="btn_ver" href="frontend/recursos">
                                         Ver Detalle
                                     </a>
                                 </div>
