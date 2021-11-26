@@ -1308,14 +1308,14 @@ defer></script>
         $(".notifications-menu").on('click', function() {
             if (!$(this).hasClass('open')) {
                 $('.notifications-menu .label-warning').hide();
-                $.get('/admin/user-alerts/read');
+                $.get('/user-alerts/read');
             }
         });
     });
 </script>
 <script>
     $(document).ready(function() {
-        let url = "{{ route('admin.globalStructureSearch') }}";
+        let url = "{{ route('globalStructureSearch') }}";
         $("#buscador_global").click(function(e) {
             e.preventDefault();
             let sugeridos = document.querySelector(
@@ -1381,7 +1381,7 @@ defer></script>
         $('.searchable-field').select2({
             minimumInputLength: 3,
             ajax: {
-                url: '{{ route('admin.globalSearch') }}',
+                url: '{{ route('globalSearch') }}',
                 dataType: 'json',
                 type: 'GET',
                 delay: 200,

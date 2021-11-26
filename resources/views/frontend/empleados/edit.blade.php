@@ -189,7 +189,7 @@
 
                             <section id="contenido1" class="mt-4 caja_tab_reveldada">
                                 <div>
-                                    <form method="POST" action="{{ route('frontend.empleados.update', [$empleado->id]) }}"
+                                    <form method="POST" action="{{ route('empleados.update', [$empleado->id]) }}"
                                         enctype="multipart/form-data" id="formEmpleados">
                                         @method('PUT')
                                         @csrf
@@ -610,7 +610,7 @@
 
 
                                     <form method="POST"
-                                        action="{{ route('frontend.empleados.storeResumen', [$empleado->id]) }}"
+                                        action="{{ route('empleados.storeResumen', [$empleado->id]) }}"
                                         id="formResumen">
                                         <div class="row">
                                             <div class="form-group col-sm-12 col-lg-12 col-md-12">
@@ -639,7 +639,7 @@
                                     </div>
 
                                     <form method="POST"
-                                        action="{{ route('frontend.empleados.storeCertificaciones', [$empleado->id]) }}"
+                                        action="{{ route('empleados.storeCertificaciones', [$empleado->id]) }}"
                                         id="formCertificaciones" enctype="multipart/form-data">
 
                                         <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" />
@@ -731,7 +731,7 @@
 
 
                                     <form method="POST"
-                                        action="{{ route('frontend.empleados.storeCursos', [$empleado->id]) }}"
+                                        action="{{ route('empleados.storeCursos', [$empleado->id]) }}"
                                         id="formCursos">
 
                                         <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" />
@@ -837,7 +837,7 @@
                                     </div>
 
                                     <form method="POST"
-                                        action="{{ route('frontend.empleados.storeExperiencia', [$empleado->id]) }}"
+                                        action="{{ route('empleados.storeExperiencia', [$empleado->id]) }}"
                                         id="formExperiencia" enctype="multipart/form-data">
 
                                         <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" />
@@ -950,7 +950,7 @@
 
 
                                     <form method="POST"
-                                        action="{{ route('frontend.empleados.storeEducacion', [$empleado->id]) }}"
+                                        action="{{ route('empleados.storeEducacion', [$empleado->id]) }}"
                                         id="formEducacion" enctype="multipart/form-data">
 
                                         <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" />
@@ -1297,7 +1297,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('frontend.empleados.getExperiencia', $empleado->id) }}",
+                ajax: "{{ route('empleados.getExperiencia', $empleado->id) }}",
                 columns: [{
                         data: 'empresa',
                         name: 'empresa'
@@ -1322,7 +1322,7 @@
                         data: 'id',
                         render: function(data, type, route, meta) {
                             let urlEliminar =
-                                `/frontend/empleados/delete/${data}/competencias-experiencia`;
+                                `/empleados/delete/${data}/competencias-experiencia`;
                             let html = `
                             <button onclick="event.preventDefault(); EliminarExperiencia('${urlEliminar}','${data}')" class="btn btn-sm text-primary"><i class="fas fa-trash-alt" style="color:#fd0000"></i></button>
                             `;
@@ -1386,7 +1386,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('frontend.empleados.getEducacion', $empleado->id) }}",
+                ajax: "{{ route('empleados.getEducacion', $empleado->id) }}",
                 columns: [{
                         data: 'institucion',
                         name: 'institucion'
@@ -1407,7 +1407,7 @@
                         data: 'id',
                         render: function(data, type, route, meta) {
                             let urlEliminar =
-                                `/frontend/empleados/delete/${data}/competencias-educacion`;
+                                `/empleados/delete/${data}/competencias-educacion`;
                             let html = `
                             <button onclick="event.preventDefault(); EliminarEducacion('${urlEliminar}','${data}')" class="btn btn-sm text-primary"><i class="fas fa-trash-alt" style="color:#fd0000"></i></button>
                             `;
@@ -1472,7 +1472,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('frontend.empleados.getCursos', $empleado->id) }}",
+                ajax: "{{ route('empleados.getCursos', $empleado->id) }}",
                 columns: [{
                         data: 'curso_diploma',
                         name: 'nombre'
@@ -1493,7 +1493,7 @@
                         data: 'id',
                         render: function(data, type, route, meta) {
                             let urlEliminar =
-                                `/frontend/empleados/delete/${data}/competencias-cursos`;
+                                `/empleados/delete/${data}/competencias-cursos`;
                             let html = `
                             <button onclick="event.preventDefault(); EliminarCurso('${urlEliminar}','${data}')" class="btn btn-sm text-primary"><i class="fas fa-trash-alt" style="color:#fd0000"></i></button>
                             `;
@@ -1557,7 +1557,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('frontend.empleados.getCertificaciones', $empleado->id) }}",
+                ajax: "{{ route('empleados.getCertificaciones', $empleado->id) }}",
                 columns: [{
                         data: 'nombre',
                         name: 'nombre'
@@ -1578,7 +1578,7 @@
                         data: 'id',
                         render: function(data, type, route, meta) {
                             let urlEliminar =
-                                `/frontend/empleados/delete/${data}/competencias-certificaciones`;
+                                `/empleados/delete/${data}/competencias-certificaciones`;
                             let html = `
                             <button onclick="event.preventDefault(); Eliminar('${urlEliminar}','${data}')" class="btn btn-sm text-primary"><i class="fas fa-trash-alt" style="color:#fd0000"></i></button>
                             `;
@@ -1655,7 +1655,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // let url = "{{ route('frontend.empleados.get') }}";
+            // let url = "{{ route('empleados.get') }}";
 
 
 
