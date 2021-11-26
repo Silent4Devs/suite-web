@@ -93,16 +93,6 @@
                             </a>
                         </li>
                     @endcan
-                    @can('organigrama_organizacion_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.organigrama.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/organigrama') || request()->is('admin/organigrama/*') ? 'c-active' : '' }}">
-                                <i class="fas fa-users iconos_menu letra_blanca">
-                                </i>
-                                <font class="letra_blanca"> Organigrama </font>
-                            </a>
-                        </li>
-                    @endcan
                     @can('mapa_procesos_organizacion_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.procesos.mapa') }}"
@@ -316,19 +306,72 @@
         </li> --}}
 
         <li class="c-sidebar-nav-title">
-            <font class="letra_blanca">Recursos Humanos</font>
+            <font class="letra_blanca">Gestión de talento</font>
         </li>
-        <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/*') ? 'active' : '' }}"
-                href="{{ route('admin.rh-evaluacion360.index') }}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                    class="bi bi-file-earmark-person iconos_menu letra_blanca" viewBox="0 0 16 16">
-                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                    <path
-                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z" />
-                </svg>
-                <font class="letra_blanca"> Evaluación 360 Grados </font>
+        <li class="c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                <i class="fas fa-users iconos_menu letra_blanca">
+                </i>
+                <font class="letra_blanca"> Recursos Humanos </font>
             </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                @can('configuracion_empleados_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.empleados.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/empleados') || request()->is('admin/empleados/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-user iconos_menu letra_blanca">
+
+                            </i>
+                            <font class="letra_blanca"> Empleados </font>
+                        </a>
+                    </li>
+                @endcan
+                @can('organigrama_organizacion_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.organigrama.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/organigrama') || request()->is('admin/organigrama/*') ? 'c-active' : '' }}">
+                            <i class="fas fa-sitemap iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca"> Organigrama </font>
+                        </a>
+                    </li>
+                @endcan
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                        <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca "> Capacitaciones </font>
+                    </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        @can('configuracion_macroproceso_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ asset('admin/categoria-capacitacion') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
+                                    <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca"
+                                        style="font-size:12pt;"></i>
+                                    <font class="letra_blanca"> Crear categorías</font>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('configuracion_procesos_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ asset('admin/recursos') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
+                                    <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
+                                        style="font-size:12pt;"></i>
+                                    <font class="letra_blanca"> Crear capacitaciones</font>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/*') ? 'active' : '' }}"
+                        href="{{ route('admin.rh-evaluacion360.index') }}">
+                        <img src="{{ asset('img/360-degrees1.png') }}" alt="icono360"
+                            style="width: 26px;margin-right: 14px;margin-left: 3px;">
+                        <font class="letra_blanca"> Evaluación 360° </font>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li class="c-sidebar-nav-title">
@@ -430,17 +473,7 @@
                             </ul>
                         </li>
                     @endcan
-                    @can('configuracion_empleados_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.empleados.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/empleados') || request()->is('admin/empleados/*') ? 'active' : '' }}">
-                                <i class="fa-fw fas fa-user iconos_menu letra_blanca">
 
-                                </i>
-                                <font class="letra_blanca"> Empleados </font>
-                            </a>
-                        </li>
-                    @endcan
                     <li class="c-sidebar-nav-dropdown">
                         <a class="c-sidebar-nav-dropdown-toggle" href="#">
                             <i class="fa-fw fas fa-laptop iconos_menu letra_blanca"></i>

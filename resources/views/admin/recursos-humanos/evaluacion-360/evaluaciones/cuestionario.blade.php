@@ -55,6 +55,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="card-custom">
+                            <p><strong>Evaluado</strong></p>
                             <img class="rounded-circle"
                                 src="{{ asset('storage/empleados/imagenes/' . $evaluado->avatar) }}">
                             <h5 class="mt-2">{{ $evaluado->name }}</h5>
@@ -63,6 +64,7 @@
                     </div>
                     <div class="col-6">
                         <div class="card-custom">
+                            <p><strong>Evaluador</strong></p>
                             <img class="rounded-circle"
                                 src="{{ asset('storage/empleados/imagenes/' . $evaluador->avatar) }}">
                             <h5 class="mt-2">{{ $evaluador->name }}</h5>

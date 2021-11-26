@@ -10,7 +10,17 @@ class TipoObjetivo extends Model
     use HasFactory;
 
     protected $table = 'ev360_tipo_objetivos';
+    protected $appends = ['imagen_ruta'];
     protected $guarded = ['id'];
+
+    public function getImagenRutaAttribute()
+    {
+        if ($this->imagen) {
+            return asset('storage/perspectivas/img/' . $this->imagen);
+        }
+        return asset('img/bullseye.png');
+    }
+
 
     public function objetivos()
     {

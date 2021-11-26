@@ -5,8 +5,8 @@
     <style>
         img.rounded-circle {
             border-radius: 0 !important;
-            clip-path: circle(13px at 50% 50%);
-            height: 26px;
+            clip-path: circle(11px at 50% 50%);
+            height: 20px;
         }
 
         table {
@@ -18,13 +18,13 @@
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Resumen: </strong> Evaluación </h3>
         </div>
-        <div class="col-12 mt-3">
+        <div class="mt-3 col-12">
             <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
                 RESUMEN GENERAL
             </div>
         </div>
         @livewire('ev360-resumen-tabla', ['evaluacion' => $evaluacion->id])
-        <div class="col-12 mt-3">
+        <div class="mt-3 col-12">
             <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
                 GRÁFICAS
             </div>
