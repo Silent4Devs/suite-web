@@ -29,7 +29,7 @@
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
+                    title: `tenant ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
@@ -39,7 +39,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
+                    title: `tenant ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
@@ -49,7 +49,7 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
+                    title: `tenant ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar PDF',
@@ -65,7 +65,7 @@
                 },
                 {
                     extend: 'print',
-                    title: `Amenazas ${new Date().toLocaleDateString().trim()}`,
+                    title: `tenant ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',

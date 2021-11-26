@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tenant;
+use Illuminate\Support\Facades\File;
 use Yajra\DataTables\Facades\DataTables;
 use Flash;
 use App\Repositories\TenantRepository;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use Illuminate\Support\Facades\Storage;
 
 class TenantController extends Controller
 {
@@ -34,7 +36,7 @@ class TenantController extends Controller
                 $deleteGate = 'user_delete';
                 $crudRoutePart = 'tenant';
 
-                return view('partials.datatablesActions', compact(
+                return view('partials.datatablesActionsCRUDTenant', compact(
                     'viewGate',
                     'editGate',
                     'deleteGate',
@@ -63,6 +65,9 @@ class TenantController extends Controller
         $tenant->domains()->create([
             "domain"=>$request->id.".localhost"
         ]);
+        $tenantDirectory="tenant".$request->id;
+        Storage::disk("tenant")->makeDirectory($tenantDirectory."/app/public");
+        //File::makeDirectory("storage/".$tenantDirectory);
         return redirect()->route('admin.tenant.index');
         }
 
