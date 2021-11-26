@@ -19,7 +19,7 @@
     </div>
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Evaluaciones</strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Evaluaciones 360°</strong></h3>
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -33,9 +33,9 @@
                     <div class="col-11">
                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                             Instrucciones</p>
-                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En este apartado podrá conocer el
-                            estatus de la evaluación, así como crear una nueva presionando el botón
-                            <strong>"Agregar"</strong>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En este apartado podrá visualizar
+                            las evaluaciones creadas y conocer el
+                            estatus en el que se encuentran, así como crear nuevas evaluaciones.
                         </p>
                     </div>
                 </div>
@@ -71,10 +71,10 @@
                             Fecha&nbsp;Fin
                         </th>
                         <th style="vertical-align: top">
-                            Competencias
+                            ¿Incluye Competencias?
                         </th>
                         <th style="vertical-align: top">
-                            Objetivos
+                            ¿Incluye Objetivos?
                         </th>
                         <th style="vertical-align: top;">
                             Opciones
@@ -220,7 +220,7 @@
                         name: 'estatus_formateado',
                         render: function(data, type, row, meta) {
                             return `
-                            <div class="d-flex w-100 align-items-center text-center" style="height:100%;background-color:${row.color_estatus};color:${row.color_estatus_text}">
+                            <div class="text-center d-flex w-100 align-items-center" style="height:100%;background-color:${row.color_estatus};color:${row.color_estatus_text}">
                                 <p class="m-0 w-100">${data}</p>
                             </div>
                             `;

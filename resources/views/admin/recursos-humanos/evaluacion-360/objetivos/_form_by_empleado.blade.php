@@ -11,49 +11,54 @@
 
 </style>
 
-<div class="col-12">
-    <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
-        <div class="row w-100">
-            <div class="text-center col-1 align-items-center d-flex justify-content-center">
-                <div class="w-100">
-                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+@if (!$editar)
+    <div class="col-12">
+        <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                    </div>
                 </div>
-            </div>
-            <div class="col-11">
-                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
-                </p>
-                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Define los objetivos esperados
-                    para: <strong>{{ $empleado->name }}</strong></p>
+                <div class="col-11">
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                    </p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Define los objetivos estratégicos
+                        esperados
+                        para: <strong>{{ $empleado->name }}</strong></p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col-12 mt-3">
-    <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
-        CREACIÓN DE OBJETIVOS
+@endif
+@if (!$editar)
+    <div class="mt-3 col-12">
+        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+            CREACIÓN DE OBJETIVOS ESTRATÉGICOS
+        </div>
     </div>
-</div>
-<div class="col-sm-12 col-lg-4 col-md-4 col-12">
+@endif
+<div class="col-sm-12 col-lg-12 col-md-12 col-12">
     <div class="form-group">
         <label for="nombre">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                 class="bi bi-pen-fill iconos-crear" viewBox="0 0 16 16">
                 <path
                     d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
-            </svg> Nombre <span class="text-danger">*</span>
+            </svg> Objetivo Estratégico <span class="text-danger">*</span>
         </label>
         <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" id="nombre"
             aria-describedby="nombreHelp" name="nombre" value="{{ old('nombre', $objetivo->nombre) }}">
-        <small id="nombreHelp" class="form-text text-muted">Ingresa el nombre del objetivo</small>
+        <small id="nombreHelp" class="form-text text-muted">Ingresa el nombre del objetivo estratégico</small>
         @if ($errors->has('nombre'))
             <div class="invalid-feedback">
                 {{ $errors->first('nombre') }}
             </div>
         @endif
-        <span class="errors nombre_error text-danger"></span>
+        <span class="errors nombre_error{{ $editar ? '_edit' : '' }} text-danger"></span>
     </div>
 </div>
-<div class="col-sm-12 col-lg-4 col-md-4 col-12">
+<div class="col-sm-12 col-lg-6 col-md-6 col-12">
     <div class="form-group">
         <label for="tipo_id">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -67,17 +72,19 @@
             <div class="col-11" style="margin-top:-9px">
                 @livewire('tipo-objetivos-select',['tipo_seleccionado'=>$tipo_seleccionado])
             </div>
-            <div class="p-0 col" style="margin-top: -26px;height: 28px;margin-left: -10px;">
-                <button id="btnAgregarTipo" class="btn btn-sm text-white" style="background:#3eb2ad;height: 32px;"
-                    data-toggle="modal" data-target="#tipoObjetivoModal" title="Agregar Tipo"><i
-                        class="fas fa-plus"></i></button>
-            </div>
+            @if (!$editar)
+                <div class="p-0 col" style="margin-top: -26px;height: 28px;margin-left: -10px;">
+                    <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
+                        data-toggle="modal" data-target="#tipoObjetivoModal" title="Agregar Tipo"><i
+                            class="fas fa-plus"></i></button>
+                </div>
+            @endif
         </div>
         @livewire('tipo-objetivos-create')
         {{-- Fin Modulo para tipo de competencia --}}
     </div>
 </div>
-<div class="col-sm-12 col-lg-4 col-md-4 col-12">
+<div class="col-sm-12 col-lg-6 col-md-6 col-12">
     <div class="form-group">
         <label for="KPI">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -88,16 +95,16 @@
         </label>
         <input class="form-control {{ $errors->has('KPI') ? 'is-invalid' : '' }}" type="text" name="KPI"
             value="{{ old('KPI', $objetivo->KPI) }}">
-        <small id="KPIHelp" class="form-text text-muted">Ingresa el KPI del objetivo</small>
+        <small id="KPIHelp" class="form-text text-muted">Ingresa el KPI del objetivo estratégico </small>
         @if ($errors->has('KPI'))
             <div class="invalid-feedback">
                 {{ $errors->first('KPI') }}
             </div>
         @endif
-        <span class="errors KPI_error text-danger"></span>
+        <span class="errors KPI_error{{ $editar ? '_edit' : '' }} text-danger"></span>
     </div>
 </div>
-<div class="col-sm-12 col-lg-4 col-md-4 col-12">
+<div class="col-sm-12 col-lg-6 col-md-6 col-12">
     <div class="form-group">
         <label for="meta">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -110,69 +117,70 @@
         </label>
         <input type="number" class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" id="meta"
             aria-describedby="metaHelp" name="meta" value="{{ old('meta', $objetivo->meta) }}">
-        <small id="metaHelp" class="form-text text-muted">Ingresa la Meta del objetivo</small>
+        <small id="metaHelp" class="form-text text-muted">Ingresa la Meta del objetivo estratégico </small>
         @if ($errors->has('meta'))
             <div class="invalid-feedback">
                 {{ $errors->first('meta') }}
             </div>
         @endif
-        <span class="errors meta_error text-danger"></span>
+        <span class="errors meta_error{{ $editar ? '_edit' : '' }} text-danger"></span>
     </div>
 </div>
-<div class="col-sm-12 col-lg-4 col-md-4 col-12">
+<div class="col-sm-12 col-lg-6 col-md-6 col-12">
     <div class="form-group">
         <label for="metrica_id">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                class="bi bi-alt iconos-crear" viewBox="0 0 16 16">
-                <path
-                    d="M1 13.5a.5.5 0 0 0 .5.5h3.797a.5.5 0 0 0 .439-.26L11 3h3.5a.5.5 0 0 0 0-1h-3.797a.5.5 0 0 0-.439.26L5 13H1.5a.5.5 0 0 0-.5.5zm10 0a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5z" />
-            </svg> Métrica <span class="text-danger">*</span>
+            <i class="fas fa-ruler-combined iconos-crear"></i> Unidad de medida <span class="text-danger">*</span>
         </label>
         {{-- Modulo para metrica de objetivo --}}
         <div class="row align-items-center">
             <div class="col-11" style="margin-top:-9px">
                 @livewire('metrica-objetivo-select',['metrica_seleccionada'=>$metrica_seleccionada])
             </div>
-            <div class="p-0 col" style="margin-top: -26px;height: 28px;margin-left: -10px;">
-                <button id="btnAgregarMetrica" class="btn btn-sm text-white" style="background:#3eb2ad;height: 32px;"
-                    data-toggle="modal" data-target="#metricaObjetivoModal" title="Agregar Métrica"><i
-                        class="fas fa-plus"></i></button>
-            </div>
+            @if (!$editar)
+                <div class="p-0 col" style="margin-top: -26px;height: 28px;margin-left: -10px;">
+                    <button id="btnAgregarMetrica" class="text-white btn btn-sm"
+                        style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#metricaObjetivoModal"
+                        title="Agregar unidad"><i class="fas fa-plus"></i></button>
+                </div>
+            @endif
         </div>
         @livewire('metrica-objetivo-create')
         {{-- Fin Modulo para tipo de competencia --}}
     </div>
 </div>
-<div class="col-sm-12 col-lg-4 col-md-4 col-12">
+<div class="col-sm-12 col-lg-12 col-md-12 col-12">
     <div class="form-group">
         <label for="descripcion_meta">
             <i class="fas fa-pencil-alt iconos-crear"></i>Descripción
         </label>
-        <input class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" type="text"
-            name="descripcion_meta" value="{{ old('descripcion_meta', $objetivo->descripcion_meta) }}">
-        <small id="descripcion_metaHelp" class="form-text text-muted">Ingresa una breve descripción de la
-            meta</small>
+        {{-- <input class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}" type="text"
+            name="descripcion_meta" value="{{ old('descripcion_meta', $objetivo->descripcion_meta) }}"> --}}
+        <textarea class="form-control {{ $errors->has('descripcion_meta') ? 'is-invalid' : '' }}"
+            name="descripcion_meta" id="" cols="30" rows="1">
+                {{ old('descripcion_meta', $objetivo->descripcion_meta) }}
+            </textarea>
+        <small id="descripcion_metaHelp" class="form-text text-muted">Ingresa una breve descripción del objetivo
+            estratégico</small>
         @if ($errors->has('descripcion_meta'))
             <div class="invalid-feedback">
                 {{ $errors->first('descripcion_meta') }}
             </div>
         @endif
-        <span class="errors descripcion_meta_error text-danger"></span>
+        <span class="errors descripcion_meta_error{{ $editar ? '_edit' : '' }} text-danger"></span>
     </div>
 </div>
 
-<div class="col-sm-12 col-lg-12 col-md-12 col-12">
-
+{{-- <div class="col-sm-12 col-lg-12 col-md-12 col-12">
     <div class="input-group is-invalid">
         <div class="form-group" style="width: 100%;border: solid 1px #cecece;">
             <div class="row align-items-center" style="padding: 20px 0;">
                 <div class="col-md-6 col-sm-6 col-12 d-flex justify-content-center">
-                    <label style="cursor: pointer" for="foto">
+                    <label style="cursor: pointer" for="foto{{ $editar ? 'Edit' : '' }}">
                         <div class="d-flex align-items-center">
                             <h5>
                                 <i class="fas fa-image iconos-crear"
                                     style="font-size: 20pt;position: relative;top: 4px;"></i>
-                                <span id="texto-imagen" class="pl-2">
+                                <span id="texto-imagen{{ $editar ? 'Edit' : '' }}" class="pl-2">
                                     Subir imágen
                                     <small class="text-danger" style="font-size: 10px">
                                         (Opcional)</small>
@@ -182,56 +190,57 @@
                     </label>
                 </div>
                 <div class="text-center col-6">
-                    <img id="uploadPreview" src="{{ asset('img/not-available.png') }}" width="150" height="150"
+                    <img id="uploadPreview{{ $editar ? 'Edit' : '' }}" class="imagen-preview"
+                        src="{{ asset('img/not-available.png') }}" width="150" height="150"
                         accept="image/png, image/gif, image/jpeg" style="clip-path: circle(60px at 50% 50%);
                         height: 120px;" />
                 </div>
             </div>
-            <input name="foto" type="file" accept="image/png, image/jpeg" class="form-control-file" id="foto" hidden="">
+            <input name="foto" type="file" accept="image/png, image/jpeg" class="form-control-file"
+                id="foto{{ $editar ? 'Edit' : '' }}" hidden="">
         </div>
     </div>
-</div>
-<div class="col-12">
-    <button id="BtnAgregarObjetivo" class="btn btn-sm btn-outline-primary" style="float: right"
-        title="Agregar objetivo"><i class="mr-2 fas fa-plus-circle"></i>Agregar</button>
-</div>
-<div class="card-body datatable-fix">
-    <div class="mt-3">
-        <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
-            LISTADO DE OBJETIVOS
-        </div>
+</div> --}}
+@if (!$editar)
+    <div class="col-12">
+        <button id="BtnAgregarObjetivo" class="btn btn-success" style="float: right" title="Agregar objetivo"><i
+                class="mr-2 fas fa-plus-circle"></i>Agregar</button>
     </div>
-    <table class="table table-bordered w-100 tblObjetivos">
-        <thead class="thead-dark">
-            <tr>
-                <th style="vertical-align: top">
-                    Objetivo
-                </th>
-                <th style="vertical-align: top">
-                    Perspectiva
-                </th>
-                <th style="vertical-align: top">
-                    KPI
-                </th>
-                <th style="vertical-align: top">
-                    Meta
-                </th>
-                <th style="vertical-align: top">
-                    Métrica
-                </th>
-                <th style="vertical-align: top">
-                    Descripción
-                </th>
-                <th style="vertical-align: top">
-                    Imágen
-                </th>
-                <th style="vertical-align: top">
-                    Opciones
-                </th>
-            </tr>
-        </thead>
-    </table>
-</div>
+    <div class="card-body datatable-fix">
+        <div class="mt-3">
+            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                OBJETIVOS ESTRATÉGICOS ASIGNADOS
+            </div>
+        </div>
+        <table class="table table-bordered w-100 tblObjetivos">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="vertical-align: top">
+                        Perspectiva
+                    </th>
+                    <th style="vertical-align: top">
+                        Objetivos Estratégicos
+                    </th>
+                    <th style="vertical-align: top">
+                        KPI
+                    </th>
+                    <th style="vertical-align: top">
+                        Meta
+                    </th>
+                    {{-- <th style="vertical-align: top">
+                        Unidad
+                    </th> --}}
+                    <th style="vertical-align: top">
+                        Descripción
+                    </th>
+                    <th style="vertical-align: top">
+                        Opciones
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+@endif
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -76,15 +76,14 @@
                                     <div style="text-transform: capitalize">
                                         <i class="m-0 fas fa-bullseye" style="font-size:40px;"></i>
                                         <p class="m-0 mt-2">
-                                            Definir
-                                            <br>
-                                            Objetivos
+                                            Asignar
+                                            Objetivos Estratégicos
                                         </p>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.ev360-evaluaciones.index') }}">
+                                <a href="{{ route('admin.ev360-evaluaciones.create') }}">
                                     <div style="text-transform: capitalize">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                                             class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -97,6 +96,18 @@
                                             Crear
                                             <br>
                                             Evaluaciones
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.ev360-evaluaciones.index') }}">
+                                    <div style="text-transform: capitalize">
+                                        <i class="fas fa-clone"></i>
+                                        <p class="m-0 mt-2">
+                                            Evaluaciones
+                                            <br>
+                                            Creadas
                                         </p>
                                     </div>
                                 </a>

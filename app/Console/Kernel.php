@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\NotificarEvaluacion360;
 use App\Console\Commands\NotificarRecursos;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         NotificarRecursos::class,
+        NotificarEvaluacion360::class,
     ];
 
     /**
@@ -27,6 +29,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('user:recursos')->dailyAt('14:25')->timezone('America/Mexico_City');
+        $schedule->command('notify:ev360')->daily()->timezone('America/Mexico_City');
     }
 
     /**

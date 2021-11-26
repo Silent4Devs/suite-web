@@ -80,11 +80,28 @@
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p>Descripción:</p>
                                             <p>Buen día {{ $evaluador->name }}, </p>
-                                            <p>Le informamos que usted ha sido seleccionado para evaluar a los
+                                            @php
+                                                $autoevaluacion = $evaluados->filter(function ($evaluado) use ($evaluador) {
+                                                    return $evaluador->id == $evaluado->id;
+                                                });
+                                                $exists_autoevaluacion = false;
+                                                if ($autoevaluacion) {
+                                                    $exists_autoevaluacion = true;
+                                                }
+                                            @endphp
+                                            @if ($exists_autoevaluacion)
+                                                <p>Ya se encuentra habilitada la <strong>Evaluación de
+                                                        Desempeño</strong>
+                                                    para su autoevaluacion.
+                                                </p>
+                                            @endif
+                                            <p>Así mismo le informamos que ha sido seleccionado para evaluar a los
                                                 siguientes empleados:
                                             <ul>
                                                 @foreach ($evaluados as $evaluado)
-                                                    <li>{{ $evaluado->name }}</li>
+                                                    @if ($evaluador->id != $evaluado->id)
+                                                        <li>{{ $evaluado->name }}</li>
+                                                    @endif
                                                 @endforeach
                                             </ul>
                                             <small>Por favor revise los links de cada una de las evaluaciones a los

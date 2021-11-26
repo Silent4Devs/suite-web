@@ -66,7 +66,7 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto'];
+    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto','declaraciones_responsable'];
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
@@ -305,5 +305,18 @@ class Empleado extends Model
         $by_area = self::where('area_id', $this->area_id)->pluck('id')->toArray();
 
         return $by_area;
+    }
+    //declaraciones
+
+    public function getDeclaracionesResponsableAttribute()
+    {
+       $misDeclaraciones=DeclaracionAplicabilidadResponsable::select('id')->where('empleado_id',$this->id)->pluck('id')->toArray();
+       return $misDeclaraciones;
+    }
+
+    public function getDeclaracionesAprobadorAttribute()
+    {
+       $misDeclaraciones=DeclaracionAplicabilidadAprobadores::select('id')->where('empleado_id',$this->id)->pluck('id')->toArray();
+       return $misDeclaraciones;
     }
 }

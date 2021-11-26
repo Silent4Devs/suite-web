@@ -3,11 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\Empleado;
+use App\Models\RH\Competencia;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\ObjetivoRespuesta;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -21,6 +23,8 @@ class Ev360ResumenTabla extends Component
     public $lista_evaluados;
     public $perPage = 10;
     public $search = '';
+    public $competencias_evaluadas;
+    public $objetivos_evaluados;
 
     public function mount($evaluacion)
     {
@@ -29,7 +33,7 @@ class Ev360ResumenTabla extends Component
 
     public function render()
     {
-        $evaluacion = Evaluacion::with('evaluados')->find(intval($this->evaluacion));
+        $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados')->find(intval($this->evaluacion));
         $evaluados = $evaluacion->evaluados;
         $this->lista_evaluados = collect();
         $calificaciones = collect();
@@ -46,6 +50,7 @@ class Ev360ResumenTabla extends Component
                 'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
             ]);
         }
+        // dd($this->lista_evaluados);
 
         foreach ($this->lista_evaluados as $evaluado) {
             if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 60) {
@@ -80,7 +85,23 @@ class Ev360ResumenTabla extends Component
         $items = $collection->slice($offset, $this->perPage + 1);
         $paginator = new Paginator($items, $this->perPage, $this->page);
 
-        return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'lista' => $paginator]);
+        $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
+        $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->id);
+        return view('livewire.ev360-resumen-tabla', ['lista_evaluados', 'calificaciones', 'evaluacion', 'competencias_evaluadas', 'lista' => $paginator]);
+    }
+
+    public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion)
+    {
+        $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->pluck('competencia_id')->unique()->toArray();
+        return $competencias;
+    }
+
+    public function obtenerCantidadMaximaDeObjetivos($evaluacion)
+    {
+        $competencias = DB::table('ev360_objetivos_calificaciones')->where('evaluacion_id', $evaluacion);
+        $agrupar_competencias = $competencias->select(DB::raw('count(id) AS total'))->groupBy('evaluado_id')
+            ->get();
+        return $agrupar_competencias->max('total');
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -96,7 +117,6 @@ class Ev360ResumenTabla extends Component
 
         $promedio_competencias = 0;
         $promedio_general_competencias = 0;
-        $evalaciones_lista = collect();
         $lista_autoevaluacion = collect();
         $lista_jefe_inmediato = collect();
         $lista_equipo_a_cargo = collect();
@@ -115,7 +135,9 @@ class Ev360ResumenTabla extends Component
                 return intval($evaluador->tipo) == EvaluadoEvaluador::MISMA_AREA;
             });
             $promedio_competencias = 0;
-            $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() ? $evaluado->puestoRelacionado->competencias->count() : 1;
+            $promedio_competencias_collect = collect();
+            // $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() ? $evaluado->puestoRelacionado->competencias->count() : 1;
+            $cantidad_competencias_evaluadas = count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id)) ? count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id)) : 1;
             $lista_autoevaluacion->push([
                 'tipo' => 'Autoevaluación',
                 'peso_general' => $evaluacion->peso_autoevaluacion,
@@ -136,9 +158,8 @@ class Ev360ResumenTabla extends Component
                         $calificacion += $competencia['porcentaje'];
                     }
                 }
-                $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
-            } else {
-                $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
+                // $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
+                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
             }
 
             $lista_jefe_inmediato->push([
@@ -161,9 +182,7 @@ class Ev360ResumenTabla extends Component
                         $calificacion += $competencia['porcentaje'];
                     }
                 }
-                $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100);
-            } else {
-                $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100);
+                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
             }
 
             $lista_equipo_a_cargo->push([
@@ -186,9 +205,8 @@ class Ev360ResumenTabla extends Component
                         $calificacion += $competencia['porcentaje'];
                     }
                 }
-                $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_equipo / 100);
-            } else {
-                $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_equipo / 100);
+
+                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
             }
 
             $lista_misma_area->push([
@@ -211,14 +229,20 @@ class Ev360ResumenTabla extends Component
                         $calificacion += $competencia['porcentaje'];
                     }
                 }
-                $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_area / 100);
-            } else {
-                $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_area / 100);
+
+                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
             }
             // dd($promedio_competencias);
-            $promedio_competencias = number_format($promedio_competencias / 100, 2);
-            $promedio_general_competencias = $promedio_competencias * $evaluacion->peso_general_competencias;
-            $calificacion_final += $promedio_general_competencias;
+            $cantidad_participantes = $promedio_competencias_collect->count();
+            if ($this->empleadoTieneCompetenciasAsignadas($evaluado->id, $evaluacion->id)) {
+                $promedio_competencias = number_format($promedio_competencias_collect->sum(), 2);
+                $promedio_general_competencias = number_format(($promedio_competencias * ($evaluacion->peso_general_competencias / 100)) / $cantidad_participantes, 2);
+                $calificacion_final += $promedio_general_competencias;
+            } else {
+                $promedio_competencias = 1;
+                $promedio_general_competencias = number_format(100, 2);
+                $calificacion_final += $evaluacion->peso_general_competencias;
+            }
         } else {
             //Logica para cuando no se evaluan competencias
         }
@@ -252,9 +276,11 @@ class Ev360ResumenTabla extends Component
                 ]);
             }
             $calificacion_objetivos = 0;
-            if (count($evaluadores_objetivos->first()['objetivos'])) {
-                foreach ($evaluadores_objetivos->first()['objetivos'] as $objetivo) {
-                    $calificacion_objetivos += $objetivo['calificacion'] / $objetivo['meta'];
+            if ($evaluadores_objetivos->first()) {
+                if (count($evaluadores_objetivos->first()['objetivos'])) {
+                    foreach ($evaluadores_objetivos->first()['objetivos'] as $objetivo) {
+                        $calificacion_objetivos += $objetivo['calificacion'] / $objetivo['meta'];
+                    }
                 }
             }
 
@@ -282,20 +308,29 @@ class Ev360ResumenTabla extends Component
                 }),
             ]);
 
-            $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
-            $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
-            $promedio_objetivos = number_format($promedio_objetivos, 2);
-            $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
-            $calificacion_final += $promedio_general_objetivos;
+
+            if ($this->empleadoTieneObjetivosAsignados($evaluado->id, $evaluacion->id)) {
+                $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
+                $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
+                $promedio_objetivos = number_format($promedio_objetivos, 2);
+                $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
+                $calificacion_final += $promedio_general_objetivos;
+            } else {
+                $promedio_objetivos = 1;
+                $promedio_general_objetivos = 100 * ($evaluacion->peso_general_objetivos / 100);
+                $calificacion_final +=  $evaluacion->peso_general_objetivos;
+            }
         }
 
         return [
+            'peso_general_competencias' => $evaluacion->peso_general_competencias,
+            'peso_general_objetivos' => $evaluacion->peso_general_objetivos,
             'lista_autoevaluacion' => $lista_autoevaluacion,
             'lista_jefe_inmediato' => $lista_jefe_inmediato,
             'lista_equipo_a_cargo' => $lista_equipo_a_cargo,
             'lista_misma_area' => $lista_misma_area,
-            'promedio_competencias' => $promedio_competencias,
-            'promedio_general_competencias' => $promedio_general_competencias,
+            'promedio_competencias' => number_format(($promedio_competencias / 100) / $cantidad_competencias_evaluadas, 2),
+            'promedio_general_competencias' => number_format($promedio_general_competencias, 2),
             'evaluadores_objetivos' => $evaluadores_objetivos,
             'promedio_objetivos' => $promedio_objetivos,
             'promedio_general_objetivos' => $promedio_general_objetivos,
@@ -322,6 +357,7 @@ class Ev360ResumenTabla extends Component
                 }
 
                 return [
+                    'id_competencia' => $competencia->competencia->id,
                     'competencia' => $competencia->competencia->nombre,
                     'tipo_competencia' => $competencia->competencia->tipo_competencia,
                     'calificacion' => $competencia->calificacion,
@@ -334,5 +370,22 @@ class Ev360ResumenTabla extends Component
                 ];
             }),
         ];
+    }
+
+    public function empleadoTieneCompetenciasAsignadas($empleado, $evaluacion)
+    {
+        $existsObjetivos = EvaluacionRepuesta::where('evaluado_id', $empleado)->where('evaluacion_id', $evaluacion)->exists();
+        if ($existsObjetivos) {
+            return true;
+        }
+        return false;
+    }
+    public function empleadoTieneObjetivosAsignados($empleado, $evaluacion)
+    {
+        $existsObjetivos = ObjetivoRespuesta::where('evaluado_id', $empleado)->where('evaluacion_id', $evaluacion)->exists();
+        if ($existsObjetivos) {
+            return true;
+        }
+        return false;
     }
 }
