@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     {{ Breadcrumbs::render('EV360-Competencias-Create') }}
@@ -15,9 +15,9 @@
         <div class="card-body">
             <h3>Puesto: {{ $puesto->puesto }}</h3>
             <form id="formCompetenciaCreate" method="POST"
-                action="{{ route('admin.ev360-competencias-por-puesto.store', $puesto) }}" class="mt-3 row">
+                action="{{ route('ev360-competencias-por-puesto.store', $puesto) }}" class="mt-3 row">
                 @csrf
-                @include('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.competencias.form')
+                @include('frontend.recursos-humanos.evaluacion-360.competencias-por-puesto.competencias.form')
             </form>
             <button id="asignarBtn" style="float: right;" class="mb-2 btn btn-sm btn-outline-success"><i
                     class="mr-2 fas fa-sync"></i>Asignar</button>
@@ -90,7 +90,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.ev360-competencias-por-puesto.indexCompetenciasPorPuesto', $puesto) }}",
+                ajax: "{{ route('ev360-competencias-por-puesto.indexCompetenciasPorPuesto', $puesto) }}",
 
                 columns: [{
                     data: 'competencia.nombre',
@@ -100,11 +100,11 @@
                     data: 'id',
                     render: function(data, type, row, meta) {
                         let urlEditar =
-                            `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/edit`;
+                            `/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/edit`;
                         let urlActualizar =
-                            `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}`;
+                            `/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}`;
                         let urlEliminar =
-                            `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}`;
+                            `/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}`;
                         let botones = `
                             <div class="btn-group">
                                 <button style="color: white;background: #4a57ff;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlActualizar}','${urlEditar}','${row.competencia.id}','${row.competencia.nombre}','${row.nivel_esperado}')"><i class="fas fa-edit"></i></button>
@@ -139,7 +139,7 @@
             window.Editar = function(urlActualizar, urlEditar, competencia_id, competencia_nombre, nivel_actual) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.ev360-competencias.obtenerNiveles') }}",
+                    url: "{{ route('ev360-competencias.obtenerNiveles') }}",
                     data: {
                         competencia_id: competencia_id
                     },
@@ -258,7 +258,7 @@
                 let competencia_nombre = e.params.data.text;
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.ev360-competencias.obtenerNiveles') }}",
+                    url: "{{ route('ev360-competencias.obtenerNiveles') }}",
                     data: {
                         competencia_id
                     },
@@ -289,10 +289,10 @@
                                 <div class="text-center col-sm-1 col-lg-1 d-flex justify-content-center align-items-center" style="font-weight:bold;
                                 font-size:12px;">
                                 <p>${opcion.ponderacion}</p>
-                                </div>    
+                                </div>
                                 <div class="px-0 py-2 col-sm-11 col-lg-11" style="font-size: 11px;">
                                     ${opcion.definicion}
-                                    </div>    
+                                    </div>
                             </div>
                             `;
                         });
@@ -311,7 +311,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.ev360-competencias-por-puesto.store', $puesto) }}",
+                    url: "{{ route('ev360-competencias-por-puesto.store', $puesto) }}",
                     data: datos,
                     dataType: "JSON",
                     beforeSend: function() {

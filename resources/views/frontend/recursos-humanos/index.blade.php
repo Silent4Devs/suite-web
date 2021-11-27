@@ -1,8 +1,8 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/menu-secciones.css') }}">
     <div class="mt-3">
-        {{ Breadcrumbs::render('Evaluacion360') }}
+        {{-- {{ Breadcrumbs::render('Evaluacion360') }} --}}
     </div>
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
@@ -26,12 +26,12 @@
             </div>
             <div class="caja_caja_secciones">
                 <div class="caja_secciones">
-                    @can('contexto_access'){{-- Cambiar Permiso --}}
+                    {{-- @can('contexto_access')Cambiar Permiso --}}
                         <section data-id="contexto" id="s1" class="caja_tab_reveldada caja">
                             <div class="mt-5">
                                 <ul>
                                     <li>
-                                        <a href="{{ route('admin.ev360-competencias.index') }}">
+                                        <a href="{{ route('ev360-competencias.index') }}">
                                             <div style="text-transform: capitalize">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
                                                     fill="currentColor" class="bi bi-file-earmark-medical-fill"
@@ -46,7 +46,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}">
+                                        <a href="{{ route('ev360-competencias-por-puesto.index') }}">
                                             <div style="text-transform: capitalize">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
                                                     fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
@@ -62,7 +62,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.ev360-objetivos.index') }}">
+                                        <a href="{{ route('ev360-objetivos.index') }}">
                                             <div style="text-transform: capitalize">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
                                                     fill="currentColor" class="bi bi-bullseye" viewBox="0 0 16 16">
@@ -81,7 +81,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.ev360-evaluaciones.index') }}">
+                                        <a href="{{ route('ev360-evaluaciones.index') }}">
                                             <div style="text-transform: capitalize">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
                                                     fill="currentColor" class="bi bi-file-earmark-person-fill"
@@ -98,7 +98,7 @@
                                 </ul>
                             </div>
                         </section>
-                    @else
+                    {{-- @else
                         <div class="mt-5 row" style="margin-left: -10px">
                             <div class="mb-3 col-12">
                                 <img src="{{ asset('img/not_access.svg') }}" width="400 " />
@@ -110,8 +110,8 @@
                                     otorge dichos permisos
                                 </strong>
                             </div>
-                        </div>
-                    @endcan
+                        </div> --}}
+                    {{-- @endcan --}}
                 </div>
             </div>
         </div>

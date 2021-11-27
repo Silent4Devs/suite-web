@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/menu-secciones.css') }}">
     {{ Breadcrumbs::render('EV360-Competencias-Edit') }}
@@ -17,11 +17,11 @@
             </h3>
         </div>
         <div class="card-body">
-            <form id="formGrupo" method="POST" action="{{ route('admin.ev360-competencias.update', $competencia) }}"
+            <form id="formGrupo" method="POST" action="{{ route('ev360-competencias.update', $competencia) }}"
                 class="mt-3 row">
                 @csrf
                 @method('PATCH')
-                @include('admin.recursos-humanos.evaluacion-360.competencias._formEdit')
+                @include('frontend.recursos-humanos.evaluacion-360.competencias._formEdit')
                 <div class="d-flex justify-content-end w-100">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button type="submit" class="btn btn-danger">Guardar</button>
@@ -42,8 +42,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formConductaCreate" action="{{ route('admin.ev360-conductas.store') }}" method="post">
-                        @include('admin.recursos-humanos.evaluacion-360.conductas._form')
+                    <form id="formConductaCreate" action="{{ route('ev360-conductas.store') }}" method="post">
+                        @include('frontend.recursos-humanos.evaluacion-360.conductas._form')
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -67,7 +67,7 @@
                 action: function(e, dt, node, config) {
                     $('#formConductaCreate').removeAttr('action');
                     $('#formConductaCreate').removeAttr('method');
-                    $('#formConductaCreate').attr('action', "{{ route('admin.ev360-conductas.store') }}");
+                    $('#formConductaCreate').attr('action', "{{ route('ev360-conductas.store') }}");
                     $('#formConductaCreate').attr('method', 'POST');
                     CKEDITOR.instances.definicion.setData('');
                     $('#conductasModal').modal('show');
@@ -80,7 +80,7 @@
                 processing: true,
                 serverSide: true,
                 retrieve: true,
-                ajax: "{{ route('admin.ev360-competencias.obtenerConductas', $competencia->id) }}",
+                ajax: "{{ route('ev360-competencias.obtenerConductas', $competencia->id) }}",
                 columns: [{
                     data: 'ponderacion'
                 }, {
@@ -93,11 +93,11 @@
                     data: 'id',
                     render: function(data, type, row, meta) {
                         let urlBtnEditar =
-                            `/admin/recursos-humanos/evaluacion-360/conductas/${data}/edit`;
+                            `/recursos-humanos/evaluacion-360/conductas/${data}/edit`;
                         let urlBtnActualizar =
-                            `/admin/recursos-humanos/evaluacion-360/conductas/${data}`;
+                            `/recursos-humanos/evaluacion-360/conductas/${data}`;
                         let urlBtnEliminar =
-                            `/admin/recursos-humanos/evaluacion-360/conductas/${data}`;
+                            `/recursos-humanos/evaluacion-360/conductas/${data}`;
                         let botones = `
                             <div class="btn-group">
                                 <button style="color: white;background: #4a57ff;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
@@ -271,7 +271,7 @@
                 if (e.currentTarget.checked) {
                     $.ajax({
                         type: "POST",
-                        url: "{{ route('admin.ev360-competencias.obtenerNiveles') }}",
+                        url: "{{ route('ev360-competencias.obtenerNiveles') }}",
                         data: {
                             competencia_id: @json($competencia->id),
                         },
@@ -287,7 +287,7 @@
                             if (response.length > 0) {
                                 let select = `
                                 <label for="nivel_esperado">Establece el nivel esperado general
-                                <span class="text-danger">*</span>    
+                                <span class="text-danger">*</span>
                                 </label>
                                 <select name="nivel_esperado" id="nivel_esperado" class="form-control" required>
                             `;
@@ -300,7 +300,7 @@
                                 contenedor.innerHTML = select;
                             } else {
                                 contenedor.innerHTML = `<span class="mt-2 alerta-error">
-                                    <i class='mr-2 fas fa-exclamation-triangle'></i> 
+                                    <i class='mr-2 fas fa-exclamation-triangle'></i>
                                     Debes ingresar niveles a la competencia primero, luego deselecciona y vuelve a seleccionar.
                                     </span>`;
                             }

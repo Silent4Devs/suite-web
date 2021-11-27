@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Frontend\RH\CompetenciasPorPuestoController;
+use App\Http\Controllers\Frontend\LockedPlanTrabajoController;
+use App\Http\Controllers\Frontend\RH\EV360CompetenciasController;
+use App\Http\Controllers\Frontend\RH\EV360EvaluacionPeriodosController;
+use App\Http\Controllers\Frontend\RH\EV360ConductasController;
+use App\Http\Controllers\Frontend\RH\EV360ObjetivosController;
+use App\Http\Controllers\Frontend\RH\Evaluacion360Controller;
+use App\Http\Controllers\Frontend\RH\EvaluadoEvaluadorController;
 use App\Http\Controllers\Frontend\AlcanceSgsiController;
 use App\Http\Controllers\Frontend\ComiteseguridadController;
 use App\Http\Controllers\Frontend\DeskController;
@@ -130,26 +138,26 @@ Route::middleware([
         Route::delete('organizacions/destroy', [OrganizacionController::class, 'massDestroy'])->name('organizacions.massDestroy');
         Route::post('organizacions/ckmedia', [OrganizacionController::class, 'storeCKEditorImages'])->name('organizacions.storeCKEditorImages');
 
-        Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
+        Route::get('recursos-humanos/evaluacion-360', [Evaluacion360Controller::class,'index'])->name('rh-evaluacion360.index');
 
-        Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/participantes', 'RH\EV360EvaluacionesController@getParticipantes')->name('ev360-evaluaciones.getParticipantes');
-        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia', 'RH\EV360EvaluacionesController@relatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.relatedCompetenciaWithEvaluacion');
-        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedCompetenciaWithEvaluacion');
-        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo', 'RH\EV360EvaluacionesController@relatedObjetivoWithEvaluacion')->name('ev360-evaluaciones.relatedObjetivoWithEvaluacion');
-        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedObjetivoWithEvaluacion');
-        Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion', 'RH\EV360EvaluacionesController@evaluacion')->name('ev360-evaluaciones.evaluacion');
-        Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}', 'RH\EV360EvaluacionesController@contestarCuestionario')->name('ev360-evaluaciones.contestarCuestionario');
-        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}/cerrar', 'RH\EV360EvaluacionesController@finalizarEvaluacion')->name('ev360-evaluaciones.finalizarEvaluacion');
-        Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada-descripcion/store', 'RH\EV360EvaluacionesController@storeMetaAlcanzadaDescripcion')->name('ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion');
-        Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada/store', 'RH\EV360EvaluacionesController@storeMetaAlcanzada')->name('ev360-evaluaciones.objetivos.storeMetaAlcanzada');
-        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/iniciar', 'RH\EV360EvaluacionesController@iniciarEvaluacion')->name('ev360-evaluaciones.iniciarEvaluacion');
-        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/postergar', 'RH\EV360EvaluacionesController@postergarEvaluacion')->name('ev360-evaluaciones.postergarEvaluacion');
-        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/cerrar', 'RH\EV360EvaluacionesController@cerrarEvaluacion')->name('ev360-evaluaciones.cerrarEvaluacion');
-        Route::post('recursos-humanos/evaluacion-360/autoevaluacion/competencias/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionCompetencias')->name('ev360-evaluaciones.autoevaluacion.competencias.get');
-        Route::post('recursos-humanos/evaluacion-360/autoevaluacion/objetivos/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionObjetivos')->name('ev360-evaluaciones.autoevaluacion.objetivos.get');
-        Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/consulta/{evaluado}', 'RH\EV360EvaluacionesController@consultaPorEvaluado')->name('ev360-evaluaciones.autoevaluacion.consulta.evaluado');
-        Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen', 'RH\EV360EvaluacionesController@resumen')->name('ev360-evaluaciones.consulta.resumen');
-        Route::resource('recursos-humanos/evaluacion-360/evaluaciones', 'RH\EV360EvaluacionesController')->names([
+        Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/participantes', [Evaluacion360Controller::class,'getParticipantes'])->name('ev360-evaluaciones.getParticipantes');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia', [Evaluacion360Controller::class,'relatedCompetenciaWithEvaluacion'])->name('ev360-evaluaciones.relatedCompetenciaWithEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia/delete', [Evaluacion360Controller::class,'deleteRelatedCompetenciaWithEvaluacion'])->name('ev360-evaluaciones.deleteRelatedCompetenciaWithEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo', [Evaluacion360Controller::class,'relatedObjetivoWithEvaluacion'])->name('ev360-evaluaciones.relatedObjetivoWithEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo/delete', [Evaluacion360Controller::class,'deleteRelatedCompetenciaWithEvaluacion'])->name('ev360-evaluaciones.deleteRelatedObjetivoWithEvaluacion');
+        Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion', [Evaluacion360Controller::class,'evaluacion'])->name('ev360-evaluaciones.evaluacion');
+        Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}', [Evaluacion360Controller::class,'contestarCuestionario'])->name('ev360-evaluaciones.contestarCuestionario');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}/cerrar', [Evaluacion360Controller::class,'finalizarEvaluacion'])->name('ev360-evaluaciones.finalizarEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada-descripcion/store', [Evaluacion360Controller::class,'storeMetaAlcanzadaDescripcion'])->name('ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada/store', [Evaluacion360Controller::class,'storeMetaAlcanzada'])->name('ev360-evaluaciones.objetivos.storeMetaAlcanzada');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/iniciar', [Evaluacion360Controller::class,'iniciarEvaluacion'])->name('ev360-evaluaciones.iniciarEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/postergar', [Evaluacion360Controller::class,'postergarEvaluacion'])->name('ev360-evaluaciones.postergarEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/cerrar', [Evaluacion360Controller::class,'cerrarEvaluacion'])->name('ev360-evaluaciones.cerrarEvaluacion');
+        Route::post('recursos-humanos/evaluacion-360/autoevaluacion/competencias/obtener', [Evaluacion360Controller::class,'getAutoevaluacionCompetencias'])->name('ev360-evaluaciones.autoevaluacion.competencias.get');
+        Route::post('recursos-humanos/evaluacion-360/autoevaluacion/objetivos/obtener', [Evaluacion360Controller::class,'getAutoevaluacionObjetivos'])->name('ev360-evaluaciones.autoevaluacion.objetivos.get');
+        Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/consulta/{evaluado}', [Evaluacion360Controller::class,'consultaPorEvaluado'])->name('ev360-evaluaciones.autoevaluacion.consulta.evaluado');
+        Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen', [Evaluacion360Controller::class,'resumen'])->name('ev360-evaluaciones.consulta.resumen');
+        Route::resource('recursos-humanos/evaluacion-360/evaluaciones', Evaluacion360Controller::class)->names([
             'index' => 'ev360-evaluaciones.index',
             'create' => 'ev360-evaluaciones.create',
             'store' => 'ev360-evaluaciones.store',
@@ -158,56 +166,71 @@ Route::middleware([
             'update' => 'ev360-evaluaciones.update',
         ]);
 
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/remover', 'RH\EvaluadoEvaluadorController@remover')->name('ev360-evaluaciones.evaluadores.remover');
-        // Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/agregar', 'RH\EvaluadoEvaluadorController@agregar')->name('ev360-evaluaciones.evaluadores.agregar');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/remover', [EvaluadoEvaluadorController::class,'remover'])->name('ev360-evaluaciones.evaluadores.remover');
+        Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/agregar', [EvaluadoEvaluadorController::class,'agregar'])->name('ev360-evaluaciones.evaluadores.agregar');
+        Route::get(
+            'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/create',
+            'RH\CompetenciasPorPuestoController@create'
+        )->name('ev360-competencias-por-puesto.create');
+        Route::get(
+            'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/obtener',[CompetenciasPorPuestoController::class,'indexCompetenciasPorPuesto'])->name('ev360-competencias-por-puesto.indexCompetenciasPorPuesto');
+        Route::post(
+            'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}',[CompetenciasPorPuestoController::class,'store'])->name('ev360-competencias-por-puesto.store');
+        Route::resource('recursos-humanos/evaluacion-360/competencias-por-puesto', CompetenciasPorPuestoController::class)->names([
+            'index' => 'ev360-competencias-por-puesto.index',
+            'show' => 'ev360-competencias-por-puesto.show',
+            'edit' => 'ev360-competencias-por-puesto.edit',
+            'update' => 'ev360-competencias-por-puesto.update',
+            'destroy' => 'ev360-competencias-por-puesto.destroy',
+        ])->except('create', 'store');
 
-        // Route::post('recursos-humanos/evaluacion-360/competencias/store-redirect', 'RH\EV360CompetenciasController@storeAndRedirect')->name('ev360-competencias.conductas');
-        // Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/conductas', 'RH\EV360CompetenciasController@conductas')->name('ev360-competencias.obtenerConductas');
-        // Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/informacion', 'RH\EV360CompetenciasController@informacionCompetencia')->name('ev360-competencias.informacionCompetencia');
-        // Route::post('recursos-humanos/evaluacion-360/competencias/{competencia}/repuesta', 'RH\EV360CompetenciasController@guardarRespuestaCompetencia')->name('ev360-competencias.guardarRespuestaCompetencia');
-        // Route::resource('recursos-humanos/evaluacion-360/competencias', 'RH\EV360CompetenciasController')->names([
-        //     'index' => 'ev360-competencias.index',
-        //     'create' => 'ev360-competencias.create',
-        //     'store' => 'ev360-competencias.store',
-        //     'show' => 'ev360-competencias.show',
-        //     'edit' => 'ev360-competencias.edit',
-        //     'update' => 'ev360-competencias.update',
-        // ]);
+        Route::post('recursos-humanos/evaluacion-360/competencias/store-redirect', [EV360CompetenciasController::class,'storeAndRedirect'])->name('ev360-competencias.conductas');
+        Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/conductas', [EV360CompetenciasController::class,'conductas'])->name('ev360-competencias.obtenerConductas');
+        Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/informacion', [EV360CompetenciasController::class,'informacionCompetencia'])->name('ev360-competencias.informacionCompetencia');
+        Route::post('recursos-humanos/evaluacion-360/competencias/{competencia}/repuesta', [EV360CompetenciasController::class,'guardarRespuestaCompetencia'])->name('ev360-competencias.guardarRespuestaCompetencia');
+        Route::resource('recursos-humanos/evaluacion-360/competencias',EV360CompetenciasController::class)->names([
+            'index' => 'ev360-competencias.index',
+            'create' => 'ev360-competencias.create',
+            'store' => 'ev360-competencias.store',
+            'show' => 'ev360-competencias.show',
+            'edit' => 'ev360-competencias.edit',
+            'update' => 'ev360-competencias.update',
+        ]);
 
-        // Route::post('recursos-humanos/evaluacion-360/conductas/store', 'RH\EV360ConductasController@store')->name('ev360-conductas.store');
-        // Route::get('recursos-humanos/evaluacion-360/conductas/{conducta}/edit', 'RH\EV360ConductasController@edit')->name('ev360-conductas.edit');
-        // Route::patch('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@update')->name('ev360-conductas.update');
-        // Route::delete('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@destroy')->name('ev360-conductas.destroy');
+        Route::post('recursos-humanos/evaluacion-360/conductas/store', [EV360ConductasController::class,'store'])->name('ev360-conductas.store');
+        Route::get('recursos-humanos/evaluacion-360/conductas/{conducta}/edit', [EV360ConductasController::class,'edit'])->name('ev360-conductas.edit');
+        Route::patch('recursos-humanos/evaluacion-360/conductas/{conducta}', [EV360ConductasController::class,'update'])->name('ev360-conductas.update');
+        Route::delete('recursos-humanos/evaluacion-360/conductas/{conducta}', [EV360ConductasController::class,'destroy'])->name('ev360-conductas.destroy');
 
-        // Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@createByEmpleado')->name('ev360-objetivos-empleado.create');
-        // Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@storeByEmpleado')->name('ev360-objetivos-empleado.store');
-        // Route::resource('recursos-humanos/evaluacion-360/objetivos', 'RH\EV360ObjetivosController')->names([
-        //     'index' => 'ev360-objetivos.index',
-        //     'create' => 'ev360-objetivos.create',
-        //     'store' => 'ev360-objetivos.store',
-        //     'show' => 'ev360-objetivos.show',
-        //     'edit' => 'ev360-objetivos.edit',
-        //     'update' => 'ev360-objetivos.update',
-        // ]);
+        Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos', [EV360ObjetivosController::class,'createByEmpleado'])->name('ev360-objetivos-empleado.create');
+        Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos', [EV360ObjetivosController::class,'storeByEmpleado'])->name('ev360-objetivos-empleado.store');
+        Route::resource('recursos-humanos/evaluacion-360/objetivos', EV360ObjetivosController::class)->names([
+            'index' => 'ev360-objetivos.index',
+            'create' => 'ev360-objetivos.create',
+            'store' => 'ev360-objetivos.store',
+            'show' => 'ev360-objetivos.show',
+            'edit' => 'ev360-objetivos.edit',
+            'update' => 'ev360-objetivos.update',
+        ]);
 
-        // Route::resource('recursos-humanos/evaluacion-360/periodo', 'RH\EV360EvaluacionPeriodosController')->names([
-        //     'index' => 'ev360-periodo.index',
-        //     'create' => 'ev360-periodo.create',
-        //     'store' => 'ev360-periodo.store',
-        //     'show' => 'ev360-periodo.show',
-        //     'edit' => 'ev360-periodo.edit',
-        //     'update' => 'ev360-periodo.update',
-        // ]);
+        Route::resource('recursos-humanos/evaluacion-360/periodo', EV360EvaluacionPeriodosController::class)->names([
+            'index' => 'ev360-periodo.index',
+            'create' => 'ev360-periodo.create',
+            'store' => 'ev360-periodo.store',
+            'show' => 'ev360-periodo.show',
+            'edit' => 'ev360-periodo.edit',
+            'update' => 'ev360-periodo.update',
+        ]);
 
         Route::view('iso27001', 'frontend.iso27001.index')->name('iso27001.index');
         Route::view('soporte', 'frontend.soporte.index')->name('soporte.index');
         Route::get('portal-comunicacion/reportes', [PortalComunicacionController::class, 'reportes'])->name('portal-comunicacion.reportes');
         Route::resource('portal-comunicacion', PortalComunicacionController::class);
 
-        Route::post('plantTrabajoBase/bloqueo/mostrar', 'LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');
-        Route::post('plantTrabajoBase/bloqueo/quitar', 'LockedPlanTrabajoController@removeLockedToPlanTrabajo')->name('lockedPlan.removeLockedToPlanTrabajo');
-        Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
-        Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
+        Route::post('plantTrabajoBase/bloqueo/mostrar', [LockedPlanTrabajoController::class,'getLockedToPlanTrabajo'])->name('lockedPlan.getLockedToPlanTrabajo');
+        Route::post('plantTrabajoBase/bloqueo/quitar', [LockedPlanTrabajoController::class,'removeLockedToPlanTrabajo'])->name('lockedPlan.removeLockedToPlanTrabajo');
+        Route::post('plantTrabajoBase/bloqueo/is-locked', [LockedPlanTrabajoController::class,'isLockedToPlanTrabajo'])->name('lockedPlan.isLockedToPlanTrabajo');
+        Route::post('plantTrabajoBase/bloqueo/registrar', [LockedPlanTrabajoController::class,'setLockedToPlanTrabajo'])->name('lockedPlan.setLockedToPlanTrabajo');
 
         Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
 

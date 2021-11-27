@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\RH;
+namespace App\Http\Controllers\Frontend\RH;
 
 use App\Http\Controllers\Controller;
 use App\Models\Puesto;
@@ -30,7 +30,7 @@ class CompetenciasPorPuestoController extends Controller
             return datatables()->of($puestos)->toJson();
         }
 
-        return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.index');
+        return view('frontend.recursos-humanos.evaluacion-360.competencias-por-puesto.index');
     }
 
     public function indexCompetenciasPorPuesto(Request $request, $puesto)
@@ -52,7 +52,7 @@ class CompetenciasPorPuestoController extends Controller
         $puesto = Puesto::find(intval($puesto));
         $competencias = Competencia::all();
 
-        return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.create', compact('puesto', 'competencias'));
+        return view('frontend.recursos-humanos.evaluacion-360.competencias-por-puesto.create', compact('puesto', 'competencias'));
     }
 
     /**

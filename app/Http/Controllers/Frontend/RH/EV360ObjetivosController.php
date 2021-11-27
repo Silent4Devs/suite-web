@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\RH;
+namespace App\Http\Controllers\Frontend\RH;
 
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
@@ -18,7 +18,7 @@ class EV360ObjetivosController extends Controller
             return datatables()->of($objetivos)->toJson();
         }
 
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.index');
+        return view('frontend.recursos-humanos.evaluacion-360.objetivos.index');
     }
 
     public function create()
@@ -27,7 +27,7 @@ class EV360ObjetivosController extends Controller
         $tipo_seleccionado = null;
         $metrica_seleccionada = null;
 
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.create', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada'));
+        return view('frontend.recursos-humanos.evaluacion-360.objetivos.create', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada'));
     }
 
     public function createByEmpleado(Request $request, $empleado)
@@ -50,7 +50,7 @@ class EV360ObjetivosController extends Controller
         if ($request->ajax()) {
         }
 
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado'));
+        return view('frontend.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado'));
     }
 
     public function storeByEmpleado(Request $request, $empleado)
@@ -90,9 +90,9 @@ class EV360ObjetivosController extends Controller
         ]);
         $objetivo = Objetivo::create($request->all());
         if ($objetivo) {
-            return redirect()->route('admin.ev360-objetivos.index')->with('success', 'Objetivo creado con éxito');
+            return redirect()->route('ev360-objetivos.index')->with('success', 'Objetivo creado con éxito');
         } else {
-            return redirect()->route('admin.ev360-objetivos.index')->with('error', 'Ocurrió un error al crear el objetivo, intente de nuevo...');
+            return redirect()->route('ev360-objetivos.index')->with('error', 'Ocurrió un error al crear el objetivo, intente de nuevo...');
         }
     }
 
@@ -102,7 +102,7 @@ class EV360ObjetivosController extends Controller
         $tipo_seleccionado = $objetivo->tipo_id;
         $metrica_seleccionada = $objetivo->metrica_id;
 
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.edit', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada'));
+        return view('frontend.recursos-humanos.evaluacion-360.objetivos.edit', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada'));
     }
 
     public function update(Request $request, $objetivo)
@@ -118,9 +118,9 @@ class EV360ObjetivosController extends Controller
         $objetivo = Objetivo::find($objetivo);
         $u_objetivo = $objetivo->update($request->all());
         if ($u_objetivo) {
-            return redirect()->route('admin.ev360-objetivos.index')->with('success', 'Objetivo editado con éxito');
+            return redirect()->route('ev360-objetivos.index')->with('success', 'Objetivo editado con éxito');
         } else {
-            return redirect()->route('admin.ev360-objetivos.index')->with('error', 'Ocurrió un error al editar el objetivo, intente de nuevo...');
+            return redirect()->route('ev360-objetivos.index')->with('error', 'Ocurrió un error al editar el objetivo, intente de nuevo...');
         }
     }
 }
