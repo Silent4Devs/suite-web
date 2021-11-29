@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\RH;
+namespace App\Http\Controllers\Frontend\RH;
 
 use App\Http\Controllers\Controller;
 use App\Models\Puesto;
@@ -20,7 +20,7 @@ class EV360CompetenciasController extends Controller
             return datatables()->of($competencias)->toJson();
         }
 
-        return view('admin.recursos-humanos.evaluacion-360.competencias.index');
+        return view('frontend.recursos-humanos.evaluacion-360.competencias.index');
     }
 
     public function create()
@@ -28,7 +28,7 @@ class EV360CompetenciasController extends Controller
         $competencia = new Competencia;
         $tipo_seleccionado = null;
 
-        return view('admin.recursos-humanos.evaluacion-360.competencias.create', compact('competencia', 'tipo_seleccionado'));
+        return view('frontend.recursos-humanos.evaluacion-360.competencias.create', compact('competencia', 'tipo_seleccionado'));
     }
 
     public function store(Request $request)
@@ -40,9 +40,9 @@ class EV360CompetenciasController extends Controller
         ]);
         $competencia = Competencia::create($request->all());
         if ($competencia) {
-            return redirect()->route('admin.ev360-competencias.edit', $competencia->id);
+            return redirect()->route('ev360-competencias.edit', $competencia->id);
         } else {
-            return redirect()->route('admin.ev360-competencias.index')->with('error', 'Ocurrió un error al crear la competencia, intente de nuevo...');
+            return redirect()->route('ev360-competencias.index')->with('error', 'Ocurrió un error al crear la competencia, intente de nuevo...');
         }
     }
 
@@ -66,7 +66,7 @@ class EV360CompetenciasController extends Controller
         $competencia = Competencia::find(intval($competencia));
         $tipo_seleccionado = $competencia->tipo_id;
 
-        return view('admin.recursos-humanos.evaluacion-360.competencias.edit', compact('competencia', 'tipo_seleccionado'));
+        return view('frontend.recursos-humanos.evaluacion-360.competencias.edit', compact('competencia', 'tipo_seleccionado'));
     }
 
     public function update(Request $request, $competencia)
@@ -95,9 +95,9 @@ class EV360CompetenciasController extends Controller
             }
         }
         if ($competencia_u) {
-            return redirect()->route('admin.ev360-competencias.index')->with('success', 'Competencia actualizada con éxito');
+            return redirect()->route('ev360-competencias.index')->with('success', 'Competencia actualizada con éxito');
         } else {
-            return redirect()->route('admin.ev360-competencias.index')->with('error', 'Ocurrió un error al crear la competencia, intente de nuevo...');
+            return redirect()->route('ev360-competencias.index')->with('error', 'Ocurrió un error al crear la competencia, intente de nuevo...');
         }
     }
 

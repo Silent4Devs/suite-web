@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Objetivos') }}
@@ -112,7 +112,7 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar competencia',
-                url: "{{ route('admin.ev360-objetivos.create') }}",
+                url: "{{ route('ev360-objetivos.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                     let {
@@ -129,7 +129,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.ev360-objetivos.index') }}",
+                ajax: "{{ route('ev360-objetivos.index') }}",
                 columns: [{
                         data: 'id'
                     }, {
@@ -151,9 +151,9 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             let urlEditar =
-                                `admin/recursos-humanos/evaluacion-360/objetivos/${data}/edit`;
+                                `recursos-humanos/evaluacion-360/objetivos/${data}/edit`;
                             let urlVisualizarEliminar =
-                                `admin/recursos-humanos/evaluacion-360/objetivos/${data}`;
+                                `recursos-humanos/evaluacion-360/objetivos/${data}`;
                             let html = `
                             <div class="btn-group">
                                 <a href="${urlEditar}" title="Editar" class="btn btn-sm"><i class="fa fa-edit"></i></a>

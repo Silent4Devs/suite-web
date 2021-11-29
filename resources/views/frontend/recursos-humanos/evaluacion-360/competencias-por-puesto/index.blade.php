@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Competencias') }}
@@ -110,7 +110,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.ev360-competencias-por-puesto.index') }}",
+                ajax: "{{ route('ev360-competencias-por-puesto.index') }}",
                 columns: [{
                         data: 'id'
                     }, {
@@ -127,7 +127,7 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             let urlBtnAsignarCompetencias =
-                                `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
+                                `/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
                             let botones = `
                                 <a class="btn btn-sm btn-editar" title="Asignar competencias" href="${urlBtnAsignarCompetencias}"><i class="fas fa-sync-alt"></i></a>
                             `;

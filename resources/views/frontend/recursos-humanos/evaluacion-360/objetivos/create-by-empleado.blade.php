@@ -1,17 +1,17 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('EV360-Objetivos-Create') }}
+    {{-- {{ Breadcrumbs::render('EV360-Objetivos-Create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Objetivo </h3>
         </div>
         <div class="card-body">
-            <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
+            <form id="formObjetivoCreate" method="POST" action="{{ route('ev360-objetivos.index') }}"
                 class="mt-3 row">
                 @csrf
-                @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado')
+                @include('frontend.recursos-humanos.evaluacion-360.objetivos._form_by_empleado')
                 <div class="d-flex justify-content-end w-100">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button type="submit" class="btn btn-danger">Guardar</button>
@@ -31,7 +31,7 @@
                 processing: true,
                 serverSide: true,
                 retrieve: true,
-                ajax: "{{ route('admin.ev360-objetivos-empleado.create', $empleado->id) }}",
+                ajax: "{{ route('ev360-objetivos-empleado.create', $empleado->id) }}",
                 columns: [{
                     data: 'objetivo.nombre'
                 }, {
@@ -63,7 +63,7 @@
                 // let formData = new FormData(document.getElementById('formObjetivoCreate'));
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.ev360-objetivos-empleado.store', $empleado->id) }}",
+                    url: "{{ route('ev360-objetivos-empleado.store', $empleado->id) }}",
                     data: $('#formObjetivoCreate').serialize(),
                     beforeSend: function() {
                         toastr.info('Asignando el objetivo');

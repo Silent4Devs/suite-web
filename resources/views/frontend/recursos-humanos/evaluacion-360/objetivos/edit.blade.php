@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
     {{ Breadcrumbs::render('EV360-Objetivos-Edit') }}
@@ -8,10 +8,10 @@
             <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Objetivo </h3>
         </div>
         <div class="card-body">
-            <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
+            <form id="formObjetivoCreate" method="POST" action="{{ route('ev360-objetivos.index') }}"
                 class="mt-3 row">
                 @csrf
-                @include('admin.recursos-humanos.evaluacion-360.objetivos._form')
+                @include('frontend.recursos-humanos.evaluacion-360.objetivos._form')
                 <div class="d-flex justify-content-end w-100">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                     <button type="submit" class="btn btn-danger">Actualizar</button>
