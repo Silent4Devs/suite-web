@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyCompetenciumRequest;
-use App\Http\Requests\StoreCompetenciumRequest;
-use App\Http\Requests\UpdateCompetenciumRequest;
 use App\Models\Area;
 use App\Models\Competencium;
 use App\Models\Team;
@@ -38,10 +35,7 @@ class CompetenciasController extends Controller
                 $deleteGate = 'competencium_delete';
                 $crudRoutePart = 'competencia';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFronted', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -91,7 +85,7 @@ class CompetenciasController extends Controller
         return view('frontend.competencia.create', compact('nombrecolaboradors'));
     }
 
-    public function store(StoreCompetenciumRequest $request)
+    public function store(Request $request)
     {
         $competencium = Competencium::create($request->all());
 
@@ -117,7 +111,7 @@ class CompetenciasController extends Controller
         return view('frontend.competencia.edit', compact('nombrecolaboradors', 'competencium'));
     }
 
-    public function update(UpdateCompetenciumRequest $request, Competencium $competencium)
+    public function update(Request $request, Competencium $competencium)
     {
         $competencium->update($request->all());
 
@@ -158,7 +152,7 @@ class CompetenciasController extends Controller
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyCompetenciumRequest $request)
+    public function massDestroy(Request $request)
     {
         Competencium::whereIn('id', request('ids'))->delete();
 

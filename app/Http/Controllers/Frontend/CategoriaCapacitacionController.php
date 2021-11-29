@@ -28,10 +28,7 @@ class CategoriaCapacitacionController extends Controller
                 $deleteGate = 'recurso_delete';
                 $crudRoutePart = 'categoria-capacitacion';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
