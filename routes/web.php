@@ -231,7 +231,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
 
     //Panel declaracion
+    Route::post('paneldeclaracion/responsables-quitar','PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
     Route::post('paneldeclaracion/responsables','PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
+    Route::post('paneldeclaracion/enviar-correo','PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
+    Route::post('paneldeclaracion/aprobadores-quitar','PanelDeclaracionController@quitarRelacionAprobador')->name('paneldeclaracion.aprobadores.quitar');
     Route::post('paneldeclaracion/aprobadores','PanelDeclaracionController@relacionarAprobador')->name('paneldeclaracion.aprobadores');
     Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
     Route::resource('paneldeclaracion', 'PanelDeclaracionController');
