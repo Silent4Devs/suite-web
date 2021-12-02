@@ -999,7 +999,7 @@
                                 @endif --}}
                         </div>
                         {{-- <div class="py-2 dropdown-header bg-light"><strong>Ajustes</strong></div> --}}
-                        <div class="px-3 mt-3 d-flex justify-content-between">
+                        <div class="px-3 mt-3 d-flex justify-content-center">
                             @if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                                 @can('profile_password_edit')
 
@@ -1012,10 +1012,10 @@
 
                                 @endcan
                             @endif
-                            <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
+                            {{-- <a class="p-2 border rounded shadow-xs btn btn-sm" href="#">
                                 <i class="mr-1 fas fa-fw fa-lock">
                                 </i> Bloquear
-                            </a>
+                            </a> --}}
                             <a class="p-2 border rounded shadow-xs btn btn-sm"
                                 onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                 <i class="mr-1 fas fa-sign-out-alt">
