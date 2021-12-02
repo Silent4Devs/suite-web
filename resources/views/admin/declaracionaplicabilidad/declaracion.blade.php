@@ -61,10 +61,10 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th style="width:15px !important;" >RESPONSABLE</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
                                         <th style="width:15%;" scope="col">ESTATUS</th>
                                         <th style="width:35%;" scope="col">COMENTARIOS</th>
                                         <th style="width:15px !important;" >APROBADOR</th>
