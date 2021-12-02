@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DeclaracionAplicabilidadAprobadores extends Model
 {
-	use SoftDeletes;
+	// use SoftDeletes;
 	protected $table = 'declaracion_aplicabilidad_aprobadores';
 
 	protected $casts = [
