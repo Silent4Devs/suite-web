@@ -169,9 +169,7 @@ Route::middleware([
         Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/remover', [EvaluadoEvaluadorController::class,'remover'])->name('ev360-evaluaciones.evaluadores.remover');
         Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/agregar', [EvaluadoEvaluadorController::class,'agregar'])->name('ev360-evaluaciones.evaluadores.agregar');
         Route::get(
-            'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/create',
-            'RH\CompetenciasPorPuestoController@create'
-        )->name('ev360-competencias-por-puesto.create');
+            'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/create',[CompetenciasPorPuestoController::class,'create'])->name('ev360-competencias-por-puesto.create');
         Route::get(
             'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/obtener',[CompetenciasPorPuestoController::class,'indexCompetenciasPorPuesto'])->name('ev360-competencias-por-puesto.indexCompetenciasPorPuesto');
         Route::post(
@@ -184,6 +182,7 @@ Route::middleware([
             'destroy' => 'ev360-competencias-por-puesto.destroy',
         ])->except('create', 'store');
 
+        Route::post('recursos-humanos/evaluacion-360/competencias/obtener-niveles', [EV360CompetenciasController::class,'obtenerNiveles'])->name('ev360-competencias.obtenerNiveles');
         Route::post('recursos-humanos/evaluacion-360/competencias/store-redirect', [EV360CompetenciasController::class,'storeAndRedirect'])->name('ev360-competencias.conductas');
         Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/conductas', [EV360CompetenciasController::class,'conductas'])->name('ev360-competencias.obtenerConductas');
         Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/informacion', [EV360CompetenciasController::class,'informacionCompetencia'])->name('ev360-competencias.informacionCompetencia');

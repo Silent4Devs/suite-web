@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyRecursoRequest;
-use App\Http\Requests\StoreRecursoRequest;
-use App\Http\Requests\UpdateRecursoRequest;
 use App\Models\CategoriaCapacitacion;
 use App\Models\Recurso;
 use App\Models\Team;
@@ -41,10 +38,7 @@ class RecursosController extends Controller
                 $deleteGate = 'recurso_delete';
                 $crudRoutePart = 'recursos';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -96,7 +90,7 @@ class RecursosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('recurso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('recurso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $participantes = User::all()->pluck('name', 'id');
         $categorias = CategoriaCapacitacion::get();
@@ -104,7 +98,7 @@ class RecursosController extends Controller
         return view('frontend.recursos.create', compact('participantes', 'categorias'));
     }
 
-    public function store(StoreRecursoRequest $request)
+    public function store(Request $request)
     {
         $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
         $recurso = Recurso::create([
@@ -141,7 +135,7 @@ class RecursosController extends Controller
 
     public function edit(Recurso $recurso)
     {
-        abort_if(Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $participantes = User::all()->pluck('name', 'id');
 
@@ -151,7 +145,7 @@ class RecursosController extends Controller
         return view('frontend.recursos.edit', compact('participantes', 'recurso', 'categorias'));
     }
 
-    public function update(UpdateRecursoRequest $request, Recurso $recurso)
+    public function update(Request $request, Recurso $recurso)
     {
         if ($request->ajax()) {
             $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
@@ -194,7 +188,7 @@ class RecursosController extends Controller
 
     public function show(Recurso $recurso)
     {
-        abort_if(Gate::denies('recurso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+      //  abort_if(Gate::denies('recurso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $recurso->load('participantes', 'team');
 
@@ -203,14 +197,14 @@ class RecursosController extends Controller
 
     public function destroy(Recurso $recurso)
     {
-        abort_if(Gate::denies('recurso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+      //  abort_if(Gate::denies('recurso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $recurso->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyRecursoRequest $request)
+    public function massDestroy(Request $request)
     {
         Recurso::whereIn('id', request('ids'))->delete();
 
@@ -219,7 +213,7 @@ class RecursosController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('recurso_create') && Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // abort_if(Gate::denies('recurso_create') && Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Recurso();
         $model->id = $request->input('crud_id', 0);
