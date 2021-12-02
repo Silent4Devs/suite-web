@@ -418,9 +418,9 @@
                         <div>
                             <ul id="progressbar">
                                 <li class="active" id="createEvaluacion"><strong>Configuración</strong></li>
-                                <li id="publicoObjetivo"><strong>Publico Objetivo</strong></li>
+                                <li id="publicoObjetivo"><strong>Público Objetivo</strong></li>
                                 <li id="evaluadores"><strong>Evaluadores</strong></li>
-                                <li id="periodosCircle"><strong>Periodos</strong></li>
+                                <li id="periodosCircle"><strong>Períodos</strong></li>
                                 <li id="finalizarEvaluacion"><strong>Finalizar</strong></li>
                             </ul>
                             <div class="progress">
@@ -497,63 +497,77 @@
                                             @endif
                                             <span class="errors descripcion_error text-danger"></span>
                                         </div>
+                                        <br>
                                     </div>
                                     <div class="col-sm-12 col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
-                                            <label for="">
-                                                <i class="mr-2 iconos-crear fas fa-question-circle"></i>
-                                                ¿Qué
-                                                campos
-                                                deseas evaluar?
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <br>
-                                            <div class="d-flex">
-                                                <label class="mr-4 container-check">Competencias
-                                                    @if ($errors->has('includeCompetencias'))
-                                                        <small class="text-danger">
-                                                            ({{ $errors->first('includeCompetencias') }})
-                                                        </small>
-                                                    @endif
-                                                    {{-- <input type="checkbox" type="checkbox"
-                                                        wire:change="$set('showContentTable',{{ !$showContentTable }})"
-                                                        wire:model="includeCompetencias"> --}}
-                                                    <input type="checkbox" type="checkbox"
-                                                        wire:model="includeCompetencias"
-                                                        wire:change.prevent="$set('showPesoGeneralCompetencias',{{ !$showPesoGeneralCompetencias }})">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                                <label class="container-check">Objetivos
-                                                    @if ($errors->has('includeObjetivos'))
-                                                        <small class="text-danger">
-                                                            ({{ $errors->first('includeObjetivos') }})
-                                                        </small>
-                                                    @endif
-                                                    <input type="checkbox" wire:model="includeObjetivos"
-                                                        class="form-check-input" type="checkbox"
-                                                        wire:change.prevent="$set('showPesoGeneralObjetivos',{{ !$showPesoGeneralObjetivos }})">
-                                                    <span class="checkmark"></span>
-                                                </label>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <label for="">
+                                                        <i class="mr-2 iconos-crear fas fa-question-circle"></i>
+                                                        ¿Qué
+                                                        desea evaluar?
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                </div>
+                                                @if ($showPesoGeneralCompetencias || $showPesoGeneralObjetivos)
+                                                    <div class="col-7">
+                                                        <label for="pesoGeneralCompetencias"><i
+                                                                class="mr-2 iconos-crear fas fa-question-circle"></i>Peso
+                                                            General (0-100%)<span
+                                                                class="text-danger">*</span></label>
+                                                    </div>
+                                                @endif
                                             </div>
-                                            <div class="mt-3 row">
-                                                <div
-                                                    class="col-6 {{ $showPesoGeneralCompetencias ? '' : 'd-none' }}">
-                                                    <label for="pesoGeneralCompetencias"><i
-                                                            class="mr-2 iconos-crear fas fa-question-circle"></i>Peso
-                                                        General
-                                                        Competencias<span class="text-danger">*</span></label>
-                                                    <input wire:model.defer="pesoGeneralCompetencias"
+                                            <div class="mt-3 row align-items-center">
+                                                <div class="col-5">
+                                                    <div style="margin-top: 8px;">
+                                                        <label class="mr-4 container-check">Competencias
+                                                            @if ($errors->has('includeCompetencias'))
+                                                                <small class="text-danger">
+                                                                    ({{ $errors->first('includeCompetencias') }})
+                                                                </small>
+                                                            @endif
+                                                            {{-- Evaluación de Desempeño Jun-Dic 2021 --}}
+                                                            {{-- Evaluación de desempeño realizada en el segundo periodo del año 2021 para los empleados de S4B sede Torre Murano. --}}
+                                                            <input type="checkbox" type="checkbox"
+                                                                wire:model="includeCompetencias"
+                                                                wire:change.prevent="$set('showPesoGeneralCompetencias',{{ !$showPesoGeneralCompetencias }})">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-7 {{ $showPesoGeneralCompetencias ? '' : 'd-none' }}"
+                                                    style="position: relative;">
+                                                    <input style="width: 120px;text-align: center;padding-right: 20px;"
+                                                        wire:model.defer="pesoGeneralCompetencias"
                                                         id="pesoGeneralCompetencias" class="form-control"
                                                         type="number" min="0" max="100">
+                                                    <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
-                                                <div class="col-6 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
-                                                    <label for="pesoGeneralOnjetivos"><i
-                                                            class="mr-2 iconos-crear fas fa-question-circle"></i>Peso
-                                                        General
-                                                        Objetivos<span class="text-danger">*</span></label>
-                                                    <input wire:model.defer="pesoGeneralObjetivos"
+                                            </div>
+                                            <div class="mt-3 row align-items-center">
+                                                <div class="col-5">
+                                                    <div style="margin-top: 8px;">
+                                                        <label class="container-check">Objetivos
+                                                            @if ($errors->has('includeObjetivos'))
+                                                                <small class="text-danger">
+                                                                    ({{ $errors->first('includeObjetivos') }})
+                                                                </small>
+                                                            @endif
+                                                            <input type="checkbox" wire:model="includeObjetivos"
+                                                                class="form-check-input" type="checkbox"
+                                                                wire:change.prevent="$set('showPesoGeneralObjetivos',{{ !$showPesoGeneralObjetivos }})">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-7 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+                                                    <input style="width: 120px;text-align: center;padding-right: 20px;"
+                                                        wire:model.defer="pesoGeneralObjetivos"
                                                         id="pesoGeneralOnjetivos" class="form-control" type="number"
                                                         min="0" max="100">
+                                                    <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -636,9 +650,9 @@
                         <div>
                             <ul id="progressbar">
                                 <li id="createEvaluacion"><strong>Configuración</strong></li>
-                                <li class="active" id="publicoObjetivo"><strong>Publico Objetivo</strong></li>
+                                <li class="active" id="publicoObjetivo"><strong>Público Objetivo</strong></li>
                                 <li id="evaluadores"><strong>Evaluadores</strong></li>
-                                <li id="periodosCircle"><strong>Periodos</strong></li>
+                                <li id="periodosCircle"><strong>Períodos</strong></li>
                                 <li id="finalizarEvaluacion"><strong>Finalizar</strong></li>
                             </ul>
                             <div class="progress">
@@ -664,88 +678,99 @@
                                                         style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                                         Instrucciones</p>
                                                     <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
-                                                        Ahora es tiempo de elegir el público objetivo de la evaluación ,
-                                                        puedes seleccionar <small class="text-muted">(Toda la
-                                                            empresa, por áreas o manualmente)</small>,
-                                                        también tienes la posibilidad de crear tus grupos de evaluación
-                                                        para utilizarlos posteriormente.
+                                                        Ahora es tiempo de elegir a los empleados a evaluar.
+                                                        Puedes seleccionar a toda la
+                                                        organización, áreas en específico, grupos creados o selección
+                                                        manual por
+                                                        empleados.
+                                                        {{-- también tienes la posibilidad de crear tus grupos de evaluación
+                                                        para utilizarlos posteriormente. --}}
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-9">
-                                        <div>
-                                            {{-- <p class="text-muted"><i class="fas fa-info-circle"></i> Seleccionar
-                                                Evaluados
-                                            </p> --}}
-                                            <label class="mb-0" for="descripcion">
-                                                <i class="fas fa-users iconos-crear"></i> Público objetivo <small
-                                                    class="text-danger">*</small>
-                                            </label>
-                                            <select
-                                                class="mt-2 form-control {{ $errors->has('evaluados_objetivo') ? 'is-invalid' : '' }}"
-                                                wire:model="evaluados_objetivo" id="evaluados_objetivo"
-                                                name="evaluados_objetivo" wire:change="habilitarSelectAlternativo()">
-                                                <option value="" selected>-- Seleciona una opción --</option>
-                                                <option value="all">Toda la empresa</option>
-                                                <option value="area">Por areas</option>
-                                                @foreach ($grupos_evaluados as $grupo)
-                                                    <option value="{{ $grupo->id }}">{{ $grupo->nombre }} - Grupo
-                                                    </option>
-                                                @endforeach
-                                                <option value="manual">Manualmente</option>
-                                            </select>
-                                            @if ($errors->has('evaluados_objetivo'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('evaluados_objetivo') }}
-                                                </div>
-                                            @endif
-                                            <span class="errors evaluados_manual_error text-danger"></span>
-                                            <small id="evaluadosQuestionHelp" class="form-text text-muted">Selecciona a
-                                                quien(es)
-                                                irá dirigida la
-                                                evaluación</small>
-                                            @if ($habilitarSelectAreas)
+                                    <div class="col-12">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-9">
+                                                {{-- <p class="text-muted"><i class="fas fa-info-circle"></i> Seleccionar
+                                                    Evaluados
+                                                </p> --}}
+                                                <label class="mb-0" for="descripcion">
+                                                    <i class="fas fa-users iconos-crear"></i> Público objetivo <small
+                                                        class="text-danger">*</small>
+                                                </label>
                                                 <select
-                                                    class="mt-3 form-control {{ $errors->has('by_area') ? 'is-invalid' : '' }}"
-                                                    id="by_area" wire:model.defer="by_area">
+                                                    class="mt-2 form-control {{ $errors->has('evaluados_objetivo') ? 'is-invalid' : '' }}"
+                                                    wire:model="evaluados_objetivo" id="evaluados_objetivo"
+                                                    name="evaluados_objetivo"
+                                                    wire:change="habilitarSelectAlternativo()">
                                                     <option value="" selected>-- Seleciona una opción --</option>
-                                                    @foreach ($areas as $area)
-                                                        <option value="{{ $area->id }}">{{ $area->area }}
+                                                    <option value="all">Toda la empresa</option>
+                                                    <option value="area">Por Área</option>
+                                                    @foreach ($grupos_evaluados as $grupo)
+                                                        <option value="{{ $grupo->id }}">{{ $grupo->nombre }} -
+                                                            Grupo
                                                         </option>
                                                     @endforeach
+                                                    <option value="manual">Manualmente</option>
                                                 </select>
-                                                @if ($errors->has('by_area'))
+                                                @if ($errors->has('evaluados_objetivo'))
                                                     <div class="invalid-feedback">
-                                                        {{ $errors->first('by_area') }}
+                                                        {{ $errors->first('evaluados_objetivo') }}
                                                     </div>
                                                 @endif
-                                            @endif
-                                            @if ($habilitarSelectManual)
-                                                <select
-                                                    class="mt-3 form-control {{ $errors->has('by_manual') ? 'is-invalid' : '' }}"
-                                                    multiple id="by_manual" wire:model.defer="by_manual">
-                                                    @foreach ($empleados as $empleado)
-                                                        <option value="{{ $empleado->id }}">{{ $empleado->name }}
+                                                <span class="errors evaluados_manual_error text-danger"></span>
+                                                <small id="evaluadosQuestionHelp"
+                                                    class="form-text text-muted">Selecciona a
+                                                    quien(es)
+                                                    va dirigida la
+                                                    evaluación</small>
+                                                @if ($habilitarSelectAreas)
+                                                    <select
+                                                        class="mt-3 form-control {{ $errors->has('by_area') ? 'is-invalid' : '' }}"
+                                                        id="by_area" wire:model.defer="by_area">
+                                                        <option value="" selected>-- Seleciona el área a evaluar --
                                                         </option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('by_manual'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('by_manual') }}
-                                                    </div>
+                                                        @foreach ($areas as $area)
+                                                            <option value="{{ $area->id }}">{{ $area->area }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('by_area'))
+                                                        <div class="invalid-feedback">
+                                                            {{ $errors->first('by_area') }}
+                                                        </div>
+                                                    @endif
                                                 @endif
-                                                <small class="form-text text-muted">No se creará un nuevo grupo,
-                                                    recomendado
-                                                    para
-                                                    selecciones de una sola vez</small>
-                                            @endif
+                                                @if ($habilitarSelectManual)
+                                                    <label class="m-0 mt-2" for="">Selecciona a los empleados a
+                                                        evaluar</label>
+                                                    <select
+                                                        class="mt-3 form-control {{ $errors->has('by_manual') ? 'is-invalid' : '' }}"
+                                                        multiple id="by_manual" wire:model.defer="by_manual">
+                                                        @foreach ($empleados as $empleado)
+                                                            <option value="{{ $empleado->id }}">
+                                                                {{ $empleado->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('by_manual'))
+                                                        <div class="invalid-feedback">
+                                                            {{ $errors->first('by_manual') }}
+                                                        </div>
+                                                    @endif
+                                                    <small class="form-text text-muted">Importante: No se creará un
+                                                        nuevo grupo,esta opción es recomendada para selecciones de una
+                                                        sola vez</small>
+                                                @endif
+                                            </div>
+                                            <div class="col-3" style="margin-top: 0;">
+                                                @livewire('ev360-grupo-evaluados-create')
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-3" style="margin-top: 0;">
-                                        @livewire('ev360-grupo-evaluados-create')
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -757,9 +782,9 @@
                         <div>
                             <ul id="progressbar">
                                 <li id="createEvaluacion"><strong>Configuración</strong></li>
-                                <li id="publicoObjetivo"><strong>Publico Objetivo</strong></li>
+                                <li id="publicoObjetivo"><strong>Público Objetivo</strong></li>
                                 <li class="active" id="evaluadores"><strong>Evaluadores</strong></li>
-                                <li id="periodosCircle"><strong>Periodos</strong></li>
+                                <li id="periodosCircle"><strong>Períodos</strong></li>
                                 <li id="finalizarEvaluacion"><strong>Finalizar</strong></li>
                             </ul>
                             <div class="progress">
@@ -781,9 +806,8 @@
                                                 style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                                 Instrucciones</p>
                                             <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
-                                                Ahora ingresa el peso correspondiente de cada evaluador, por defecto
-                                                se encuentra en 25,
-                                                pero puedes modificarlo según los valores que requieras.
+                                                Ahora define el peso porcentual de cada evaluador, repartiendo el 100%
+                                                entre todos ellos.
                                             </p>
                                         </div>
                                     </div>
@@ -936,9 +960,9 @@
                         <div>
                             <ul id="progressbar">
                                 <li id="createEvaluacion"><strong>Configuración</strong></li>
-                                <li id="publicoObjetivo"><strong>Publico Objetivo</strong></li>
+                                <li id="publicoObjetivo"><strong>Público Objetivo</strong></li>
                                 <li id="evaluadores"><strong>Evaluadores</strong></li>
-                                <li class="active" id="periodosCircle"><strong>Periodos</strong></li>
+                                <li class="active" id="periodosCircle"><strong>Períodos</strong></li>
                                 <li id="finalizarEvaluacion"><strong>Finalizar</strong></li>
                             </ul>
                             <div class="progress">
@@ -965,7 +989,9 @@
                                                 style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                                 Instrucciones</p>
                                             <p class="m-0" style="font-size: 14px; color:#1E3A8A ">
-                                                Por último, define los periodos que requieras para esta evaluación
+                                                Por último, define el número de veces que se aplicará la evaluación y el
+                                                periodo
+                                                en el que se ejecutará.
                                             </p>
                                         </div>
                                     </div>
@@ -983,7 +1009,7 @@
                                                 value="{{ $periodo['fecha_inicio'] }}">
                                         </div>
                                         <div class="pl-0 col-3">
-                                            <p class="m-0 text-muted">Fecha Finalización</p>
+                                            <p class="m-0 text-muted">Fecha Fin</p>
                                             <input class="form-control" type="date"
                                                 wire:model.defer="periodos.{{ $idx }}.fecha_fin"
                                                 value="{{ $periodo['fecha_fin'] }}">
@@ -1015,9 +1041,9 @@
                         <div>
                             <ul id="progressbar">
                                 <li id="createEvaluacion"><strong>Configuración</strong></li>
-                                <li id="publicoObjetivo"><strong>Publico Objetivo</strong></li>
+                                <li id="publicoObjetivo"><strong>Público Objetivo</strong></li>
                                 <li id="evaluadores"><strong>Evaluadores</strong></li>
-                                <li id="periodosCircle"><strong>Periodos</strong></li>
+                                <li id="periodosCircle"><strong>Períodos</strong></li>
                                 <li class="active" id="finalizarEvaluacion"><strong>Finalizar</strong></li>
                             </ul>
                             <div class="progress">
@@ -1034,7 +1060,8 @@
                                 <div class="row justify-content-center">
                                     <div class="text-center col-7">
                                         <h5 class="text-center purple-text">
-                                            Su evaluación ha sido creada satisfactoriamente :)
+                                            Su evaluación ha sido creada satisfactoriamente, los evaluadores recibirán
+                                            una notificación en el sistema y por correo eléctronico.
                                         </h5>
                                     </div>
                                 </div>
@@ -1081,6 +1108,53 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            $("#pesoGeneralObjetivos").keydown(function(event) {
+
+                //prevent using shift with numbers
+                if (event.shiftKey == true) {
+                    event.preventDefault();
+                }
+
+                if (!((event.keyCode == 190) || (event.keyCode >= 48 && event.keyCode <= 57) || (event
+                            .keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event
+                        .keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46
+                    )) {
+                    event.preventDefault();
+
+                }
+            });
+
+            $("#pesoGeneralObjetivos").keyup(function(event) {
+
+                var number = parseFloat($(this).val());
+                if (number > 100 || number == 0) {
+                    $(this).val("");
+                }
+            });
+            $("#pesoGeneralCompetencias").keydown(function(event) {
+
+                //prevent using shift with numbers
+                if (event.shiftKey == true) {
+                    event.preventDefault();
+                }
+
+                if (!((event.keyCode == 190) || (event.keyCode >= 48 && event.keyCode <= 57) || (event
+                            .keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event
+                        .keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46
+                    )) {
+                    event.preventDefault();
+
+                }
+            });
+
+            $("#pesoGeneralCompetencias").keyup(function(event) {
+
+                var number = parseFloat($(this).val());
+                if (number > 100 || number == 0) {
+                    $(this).val("");
+                }
+            });
+
             window.initSelect2 = () => {
                 $('#by_manual').select2({
                     'theme': 'bootstrap4'

@@ -10,20 +10,28 @@
     </style>
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong>Asignar competencias al puesto</strong></h3>
+            <h3 class="mb-1 text-center text-white"><strong>Competencias para: {{ $puesto->puesto }}</strong>
+            </h3>
         </div>
         <div class="card-body">
-            <h3>Puesto: {{ $puesto->puesto }}</h3>
+            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                Asignar Competencias
+            </div>
             <form id="formCompetenciaCreate" method="POST"
                 action="{{ route('admin.ev360-competencias-por-puesto.store', $puesto) }}" class="mt-3 row">
                 @csrf
                 @include('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.competencias.form')
             </form>
-            <button id="asignarBtn" style="float: right;" class="mb-2 btn btn-sm btn-outline-success"><i
-                    class="mr-2 fas fa-sync"></i>Asignar</button>
+            {{-- <div class="d-flex justify-content-end">
+                <button id="asignarBtn" class="mb-2 btn btn-sm btn-outline-success"><i
+                        class="mr-2 fas fa-sync"></i>Asignar</button>
+            </div> --}}
             <span id="asignando_competencia" class="d-none"><i class=" fas fa-circle-notch fa-spin"></i>
                 Asignando competencia</span>
-            <div class="card-body datatable-fix">
+            <div class="text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                Competencias Asignadas
+            </div>
+            <div class="datatable-fix">
                 <table class="table table-bordered w-100 tblCompetenciasPorPuesto">
                     <thead class="thead-dark">
                         <tr>
@@ -42,7 +50,7 @@
                 </table>
             </div>
             <div class="d-flex justify-content-end w-100">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Salir</a>
+                <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}" class="btn_cancelar">Regresar</a>
                 {{-- <button type="submit" class="btn btn-danger">Guardar</button> --}}
             </div>
         </div>
@@ -94,8 +102,10 @@
 
                 columns: [{
                     data: 'competencia.nombre',
+                    width: '70%'
                 }, {
                     data: 'nivel_esperado',
+                    width: '15%'
                 }, {
                     data: 'id',
                     render: function(data, type, row, meta) {
@@ -112,7 +122,8 @@
                             </div>
                         `;
                         return botones;
-                    }
+                    },
+                    width: '15%'
                 }],
                 language: {
                     decimal: "",

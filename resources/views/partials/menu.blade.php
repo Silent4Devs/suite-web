@@ -64,7 +64,7 @@
                                 <i class="fas fa-bullseye iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca" style="margin-left:5px;"> Organización</font>
+                                <font class="letra_blanca" style="margin-left:10px;"> Organización</font>
                             </a>
                         </li>
                     @endcan
@@ -75,7 +75,7 @@
                                 <i class="fas fa-map-marked-alt iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca"> Sedes</font>
+                                <font class="letra_blanca" style="margin-left:10px;"> Sedes</font>
                             </a>
                         </li>
                     @endcan
@@ -89,17 +89,7 @@
                                 <i class="fab fa-adn iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca"> {{ trans('cruds.area.title') }} </font>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('organigrama_organizacion_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.organigrama.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/organigrama') || request()->is('admin/organigrama/*') ? 'c-active' : '' }}">
-                                <i class="fas fa-users iconos_menu letra_blanca">
-                                </i>
-                                <font class="letra_blanca"> Organigrama </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.area.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -108,7 +98,7 @@
                             <a href="{{ route('admin.procesos.mapa') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/procesos/mapa_procesos') || request()->is('admin/procesos/mapa-procesos') ? 'c-active' : '' }}">
                                 <i class="fas fa-dice-d20 iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> Mapa de procesos </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> Mapa de procesos </font>
                             </a>
                         </li>
                     @endcan
@@ -148,7 +138,7 @@
                             <a href="{{ route('admin.documentos.publicados') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/publicados') || request()->is('admin/publicados*') ? 'active' : '' }}">
                                 <i class="fas fa-copy iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> Lista de Documentos </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> Lista de Documentos </font>
                             </a>
                         </li>
                     @endcan
@@ -157,7 +147,7 @@
                             <a href="{{ route('admin.carpeta.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
                                 <i class="fas fa-folder-open iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> Documentos Publicados </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> Documentos Publicados </font>
                             </a>
                         </li>
                     @endcan
@@ -252,7 +242,7 @@
                         <i class="fas fa-fire iconos_menu letra_blanca">
 
                         </i>
-                        <font class="letra_blanca" style="margin-left:5px;"> Amenazas</font>
+                        <font class="letra_blanca" style="margin-left:11px;"> Amenazas</font>
                     </a>
                 </li>
 
@@ -262,7 +252,7 @@
                         <i class="fas fa-shield-alt iconos_menu letra_blanca">
 
                         </i>
-                        <font class="letra_blanca"> Vulnerabilidades</font>
+                        <font class="letra_blanca" style="margin-left:10px;"> Vulnerabilidades</font>
                     </a>
                 </li>
 
@@ -276,7 +266,7 @@
                             <i class="fas fa-table iconos_menu letra_blanca">
 
                             </i>
-                            <font class="letra_blanca">Matriz de Riesgos</font>
+                            <font class="letra_blanca" style="margin-left:10px;">Matriz de Riesgos</font>
                         </a>
                     </li>
                 @endcan
@@ -316,19 +306,72 @@
         </li> --}}
 
         <li class="c-sidebar-nav-title">
-            <font class="letra_blanca">Recursos Humanos</font>
+            <font class="letra_blanca">Gestión de talento</font>
         </li>
-        <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/*') ? 'active' : '' }}"
-                href="{{ route('admin.rh-evaluacion360.index') }}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                    class="bi bi-file-earmark-person iconos_menu letra_blanca" viewBox="0 0 16 16">
-                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                    <path
-                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z" />
-                </svg>
-                <font class="letra_blanca"> Evaluación 360 Grados </font>
+        <li class="c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                <i class="fas fa-users iconos_menu letra_blanca">
+                </i>
+                <font class="letra_blanca"> Recursos Humanos </font>
             </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                @can('configuracion_empleados_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.empleados.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/empleados') || request()->is('admin/empleados/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-user iconos_menu letra_blanca">
+
+                            </i>
+                            <font class="letra_blanca" style="margin-left:10px;"> Empleados </font>
+                        </a>
+                    </li>
+                @endcan
+                @can('organigrama_organizacion_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.organigrama.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/organigrama') || request()->is('admin/organigrama/*') ? 'c-active' : '' }}">
+                            <i class="fas fa-sitemap iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca" style="margin-left:10px;"> Organigrama </font>
+                        </a>
+                    </li>
+                @endcan
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                        <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca " style="margin-left:10px;"> Capacitaciones </font>
+                    </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        @can('configuracion_macroproceso_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ asset('admin/categoria-capacitacion') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
+                                    <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca"
+                                        style="font-size:12pt;"></i>
+                                    <font class="letra_blanca" style="margin-left:10px;"> Crear categorías</font>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('configuracion_procesos_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ asset('admin/recursos') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
+                                    <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
+                                        style="font-size:12pt;"></i>
+                                    <font class="letra_blanca" style="margin-left:10px;"> Crear capacitaciones</font>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/*') ? 'active' : '' }}"
+                        href="{{ route('admin.rh-evaluacion360.index') }}">
+                        <img src="{{ asset('img/360-degrees1.png') }}" alt="icono360"
+                            style="width: 26px;margin-right: 14px;margin-left: 3px;">
+                        <font class="letra_blanca" style="margin-left:10px;"> Evaluación 360° </font>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li class="c-sidebar-nav-title">
@@ -364,7 +407,7 @@
                             class="c-sidebar-nav-dropdown {{ request()->is('admin/carpeta*') ? 'c-show' : '' }} {{ request()->is('admin/crear-documentos*') ? 'c-show' : '' }}">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
                                 <i class="fas fa-folder iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> Documentos </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> Documentos </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('documentos_create')
@@ -372,7 +415,7 @@
                                         <a href="{{ route('admin.documentos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/crear-documentos') || request()->is('admin/crear-documentos*') ? 'active' : '' }}">
                                             <i class="fas fa-folder-plus iconos_menu letra_blanca"></i>
-                                            <font class="letra_blanca"> Crear Documentos </font>
+                                            <font class="letra_blanca" style="margin-left:10px;"> Crear Documentos </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -381,7 +424,7 @@
                                         <a href="{{ route('admin.carpeta.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/carpeta') || request()->is('admin/carpeta/*') ? 'active' : '' }}">
                                             <i class="fas fa-folder-open iconos_menu letra_blanca"></i>
-                                            <font class="letra_blanca"> Gestor Documental </font>
+                                            <font class="letra_blanca" style="margin-left:10px;"> Gestor Documental </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -395,7 +438,7 @@
                                 <i class="fas fa-map-marked-alt iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca">Sedes</font>
+                                <font class="letra_blanca" style="margin-left:10px;">Sedes</font>
                             </a>
                         </li>
                     @endcan
@@ -403,7 +446,7 @@
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
                                 <i class="fas fa-puzzle-piece iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca "> Áreas </font>
+                                <font class="letra_blanca " style="margin-left:10px;"> Áreas </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('configuracion_grupoarea_create')
@@ -411,7 +454,7 @@
                                         <a href="{{ route('admin.grupoarea.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/grupoarea') || request()->is('admin/grupoarea/*') ? 'active' : '' }}">
                                             <i class="ml-1 fas fa-cubes iconos_menu letra_blanca"></i>
-                                            <font class="letra_blanca"> Crear Grupo </font>
+                                            <font class="letra_blanca" style="margin-left:10px;"> Crear Grupo </font>
                                         </a>
                                     </li>
                                 @endcan
@@ -423,28 +466,18 @@
                                             <i class="ml-1 fab fa-adn iconos_menu letra_blanca">
 
                                             </i>
-                                            <font class="letra_blanca"> Crear Áreas </font>
+                                            <font class="letra_blanca" style="margin-left:10px;"> Crear Áreas </font>
                                         </a>
                                     </li>
                                 @endcan
                             </ul>
                         </li>
                     @endcan
-                    @can('configuracion_empleados_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.empleados.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/empleados') || request()->is('admin/empleados/*') ? 'active' : '' }}">
-                                <i class="fa-fw fas fa-user iconos_menu letra_blanca">
 
-                                </i>
-                                <font class="letra_blanca"> Empleados </font>
-                            </a>
-                        </li>
-                    @endcan
                     <li class="c-sidebar-nav-dropdown">
                         <a class="c-sidebar-nav-dropdown-toggle" href="#">
                             <i class="fa-fw fas fa-laptop iconos_menu letra_blanca"></i>
-                            <font class="letra_blanca "> Activos </font>
+                            <font class="letra_blanca " style="margin-left:10px;"> Activos </font>
                         </a>
                         <ul class="c-sidebar-nav-dropdown-items">
                             @can('configuracion_tipoactivo_access')
@@ -453,7 +486,7 @@
                                         class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
                                         <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca"
                                             style="font-size:13pt;"></i>
-                                        <font class="letra_blanca"> Categorias</font>
+                                        <font class="letra_blanca" style="margin-left:10px;"> Categorias</font>
                                     </a>
                                 </li>
                             @endcan
@@ -462,7 +495,7 @@
                                     <a href="{{ route('admin.activos.index') }}"
                                         class="c-sidebar-nav-link {{ request()->is('admin/activos') || request()->is('admin/activos/*') ? 'active' : '' }}">
                                         <i class="ml-2 fas fa-th-list iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                        <font class="letra_blanca"> Inventario</font>
+                                        <font class="letra_blanca" style="margin-left:10px;"> Inventario</font>
                                     </a>
                                 </li>
                             @endcan
@@ -472,7 +505,7 @@
                         <li class="c-sidebar-nav-dropdown">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
                                 <i class="fas fa-dice-d20 iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca "> Procesos </font>
+                                <font class="letra_blanca " style="margin-left:10px;"> Procesos </font>
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
                                 @can('configuracion_macroproceso_access')
@@ -480,7 +513,7 @@
                                         <a href="{{ route('admin.macroprocesos.index') }}"
                                             class="c-sidebar-nav-link {{ request()->is('admin/tipoactivos') || request()->is('admin/tipoactivos/*') ? 'active' : '' }}">
                                             <i class="ml-2 fas fa-th iconos_menu letra_blanca" style="font-size:12pt;"></i>
-                                            <font class="letra_blanca"> Macroprocesos</font>
+                                            <font class="letra_blanca" style="margin-left:10px;"> Macroprocesos</font>
                                         </a>
                                     </li>
                                 @endcan
@@ -490,7 +523,7 @@
                                             class="c-sidebar-nav-link {{ request()->is('admin/procesos') || request()->is('admin/procesos/*') ? 'active' : '' }}">
                                             <i class="ml-2 fas fa-project-diagram iconos_menu letra_blanca"
                                                 style="font-size:12pt;"></i>
-                                            <font class="letra_blanca"> Procesos</font>
+                                            <font class="letra_blanca" style="margin-left:10px;"> Procesos</font>
                                         </a>
                                     </li>
                                 @endcan
@@ -501,7 +534,7 @@
                     <li class="c-sidebar-nav-dropdown">
                         <a class="c-sidebar-nav-dropdown-toggle" href="#">
                             <i class="fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
-                            <font class="letra_blanca "> Conocimientos </font>
+                            <font class="letra_blanca " style="margin-left:10px;"> Conocimientos </font>
                         </a>
                         <ul class="c-sidebar-nav-dropdown-items">
                             @can('configuracion_macroproceso_access')
@@ -510,7 +543,7 @@
                                         class="c-sidebar-nav-link {{ request()->is('admin/categoria-capacitacion') || request()->is('admin/categoria-capacitacion/*') ? 'active' : '' }}">
                                         <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca"
                                             style="font-size:12pt;"></i>
-                                        <font class="letra_blanca"> Crear categorías</font>
+                                        <font class="letra_blanca" style="margin-left:10px;"> Crear categorías</font>
                                     </a>
                                 </li>
                             @endcan
@@ -520,7 +553,7 @@
                                         class="c-sidebar-nav-link {{ request()->is('admin/recursos') || request()->is('admin/recursos/*') ? 'active' : '' }}">
                                         <i class="ml-2 fas fa-graduation-cap iconos_menu letra_blanca"
                                             style="font-size:12pt;"></i>
-                                        <font class="letra_blanca"> Crear conocimientos</font>
+                                        <font class="letra_blanca" style="margin-left:10px;"> Crear conocimientos</font>
                                     </a>
                                 </li>
                             @endcan
@@ -532,7 +565,7 @@
                             class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*/edit') || request()->is('admin/sedes/create') ? 'active' : '' }}">
                             <i class="ml-2 fas fa-file iconos_menu letra_blanca"></i>
 
-                            <font class="letra_blanca">Controles</font>
+                            <font class="letra_blanca" style="margin-left:10px;">Controles</font>
                         </a>
                     </li>
                     @endcan
@@ -573,7 +606,7 @@
                             <a href="{{ route('admin.roles.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-briefcase iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> {{ trans('cruds.role.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.role.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -582,7 +615,7 @@
                             <a href="{{ route('admin.users.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-user iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> {{ trans('cruds.user.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.user.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -600,7 +633,7 @@
                             <a href="{{ route('admin.audit-logs.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/audit-logs') || request()->is('admin/audit-logs/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-file-alt iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca"> {{ trans('cruds.auditLog.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:11px;"> {{ trans('cruds.auditLog.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -609,7 +642,7 @@
                             <a href="{{ route('admin.puestos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/puestos') || request()->is('admin/puestos/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-user-md iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca">{{ trans('cruds.puesto.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;">{{ trans('cruds.puesto.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -619,7 +652,7 @@
                             class="c-sidebar-nav-link {{ request()->is('admin/perfiles') || request()->is('admin/perfiles/*') || request()->is('admin/perfiles/create') ? 'active' : '' }}">
                             <i class="fas fa-briefcase iconos_menu letra_blanca"></i>
 
-                            <font class="letra_blanca">Perfiles</font>
+                            <font class="letra_blanca" style="margin-left:10px;">Perfiles</font>
                         </a>
                     </li>
                     @endcan
@@ -630,7 +663,7 @@
                                 <i class="fa-fw fas fa-bell iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca"> {{ trans('cruds.userAlert.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.userAlert.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -641,7 +674,7 @@
                                 <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca"> {{ trans('cruds.enlacesEjecutar.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.enlacesEjecutar.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -652,7 +685,7 @@
                                 <i class="fa-fw fas fa-users iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca"> {{ trans('cruds.team.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.team.title') }} </font>
                             </a>
                         </li>
                     @endcan

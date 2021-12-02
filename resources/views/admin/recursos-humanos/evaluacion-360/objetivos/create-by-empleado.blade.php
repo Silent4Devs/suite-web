@@ -1,21 +1,85 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        .lds-facebook {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
 
+        .lds-facebook div {
+            display: inline-block;
+            position: absolute;
+            left: 8px;
+            width: 16px;
+            background: rgb(24, 24, 24);
+            animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+        }
+
+        .lds-facebook div:nth-child(1) {
+            left: 8px;
+            animation-delay: -0.24s;
+        }
+
+        .lds-facebook div:nth-child(2) {
+            left: 32px;
+            animation-delay: -0.12s;
+        }
+
+        .lds-facebook div:nth-child(3) {
+            left: 56px;
+            animation-delay: 0;
+        }
+
+        @keyframes lds-facebook {
+            0% {
+                top: 8px;
+                height: 64px;
+            }
+
+            50%,
+            100% {
+                top: 24px;
+                height: 32px;
+            }
+        }
+
+        .display-almacenando {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            margin-left: 0px;
+            background: #0000000d;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .display-almacenando h1 {
+            font-size: 50px;
+        }
+
+        .display-almacenando p {
+            font-size: 30px;
+        }
+
+    </style>
     {{ Breadcrumbs::render('EV360-Objetivos-Create', $empleado) }}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Asignar </strong> Objetivos </h3>
+            <h3 class="mb-1 text-center text-white"><strong> Asignar </strong> Objetivos Estratégicos </h3>
         </div>
         <div class="card-body">
             <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
                 enctype="multipart/form-data" class="mt-3 row">
                 @csrf
-                @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado')
+                @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado',['editar'=>false])
                 <div class="col-12">
                     <div class="d-flex justify-content-end w-100">
-                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                        <button type="submit" class="btn btn-danger ml-2">Guardar</button>
+                        <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
                     </div>
                 </div>
             </form>
@@ -35,14 +99,26 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formConductaCreate" action="{{ route('admin.ev360-conductas.store') }}" method="post">
-                        @include('admin.recursos-humanos.evaluacion-360.conductas._form')
+                    <form id="formObjetivoEdit" method="post" enctype="multipart/form-data" class="mt-3 row">
+                        @method('PATCH')
+                        @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado',['editar'=>true])
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCancelarConducta" class="btn_cancelar"
+                    <button type="button" id="btnCancelarEditObjetivo" class="btn_cancelar"
                         data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="btnGuardarConducta" class="btn btn-danger">Guardar</button>
+                    <button type="button" id="btnActualizarObjetivo" class="btn btn-danger">Guardar</button>
+                </div>
+                <div class="display-almacenando row" id="displayAlmacenandoUniversal" style="display: none">
+                    <div class="col-12">
+                        <h1>
+                            <div class="lds-facebook">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </h1>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,7 +128,7 @@
 @section('scripts')
     <script type="text/javascript">
         $(function() {
-            $('.form-control-file').on('change', function(e) {
+            $('#foto').on('change', function(e) {
                 let inputFile = e.currentTarget;
                 console.log('si')
                 $("#texto-imagen").text(inputFile.files[0].name);
@@ -61,6 +137,28 @@
                 reader.readAsDataURL(inputFile.files[0]);
                 reader.onload = function(e) {
                     document.getElementById('uploadPreview').src = e.target.result;
+                };
+            });
+            // $('#fotoEdit').on('change', function(e) {
+            //     let inputFile = e.currentTarget;
+            //     console.log('No')
+            //     $("#texto-imagenEdit").text(inputFile.files[0].name);
+            //     // Imagen previa
+            //     var reader = new FileReader();
+            //     reader.readAsDataURL(inputFile.files[0]);
+            //     reader.onload = function(e) {
+            //         document.querySelector('#uploadPreviewEdit').src = e.target.result;
+            //     };
+            // });
+            $('#fotoPerspectiva').on('change', function(e) {
+                let inputFile = e.currentTarget;
+                console.log('No')
+                $("#texto-imagen-perspectiva").text(inputFile.files[0].name);
+                // Imagen previa
+                var reader = new FileReader();
+                reader.readAsDataURL(inputFile.files[0]);
+                reader.onload = function(e) {
+                    document.querySelector('#uploadPreviewPerspectiva').src = e.target.result;
                 };
             });
 
@@ -74,38 +172,35 @@
                 retrieve: true,
                 ajax: "{{ route('admin.ev360-objetivos-empleado.create', $empleado->id) }}",
                 columns: [{
-                    data: 'objetivo.nombre'
-                }, {
                     data: 'objetivo.tipo.nombre',
+                }, {
+                    data: 'objetivo.nombre'
                 }, {
                     data: 'objetivo.KPI',
                 }, {
-                    data: 'objetivo.meta',
-                }, {
-                    data: 'objetivo.metrica.definicion',
+                    data: 'objetivo',
+                    render: function(data, type, row, meta) {
+                        return data.meta + ' ' + data.metrica.definicion;
+                    }
                 }, {
                     data: 'objetivo.descripcion_meta',
-                }, {
-                    data: 'objetivo.imagen_ruta',
-                    render: function(data, type, row, meta) {
-                        console.log(row);
-                        return `<img src="${data}" alt="${row.objetivo.nombre}" title="${row.objetivo.nombre}" style="clip-path:circle(15px at 50% 50%); height:30px;">`;
-                    }
                 }, {
                     data: 'id',
                     render: function(data, type, row, meta) {
                         let urlBtnEditar =
-                            `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}/edit`;
+                            `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}/editByEmpleado`;
                         let urlBtnActualizar =
-                            `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}`;
+                            `/admin/recursos-humanos/evaluacion-360/objetivos/${row.objetivo_id}/empleado`;
                         let urlBtnEliminar =
                             `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}`;
+                        let urlShow =
+                            `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/lista`;
                         let botones = `
                             <div class="btn-group">
-                                <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button> 
                             </div>
-                        `;
+                                `;
+                        // <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
                         return botones;
                     }
                 }],
@@ -169,17 +264,28 @@
                         toastr.info(
                             'Recuperando información de la conducta, espere unos instantes...');
                     },
-                    success: function({
-                        conducta
-                    }) {
-                        CKEDITOR.instances.definicion.setData(conducta.definicion);
-                        document.getElementById('nivelEditCreate').innerHTML =
-                            `<i class="fas fa-info-circle mr-1"></i>Nivel Actual: <strong>${ conducta.ponderacion }</strong>`;
+                    success: function(response) {
+                        document.querySelector('#formObjetivoEdit input[name="nombre"]').value =
+                            response.nombre;
+                        document.querySelector('#formObjetivoEdit input[name="KPI"]').value =
+                            response.KPI;
+                        document.querySelector('#formObjetivoEdit input[name="meta"]').value =
+                            response.meta;
+                        document.querySelector(
+                                '#formObjetivoEdit input[name="descripcion_meta"]').value = response
+                            .descripcion_meta;
+                        document.querySelector('#formObjetivoEdit .imagen-preview').src =
+                            response.imagen_ruta;
+
+                        $('#formObjetivoEdit #tipo_id').val(response.tipo_id).trigger('change');
+                        $('#formObjetivoEdit #metrica_id').val(response.metrica_id).trigger(
+                            'change');
+
                         $('#objetivoModal').modal('show');
-                        $('#formConductaCreate').removeAttr('action');
-                        $('#formConductaCreate').removeAttr('method');
-                        $('#formConductaCreate').attr('action', urlActualizar);
-                        $('#formConductaCreate').attr('method', 'PATCH');
+                        $('#formObjetivoEdit').removeAttr('action');
+                        $('#formObjetivoEdit').removeAttr('method');
+                        $('#formObjetivoEdit').attr('action', urlActualizar);
+                        $('#formObjetivoEdit').attr('method', 'PATCH');
                     },
                     error: function(request, status, error) {
                         if (error != 'Unprocessable Entity') {
@@ -196,6 +302,67 @@
                     }
                 });
             }
+
+            document.getElementById('btnActualizarObjetivo').addEventListener('click', function(e) {
+                e.preventDefault();
+                limpiarErrores();
+                let formulario = document.getElementById('formObjetivoEdit');
+                let nombre = document.querySelector('#formObjetivoEdit input[name="nombre"]').value;
+                let kpi = document.querySelector('#formObjetivoEdit input[name="KPI"]').value;
+                let meta = document.querySelector('#formObjetivoEdit input[name="meta"]').value;
+                let descripcion = document.querySelector(
+                    '#formObjetivoEdit input[name="descripcion_meta"]').value;
+                let tipo_id = $('#formObjetivoEdit #tipo_id').val();
+                let metrica_id = $('#formObjetivoEdit #metrica_id').val();
+                let formDataEdit = new FormData();
+                formDataEdit.append('nombre', nombre);
+                formDataEdit.append('KPI', kpi);
+                formDataEdit.append('meta', meta);
+                formDataEdit.append('descripcion', descripcion);
+                formDataEdit.append('tipo_id', tipo_id);
+                formDataEdit.append('metrica_id', metrica_id);
+                // formDataEdit.append('foto', document.querySelector('#formObjetivoEdit #fotoEdit').files[0]);
+                mostrarValidando();
+                $.ajax({
+                    type: "POST",
+                    url: formulario.getAttribute('action'),
+                    data: formDataEdit,
+                    processData: false,
+                    contentType: false,
+                    dataType: "JSON",
+                    beforeSend: function() {
+                        toastr.info(
+                            'Actualizando, espere unos instantes...');
+                    },
+                    success: function(response) {
+                        ocultarValidando();
+                        limpiarErrores();
+                        $('#objetivoModal').modal('hide');
+                        toastr.success('Registro actualizado');
+                        tblObjetivos.ajax.reload();
+                        document.getElementById('fotoEdit').value = "";
+                        document.getElementById('texto-imagenEdit').innerHTML =
+                            'Subir imágen <small class="text-danger" style="font-size: 10px">(Opcional)</small>';
+                        document.getElementById('uploadPreviewEdit').src =
+                            @json(asset('img/not-available.png'))
+                    },
+                    error: function(request, status, error) {
+                        ocultarValidando();
+                        if (error != 'Unprocessable Entity') {
+                            toastr.error(
+                                'Ocurrió un error: ' + error);
+                        } else {
+                            $.each(request.responseJSON.errors, function(indexInArray,
+                                valueOfElement) {
+                                document.querySelector(
+                                        `span.${indexInArray}_error_edit`)
+                                    .innerHTML =
+                                    `<i class="mr-2 fas fa-info-circle"></i> ${valueOfElement[0]}`;
+                            });
+                        }
+                    }
+                });
+            })
 
             window.Eliminar = function(urlEliminar) {
                 Swal.fire({
@@ -239,6 +406,14 @@
             errores.forEach(element => {
                 element.innerHTML = "";
             });
+        }
+
+        function mostrarValidando() {
+            document.getElementById('displayAlmacenandoUniversal').style.display = 'grid';
+        }
+
+        function ocultarValidando() {
+            document.getElementById('displayAlmacenandoUniversal').style.display = 'none';
         }
 
         Livewire.on('tipoObjetivoStore', () => {
