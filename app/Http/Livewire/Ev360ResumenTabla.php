@@ -11,8 +11,8 @@ use App\Models\RH\ObjetivoRespuesta;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Livewire\Component;
 use Livewire\WithPagination;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Ev360ResumenTabla extends Component
 {
