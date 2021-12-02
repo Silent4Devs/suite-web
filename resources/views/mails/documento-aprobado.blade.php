@@ -111,6 +111,7 @@
                                                 <strong>se publicará</strong> el documento automáticamente.
                                             </p>
                                         </div>
+
                                     </td>
                                 </tr>
                             </table>
