@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DeclaracionAplicabilidadResponsable extends Model
 {
-	use SoftDeletes;
+	// use SoftDeletes;
 	protected $table = 'declaracion_aplicabilidad_responsables';
 
 	protected $casts = [
@@ -37,7 +37,8 @@ class DeclaracionAplicabilidadResponsable extends Model
 		'declaracion_id',
 		'empleado_id',
 		'aplica',
-		'justificacion'
+		'justificacion',
+        'notificado'
 	];
 
 	public function declaracion_aplicabilidad()

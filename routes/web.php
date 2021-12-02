@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
+Route::get('/usuario-bloqueado', 'UsuarioBloqueado@usuarioBloqueado')->name('users.usuario-bloqueado');
 
 Route::post('/revisiones/approve', 'RevisionDocumentoController@approve')->name('revisiones.approve');
 Route::post('/revisiones/reject', 'RevisionDocumentoController@reject')->name('revisiones.reject');
@@ -17,7 +18,7 @@ Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@ed
 
 Auth::routes();
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
     Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
     //Consulta de evaluación 
@@ -241,7 +242,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
 
     //Panel declaracion
+    Route::post('paneldeclaracion/responsables-quitar','PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
     Route::post('paneldeclaracion/responsables','PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
+    Route::post('paneldeclaracion/enviar-correo','PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
+    Route::post('paneldeclaracion/aprobadores-quitar','PanelDeclaracionController@quitarRelacionAprobador')->name('paneldeclaracion.aprobadores.quitar');
     Route::post('paneldeclaracion/aprobadores','PanelDeclaracionController@relacionarAprobador')->name('paneldeclaracion.aprobadores');
     Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
     Route::resource('paneldeclaracion', 'PanelDeclaracionController');
@@ -268,6 +272,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('macroprocesos', 'MacroprocesoController');
 
     // Users
+    Route::get('users/two-factor/{user}/change', 'UsersController@cambiarVerificacion')->name('users.two-factor-change');
+    Route::get('users/bloqueo/{user}/change', 'UsersController@toogleBloqueo')->name('users.toogle-bloqueo');
     Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     //Route::post('users/get', 'UsersController@getUsers')->name('users.get');
@@ -721,7 +727,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('reportes-contexto/create', 'ReporteContextoController@store')->name('reportes-contexto.store');
 });
 
-Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
     // Change password
     if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
         Route::get('password', 'ChangePasswordController@edit')->name('password.edit');

@@ -129,6 +129,25 @@
             console.log('Actualizado, response')
             }
             });
+            $(".estatus").editable({
+            dataType: 'json',
+            source: [{
+            value: '1',
+            text: 'Pendiente de aprobar'
+            },
+            {
+            value: '2',
+            text: 'Aprobada'
+            },
+            {
+            value: '3',
+            text: 'Rechazada'
+            },
+            ],
+            success: function (response, newValue) {
+            console.log('Actualizado, response')
+            }
+            });
 
 
             });

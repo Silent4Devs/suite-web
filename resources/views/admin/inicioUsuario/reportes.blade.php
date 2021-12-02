@@ -1,6 +1,8 @@
 <style type="text/css">
     .cards_reportes{
-        width: 250px;
+        overflow: hidden;
+        width: 200px;
+        height:80px;
         padding: 20px 0px;
         padding-left: 30px;
         border: 1px solid #ccc;
@@ -19,9 +21,80 @@
         color: #00abb2;
         border: 1px solid #00abb2;
     }
+
+    .cards_alto{
+        width: 200px;
+        padding: 10px 10px;
+        padding-left: 30px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: left;
+        display:inline-block;
+        margin: 10px;
+        cursor: pointer;
+        color: #888888;
+    }
+    .cards_alto i{
+        font-size: 16pt;
+        margin-right: 10px;
+    }
+    .cards_alto:hover{
+        color: #00abb2;
+        border: 1px solid #00abb2;
+    }
 </style>
 
-<div style="text-align: center;" class="mt-5">
+
+<div class="card-body datatable-fix w-100">
+    <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="row w-100">
+            <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                <div class="w-100">
+                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                </div>
+            </div>
+            <div class="col-11">
+                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá reportar cualquier situación que afecte el logro de los
+                    objetivos de la organización, el incumplimiento con las políticas internas, el código de ética y conducta o los valores establecidos en la Organización.
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-lg-6">
+            <div class="mb-3 ml-2 mr-2 bg-white rounded" style="height:300px; border:1px solid #ccc !important">
+                <h6>Deseo reportar un:</h6>
+                <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}"  class="cards_reportes">
+                    <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
+                </a>
+                <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}"  class="cards_reportes">
+                    <i class="fas fa-shield-virus"></i> Riesgo Identificado
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-6">
+
+            <div class="mb-3 ml-2 mr-2 bg-white rounded" style="height:300px; border:1px solid #ccc !important">
+                <h6>Deseo realizar un:</h6>
+                <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="cards_reportes">
+                    <i class="fas fa-frown"></i> Realizar queja
+                </a>
+                <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="cards_reportes">
+                    <i class="fas fa-hand-paper"></i> Realizar denuncia
+                </a>
+                <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
+                    <i class="fas fa-rocket"></i> Reportar mejora
+                </a>
+                <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
+                    <i class="fas fa-lightbulb"></i> Realizar sugerencia
+                </a>
+            </div>
+        </div>
+    </div>
+{{-- <div style="text-align: center;" class="mt-5">
     <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}" class="cards_reportes">
         <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
     </a>
@@ -40,4 +113,4 @@
     <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
         <i class="fas fa-lightbulb"></i> Realizar sugerencia
     </a>
-</div>
+</div> --}}
