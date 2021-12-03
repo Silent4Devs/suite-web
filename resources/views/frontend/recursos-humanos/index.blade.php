@@ -11,7 +11,7 @@
             </h3>
         </div>
         <div class="card-body">
-            <div class="caja_botones_menu">
+            {{-- <div class="caja_botones_menu">
                 <a href="#" id="contexto" data-tabs="s1" class="btn_activo tabs ventana_cerrar">
                     <div class="d-flex align-items-center justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -23,97 +23,112 @@
                         <p class="m-0">Evaluación 360 Grados</p>
                     </div>
                 </a>
-            </div>
-            <div class="caja_caja_secciones">
+            </div> --}}
+            {{-- <div class="caja_caja_secciones">
                 <div class="caja_secciones">
-                    {{-- @can('contexto_access')Cambiar Permiso --}}
-                        <section data-id="contexto" id="s1" class="caja_tab_reveldada caja">
-                            <div class="mt-5">
-                                <ul>
-                                    <li>
-                                        <a href="{{ route('ev360-competencias.index') }}">
-                                            <div style="text-transform: capitalize">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-                                                    fill="currentColor" class="bi bi-file-earmark-medical-fill"
-                                                    viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-3 2v.634l.549-.317a.5.5 0 1 1 .5.866L7 7l.549.317a.5.5 0 1 1-.5.866L6.5 7.866V8.5a.5.5 0 0 1-1 0v-.634l-.549.317a.5.5 0 1 1-.5-.866L5 7l-.549-.317a.5.5 0 0 1 .5-.866l.549.317V5.5a.5.5 0 1 1 1 0zm-2 4.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zm0 2h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z" />
-                                                </svg>
-                                                <p class="m-0 mt-2">
-                                                    Competencias
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('ev360-competencias-por-puesto.index') }}">
-                                            <div style="text-transform: capitalize">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-                                                    fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                                                    <path fill-rule="evenodd"
-                                                        d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
-                                                </svg>
-                                                <p class="m-0 mt-2">
-                                                    Competencias Por Puesto
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('ev360-objetivos.index') }}">
-                                            <div style="text-transform: capitalize">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-                                                    fill="currentColor" class="bi bi-bullseye" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                    <path
-                                                        d="M8 13A5 5 0 1 1 8 3a5 5 0 0 1 0 10zm0 1A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
-                                                    <path
-                                                        d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
-                                                    <path d="M9.5 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                                </svg>
-                                                <p class="m-0 mt-2">
-                                                    Objetivos
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('ev360-evaluaciones.index') }}">
-                                            <div style="text-transform: capitalize">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-                                                    fill="currentColor" class="bi bi-file-earmark-person-fill"
-                                                    viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z" />
-                                                </svg>
-                                                <p class="m-0 mt-2">
-                                                    Evaluaciones
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </section>
-                    {{-- @else
-                        <div class="mt-5 row" style="margin-left: -10px">
-                            <div class="mb-3 col-12">
-                                <img src="{{ asset('img/not_access.svg') }}" width="400 " />
-                            </div>
-                            <div class="col-12">
-                                <strong style="font-size:12pt">
-                                    <i class="mr-1 fas fa-info-circle"></i>
-                                    No puedes acceder al módulo de Análisis de Brechas, solicita al administrador que te
-                                    otorge dichos permisos
-                                </strong>
-                            </div>
-                        </div> --}}
-                    {{-- @endcan --}}
                 </div>
-            </div>
+            </div> --}}
+          {{--  @can('contexto_access') Cambiar Permiso --}}
+                <section data-id="contexto" id="s1" class="caja_tab_reveldada caja">
+                    <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                        <div class="row w-100">
+                            <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                <div class="w-100">
+                                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                                </div>
+                            </div>
+                            <div class="col-11">
+                                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                    Instrucciones</p>
+                                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor
+                                    ingrese a los siguientes módulos para llevar a cabo la evaluación 360°</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <ul>
+                            <li>
+                                <a href="{{ route('ev360-competencias.index') }}">
+                                    <div style="text-transform: capitalize">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                            class="bi bi-star-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                        </svg>
+                                        <p class="m-0 mt-2">
+                                            Definir Competencias
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('ev360-competencias-por-puesto.index') }}">
+                                    <div style="text-transform: capitalize">
+                                        <i class="m-0 fas fa-user-tag" style="font-size:40px"></i>
+                                        <p class="m-0 mt-2">
+                                            Competencias Por Puesto
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('ev360-objetivos.index') }}">
+                                    <div style="text-transform: capitalize">
+                                        <i class="m-0 fas fa-bullseye" style="font-size:40px;"></i>
+                                        <p class="m-0 mt-2">
+                                            Asignar
+                                            Objetivos Estratégicos
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('ev360-evaluaciones.create') }}">
+                                    <div style="text-transform: capitalize">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                            class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path
+                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd"
+                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                        </svg>
+                                        <p class="m-0 mt-2">
+                                            Crear
+                                            <br>
+                                            Evaluaciones
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('ev360-evaluaciones.index') }}">
+                                    <div style="text-transform: capitalize">
+                                        <i class="fas fa-clone"></i>
+                                        <p class="m-0 mt-2">
+                                            Evaluaciones
+                                            <br>
+                                            Creadas
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            {{-- @else --}}
+                <div class="mt-5 row" style="margin-left: -10px">
+                    <div class="mb-3 col-12">
+                        <img src="{{ asset('img/not_access.svg') }}" width="400 " />
+                    </div>
+                    <div class="col-12">
+                        <strong style="font-size:12pt">
+                            <i class="mr-1 fas fa-info-circle"></i>
+                            No puedes acceder al módulo de Análisis de Brechas, solicita al administrador que te
+                            otorge dichos permisos
+                        </strong>
+                    </div>
+                </div>
+            {{-- @endcan --}}
         </div>
     </div>
 @endsection

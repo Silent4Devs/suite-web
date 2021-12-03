@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('EV360-Competencias-Create') }}
+    {{-- {{ Breadcrumbs::render('EV360-Competencias-Create') }} --}}
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -9,12 +9,14 @@
         </div>
         <div class="card-body">
             <form id="formCompetenciaCreate" method="POST" action="{{ route('ev360-competencias.store') }}"
-                class="mt-3 row">
+                class="mt-3" enctype="multipart/form-data">
                 @csrf
                 @include('frontend.recursos-humanos.evaluacion-360.competencias._form')
-                <div class="d-flex justify-content-end w-100">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button type="submit" class="btn btn-danger">Guardar</button>
+                <div class="w-100">
+                    <div class="d-flex justify-content-end w-100">
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                        <button type="submit" class="ml-2 btn btn-danger">Guardar</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -23,6 +25,17 @@
 
 @section('scripts')
     <script type="text/javascript">
+        $('.form-control-file').on('change', function(e) {
+            let inputFile = e.currentTarget;
+            console.log('si')
+            $("#texto-imagen").text(inputFile.files[0].name);
+            // Imagen previa
+            var reader = new FileReader();
+            reader.readAsDataURL(inputFile.files[0]);
+            reader.onload = function(e) {
+                document.getElementById('uploadPreview').src = e.target.result;
+            };
+        });
         window.Conductas = function(url) {
             Swal.fire({
                 title: '¿Quieres Agregar Conductas?',
@@ -71,5 +84,30 @@
         Livewire.on('select2', () => {
             initSelect2();
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var headers = {
+                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': 'https://api.flaticon.com/v2'
+            };
+
+
+            // (async () => {
+            //     const rawResponse = await fetch('https://api.flaticon.com/v2/app/authentication', {
+            //         method: 'POST',
+            //         headers: {
+            //             'Accept': 'application/json',
+            //             'Content-Type': 'multipart/form-data'
+            //         },
+            //         body: JSON.stringify({
+            //             apikey: 'b4637afbcac328a8c4c535ccf8f67f636bad145e'
+            //         })
+            //     });
+            //     const content = await rawResponse.json();
+
+            //     console.log(content);
+            // })();
+        })
     </script>
 @endsection

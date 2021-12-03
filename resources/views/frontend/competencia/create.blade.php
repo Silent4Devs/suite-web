@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.competencia.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.competencia.create') }} --}}
 
 <div class="card mt-4">
     <div class="col-md-10 col-sm-9 py-3 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.competencia.store") }}" enctype="multipart/form-data" class="row">
+        <form method="POST" action="{{ route("competencia.store") }}" enctype="multipart/form-data" class="row">
             @csrf
             <div class="form-group col-md-6">
                 <label class="required" for="nombrecolaborador_id"><i class="fas fa-user iconos-crear"></i>{{ trans('cruds.competencium.fields.nombrecolaborador') }}</label>
@@ -64,7 +64,7 @@
 <script>
     var uploadedCertificadosMap = {}
 Dropzone.options.certificadosDropzone = {
-    url: '{{ route('admin.competencia.storeMedia') }}',
+    url: '{{ route('competencia.storeMedia') }}',
     maxFilesize: 4, // MB
     addRemoveLinks: true,
     headers: {

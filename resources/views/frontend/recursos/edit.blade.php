@@ -16,7 +16,7 @@
 
 </style>
 
-    {{ Breadcrumbs::render('frontend.recursos.create') }}
+    {{-- {{ Breadcrumbs::render('frontend.recursos.create') }} --}}
 
     <div class="card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">

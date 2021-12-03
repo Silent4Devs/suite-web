@@ -134,6 +134,7 @@ class InicioUsuarioController extends Controller
         $contador_revisiones = 0;
         $evaluaciones = new EvaluadoEvaluador;
         $mis_evaluaciones = new EvaluadoEvaluador;
+        $last_evaluacion = collect();
         $lista_evaluaciones = collect();
         if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();

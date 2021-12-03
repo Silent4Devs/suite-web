@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyCompetenciumRequest;
-use App\Http\Requests\StoreCompetenciumRequest;
-use App\Http\Requests\UpdateCompetenciumRequest;
 use App\Models\Area;
 use App\Models\Competencium;
 use App\Models\Team;
@@ -23,7 +20,7 @@ class CompetenciasController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('competencium_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Competencium::with(['nombrecolaborador', 'team'])->select(sprintf('%s.*', (new Competencium)->table));
@@ -38,10 +35,7 @@ class CompetenciasController extends Controller
                 $deleteGate = 'competencium_delete';
                 $crudRoutePart = 'competencia';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -84,14 +78,14 @@ class CompetenciasController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('competencium_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('frontend.competencia.create', compact('nombrecolaboradors'));
     }
 
-    public function store(StoreCompetenciumRequest $request)
+    public function store(Request $request)
     {
         $competencium = Competencium::create($request->all());
 
@@ -108,7 +102,7 @@ class CompetenciasController extends Controller
 
     public function edit(Competencium $competencium)
     {
-        abort_if(Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -117,7 +111,7 @@ class CompetenciasController extends Controller
         return view('frontend.competencia.edit', compact('nombrecolaboradors', 'competencium'));
     }
 
-    public function update(UpdateCompetenciumRequest $request, Competencium $competencium)
+    public function update(Request $request, Competencium $competencium)
     {
         $competencium->update($request->all());
 
@@ -142,7 +136,7 @@ class CompetenciasController extends Controller
 
     public function show(Competencium $competencium)
     {
-        abort_if(Gate::denies('competencium_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $competencium->load('nombrecolaborador', 'team');
 
@@ -151,14 +145,14 @@ class CompetenciasController extends Controller
 
     public function destroy(Competencium $competencium)
     {
-        abort_if(Gate::denies('competencium_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $competencium->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyCompetenciumRequest $request)
+    public function massDestroy(Request $request)
     {
         Competencium::whereIn('id', request('ids'))->delete();
 
@@ -167,7 +161,7 @@ class CompetenciasController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Competencium();
         $model->id = $request->input('crud_id', 0);

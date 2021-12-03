@@ -9,6 +9,21 @@
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
+            <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                            Instrucciones</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor
+                            ingrese las competencias definidas en la organización</p>
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered w-100 tblCompetencias">
                 <thead class="thead-dark">
                     <tr>
@@ -139,14 +154,17 @@
                         render: function(data, type, row, meta) {
                             let urlBtnEditar =
                                 `/recursos-humanos/evaluacion-360/competencias/${data}/edit`;
+                            let urlBtnEditarConductas =
+                                `/recursos-humanos/evaluacion-360/competencias/${data}/${'editar-conductas'}/edit`;
                             // let urlBtnEvaluacionEstatus =
-                            //     `/recursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
+                            //     `/ecursos-humanos/evaluacion-360/evaluaciones/${data}/evaluacion`;
                             let urlBtnVisualizar =
                                 `/recursos-humanos/evaluacion-360/competencias/${data}`;
                             let urlBtnEliminar =
                                 `/recursos-humanos/evaluacion-360/competencias/${data}`;
 
                             let botones = `
+                            <a class="mr-2 btn btn-sm btn-editar" title="Agregar Conductas" href="${urlBtnEditarConductas}"><i class="fas fa-chalkboard-teacher"></i></a>
                                 <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-editar" title="Visualizar" href="${urlBtnVisualizar}"><i class="fas fa-eye"></i></a>
                                 <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
@@ -158,7 +176,10 @@
                 orderCellsTop: true,
                 order: [
                     [1, 'desc']
-                ]
+                ],
+                dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
             };
             let table = $('.tblCompetencias').DataTable(dtOverrideGlobals);
         });

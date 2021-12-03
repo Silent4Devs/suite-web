@@ -13,8 +13,8 @@
                 @csrf
                 @include('frontend.recursos-humanos.evaluacion-360.objetivos._form')
                 <div class="d-flex justify-content-end w-100">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button type="submit" class="btn btn-danger">Guardar</button>
+                    <a href="{{ route('ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
+                    {{-- <button type="submit" class="btn btn-danger">Guardar</button> --}}
                 </div>
             </form>
         </div>

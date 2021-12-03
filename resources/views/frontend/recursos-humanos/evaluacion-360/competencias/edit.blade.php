@@ -11,6 +11,76 @@
         }
 
     </style>
+    <style>
+        /* The container */
+        .container-check {
+            display: block;
+            position: relative;
+            padding-left: 33px;
+            margin-bottom: 11px;
+            cursor: pointer;
+            font-size: 14px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default checkbox */
+        .container-check input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 23px;
+            width: 23px;
+            background-color: #eee;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container-check:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container-check input:checked~.checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container-check input:checked~.checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container-check .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+    </style>
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Competencia: ({{ $competencia->nombre }})
@@ -22,9 +92,13 @@
                 @csrf
                 @method('PATCH')
                 @include('frontend.recursos-humanos.evaluacion-360.competencias._formEdit')
-                <div class="d-flex justify-content-end w-100">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button type="submit" class="btn btn-danger">Guardar</button>
+                <div class="container row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end w-100">
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <button type="submit" class="ml-2 btn btn-danger">Guardar</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -34,11 +108,13 @@
         aria-labelledby="conductasModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="conductasModalLabel"><i class="fas fa-cog"></i> Conductas Esperadas
-                    </h5>
+                <div class="modal-header" style="background: #00abb2;color: white;">
+                    <h4 class="modal-title" id="conductasModalLabel"><i class="mr-1 fas fa-chalkboard-teacher"></i>
+                        Conductas
+                        Esperadas
+                    </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true" style="color: white;font-size: 28px;">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -48,7 +124,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnCancelarConducta" class="btn_cancelar"
-                        data-dismiss="modal">Descartar</button>
+                        data-dismiss="modal">Cancelar</button>
                     <button type="button" id="btnGuardarConducta" class="btn btn-danger">Guardar</button>
                 </div>
             </div>
@@ -59,6 +135,19 @@
 @section('scripts')
     <script>
         $(function() {
+            $('.form-control-file').on('change', function(e) {
+                let inputFile = e.currentTarget;
+                console.log('si')
+                $("#texto-imagen").text(inputFile.files[0].name);
+                // Imagen previa
+                var reader = new FileReader();
+                reader.readAsDataURL(inputFile.files[0]);
+                reader.onload = function(e) {
+                    document.getElementById('uploadPreview').src = e.target.result;
+                };
+            });
+
+
             let dtButtons = [];
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
@@ -71,6 +160,14 @@
                     $('#formConductaCreate').attr('method', 'POST');
                     CKEDITOR.instances.definicion.setData('');
                     $('#conductasModal').modal('show');
+                    document.getElementById('nivelEditCreate').innerHTML =
+                        `<i class="fas fa-circle-notch fa-spin mr-2"></i> Cargando...`;
+                    let ultimo_nivel = obtenerUltimoNivel(@json($competencia->id));
+                    ultimo_nivel.then(data => {
+                        document.getElementById('nivelEditCreate').innerHTML =
+                            `<i class="fas fa-info-circle mr-1"></i>Siguiente Nivel: <strong>${ data + 1 }</strong>`;
+                    });
+
                 }
             };
             dtButtons.push(btnAgregar);
@@ -100,8 +197,8 @@
                             `/recursos-humanos/evaluacion-360/conductas/${data}`;
                         let botones = `
                             <div class="btn-group">
-                                <button style="color: white;background: #4a57ff;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
-                                <button style="color: white;background: #ff4a4a;box-shadow:1px 1px 3px 0px #00000082;" class="btn btn-sm btn-eliminar" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
                             </div>
                         `;
                         return botones;
@@ -109,10 +206,31 @@
                 }],
                 order: [
                     [1, 'asc']
-                ]
+                ],
+                dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
             };
             window.table = $('.tblNiveles').DataTable(dtOverrideGlobals);
         });
+
+        async function obtenerUltimoNivel(competencia_id) {
+            let url = "{{ route('ev360-competencias.obtenerUltimoNivel') }}";
+            const rawResponse = await fetch(url, {
+                headers: {
+                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    competencia_id
+                })
+            });
+            let siguiente_nivel = await rawResponse.json();
+            return siguiente_nivel;
+        }
+
         window.Editar = function(urlEditar, urlActualizar) {
             $.ajax({
                 type: "GET",
@@ -125,6 +243,8 @@
                     conducta
                 }) {
                     CKEDITOR.instances.definicion.setData(conducta.definicion);
+                    document.getElementById('nivelEditCreate').innerHTML =
+                        `<i class="fas fa-info-circle mr-1"></i>Nivel Actual: <strong>${ conducta.ponderacion }</strong>`;
                     $('#conductasModal').modal('show');
                     $('#formConductaCreate').removeAttr('action');
                     $('#formConductaCreate').removeAttr('method');
@@ -146,6 +266,7 @@
                 }
             });
         }
+
         window.Eliminar = function(urlEliminar) {
             Swal.fire({
                 title: '¿Quieres eliminar esta conducta?',
@@ -181,6 +302,7 @@
                 }
             })
         }
+
         $(document).ready(function() {
             document.getElementById('btnGuardarConducta').addEventListener('click', function(e) {
                 e.preventDefault();
