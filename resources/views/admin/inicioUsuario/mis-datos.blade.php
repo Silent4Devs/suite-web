@@ -182,10 +182,8 @@
                         </div>
                         <div class="p-3 mt-3 card" x-data="{show:false}">
                             <h5 class="mb-0"><i class="mr-2 fas fa-users"></i>Mi Equipo
-                                @if ($last_evaluacion)
-                                    <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
-                                        class="btn btn-xs btn-light"><i class="mr-1 fas fa-link"></i>Evaluaciones</a>
-                                @endif
+                                <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
+                                    class="btn btn-xs btn-light"><i class="mr-1 fas fa-link"></i>Evaluaciones</a>
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
                             </h5>
@@ -409,9 +407,7 @@
                                         <h5 class="mb-0 d-inline-block"><i class="mr-2 fas fa-edit"></i>Mi
                                             autoevaluación
                                         </h5>
-                                        @if ($last_evaluacion)
-                                            @include('admin.inicioUsuario.info_card_evaluacion')
-                                        @endif
+                                        @include('admin.inicioUsuario.info_card_evaluacion')
                                         <hr class="hr-custom-title">
                                         <div id="evaluacionesRealizar" x-show="show" x-transition:enter.duration.500ms
                                             x-transition:leave.duration.400ms>
@@ -424,30 +420,26 @@
                                                             font-size: 13px;" aria-valuenow="25" aria-valuemin="0"
                                                             aria-valuemax="100">25%</div> --}}
                                                     @if ($last_evaluacion)
-                                                        @if ($mis_evaluaciones)
-                                                            <div class="progress" style="height: 28px;">
-                                                                <div class="progress-bar" role="progressbar"
-                                                                    style="width: {{ $mis_evaluaciones->progreso_competencias }}%;background: #00abb2;font-weight: bold;font-size: 13px;"
-                                                                    aria-valuenow="
-                                                                {{ $mis_evaluaciones->progreso_competencias }}"
-                                                                    aria-valuemin="0" aria-valuemax="100">
-                                                                    {{ $mis_evaluaciones->progreso_competencias }}%
-                                                                </div>
+                                                        <div class="progress" style="height: 28px;">
+                                                            <div class="progress-bar" role="progressbar"
+                                                                style="width: {{ $mis_evaluaciones->progreso_competencias }}%;background: #00abb2;font-weight: bold;font-size: 13px;"
+                                                                aria-valuenow="
+                                                                    {{ $mis_evaluaciones->progreso_competencias }}"
+                                                                aria-valuemin="0" aria-valuemax="100">
+                                                                {{ $mis_evaluaciones->progreso_competencias }}%
                                                             </div>
-                                                        @endif
-                                                        <div class="mt-3">
-                                                            <a class="btn btn-sm btn-light"
-                                                                href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id, 'evaluador' => auth()->user()->empleado->id]) }}"><i
-                                                                    class="mr-1 fas fa-link"
-                                                                    style="font-size:11px;"></i>
-                                                                Autoevaluarme</a>
-                                                            <a class="btn btn-sm btn-light"
-                                                                href="{{ route('admin.ev360-evaluaciones.misEvaluaciones', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id]) }}"><i
-                                                                    class="mr-1 fas fa-link"
-                                                                    style="font-size:11px;"></i>Ver
-                                                                mis Autoevaluaciones</a>
                                                         </div>
                                                     @endif
+                                                    <div class="mt-3">
+                                                        <a class="btn btn-sm btn-light"
+                                                            href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id, 'evaluador' => auth()->user()->empleado->id]) }}"><i
+                                                                class="mr-1 fas fa-link" style="font-size:11px;"></i>
+                                                            Autoevaluarme</a>
+                                                        <a class="btn btn-sm btn-light"
+                                                            href="{{ route('admin.ev360-evaluaciones.misEvaluaciones', ['evaluacion' => $last_evaluacion->id, 'evaluado' => auth()->user()->empleado->id]) }}"><i
+                                                                class="mr-1 fas fa-link" style="font-size:11px;"></i>Ver
+                                                            mis Autoevaluaciones</a>
+                                                    </div>
                                                 </div>
                                                 <div
                                                     style="width: 100%;height: 38px;position: absolute;top: 0;left: 0;background: aliceblue;z-index: 0;">
@@ -465,41 +457,38 @@
                                             realizar
                                             <div class="circle-total-evaluaciones">
                                                 <span
-                                                    style="position: absolute;top: 3px;">{{ $evaluaciones->count() }}</span>
+                                                    style="position: absolute;top: 3px;">{{ count($evaluaciones) }}</span>
                                             </div>
                                         </h5>
-                                        @if ($last_evaluacion)
-                                            @include('admin.inicioUsuario.info_card_evaluacion')
-                                        @endif
+                                        @include('admin.inicioUsuario.info_card_evaluacion')
                                         <hr class="hr-custom-title">
 
                                         <div id="evaluacionesRealizar" class="row" x-show="show"
                                             x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
-                                            @if ($evaluaciones->count())
-                                                @foreach ($evaluaciones as $evaluacion)
-                                                    <div class="col-md-6">
-                                                        <div class="card">
-                                                            <div class="card-body" style="position:relative">
-                                                                <div
-                                                                    class="text-center d-flex flex-column align-items-center">
+                                            @foreach ($evaluaciones as $evaluacion)
+                                                <div class="col-md-6">
+                                                    <div class="card">
+                                                        <div class="card-body" style="position:relative">
+                                                            <div
+                                                                class="text-center d-flex flex-column align-items-center">
 
-                                                                    <img class="img-fluid img-profile-sm"
-                                                                        style="position: relative;z-index: 1;"
-                                                                        src="{{ asset('storage/empleados/imagenes') }}/{{ $evaluacion->empleado_evaluado->avatar }}">
-                                                                    <div class="mt-3">
-                                                                        <h5 style="font-size:1vw;font-weight: bold">
-                                                                            {{ $evaluacion->empleado_evaluado->name }}
-                                                                        </h5>
-                                                                        <p class="mb-1 text-secondary">
-                                                                            {{ $evaluacion->empleado_evaluado->puesto }}
-                                                                        </p>
-                                                                    </div>
-                                                                    <div>
-                                                                        <a class="btn btn-sm btn-light"
-                                                                            href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}"><i
-                                                                                class="mr-1 fas fa-link"
-                                                                                style="font-size:11px;"></i> Evaluar</a>
-                                                                        {{-- @if ($evaluacion->empleado_evaluado->supervisor)
+                                                                <img class="img-fluid img-profile-sm"
+                                                                    style="position: relative;z-index: 1;"
+                                                                    src="{{ asset('storage/empleados/imagenes') }}/{{ $evaluacion->empleado_evaluado->avatar }}">
+                                                                <div class="mt-3">
+                                                                    <h5 style="font-size:1vw;font-weight: bold">
+                                                                        {{ $evaluacion->empleado_evaluado->name }}
+                                                                    </h5>
+                                                                    <p class="mb-1 text-secondary">
+                                                                        {{ $evaluacion->empleado_evaluado->puesto }}
+                                                                    </p>
+                                                                </div>
+                                                                <div>
+                                                                    <a class="btn btn-sm btn-light"
+                                                                        href="{{ route('admin.ev360-evaluaciones.contestarCuestionario', ['evaluacion' => $evaluacion->evaluacion, 'evaluado' => $evaluacion->empleado_evaluado, 'evaluador' => $evaluacion->evaluador]) }}"><i
+                                                                            class="mr-1 fas fa-link"
+                                                                            style="font-size:11px;"></i> Evaluar</a>
+                                                                    {{-- @if ($evaluacion->empleado_evaluado->supervisor)
                                                                         @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->supervisor->id)
                                                                             <span
                                                                                 style="position: absolute;top: 7px;z-index: 1;right: 7px;"
@@ -517,16 +506,15 @@
                                                                             </span>
                                                                         @endif
                                                                     @endif --}}
-                                                                    </div>
                                                                 </div>
-                                                                <div
-                                                                    style="width:100%;height: 80px;position: absolute;top: 0;left: 0;background: aliceblue;z-index: 0;">
-                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                style="width:100%;height: 80px;position: absolute;top: 0;left: 0;background: aliceblue;z-index: 0;">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                @endforeach
-                                            @endif
+                                                </div>
+                                            @endforeach
                                             {{-- @foreach ($evaluaciones as $evaluacion)
                                                 <small>{{ $evaluacion->empleado_evaluado->name }}
                                                     @if (auth()->user()->empleado->id == $evaluacion->empleado_evaluado->id)
