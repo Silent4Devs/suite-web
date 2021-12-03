@@ -58,6 +58,13 @@ class Organizacion extends Model
         'team_id',
         'antecedentes',
         'logotipo',
+        'razon_social',
+        'rfc',
+        'representante_legal',
+        'fecha_constitucion',
+        'num_empleados',
+        'tamano',
+
     ];
 
     public function getLogotipoAttribute($value){

@@ -14,11 +14,13 @@ use App\Http\Requests\StoreOrganizacionRequest;
 use App\Http\Requests\UpdateOrganizacionRequest;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyOrganizacionRequest;
+use App\Models\Empleado;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class OrganizacionController extends Controller
 {
     use MediaUploadingTrait;
+
 
     public function index(Request $request)
     {
@@ -45,11 +47,27 @@ class OrganizacionController extends Controller
 
     public function create()
     {
+
+        $countEmpleados = Empleado::get()->count();
+
+
+        if ($countEmpleados == 0 ){
+            $tamanoEmpresa = "debe registrar a los empleados";
+        }else if ($countEmpleados >= 1 && $countEmpleados <= 250) {
+            $tamanoEmpresa = "Chica";
+        } else if ($countEmpleados >= 250 && $countEmpleados <= 1000) {
+            $tamanoEmpresa = "Mediana";
+        } else if ($countEmpleados >=1000) {
+            $tamanoEmpresa = "Grande";
+        }
+
+        // dd($tamanoEmpresa);
+
         $count = Organizacion::get()->count();
         if ($count == 0) {
             abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            return view('admin.organizacions.create');
+            return view('admin.organizacions.create')->with('countEmpleados', $countEmpleados)->with('tamanoEmpresa', $tamanoEmpresa);
         } else {
             Flash::warning("<h5 align='center'>Ya existe un registro en la base de datos</h5>");
 
@@ -59,8 +77,11 @@ class OrganizacionController extends Controller
 
     public function store(StoreOrganizacionRequest $request)
     {
+        // dd($request);
+
         abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacion::create([
+
             'empresa' => $request->empresa,
             'direccion' => $request->direccion,
             'telefono' => $request->telefono,
@@ -72,6 +93,13 @@ class OrganizacionController extends Controller
             'vision' => $request->vision,
             'valores' => $request->valores,
             'antecedentes' => $request->antecedentes,
+            'razon_social' => $request->razon_social,
+            'rfc' => $request->rfc,
+            'representante_legal' => $request->representante_legal,
+            'fecha_constitucion' => $request->fecha_constitucion,
+            'num_empleados' => $request->num_empleados,
+            'tamano' => $request->tamano,
+
         ]);
 
         if ($request->hasFile('logotipo')) {

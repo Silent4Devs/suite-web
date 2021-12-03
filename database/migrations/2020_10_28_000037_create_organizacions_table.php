@@ -20,6 +20,7 @@ class CreateOrganizacionsTable extends Migration
             $table->longText('mision')->nullable();
             $table->longText('vision')->nullable();
             $table->longText('valores')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });
