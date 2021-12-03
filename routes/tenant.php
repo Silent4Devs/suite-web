@@ -182,6 +182,7 @@ Route::middleware([
             'destroy' => 'ev360-competencias-por-puesto.destroy',
         ])->except('create', 'store');
 
+        Route::post('recursos-humanos/evaluacion-360/competencias/obtener-niveles', [EV360CompetenciasController::class,'obtenerNiveles'])->name('ev360-competencias.obtenerNiveles');
         Route::post('recursos-humanos/evaluacion-360/competencias/store-redirect', [EV360CompetenciasController::class,'storeAndRedirect'])->name('ev360-competencias.conductas');
         Route::post('recursos-humanos/evaluacion-360/competencias/obtener-niveles', [EV360CompetenciasController::class,'obtenerNiveles'])->name('ev360-competencias.obtenerNiveles');
         Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/conductas', [EV360CompetenciasController::class,'conductas'])->name('ev360-competencias.obtenerConductas');
