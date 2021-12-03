@@ -90,7 +90,7 @@ class RecursosController extends Controller
 
     public function create()
     {
-       // abort_if(Gate::denies('recurso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('recurso_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $participantes = User::all()->pluck('name', 'id');
         $categorias = CategoriaCapacitacion::get();
@@ -135,7 +135,7 @@ class RecursosController extends Controller
 
     public function edit(Recurso $recurso)
     {
-       // abort_if(Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $participantes = User::all()->pluck('name', 'id');
 
@@ -188,7 +188,7 @@ class RecursosController extends Controller
 
     public function show(Recurso $recurso)
     {
-      //  abort_if(Gate::denies('recurso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('recurso_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $recurso->load('participantes', 'team');
 
@@ -197,7 +197,7 @@ class RecursosController extends Controller
 
     public function destroy(Recurso $recurso)
     {
-      //  abort_if(Gate::denies('recurso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('recurso_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $recurso->delete();
 
@@ -213,7 +213,7 @@ class RecursosController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-       // abort_if(Gate::denies('recurso_create') && Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('recurso_create') && Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Recurso();
         $model->id = $request->input('crud_id', 0);

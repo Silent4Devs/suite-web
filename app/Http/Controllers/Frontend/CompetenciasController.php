@@ -20,7 +20,7 @@ class CompetenciasController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('competencium_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Competencium::with(['nombrecolaborador', 'team'])->select(sprintf('%s.*', (new Competencium)->table));
@@ -35,7 +35,7 @@ class CompetenciasController extends Controller
                 $deleteGate = 'competencium_delete';
                 $crudRoutePart = 'competencia';
 
-                return view('partials.datatablesActionsFronted', compact(
+                return view('partials.datatablesActionsFrontend', compact(
                     'crudRoutePart',
                     'row'
                 ));
@@ -78,7 +78,7 @@ class CompetenciasController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('competencium_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -102,7 +102,7 @@ class CompetenciasController extends Controller
 
     public function edit(Competencium $competencium)
     {
-        abort_if(Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -136,7 +136,7 @@ class CompetenciasController extends Controller
 
     public function show(Competencium $competencium)
     {
-        abort_if(Gate::denies('competencium_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $competencium->load('nombrecolaborador', 'team');
 
@@ -145,7 +145,7 @@ class CompetenciasController extends Controller
 
     public function destroy(Competencium $competencium)
     {
-        abort_if(Gate::denies('competencium_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $competencium->delete();
 
@@ -161,7 +161,7 @@ class CompetenciasController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Competencium();
         $model->id = $request->input('crud_id', 0);

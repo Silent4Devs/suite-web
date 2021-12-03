@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('admin.competencia.index') }}
+    {{-- {{ Breadcrumbs::render('frontend.competencia.index') }} --}}
 
-    @can('competencium_create')
+    {{-- @can('competencium_create') --}}
 
 
         <div class="mt-5 card">
@@ -12,14 +12,14 @@
             </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.competencia.create') }}">
+            <a class="btn btn-success" href="{{ route('competencia.create') }}">
                     Agregar <strong>+</strong>
             </a>
         </div>
     </div> --}}
-        @endcan
+        {{-- @endcan --}}
 
-        <a href="{{ route('admin.buscarCV') }}" class="mb-2 btn btn-dark d-block">Buscar CV</a>
+        <a href="{{ route('buscarCV') }}" class="mb-2 btn btn-dark d-block">Buscar CV</a>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <table class="table table-bordered w-100 datatable-Competencium">
@@ -143,11 +143,11 @@
 
             ];
 
-            @can('objetivosseguridad_create')
+            {{-- @can('objetivosseguridad_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar competencia',
-                url: "{{ route('admin.competencia.create') }}",
+                url: "{{ route('competencia.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config){
                 let {url} = config;
@@ -155,12 +155,12 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-            @endcan
-            @can('competencium_delete')
+                {{-- @endcan --}}
+                    {{-- @can('competencium_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.competencia.massDestroy') }}",
+                url: "{{ route('competencia.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -184,7 +184,7 @@
                 }
                 }
                 //dtButtons.push(deleteButton)
-            @endcan
+                {{-- @endcan --}}
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -192,7 +192,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.competencia.index') }}",
+                ajax: "{{ route('competencia.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'

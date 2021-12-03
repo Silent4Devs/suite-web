@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\RH;
+namespace App\Http\Controllers\Frontend\RH;
 
 use App\Http\Controllers\Controller;
 use App\Models\RH\EvaluadoEvaluador;

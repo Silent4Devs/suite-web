@@ -1,25 +1,45 @@
 <div class="col-12">
     <div class="form-group">
         <div class="row">
-            <div class="col-6">
-                <label>Competencia <span class="text-danger">*</span></label>
-                <select class="form-control" name="competencia_id" id="competencia_id">
-                    <option value="" selected disabled>-- Selecciona un competencia --</option>
-                    @foreach ($competencias as $competencia)
-                        <option value="{{ $competencia->id }}">{{ $competencia->nombre }}</option>
-                    @endforeach
-                </select>
-                <small class="text-danger errores error_competencia_id"></small>
+            <div class="col-10">
+                <div class="row">
+                    <div class="col-7">
+                        <label>Competencia <span class="text-danger">*</span></label>
+                        <select class="form-control" name="competencia_id" id="competencia_id">
+                            <option value="" selected disabled>-- Selecciona un competencia --</option>
+                            @foreach ($competencias as $competencia)
+                                <option value="{{ $competencia->id }}">{{ $competencia->nombre }}</option>
+                            @endforeach
+                        </select>
+                        <small class="text-danger errores error_competencia_id"></small>
+                    </div>
+                    <div class="col-5">
+                        <label>Nivel esperado <span class="text-danger">*</span>
+                            <span id="niveles_cargando" class="d-none"><i
+                                    class="fas fa-circle-notch fa-spin"></i>
+                                Cargando niveles</span>
+                            {{-- <span title="Diccionario de competencia" id="visualizarSignificado" class="text-muted d-none"><i
+                                    class="fas fa-info-circle"></i></span> --}}
+                        </label>
+                        <div class="row">
+                            <div class="pr-0 col-5">
+                                <select class="form-control" name="nivel_esperado" id="nivel_esperado"></select>
+                            </div>
+                            <div class="p-0 col-7">
+                                <button id="visualizarSignificado" class="h-100 btn btn-sm btn_cancelar"
+                                    style="margin-left: 16px;"><i class="mr-2 fas fa-book"></i>Diccionario</button>
+                            </div>
+                        </div>
+                        <small class="text-danger errores error_nivel_esperado"></small>
+                    </div>
+                </div>
             </div>
-            <div class="col-6">
-                <label>Nivel esperado <span class="text-danger">*</span>
-                    <span id="niveles_cargando" class="d-none"><i class="fas fa-circle-notch fa-spin"></i>
-                        Cargando niveles</span>
-                    <span title="Diccionario de competencia" id="visualizarSignificado" class="text-muted d-none"><i
-                            class="fas fa-info-circle"></i></span>
-                </label>
-                <select class="form-control" name="nivel_esperado" id="nivel_esperado"></select>
-                <small class="text-danger errores error_nivel_esperado"></small>
+            <div class="pl-0 col">
+                <label for="">&nbsp;</label>
+                <div style="height: 37px;">
+                    <button id="asignarBtn" class="w-100 h-100 btn btn-sm btn-success"><i
+                            class="mr-2 fas fa-sync"></i>Asignar</button>
+                </div>
             </div>
         </div>
     </div>

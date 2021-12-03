@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend\RH;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RH\Evaluaciones\CitaEvaluadorEvaluado;
+use App\Mail\RH\Evaluaciones\RecordatorioEvaluadores;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\RH\Competencia;
@@ -14,8 +16,11 @@ use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoRespuesta;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Spatie\CalendarLinks\Link;
 
 class EV360EvaluacionesController extends Controller
 {
@@ -683,6 +688,43 @@ class EV360EvaluacionesController extends Controller
     public function consultaPorEvaluado($evaluacion, $evaluado)
     {
         $informacion_obtenida = $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
+
+        $calificaciones_autoevaluacion_competencias = collect();
+        $competencias_lista_nombre = collect();
+        foreach ($informacion_obtenida['lista_autoevaluacion'] as $autoevaluacion_calificaciones) {
+            foreach ($autoevaluacion_calificaciones['evaluaciones'] as $evaluacion_auto) {
+                foreach ($evaluacion_auto['competencias'] as $competencia_auto) {
+                    $competencias_lista_nombre->push($competencia_auto['competencia']);
+                    $calificaciones_autoevaluacion_competencias->push($competencia_auto['calificacion']);
+                }
+            }
+        }
+        $calificaciones_jefe_competencias = collect();
+        foreach ($informacion_obtenida['lista_jefe_inmediato'] as $jefe_calificaciones) {
+            foreach ($jefe_calificaciones['evaluaciones'] as $evaluacion_jefe) {
+                foreach ($evaluacion_jefe['competencias'] as $competencia_jefe) {
+                    $calificaciones_jefe_competencias->push($competencia_jefe['calificacion']);
+                }
+            }
+        }
+
+        $calificaciones_equipo_competencias = collect();
+        foreach ($informacion_obtenida['lista_equipo_a_cargo'] as $equipo_calificaciones) {
+            foreach ($equipo_calificaciones['evaluaciones'] as $evaluacion_equipo) {
+                foreach ($evaluacion_equipo['competencias'] as $competencia_equipo) {
+                    $calificaciones_equipo_competencias->push($competencia_equipo['calificacion']);
+                }
+            }
+        }
+        $calificaciones_area_competencias = collect();
+        foreach ($informacion_obtenida['lista_misma_area'] as $area_calificaciones) {
+            foreach ($area_calificaciones['evaluaciones'] as $evaluacion_area) {
+                foreach ($evaluacion_area['competencias'] as $competencia_area) {
+                    $calificaciones_area_competencias->push($competencia_area['calificacion']);
+                }
+            }
+        }
+
         $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
         $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
         $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
@@ -699,7 +741,7 @@ class EV360EvaluacionesController extends Controller
         }])->find(intval($evaluado));
 
         // dd($evaluadores_objetivos);
-        return view('frontend.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final'));
+        return view('frontend.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias', 'calificaciones_equipo_competencias', 'calificaciones_area_competencias'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -735,7 +777,7 @@ class EV360EvaluacionesController extends Controller
             });
             $promedio_competencias = 0;
             $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() > 0 ? $evaluado->puestoRelacionado->competencias->count() : 1;
-            $lista_autoevaluacion->push(array(
+            $lista_autoevaluacion->push([
                 'tipo' => 'Autoevaluación',
                 'peso_general' => $evaluacion->peso_autoevaluacion,
                 'evaluaciones' => $filtro_autoevaluacion->map(function ($evaluador) use ($evaluacion, $evaluado) {
@@ -907,6 +949,7 @@ class EV360EvaluacionesController extends Controller
             $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
             $calificacion_final += $promedio_general_objetivos;
         }
+
         return [
             'lista_autoevaluacion' => $lista_autoevaluacion,
             'lista_jefe_inmediato' => $lista_jefe_inmediato,
@@ -921,7 +964,6 @@ class EV360EvaluacionesController extends Controller
             'evaluadores' => Empleado::find($evaluadores->pluck('evaluador_id')),
         ];
     }
-
 
     public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias)
     {
@@ -968,33 +1010,114 @@ class EV360EvaluacionesController extends Controller
 
         foreach ($evaluados as $evaluado) {
             // $evaluado->load('area');
-            $lista_evaluados->push(array(
+            $lista_evaluados->push([
                 'evaluado' => $evaluado->name,
                 'puesto' => $evaluado->puesto,
                 'area' => $evaluado->area->area,
-                'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id)
-            ));
+                'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id),
+            ]);
         }
 
         foreach ($lista_evaluados as $evaluado) {
             if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 60) {
                 $inaceptable++;
-            } else if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 80) {
+            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= 80) {
                 $minimo_aceptable++;
-            } else if ($evaluado['informacion_evaluacion']['calificacion_final'] <= 100) {
+            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] <= 100) {
                 $aceptable++;
-            } else if ($evaluado['informacion_evaluacion']['calificacion_final'] > 100) {
+            } elseif ($evaluado['informacion_evaluacion']['calificacion_final'] > 100) {
                 $sobresaliente++;
             }
         }
-        $calificaciones->push(array(
+        $calificaciones->push([
             'Inaceptable' => $inaceptable,
             'Mínimo Aceptable' => $minimo_aceptable,
             'Aceptable' => $aceptable,
             'Sobresaliente' => $sobresaliente,
-        ));
+        ]);
         $calificaciones = $calificaciones->first();
 
         return view('frontend.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('lista_evaluados', 'calificaciones', 'evaluacion'));
+    }
+
+    public function evaluacionesDelEmpleado($empleado)
+    {
+        $empleado = Empleado::find($empleado);
+        $evaluacione = Evaluacion::whereHas('evaluados', function ($q) use ($empleado) {
+            $q->where('evaluado_id', $empleado->id);
+        })->get();
+        $lista_evaluaciones = collect();
+        foreach ($evaluacione as $evaluacion) {
+            $lista_evaluaciones->push([
+                'id' => $evaluacion->id,
+                'nombre' => $evaluacion->nombre,
+                'fecha_inicio' => Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y'),
+                'fecha_fin' => Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y'),
+                'informacion_evaluacion' => $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $empleado->id),
+            ]);
+        }
+
+        return view('frontend.recursos-humanos.evaluacion-360.evaluaciones.consultas.lista-evaluaciones-por-empleado', compact('lista_evaluaciones', 'empleado'));
+    }
+
+    public function enviarCorreoAEvaluadores(Evaluacion $evaluacion)
+    {
+        $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->pluck('evaluador_id')->unique()->toArray();
+        foreach ($evaluadores as $evaluador) {
+            $evaluados = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
+                ->where('evaluador_id', $evaluador)
+                ->where('evaluado', false)
+                ->pluck('evaluado_id')
+                ->unique()
+                ->toArray();
+            $evaluados = Empleado::find($evaluados);
+            $evaluador_model = Empleado::find($evaluador);
+            if (count($evaluados)) {
+                $this->enviarNotificacionAlEvaluador($evaluador_model->email, $evaluacion, $evaluador_model, $evaluados);
+                if (env('APP_ENV') == 'local') { // solo funciona en desarrollo, es una muy mala práctica, es para que funcione con mailtrap y la limitación del plan gratuito
+                    if (env('MAIL_HOST') == 'smtp.mailtrap.io') {
+                        sleep(1); //use usleep(500000) for half a second or less
+                    }
+                }
+            }
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
+    {
+        Mail::to($email)->send(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
+    }
+
+    public function enviarInvitacionDeEvaluacion(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date|after:fecha_inicio',
+            'descripcion' => 'nullable|string',
+        ]);
+        $evaluacion = Evaluacion::find(intval($request->evaluacion));
+        $evaluado = Empleado::find(intval($request->evaluado));
+        $evaluador = Empleado::find(intval($request->evaluador));
+        $fecha_inicio = $request->fecha_inicio;
+        $fecha_fin = $request->fecha_fin;
+        $nombre = $request->nombre;
+        $descripcion = $request->descripcion ? $request->descripcion : 'Sin descripción';
+        $from = DateTime::createFromFormat('Y-m-d H:i', Carbon::parse($fecha_inicio)->format('Y-m-d H:i'));
+        $to = DateTime::createFromFormat('Y-m-d H:i', Carbon::parse($fecha_fin)->format('Y-m-d H:i'));
+        $link = Link::create($nombre, $from, $to)
+            ->description($descripcion);
+        $link_outlook = $link->google();
+
+        $this->enviarCorreoInvitacionAlEvaluado($evaluador->email, $evaluacion, $evaluador, $evaluado, $link_outlook);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function enviarCorreoInvitacionAlEvaluado($email, $evaluacion, $evaluador, $evaluado, $enlace)
+    {
+        Mail::to($email)->send(new CitaEvaluadorEvaluado($evaluacion, $evaluador, $evaluado, $enlace));
     }
 }

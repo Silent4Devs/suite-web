@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 
-    {{ Breadcrumbs::render('EV360-Evaluaciones-Evaluacion') }}
+    {{-- {{ Breadcrumbs::render('EV360-Evaluaciones-Evaluacion', $evaluacion) }} --}}
     <style>
         .nav-pills .nav-link.active,
         .nav-pills .show>.nav-link {
@@ -43,7 +43,7 @@
             text-align: center;
             position: absolute;
             top: 6px;
-            right: 51px;
+            right: 20px;
             font-weight: bold;
             border: 2px solid;
             cursor: pointer;
@@ -77,254 +77,179 @@
             <h3 class="mb-1 text-center text-white"><strong>Evaluación: </strong>{{ $evaluacion->nombre }}</h3>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="p-0 col-2">
-                    <div class="nav flex-column nav-pills" id="ev360EvaluacionMenu" role="tablist"
-                        aria-orientation="vertical">
-                        <a class="nav-link active" id="tab-configuracion-tab" data-toggle="pill"
-                            onclick="almacenarMenuEnLocalStorage('#tab-configuracion')" href="#tab-configuracion" role="tab"
-                            aria-controls="tab-configuracion" aria-selected="true"><i class="mr-2 fas fa-cogs"></i>
-                            Configuración</a>
-                        {{-- <a class="nav-link" id="tab-cuestionario-tab" data-toggle="pill"
-                            onclick="almacenarMenuEnLocalStorage('#tab-cuestionario')" href="#tab-cuestionario" role="tab"
-                            aria-controls="tab-cuestionario" aria-selected="false"><i
-                                class="mr-2 fas fa-file-signature"></i>Competencias y Objetivos
-                            @if (!count($evaluacion->competencias))
-                                <span class="badge badge-{{ count($evaluacion->competencias) ? 'success' : 'danger' }}">
-                                    {{ count($evaluacion->competencias) }}</span>
-                            @endif
-
-                        </a> --}}
-                        <a class="nav-link" id="tab-participantes-tab" data-toggle="pill"
-                            onclick="almacenarMenuEnLocalStorage('#tab-participantes')" href="#tab-participantes" role="tab"
-                            aria-controls="tab-participantes" aria-selected="false"><i class="mr-2 fas fa-users"></i>
-                            Participantes</a>
-                    </div>
-                </div>
-                <div class="col-10">
-                    <div class="tab-content" id="tab-tabContent">
-                        <div class="tab-pane fade show active" id="tab-configuracion" role="tabpanel"
-                            aria-labelledby="tab-configuracion-tab">
-                            <div class="w-100" style="border-radius: 8px 8px 5px 5px">
-                                <div class="border w-100"
-                                    style="padding:15px 10px;color:aliceblue;background: #008186;border-radius: 8px 8px 0 0;">
-                                    <div class="row">
-                                        <div class="col-6 d-flex align-items-center">
-                                            <span style="font-size:20px;"
-                                                class="mr-2">{{ $evaluacion->nombre }}</span><span
-                                                class="badge"
-                                                style="background: {{ $evaluacion->color_estatus }};color:{{ $evaluacion->color_estatus_text }}">
-                                                <span
-                                                    style="border-radius: 100%;width: 6px;height: 6px;background: white;display: inline-block;margin-right: 3px"></span>{{ $evaluacion->estatus_formateado }}
-                                            </span>
-                                        </div>
-                                        <div class="col-6 d-flex align-items-center justify-content-end">
-                                            @if (count($evaluacion->competencias))
-                                                @if ($evaluacion->estatus == App\Models\RH\Evaluacion::DRAFT)
-                                                    <button id="btnIniciarEvaluacion" class="btn btn-sm"
-                                                        style="background: #2cb142;color: #fff;"><i
-                                                            class="mr-2 fas fa-calendar-check"></i>Iniciar
-                                                        Evaluación</button>
-                                                @elseif ($evaluacion->estatus == App\Models\RH\Evaluacion::CLOSED)
-                                                    <button id="btnPostergarEvaluacion" class="btn btn-sm"
-                                                        style="background: #2c40b1;color: #fff;"><i
-                                                            class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
-                                                        nueva fecha de finalización</button>
-                                                @else
-                                                    <button id="btnCerrarEvaluacion"
-                                                        onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
-                                                        class="btn btn-sm" style="background: #c53030;color: #fff;"><i
-                                                            class="mr-2 fas fa-calendar-times"></i>Cerrar
-                                                        Evaluación</button>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- @if (!count($evaluacion->competencias))
-                                    <div class="alerta-no-preguntas">
-                                        <i class="fas fa-exclamation-triangle"></i> Debes de seleccionar competencias u
-                                        objetivos
-                                        para poder
-                                        iniciar la evaluación...
-                                    </div>
-                                @endif --}}
-                                <ul class="list-group list-group-horizontal w-100">
-                                    <li class="pr-0 list-group-item w-100" style="border:none;">
-                                        <p class="m-0 text-muted">Autor</p>
-                                        <p class="m-0" style="font-weight: bold;">
-                                            <img alt="{{ $evaluacion->autor->name }}"
-                                                src="{{ asset('storage/empleados/imagenes/' . $evaluacion->autor->avatar) }}"
-                                                class="rounded-circle"
-                                                style="clip-path: circle(10px at 50% 50%);height: 20px;margin-left: -6px;" />
-                                            {{ $evaluacion->autor->name }}
-                                        </p>
-                                    </li>
-                                    <li class="px-0 list-group-item w-100" style="border:none;">
-                                        <p class="m-0 text-muted">Comineza En</p>
-                                        <p class="m-0"><i class="mr-1 fas fa-calendar-check"></i>
-                                            {{ $evaluacion->fecha_inicio ? \Carbon\Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y') : 'Sin definir' }}
-                                        </p>
-                                    </li>
-                                    <li class="px-0 list-group-item w-100" style="border:none;">
-                                        <p class="m-0 text-muted">Finaliza En</p>
-                                        <p class="m-0"><i class="mr-1 fas fa-calendar-times"></i>
-                                            {{ $evaluacion->fecha_fin ? \Carbon\Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y') : 'Sin definir' }}
-                                        </p>
-                                    </li>
-                                    <li class="px-0 list-group-item w-100" style="border:none;">
-                                        <p class="m-0 text-muted">Participación</p>
-                                        <div class="row align-items-center justify-content-center">
-                                            <div class="pr-1 col-9">
-                                                <div class="progress">
-                                                    <div class="progress-bar {{ $progreso == 100 ? 'bg-success' : '' }}"
-                                                        role="progressbar" style="width: {{ $progreso }}%;"
-                                                        aria-valuenow="{{ $progreso }}" aria-valuemin="0"
-                                                        aria-valuemax="100">
-                                                        <span style="font-size:8px;">{{ $progreso }}%</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="p-0 col-3">
-                                                <span
-                                                    style="font-size: 12px; font-weight: bold">{{ $contestadas }}/{{ $total_evaluaciones }}</span>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                </ul>
-                                <!-- Modal -->
-                                <div class="modal fade" id="modalIniciarEvaluacion" data-backdrop="static"
-                                    data-keyboard="false" tabindex="-1" aria-labelledby="modalIniciarEvaluacionLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modalIniciarEvaluacionLabel"><i
-                                                        class="mr-2 fas fa-cogs"></i>Iniciar Evaluación</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="formIniciarEvaluacion"
-                                                    action="{{ route('ev360-evaluaciones.iniciarEvaluacion', $evaluacion) }}"
-                                                    method="POST">
-                                                    @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form')
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn_cancelar"
-                                                    data-dismiss="modal">Descartar</button>
-                                                <button id="btnModalIniciarEvaluacion" type="button"
-                                                    class="btn btn-danger">Iniciar Evaluación</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="modalPostergarFechaFinEvaluacion" data-backdrop="static"
-                                    data-keyboard="false" tabindex="-1"
-                                    aria-labelledby="modalPostergarFechaFinEvaluacionLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modalPostergarFechaFinEvaluacionLabel"><i
-                                                        class="mr-2 fas fa-cogs"></i>Reiniciar evaluación con nueva fecha de
-                                                    finalización</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="formPostergarEvaluacion"
-                                                    action="{{ route('ev360-evaluaciones.postergarEvaluacion', $evaluacion) }}"
-                                                    method="POST">
-                                                    @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form_postergar')
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn_cancelar"
-                                                    data-dismiss="modal">Descartar</button>
-                                                <button id="btnmodalPostergarFechaFinEvaluacion" type="button"
-                                                    class="btn btn-danger">Iniciar evaluación</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+            <div>
+                {{-- <h3><i class="mr-2 fas fa-book"></i>Información general de la evaluación:
+                    <strong>{{ $evaluacion->nombre }}</strong>
+                </h3> --}}
+                <div class="w-100" style="border-radius: 8px 8px 5px 5px">
+                    <div class="w-100" style="color:rgb(51, 51, 51);">
+                        <div>
+                            <div class="text-center form-group"
+                                style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                                INFORMACIÓN GENERAL
                             </div>
-                        </div>
-                        {{-- <div class="tab-pane fade" id="tab-cuestionario" role="tabpanel"
-                            aria-labelledby="tab-cuestionario-tab">
-                            <div>
-                                <div class="w-100"
-                                    style="padding:15px 10px;color:white;background: #008186;border-radius: 8px 8px 0 0;">
-                                    <div class="row">
-                                        <div class="col-12 d-flex align-items-center">
-                                            <span style="font-size:18px;"><i class="mr-2 fas fa-sync-alt"></i>Vinculación de
-                                                Competencias
-                                                y Objetivos
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div style="float: right">
+                                <button id="btnEnviarRecordatorio" class="btn btn-sm"
+                                    style="background: #99faa6;color: rgb(54, 54, 54);"><i
+                                        class="mr-2 fas fa-envelope-open-text"></i>Enviar
+                                    recordatorio a evaluadores</button>
                                 @if ($evaluacion->estatus == App\Models\RH\Evaluacion::DRAFT)
-                                    <form action="" method="POST">
-                                        @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.vinculacion._form_vinculacion')
-                                    </form>
+                                    <button id="btnIniciarEvaluacion" class="btn btn-sm"
+                                        style="background: #3ddf58;color: #fff;"><i
+                                            class="mr-2 fas fa-calendar-check"></i>Iniciar
+                                        Evaluación</button>
+                                @elseif ($evaluacion->estatus == App\Models\RH\Evaluacion::CLOSED)
+                                    <button id="btnPostergarEvaluacion" class="btn btn-sm"
+                                        style="background: #4e59d4;color: #fff;"><i
+                                            class="mr-2 fas fa-calendar-plus"></i>Reiniciar evaluación con
+                                        nueva fecha de finalización</button>
                                 @else
-                                    <h5 class="my-3"><i class="mr-2 fas fa-check"></i>Competencias seleccionadas
-                                    </h5>
-                                    <ul class="list-group">
-                                        @foreach ($competencias_seleccionadas_text as $competencia)
-                                            <li class="list-group-item">{{ $competencia->competencia->nombre }} <span
-                                                    class="badge badge-primary">{{ $competencia->competencia->tipo->nombre }}</span>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    <h5 class="my-3"><i class="mr-2 fas fa-check"></i>Objetivos seleccionados
-                                    </h5>
-                                    <ul class="list-group">
-                                        @foreach ($objetivos_seleccionados_text as $objetivo)
-                                            <li class="list-group-item">{{ $objetivo->objetivo->nombre }} <span
-                                                    class="badge badge-primary">{{ $objetivo->objetivo->tipo->nombre }}</span>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    <button id="btnCerrarEvaluacion"
+                                        onclick="event.preventDefault();CerrarEvaluacion(this,'{{ route('ev360-evaluaciones.cerrarEvaluacion', $evaluacion) }}')"
+                                        class="btn btn-sm" style="background: #eb4a4a;color: #fff;"><i
+                                            class="mr-2 fas fa-calendar-times"></i>Cerrar
+                                        Evaluación</button>
                                 @endif
                             </div>
-                        </div> --}}
-                        <div class="tab-pane fade" id="tab-participantes" role="tabpanel"
-                            aria-labelledby="tab-participantes-tab">
-                            <div class="w-100"
-                                style="padding:15px 10px;color:white;background: #008186;border-radius: 8px 8px 0 0;">
-                                <div class="row">
-                                    <div class="col-12 d-flex align-items-center">
-                                        <span style="font-size:18px;">
-                                            <i class="mr-2 fas fa-users"></i>Participantes
-                                        </span>
-                                    </div>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-horizontal w-100">
+                        <li class="pl-0 pr-0 list-group-item w-100" style="border:none;">
+                            <p class="m-0 text-muted">Nombre de la evaluación</p>
+                            <p class="m-0" style="font-weight: bold;">
+                                {{ $evaluacion->nombre }}
+                            </p>
+                        </li>
+                        <li class="px-0 text-center list-group-item w-100" style="border:none;width: 90px !important;">
+                            <p class="m-0 text-center text-muted">Estatus</p>
+                            <p class="m-0"> <span class="badge"
+                                    style="background: {{ $evaluacion->color_estatus }};color:{{ $evaluacion->color_estatus_text }}">
+                                    <span
+                                        style="border-radius: 100%;width: 6px;height: 6px;background: white;display: inline-block;margin-right: 3px"></span>{{ $evaluacion->estatus_formateado }}
+                                </span>
+                            </p>
+                        </li>
+                        <li class="px-0 text-center list-group-item w-100" style="border:none;">
+                            <p class="m-0 text-center text-muted">Comienza el</p>
+                            <p class="m-0"><i class="mr-1 fas fa-calendar-check"></i>
+                                {{ $evaluacion->fecha_inicio ? \Carbon\Carbon::parse($evaluacion->fecha_inicio)->format('d-m-Y') : 'Sin definir' }}
+                            </p>
+                        </li>
+                        <li class="px-0 text-center list-group-item w-100" style="border:none;">
+                            <p class="m-0 text-center text-muted">Finaliza el</p>
+                            <p class="m-0"><i class="mr-1 fas fa-calendar-times"></i>
+                                {{ $evaluacion->fecha_fin ? \Carbon\Carbon::parse($evaluacion->fecha_fin)->format('d-m-Y') : 'Sin definir' }}
+                            </p>
+                        </li>
+                        <li class="pl-0 pr-0 list-group-item w-100" style="border:none;">
+                            <p class="m-0 text-muted">Autor</p>
+                            <p class="m-0" style="font-weight: bold;">
+                                <img alt="{{ $evaluacion->autor->name }}"
+                                    src="{{ asset('storage/empleados/imagenes/' . $evaluacion->autor->avatar) }}"
+                                    class="rounded-circle"
+                                    style="clip-path: circle(15px at 50% 50%);height: 30px;margin-left: -6px;" />
+                                {{ $evaluacion->autor->name }}
+                            </p>
+                        </li>
+                    </ul>
+                    <ul class="list-group list-group-horizontal">
+                        <li class="px-0 list-group-item" style="border:none;width:400%">
+                            <p class="m-0 text-muted">Porcentaje de avance</p>
+                            <div class="progress">
+                                <div class="progress-bar {{ $progreso == 100 ? 'bg-success' : '' }}" role="progressbar"
+                                    style="width: {{ $progreso }}%;" aria-valuenow="{{ $progreso }}"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    <span style="font-size:8px;">{{ $progreso }}%</span>
                                 </div>
                             </div>
-                            <div class="datatable-fix w-100">
-                                <table id="tblParticipantes">
-                                    <thead>
-                                        <tr>
-                                            <th>Evaluado</th>
-                                            <th>Area</th>
-                                            <th>Evaluadores</th>
-                                            <th>Participación</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
+                        </li>
+                        <li class="px-0 text-center list-group-item w-100" style="border:none;">
+                            <div class="ml-3">
+                                <p class="m-0 text-muted">Respuestas recibidas</p>
+                                <span
+                                    style="font-size: 12px; font-weight: bold">{{ $contestadas }}/{{ $total_evaluaciones }}</span>
+                            </div>
+
+                        </li>
+                    </ul>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalIniciarEvaluacion" data-backdrop="static" data-keyboard="false"
+                        tabindex="-1" aria-labelledby="modalIniciarEvaluacionLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalIniciarEvaluacionLabel"><i
+                                            class="mr-2 fas fa-cogs"></i>Iniciar Evaluación</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formIniciarEvaluacion"
+                                        action="{{ route('ev360-evaluaciones.iniciarEvaluacion', $evaluacion) }}"
+                                        method="POST">
+                                        @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form')
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn_cancelar" data-dismiss="modal">Descartar</button>
+                                    <button id="btnModalIniciarEvaluacion" type="button" class="btn btn-danger">Iniciar
+                                        Evaluación</button>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="modalPostergarFechaFinEvaluacion" data-backdrop="static"
+                        data-keyboard="false" tabindex="-1" aria-labelledby="modalPostergarFechaFinEvaluacionLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalPostergarFechaFinEvaluacionLabel"><i
+                                            class="mr-2 fas fa-cogs"></i>Reiniciar evaluación con nueva fecha de
+                                        finalización</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formPostergarEvaluacion"
+                                        action="{{ route('ev360-evaluaciones.postergarEvaluacion', $evaluacion) }}"
+                                        method="POST">
+                                        @include('frontend.recursos-humanos.evaluacion-360.evaluaciones.iniciar_evaluacion._form_postergar')
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn_cancelar" data-dismiss="modal">Descartar</button>
+                                    <button id="btnmodalPostergarFechaFinEvaluacion" type="button"
+                                        class="btn btn-danger">Iniciar evaluación</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="datatable-fix w-100">
+                    <div class="text-center form-group"
+                        style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                        PROGRESO DE EVALUACIÓNES POR EMPLEADO
+                    </div>
+                    <table id="tblParticipantes" class="table">
+                        <thead class="bg-dark">
+                            <tr>
+                                <th>Evaluado</th>
+                                <th>Área</th>
+                                <th>Evaluadores</th>
+                                <th>Porcentaje&nbsp;de&nbsp;avance</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
+            <a style="float: right" href="{{ route('ev360-evaluaciones.index') }}"
+                class="mt-2 btn btn_cancelar">Regresar</a>
         </div>
     </div>
 
@@ -608,26 +533,26 @@
                         data: 'evaluadores',
                         render: function(data, type, row, meta) {
                             if (data) {
-                                let html = '<div style="position:relative">';
+                                let html = '<div class="d-flex" style="position:relative">';
                                 let seleccionados = [];
                                 data.forEach((element, idx) => {
-                                    if (idx <= 2) {
+                                    if (idx <= 5) {
                                         html +=
                                             `
                                         <img style="" src="${@json(asset('storage/empleados/imagenes/'))}/${element.evaluador.avatar}"
                                             class="rounded-circle" alt="${element.evaluador.name}"
                                             title="${element.evaluador.name}" width="40" height="37">
-                                            ${element.evaluado?'<i class="fas fa-check-circle" style="position:relative;top:0;left:-20px;z-index:1;color: #3ff556;text-shadow: 1px 1px 0px black;"></i>':''}
+                                            ${element.evaluado?'<i class="fas fa-check-circle" style="    position: relative;top: 0;left: -20px;z-index: 1;color: #002102;text-shadow: 1px 1px 0px gainsboro;"></i>':''}
                                         `
                                     }
                                     seleccionados.push(element.evaluador.id);
                                 });
-                                if (data.length > 3) {
-                                    let restantes = data.length - 3;
-                                    html += `
-                                    <p class="m-0 restantes">+${restantes}<p>
-                                    `;
-                                }
+                                // if (data.length > 3) {
+                                //     let restantes = data.length - 3;
+                                //     html += `
+                            //     <p class="m-0 restantes">+${restantes}<p>
+                            //     `;
+                                // }
                                 if (row.can_edit) {
                                     html +=
                                         `<p onclick="event.preventDefault();ListaEvaluadores('${JSON.stringify(seleccionados)}','${row.id}','${row.evaluacion}')" class="m-0 add_evaluador"><i class="fas fa-plus-circle"></i></p></div>`;
@@ -812,6 +737,40 @@
                     }
                 })
             }
+
+            document.getElementById('btnEnviarRecordatorio').addEventListener('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: '¿Quieres enviar recordatorio por correo a los evaluadores?',
+                    html: "<span style='font-size:20px'><i class='fas fa-envelope-open-text'></i></span>",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Enviar!',
+                    cancelButtonText: 'No',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let url =
+                            "{{ route('ev360-evaluaciones.recordatorio', $evaluacion) }}"
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            dataType: "JSON",
+                            beforeSend: function() {
+                                toastr.info(
+                                    'Enviando recordatorio, espere un momento...');
+                            },
+                            success: function(response) {
+                                toastr.success('Recordatorio enviado');
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                toastr.error(errorThrown);
+                            }
+                        });
+                    }
+                })
+            })
         });
 
         function seleccionarMenuAlIniciar() {

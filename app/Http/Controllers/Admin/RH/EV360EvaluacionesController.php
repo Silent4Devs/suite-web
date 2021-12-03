@@ -18,7 +18,6 @@ use App\Models\RH\ObjetivoRespuesta;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Spatie\CalendarLinks\Link;
@@ -27,12 +26,11 @@ class EV360EvaluacionesController extends Controller
 {
     public function index(Request $request)
     {
-        // dd($this->obtenerCantidadMaximaDeObjetivos(20));
         $areas = Area::all();
         $empleados = Empleado::all();
 
         if ($request->ajax()) {
-            $evaluaciones = Evaluacion::orderByDesc('id')->get();
+            $evaluaciones = Evaluacion::all();
 
             return datatables()->of($evaluaciones)->toJson();
         }
@@ -690,34 +688,7 @@ class EV360EvaluacionesController extends Controller
     public function consultaPorEvaluado($evaluacion, $evaluado)
     {
         $informacion_obtenida = $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
-        $calificaciones = $this->desglosarCalificaciones($informacion_obtenida);
-        $calificaciones_autoevaluacion_competencias = $calificaciones['calificaciones_autoevaluacion_competencias'];
-        $calificaciones_jefe_competencias = $calificaciones['calificaciones_jefe_competencias'];
-        $calificaciones_equipo_competencias = $calificaciones['calificaciones_equipo_competencias'];
-        $calificaciones_area_competencias = $calificaciones['calificaciones_area_competencias'];
-        $competencias_lista_nombre = $calificaciones['competencias_lista_nombre'];
 
-        $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
-        $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
-        $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
-        $lista_misma_area = $informacion_obtenida['lista_misma_area'];
-        $promedio_competencias = $informacion_obtenida['promedio_competencias'];
-        $promedio_general_competencias = $informacion_obtenida['promedio_general_competencias'];
-        $evaluadores_objetivos = $informacion_obtenida['evaluadores_objetivos'];
-        $promedio_objetivos = $informacion_obtenida['promedio_objetivos'];
-        $promedio_general_objetivos = $informacion_obtenida['promedio_general_objetivos'];
-        $calificacion_final = $informacion_obtenida['calificacion_final'];
-        $evaluacion = Evaluacion::find(intval($evaluacion));
-        $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
-            $q->with('competencias');
-        }])->find(intval($evaluado));
-
-        // dd($evaluadores_objetivos);
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias', 'calificaciones_equipo_competencias', 'calificaciones_area_competencias'));
-    }
-
-    public function desglosarCalificaciones($informacion_obtenida)
-    {
         $calificaciones_autoevaluacion_competencias = collect();
         $competencias_lista_nombre = collect();
         foreach ($informacion_obtenida['lista_autoevaluacion'] as $autoevaluacion_calificaciones) {
@@ -754,13 +725,23 @@ class EV360EvaluacionesController extends Controller
             }
         }
 
-        return [
-            'competencias_lista_nombre' => $competencias_lista_nombre,
-            'calificaciones_autoevaluacion_competencias' => $calificaciones_autoevaluacion_competencias,
-            'calificaciones_jefe_competencias' => $calificaciones_jefe_competencias,
-            'calificaciones_equipo_competencias' => $calificaciones_equipo_competencias,
-            'calificaciones_area_competencias' => $calificaciones_area_competencias,
-        ];
+        $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
+        $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
+        $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
+        $lista_misma_area = $informacion_obtenida['lista_misma_area'];
+        $promedio_competencias = $informacion_obtenida['promedio_competencias'];
+        $promedio_general_competencias = $informacion_obtenida['promedio_general_competencias'];
+        $evaluadores_objetivos = $informacion_obtenida['evaluadores_objetivos'];
+        $promedio_objetivos = $informacion_obtenida['promedio_objetivos'];
+        $promedio_general_objetivos = $informacion_obtenida['promedio_general_objetivos'];
+        $calificacion_final = $informacion_obtenida['calificacion_final'];
+        $evaluacion = Evaluacion::find(intval($evaluacion));
+        $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
+            $q->with('competencias');
+        }])->find(intval($evaluado));
+
+        // dd($evaluadores_objetivos);
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias', 'calificaciones_equipo_competencias', 'calificaciones_area_competencias'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -776,6 +757,7 @@ class EV360EvaluacionesController extends Controller
 
         $promedio_competencias = 0;
         $promedio_general_competencias = 0;
+        $evalaciones_lista = collect();
         $lista_autoevaluacion = collect();
         $lista_jefe_inmediato = collect();
         $lista_equipo_a_cargo = collect();
@@ -794,10 +776,8 @@ class EV360EvaluacionesController extends Controller
                 return intval($evaluador->tipo) == EvaluadoEvaluador::MISMA_AREA;
             });
             $promedio_competencias = 0;
-            $promedio_competencias_collect = collect();
-            // $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() > 0 ? $evaluado->puestoRelacionado->competencias->count() : 1;
-            $cantidad_competencias_evaluadas = count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id)) ? count($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id)) : 1;
-            $lista_autoevaluacion->push(array(
+            $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() > 0 ? $evaluado->puestoRelacionado->competencias->count() : 1;
+            $lista_autoevaluacion->push([
                 'tipo' => 'Autoevaluación',
                 'peso_general' => $evaluacion->peso_autoevaluacion,
                 'evaluaciones' => $filtro_autoevaluacion->map(function ($evaluador) use ($evaluacion, $evaluado) {
@@ -817,11 +797,9 @@ class EV360EvaluacionesController extends Controller
                         $calificacion += $competencia['porcentaje'];
                     }
                 }
-
-                // $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
-                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
-                // } else {
-                //     $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
+                $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
+            } else {
+                $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
             }
 
             $lista_jefe_inmediato->push([
@@ -844,10 +822,9 @@ class EV360EvaluacionesController extends Controller
                         $calificacion += $competencia['porcentaje'];
                     }
                 }
-                // $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100);
-                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
-                // } else {
-                //     $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100);
+                $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100);
+            } else {
+                $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100);
             }
 
             $lista_equipo_a_cargo->push([
@@ -870,10 +847,9 @@ class EV360EvaluacionesController extends Controller
                         $calificacion += $competencia['porcentaje'];
                     }
                 }
-                // $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_equipo / 100);
-                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
-                // } else {
-                //     $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_equipo / 100);
+                $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_equipo / 100);
+            } else {
+                $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_equipo / 100);
             }
 
             $lista_misma_area->push([
@@ -896,26 +872,18 @@ class EV360EvaluacionesController extends Controller
                         $calificacion += $competencia['porcentaje'];
                     }
                 }
-                // $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_area / 100);
-                $promedio_competencias_collect->push(($calificacion * 100) / $cantidad_competencias_evaluadas);
-                // } else {
-                //     $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_area / 100);
-            }
-
-            // $promedio_competencias = number_format($promedio_competencias / 100, 2);
-            $cantidad_participantes = $promedio_competencias_collect->count();
-            if ($this->empleadoTieneCompetenciasAsignadas($evaluado->id, $evaluacion->id)) {
-                $promedio_competencias = number_format($promedio_competencias_collect->sum(), 2);
-                $promedio_general_competencias = number_format(($promedio_competencias * ($evaluacion->peso_general_competencias / 100)) / $cantidad_participantes, 2);
-                $calificacion_final += $promedio_general_competencias;
+                $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_area / 100);
             } else {
-                $promedio_competencias = 1;
-                $promedio_general_competencias = 100 * ($evaluacion->peso_general_competencias / 100);
-                $calificacion_final += $evaluacion->peso_general_competencias;
+                $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_area / 100);
             }
+            // dd($promedio_competencias);
+            $promedio_competencias = number_format($promedio_competencias / 100, 2);
+            $promedio_general_competencias = $promedio_competencias * $evaluacion->peso_general_competencias;
+            $calificacion_final += $promedio_general_competencias;
         } else {
             //Logica para cuando no se evaluan competencias
         }
+
         $promedio_objetivos = 0;
         $promedio_general_objetivos = 0;
         $evaluadores_objetivos = collect();
@@ -945,11 +913,9 @@ class EV360EvaluacionesController extends Controller
                 ]);
             }
             $calificacion_objetivos = 0;
-            if ($evaluadores_objetivos->first()) {
-                if (count($evaluadores_objetivos->first()['objetivos'])) {
-                    foreach ($evaluadores_objetivos->first()['objetivos'] as $objetivo) {
-                        $calificacion_objetivos += $objetivo['calificacion'] / $objetivo['meta'];
-                    }
+            if (count($evaluadores_objetivos->first()['objetivos'])) {
+                foreach ($evaluadores_objetivos->first()['objetivos'] as $objetivo) {
+                    $calificacion_objetivos += $objetivo['calificacion'] / $objetivo['meta'];
                 }
             }
 
@@ -977,18 +943,11 @@ class EV360EvaluacionesController extends Controller
                 }),
             ]);
 
-            if ($this->empleadoTieneObjetivosAsignados($evaluado->id, $evaluacion->id)) {
-                $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
-                $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
-                $promedio_objetivos = number_format($promedio_objetivos, 2);
-                $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
-                $calificacion_final += $promedio_general_objetivos;
-            } else {
-
-                $promedio_objetivos = 1;
-                $promedio_general_objetivos = 100 * ($evaluacion->peso_general_objetivos / 100);
-                $calificacion_final +=  $evaluacion->peso_general_objetivos;
-            }
+            $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
+            $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
+            $promedio_objetivos = number_format($promedio_objetivos, 2);
+            $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
+            $calificacion_final += $promedio_general_objetivos;
         }
 
         return [
@@ -996,8 +955,8 @@ class EV360EvaluacionesController extends Controller
             'lista_jefe_inmediato' => $lista_jefe_inmediato,
             'lista_equipo_a_cargo' => $lista_equipo_a_cargo,
             'lista_misma_area' => $lista_misma_area,
-            'promedio_competencias' => number_format(($promedio_competencias / 100) / $cantidad_competencias_evaluadas, 2),
-            'promedio_general_competencias' => number_format($promedio_general_competencias, 2),
+            'promedio_competencias' => $promedio_competencias,
+            'promedio_general_competencias' => $promedio_general_competencias,
             'evaluadores_objetivos' => $evaluadores_objetivos,
             'promedio_objetivos' => $promedio_objetivos,
             'promedio_general_objetivos' => $promedio_general_objetivos,
@@ -1037,7 +996,6 @@ class EV360EvaluacionesController extends Controller
             }),
         ];
     }
-
 
     public function resumen($evaluacion)
     {
@@ -1079,13 +1037,7 @@ class EV360EvaluacionesController extends Controller
         ]);
         $calificaciones = $calificaciones->first();
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('evaluacion', 'calificaciones'));
-    }
-    public function resumenJefe($evaluacion)
-    {
-        $evaluacion = Evaluacion::with('evaluados')->find(intval($evaluacion));
-        $evaluados = $evaluacion->evaluados;
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('calificaciones', 'evaluacion'));
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('lista_evaluados', 'calificaciones', 'evaluacion'));
     }
 
     public function evaluacionesDelEmpleado($empleado)
@@ -1124,7 +1076,7 @@ class EV360EvaluacionesController extends Controller
                 $this->enviarNotificacionAlEvaluador($evaluador_model->email, $evaluacion, $evaluador_model, $evaluados);
                 if (env('APP_ENV') == 'local') { // solo funciona en desarrollo, es una muy mala práctica, es para que funcione con mailtrap y la limitación del plan gratuito
                     if (env('MAIL_HOST') == 'smtp.mailtrap.io') {
-                        sleep(4); //use usleep(500000) for half a second or less
+                        sleep(1); //use usleep(500000) for half a second or less
                     }
                 }
             }
@@ -1167,48 +1119,5 @@ class EV360EvaluacionesController extends Controller
     public function enviarCorreoInvitacionAlEvaluado($email, $evaluacion, $evaluador, $evaluado, $enlace)
     {
         Mail::to($email)->send(new CitaEvaluadorEvaluado($evaluacion, $evaluador, $evaluado, $enlace));
-    }
-
-    public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion)
-    {
-        $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->pluck('competencia_id')->unique()->toArray();
-        return $competencias;
-    }
-
-    public function empleadoTieneCompetenciasAsignadas($empleado, $evaluacion)
-    {
-        $existsObjetivos = EvaluacionRepuesta::where('evaluado_id', $empleado)->where('evaluacion_id', $evaluacion)->exists();
-        if ($existsObjetivos) {
-            return true;
-        }
-        return false;
-    }
-    public function empleadoTieneObjetivosAsignados($empleado, $evaluacion)
-    {
-        $existsObjetivos = ObjetivoRespuesta::where('evaluado_id', $empleado)->where('evaluacion_id', $evaluacion)->exists();
-        if ($existsObjetivos) {
-            return true;
-        }
-        return false;
-    }
-
-    public function misEvaluaciones($evaluacion, $evaluado)
-    {
-        $evaluacion = Evaluacion::select('id', 'nombre')->find(intval($evaluacion));
-        $evaluado = Empleado::select('id', 'name')->find(intval($evaluado));
-        $equipo = false;
-        // dd($informacion_obtenida);
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.mis-evaluaciones', compact('evaluacion', 'evaluado', 'equipo'));
-    }
-
-    public function evaluacionesDeMiEquipo($evaluacion, $evaluador)
-    {
-        $evaluacion = Evaluacion::select('id', 'nombre')->find(intval($evaluacion));
-        $evaluador = Empleado::select('id', 'name')->with('children')->find(intval($evaluador));
-        $evaluado = $this->obtenerEquipoACargo($evaluador->children);
-        $evaluado = $evaluador->children->first();
-        $equipo = true;
-        // dd($informacion_obtenida);
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.mis-evaluaciones', compact('evaluacion', 'evaluador', 'equipo', 'evaluado'));
     }
 }

@@ -5,16 +5,41 @@
             font-size: 11px;
         }
 
+        table {
+            height: 1px;
+        }
+
+        td.padding-0 {
+            padding: 0;
+        }
+
     </style>
     <div class="mt-3">
-        {{ Breadcrumbs::render('EV360-Evaluaciones') }}
+        {{-- {{ Breadcrumbs::render('EV360-Evaluaciones') }} --}}
     </div>
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Cuestionarios</strong></h3>
+            <h3 class="mb-2 text-center text-white"><strong>Evaluaciones 360°</strong></h3>
         </div>
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
+            <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                            Instrucciones</p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En este apartado podrá visualizar
+                            las evaluaciones creadas y conocer el
+                            estatus en el que se encuentran, así como crear nuevas evaluaciones.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered w-100 tblEvaluaciones">
                 <thead class="thead-dark">
                     <tr>
@@ -27,7 +52,7 @@
                         <th style="vertical-align: top">
                             Estatus
                         </th>
-                        <th style="vertical-align: top">
+                        {{-- <th style="vertical-align: top">
                             Autoevaluación
                         </th>
                         <th style="vertical-align: top">
@@ -38,7 +63,7 @@
                         </th>
                         <th style="vertical-align: top">
                             Misma&nbsp;Área
-                        </th>
+                        </th> --}}
                         <th style="vertical-align: top">
                             Fecha&nbsp;Inicio
                         </th>
@@ -46,10 +71,10 @@
                             Fecha&nbsp;Fin
                         </th>
                         <th style="vertical-align: top">
-                            Incluye&nbsp;Competencias
+                            ¿Incluye Competencias?
                         </th>
                         <th style="vertical-align: top">
-                            Incluye&nbsp;Objetivos
+                            ¿Incluye Objetivos?
                         </th>
                         <th style="vertical-align: top;">
                             Opciones
@@ -187,43 +212,73 @@
                     },
                     {
                         data: 'nombre',
-                        name: 'nombre'
+                        name: 'nombre',
+                        width: '800px'
                     },
                     {
                         data: 'estatus_formateado',
-                        name: 'estatus_formateado'
+                        name: 'estatus_formateado',
+                        render: function(data, type, row, meta) {
+                            return `
+                            <div class="text-center d-flex w-100 align-items-center" style="height:100%;background-color:${row.color_estatus};color:${row.color_estatus_text}">
+                                <p class="m-0 w-100">${data}</p>
+                            </div>
+                            `;
+                        },
+                        className: "padding-0",
+                        width: '110px'
                     },
-                    {
-                        data: 'autoevaluacion',
-                        name: 'autoevaluacion'
-                    },
-                    {
-                        data: 'evaluado_por_jefe',
-                        name: 'evaluado_por_jefe'
-                    },
-                    {
-                        data: 'evaluado_por_equipo_a_cargo',
-                        name: 'evaluado_por_equipo_a_cargo'
-                    },
-                    {
-                        data: 'evaluado_por_misma_area',
-                        name: 'evaluado_por_misma_area'
-                    },
+                    // {
+                    //     data: 'autoevaluacion',
+                    //     name: 'autoevaluacion',
+                    //     render: function(data, type, row, meta) {
+                    //         return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'evaluado_por_jefe',
+                    //     name: 'evaluado_por_jefe',
+                    //     render: function(data, type, row, meta) {
+                    //         return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'evaluado_por_equipo_a_cargo',
+                    //     name: 'evaluado_por_equipo_a_cargo',
+                    //     render: function(data, type, row, meta) {
+                    //         return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'evaluado_por_misma_area',
+                    //     name: 'evaluado_por_misma_area',
+                    //     render: function(data, type, row, meta) {
+                    //         return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                    //     }
+                    // },
                     {
                         data: 'fecha_inicio',
-                        name: 'fecha_inicio'
+                        name: 'fecha_inicio',
+                        width: '110px'
                     },
                     {
                         data: 'fecha_fin',
-                        name: 'fecha_fin'
+                        name: 'fecha_fin',
+                        width: '110px'
                     },
                     {
                         data: 'include_competencias',
-                        name: 'include_competencias'
+                        name: 'include_competencias',
+                        render: function(data, type, row, meta) {
+                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                        }
                     },
                     {
                         data: 'include_objetivos',
-                        name: 'include_objetivos'
+                        name: 'include_objetivos',
+                        render: function(data, type, row, meta) {
+                            return `<span class="badge badge-primary">${data?'Si':'No'}</span>`;
+                        }
                     },
                     {
                         data: 'id',
@@ -238,12 +293,12 @@
                             let urlResumen = `
                                 /recursos-humanos/evaluacion-360/evaluacion/${data}/resumen
                                 `;
+                            // <a href="${urlEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                            // <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                             let html = `
                                 <div class="btn-group" style="background: white;">
-                                    <a href="${urlEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    <a href="${urlShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                                     <a href="${urlEvaluacion}" class="btn btn-sm" title="Evaluación"><i class="fas fa-cogs"></i></a>
-                                    <a href="${urlResumen}" class="btn btn-sm" title="Evaluación"><i class="fas fa-chart-bar"></i></a>
+                                    <a href="${urlResumen}" class="btn btn-sm" title="Gráfica"><i class="fas fa-chart-bar"></i></a>
                                     <button onclick="Delete('${urlEdit}',${row})" class="btn btn-sm text-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                                 </div>
                             `;
@@ -254,7 +309,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, 'desc']
+                    [0, 'desc']
                 ],
                 // fixedColumns: true,
                 // scrollX: true,

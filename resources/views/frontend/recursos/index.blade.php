@@ -141,7 +141,7 @@
 
             ];
 
-            {{--  @can('recurso_create') --}}
+            {{-- @can('recurso_create') --}}
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar curso y capacitación',
@@ -153,7 +153,7 @@
                 }
                 };
                 dtButtons.push(btnAgregar);
-                {{--  @endcan --}}
+                {{-- @endcan --}}
                     {{-- @can('recurso_delete') --}}
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
