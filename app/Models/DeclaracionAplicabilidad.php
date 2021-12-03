@@ -22,6 +22,12 @@ class DeclaracionAplicabilidad extends Model
         'anexo_indice',
         'control',
         'descripcion_control',
+        'justificacion',
+        'aplica',
+        'aprobadores_id',
+        'responsables_id',
+        'estatus',
+        'fecha_aprobacion',
         'created_at',
         'updated_at',
     ];
@@ -35,5 +41,10 @@ class DeclaracionAplicabilidad extends Model
     public function aprobadores()
     {
         return $this->belongsToMany('App\Models\Empleado', 'declaracion_aplicabilidad_aprobadores', 'declaracion_id','aprobadores_id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'aprobadores_id', 'id');
     }
 }

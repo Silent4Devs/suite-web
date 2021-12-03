@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\DeclaracionAplicabilidad;
 use Carbon\Carbon;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use App\Models\DeclaracionAplicabilidad;
 
 class DeclaracionAplicabilidadController extends Controller
 {
@@ -96,6 +97,8 @@ class DeclaracionAplicabilidadController extends Controller
         $ISO27001_SoA_PATH = 'storage/Normas/ISO27001/Analísis Inicial/';
         $path = public_path($ISO27001_SoA_PATH);
         $lista_archivos_declaracion = glob($path . 'Analisis Inicial*.pdf');
+        $empleados=Empleado::select('id','name','genero','foto')->get();
+
 
         // dd(DB::getQueryLog());
         // dd($lista_archivos_declaracion);
@@ -139,6 +142,22 @@ class DeclaracionAplicabilidadController extends Controller
 
                     return response()->json(['success' => true]);
                     break;
+                case 'estatus':
+                    $gapun = DeclaracionAplicabilidad::findOrFail($id);
+                    $gapun->estatus = $request->value;
+                    $gapun->save();
+
+                    return response()->json(['success' => true]);
+                    break;
+
+                case 'comentarios':
+                    $gapun = DeclaracionAplicabilidad::findOrFail($id);
+                    $gapun->comentarios = $request->value;
+                    $gapun->save();
+
+                    return response()->json(['success' => true]);
+                    break;
+
             }
         }
     }

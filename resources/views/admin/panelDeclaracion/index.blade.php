@@ -1,67 +1,133 @@
 @extends('layouts.admin')
 @section('content')
 
-<style>
-    .select-revisores .select2-selection {
-        height: 50px !important;
-    }
+    <style>
+        .select-revisores .select2-selection {
+            height: 50px !important;
+        }
 
-    .select-revisores .select2-selection,
-    .select-revisores textarea {
-        border: 2px solid #0b9095 !important;
-        height: 50px !important;
-    }
+        .select-revisores .select2-selection,
+        .select-revisores textarea {
+            border: 2px solid #0b9095 !important;
+            height: 50px !important;
+        }
 
-    .labels-publicacion {
-        color: #0b9095 !important;
-        font-weight: normal !important;
-    }
-
-
-    .table tr td:nth-child(3){
-        min-width:300px !important;
-    }
-
-    .table tr td:nth-child(4){
-            min-width:300px !important;
-    }
-
-</style>
+        .labels-publicacion {
+            color: #0b9095 !important;
+            font-weight: normal !important;
+        }
 
 
-@include('partials.flashMessages')
+        .table tr td:nth-child(3) {
+            min-width: 300px !important;
+        }
 
-<div class="mt-5 card">
-    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-        <h3 class="mb-2 text-center text-white"><strong>Controles</strong></h3>
+        .table tr td:nth-child(4) {
+            min-width: 300px !important;
+        }
+
+    </style>
+
+    @include('partials.flashMessages')
+
+    <div class="mt-5 card">
+        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            <h3 class="mb-2 text-center text-white"><strong>Asignación Controles</strong></h3>
+        </div>
+
+
+        <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor de cada uno de los controles
+                        seleccionar al responsable
+                        de su gestión así como al responsable de aprobar dicho control
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body datatable-fix">
+            <table class="table table-bordered w-100 datatable datatable-PanelDeclaracion">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            No
+                        </th>
+                        <th>
+                            Control
+                        </th>
+                        <th>
+                            Responsable
+                        </th>
+                        <th>
+                            Aprobador
+                        </th>
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+
+                </thead>
+            </table>
+
+            <div class="container">
+                {{-- <div class="mb-4 row">
+                    <div class="text-center col">
+                        <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal"
+                            data-target="#ResponsablesModal"><i class="mr-2 text-white fas fa-file"
+                                style="font-size:13pt"></i>Notificar&nbsp;usuario</a>
+                    </div>
+                </div> --}}
+                <!-- modal -->
+                <div class="modal fade" id="ResponsablesModal" tabindex="-1" role="dialog"
+                    aria-labelledby="basicModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class='carousel-inner'>
+                                    {{-- <select class="revisoresSelect" id='responsables'
+                                        multiple="multiple">
+                                        @foreach ($empleados as $responsable)
+                                            <option data-image='{{ $responsable->foto }}'
+                                                data-id-empleado='{{ $responsable->id }}'
+                                                data-gender='{{ $responsable->genero }}'>
+                                                {{ $responsable->name }}</option>
+                                        @endforeach
+
+                                    </select> --}}
+                                    <p>Realizó modificaciones en la lista de asistentes. Elija una de las opciones siguientes</p>
+                                    <input type="radio" id="contactChoice1"name="contact" value="email"> Enviar actualizaciones solo
+                                    a los asistentes agregados o eliminados
+                                    <br>
+                                    <input type="radio" id="contactChoice1"name="contact" value="email">&nbsp;Enviar actualizaciones a todos
+                                    los asistentes
+                                    <br>
+                                    <button type="button" class="mt-3 btn btn-primary btnEnviar"
+                                        onclick="enviarCorreo(event,'responsable')">Enviar</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-    <div class="card-body datatable-fix">
-        <table class="table table-bordered w-100 datatable datatable-PanelDeclaracion">
-            <thead class="thead-dark">
-                <tr>
-                    <th>
-                        No
-                    </th>
-                    <th>
-                        Control
-                     </th>
-                    <th>
-                       Responsable
-                    </th>
-                    <th>
-                        Aprobador
-                    </th>
-                    <th>
-                        Opciones
-                    </th>
-                </tr>
-
-            </thead>
-        </table>
-    </div>
-</div>
 @endsection
+
+
 
 
 @section('scripts')
@@ -133,6 +199,12 @@
                     text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Restaurar a estado anterior',
+                },
+                {
+                    text: '<a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#ResponsablesModal"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Notificar&nbsp;usuario</a>',
+                    action: function(e, dt, node, config) {
+
+                    }
                 }
 
             ];
@@ -211,29 +283,32 @@
                     {
                         data: 'responsable',
                         name: 'responsable',
-                        render: function(data, type,row, meta) {
-                         let responsableselect ="";
-                         let responsableselects = JSON.parse(row.empleados);
-                         console.log(row.empleados.declaraciones_responsable);
-                         responsableselect =`
+                        render: function(data, type, row, meta) {
+                            let responsableselect = "";
+                            let responsableselects = JSON.parse(row.empleados);
+                            //  console.log(row.empleados.declaraciones_responsable);
+                            responsableselect = `
                             <select class="revisoresSelect" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
-                                ${responsableselects?.map ((responsableselect,idx)=>{
+                                ${responsableselects?.map ((responsable,idx)=>{
                                     return`
-                                    <option data-image='${responsableselect.foto}' data-id-empleado='${responsableselect.id}' data-gender='${responsableselect.genero}'>
-                                        ${responsableselect.name }</option>`})}
+                                            <option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-image='${responsable.foto}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>
+                                                            ${responsable.name }</option>`})}
                             </select>`;
-                             $(`select#responsables${row.id}`).select2({
+                            $(`select#responsables${row.id}`).select2({
                                 theme: 'bootstrap4',
                                 templateResult: formatState,
                                 templateSelection: formatState
                             });
-                            $(`select#responsables${row.id}`).on('select2:select', function (e) {
-                                const declaracion=this.getAttribute('data-id');
-                                const {element}=e.params.data;
-                                const responsable=element.getAttribute('data-id-empleado')
-                                const url="{{route('admin.paneldeclaracion.responsables')}}";
-                                const token="{{ csrf_token() }}";
-                                const request= fetch(url,{
+                            $(`select#responsables${row.id}`).on('select2:select', function(e) {
+                                const declaracion = this.getAttribute('data-id');
+                                const {
+                                    element
+                                } = e.params.data;
+                                const responsable = element.getAttribute('data-id-empleado')
+                                const url =
+                                    "{{ route('admin.paneldeclaracion.responsables') }}";
+                                const token = "{{ csrf_token() }}";
+                                const request = fetch(url, {
                                     mode: 'cors', // this cannot be 'no-cors'
                                     headers: {
                                         'X-CSRF-TOKEN': token,
@@ -241,43 +316,77 @@
                                         'Content-Type': 'application/json',
                                     },
                                     method: 'POST',
-                                    body: JSON.stringify({ declaracion, responsable })
+                                    body: JSON.stringify({
+                                        declaracion,
+                                        responsable
+                                    })
                                 });
-                                request.then(response=>response.json()).
-                                then(data=>{
-                                    console.log(data)
+                                request.then(response => response.json()).
+                                then(data => {
+                                    toastr.success(data.message);
                                 }).
-                                catch(error=>console.log)
-                                console.log(empleadoId);
+                                catch(error => console.log)
                             });
-                                    return responsableselect;
+                            $(`select#responsables${row.id}`).on('select2:unselect', function(e) {
+                                const declaracion = this.getAttribute('data-id');
+                                const {
+                                    element
+                                } = e.params.data;
+                                const responsable = element.getAttribute('data-id-empleado')
+                                const url =
+                                    "{{ route('admin.paneldeclaracion.responsables.quitar') }}";
+                                const token = "{{ csrf_token() }}";
+                                const request = fetch(url, {
+                                    mode: 'cors', // this cannot be 'no-cors'
+                                    headers: {
+                                        'X-CSRF-TOKEN': token,
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json',
+                                    },
+                                    method: 'POST',
+                                    body: JSON.stringify({
+                                        declaracion,
+                                        responsable
+                                    })
+                                });
+                                request.then(response => response.json()).
+                                then(data => {
+                                    toastr.success(data.message);
+                                }).
+                                catch(error => console.log)
+                                console.log(declaracion, responsable);
+                            });
+                            return responsableselect;
                         }
                     },
                     {
                         data: 'aprobador',
                         name: 'aprobador',
-                        render: function(data, type,row, meta) {
-                        let aprobadorselect ="";
-                        let aprobadoreselects = JSON.parse(row.empleados);
-                        aprobadorselect  =`
-                        <select class="revisoresSelect" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple">
-                            ${aprobadoreselects?.map ((aprobadorselect,idx)=>{
+                        render: function(data, type, row, meta) {
+                            let aprobadorselect = "";
+                            let aprobadoreselects = JSON.parse(row.empleados);
+                            aprobadorselect = `
+                        <select class="revisoresSelect" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
+                            ${aprobadoreselects?.map ((aprobador,idx)=>{
                                 return`
-                                <option data-image='${aprobadorselect.foto}' data-id-empleado='${aprobadorselect.id}' data-gender='${aprobadorselect.genero}'>
-                                    ${aprobadorselect.name }</option>`})}
+                                                    <option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-image='${aprobador.foto}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>
+                                                        ${aprobador.name }</option>`})}
                                 </select>`;
-                                $(`select#aprobadores${row.id}`).select2({
+                            $(`select#aprobadores${row.id}`).select2({
                                 theme: 'bootstrap4',
                                 templateResult: formatState,
                                 templateSelection: formatState
                             });
-                            $(`select#aprobadores${row.id}`).on('select2:select', function (e) {
-                                const declaracion=this.getAttribute('data-id');
-                                const {element}=e.params.data;
-                                const aprobador=element.getAttribute('data-id-empleado')
-                                const url="{{route('admin.paneldeclaracion.aprobadores')}}";
-                                const token="{{ csrf_token() }}";
-                                const request= fetch(url,{
+                            $(`select#aprobadores${row.id}`).on('select2:select', function(e) {
+                                const declaracion = this.getAttribute('data-id');
+                                const {
+                                    element
+                                } = e.params.data;
+                                const aprobador = element.getAttribute('data-id-empleado')
+                                const url =
+                                    "{{ route('admin.paneldeclaracion.aprobadores') }}";
+                                const token = "{{ csrf_token() }}";
+                                const request = fetch(url, {
                                     mode: 'cors', // this cannot be 'no-cors'
                                     headers: {
                                         'X-CSRF-TOKEN': token,
@@ -285,14 +394,46 @@
                                         'Content-Type': 'application/json',
                                     },
                                     method: 'POST',
-                                    body: JSON.stringify({ declaracion, aprobador })
+                                    body: JSON.stringify({
+                                        declaracion,
+                                        aprobador
+                                    })
                                 });
-                                request.then(response=>response.json()).
-                                then(data=>{
+                                request.then(response => response.json()).
+                                then(data => {
                                     console.log(data)
                                 }).
-                                catch(error=>console.log)
+                                catch(error => console.log)
                                 console.log(empleadoId);
+                            });
+                            $(`select#aprobadores${row.id}`).on('select2:unselect', function(e) {
+                                const declaracion = this.getAttribute('data-id');
+                                const {
+                                    element
+                                } = e.params.data;
+                                const aprobador = element.getAttribute('data-id-empleado')
+                                const url =
+                                    "{{ route('admin.paneldeclaracion.aprobadores.quitar') }}";
+                                const token = "{{ csrf_token() }}";
+                                const request = fetch(url, {
+                                    mode: 'cors', // this cannot be 'no-cors'
+                                    headers: {
+                                        'X-CSRF-TOKEN': token,
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json',
+                                    },
+                                    method: 'POST',
+                                    body: JSON.stringify({
+                                        declaracion,
+                                        aprobador
+                                    })
+                                });
+                                request.then(response => response.json()).
+                                then(data => {
+                                    toastr.success(data.message);
+                                }).
+                                catch(error => console.log)
+                                console.log(declaracion, aprobador);
                             });
                             return aprobadorselect;
                         }
@@ -308,7 +449,7 @@
                 ]
             };
             let table = $('.datatable-PanelDeclaracion').DataTable(dtOverrideGlobals);
-              // buttons: dtButtons
+            // buttons: dtButtons
             // })
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
             //     $($.fn.dataTable.tables(true)).DataTable()
@@ -326,89 +467,125 @@
 
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-        $('select').select2({
-            theme: 'bootstrap4',
+        document.addEventListener('DOMContentLoaded', function() {
+
+            window.enviarCorreo = (e, tipo) => {
+                // console.log("Enviar correo");
+                const responsables = $(e.target.parentElement.querySelector('select')).select2('data');
+                const array_responsables = [];
+                responsables.forEach(responsable => {
+                    const responsable_id = responsable.element.getAttribute('data-id-empleado')
+                    array_responsables.push(responsable_id)
+                })
+                const url = "{{ route('admin.paneldeclaracion.enviarcorreo') }}"
+                const token = "{{ csrf_token() }}";
+                const request = fetch(url, {
+                        mode: 'cors', // this cannot be 'no-cors'
+                        headers: {
+                            'X-CSRF-TOKEN': token,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'POST',
+                        body: JSON.stringify({
+                            responsables: JSON.stringify(array_responsables),
+                            tipo
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+            }
+
+            $('select').select2({
+                theme: 'bootstrap4',
+            });
+
+            $('select.empleado').select2({
+                theme: 'bootstrap4',
+                templateResult: formatState,
+                templateSelection: formatState
+            });
+
+            $('.revisoresSelect').select2({
+                theme: 'bootstrap4',
+                templateResult: formatState,
+                templateSelection: formatStateMulti
+            });
+
+            $(`select#responsables`).select2({
+                theme: 'bootstrap4',
+                templateResult: formatState,
+                templateSelection: formatState
+            });
+
         });
 
-        $('select.empleado').select2({
-            theme: 'bootstrap4',
-            templateResult: formatState,
-            templateSelection: formatState
-        });
-
-        $('.revisoresSelect').select2({
-            theme: 'bootstrap4',
-            templateResult: formatState,
-            templateSelection: formatStateMulti
-        });
-
-    });
-
-    window.formatStateMulti=(opt)=> {
-        if (!opt.id) {
-            return opt.text;
-        }
-
-        var optimage = $(opt.element).attr('data-image');
-        var gender = $(opt.element).attr('data-gender');
-        if (!optimage) {
-            let foto = 'ususario_no_cargado.png'
-            if (gender == 'M') {
-                foto = 'woman.png';
+        window.formatStateMulti = (opt) => {
+            if (!opt.id) {
+                return opt.text;
             }
 
-            if (gender == 'H') {
-                foto = 'man.png';
+            var optimage = $(opt.element).attr('data-image');
+            var gender = $(opt.element).attr('data-gender');
+            if (!optimage) {
+                let foto = 'ususario_no_cargado.png'
+                if (gender == 'M') {
+                    foto = 'woman.png';
+                }
+
+                if (gender == 'H') {
+                    foto = 'man.png';
+                }
+
+                var $opt = $(
+                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + foto +
+                    '" class="img-fluid rounded-circle" width="30" height="30"/></span>'
+                );
+                return $opt;
+            } else {
+                var $opt = $(
+                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + optimage +
+                    '" class="img-fluid rounded-circle" width="30" height="30"/></span>'
+                );
+                return $opt;
+            }
+        };
+
+        window.formatState = (opt) => {
+            if (!opt.id) {
+                return opt.text;
             }
 
-            var $opt = $(
-                '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + foto +
-                '" class="img-fluid rounded-circle" width="30" height="30"/></span>'
-            );
-            return $opt;
-        } else {
-            var $opt = $(
-                '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + optimage +
-                '" class="img-fluid rounded-circle" width="30" height="30"/></span>'
-            );
-            return $opt;
-        }
-    };
+            var optimage = $(opt.element).attr('data-image');
+            var gender = $(opt.element).attr('data-gender');
+            if (!optimage) {
+                let foto = 'ususario_no_cargado.png'
+                if (gender == 'M') {
+                    foto = 'woman.png';
+                }
 
-    window.formatState=(opt)=> {
-        if (!opt.id) {
-            return opt.text;
-        }
+                if (gender == 'H') {
+                    foto = 'man.png';
+                }
 
-        var optimage = $(opt.element).attr('data-image');
-        var gender = $(opt.element).attr('data-gender');
-        if (!optimage) {
-            let foto = 'ususario_no_cargado.png'
-            if (gender == 'M') {
-                foto = 'woman.png';
+                var $opt = $(
+                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + foto +
+                    '" class="img-fluid rounded-circle" width=25 height=25/> ' +
+                    opt.text + '</span>'
+                );
+                return $opt;
+            } else {
+                var $opt = $(
+                    '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + optimage +
+                    '" class="img-fluid rounded-circle" width=25 height=25/> ' +
+                    opt.text + '</span>'
+                );
+                return $opt;
             }
 
-            if (gender == 'H') {
-                foto = 'man.png';
-            }
-
-            var $opt = $(
-                '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + foto +
-                '" class="img-fluid rounded-circle" width=25 height=25/> ' +
-                opt.text + '</span>'
-            );
-            return $opt;
-        } else {
-            var $opt = $(
-                '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' + optimage +
-                '" class="img-fluid rounded-circle" width=25 height=25/> ' +
-                opt.text + '</span>'
-            );
-            return $opt;
-        }
-    };
-
+        };
     </script>
 
 

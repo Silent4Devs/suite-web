@@ -53,6 +53,7 @@ class User extends Authenticatable
         'deleted_at',
         'team_id',
         'two_factor_expires_at',
+        'is_active',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
