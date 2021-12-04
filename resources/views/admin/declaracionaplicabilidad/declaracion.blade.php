@@ -115,21 +115,25 @@
                                                 <a href="#" data-type="select" data-pk="{{ $g5s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
                                                     data-title="Seleccionar estatus" data-value="{{ $g5s->estatus }}"
-                                                    class="estatus" data-name="estatus">
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
                                                 </a>
                                             </td>
                                             <td>
                                                 <a href="#" data-type="textarea" data-pk="{{ $g5s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
                                                     data-title="Comentarios" data-value="{{ $g5s->comentarios }}"
-                                                    class="justificacion" data-name="comentarios">
+                                                    class="justificacion" data-name="comentarios" >
                                                 </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g5s->id}}" >
+                                                @if($g5s->estatus == 2 )
+                                                {{$g5s->updated_at}}
+                                                @endif
+                                                hola
+
                                             </td>
                                         </tr>
                                     @endforeach
