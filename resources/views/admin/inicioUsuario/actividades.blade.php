@@ -33,7 +33,7 @@
         <thead>
             <tr>
                 <th>Actividad</th>
-                <th>Tipo</th>
+                <th>Origen</th>
                 {{-- <th>Categoria</th> --}}
                 {{-- <th>Urgencia</th> --}}
                 <th style="min-width:200px;">Fecha&nbsp;inicio</th>

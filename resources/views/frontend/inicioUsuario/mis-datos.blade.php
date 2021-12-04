@@ -156,7 +156,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-3 title-info-personal">Area</div>
+                                    <div class="col-3 title-info-personal">Área</div>
                                     <div class="col-3 title-info-personal">Puesto</div>
                                     <div class="col-3 title-info-personal">Sede</div>
                                     <div class="col-3 title-info-personal">Estatus</div>
