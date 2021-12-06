@@ -17,6 +17,7 @@ use App\Models\EvidenciasRiesgo;
 use App\Models\EvidenciasSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
+use App\Models\PanelInicioRule;
 use App\Models\PlanImplementacion;
 use App\Models\Proceso;
 use App\Models\Quejas;
@@ -190,7 +191,9 @@ class InicioUsuarioController extends Controller
             $mis_objetivos = collect();
         }
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'last_evaluacion'));
+        $panel_rules = PanelInicioRule::select('nombre', 'n_empleado', 'area', 'jefe_inmediato', 'puesto', 'perfil', 'fecha_ingreso', 'genero', 'estatus', 'email', 'telefono', 'sede', 'direccion', 'cumpleaños')->get()->first();
+
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
