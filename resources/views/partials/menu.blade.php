@@ -603,6 +603,15 @@
                     @endcan --}}
                     @can('role_access')
                         <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.panel-inicio.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/panel-inicio') || request()->is('admin/panel-inicio/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-chalkboard-teacher iconos_menu letra_blanca"></i>
+                                <span class="letra_blanca" style="margin-left:10px;"> Mi perfil </span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('role_access')
+                        <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.roles.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-briefcase iconos_menu letra_blanca"></i>
