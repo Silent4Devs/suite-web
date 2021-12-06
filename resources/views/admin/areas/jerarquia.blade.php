@@ -447,7 +447,7 @@
             background-color: rgba(255, 255, 255, 10);
             border-radius: 20px;
             /* redondear bordes (esquinas)*/
-            box-shadow: 3px 3px 3px #707070;
+            /* box-shadow: 3px 3px 3px #707070; */
             /*sombra del elemento-desplazamiento x-desplazamiento y-desenfoque-color*/
 
         }
@@ -485,7 +485,43 @@
             margin-bottom: -2px;
             margin-right: 10px;
         }
-
+        #chart-container{
+            /* background-color:red; */
+            /* z-index:1 !important; */
+            position:relative !important;
+        }
+        .charContainerAll{
+            /* background-color:yellow; */
+            z-index:0 !important;
+            position: relative !important;
+        }
+        .caja_grupos{
+            left:20px;
+            transition:0.5s !important;
+            margin-left:-150px;
+            position:absolute; 
+            top:30px; 
+            background: white;
+            z-index:1;
+        }
+        .grupos_funciones .caja_grupos{
+            margin-left:0px;
+            /* transition:0.5s !important; */
+           
+        }
+        .btn_grupos{
+            transform:rotate(0deg);
+            transition:0.5s;
+        }
+        .grupos_funciones .btn_grupos{
+            transform:rotate(180deg);
+        }
+        .modal-backdrop{
+            display:none;
+        }
+        .caja_grupos ul{
+            transition:0.5s !important;
+        }
     </style>
 @endsection
 @section('content')
@@ -542,6 +578,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-1 col-sm-12" style="position: relative;">
                                 <div class="pl-0 col-3" style="position: absolute;top: 20px;left: 0;">
                                     <button class="btn btn-lg" id="reloadOrg" title="Recargar organigrama"
@@ -550,13 +587,14 @@
                             </div>
                         </div>
 
+
+
+
                         {{-- <div id="exportData"></div> --}}
                         <div class="contenedor-areas">
-                            <div id="chart-container" class="m-0" style="position: relative">
-                                {{-- <div id="chart-side" class="sidenav" style="width: 0px"></div> --}}
-                            </div>
-                            <div class="row justify-content-end" style="position: absolute;top: 20px;right: 35px;">
-                                <ul style="background: white;">
+                            <i class="fas fa-caret-right btn_grupos" style= "position:absolute; top:0; font-size:25pt;"></i>
+                            <div class="row caja_grupos">
+                                <ul >
                                     @foreach ($grupos as $grupo)
                                         <li class="mb-2 d-flex align-items-center" data-toggle="modal"
                                             data-target="#Grupo{{ $grupo->id }}" style="cursor: pointer;">
@@ -618,6 +656,9 @@
                                     @endforeach
                                 </ul>
                             </div>
+                            <div id="chart-container" class="m-0" style="position: relative">
+                                {{-- <div id="chart-side" class="sidenav" style="width: 0px"></div> --}}
+                            </div>
                         </div>
 
                     </section>
@@ -643,7 +684,7 @@
                                                                 <div class="mb-3 ml-2 mr-2 bg-white rounded col-3 sesioninicio"
                                                                     style="height:40px; border:1px solid #ccc !important"
                                                                     onclick="renderModal(this,'{{ $area->area }}', '{{ $area->descripcion }}', '{{ $grupo->color }}')">
-                                                                    <p class="text-center" style="cursor:pointer">
+                                                                    <p class="text-center" style="cursor:pointer border:1px solid #ccc !important">
                                                                         {{ $area->area }}
                                                                     </p>
                                                                 </div>
@@ -651,8 +692,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="menulogin d-none"
-                                                    style="border-top:solid 3px rgb(163, 163, 163);">
+                                                <div class="menulogin d-none" style="border:solid 3px rgb(163, 163, 163);">
                                                 </div>
                                             </div>
                                         @endforeach
@@ -682,6 +722,15 @@
     </div>
 @endsection
 @section('scripts')
+
+    <script>
+
+    $(".btn_grupos").click(function(){
+        $(".contenedor-areas").toggleClass("grupos_funciones");
+    });
+
+    </script>
+
     <script type="module">
         import OrgChart from "{{ asset('orgchart/orgchart.js') }}"; // Se importan funcionalidades de OrgChart
 
@@ -767,7 +816,7 @@
 
     <script>
         function renderModal(element, nombre, descripcion, color) {
-            element.style.border = `2px solid ${color!=null?color:"black"}`;
+            //element.style.border = `2px solid ${color!=null?color:"black"}`;
 
             let contenedor = document.querySelector(".menulogin");
             contenedor.classList.remove("d-none")
@@ -788,7 +837,7 @@
             let btnCerrar = document.querySelector(".btnCerrar");
             btnCerrar.addEventListener("click", function(e) {
                 e.preventDefault();
-                element.style.border = "none";
+                // element.style.border = "none";
                 contenedor.classList.remove("d-block")
                 contenedor.classList.add("d-none")
             });
