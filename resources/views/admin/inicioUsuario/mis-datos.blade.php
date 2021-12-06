@@ -260,7 +260,9 @@
                                 </h5>
                                 <hr class="hr-custom-title">
                                 <div class="row">
+                                    @if ($panel_rules->n_empleado)
                                     <div class="col-3 title-info-personal">N° Empleado</div>
+                                    @endif
                                     <div class="col-3 title-info-personal">Email</div>
                                     <div class="col-3 title-info-personal">Fecha Ingreso</div>
                                     <div class="col-3 title-info-personal">Jefe Inmediato</div>
