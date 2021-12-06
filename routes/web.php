@@ -727,7 +727,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('reportes-contexto/', 'ReporteContextoController@index')->name('reportes-contexto.index');
     Route::post('reportes-contexto/create', 'ReporteContextoController@store')->name('reportes-contexto.store');
 
-    Route::resource('panel-inicio', PanelInicioRuleController::class);
+    Route::resource('panel-inicio', 'PanelInicioRuleController');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {

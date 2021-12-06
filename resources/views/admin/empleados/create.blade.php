@@ -490,7 +490,7 @@
                                         <div class="row">
                                             <div class="form-group col-sm-12 col-md-6 ">
                                                 <label for="direccion"><i
-                                                        class="fas fa-map iconos-crear"></i>Direccion</label>
+                                                        class="fas fa-map iconos-crear"></i>Dirección</label>
                                                 <input
                                                     class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}"
                                                     type="text" name="direccion" id="direccion"
