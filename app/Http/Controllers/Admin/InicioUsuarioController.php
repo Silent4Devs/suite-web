@@ -17,6 +17,7 @@ use App\Models\EvidenciasRiesgo;
 use App\Models\EvidenciasSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
+use App\Models\PanelInicioRule;
 use App\Models\PlanImplementacion;
 use App\Models\Proceso;
 use App\Models\Quejas;
@@ -143,24 +144,26 @@ class InicioUsuarioController extends Controller
             $mis_documentos = Documento::with('macroproceso')->where('elaboro_id', $usuario->empleado->id)->get();
             //Evaluaciones
             $last_evaluacion = Evaluacion::select('id', 'nombre', 'fecha_inicio', 'fecha_fin')->latest()->first();
-            $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                $q->where('estatus', Evaluacion::ACTIVE)
-                    ->where('fecha_inicio', '<=', Carbon::now())
-                    ->where('fecha_fin', '>', Carbon::now())
-                    ->where('id', $last_evaluacion->id);
-            })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)
-                ->where('evaluado_id', '!=', auth()->user()->empleado->id)
-                ->where('evaluado', false)
-                ->get();
-            $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                $q->where('estatus', Evaluacion::ACTIVE)
-                    ->where('fecha_inicio', '<=', Carbon::now())
-                    ->where('fecha_fin', '>', Carbon::now())
-                    ->where('id', $last_evaluacion->id);
-            })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)
-                ->where('evaluado_id', auth()->user()->empleado->id)
-                ->first();
+            if ($last_evaluacion) {
+                $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
+                    $q->where('estatus', Evaluacion::ACTIVE)
+                        ->where('fecha_inicio', '<=', Carbon::now())
+                        ->where('fecha_fin', '>', Carbon::now())
+                        ->where('id', $last_evaluacion->id);
+                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)
+                    ->where('evaluado_id', '!=', auth()->user()->empleado->id)
+                    ->where('evaluado', false)
+                    ->get();
 
+                $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
+                    $q->where('estatus', Evaluacion::ACTIVE)
+                        ->where('fecha_inicio', '<=', Carbon::now())
+                        ->where('fecha_fin', '>', Carbon::now())
+                        ->where('id', $last_evaluacion->id);
+                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)
+                    ->where('evaluado_id', auth()->user()->empleado->id)
+                    ->first();
+            }
             // $mis_objetivos = Empleado::with(['objetivos' => function ($q) {
             //     $q->with(['objetivo' => function ($query) {
             //         $query->with(['calificacion']);
@@ -190,7 +193,9 @@ class InicioUsuarioController extends Controller
             $mis_objetivos = collect();
         }
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'last_evaluacion'));
+        $panel_rules = PanelInicioRule::select('nombre', 'n_empleado', 'area', 'jefe_inmediato', 'puesto', 'perfil', 'fecha_ingreso', 'genero', 'estatus', 'email', 'telefono', 'sede', 'direccion', 'cumpleaños')->get()->first();
+
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
