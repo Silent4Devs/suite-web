@@ -66,7 +66,7 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto','declaraciones_responsable','declaraciones_aprobador'];
+    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto'];
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
@@ -308,15 +308,15 @@ class Empleado extends Model
     }
     //declaraciones
 
-    public function getDeclaracionesResponsableAttribute()
-    {
-       $misDeclaraciones=DeclaracionAplicabilidadResponsable::select('id','declaracion_id')->where('empleado_id',$this->id)->pluck('declaracion_id')->toArray();
-       return $misDeclaraciones;
-    }
+    // public function getDeclaracionesResponsableAttribute()
+    // {
+    //    $misDeclaraciones=DeclaracionAplicabilidadResponsable::select('id','declaracion_id')->where('empleado_id',$this->id)->pluck('declaracion_id')->toArray();
+    //    return $misDeclaraciones;
+    // }
 
-    public function getDeclaracionesAprobadorAttribute()
-    {
-       $misDeclaraciones=DeclaracionAplicabilidadAprobadores::select('id','declaracion_id')->where('aprobadores_id',$this->id)->pluck('declaracion_id')->toArray();
-       return $misDeclaraciones;
-    }
+    // public function getDeclaracionesAprobadorAttribute()
+    // {
+    //    $misDeclaraciones=DeclaracionAplicabilidadAprobadores::select('id','declaracion_id')->where('aprobadores_id',$this->id)->pluck('declaracion_id')->toArray();
+    //    return $misDeclaraciones;
+    // }
 }

@@ -77,11 +77,14 @@
                                 <div class="px-5">
                                     @if (auth()->user()->empleado)
                                         <div class="text-center">
-                                            <img src="{{ asset('storage/empleados/imagenes/' . auth()->user()->empleado->avatar) }}"
-                                                class="usuario-bloqueado-foto img-fluid" alt="">
+                                            {{-- <img src="{{ asset('storage/empleados/imagenes/' . auth()->user()->empleado->avatar) }}"
+                                                class="usuario-bloqueado-foto img-fluid" alt=""> --}}
+                                            <img src="{{ asset('img/cancel-user.svg') }}" class="img-fluid"
+                                                style="width:60%" alt="">
                                         </div>
-                                        <h2 class="mt-4 mb-0 h1 text-theme" style="text-transform: uppercase">Usuario
-                                            Bloqueado
+                                        <h2 class="mt-4 mb-0 h1 text-theme">Sin
+                                            acceso
+                                            a la plataforma
                                         </h2>
                                         <p class="mt-3 mb-2 text-muted" style="font-size:14px">Hola
                                             {{ auth()->user()->empleado->name }}, ponte en
@@ -91,11 +94,12 @@
                                             este conflicto</p>
                                     @else
                                         <div class="text-center">
-                                            <img src="{{ asset('img/block-user.png') }}"
-                                                class="usuario-bloqueado-foto img-fluid" alt="">
+                                            <img src="{{ asset('img/cancel-user.svg') }}" class="img-fluid"
+                                                style="width:60%" alt="">
                                         </div>
-                                        <h2 class="mt-4 mb-0 h1 text-theme" style="text-transform: uppercase">Usuario
-                                            Bloqueado
+                                        <h2 class="mt-4 mb-0 h1 text-theme">Sin
+                                            acceso
+                                            a la plataforma
                                         </h2>
                                         <p class="mt-3 mb-2 text-muted" style="font-size:14px">Hola
                                             {{ auth()->user()->name }}, ponte en contacto
