@@ -43,6 +43,26 @@
                 <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
             </div>
             <div class="form-group col-sm-6">
+                <label class="" for="razon_social"><i class="far fa-building iconos-crear"></i> Razón Social</label>
+                <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" type="text" name="razon_social" id="razon_social" value="{{ old('razon_social', '') }}">
+                @if($errors->has('razon_social'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('razon_social') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="" for="rfc"><i class="fas fa-file-alt iconos-crear"></i>RFC</label>
+                <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="rfc" id="rfc" value="{{ old('rfc', '') }}" >
+                @if($errors->has('rfc'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('rfc') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
+            </div>
+            <div class="form-group col-sm-6">
                 <label for="telefono"> <i class="fas fa-phone iconos-crear"></i> Teléfono</label>
                 <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number" name="telefono" id="telefono" value="{{ old('telefono', '') }}" step="1">
                 @if($errors->has('telefono'))
@@ -78,7 +98,7 @@
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" class="needsclick dropzone" name="logotipo" id="logotipo" class="form-control {{ $errors->has('logotipo') ? 'is-invalid' : '' }}"  id="logotipo-dropzone" accept="image/*" value="{{ old('logotipo', '') }}">
                         <label class="custom-file-label" for="inputGroupFile02"></label>
-                 
+
                     </div>
                 </div>
                     @if($errors->has('logotipo'))
@@ -87,6 +107,47 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="" for="representante_legal"><i class="iconos-crear fas fa-user"></i>Representante Legal</label>
+                <input class="form-control {{ $errors->has('representante_legal') ? 'is-invalid' : '' }}" type="text" name="representante_legal" id="representante_legal" value="{{ old('representante_legal', '') }}" >
+                @if($errors->has('representante_legal'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('representante_legal') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
+            </div>
+
+            <div class="form-group col-sm-6">
+                <label for="fecha_constitucion"><i class="iconos-crear  fas fa-calendar-alt"></i>Fecha de constitución</label>
+                <input class="form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}" type="date" name="fecha_constitucion" id="fecha_constitucion" value="{{ old('fecha_constitucion') }}">
+                @if($errors->has('fecha_constitucion'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('fecha_constitucion') }}
+                </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span> --}}
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="" for="num_empleados"><i class="iconos-crear  fas fa-users"></i>Número de empleados</label>
+                <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number" name="num_empleados" id="num_empleados" value="{{ old('num_empleados', $countEmpleados) }}" style="" readonly >
+                @if($errors->has('num_empleados'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('num_empleados') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="" for="tamano"><i class="iconos-crear  fas fa-building"></i>Tamaño</label>
+                <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text" name="tamano" id="tamano" value="{{ old('tamano', $tamanoEmpresa) }}" readonly>
+                @if($errors->has('tamano'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('tamano') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
             </div>
 
 
@@ -118,9 +179,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.giro_helper') }}</span>
             </div>
-
             <div class="form-group col-sm-6">
                 <label for="mision"> <i class="fas fa-flag iconos-crear"></i> {{ trans('cruds.organizacion.fields.mision') }}</label>
+                <label for="valores"> <i class="far fa-heart iconos-crear"></i> {{ trans('cruds.organizacion.fields.valores') }}</label>
                 <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision" id="mision">{{ old('mision') }}</textarea>
                 @if($errors->has('mision'))
                     <div class="invalid-feedback">

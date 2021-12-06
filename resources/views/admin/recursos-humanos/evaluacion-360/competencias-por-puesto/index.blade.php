@@ -135,7 +135,7 @@
                 ajax: "{{ route('admin.ev360-competencias-por-puesto.index') }}",
                 columns: [{
                     data: 'puesto',
-                    width: '40%',
+                    width: '30%',
                 }, {
                     data: 'competencias',
                     render: function(data, type, row, meta) {
@@ -149,7 +149,7 @@
                         html += '</div>';
                         return html;
                     },
-                    width: '20%',
+                    width: '30%',
                 }, {
                     data: 'competencias',
                     render: function(data, type, row, meta) {
@@ -164,7 +164,7 @@
                         let urlBtnAsignarCompetencias =
                             `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
                         let botones =
-                            `<a class="btn btn-sm btn-editar btn-primary" title="Asignar competencias" href="${urlBtnAsignarCompetencias}"><i class="mr-2 fas fa-user-tag"></i> Asignar</a>`;
+                            `<a class="btn btn-sm btn-editar btn-primary" title="Agregar competencias" href="${urlBtnAsignarCompetencias}"><i class="mr-2 fas fa-user-tag"></i> Agregar</a>`;
                         return botones;
                     },
                     width: '15%'

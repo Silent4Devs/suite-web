@@ -329,7 +329,7 @@
                                 let html =
                                     `
                 			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/seguridad-edit/" class="btn archivar"><i class="fas fa-edit"></i></a>`;
+                				<a href="/admin/desk/${data}/seguridad-edit/"><i class="fas fa-edit"></i></a>`;
 
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {

@@ -7,16 +7,33 @@
         overflow-x: auto;
     }
 
-    .td_nombre{
+    .td_nombre {
         min-width: 400px !important;
     }
+
 </style>
-<div class="card-body datatable-fix">
+<div class="card-body datatable-fix w-100">
+    <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="row w-100">
+            <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                <div class="w-100">
+                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                </div>
+            </div>
+            <div class="col-11">
+                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará las actividades
+                    que le han sido asignadas en los Planes de Acción creados dentro del sistema.
+                </p>
+
+            </div>
+        </div>
+    </div>
     <table id="tabla_usuario_actividades" class="table">
         <thead>
             <tr>
                 <th>Actividad</th>
-                <th>Tipo</th>
+                <th>Origen</th>
                 {{-- <th>Categoria</th> --}}
                 {{-- <th>Urgencia</th> --}}
                 <th style="min-width:200px;">Fecha&nbsp;inicio</th>
@@ -80,12 +97,11 @@
                         @php
                             if (intval($task->parent_id) == 1) {
                                 $ruta = '/admin/planTrabajoBase/';
-                            }
-                            else{
-                                $ruta = '/admin/planes-de-accion/'.$task->parent_id;
+                            } else {
+                                $ruta = '/admin/planes-de-accion/' . $task->parent_id;
                             }
                         @endphp
-                        <a href="{{asset($ruta)}}"><i class="far fas fa-stream"></i></a>
+                        <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
                         {{-- <i class="fas fa-code-branch"></i> delegar --}}
                         {{-- <i class="far fa-times-circle"></i> rechazar --}}
                         {{-- <i class="fas fa-archive"></i> archivado --}}
@@ -130,12 +146,12 @@
                     orientation: 'portrait',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
-                        orthogonal:"compartido"
+                        orthogonal: "compartido"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {

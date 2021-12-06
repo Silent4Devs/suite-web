@@ -25,15 +25,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DeclaracionAplicabilidadAprobadores extends Model
 {
-	use SoftDeletes;
+	// use SoftDeletes;
 	protected $table = 'declaracion_aplicabilidad_aprobadores';
 
 	protected $casts = [
 		'declaracion_id' => 'int',
 		'aprobadores_id' => 'int',
 		'estatus' => 'int',
-		'created_at' => 'timestamp without time zone',
-		'updated_at' => 'timestamp without time zone'
 	];
 
 	protected $dates = [

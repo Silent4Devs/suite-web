@@ -43,7 +43,7 @@
                                 class="fas fa-map-marker-alt iconos-crear"></i>{{ trans('cruds.organizacion.fields.direccion') }}</label>
                         <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}"
                             name="direccion" id="direccion"
-                            required>{{ old('direccion', $organizacion->direccion) }}</textarea>
+                            required style="min-height: 0px; max-height: 200px; height: 35px;">{{ old('direccion', $organizacion->direccion) }}</textarea>
                         @if ($errors->has('direccion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('direccion') }}
@@ -52,6 +52,29 @@
                         <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label class="" for="razon_social">Razón Social</label>
+                        <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" type="text" name="razon_social" id="razon_social" value="{{ old('razon_social', $organizacion->razon_social) }}" >
+                        @if($errors->has('razon_social'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('razon_social') }}
+                            </div>
+                        @endif
+                        {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="" for="rfc">RFC</label>
+                        <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="rfc" id="rfc" value="{{ old('rfc', $organizacion->rfc) }}" >
+                        @if($errors->has('rfc'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('rfc') }}
+                            </div>
+                        @endif
+                        {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
+                    </div>
+                </div>
+
 
                 <div class="row">
                     <div class="form-group col-sm-6">
@@ -109,6 +132,51 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label class="" for="representante_legal">Representante Legal</label>
+                        <input class="form-control {{ $errors->has('representante_legal') ? 'is-invalid' : '' }}" type="text" name="representante_legal" id="representante_legal" value="{{ old('representante_legal', $organizacion->representante_legal) }}" >
+                        @if($errors->has('representante_legal'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('representante_legal') }}
+                            </div>
+                        @endif
+                        {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="fecha_constitucion">Fecha de constitución</label>
+                        <input class=" form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}" type="date" name="fecha_constitucion" id="fecha_constitucion" value="{{ old('fecha_constitucion',  \Carbon\Carbon::parse($organizacion->fecha_constitucion))->format('Y-m-d') }}">
+                        @if($errors->has('fecha_constitucion'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_constitucion') }}
+                        </div>
+                        @endif
+                        {{-- <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span> --}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label class="" for="num_empleados">Número de empleados</label>
+                        <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number" name="num_empleados" id="num_empleados" value="{{ old('num_empleados', $organizacion->num_empleados) }}" readonly>
+                        @if($errors->has('num_empleados'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('num_empleados') }}
+                            </div>
+                        @endif
+                        {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="" for="tamano">Tamaño</label>
+                        <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text" name="tamano" id="tamano" value="{{ old('tamano', $organizacion->tamano) }}" readonly>
+                        @if($errors->has('tamano'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('tamano') }}
+                            </div>
+                        @endif
+                        {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
+                    </div>
+                </div>
+
                 <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">
                         <p class="mb-1 text-center text-white">DATOS COMPLEMENTARIOS</p>
@@ -144,7 +212,7 @@
 
                 <div class="row">
                     <div class="form-group col-sm-6">
-                        <label for="mision"><i class="fas fa-flag iconos-crear"></i> </label>
+                        <label for="mision"><i class="fas fa-flag iconos-crear"></i>Misión </label>
                         <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision"
                             id="mision">{{ old('mision', $organizacion->mision) }}</textarea>
                         @if ($errors->has('mision'))

@@ -8,8 +8,7 @@
         <div class="col-11">
             <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Intrucciones</p>
             <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Por favor seleccione de los siguientes controles
-                cuales
-                serán aplicables a su organización y justifique su selección
+                cuales serán aplicables a su organización y justifique su selección
             </p>
 
         </div>
@@ -48,25 +47,38 @@
                                     </div>
                                 </div>
                             @endif
+                            <button type="button" class="btn btn-sm btn-outline-success dropdown-toggle"
+                             aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#ResponsablesModal">
+                             <i class="far fa-file"></i>
+                            Notificar responsable
+                        </button>
+                            {{-- <a href="#" class="btn btn-sm btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#ResponsablesModal">Notificar&nbsp;responsable</a> --}}
                         </div>
+
+
                         <div class="table-responsive">
                             <table class="table" style="font-size: 12px;">
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
+                                        <th style="width:15px !important;" >RESPONSABLE</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">A.5
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">A.5
                                             Políticas de Seguridad de Información</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.5.1 Directivas de la gestión para seguridad de la
                                             información</td>
                                     </tr>
@@ -82,7 +94,9 @@
                                             <td style="width:35%">
                                                 {{ $g5s->anexo_descripcion }}
                                             </td>
-
+                                            <td>
+                                                Hola
+                                            </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g5s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
@@ -96,6 +110,30 @@
                                                     data-title="Justificacion" data-value="{{ $g5s->justificacion }}"
                                                     class="justificacion" data-name="justificacion">
                                                 </a>
+                                            </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g5s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{ $g5s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="#" data-type="textarea" data-pk="{{ $g5s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g5s->comentarios }}"
+                                                    class="justificacion" data-name="comentarios" >
+                                                </a>
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g5s->id}}" >
+                                                @if($g5s->estatus == 2 )
+                                                {{$g5s->updated_at}}
+                                                @endif
+                                                hola
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -112,16 +150,19 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15px !important;" scope="col" >RESPONSABLE</th>
+                                        <th scope="col" style="width: 5%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">A.6
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">A.6
                                             Organización de la seguridad de la información</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.6.1 organización interna</td>
                                     </tr>
 
@@ -151,7 +192,15 @@
                                                     class="justificacion" data-name="justificacion">
                                                 </a>
                                             </td>
-
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -165,6 +214,9 @@
                                     <th style="width:55%" COLSPAN="2">CONTROL</th>
                                     <th scope="col" style="width: 5%">APLICA</th>
                                     <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                    <th style="width:5% !important;" scope="col">RESPONSABLE</th>
+                                    <th scope="col" style="width: 5%">ESTATUS</th>
+                                    <th scope="col" style="width:35%;">COMENTARIOS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -193,6 +245,15 @@
                                                 class="justificacion" data-name="justificacion">
                                             </a>
                                         </td>
+                                        <td>
+                                            Hola
+                                        </td>
+                                        <td>
+                                            Hola
+                                        </td>
+                                        <td>
+                                            Hola
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -207,16 +268,19 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">A.7
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">A.7
                                             seguridad de los recursos humanos</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.7.1 Antes de empleo</td>
                                     </tr>
 
@@ -247,6 +311,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -262,12 +335,15 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">A
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">A
                                             7.2 Durante el empleo</td>
                                     </tr>
                                     @foreach ($gapda72s as $g72s)
@@ -297,6 +373,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -311,12 +396,15 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.7.3 Cese al empleo o cambio de puesto de trabajo</td>
                                     </tr>
                                     @foreach ($gapda73s as $g73s)
@@ -346,6 +434,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -360,16 +457,19 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">A.8
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">A.8
                                             Administración de activos</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.8.1 Responsabilidad sobre los activos</td>
                                     </tr>
 
@@ -400,6 +500,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -414,16 +523,19 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.8.2 Clasificación de la información</td>
                                     </tr>
                                     <tr class="grises">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             Objetivo de control: Asegurar que la información reciba un
                                             nivel adecuado de protección, de acuerdo con su importancia para la
                                             organización.</td>
@@ -455,6 +567,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -469,12 +590,15 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.8.3 Manipulación de los soportes</td>
                                     </tr>
                                     @foreach ($gapda83s as $g83s)
@@ -504,6 +628,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -518,14 +651,17 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" class="negras">
-                                        <td colspan="6">A.9 Control de acceso</td>
+                                        <td colspan="8">A.9 Control de acceso</td>
                                     </tr>
                                     <tr class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" class="verdes">
-                                        <td colspan="6">A.9.1 Requisitos del negocio para control de acceso</td>
+                                        <td colspan="8">A.9.1 Requisitos del negocio para control de acceso</td>
                                     </tr>
                                     @foreach ($gapda91s as $g91s)
                                         <tr>
@@ -554,6 +690,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -568,12 +713,15 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.9.2 Gestión de accesos de usuario</td>
                                     </tr>
 
@@ -606,6 +754,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -620,12 +777,15 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.9.3 Responsabilidades del usuario</td>
                                     </tr>
 
@@ -656,6 +816,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -671,12 +840,15 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.9.4 Control de acceso a sistema y aplicaciones</td>
                                     </tr>
                                     @foreach ($gapda94s as $g94s)
@@ -706,6 +878,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -720,16 +901,19 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.10 Criptografía</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.10.1 Controles Criptografícos </td>
                                     </tr>
                                     @foreach ($gapda101s as $g101s)
@@ -760,6 +944,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -774,15 +967,18 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.11 Seguridad Física y del Entorno</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.11.1 Áreas seguras </td>
                                     </tr>
                                     @foreach ($gapda111s as $g111s)
@@ -813,6 +1009,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -827,12 +1032,15 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.11.2 Seguridad de los Equipos</td>
                                     </tr>
 
@@ -864,6 +1072,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -878,15 +1095,18 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.12 Seguridad de las Operaciones</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.12.1 Procedimientos y Responsbilidades Operacionales</td>
                                     </tr>
                                     @foreach ($gapda121s as $g121s)
@@ -917,6 +1137,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -931,6 +1160,9 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -965,6 +1197,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -979,11 +1220,14 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.12.3 Copias de Seguridad</td>
                                     </tr>
                                     @foreach ($gapda123s as $g123s)
@@ -1014,6 +1258,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1028,11 +1281,14 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.12.4 Registro y Supervisión </td>
                                     </tr>
                                     @foreach ($gapda124s as $g124s)
@@ -1063,6 +1319,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1077,12 +1342,15 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.12.5 Control de Software y Explotación </td>
                                     </tr>
                                     @foreach ($gapda125s as $g125s)
@@ -1113,6 +1381,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1127,12 +1404,15 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.12.6 Gestión de la Vulnerabilidad Técnica </td>
                                     </tr>
                                     @foreach ($gapda126s as $g126s)
@@ -1163,6 +1443,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1177,11 +1466,14 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.12.7 Consideraciones sobre la auditoria de sistemas de
                                             información</td>
                                     </tr>
@@ -1213,6 +1505,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1227,15 +1528,18 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.13 Seguridad de las comunicaciones</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.13.1 Gestión de la seguridad de redes</td>
                                     </tr>
                                     @foreach ($gapda131s as $g131s)
@@ -1266,6 +1570,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1280,11 +1593,14 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.13.2 Intercambio de información</td>
                                     </tr>
                                     @foreach ($gapda132s as $g132s)
@@ -1315,6 +1631,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1329,16 +1654,19 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.14 Adquisición, desarrollo y mantenimiento de los sistemas
                                             de información</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.14.1 Requisitos de seguridad en sistemas de información
                                         </td>
                                     </tr>
@@ -1370,6 +1698,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1384,11 +1721,14 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.14.2 Seguridad en el desarrollo y en los procesos de
                                             soporte</td>
                                     </tr>
@@ -1421,6 +1761,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1435,11 +1784,14 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.14.3 Datos de prueba</td>
                                     </tr>
                                     @foreach ($gapda143s as $g143s)
@@ -1470,6 +1822,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1484,16 +1845,19 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.15 Relación con los proveedores</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.15.1 Requisitos de seguridad en sistemas de información
                                         </td>
                                     </tr>
@@ -1525,6 +1889,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1539,11 +1912,14 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.15.2 Gestión de la provisión de servicios del proveedor
                                         </td>
                                     </tr>
@@ -1575,6 +1951,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1589,16 +1974,19 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.16 Gestión de incidentes de Seguridad de la Información
                                         </td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.16.1 Gestión de incidentes de Seguridad de la Información
                                             y mejoras</td>
                                     </tr>
@@ -1630,6 +2018,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1644,16 +2041,19 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.17 Aspectos de seguridad de la información para la gestión
                                             de la continuidad del Instituto</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.17.1 Continuidad de la Seguridad de la Información</td>
                                     </tr>
                                     @foreach ($gapda171s as $g171s)
@@ -1684,6 +2084,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1698,11 +2107,14 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.17.2 Redundancias</td>
                                     </tr>
 
@@ -1734,6 +2146,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1748,15 +2169,18 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.18 Cumplimiento</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.18.1 Cumplimiento de los requisitos legales y
                                             contractuales</td>
                                     </tr>
@@ -1788,6 +2212,15 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -1802,11 +2235,14 @@
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
                                         <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:20%" scope="col">RESPONSABLE</th>
+                                        <th scope="col" style="width: 15%">ESTATUS</th>
+                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
                                             A.18.2 Revisiones de la Seguridad de la Información</td>
                                     </tr>
                                     @foreach ($gapda182s as $g182s)
@@ -1836,6 +2272,15 @@
                                                     data-value="{{ $g132s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
                                                 </a>
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
+                                            </td>
+                                            <td>
+                                                Hola
                                             </td>
                                         </tr>
                                     @endforeach
