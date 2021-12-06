@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             ClausulasSeeder::class,
             VulnerabilidadesTableSeeder::class,
             AmenazasTableSeeder::class,
+            PanelInicioSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }
