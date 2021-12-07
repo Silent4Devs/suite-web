@@ -56,6 +56,8 @@
                         </div>
 
 
+
+
                         <div class="table-responsive">
                             <table class="table" style="font-size: 12px;">
                                 <thead class="thead-dark" align="center">
@@ -95,8 +97,8 @@
                                                 {{ $g5s->anexo_descripcion }}
                                             </td>
                                             <td>
-                                                Hola
-                                            </td>
+                                                {{$g5s->empleado_id}}
+                                             </td>
                                             <td style="width:5%">
                                                 <a href="#" data-type="select" data-pk="{{ $g5s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
@@ -126,7 +128,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                Hola
+                                               {{$g5s->aprobadores_id}}
                                             </td>
                                             <td style="width:15%" id="actualizacion_fecha_{{$g5s->id}}" >
                                                 @if($g5s->estatus == 2 )
@@ -147,22 +149,24 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:15px !important;" scope="col" >RESPONSABLE</th>
-                                        <th scope="col" style="width: 5%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">A.6
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">A.6
                                             Organización de la seguridad de la información</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.6.1 organización interna</td>
                                     </tr>
 
@@ -192,14 +196,27 @@
                                                     class="justificacion" data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g6s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g6s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{ $g6s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g6s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g6s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g6s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g6s->id}}" >
+                                                @if($g6s->estatus == 2 )
+                                                {{$g6s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -211,12 +228,13 @@
                             <thead class="thead-dark" align="center">
                                 <tr>
                                     <th scope="col" style="width: 5%">INDICE</th>
-                                    <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                    <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                     <th scope="col" style="width: 5%">APLICA</th>
-                                    <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                    <th style="width:5% !important;" scope="col">RESPONSABLE</th>
-                                    <th scope="col" style="width: 5%">ESTATUS</th>
-                                    <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                    <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                    <th style="width:15%;" scope="col">ESTATUS</th>
+                                    <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                    <th style="width:15px !important;" >APROBADOR</th>
+                                    <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -245,14 +263,27 @@
                                                 class="justificacion" data-name="justificacion">
                                             </a>
                                         </td>
+                                        <td style="width:15%">
+                                            <a href="#" data-type="select" data-pk="{{ $g62s->id }}"
+                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g62s->id) }}"
+                                                data-title="Seleccionar estatus" data-value="{{ $g62s->estatus }}"
+                                                class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                            </a>
+                                        </td>
                                         <td>
-                                            Hola
+                                            <a href="#" data-type="textarea" data-pk="{{ $g62s->id }}"
+                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g62s->id) }}"
+                                                data-title="Comentarios" data-value="{{ $g62s->comentarios }}"
+                                                class="comentarios" data-name="comentarios" >
+                                            </a>
                                         </td>
                                         <td>
                                             Hola
                                         </td>
-                                        <td>
-                                            Hola
+                                        <td style="width:15%" id="actualizacion_fecha_{{$g62s->id}}" >
+                                            @if($g62s->estatus == 2 )
+                                            {{$g62s->updated_at}}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -265,22 +296,23 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">A.7
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">A.7
                                             seguridad de los recursos humanos</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.7.1 Antes de empleo</td>
                                     </tr>
 
@@ -311,14 +343,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g71s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g71s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g71s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g71s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g71s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g71s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g71s->id}}" >
+                                                @if($g5s->estatus == 2 )
+                                                {{$g5s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -332,18 +377,19 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">A
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">A
                                             7.2 Durante el empleo</td>
                                     </tr>
                                     @foreach ($gapda72s as $g72s)
@@ -373,14 +419,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g72s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g72s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g72s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g72s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g72s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g72s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g72s->id}}" >
+                                                @if($g5s->estatus == 2 )
+                                                {{$g5s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -393,18 +452,19 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.7.3 Cese al empleo o cambio de puesto de trabajo</td>
                                     </tr>
                                     @foreach ($gapda73s as $g73s)
@@ -434,14 +494,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{$g73s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update',$g73s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g73s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{$g73s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update',$g73s->id) }}"
+                                                    data-title="Comentarios" data-value="{{$g73s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g73s->id}}" >
+                                                @if($g73s->estatus == 2 )
+                                                {{$g73s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -454,22 +527,23 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="negras">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">A.8
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">A.8
                                             Administración de activos</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.8.1 Responsabilidad sobre los activos</td>
                                     </tr>
 
@@ -500,14 +574,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g81s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g81s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g81s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g81s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g81s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g81s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g81s->id}}" >
+                                                @if($g81s->estatus == 2 )
+                                                {{$g81s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -520,22 +607,23 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.8.2 Clasificación de la información</td>
                                     </tr>
                                     <tr class="grises">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             Objetivo de control: Asegurar que la información reciba un
                                             nivel adecuado de protección, de acuerdo con su importancia para la
                                             organización.</td>
@@ -567,14 +655,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g82s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g82s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g82s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g82s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g82s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g82s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g82s->id}}" >
+                                                @if($g82s->estatus == 2 )
+                                                {{$g5s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -587,18 +688,19 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.8.3 Manipulación de los soportes</td>
                                     </tr>
                                     @foreach ($gapda83s as $g83s)
@@ -628,14 +730,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g83s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g83s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g83s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g83s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g83s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g83s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g83s->id}}" >
+                                                @if($g83s->estatus == 2 )
+                                                {{$g83s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -648,12 +763,13 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -690,14 +806,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g91s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g91s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g91s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g91s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g91s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g91s->id}}" >
+                                                @if($g91s->estatus == 2 )
+                                                {{$g91s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -710,18 +839,19 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.9.2 Gestión de accesos de usuario</td>
                                     </tr>
 
@@ -754,14 +884,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g92s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g92s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g92s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g92s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g92s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g92s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g92s->id}}" >
+                                                @if($g92s->estatus == 2 )
+                                                {{$g92s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -774,18 +917,19 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.9.3 Responsabilidades del usuario</td>
                                     </tr>
 
@@ -816,14 +960,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g93s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g93s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g93s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g93s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g93s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g93s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g93s->id}}" >
+                                                @if($g93s->estatus == 2 )
+                                                {{$g93s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -837,18 +994,19 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.9.4 Control de acceso a sistema y aplicaciones</td>
                                     </tr>
                                     @foreach ($gapda94s as $g94s)
@@ -878,14 +1036,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g94s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g94s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g94s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g94s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g94s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g94s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g94s->id}}" >
+                                                @if($g94s->estatus == 2 )
+                                                {{$g94s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -898,22 +1069,23 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.10 Criptografía</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.10.1 Controles Criptografícos </td>
                                     </tr>
                                     @foreach ($gapda101s as $g101s)
@@ -944,14 +1116,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g101s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g101s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g101s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g101s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g101s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g101s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g101s->id}}" >
+                                                @if($g101s->estatus == 2 )
+                                                {{$g101s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -964,21 +1149,22 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.11 Seguridad Física y del Entorno</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.11.1 Áreas seguras </td>
                                     </tr>
                                     @foreach ($gapda111s as $g111s)
@@ -1009,14 +1195,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g111s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g111s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g111s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g111s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g111s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g111s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g111s->id}}" >
+                                                @if($g111s->estatus == 2 )
+                                                {{$g111s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1029,18 +1228,19 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.11.2 Seguridad de los Equipos</td>
                                     </tr>
 
@@ -1072,14 +1272,28 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g112s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g112s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g112s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g112s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g112s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g112s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g112s->id}}" >
+                                                @if($g112s->estatus == 2 )
+                                                {{$g112s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1092,21 +1306,22 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.12 Seguridad de las Operaciones</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.12.1 Procedimientos y Responsbilidades Operacionales</td>
                                     </tr>
                                     @foreach ($gapda121s as $g121s)
@@ -1137,14 +1352,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g121s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g121s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g121s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g121s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g121s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g121s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g121s->id}}" >
+                                                @if($g121s->estatus == 2 )
+                                                {{$g121s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1157,17 +1385,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="6">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.12.2 Protección contra el software malicioso</td>
                                     </tr>
                                     @foreach ($gapda122s as $g122s)
@@ -1197,14 +1426,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g122s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g122s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g122s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g122s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g122s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g122s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g122s->id}}" >
+                                                @if($g122s->estatus == 2 )
+                                                {{$g122s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1217,17 +1459,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.12.3 Copias de Seguridad</td>
                                     </tr>
                                     @foreach ($gapda123s as $g123s)
@@ -1258,14 +1501,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g123s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g123s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g123s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g123s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g123s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g123s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g123s->id}}" >
+                                                @if($g123s->estatus == 2 )
+                                                {{$g123s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1278,17 +1534,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.12.4 Registro y Supervisión </td>
                                     </tr>
                                     @foreach ($gapda124s as $g124s)
@@ -1319,14 +1576,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g124s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g124s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g124s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g124s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g124s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g124s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g124s->id}}" >
+                                                @if($g124s->estatus == 2 )
+                                                {{$g124s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1339,18 +1609,19 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.12.5 Control de Software y Explotación </td>
                                     </tr>
                                     @foreach ($gapda125s as $g125s)
@@ -1381,14 +1652,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g125s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g125s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g125s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g125s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g125s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g125s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g125s->id}}" >
+                                                @if($g125s->estatus == 2 )
+                                                {{$g125s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1401,18 +1685,19 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.12.6 Gestión de la Vulnerabilidad Técnica </td>
                                     </tr>
                                     @foreach ($gapda126s as $g126s)
@@ -1443,14 +1728,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g126s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g126s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g126s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g126s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g126s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g126s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g126s->id}}" >
+                                                @if($g126s->estatus == 2 )
+                                                {{$g126s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1463,17 +1761,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.12.7 Consideraciones sobre la auditoria de sistemas de
                                             información</td>
                                     </tr>
@@ -1505,14 +1804,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g127s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g127s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g127s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g127s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g127s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g127s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g127s->id}}" >
+                                                @if($g127s->estatus == 2 )
+                                                {{$g127s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1525,21 +1837,22 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.13 Seguridad de las comunicaciones</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.13.1 Gestión de la seguridad de redes</td>
                                     </tr>
                                     @foreach ($gapda131s as $g131s)
@@ -1570,14 +1883,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g131s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g131s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g131s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
+                                            <td class="text-justify">
+                                                <a href="#" data-type="textarea" data-pk="{{ $g131s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g131s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g131s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g131s->id}}" >
+                                                @if($g131s->estatus == 2 )
+                                                {{$g131s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1590,17 +1916,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.13.2 Intercambio de información</td>
                                     </tr>
                                     @foreach ($gapda132s as $g132s)
@@ -1631,14 +1958,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g132s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g132s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g132s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g132s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g132s->id}}" >
+                                                @if($g132s->estatus == 2 )
+                                                {{$g132s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1651,22 +1991,23 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.14 Adquisición, desarrollo y mantenimiento de los sistemas
                                             de información</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.14.1 Requisitos de seguridad en sistemas de información
                                         </td>
                                     </tr>
@@ -1698,14 +2039,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g141s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g141s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g141s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g141s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g141s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g141s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g141s->id}}" >
+                                                @if($g141s->estatus == 2 )
+                                                {{$g141s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1718,17 +2072,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.14.2 Seguridad en el desarrollo y en los procesos de
                                             soporte</td>
                                     </tr>
@@ -1761,14 +2116,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g142s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g142s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g142s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g142s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g142s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g142s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g142s->id}}" >
+                                                @if($g142s->estatus == 2 )
+                                                {{$g142s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1781,17 +2149,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.14.3 Datos de prueba</td>
                                     </tr>
                                     @foreach ($gapda143s as $g143s)
@@ -1822,14 +2191,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g143s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g143s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g143s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g143s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g143s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g143s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g143s->id}}" >
+                                                @if($g143s->estatus == 2 )
+                                                {{$g143s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1842,22 +2224,23 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.15 Relación con los proveedores</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.15.1 Requisitos de seguridad en sistemas de información
                                         </td>
                                     </tr>
@@ -1889,14 +2272,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g151s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g151s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g151s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
+                                            <td class="text-justify">
+                                                <a href="#" data-type="textarea" data-pk="{{ $g151s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g151s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g151s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g151s->id}}" >
+                                                @if($g151s->estatus == 2 )
+                                                {{$g151s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1909,17 +2305,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.15.2 Gestión de la provisión de servicios del proveedor
                                         </td>
                                     </tr>
@@ -1951,14 +2348,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g152s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g152s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g152s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
+                                            <td class="text-justify">
+                                                <a href="#" data-type="textarea" data-pk="{{ $g152s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g152s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g152s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g152s->id}}" >
+                                                @if($g152s->estatus == 2 )
+                                                {{$g152s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -1973,10 +2383,11 @@
                                         <th scope="col" style="width: 5%">INDICE</th>
                                         <th style="width:55%" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -2018,14 +2429,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g161s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g161s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g161s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
+                                            <td class="text-justify">
+                                                <a href="#" data-type="textarea" data-pk="{{ $g161s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g161s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g161s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g161s->id}}" >
+                                                @if($g161s->estatus == 2 )
+                                                {{$g161s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -2038,17 +2462,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.17 Aspectos de seguridad de la información para la gestión
                                             de la continuidad del Instituto</td>
                                     </tr>
@@ -2084,14 +2509,27 @@
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g171s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g171s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g171s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
+                                            <td class="text-justify">
+                                                <a href="#" data-type="textarea" data-pk="{{ $g171s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g171s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g171s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g171s->id}}" >
+                                                @if($g171s->estatus == 2 )
+                                                {{$g171s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -2104,17 +2542,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.17.2 Redundancias</td>
                                     </tr>
 
@@ -2140,20 +2579,33 @@
 
                                             <td class="text-justify">
                                                 <a href="#" data-type="textarea" data-pk="{{ $g172s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g172s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g132s->justificacion }}" class="justificacion"
+                                                    data-value="{{ $g172s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
+                                                </a>
+                                            </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g172s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g72s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g172s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
+                                            <td class="text-justify">
+                                                <a href="#" data-type="textarea" data-pk="{{ $g172s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g172s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g172s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
                                                 </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
-                                            </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g172s->id}}" >
+                                                @if($g172s->estatus == 2 )
+                                                {{$g172s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -2166,21 +2618,22 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.18 Cumplimiento</td>
                                     </tr>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.18.1 Cumplimiento de los requisitos legales y
                                             contractuales</td>
                                     </tr>
@@ -2205,21 +2658,34 @@
                                             </td>
 
                                             <td class="text-justify">
-                                                <a href="#" data-type="textarea" data-pk="{{ $g132s->id }}"
-                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
+                                                <a href="#" data-type="textarea" data-pk="{{ $g181s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g181s->id) }}"
                                                     data-title="Justificacion"
-                                                    data-value="{{ $g132s->justificacion }}" class="justificacion"
+                                                    data-value="{{ $g181s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
+                                                </a>
+                                            </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g181s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g181s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g181s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
+                                            <td class="text-justify">
+                                                <a href="#" data-type="textarea" data-pk="{{ $g181s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g81s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g181s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
                                                 </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
-                                            </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g181s->id}}" >
+                                                @if($g181s->estatus == 2 )
+                                                {{$g181s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -2232,17 +2698,18 @@
                                 <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col" style="width: 5%">INDICE</th>
-                                        <th style="width:55%" COLSPAN="2">CONTROL</th>
+                                        <th style="min-width:400px" COLSPAN="2">CONTROL</th>
                                         <th scope="col" style="width: 5%">APLICA</th>
-                                        <th style="width:35%;" scope="col">JUSTIFICACIÓN</th>
-                                        <th style="width:20%" scope="col">RESPONSABLE</th>
-                                        <th scope="col" style="width: 15%">ESTATUS</th>
-                                        <th scope="col" style="width:35%;">COMENTARIOS</th>
+                                        <th style="min-width:200px;" scope="col">JUSTIFICACIÓN</th>
+                                        <th style="width:15%;" scope="col">ESTATUS</th>
+                                        <th style="width:35%;" scope="col">COMENTARIOS</th>
+                                        <th style="width:15px !important;" >APROBADOR</th>
+                                        <th style="width:15px !important;" >FECHA DE APROBACIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="8">
+                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.18.2 Revisiones de la Seguridad de la Información</td>
                                     </tr>
                                     @foreach ($gapda182s as $g182s)
@@ -2264,23 +2731,35 @@
                                                     data-name="aplica">
                                                 </a>
                                             </td>
-
                                             <td class="text-justify">
-                                                <a href="#" data-type="textarea" data-pk="{{ $g132s->id }}"
+                                                <a href="#" data-type="textarea" data-pk="{{ $g182s->id }}"
                                                     data-url="{{ route('admin.declaracion-aplicabilidad.update', $g132s->id) }}"
                                                     data-title="Justificacion"
                                                     data-value="{{ $g132s->justificacion }}" class="justificacion"
                                                     data-name="justificacion">
                                                 </a>
                                             </td>
+                                            <td style="width:15%">
+                                                <a href="#" data-type="select" data-pk="{{ $g182s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g182s->id) }}"
+                                                    data-title="Seleccionar estatus" data-value="{{$g182s->estatus }}"
+                                                    class="estatus" data-name="estatus" onchange='cambioOpciones();' id="opciones">
+                                                </a>
+                                            </td>
                                             <td>
-                                                Hola
+                                                <a href="#" data-type="textarea" data-pk="{{ $g182s->id }}"
+                                                    data-url="{{ route('admin.declaracion-aplicabilidad.update', $g182s->id) }}"
+                                                    data-title="Comentarios" data-value="{{ $g182s->comentarios }}"
+                                                    class="comentarios" data-name="comentarios" >
+                                                </a>
                                             </td>
                                             <td>
                                                 Hola
                                             </td>
-                                            <td>
-                                                Hola
+                                            <td style="width:15%" id="actualizacion_fecha_{{$g182s->id}}" >
+                                                @if($g182s->estatus == 2 )
+                                                {{$g182s->updated_at}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

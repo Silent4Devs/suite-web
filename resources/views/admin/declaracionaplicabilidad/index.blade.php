@@ -113,6 +113,12 @@
             console.log('Actualizado, response')
             }
             });
+            $(".comentarios").editable({
+            dataType: 'json',
+            success: function (response, newValue) {
+            console.log('Actualizado, response')
+            }
+            });
             $(".aplica").editable({
             dataType: 'json',
             source: [{
