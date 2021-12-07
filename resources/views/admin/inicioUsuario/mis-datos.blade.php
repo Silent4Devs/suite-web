@@ -261,52 +261,101 @@
                                 <hr class="hr-custom-title">
                                 <div class="row">
                                     @if ($panel_rules->n_empleado)
-                                    <div class="col-3 title-info-personal">N° Empleado</div>
+                                        <div class="col-3 title-info-personal">N° Empleado</div>
                                     @endif
-                                    <div class="col-3 title-info-personal">Email</div>
-                                    <div class="col-3 title-info-personal">Fecha Ingreso</div>
-                                    <div class="col-3 title-info-personal">Jefe Inmediato</div>
+                                    @if ($panel_rules->email)
+                                        <div class="col-3 title-info-personal">Email</div>
+                                    @endif
+                                    @if ($panel_rules->fecha_ingreso)
+                                        <div class="col-3 title-info-personal">Fecha Ingreso</div>
+                                    @endif
+                                    @if ($panel_rules->jefe_inmediato)
+                                        <div class="col-3 title-info-personal">Jefe Inmediato</div>
+                                    @endif
                                 </div>
                                 <div class="row">
-                                    <div class="col-3 text-muted" style="font-size:12px">
-                                        {{ $usuario->empleado->n_empleado }}</div>
-                                    <div class="col-3 text-muted" style="font-size:12px">
-                                        {{ $usuario->empleado->email }}</div>
-                                    <div class="col-3 text-muted" style="font-size:12px">
-                                        {{ \Carbon\Carbon::parse($usuario->empleado->antiguedad)->format('d-m-Y') }}
-                                    </div>
-                                    <div class="col-3 text-muted" style="font-size:12px">
-                                        {{ $usuario->empleado->supervisor ? $usuario->empleado->supervisor->name : 'Sin Jefe Inmediato' }}
-                                    </div>
+                                    @if ($panel_rules->n_empleado)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->n_empleado }}</div>
+                                    @endif
+                                    @if ($panel_rules->email)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->email }}</div>
+                                    @endif
+                                    @if ($panel_rules->fecha_ingreso)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ \Carbon\Carbon::parse($usuario->empleado->antiguedad)->format('d-m-Y') }}
+                                        </div>
+                                    @endif
+                                    @if ($panel_rules->jefe_inmediato)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->supervisor ? $usuario->empleado->supervisor->name : 'Sin Jefe Inmediato' }}
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="row">
-                                    <div class="col-3 title-info-personal">Área</div>
-                                    <div class="col-3 title-info-personal">Puesto</div>
-                                    <div class="col-3 title-info-personal">Sede</div>
-                                    <div class="col-3 title-info-personal">Teléfono</div>
+                                    @if ($panel_rules->area)
+                                        <div class="col-3 title-info-personal">Área</div>
+                                    @endif
+                                    @if ($panel_rules->puesto)
+                                        <div class="col-3 title-info-personal">Puesto</div>
+                                    @endif
+                                    @if ($panel_rules->sede)
+                                        <div class="col-3 title-info-personal">Sede</div>
+                                    @endif
+                                    @if ($panel_rules->telefono)
+                                        <div class="col-3 title-info-personal">Teléfono</div>
+                                    @endif
                                 </div>
                                 <div class="row">
-                                    <div class="col-3 text-muted" style="font-size:12px">
-                                        {{ $usuario->empleado->area ? $usuario->empleado->area->area : 'Dato no registrado' }}
-                                    </div>
-                                    <div class="col-3 text-muted" style="font-size:12px">
-                                        {{ $usuario->empleado->puesto ? $usuario->empleado->puesto : 'Dato no registrado' }}
-                                    </div>
-                                    <div class="col-3 text-muted" style="font-size:12px">
-                                        {{ $usuario->empleado->sede ? $usuario->empleado->sede->sede : 'Dato no registrado' }}
-                                    </div>
-                                    <div class="col-3 text-muted" style="font-size:12px">
-                                        {{ $usuario->empleado->telefono ? $usuario->empleado->telefono : 'Dato no registrado' }}
-                                    </div>
+                                    @if ($panel_rules->area)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->area ? $usuario->empleado->area->area : 'Dato no registrado' }}
+                                        </div>
+                                    @endif
+                                    @if ($panel_rules->puesto)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->puesto ? $usuario->empleado->puesto : 'Dato no registrado' }}
+                                        </div>
+                                    @endif
+                                    @if ($panel_rules->sede)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->sede ? $usuario->empleado->sede->sede : 'Dato no registrado' }}
+                                        </div>
+                                    @endif
+                                    @if ($panel_rules->telefono)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->telefono ? $usuario->empleado->telefono : 'Dato no registrado' }}
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="row">
-                                    <div class="col-3 title-info-personal">Cumpleaños</div>
+                                    @if ($panel_rules->cumpleaños)
+                                        <div class="col-3 title-info-personal">Cumpleaños</div>
+                                    @endif
+                                    @if ($panel_rules->perfil)
+                                        <div class="col-3 title-info-personal">Perfil</div>
+                                    @endif
+                                    {{--@if ($panel_rules->cumpleaños)
+                                        <div class="col-3 title-info-personal">Sede</div>
+                                    @endif--}}
                                 </div>
                                 <div class="row">
-                                    <div class="col-3 text-muted" style="font-size:12px">
-                                        {{ $usuario->empleado->cumpleaños ? $usuario->empleado->cumpleaños : 'Dato no registrado' }}
-                                    </div>
-
+                                    @if ($panel_rules->cumpleaños)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->cumpleaños ? $usuario->empleado->cumpleaños : 'Dato no registrado' }}
+                                        </div>
+                                    @endif
+                                    @if ($panel_rules->perfil)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->perfil ? $usuario->empleado->perfil : 'Dato no registrado' }}
+                                        </div>
+                                    @endif
+                                   {{--@if ($panel_rules->perfil)
+                                        <div class="col-3 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->perfil ? $usuario->empleado->perfil : 'Dato no registrado' }}
+                                        </div>
+                                    @endif--}}
                                 </div>
                             </div>
                         </div>

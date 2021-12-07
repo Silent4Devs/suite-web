@@ -323,6 +323,7 @@
                                 });
                                 request.then(response => response.json()).
                                 then(data => {
+
                                     toastr.success(data.message);
                                 }).
                                 catch(error => console.log)

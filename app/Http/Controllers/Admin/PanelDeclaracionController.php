@@ -142,19 +142,26 @@ class PanelDeclaracionController extends Controller
 
         $declaracion=$request->declaracion;
         $responsable=$request->responsable;
-        $exists=DeclaracionAplicabilidadResponsable::where('declaracion_id',$declaracion)->where('empleado_id',$responsable)->exists();
-        if(!$exists){
-            DeclaracionAplicabilidadResponsable::create([
-                'declaracion_id' => $declaracion,
-                'empleado_id'=>$responsable,
-            ]);
-            return response()->json(['message'=>'Responsable asignado'],200);
+        $existResponsable=DeclaracionAplicabilidadResponsable::select('declaracion_id')->where('declaracion_id',$declaracion)->exists();
+        // dd($existResponsable);
+        if(!$existResponsable){
+            $exists=DeclaracionAplicabilidadResponsable::where('declaracion_id',$declaracion)->where('empleado_id',$responsable)->exists();
+            if(!$exists){
+                DeclaracionAplicabilidadResponsable::create([
+                    'declaracion_id' => $declaracion,
+                    'empleado_id'=>$responsable,
+                ]);
+                return response()->json(['message'=>'Responsable d'],200);
+            }else{
+                return response()->json(['message'=>'Este responsable ya ha sido asignado'],200);
+
+            }
         }else{
-            return response()->json(['message'=>'Este responsable ya ha sido asignado'],200);
+            return response()->json(['message'=>'Limite de responsables alcanzado'],200);
 
         }
 
-    }
+}
     //QUITAR EL RESPONSABLE
     public function quitarRelacionResponsable(Request $request)
     {
@@ -178,6 +185,9 @@ class PanelDeclaracionController extends Controller
         {
             $declaracion=$request->declaracion;
             $aprobador=$request->aprobador;
+            $existAprobador=DeclaracionAplicabilidadAprobadores::select('declaracion_id')->where('declaracion_id',$declaracion)->exists();
+            // dd($existResponsable);
+            if(!$existAprobador){
             $exists=DeclaracionAplicabilidadAprobadores::where('declaracion_id',$declaracion)->where('aprobadores_id',$aprobador)->exists();
             if(!$exists){
                 DeclaracionAplicabilidadAprobadores::create([
@@ -187,6 +197,10 @@ class PanelDeclaracionController extends Controller
                 return response()->json(['message'=>'Aprobador asignado'],200);
             }else{
                 return response()->json(['message'=>'Este aprobador ya ha sido asignado'],200);
+            }
+            }else{
+                return response()->json(['message'=>'Limite de responsables alcanzado'],200);
+
             }
 
         }
