@@ -5,7 +5,7 @@
 
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
-            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Comunicación SGSI test </h3>
+            <h3 class="mb-1 text-center text-white"><strong> Editar: </strong> Comunicado General </h3>
         </div>
 
         <div class="card-body">
@@ -46,13 +46,14 @@
                     <div class="custom-file">
                         <input type="file" name="files[]" multiple class="form-control" id="documento"
                             accept="application/pdf">
+                        <small>Documento actual:{{ $comunicacionSgi->documentos_comunicacion[0]->documento }} </small><br>
                     </div>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
-
                     <input type="file" name="imagen" class="form-control" accept="image/*" value="{{ old('imagen') }}">
+                    <small>Imagen actual:{{ $comunicacionSgi->imagenes_comunicacion[0]->imagen }} </small><br>
                     <small>Tamaño recomendado de la imagen 500px por 300px</small>
                     @if ($errors->has('imagen'))
                         <div class="invalid-feedback">
