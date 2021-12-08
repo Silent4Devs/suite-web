@@ -118,11 +118,11 @@ class InicioUsuarioController extends Controller
                 $auditoria_internas->push($auditoria);
             }
             $auditoria_internas = $auditoria_internas->unique();
-            $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
-                $query->where('empleados.id', $empleado->id)->where('archivado', '=', 0);
-            })->get();
+            // $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
+            //     $query->where('empleados.id', $empleado->id)->where('archivado', '=', 0);
+            // })->get();
         }
-
+        $recursos = Recurso::get();
         $contador_recursos = 0;
         if ($usuario->empleado) {
             $contador_recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
@@ -798,12 +798,34 @@ class InicioUsuarioController extends Controller
         return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
-    public function archivarCapacitacion(Request $request)
+    public function archivarCapacitacion($id)
     {
-        $int_empleado = intval($request->id_empleado);
-        $recurso = Recurso::find(intval($request->recurso_id));
-        $recurso->empleados()->syncWithoutDetaching([$int_empleado => ['archivado' => true]]);
+        $recurso = Recurso::find($id);
 
-        return response()->json(['success' => true]);
+        $recurso->update([
+            'archivar' => 'archivado',
+        ]);
+
+        return redirect('admin/inicioUsuario/capacitaciones/archivo');
+    }
+
+    public function recuperarCapacitacion($id)
+    {
+        $recurso = Recurso::find($id);
+
+        $recurso->update([
+            'archivar' => 'recuperado',
+        ]);
+
+        return redirect('admin/inicioUsuario/capacitaciones/archivo');
+    }
+
+
+
+    public function archivoCapacitacion()
+    {
+        $recursos = Recurso::get();
+
+        return view('admin.inicioUsuario.capacitaciones_archivo', compact('recursos'));
     }
 }

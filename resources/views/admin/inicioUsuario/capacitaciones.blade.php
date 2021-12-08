@@ -8,7 +8,7 @@
                 <th style="min-width:200px;">Fecha Inicio</th>
                 <th style="min-width:200px;">Fecha Fin</th>
                 <th>Calificación</th>
-                {{-- <th>Opciones</th> --}}
+                <th>Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -27,12 +27,12 @@
                         @endif
                     @endforeach
                 </td>
-                {{-- <td class="opciones_iconos">
+                <td class="opciones_iconos">
+                    <form>
                     <button onclick="archivarCapacitacion('{{auth()->user()->empleado->id}}', '{{$recurso->id}}', '{{route('admin.inicio-Usuario.capacitaciones.archivar')}}')" class="">
                         <i class="fas fa-archive"></i>
                     </button>
-                    <i class="fas fa-file-alt"></i>
-                </td> --}}
+                </td>
             </tr>
             @endforeach
         </tbody>

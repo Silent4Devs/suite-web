@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ComunicacionSgi;
 use App\Models\Documento;
+use App\Models\User;
 use App\Models\Empleado;
 use App\Models\organizacion;
 use Carbon\Carbon;
@@ -33,9 +34,10 @@ class PortalComunicacionController extends Controller
         // dd($comunicacionSgis);
 
         $comunicacionSgis_carrusel = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Carrusel')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
-        // dd( $comunicacionSgis_carrusel);
 
-        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel'));
+        $empleado_asignado =  auth()->user()->n_empleado;
+
+        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado'));
     }
 
     /**

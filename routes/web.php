@@ -163,7 +163,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('inicioUsuario/reportes/riesgos', 'InicioUsuarioController@riesgos')->name('reportes-riesgos');
     Route::post('inicioUsuario/reportes/riesgos', 'InicioUsuarioController@storeRiesgos')->name('reportes-riesgos-store');
 
-    Route::post('inicioUsuario/capacitaciones/archivar', 'InicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
+    Route::post('inicioUsuario/capacitaciones/archivar/{id}', 'InicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
+    Route::post('inicioUsuario/capacitaciones/recuperar/{id}', 'InicioUsuarioController@recuperarCapacitacion')->name('inicio-Usuario.capacitaciones.recuperar');
+    Route::get('inicioUsuario/capacitaciones/archivo', 'InicioUsuarioController@archivoCapacitacion')->name('inicio-Usuario.capacitaciones.archivo');
 
     Route::get('desk', 'DeskController@index')->name('desk.index');
 

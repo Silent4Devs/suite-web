@@ -49,6 +49,7 @@ class Recurso extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'archivar',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
