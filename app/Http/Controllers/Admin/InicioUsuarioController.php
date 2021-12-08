@@ -118,11 +118,10 @@ class InicioUsuarioController extends Controller
                 $auditoria_internas->push($auditoria);
             }
             $auditoria_internas = $auditoria_internas->unique();
-            // $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
-            //     $query->where('empleados.id', $empleado->id)->where('archivado', '=', 0);
-            // })->get();
+            $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
+                $query->where('empleados.id', $empleado->id);
+            })->get();
         }
-        $recursos = Recurso::get();
         $contador_recursos = 0;
         if ($usuario->empleado) {
             $contador_recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
@@ -817,7 +816,7 @@ class InicioUsuarioController extends Controller
             'archivar' => 'recuperado',
         ]);
 
-        return redirect('admin/inicioUsuario/capacitaciones/archivo');
+        return redirect()->route('admin.inicio-Usuario.index');
     }
 
 

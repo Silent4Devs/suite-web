@@ -13,27 +13,32 @@
         </thead>
         <tbody>
             @foreach($recursos as $recurso)
-            <tr>
+                @if(!($recurso->archivar == 'archivado'))
+                    <tr>
 
-                <td>{{$recurso->cursoscapacitaciones}}</td>
-                <td>{{$recurso->categoria_capacitacion->nombre}}</td>
-                <td>{{$recurso->instructor}}</td>
-                <td>{{$recurso->fecha_curso}}</td>
-                <td>{{$recurso->fecha_fin}}</td>
-                <td>
-                    @foreach ($recurso->empleados as $empleado)
-                        @if($empleado->id == auth()->user()->empleado->id)
-                        {{ $empleado->pivot->calificacion }}
-                        @endif
-                    @endforeach
-                </td>
-                <td class="opciones_iconos">
-                    <form>
-                    <button onclick="archivarCapacitacion('{{auth()->user()->empleado->id}}', '{{$recurso->id}}', '{{route('admin.inicio-Usuario.capacitaciones.archivar')}}')" class="">
-                        <i class="fas fa-archive"></i>
-                    </button>
-                </td>
-            </tr>
+                        <td>{{$recurso->cursoscapacitaciones}}</td>
+                        <td>{{$recurso->categoria_capacitacion->nombre}}</td>
+                        <td>{{$recurso->instructor}}</td>
+                        <td>{{$recurso->fecha_curso}}</td>
+                        <td>{{$recurso->fecha_fin}}</td>
+                        <td>
+                            @foreach ($recurso->empleados as $empleado)
+                                @if($empleado->id == auth()->user()->empleado->id)
+                                {{ $empleado->pivot->calificacion }}
+                                @endif
+                            @endforeach
+                        </td>
+                        <td class="opciones_iconos">
+
+                                <form action="{{route('admin.inicio-Usuario.capacitaciones.archivar', $recurso->id)}}" method="POST">
+                                    @csrf
+                                    <button class="btn" title="Archivar">
+                                        <i class="fas fa-archive"></i>
+                                    </button>
+                                </form>
+                        </td>
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>
@@ -110,7 +115,21 @@
                         titleAttr: 'Restaurar a estado anterior',
                     }
 
+
                 ];
+                let btnArchivo = {
+                text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',
+                titleAttr: 'Archivo',
+                url: "{{ asset('admin/inicioUsuario/capacitaciones/archivo') }}",
+                className: "btn btn-info ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                }
+            };
+            dtButtons.push(btnArchivo);
             $("#tabla_usuario_capacitaciones").DataTable({
                 buttons: dtButtons,
             });

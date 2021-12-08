@@ -28,28 +28,30 @@
 				   		</thead>
 				   		<tbody>
 				   			@foreach($recursos as $recurso)
-					   			<tr>
-					       			<td>{{$recurso->cursoscapacitaciones}}</td>
-					                <td>{{$recurso->categoria_capacitacion->nombre}}</td>
-					                <td>{{$recurso->instructor}}</td>
-					                <td>{{$recurso->fecha_curso}}</td>
-					                <td>{{$recurso->fecha_fin}}</td>
-					                <td>
-					                    @foreach ($recurso->empleados as $empleado)
-					                        @if($empleado->id == auth()->user()->empleado->id)
-					                        {{ $empleado->pivot->calificacion }}
-					                        @endif
-					                    @endforeach
-					                </td>
-					                <td class="opciones_iconos">
-					                    <form action="{{route('admin.inicio-Usuario.capacitaciones.recuperar', $recurso->id)}}" method="POST">
-					                        @csrf
-					                        <button class="btn" title="Recuperar">
-					                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#00abb2;"></i>
-					                        </button>
-					                    </form>
-					                </td>
-					   			</tr>
+				   				@if($recurso->archivar == 'archivado')
+						   			<tr>
+						       			<td>{{$recurso->cursoscapacitaciones}}</td>
+						                <td>{{$recurso->categoria_capacitacion->nombre}}</td>
+						                <td>{{$recurso->instructor}}</td>
+						                <td>{{$recurso->fecha_curso}}</td>
+						                <td>{{$recurso->fecha_fin}}</td>
+						                <td>
+						                    @foreach ($recurso->empleados as $empleado)
+						                        @if($empleado->id == auth()->user()->empleado->id)
+						                        {{ $empleado->pivot->calificacion }}
+						                        @endif
+						                    @endforeach
+						                </td>
+						                <td class="opciones_iconos">
+						                    <form action="{{route('admin.inicio-Usuario.capacitaciones.recuperar', $recurso->id)}}" method="POST">
+						                        @csrf
+						                        <button class="btn" title="Recuperar">
+						                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#00abb2;"></i>
+						                        </button>
+						                    </form>
+						                </td>
+						   			</tr>
+					   			@endif
 				   			@endforeach
 				   		</tbody>
 				   </table>
