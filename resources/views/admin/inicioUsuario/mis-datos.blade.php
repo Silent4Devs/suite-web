@@ -260,9 +260,12 @@
                                 </h5>
                                 <hr class="hr-custom-title">
                                 <div class="row">
-                                    @if ($panel_rules->n_empleado)
-                                        <div class="col-3 title-info-personal">N° Empleado</div>
+                                    @if (!empty($panel_rules->n_empleado))
+                                        @if ($panel_rules->n_empleado)
+                                            <div class="col-3 title-info-personal">N° Empleado</div>
+                                        @endif
                                     @endif
+
                                     @if ($panel_rules->email)
                                         <div class="col-3 title-info-personal">Email</div>
                                     @endif
@@ -274,9 +277,11 @@
                                     @endif
                                 </div>
                                 <div class="row">
-                                    @if ($panel_rules->n_empleado)
-                                        <div class="col-3 text-muted" style="font-size:12px">
-                                            {{ $usuario->empleado->n_empleado }}</div>
+                                    @if (!empty($panel_rules->n_empleado))
+                                        @if ($panel_rules->n_empleado)
+                                            <div class="col-3 text-muted" style="font-size:12px">
+                                                {{ $usuario->empleado->n_empleado }}</div>
+                                        @endif
                                     @endif
                                     @if ($panel_rules->email)
                                         <div class="col-3 text-muted" style="font-size:12px">
@@ -336,9 +341,9 @@
                                     @if ($panel_rules->perfil)
                                         <div class="col-3 title-info-personal">Perfil</div>
                                     @endif
-                                    {{--@if ($panel_rules->cumpleaños)
+                                    {{-- @if ($panel_rules->cumpleaños)
                                         <div class="col-3 title-info-personal">Sede</div>
-                                    @endif--}}
+                                    @endif --}}
                                 </div>
                                 <div class="row">
                                     @if ($panel_rules->cumpleaños)
@@ -351,11 +356,11 @@
                                             {{ $usuario->empleado->perfil ? $usuario->empleado->perfil : 'Dato no registrado' }}
                                         </div>
                                     @endif
-                                   {{--@if ($panel_rules->perfil)
+                                    {{-- @if ($panel_rules->perfil)
                                         <div class="col-3 text-muted" style="font-size:12px">
                                             {{ $usuario->empleado->perfil ? $usuario->empleado->perfil : 'Dato no registrado' }}
                                         </div>
-                                    @endif--}}
+                                    @endif --}}
                                 </div>
                             </div>
                         </div>
