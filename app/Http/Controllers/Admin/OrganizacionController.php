@@ -77,7 +77,7 @@ class OrganizacionController extends Controller
 
     public function store(StoreOrganizacionRequest $request)
     {
-        // dd($request);
+        //dd($request->all());
 
         abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacion::create([

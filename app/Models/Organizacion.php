@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Models;
 
 use Carbon\Carbon;
