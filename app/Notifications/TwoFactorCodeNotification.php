@@ -30,9 +30,11 @@ class TwoFactorCodeNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line(__('global.two_factor.your_code_is', ['code' => $notifiable->two_factor_code]))
-            ->action(__('global.two_factor.verify_here'), route('twoFactor.show'))
-            ->line(__('global.two_factor.will_expire_in', ['minutes' => 15]))
-            ->line(__('global.two_factor.ignore_this'));
+            ->subject('Verificación de dos factores')
+            ->view('mails.two-factor.mail', compact('notifiable'));
+        // ->line("Tu código de verificación por dos factores es: " . "$notifiable->two_factor_code")
+        // ->action('Verifica Aquí', route('twoFactor.show'))
+        // ->line("El código expirará en 15 minutos")
+        // ->line("Sí no estás intentando logearte ignora este correo");
     }
 }
