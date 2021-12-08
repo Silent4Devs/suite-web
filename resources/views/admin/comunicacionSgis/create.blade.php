@@ -83,14 +83,18 @@
                 @endif
             </div>
 
-            <div class="col-sm-12 col-md-6 form-group">
+            {{-- <div class="col-sm-12 col-md-6 form-group">
                 <label class="required" for="publico"><i class="fas fa-people-arrows iconos-crear"></i>Público Objetivo</label>
                 <select name="empleados[]" class="select2" multiple required>
                     @foreach($empleados as $empleado)
                         <option value="{{$empleado->id}}">{{$empleado->name}}</option>
                     @endforeach
                 </select>
-            </div>
+            </div> --}}
+            {{-- Select dinamico por grupos --}}
+            @livewire("grupos-comunicacion")
+
+
 
             <div class="col-sm-12 col-md-6 form-group">
                 <label class="required" for="link"><i class="fas fa-link iconos-crear"></i>Link</label>

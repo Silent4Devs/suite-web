@@ -242,6 +242,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('declaracion-aplicabilidad/{id}', 'DeclaracionAplicabilidadController@index')->name('declaracion-aplicabilidad');
     Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
     Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
+    Route::post('declaracion-aplicabilidad/enviar-correo','DeclaracionAplicabilidadController@enviarCorreo')->name('declaracion-aplicabilidad.enviarcorreo');
     Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
 
     //Panel declaracion
@@ -729,7 +730,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('reportes-contexto/', 'ReporteContextoController@index')->name('reportes-contexto.index');
     Route::post('reportes-contexto/create', 'ReporteContextoController@store')->name('reportes-contexto.store');
 
-    Route::resource('panel-inicio', PanelInicioRuleController::class);
+    Route::resource('panel-inicio', 'PanelInicioRuleController');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {

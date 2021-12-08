@@ -419,12 +419,20 @@
                 <div class="col-sm-12 col-12 col-lg-6">
                     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleCaptions" data-slide-to=""
+                            class="active"></li>
                             @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
                                 <li data-target="#carouselExampleCaptions" data-slide-to="{{ $idx }}"
-                                    class="{{ $idx == 0 ? 'active' : '' }}"></li>
+                                    class="{{ $idx == 0 ? '' : '' }}"></li>
                             @endforeach
                         </ol>
                         <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="img_carrusel" style="background-image: url('https://silent4business.com/wp-content/uploads/2019/06/Silent4Business-Logo-Color.png');">
+                                </div>
+                                    <div class="carousel-caption d-none d-md-block">
+                                    </div>
+                            </div>
                             @forelse($comunicacionSgis_carrusel as $idx=>$carrusel)
                                 @php
                                     if ($carrusel->first()->count()) {
@@ -436,12 +444,11 @@
                                     }
 
                                 @endphp
-                                <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
+                                <div class="carousel-item {{ $idx == 0 ? '' : '' }}">
                                     <div class="img_carrusel" style="background-image: url('{{ asset($imagen) }}');">
                                     </div>
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>{{ $carrusel->titulo }}</h5>
-                                        {!! Str::limit($carrusel->descripcion, 100, '...') !!}
                                     </div>
                                 </div>
                             @empty
@@ -511,9 +518,10 @@
                             <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
                             <div class="text_comunicado">
                                 <h4 class="w-100">{{ $comunicacionSgi->titulo }}</h4>
-                                <p class="w-100" style="text-align: justify;">
-                                    {!! Str::limit($comunicacionSgi->descripcion, 200, '...') !!}
-                                </p>
+
+                                <div style="text-align:left !important; overflow:hidden; height:100px !important; background-color:#EEE; !important; padding:10px; display:block !important; justify-content:start !important;">
+                                    {!! $comunicacionSgi->descripcion !!}
+                                </div>
                                 <a href="{{ asset('admin/comunicacion-sgis/' . $comunicacionSgi->id) }}">Leer más</a>
                             </div>
                         </div>

@@ -10,8 +10,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\DeclaracionAplicabilidad;
+use App\Models\DeclaracionAplicabilidadAprobadores;
+use App\Models\DeclaracionAplicabilidadResponsable;
+use App\Mail\DeclaracionAplicabilidadAprobadores as MailDeclaracionAplicabilidadAprobadores;
 
 class DeclaracionAplicabilidadController extends Controller
 {
@@ -129,21 +133,21 @@ class DeclaracionAplicabilidadController extends Controller
             switch ($request->name) {
 
                 case 'justificacion':
-                    $gapun = DeclaracionAplicabilidad::findOrFail($id);
+                    $gapun = DeclaracionAplicabilidadResponsable::findOrFail($id);
                     $gapun->justificacion = $request->value;
                     $gapun->save();
 
                     return response()->json(['success' => true]);
                     break;
                 case 'aplica':
-                    $gapun = DeclaracionAplicabilidad::findOrFail($id);
+                    $gapun = DeclaracionAplicabilidadResponsable::findOrFail($id);
                     $gapun->aplica = $request->value;
                     $gapun->save();
 
                     return response()->json(['success' => true]);
                     break;
                 case 'estatus':
-                    $gapun = DeclaracionAplicabilidad::findOrFail($id);
+                    $gapun = DeclaracionAplicabilidadAprobadores::findOrFail($id);
                     $gapun->estatus = $request->value;
                     $gapun->save();
 
@@ -151,10 +155,30 @@ class DeclaracionAplicabilidadController extends Controller
                     break;
 
                 case 'comentarios':
-                    $gapun = DeclaracionAplicabilidad::findOrFail($id);
+                    $gapun = DeclaracionAplicabilidadAprobadores::findOrFail($id);
                     $gapun->comentarios = $request->value;
                     $gapun->save();
 
+                    return response()->json(['success' => true]);
+                    break;
+
+                case 'fecha_aprobacion':
+                    $gapun = DeclaracionAplicabilidadAprobadores::findOrFail($id);
+                    $gapun->fecha = $request->value;
+                    $gapun->save();
+
+                    return response()->json(['success' => true]);
+                    break;
+
+                case 'aprobadores_id':
+                    $gapun = DeclaracionAplicabilidadAprobadores::findOrFail($id);
+                    $gapun->aprobadores_id = $request->value;
+                    return response()->json(['success' => true]);
+                    break;
+
+                case 'empleado_id':
+                    $gapun = DeclaracionAplicabilidadResponsable::findOrFail($id);
+                    $gapun->empleado_id = $request->value;
                     return response()->json(['success' => true]);
                     break;
 
@@ -299,11 +323,26 @@ class DeclaracionAplicabilidadController extends Controller
         ));*/
     }
 
-    public function PanelDeclaracion()
+    public function enviarCorreo(Request $request)
     {
+        if($request->enviarTodos){
+            $destinatarios=DeclaracionAplicabilidadAprobadores::distinct("aprobadores_id")->pluck('aprobadores_id')->toArray();
+        }elseif($request->enviarNoNotificados){
+           $destinatarios=DeclaracionAplicabilidadAprobadores::where('notificado',false)->distinct("aprobadores_id")->pluck('aprobadores_id')->toArray();
+        }else{
+            $destinatarios=json_decode($request->aprobadores);
 
-        return view('admin.panelDeclaracion');
-
+        }
+        // dd($destinatarios);
+        $tipo=$request->tipo;
+        foreach ($destinatarios as $destinatario){
+            $empleado=Empleado::select('id','name','email')->find(intval($destinatario));
+            Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidadAprobadores($empleado->name,$tipo));
+            $responsable=DeclaracionAplicabilidadAprobadores::where('empleado_id',$destinatario)->each(function($item){
+                $item->notificado=true;
+            });
+        }
+        return response()->json(['message'=>'Correo enviado'],200);
     }
 
 
