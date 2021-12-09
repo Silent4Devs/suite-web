@@ -192,6 +192,46 @@
                             <hr class="hr-custom-title">
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                                <div class="container">
+                                    @if (count($activos) === 0)
+                                        No cuenta con activos a su cargo
+                                    @else
+                                        <table class="table table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Activo</th>
+                                                    <th scope="col">Fecha alta</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($activos as $activo)
+                                                    <tr style="cursor: pointer;" data-toggle="tooltip"
+                                                        data-placement="right" title="Pulse aquí para más información">
+                                                        <td scope="row">
+                                                            <a target="_blank"
+                                                                href="{{ route('admin.activos.show', [$activo->id]) }}">
+                                                                {{ $activo->id }}
+                                                            </a>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <a target="_blank"
+                                                                href="{{ route('admin.activos.show', [$activo->id]) }}">
+                                                                {{ $activo->nombreactivo }}
+                                                            </a>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <a target="_blank"
+                                                                href="{{ route('admin.activos.show', [$activo->id]) }}">
+                                                                {{ $activo->fecha_alta }}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endif
+                                </div>
                                 @foreach ($equipo_a_cargo as $empleado)
                                     <div class="col-md-12">
                                         <div class="card">
