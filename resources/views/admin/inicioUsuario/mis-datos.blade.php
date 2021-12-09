@@ -341,9 +341,12 @@
                                     @if ($panel_rules->perfil)
                                         <div class="col-3 title-info-personal">Perfil</div>
                                     @endif
-                                    {{-- @if ($panel_rules->cumpleaños)
-                                        <div class="col-3 title-info-personal">Sede</div>
-                                    @endif --}}
+                                    @if ($panel_rules->genero)
+                                        <div class="col-3 title-info-personal">Genero</div>
+                                    @endif
+                                    @if ($panel_rules->estatus)
+                                        <div class="col-3 title-info-personal">Estatus</div>
+                                    @endif
                                 </div>
                                 <div class="row">
                                     @if ($panel_rules->cumpleaños)
@@ -353,14 +356,31 @@
                                     @endif
                                     @if ($panel_rules->perfil)
                                         <div class="col-3 text-muted" style="font-size:12px">
-                                            {{ $usuario->empleado->perfil ? $usuario->empleado->perfil : 'Dato no registrado' }}
+                                            {{ $usuario->empleado->perfil->nombre ? $usuario->empleado->perfil->nombre : 'Dato no registrado' }}
                                         </div>
                                     @endif
-                                    {{-- @if ($panel_rules->perfil)
+                                    @if ($panel_rules->genero)
                                         <div class="col-3 text-muted" style="font-size:12px">
-                                            {{ $usuario->empleado->perfil ? $usuario->empleado->perfil : 'Dato no registrado' }}
+                                            {{ $usuario->empleado->genero ? $usuario->empleado->genero : 'Dato no registrado' }}
                                         </div>
-                                    @endif --}}
+                                    @endif
+                                    @if ($panel_rules->estatus)
+                                        <div class="col-3 text-muted text-uppercase" style="font-size:12px">
+                                            {{ $usuario->empleado->estatus ? $usuario->empleado->estatus : 'Dato no registrado' }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="row">
+                                    @if ($panel_rules->direccion)
+                                        <div class="col-3 title-info-personal">Dirección</div>
+                                    @endif
+                                </div>
+                                <div class="row">
+                                    @if ($panel_rules->direccion)
+                                        <div class="col-6 text-muted" style="font-size:12px">
+                                            {{ $usuario->empleado->direccion ? $usuario->empleado->direccion : 'Dato no registrado' }}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
