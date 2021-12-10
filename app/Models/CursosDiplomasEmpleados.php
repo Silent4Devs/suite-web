@@ -5,12 +5,16 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class CursosDiplomasEmpleados extends Model
 {
     use SoftDeletes;
-    protected $table = 'cursos_diplomados_empleados';
+    use QueryCacheable;
 
+    protected $table = 'cursos_diplomados_empleados';
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     protected $dates = [
         'created_at',
         'updated_at',

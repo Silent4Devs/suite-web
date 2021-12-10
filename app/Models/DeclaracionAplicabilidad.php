@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Rennokki\QueryCache\Traits\QueryCacheable;
 class DeclaracionAplicabilidad extends Model
 {
     use HasFactory;
+    use QueryCacheable;
 
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     public $table = 'declaracion_aplicabilidad';
 
     protected $dates = [
