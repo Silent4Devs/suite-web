@@ -11,11 +11,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class AccionCorrectiva extends Model implements HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-
+    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory, QueryCacheable;
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     public $table = 'accion_correctivas';
 
     protected $appends = [

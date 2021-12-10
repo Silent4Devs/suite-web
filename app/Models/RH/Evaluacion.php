@@ -5,11 +5,12 @@ namespace App\Models\RH;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Rennokki\QueryCache\Traits\QueryCacheable;
 class Evaluacion extends Model
 {
-    use HasFactory, SoftDeletes;
-
+    use HasFactory, SoftDeletes, QueryCacheable;
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     protected $table = 'ev360_evaluaciones';
     protected $guarded = ['id'];
     protected $appends = ['estatus_formateado', 'color_estatus', 'color_estatus_text'];

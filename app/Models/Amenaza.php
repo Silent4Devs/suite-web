@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+//use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Amenaza.
@@ -17,7 +19,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Amenaza extends Model
 {
     use SoftDeletes;
+    use QueryCacheable;
 
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     public $table = 'amenazas';
 
     const CREATED_AT = 'created_at';

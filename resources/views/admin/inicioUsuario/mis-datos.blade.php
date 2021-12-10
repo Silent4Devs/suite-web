@@ -192,44 +192,97 @@
                             <hr class="hr-custom-title">
                             <div class="row align-items-center" id="listaEquipo" x-show="show"
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                                @foreach ($equipo_a_cargo as $empleado)
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body" style="position:relative">
+                                                <div class="text-center d-flex flex-column align-items-center">
+
+                                                    <img class="img-fluid img-profile-sm"
+                                                        style="position: relative;z-index: 1;"
+                                                        src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}">
+                                                    <div class="mt-3">
+                                                        <h5 style="font-size:1vw;font-weight: bold">
+                                                            {{ $empleado->name }}
+                                                        </h5>
+                                                        {{-- <p class="mb-1 text-secondary">
+                                                            {{ $empleado->puesto }}
+                                                        </p> --}}
+                                                    </div>
+                                                    <div>
+                                                        <a class="btn btn-sm btn-light" style="font-size: 10px;"
+                                                            href="{{ route('admin.ev360-objetivos-empleado.create', $empleado) }}">
+                                                            <i class="mr-1 fas fa-dot-circle"></i>Objetivos</a>
+                                                        <a type="button"
+                                                            href="{{ route('admin.ev360-evaluaciones.evaluacionesDelEmpleado', $empleado) }}"
+                                                            class="btn btn-sm btn-light" style="font-size: 10px;"
+                                                            aria-current="true"><i class="fas fa-book"></i>
+                                                            Evaluaciones
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    style="width:100%;height: 80px;position: absolute;top: 0;left: 0;background: aliceblue;z-index: 0;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="text-center col-6 col-sm-6 col-lg-6 col-md-6">
+                                        <img class="img-fluid img-profile-secondary" style="position:relative;"
+                                            src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}">
+                                        <p class="text-muted" style="font-size:10px;">
+                                            {{ Str::limit($empleado->name, 12, '...') }}</p>
+                                        <span class="btn-lista-acciones"><i class="fa fa-edit"></i></span>
+                                        <div class="list-group lista-acciones lista-toggle">
+                                            <a type="button"
+                                                href="{{ route('admin.ev360-objetivos-empleado.create', $empleado) }}"
+                                                class="list-group-item list-group-item-action text-muted"
+                                                aria-current="true"><i class="fas fa-dot-circle"></i>
+                                                Objetivos
+                                            </a>
+                                            <a type="button"
+                                                href="{{ route('admin.ev360-evaluaciones.evaluacionesDelEmpleado', $empleado) }}"
+                                                class="list-group-item list-group-item-action text-muted"
+                                                aria-current="true"><i class="fas fa-book"></i>
+                                                Evaluaciones
+                                            </a>
+                                        </div>
+                                    </div> --}}
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="p-3 mt-3 card" x-data="{show:false}">
+                            <h5 class="mb-0"><i class="mr-2 fa-fw fas fa-laptop"></i>Mis Activos
+                                <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
+                                        class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                            </h5>
+                            <hr class="hr-custom-title">
+                            <div class="row align-items-center" id="listaEquipo" x-show="show"
+                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 <div class="container">
                                     @if (count($activos) === 0)
                                         No cuenta con activos a su cargo
                                     @else
-                                        <table class="table table-hover">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col">Activo</th>
-                                                    <th scope="col">Fecha alta</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($activos as $activo)
-                                                    <tr style="cursor: pointer;" data-toggle="tooltip"
-                                                        data-placement="right" title="Pulse aquí para más información">
-                                                        <td scope="row">
-                                                            <a target="_blank"
-                                                                href="{{ route('admin.activos.show', [$activo->id]) }}">
-                                                                {{ $activo->id }}
-                                                            </a>
-                                                        </td>
-                                                        <td scope="row">
-                                                            <a target="_blank"
-                                                                href="{{ route('admin.activos.show', [$activo->id]) }}">
-                                                                {{ $activo->nombreactivo }}
-                                                            </a>
-                                                        </td>
-                                                        <td scope="row">
-                                                            <a target="_blank"
-                                                                href="{{ route('admin.activos.show', [$activo->id]) }}">
-                                                                {{ $activo->fecha_alta }}
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                        <div class="row">
+                                            <div class="col-2 title-info-personal">ID</div>
+                                            <div class="col-10 title-info-personal">Activo</div>
+                                        </div>
+                                        @foreach ($activos as $activo)
+                                            <div class="row">
+                                                <div class="col-2 text-muted" style="font-size:12px">
+                                                    <a target="_blank"
+                                                        href="{{ route('admin.activos.show', [$activo->id]) }}">
+                                                        {{ $activo->id }}
+                                                    </a>
+                                                </div>
+                                                <div class="col-10 text-muted" style="font-size:12px">
+                                                    <a target="_blank"
+                                                        href="{{ route('admin.activos.show', [$activo->id]) }}">
+                                                        {{ $activo->nombreactivo }}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     @endif
                                 </div>
                                 @foreach ($equipo_a_cargo as $empleado)
@@ -430,7 +483,8 @@
                                     <div class="pb-0 card-body" x-data="{show:false}">
                                         <div class="row">
                                             <div class="col-4">
-                                                <h5 class="mb-0"><i class="mb-1 mr-2 fas fa-bullseye"></i>Mis
+                                                <h5 class="mb-0"><i
+                                                        class="mb-1 mr-2 fas fa-bullseye"></i>Mis
                                                     Objetivos
 
                                                 </h5>
