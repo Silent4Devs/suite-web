@@ -357,8 +357,11 @@
         </div>
     @endif
 
+    <div class="col-12 text-right">
+        <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-file-csv" style="font-size:18pt;"></i></a>
+        <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-camera" style="font-size:18pt;"></i></a>
+        </div>
     <div id="caja_mapa_procesos" style="margin-top:30px;">
-
         <div class="caja2">
             <p>Necesidades del cliente</p>
         </div>
