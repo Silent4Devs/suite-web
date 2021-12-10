@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AreasExport;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyAreaRequest;
@@ -12,8 +13,10 @@ use App\Models\Grupo;
 use App\Models\Organizacion;
 use App\Models\Team;
 use Gate;
+use Illuminate\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -214,5 +217,11 @@ class AreasController extends Controller
         return json_encode($areasTree);
         // dd($areasTree);
 
+    }
+    public function exportTo()
+    {
+       // abort_if(AccessGate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return Excel::download(new AreasExport, 'areas.xlsx');
     }
 }
