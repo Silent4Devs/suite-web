@@ -307,35 +307,68 @@
                                             @endif
                                         </div>
                                         <div class="row">
-                                            <div class="form-group col-sm-3">
-                                                <label class="required" for="puesto_id"><i
-                                                        class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                                <select
-                                                    class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
-                                                    name="puesto_id" id="puesto_id" value="{{ old('puesto_id', '') }}"
-                                                    required>
-                                                    <option value="" selected disabled>
-                                                        -- Selecciona un puesto --
-                                                    </option>
-                                                    @foreach ($puestos as $puesto)
-                                                        <option value="{{ $puesto->id }}">{{ $puesto->puesto }}
+                                            <div class="col-sm-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label class="required" for="puesto_id"><i
+                                                            class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-11" style=" margin-top:-9px; margin-right: 10px;">
+                                                            @livewire('puesto-select',['puestos_seleccionado'=>$puestos_seleccionado])
+                                                        </div>
+                                                        <div class="pl-0 col"
+                                                            style="text-align: right;
+                                                                                                                    margin-top: 0px;
+                                                                                                                    margin-left: inherit;">
+                                                            <button id="btnAgregarPuesto" class="text-white btn btn-sm"
+                                                                style="background:#3eb2ad;height: 34px;" data-toggle="modal"
+                                                                data-target="#PuestoModal" title="Agregar Puesto"><i
+                                                                    class="fas fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    @livewire('puesto-create')
+                                                    {{-- <select
+                                                        class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
+                                                        name="puesto_id" id="puesto_id"
+                                                        value="{{ old('puesto_id', '') }}" required>
+                                                        <option value="" selected disabled>
+                                                            -- Selecciona un puesto --
                                                         </option>
-                                                    @endforeach
-                                                </select>
-                                                {{-- <input
+                                                        @foreach ($puestos as $puesto)
+                                                            <option value="{{ $puesto->id }}">{{ $puesto->puesto }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    {{-- <input
                                                     class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
                                                     type="text" name="puesto_id" id="puesto_id"
                                                     value="{{ old('puesto_id', '') }}" required> --}}
-                                                @if ($errors->has('puesto_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('puesto_id') }}
-                                                    </div>
-                                                @endif
+                                                    @if ($errors->has('puesto_id'))
+                                                        <div class="invalid-feedback">
+                                                            {{ $errors->first('puesto_id') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
-                                            <div class="form-group col-sm-3">
-                                                <label class="required" for="perfil_empleado_id"><i
-                                                        class="fas fa-briefcase iconos-crear"></i>Perfil</label>
-                                                <select
+                                            <div class="form-group col-sm-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label class="required" for="perfil_empleado_id"><i
+                                                            class="fas fa-briefcase iconos-crear"></i>Perfil</label>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-11" style=" margin-top:-9px; margin-right: 10px;">
+                                                            @livewire('perfil-select',['perfiles_seleccionado'=>$perfiles_seleccionado])
+                                                        </div>
+                                                        <div class="pl-0 col"
+                                                            style="text-align: right;
+                                                                                                            margin-top: 0px;
+                                                                                                            margin-left: inherit;">
+                                                            <button id="btnAgregarPerfil" class="text-white btn btn-sm"
+                                                                style="background:#3eb2ad;height: 34px;" data-toggle="modal"
+                                                                data-target="#PerfilModal" title="Agregar Perfil"><i
+                                                                    class="fas fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    @livewire('perfil-create')
+                                                    {{-- <select
                                                     class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"
                                                     name="perfil_empleado_id" id="perfil_empleado_id"
                                                     value="{{ old('perfil_empleado_id', '') }}" required>
@@ -346,14 +379,15 @@
                                                         <option value="{{ $perfil->id }}">{{ $perfil->nombre }}
                                                         </option>
                                                     @endforeach
-                                                </select>
-                                                @if ($errors->has('perfil_empleado_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('perfil_empleado_id') }}
-                                                    </div>
-                                                @endif
+                                                </select> --}}
+                                                    @if ($errors->has('perfil_empleado_id'))
+                                                        <div class="invalid-feedback">
+                                                            {{ $errors->first('perfil_empleado_id') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
-                                            <div class="form-group col-sm-6">
+                                            <div class="form-group col-sm-6 col-lg-6">
                                                 <label class="required" for="antiguedad"><i
                                                         class="fas fa-calendar-alt iconos-crear"></i>Fecha de
                                                     ingreso</label>
@@ -1182,9 +1216,41 @@
         }
     </script>
 
+    <script type="text/javascript">
+        Livewire.on('PerfilStore', () => {
+            $('#PerfilModal').modal('hide');
+            $('.modal-backdrop').hide();
+            toastr.success('Perfil de empleado creado con éxito');
+        });
+
+        Livewire.on('PuestoStore', () => {
+            $('#PuestoModal').modal('hide');
+            $('.modal-backdrop').hide();
+            toastr.success('Puesto de empleado creado con éxito');
+        });
+
+        window.initSelect2 = () => {
+            $('.select2').select2({
+                'theme': 'bootstrap4'
+            });
+        }
+
+        initSelect2();
+
+        Livewire.on('select2', () => {
+            initSelect2();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var headers = {
+                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': 'https://api.flaticon.com/v2'
+            };
 
 
-
+        })
+    </script>
 
 
 

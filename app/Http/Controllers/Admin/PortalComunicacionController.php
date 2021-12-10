@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\ComunicacionSgi;
-use App\Models\Documento;
-use App\Models\Empleado;
-use App\Models\organizacion;
 use Carbon\Carbon;
+use App\Models\Empleado;
+use App\Models\Documento;
+use App\Models\organizacion;
 use Illuminate\Http\Request;
+use App\Models\Organizacione;
+use App\Models\ComunicacionSgi;
+use App\Http\Controllers\Controller;
 
 class PortalComunicacionController extends Controller
 {
@@ -106,7 +107,7 @@ class PortalComunicacionController extends Controller
 
     public function reportes()
     {
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacione::first();
 
         return view('admin.portal-comunicacion.reportes', compact('organizacions'));
     }
