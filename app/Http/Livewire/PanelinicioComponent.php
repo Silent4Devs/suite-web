@@ -10,7 +10,22 @@ class PanelinicioComponent extends Component
 {
     use LivewireAlert;
 
-    public $panel, $id_registro, $nombre_id, $nempleado_id, $area_id, $jefe_id, $puesto_id, $perfil_id, $fechaingreso_id, $genero_id, $estatusemp_id, $correo_id, $telefono_id, $sede_id, $dire_id, $cumpleanos_id;
+    public $panel;
+    public $id_registro;
+    public $nombre_id;
+    public $nempleado_id;
+    public $area_id;
+    public $jefe_id;
+    public $puesto_id;
+    public $perfil_id;
+    public $fechaingreso_id;
+    public $genero_id;
+    public $estatusemp_id;
+    public $correo_id;
+    public $telefono_id;
+    public $sede_id;
+    public $dire_id;
+    public $cumpleanos_id;
 
     public function mount()
     {
@@ -147,7 +162,6 @@ class PanelinicioComponent extends Component
         $this->panel->save();
         $this->callAlert('success', 'La información se actualizo correctamente', false);
     }
-
 
     public function callAlert($tipo, $mensaje, $bool, $test = '')
     {

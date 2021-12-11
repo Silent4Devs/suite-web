@@ -322,10 +322,9 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('nivelriesgo', function ($row) {
                 if (is_null($row->nivelriesgo)) {
                     return null ? $row->nivelriesgo : '';
-                } elseif($row->nivelriesgo==0){
+                } elseif ($row->nivelriesgo == 0) {
                     return 'cero';
-                }
-                 else {
+                } else {
                     return $row->nivelriesgo ? $row->nivelriesgo : '';
                 }
             });

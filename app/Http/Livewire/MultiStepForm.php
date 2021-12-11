@@ -252,7 +252,7 @@ class MultiStepForm extends Component
                 'by_manual' => 'required',
             ], [
                 'evaluados_objetivo.required' => 'El campo público objetivo es requerido',
-                'by_manual.required' => 'El campo de selección manual por empleados es requerido'
+                'by_manual.required' => 'El campo de selección manual por empleados es requerido',
             ]);
         } elseif ($this->evaluados_objetivo == 'area') {
             $this->validate([
@@ -260,13 +260,13 @@ class MultiStepForm extends Component
                 'by_area' => 'required',
             ], [
                 'evaluados_objetivo.required' => 'El campo público objetivo es requerido',
-                'by_area.required' => 'El campo de selección por área es requerido'
+                'by_area.required' => 'El campo de selección por área es requerido',
             ]);
         } else {
             $this->validate([
                 'evaluados_objetivo' => 'required',
             ], [
-                'evaluados_objetivo.required' => 'El campo público objetivo es requerido'
+                'evaluados_objetivo.required' => 'El campo público objetivo es requerido',
             ]);
         }
     }
@@ -436,7 +436,7 @@ class MultiStepForm extends Component
         if ($idx == 0) {
             if ($this->sendEmail) {
                 $evaluacion->update([
-                    'email_sended' => true
+                    'email_sended' => true,
                 ]);
                 $this->enviarCorreoAEvaluadores($evaluacion, $evaluadores);
             }

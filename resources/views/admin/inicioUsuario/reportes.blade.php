@@ -2,9 +2,9 @@
     .cards_reportes{
         overflow: hidden;
         width: 200px;
-        height:80px;
-        padding: 20px 0px;
-        padding-left: 30px;
+        height:60px;
+        padding: 10px 0px;
+        padding-left: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
         text-align: left;
@@ -12,6 +12,7 @@
         margin: 10px;
         cursor: pointer;
         color: #888888;
+
     }
     .cards_reportes i{
         font-size: 16pt;
@@ -23,9 +24,11 @@
     }
 
     .cards_alto{
-        width: 200px;
-        padding: 10px 10px;
-        padding-left: 30px;
+        overflow: hidden;
+        width: 250px;
+        height:60px;
+        padding: 10px 0px;
+        padding-left: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
         text-align: left;
@@ -33,6 +36,7 @@
         margin: 10px;
         cursor: pointer;
         color: #888888;
+
     }
     .cards_alto i{
         font-size: 16pt;
@@ -64,33 +68,42 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-6 col-lg-6">
-            <div class="mb-3 ml-2 mr-2 bg-white rounded" style="height:300px; border:1px solid #ccc !important">
-                <h6>Deseo reportar un:</h6>
-                <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}"  class="cards_reportes">
-                    <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
-                </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}"  class="cards_reportes">
-                    <i class="fas fa-shield-virus"></i> Riesgo Identificado
-                </a>
+        <div class="col-sm-5 col-lg-5">
+            <div class="mb-3 ml-2 mr-2 bg-white rounded " style="height:300px; border:1px solid #ccc !important">
+                <h6 class="mt-3 ml-3" style="color: #008186;" >Deseo reportar un:</h6>
+                <div class="mt-4  row justify-content:center align-items-center">
+                    <div class="text-center col-12">
+                        <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}"  class="cards_alto">
+                            <i class="fas fa-exclamation-triangle"></i> Incidente de seguridad
+                        </a>
+                    </div>
+                    <div class="text-center col-12">
+                        <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}"  class="cards_alto">
+                            <i class="fas fa-shield-alt"></i>  Riesgo Identificado
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-sm-6 col-lg-6">
+        <div class="col-sm-7 col-lg-7">
 
             <div class="mb-3 ml-2 mr-2 bg-white rounded" style="height:300px; border:1px solid #ccc !important">
-                <h6>Deseo realizar un:</h6>
-                <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="cards_reportes">
-                    <i class="fas fa-frown"></i> Realizar queja
-                </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="cards_reportes">
-                    <i class="fas fa-hand-paper"></i> Realizar denuncia
-                </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
-                    <i class="fas fa-rocket"></i> Reportar mejora
-                </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
-                    <i class="fas fa-lightbulb"></i> Realizar sugerencia
-                </a>
+                <h6 class="mt-3 ml-3" style="color: #008186;">Deseo realizar un:</h6>
+                <div class="mt-4 text-center">
+                    <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="cards_reportes">
+                        <i class="fas fa-frown"></i> Realizar queja
+                    </a>
+
+                    <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="cards_reportes">
+                        <i class="fas fa-hand-paper"></i> Realizar denuncia
+                    </a>
+                    <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
+                        <i class="fas fa-rocket"></i> Reportar mejora
+                    </a>
+                    <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
+                        <i class="fas fa-lightbulb"></i> Realizar sugerencia
+                    </a>
+                </div>
             </div>
         </div>
     </div>
