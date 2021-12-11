@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Database\Eloquent\Model;
 class DeclaracionAplicabilidad extends Model
 {
     use HasFactory;
@@ -35,7 +35,6 @@ class DeclaracionAplicabilidad extends Model
         'updated_at',
     ];
 
-
     public function responsables()
     {
         return $this->belongsToMany('App\Models\Empleado', 'declaracion_aplicabilidad_responsables', 'declaracion_id', 'empleado_id');
@@ -43,7 +42,7 @@ class DeclaracionAplicabilidad extends Model
 
     public function aprobadores()
     {
-        return $this->belongsToMany('App\Models\Empleado', 'declaracion_aplicabilidad_aprobadores', 'declaracion_id','aprobadores_id');
+        return $this->belongsToMany('App\Models\Empleado', 'declaracion_aplicabilidad_aprobadores', 'declaracion_id', 'aprobadores_id');
     }
 
     public function empleado()

@@ -21,9 +21,9 @@ class TipoObjetivo extends Model
         if ($this->imagen) {
             return asset('storage/perspectivas/img/' . $this->imagen);
         }
+
         return asset('img/bullseye.png');
     }
-
 
     public function objetivos()
     {

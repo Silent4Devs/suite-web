@@ -333,16 +333,15 @@ class EmpleadoController extends Controller
         }
     }
 
-
     public function storeResumen(Request $request, $empleado)
     {
         $request->validate([
-            "resumen" => "required|string|max:800"
+            'resumen' => 'required|string|max:800',
         ]);
         if ($request->ajax()) {
             $empleado = Empleado::find(intval($empleado));
             $empleado->update([
-                "resumen" => $request->resumen
+                'resumen' => $request->resumen,
             ]);
             if ($empleado) {
                 return response()->json(['success' => true]);
@@ -355,10 +354,10 @@ class EmpleadoController extends Controller
     public function storeCertificaciones(Request $request, $empleado)
     {
         $request->validate([
-            "nombre" => "required|string|max:255",
-            "estatus" => "required|string|max:255",
-            "vigencia" => "required|date",
-            "empleado_id" => "required|exists:empleados,id"
+            'nombre' => 'required|string|max:255',
+            'estatus' => 'required|string|max:255',
+            'vigencia' => 'required|date',
+            'empleado_id' => 'required|exists:empleados,id',
         ]);
         // dd($request->all());
         if ($request->ajax()) {
@@ -381,7 +380,7 @@ class EmpleadoController extends Controller
                 $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
 
                 $certificado->update([
-                    "documento" => $fileNameToStore
+                    'documento' => $fileNameToStore,
                 ]);
             }
             if ($empleado) {
@@ -395,11 +394,11 @@ class EmpleadoController extends Controller
     public function storeCursos(Request $request, $empleado)
     {
         $request->validate([
-            "curso_diploma" => "required|string|max:255",
-            "tipo" => "required",
-            "año" => "required|date",
-            "duracion" => "required",
-            "empleado_id" => "required|exists:empleados,id"
+            'curso_diploma' => 'required|string|max:255',
+            'tipo' => 'required',
+            'año' => 'required|date',
+            'duracion' => 'required',
+            'empleado_id' => 'required|exists:empleados,id',
         ]);
         // dd($request->all());
         if ($request->ajax()) {
@@ -422,14 +421,13 @@ class EmpleadoController extends Controller
 
     public function storeExperiencia(Request $request, $empleado)
     {
-
         $request->validate([
-            "empresa" => "required|string|max:255",
-            "puesto" => "required|string|max:255",
-            "inicio_mes" => "required|date",
-            "fin_mes" => "required|date",
-            "descripcion" => "required",
-            "empleado_id" => "required|exists:empleados,id"
+            'empresa' => 'required|string|max:255',
+            'puesto' => 'required|string|max:255',
+            'inicio_mes' => 'required|date',
+            'fin_mes' => 'required|date',
+            'descripcion'=>'required',
+            'empleado_id' => 'required|exists:empleados,id',
 
         ]);
         // dd($request->all());
@@ -453,13 +451,12 @@ class EmpleadoController extends Controller
 
     public function storeEducacion(Request $request, $empleado)
     {
-
         $request->validate([
-            "institucion" => "required|string|max:255",
-            "nivel" => "required",
-            "año_inicio" => "required|date",
-            "año_fin" => "required|date",
-            "empleado_id" => "required|exists:empleados,id"
+            'institucion' => 'required|string|max:255',
+            'nivel' => 'required',
+            'año_inicio' => 'required|date',
+            'año_fin'=>'required|date',
+            'empleado_id' => 'required|exists:empleados,id',
 
         ]);
         // dd($request->all());

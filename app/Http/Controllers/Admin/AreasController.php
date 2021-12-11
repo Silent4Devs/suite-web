@@ -198,7 +198,6 @@ class AreasController extends Controller
         $areasTree = Area::exists(); //Eager loading
         // dd($areasTree);
 
-
         $rutaImagenes = asset('storage/empleados/imagenes/');
         $grupos = Grupo::with('areas')->orderBy('id')->get();
         $organizacionDB = Organizacion::first();
@@ -214,9 +213,9 @@ class AreasController extends Controller
         abort_if(Gate::denies('organizacion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $areasTree = Area::with(['supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+
         return json_encode($areasTree);
         // dd($areasTree);
-
     }
     public function exportTo()
     {

@@ -15,11 +15,9 @@ class ChangeFkRevisionesToDocumentosTable extends Migration
     {
         Schema::table('documentos', function (Blueprint $table) {
             $table->dropForeign('documentos_reviso_id_foreign');
-
         });
         Schema::table('documentos', function (Blueprint $table) {
             $table->foreign('reviso_id')->references('id')->on('empleados')->onDelete('CASCADE');
-
         });
     }
 

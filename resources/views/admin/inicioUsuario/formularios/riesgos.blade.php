@@ -2,7 +2,7 @@
 @section('content')
 	<div class="card">
 		<div class="text-center card-header" style="background-color: #00abb2;">
-			<strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-shield-virus"></i>Riesgos identificados</strong>
+			<strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-shield-alt"></i>  Riesgos identificados</strong>
 		</div>
 		<div class="card-body">
 			<strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"

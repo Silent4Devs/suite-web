@@ -317,12 +317,14 @@ class Empleado extends Model
     public function getDeclaracionesResponsableAttribute()
     {
         $misDeclaraciones = DeclaracionAplicabilidadResponsable::select('id', 'declaracion_id')->where('empleado_id', $this->id)->pluck('declaracion_id')->toArray();
+
         return $misDeclaraciones;
     }
 
     public function getDeclaracionesAprobadorAttribute()
     {
         $misDeclaraciones = DeclaracionAplicabilidadAprobadores::select('id', 'declaracion_id')->where('aprobadores_id', $this->id)->pluck('declaracion_id')->toArray();
+
         return $misDeclaraciones;
     }
 }

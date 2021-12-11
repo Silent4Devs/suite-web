@@ -40,7 +40,6 @@ class Organizacion extends Model
     protected static $flushCacheOnUpdate = true;
     protected $table = 'organizacions';
 
-
     protected $casts = [
         'telefono' => 'int',
         'team_id' => 'int',
@@ -69,13 +68,14 @@ class Organizacion extends Model
 
     ];
 
-    public function getLogotipoAttribute($value){
-
-        $logotipo =asset('img/logo_policromatico_2.png');
-        if($value){
-            $logotipo=asset('storage/images/'.$value);
+    public function getLogotipoAttribute($value)
+    {
+        $logotipo = asset('img/logo_policromatico_2.png');
+        if ($value) {
+            $logotipo = asset('storage/images/' . $value);
         }
-       return $logotipo;
+
+        return $logotipo;
     }
 
     public function team()

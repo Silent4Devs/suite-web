@@ -18,7 +18,6 @@ use App\Models\RH\ObjetivoRespuesta;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Spatie\CalendarLinks\Link;
@@ -984,10 +983,9 @@ class EV360EvaluacionesController extends Controller
                 $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
                 $calificacion_final += $promedio_general_objetivos;
             } else {
-
                 $promedio_objetivos = 1;
                 $promedio_general_objetivos = 100 * ($evaluacion->peso_general_objetivos / 100);
-                $calificacion_final +=  $evaluacion->peso_general_objetivos;
+                $calificacion_final += $evaluacion->peso_general_objetivos;
             }
         }
 
@@ -1038,7 +1036,6 @@ class EV360EvaluacionesController extends Controller
         ];
     }
 
-
     public function resumen($evaluacion)
     {
         $evaluacion = Evaluacion::with('evaluados')->find(intval($evaluacion));
@@ -1081,10 +1078,12 @@ class EV360EvaluacionesController extends Controller
 
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('evaluacion', 'calificaciones'));
     }
+
     public function resumenJefe($evaluacion)
     {
         $evaluacion = Evaluacion::with('evaluados')->find(intval($evaluacion));
         $evaluados = $evaluacion->evaluados;
+
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('calificaciones', 'evaluacion'));
     }
 
@@ -1172,6 +1171,7 @@ class EV360EvaluacionesController extends Controller
     public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion)
     {
         $competencias = EvaluacionRepuesta::where('evaluacion_id', $evaluacion)->pluck('competencia_id')->unique()->toArray();
+
         return $competencias;
     }
 
@@ -1181,14 +1181,17 @@ class EV360EvaluacionesController extends Controller
         if ($existsObjetivos) {
             return true;
         }
+
         return false;
     }
+
     public function empleadoTieneObjetivosAsignados($empleado, $evaluacion)
     {
         $existsObjetivos = ObjetivoRespuesta::where('evaluado_id', $empleado)->where('evaluacion_id', $evaluacion)->exists();
         if ($existsObjetivos) {
             return true;
         }
+
         return false;
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 /**
- * Class DeclaracionAplicabilidadAprobadore
+ * Class DeclaracionAplicabilidadAprobadore.
  *
  * @property int $id
  * @property int|null $declaracion_id
@@ -20,8 +20,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  *
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  * @property Empleado|null $empleado
- *
- * @package App\Models
  */
 class DeclaracionAplicabilidadAprobadores extends Model
 {
@@ -32,30 +30,30 @@ class DeclaracionAplicabilidadAprobadores extends Model
     protected static $flushCacheOnUpdate = true;
 	protected $table = 'declaracion_aplicabilidad_aprobadores';
 
-	protected $casts = [
-		'declaracion_id' => 'int',
-		'aprobadores_id' => 'int',
-		'estatus' => 'int',
-	];
+    protected $casts = [
+        'declaracion_id' => 'int',
+        'aprobadores_id' => 'int',
+        'estatus' => 'int',
+    ];
 
-	protected $dates = [
-		'fecha_aprobacion'
-	];
+    protected $dates = [
+        'fecha_aprobacion',
+    ];
 
-	protected $fillable = [
-		'declaracion_id',
-		'aprobadores_id',
-		'estatus',
-		'fecha_aprobacion'
-	];
+    protected $fillable = [
+        'declaracion_id',
+        'aprobadores_id',
+        'estatus',
+        'fecha_aprobacion',
+    ];
 
-	public function declaracion_aplicabilidad()
-	{
-		return $this->belongsTo(DeclaracionAplicabilidad::class, 'declaracion_id');
-	}
+    public function declaracion_aplicabilidad()
+    {
+        return $this->belongsTo(DeclaracionAplicabilidad::class, 'declaracion_id');
+    }
 
-	public function empleado()
-	{
-		return $this->belongsTo(Empleado::class, 'aprobadores_id');
-	}
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'aprobadores_id');
+    }
 }

@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Recurso;
-use App\Models\Documento;
-use App\Models\AuditoriaAnual;
-use App\Models\Registromejora;
-use App\Services\LaravelChart;
-use App\Models\IndicadoresSgsi;
 use App\Models\AccionCorrectiva;
+use App\Models\AuditoriaAnual;
+use App\Models\CategoriaCapacitacion;
 use App\Models\ControlDocumento;
+use App\Models\Documento;
+use App\Models\IncidentesDeSeguridad;
+use App\Models\IncidentesSeguridad;
+use App\Models\IndicadoresSgsi;
 use App\Models\PlanBaseActividade;
 use App\Models\PlanImplementacion;
+use App\Models\Recurso;
+use App\Models\Registromejora;
+use App\Services\LaravelChart;
+use Carbon\Carbon;
 use DB;
-use App\Models\IncidentesSeguridad;
-use App\Models\CategoriaCapacitacion;
-use App\Models\IncidentesDeSeguridad;
 
 class HomeController
 {
     public function index()
     {
-
         $settings1 = [
             'chart_title'        => 'Actividades por colaborador',
             'chart_type'         => 'bar',
@@ -53,7 +52,6 @@ class HomeController
             'relationship_name'  => 'estado',
         ];
 
-
         // DB::enableQueryLog();
         $total = IncidentesSeguridad::select('id')->get()->count();
         $nuevos = IncidentesSeguridad::select('id')->where('estatus', 'nuevo')->get()->count();
@@ -62,8 +60,7 @@ class HomeController
         $cerrados = IncidentesSeguridad::select('id')->where('estatus', 'cerrado')->get()->count();
         $cancelados = IncidentesSeguridad::select('id')->where('estatus', 'cancelado')->get()->count();
 
-         // Show results of log
-
+        // Show results of log
 
         $chart2 = new LaravelChart($settings2);
 
