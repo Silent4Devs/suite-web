@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Rennokki\QueryCache\Traits\QueryCacheable;
 /**
  * Class AnalisisBrecha.
  *
@@ -28,6 +28,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AnalisisBrecha extends Model
 {
     use SoftDeletes;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     protected $table = 'analisis_brechas';
 
     protected $casts = [

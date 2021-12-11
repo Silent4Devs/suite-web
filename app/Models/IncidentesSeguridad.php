@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class IncidentesSeguridad extends Model implements HasMedia
 {
     use InteractsWithMedia;
     use HasFactory;
     use SoftDeletes;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     const ARCHIVADO = '1';
     const NO_ARCHIVADO = '0';
 

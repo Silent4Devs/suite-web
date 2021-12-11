@@ -1,10 +1,10 @@
-<?php
+|<?php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Rennokki\QueryCache\Traits\QueryCacheable;
 /**
  * Class DeclaracionAplicabilidadResponsable.
  *
@@ -22,8 +22,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DeclaracionAplicabilidadResponsable extends Model
 {
-    // use SoftDeletes;
-    protected $table = 'declaracion_aplicabilidad_responsables';
+	use SoftDeletes;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
+	protected $table = 'declaracion_aplicabilidad_responsables';
 
     protected $casts = [
         'declaracion_id' => 'int',

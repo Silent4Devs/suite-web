@@ -173,10 +173,12 @@ class EmpleadoController extends Controller
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
         $certificaciones = CertificacionesEmpleados::get();
-        $puestos = Puesto::all();
-        $perfiles = PerfilEmpleado::all();
+        $puestos = Puesto::get();
+        $perfiles = PerfilEmpleado::get();
+        $perfiles_seleccionado = null;
+        $puestos_seleccionado = null;
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles'));
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado'));
     }
 
     public function onlyStore($request)
@@ -512,10 +514,12 @@ class EmpleadoController extends Controller
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
-        $puestos = Puesto::all();
-        $perfiles = PerfilEmpleado::all();
+        $puestos = Puesto::get();
+        $perfiles = PerfilEmpleado::get();
+        $perfiles_seleccionado = $empleado->perfil_empleado_id;
+        $puestos_seleccionado = $empleado->puesto_id;
 
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles'));
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado'));
     }
 
     /**
