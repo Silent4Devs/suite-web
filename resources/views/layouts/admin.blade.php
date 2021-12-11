@@ -1039,15 +1039,17 @@
                         </div>
                     </div>
                 @endif
-                @if ($errors->count() > 0)
-                    <div class="alert alert-danger">
-                        <ul class="list-unstyled">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                <div id="errores_generales_admin_quitar_recursos">
+                    @if ($errors->count() > 0)
+                        <div class="alert alert-danger">
+                            <ul class="list-unstyled">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
                 @yield('content')
 
             </div>
@@ -1126,6 +1128,11 @@
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         })
+
+        $(".btn_bajar_scroll").click(function(){
+            $("lemnt_row_menu").fadeIn(0);
+            $('.c-sidebar-nav').delay(1000).scrollTop( 900);
+        });
     </script>
 
     <script>

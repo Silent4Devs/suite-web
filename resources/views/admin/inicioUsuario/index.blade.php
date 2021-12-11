@@ -54,7 +54,7 @@
             overflow: hidden;
         }
 
-        .caja_botones_secciones a {
+        /*.caja_botones_secciones a {
             position: relative;
         }
 
@@ -73,12 +73,52 @@
             margin-top: -5px;
             margin-right: -5px;
             z-index: 1;
-        }
+        }*/
 
         .caja_botones_menu a{
             outline: none;
         }
 
+
+
+
+        /*alerta*/
+
+        .delete {
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .icono_delete {
+            margin: 40px 0px;
+            color: #FF5500;
+            opacity: 0.7;
+            font-size: 70pt;
+        }
+        .eliminar{
+            background-color: #FF5500;
+            opacity: 0.7;
+            border: none;
+        }
+        .eliminar:hover{
+            background-color: #FF5500;
+            opacity: 1;
+        }
+
+        body.c-dark-theme .delete {
+            background: #2a2b36;
+        }
+
+        body.c-dark-theme .btn-outline-secondary {
+            border: 1px solid #ccc;
+            color: #ccc;
+        }
+
+        .btn_archivar{
+            all: unset !important;
+        }
     </style>
 
     @include('partials.flashMessages')

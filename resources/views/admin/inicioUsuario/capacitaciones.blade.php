@@ -1,3 +1,10 @@
+
+<style type="text/css">
+    #errores_generales_admin_quitar_recursos{
+        display: none !important;
+    }    
+</style>
+
 <div class="card-body datatable-fix">
     <table id="tabla_usuario_capacitaciones" class="table">
         <thead>
@@ -29,13 +36,9 @@
                             @endforeach
                         </td>
                         <td class="opciones_iconos">
-
-                                <form action="{{route('admin.inicio-Usuario.capacitaciones.archivar', $recurso->id)}}" method="POST">
-                                    @csrf
-                                    <button class="btn" title="Archivar">
-                                        <i class="fas fa-archive"></i>
-                                    </button>
-                                </form>
+                            <button class=" btn_archivar" title="Archivar" data-toggle="modal" data-target="#alert_capa{{$recurso->id}}">
+                                <i class="fas fa-archive"></i>
+                            </button>
                         </td>
                     </tr>
                 @endif
@@ -45,8 +48,38 @@
 </div>
 
 
+<div>
+    @foreach($recursos as $recurso)
+        @if(!($recurso->archivar == 'archivado'))
+
+            <div class="modal fade" id="alert_capa{{$recurso->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <div class="delete">
+                        <i class="fas fa-archive icono_delete"></i>
+                        <h1 class="mb-4">Archivar</h1>
+                        <p class="parrafo">¿Esta seguro que desea archivar este registro?</p>
+                        <div class="mt-4">
+                            <form action="{{route('admin.inicio-Usuario.capacitaciones.archivar', $recurso->id)}}" method="POST">
+                                @csrf
+                                <div class="mr-4 cancelar btn btn-outline-secondary" data-dismiss="modal">Cancelar</div>
+                                <button class="eliminar btn btn-info" type="submit">Archivar</button>
+                            </form>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        @endif
+    @endforeach
+</div>
+
+
 @section('scripts')
     @parent
+
     <script type="text/javascript">
         $(document).ready(function(){
             let dtButtons = [{
@@ -118,100 +151,101 @@
 
                 ];
                 let btnArchivo = {
-                text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',
-                titleAttr: 'Archivo',
-                url: "{{ asset('admin/inicioUsuario/capacitaciones/archivo') }}",
-                className: "btn btn-info ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
+                    text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',
+                    titleAttr: 'Archivo',
+                    url: "{{ asset('admin/inicioUsuario/capacitaciones/archivo') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
+                };
+
             dtButtons.push(btnArchivo);
             $("#tabla_usuario_capacitaciones").DataTable({
                 buttons: dtButtons,
             });
 
 
-            window.archivarCapacitacion = function(id_empleado, recurso_id, url){
-                Swal.fire({
-                  title: 'Are you sure?',
-                  text: "You won't be able to revert this!",
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: url,
-                        data: {
-                            id_empleado, recurso_id
-                        },
-                        dataType: "JSON",
-                        beforeSend: function() {
-                            let timerInterval
-                            Swal.fire({
-                                title: 'Archivando...',
-                                html: 'Estamos archivando su capacitacion',
-                                timer: 4000,
-                                timerProgressBar: true,
-                                didOpen: () => {
-                                    Swal.showLoading()
-                                    timerInterval = setInterval(() => {
-                                        const content = Swal
-                                            .getHtmlContainer()
-                                        if (content) {
-                                            const b = content
-                                                .querySelector('b')
-                                            if (b) {
-                                                b.textContent = Swal
-                                                    .getTimerLeft()
-                                            }
-                                        }
-                                    }, 100)
-                                },
-                                willClose: () => {
-                                    clearInterval(timerInterval)
-                                }
-                            });
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                Swal.fire(
-                                    '¡Archivado!',
-                                    'Su revisión ha sido archivada',
-                                    'success'
-                                )
-                                setTimeout(() => {
-                                    window.location.reload();
-                                }, 1000);
-                            } else {
-                                Swal.fire(
-                                    'Erro al archivar!',
-                                    'Ocurrió un error',
-                                    'error'
-                                )
-                            }
-                        },
-                        error: function(err) {
-                            Swal.fire(
-                                'Error!',
-                                `${err}`,
-                                'error'
-                            )
-                        }
-                    });
-                  }
-                });
-            }
+            // window.archivarCapacitacion = function(id_empleado, recurso_id, url){
+            //     Swal.fire({
+            //       title: 'Are you sure?',
+            //       text: "You won't be able to revert this!",
+            //       icon: 'warning',
+            //       showCancelButton: true,
+            //       confirmButtonColor: '#3085d6',
+            //       cancelButtonColor: '#d33',
+            //       confirmButtonText: 'Yes, delete it!'
+            //     }).then((result) => {
+            //       if (result.isConfirmed) {
+            //         $.ajax({
+            //             type: "POST",
+            //             headers: {
+            //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //             },
+            //             url: url,
+            //             data: {
+            //                 id_empleado, recurso_id
+            //             },
+            //             dataType: "JSON",
+            //             beforeSend: function() {
+            //                 let timerInterval
+            //                 Swal.fire({
+            //                     title: 'Archivando...',
+            //                     html: 'Estamos archivando su capacitacion',
+            //                     timer: 4000,
+            //                     timerProgressBar: true,
+            //                     didOpen: () => {
+            //                         Swal.showLoading()
+            //                         timerInterval = setInterval(() => {
+            //                             const content = Swal
+            //                                 .getHtmlContainer()
+            //                             if (content) {
+            //                                 const b = content
+            //                                     .querySelector('b')
+            //                                 if (b) {
+            //                                     b.textContent = Swal
+            //                                         .getTimerLeft()
+            //                                 }
+            //                             }
+            //                         }, 100)
+            //                     },
+            //                     willClose: () => {
+            //                         clearInterval(timerInterval)
+            //                     }
+            //                 });
+            //             },
+            //             success: function(response) {
+            //                 if (response.success) {
+            //                     Swal.fire(
+            //                         '¡Archivado!',
+            //                         'Su revisión ha sido archivada',
+            //                         'success'
+            //                     )
+            //                     setTimeout(() => {
+            //                         window.location.reload();
+            //                     }, 1000);
+            //                 } else {
+            //                     Swal.fire(
+            //                         'Erro al archivar!',
+            //                         'Ocurrió un error',
+            //                         'error'
+            //                     )
+            //                 }
+            //             },
+            //             error: function(err) {
+            //                 Swal.fire(
+            //                     'Error!',
+            //                     `${err}`,
+            //                     'error'
+            //                 )
+            //             }
+            //         });
+            //       }
+            //     });
+            // }
         });
     </script>
 @endsection

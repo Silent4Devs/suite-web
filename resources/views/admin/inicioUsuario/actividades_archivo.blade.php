@@ -1,15 +1,9 @@
 @extends('layouts.admin')
 @section('content')
 
-    <style type="text/css">
-        #errores_generales_admin_quitar_recursos{
-            display: none !important;
-        }    
-    </style>
-
 	<div class="mt-5 card">
 	    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-	        <h3 class="mb-2 text-center text-white"><strong>Archivo de Capacitaciones</strong></h3>
+	        <h3 class="mb-2 text-center text-white"><strong>Archivo de Actividades</strong></h3>
 	    </div>
 		
 		<div class="card-body">
@@ -17,50 +11,71 @@
 					
 				<div class="datatable-fix" style="width: 100%;">
 				    <div class="mb-3 text-right">
-				        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario#capacitaciones')}}">Regresar</a>
+				        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario#actividades')}}">Regresar</a>
 				    </div>
 
 				   <table class="table tabla_archi">
-				   		<thead>
-				            <tr style="border: none !important">
-				                <th>Nombre</th>
-				                <th>Categoría</th>
-				                <th>Instructor</th>
-				                <th style="min-width:200px;">Fecha Inicio</th>
-				                <th style="min-width:200px;">Fecha Fin</th>
-				                <th>Calificación</th>
-				                <th>Opciones</th>
-				            </tr>
-				   		</thead>
-				   		<tbody>
-				   			@foreach($recursos as $recurso)
-				   				@if($recurso->archivar == 'archivado')
-						   			<tr>
-						       			<td>{{$recurso->cursoscapacitaciones}}</td>
-						                <td>{{$recurso->categoria_capacitacion->nombre}}</td>
-						                <td>{{$recurso->instructor}}</td>
-						                <td>{{$recurso->fecha_curso}}</td>
-						                <td>{{$recurso->fecha_fin}}</td>
-						                <td>
-						                    @foreach ($recurso->empleados as $empleado)
-						                        @if($empleado->id == auth()->user()->empleado->id)
-						                        {{ $empleado->pivot->calificacion }}
-						                        @endif
-						                    @endforeach
-						                </td>
-						                <td class="opciones_iconos">
-						                    <form action="{{route('admin.inicio-Usuario.capacitaciones.recuperar', $recurso->id)}}" method="POST">
-						                        @csrf
-						                        <button class="btn" title="Recuperar" style="all: unset !important;">
-						                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#00abb2;"></i>
-						                        </button>
-						                    </form>
-						                </td>
-						   			</tr>
-					   			@endif
-				   			@endforeach
-				   		</tbody>
-				   </table>
+                        <thead>
+                            <tr>
+                                <th>Actividad</th>
+                                <th>Origen</th>
+                                {{-- <th>Categoria</th> --}}
+                                {{-- <th>Urgencia</th> --}}
+                                <th style="min-width:200px;">Fecha&nbsp;inicio</th>
+                                <th style="min-width:200px;">Fecha&nbsp;fin</th>
+                                {{-- <th>Asignada por</th> --}}
+                                <th>Estatus</th>
+                                <th>Recuperar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($actividades as $task)
+                                @if($task->archivo == 'archivado')
+                                    <tr id="{{ $task->id }}" data-parent-plan="{{ $task->slug }}">
+                                        <td class="td_nombre">{{ $task->name }}</td>
+                                        <td><span class="badge badge-primary">{{ $task->parent }}</span></td>
+                                        {{-- <td>Categoria</td> --}}
+                                        {{-- <td>Urgencia</td> --}}
+                                        <td>{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTime()->format('Y-m-d') }}
+                                        </td>
+                                        <td>{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('Y-m-d') }}
+                                        </td>
+                                        
+                                        {{-- <td>Asignada por</td> --}}
+                                        <td>
+                                            @switch($task->status)
+                                                @case('STATUS_ACTIVE')
+                                                    <span class="badge" style="background-color:rgb(253, 171, 61)">En proceso</span>
+                                                @break
+                                                @case('STATUS_DONE')
+                                                    <span class="badge" style="background-color:rgb(0, 200, 117)">Completada</span>
+                                                @break
+                                                @case ('STATUS_FAILED')
+                                                    <span class="badge" style="background-color:rgb(226, 68, 92)">Con retraso</span>
+                                                @break
+                                                @case ('STATUS_SUSPENDED')
+                                                    <span class="badge" style="background-color:#aaaaaa">Suspendida</span>
+                                                @break
+                                                @case ('STATUS_UNDEFINED')
+                                                    <span class="badge" style="background-color:#00b1e1">Sin iniciar</span>
+                                                @break
+                                                @default
+                                                    <span class="badge" style="background-color:#00b1e1">Sin iniciar</span>
+                                            @endswitch
+                                        </td>
+                                        <td class="d-flex">
+                                            <form action="{{route('admin.inicio-Usuario.actividades.recuperar', $task->id_implementacion)}}" method="POST">
+                                                @csrf
+                                                <button class="btn" title="Recuperar" style="all: unset !important;">
+                                                    <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#00abb2;"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
 				</div>
 
 			</div>
