@@ -10,18 +10,9 @@
             @php
                 use App\Models\Organizacion;
                 $organizacion = Organizacion::select('id', 'logotipo')->first();
-
-                if(!empty($organizacion)){
-                    $logotipo = $organizacion->logotipo;
-                    @endphp
-                    <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
-                    @php
-                }else{
-                    @endphp
-                    <img src="{{ asset('img/logo_policromatico_2.png')}}" class="img_logo" style="width: 110%;">
-                    @php
-                }
+                $logotipo = $organizacion->logotipo;
             @endphp
+            <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
         </div>
 
     </div>
@@ -89,7 +80,8 @@
                                 <i class="fab fa-adn iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.area.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.area.title') }}
+                                </font>
                             </a>
                         </li>
                     @endcan
@@ -323,6 +315,26 @@
 
                             </i>
                             <font class="letra_blanca" style="margin-left:10px;"> Empleados </font>
+                        </a>
+                    </li>
+                @endcan
+                @can('configuracion_empleados_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.tipos-contratos-empleados.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/tipos-contratos-empleados') || request()->is('admin/tipos-contratos-empleados/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-file iconos_menu letra_blanca">
+
+                            </i>
+                            <font class="letra_blanca" style="margin-left:10px;"> Tipos de contratos </font>
+                        </a>
+                    </li>
+                @endcan
+                @can('configuracion_empleados_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.entidades-crediticias.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/entidades-crediticias') || request()->is('admin/entidades-crediticias/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-file iconos_menu letra_blanca"></i>
+                            <font class="letra_blanca" style="margin-left:10px;"> Entidades crediticias </font>
                         </a>
                     </li>
                 @endcan
@@ -560,14 +572,14 @@
                         </ul>
                     </li>
                     @can('configuracion_sede_access')
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.paneldeclaracion.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*/edit') || request()->is('admin/sedes/create') ? 'active' : '' }}">
-                            <i class="ml-2 fas fa-file iconos_menu letra_blanca"></i>
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.paneldeclaracion.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*/edit') || request()->is('admin/sedes/create') ? 'active' : '' }}">
+                                <i class="ml-2 fas fa-file iconos_menu letra_blanca"></i>
 
-                            <font class="letra_blanca" style="margin-left:10px;">Controles</font>
-                        </a>
-                    </li>
+                                <font class="letra_blanca" style="margin-left:10px;">Controles</font>
+                            </a>
+                        </li>
                     @endcan
 
                     @can('configuracion_empleados_access')
@@ -615,7 +627,8 @@
                             <a href="{{ route('admin.roles.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-briefcase iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.role.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.role.title') }}
+                                </font>
                             </a>
                         </li>
                     @endcan
@@ -624,7 +637,8 @@
                             <a href="{{ route('admin.users.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-user iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.user.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.user.title') }}
+                                </font>
                             </a>
                         </li>
                     @endcan
@@ -642,7 +656,8 @@
                             <a href="{{ route('admin.audit-logs.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/audit-logs') || request()->is('admin/audit-logs/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-file-alt iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca" style="margin-left:11px;"> {{ trans('cruds.auditLog.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:11px;"> {{ trans('cruds.auditLog.title') }}
+                                </font>
                             </a>
                         </li>
                     @endcan
@@ -651,19 +666,20 @@
                             <a href="{{ route('admin.puestos.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/puestos') || request()->is('admin/puestos/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-user-md iconos_menu letra_blanca"></i>
-                                <font class="letra_blanca" style="margin-left:10px;">{{ trans('cruds.puesto.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;">{{ trans('cruds.puesto.title') }}
+                                </font>
                             </a>
                         </li>
                     @endcan
                     @can('configuracion_sede_access')
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.perfiles.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/perfiles') || request()->is('admin/perfiles/*') || request()->is('admin/perfiles/create') ? 'active' : '' }}">
-                            <i class="fas fa-briefcase iconos_menu letra_blanca"></i>
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.perfiles.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/perfiles') || request()->is('admin/perfiles/*') || request()->is('admin/perfiles/create') ? 'active' : '' }}">
+                                <i class="fas fa-briefcase iconos_menu letra_blanca"></i>
 
-                            <font class="letra_blanca" style="margin-left:10px;">Perfiles</font>
-                        </a>
-                    </li>
+                                <font class="letra_blanca" style="margin-left:10px;">Perfiles</font>
+                            </a>
+                        </li>
                     @endcan
                     @can('user_alert_access')
                         <li class="c-sidebar-nav-item">
@@ -672,7 +688,8 @@
                                 <i class="fa-fw fas fa-bell iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.userAlert.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;">
+                                    {{ trans('cruds.userAlert.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -683,7 +700,8 @@
                                 <i class="fa-fw fas fa-cogs iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.enlacesEjecutar.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;">
+                                    {{ trans('cruds.enlacesEjecutar.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -694,7 +712,8 @@
                                 <i class="fa-fw fas fa-users iconos_menu letra_blanca">
 
                                 </i>
-                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.team.title') }} </font>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.team.title') }}
+                                </font>
                             </a>
                         </li>
                     @endcan
