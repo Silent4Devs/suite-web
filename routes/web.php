@@ -517,6 +517,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
 
     // Areas
+    Route::get('areas/exportar', 'AreasController@exportTo')->name('areas.exportar');
     Route::delete('areas/destroy', 'AreasController@massDestroy')->name('areas.massDestroy');
     Route::get('areas/grupo', 'AreasController@obtenerAreasPorGrupo')->name('areas.obtenerAreasPorGrupo');
     Route::post('areas/parse-csv-import', 'AreasController@parseCsvImport')->name('areas.parseCsvImport');

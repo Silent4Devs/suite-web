@@ -6,11 +6,15 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class Glosario extends Model
 {
     use SoftDeletes, HasFactory;
+    use QueryCacheable;
 
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     public $table = 'glosarios';
 
     public static $searchable = [

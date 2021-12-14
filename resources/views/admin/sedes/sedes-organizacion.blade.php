@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    
+
     {{ Breadcrumbs::render('admin.portal-comunicacion.sedes-organizacion') }}
 
     <div class="mt-5 card">
@@ -29,19 +29,19 @@
 
                             </div>
 
+
                             <div class="card-body">
 
                                 <div class="row">
-                                    <div class="col-10">
-                                        <p><strong>Sede:</strong> {{ $sedes->sede }}</p>
-
-                                        <p><strong>Dirección:</strong> {{ $sedes->direccion }}</p>
+                                    <div class="col-9">
+                                    <p><strong>Sede:</strong> {{ $sedes->sede }}</p>
                                     </div>
-                                    <div class="col-2">
-                                        <p><a href="sede-ubicacionorganizacion/{{ $sedes->id }}" target="_blank"><i
+                                    <div class="col-3">
+                                        <p><a href="sede-ubicacionorganizacion/{{ $sedes->id }}" target="_blank"  title="cómo llegar a la sede"><i
                                                     class="fas fa-map-marked-alt fa-2x text-info "></i></a></p>
                                     </div>
                                 </div>
+                                <p><strong>Dirección:</strong> {{ $sedes->direccion }}</p>
 
                             </div>
 

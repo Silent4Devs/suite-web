@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -13,6 +15,10 @@ class IncidentesSeguridad extends Model implements HasMedia
     use InteractsWithMedia;
     use HasFactory;
     use SoftDeletes;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     const ARCHIVADO = '1';
     const NO_ARCHIVADO = '0';
 
@@ -26,7 +32,7 @@ class IncidentesSeguridad extends Model implements HasMedia
         'id',
     ];
 
-    protected $appends = ['folio', 'archivo'];
+    protected $appends = ['folio', 'archivo', 'fecha_creacion', 'fecha_cerrado'];
 
     // public function getFechaAttribute()
     // {
@@ -66,5 +72,15 @@ class IncidentesSeguridad extends Model implements HasMedia
     public function actividades()
     {
         return $this->hasMany(ActividadIncidente::class, 'seguridad_id', 'id');
+    }
+
+    public function getFechaCreacionAttribute()
+    {
+        return Carbon::parse($this->fecha)->format('d-m-Y');
+    }
+
+    public function getFechaCerradoAttribute()
+    {
+        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y') : '';
     }
 }

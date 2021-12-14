@@ -1708,5 +1708,39 @@
         }
     </script>
 
+    <script type="text/javascript">
+        Livewire.on('PerfilStore', () => {
+            $('#PerfilModal').modal('hide');
+            $('.modal-backdrop').hide();
+            toastr.success('Perfil de empleado creado con éxito');
+        });
 
+        Livewire.on('PuestoStore', () => {
+            $('#PuestoModal').modal('hide');
+            $('.modal-backdrop').hide();
+            toastr.success('Puesto de empleado creado con éxito');
+        });
+
+        window.initSelect2 = () => {
+            $('.select2').select2({
+                'theme': 'bootstrap4'
+            });
+        }
+
+        initSelect2();
+
+        Livewire.on('select2', () => {
+            initSelect2();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var headers = {
+                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': 'https://api.flaticon.com/v2'
+            };
+
+
+        })
+    </script>
 @endsection

@@ -179,6 +179,10 @@ class EmpleadoController extends Controller
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
         $certificaciones = CertificacionesEmpleados::get();
+        $puestos = Puesto::get();
+        $perfiles = PerfilEmpleado::get();
+        $perfiles_seleccionado = null;
+        $puestos_seleccionado = null;
         $puestos = Puesto::all();
         $perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'slug', 'description')->get();
@@ -188,7 +192,7 @@ class EmpleadoController extends Controller
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries'));
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles','perfiles_seleccionado', 'puestos_seleccionado' ));
     }
 
     public function onlyStore($request)
@@ -690,11 +694,15 @@ class EmpleadoController extends Controller
         $perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
+        $puestos = Puesto::get();
+        $perfiles = PerfilEmpleado::get();
+        $perfiles_seleccionado = $empleado->perfil_empleado_id;
+        $puestos_seleccionado = $empleado->puesto_id;
 
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
 
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries'));
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado'));
     }
 
     /**

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class DeclaracionAplicabilidadController extends Controller
 {
@@ -102,6 +103,9 @@ class DeclaracionAplicabilidadController extends Controller
         $path = public_path($ISO27001_SoA_PATH);
         $lista_archivos_declaracion = glob($path . 'Analisis Inicial*.pdf');
         $empleados = Empleado::select('id', 'name', 'genero', 'foto')->get();
+        $responsables = DeclaracionAplicabilidadResponsable::get();
+        $aprobadores = DeclaracionAplicabilidadAprobadores::get();
+        // $empleados=Empleado::select('id','name','genero','foto')->get();
 
         // dd(DB::getQueryLog());
         // dd($lista_archivos_declaracion);
@@ -116,7 +120,9 @@ class DeclaracionAplicabilidadController extends Controller
             ->with('gapda141s', $gapa141)->with('gapda142s', $gapa142)->with('gapda143s', $gapa143)->with('gapda151s', $gapa151)
             ->with('gapda152s', $gapa152)->with('gapda161s', $gapa161)->with('gapda171s', $gapa171)->with('gapda172s', $gapa172)
             ->with('gapda181s', $gapa181)->with('gapda182s', $gapa182)->with('lista_archivos_declaracion', $lista_archivos_declaracion)
-            ->with('ISO27001_SoA_PATH', $ISO27001_SoA_PATH);
+            ->with('ISO27001_SoA_PATH', $ISO27001_SoA_PATH)
+            ->with('aprobadores', $aprobadores)
+            ->with('responsables', $responsables);
     }
 
     /**
@@ -132,41 +138,58 @@ class DeclaracionAplicabilidadController extends Controller
             switch ($request->name) {
 
                 case 'justificacion':
-                    $gapun = DeclaracionAplicabilidadResponsable::findOrFail($id);
-                    $gapun->justificacion = $request->value;
-                    $gapun->save();
+                    try {
+                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['justificacion'=>$request->value]);
+                        // $gapun->justificacion = $request->value;
 
-                    return response()->json(['success' => true]);
+                        return response()->json(['success' => true, 'id'=>$id]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false]);
+                    }
+
                     break;
                 case 'aplica':
-                    $gapun = DeclaracionAplicabilidadResponsable::findOrFail($id);
-                    $gapun->aplica = $request->value;
-                    $gapun->save();
+                    try {
+                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['aplica'=>$request->value]);
+                        // $gapun->aplica = $request->value;
+                        return response()->json(['success' => true, 'id'=>$id]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false]);
+                    }
 
-                    return response()->json(['success' => true]);
                     break;
                 case 'estatus':
-                    $gapun = DeclaracionAplicabilidadAprobadores::findOrFail($id);
-                    $gapun->estatus = $request->value;
-                    $gapun->save();
+                    try {
+                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['estatus'=>$request->value]);
+                        $declaracionEstatus = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->first();
+                        // $gapun->estatus = $request->value;
+                        return response()->json(['success' => true, 'id'=>$id, 'value'=> $request->value, 'fecha'=>Carbon::parse($declaracionEstatus->updated_at)->format('d-m-Y')]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false, 'error'=>$e->getMessage()]);
+                    }
 
-                    return response()->json(['success' => true]);
                     break;
 
                 case 'comentarios':
-                    $gapun = DeclaracionAplicabilidadAprobadores::findOrFail($id);
-                    $gapun->comentarios = $request->value;
-                    $gapun->save();
+                    try {
+                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['comentarios'=>$request->value]);
+                        $gapun->comentarios = $request->value;
 
-                    return response()->json(['success' => true]);
+                        return response()->json(['success' => true, 'id'=>$id]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false]);
+                    }
                     break;
 
                 case 'fecha_aprobacion':
-                    $gapun = DeclaracionAplicabilidadAprobadores::findOrFail($id);
-                    $gapun->fecha = $request->value;
-                    $gapun->save();
+                    try {
+                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['fecha_aprobacion'=>$request->value]);
+                        $gapun->fecha_aprobacion = $request->value;
 
-                    return response()->json(['success' => true]);
+                        return response()->json(['success' => true, 'id'=>$id]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false]);
+                    }
                     break;
 
                 case 'aprobadores_id':

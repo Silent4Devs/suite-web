@@ -51,9 +51,9 @@
                     <td><span class="badge badge-primary">{{ $task->parent }}</span></td>
                     {{-- <td>Categoria</td> --}}
                     {{-- <td>Urgencia</td> --}}
-                    <td>{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTime()->format('Y-m-d') }}
+                    <td>{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTime()->format('d-m-Y') }}
                     </td>
-                    <td>{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('Y-m-d') }}
+                    <td>{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('d-m-Y') }}
                     </td>
                     <td>
                         <div class="td_div_recursos">

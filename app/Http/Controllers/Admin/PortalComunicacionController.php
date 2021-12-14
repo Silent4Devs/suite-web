@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ComunicacionSgi;
 use App\Models\Documento;
 use App\Models\Empleado;
-use App\Models\organizacion;
+use App\Models\Organizacione;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -106,7 +106,7 @@ class PortalComunicacionController extends Controller
 
     public function reportes()
     {
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacione::first();
 
         return view('admin.portal-comunicacion.reportes', compact('organizacions'));
     }

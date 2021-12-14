@@ -167,9 +167,13 @@
             },
             ],
             success: function (response, newValue) {
-            console.log('Actualizado, response')
-            $("#actualizacion_fecha").load(location.href+" #actualizacion_fecha>*","");
-            // alert('refrescar');
+            console.log(response)
+            if(Number(response.value) == 2){
+                document.getElementById(`actualizacion_fecha_${response.id}`).innerHTML = response.fecha
+            }else{
+                document.getElementById(`actualizacion_fecha_${response.id}`).innerHTML = ''
+
+            }
             }
             });
 
