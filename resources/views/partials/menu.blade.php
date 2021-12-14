@@ -50,7 +50,7 @@
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('organizacion_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.organizacions.index') }}"
+                            <a href="{{ route('admin.organizacions.visualizarorganizacion') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
                                 <i class="fas fa-bullseye iconos_menu letra_blanca">
 
@@ -415,6 +415,21 @@
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('documentos_access')
+
+
+
+
+                        @can('organizacion_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route('admin.organizacions.index') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
+                                    <i class="fas fa-bullseye iconos_menu letra_blanca">
+
+                                    </i>
+                                    <font class="letra_blanca" style="margin-left:10px;">Mi Organización</font>
+                                </a>
+                            </li>
+                        @endcan
                         <li
                             class="c-sidebar-nav-dropdown {{ request()->is('admin/carpeta*') ? 'c-show' : '' }} {{ request()->is('admin/crear-documentos*') ? 'c-show' : '' }}">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">

@@ -324,7 +324,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
     Route::post('organizacions/media', 'OrganizacionController@storeMedia')->name('organizacions.storeMedia');
     Route::post('organizacions/ckmedia', 'OrganizacionController@storeCKEditorImages')->name('organizacions.storeCKEditorImages');
+    Route::get('organizacions/visualizarorganizacion', 'OrganizacionController@visualizarOrganizacion')->name('organizacions.visualizarorganizacion');
+    Route::post('organizacions/{schedule}/update-schedule', 'OrganizacionController@updateSchedule')->name('organizacions.update-schedule');
+    Route::post('organizacions/{schedule}/delete-schedule', 'OrganizacionController@deleteSchedule')->name('organizacions.delete-schedule');
     Route::resource('organizacions', 'OrganizacionController');
+
+    // Route::get('sedes/organizacion', 'SedeController@obtenerListaSedes')->name('sedes.obtenerListaSedes');
 
     Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
     Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
@@ -779,7 +784,9 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
     // Organizacions
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
+
     Route::resource('organizacions', 'OrganizacionController');
+
 
 
     // Glosarios
