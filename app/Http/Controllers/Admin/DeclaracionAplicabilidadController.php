@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\DeclaracionAplicabilidadAprobadores as MailDeclaracionAplicabilidadAprobadores;
 use App\Models\DeclaracionAplicabilidad;
+use App\Models\DeclaracionAplicabilidadAprobadores;
+use App\Models\DeclaracionAplicabilidadResponsable;
 use App\Models\Empleado;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,7 +14,9 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class DeclaracionAplicabilidadController extends Controller
 {
@@ -98,6 +103,9 @@ class DeclaracionAplicabilidadController extends Controller
         $path = public_path($ISO27001_SoA_PATH);
         $lista_archivos_declaracion = glob($path . 'Analisis Inicial*.pdf');
         $empleados = Empleado::select('id', 'name', 'genero', 'foto')->get();
+        $responsables = DeclaracionAplicabilidadResponsable::get();
+        $aprobadores = DeclaracionAplicabilidadAprobadores::get();
+        // $empleados=Empleado::select('id','name','genero','foto')->get();
 
         // dd(DB::getQueryLog());
         // dd($lista_archivos_declaracion);
@@ -112,7 +120,9 @@ class DeclaracionAplicabilidadController extends Controller
             ->with('gapda141s', $gapa141)->with('gapda142s', $gapa142)->with('gapda143s', $gapa143)->with('gapda151s', $gapa151)
             ->with('gapda152s', $gapa152)->with('gapda161s', $gapa161)->with('gapda171s', $gapa171)->with('gapda172s', $gapa172)
             ->with('gapda181s', $gapa181)->with('gapda182s', $gapa182)->with('lista_archivos_declaracion', $lista_archivos_declaracion)
-            ->with('ISO27001_SoA_PATH', $ISO27001_SoA_PATH);
+            ->with('ISO27001_SoA_PATH', $ISO27001_SoA_PATH)
+            ->with('aprobadores', $aprobadores)
+            ->with('responsables', $responsables);
     }
 
     /**
@@ -128,31 +138,70 @@ class DeclaracionAplicabilidadController extends Controller
             switch ($request->name) {
 
                 case 'justificacion':
-                    $gapun = DeclaracionAplicabilidad::findOrFail($id);
-                    $gapun->justificacion = $request->value;
-                    $gapun->save();
+                    try {
+                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['justificacion'=>$request->value]);
+                        // $gapun->justificacion = $request->value;
 
-                    return response()->json(['success' => true]);
+                        return response()->json(['success' => true, 'id'=>$id]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false]);
+                    }
+
                     break;
                 case 'aplica':
-                    $gapun = DeclaracionAplicabilidad::findOrFail($id);
-                    $gapun->aplica = $request->value;
-                    $gapun->save();
+                    try {
+                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['aplica'=>$request->value]);
+                        // $gapun->aplica = $request->value;
+                        return response()->json(['success' => true, 'id'=>$id]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false]);
+                    }
 
-                    return response()->json(['success' => true]);
                     break;
                 case 'estatus':
-                    $gapun = DeclaracionAplicabilidad::findOrFail($id);
-                    $gapun->estatus = $request->value;
-                    $gapun->save();
+                    try {
+                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['estatus'=>$request->value]);
+                        $declaracionEstatus = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->first();
+                        // $gapun->estatus = $request->value;
+                        return response()->json(['success' => true, 'id'=>$id, 'value'=> $request->value, 'fecha'=>Carbon::parse($declaracionEstatus->updated_at)->format('d-m-Y')]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false, 'error'=>$e->getMessage()]);
+                    }
 
-                    return response()->json(['success' => true]);
                     break;
 
                 case 'comentarios':
-                    $gapun = DeclaracionAplicabilidad::findOrFail($id);
-                    $gapun->comentarios = $request->value;
-                    $gapun->save();
+                    try {
+                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['comentarios'=>$request->value]);
+                        $gapun->comentarios = $request->value;
+
+                        return response()->json(['success' => true, 'id'=>$id]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false]);
+                    }
+                    break;
+
+                case 'fecha_aprobacion':
+                    try {
+                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['fecha_aprobacion'=>$request->value]);
+                        $gapun->fecha_aprobacion = $request->value;
+
+                        return response()->json(['success' => true, 'id'=>$id]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false]);
+                    }
+                    break;
+
+                case 'aprobadores_id':
+                    $gapun = DeclaracionAplicabilidadAprobadores::findOrFail($id);
+                    $gapun->aprobadores_id = $request->value;
+
+                    return response()->json(['success' => true]);
+                    break;
+
+                case 'empleado_id':
+                    $gapun = DeclaracionAplicabilidadResponsable::findOrFail($id);
+                    $gapun->empleado_id = $request->value;
 
                     return response()->json(['success' => true]);
                     break;
@@ -298,8 +347,25 @@ class DeclaracionAplicabilidadController extends Controller
         ));*/
     }
 
-    public function PanelDeclaracion()
+    public function enviarCorreo(Request $request)
     {
-        return view('admin.panelDeclaracion');
+        if ($request->enviarTodos) {
+            $destinatarios = DeclaracionAplicabilidadAprobadores::distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
+        } elseif ($request->enviarNoNotificados) {
+            $destinatarios = DeclaracionAplicabilidadAprobadores::where('notificado', false)->distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
+        } else {
+            $destinatarios = json_decode($request->aprobadores);
+        }
+        // dd($destinatarios);
+        $tipo = $request->tipo;
+        foreach ($destinatarios as $destinatario) {
+            $empleado = Empleado::select('id', 'name', 'email')->find(intval($destinatario));
+            Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidadAprobadores($empleado->name, $tipo));
+            $responsable = DeclaracionAplicabilidadAprobadores::where('empleado_id', $destinatario)->each(function ($item) {
+                $item->notificado = true;
+            });
+        }
+
+        return response()->json(['message'=>'Correo enviado'], 200);
     }
 }

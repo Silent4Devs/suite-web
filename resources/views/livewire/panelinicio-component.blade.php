@@ -1,13 +1,29 @@
 <div class="container">
+    <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="row w-100">
+            <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                <div class="w-100">
+                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                </div>
+            </div>
+            <div class="col-11">
+                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá habilitar/deshabilitar la información
+                    que aparecera en la sección del perfil del empleado al ingresar al portal tabantaj.
+                </p>
+
+            </div>
+        </div>
+    </div>
     <div class="row">
-        <div class="form-group col-sm-3">
+        {{--<div class="form-group col-sm-3">
             <label class="required" for="nombre_id"><i class="fas fa-street-view iconos-crear"></i>Nombre</label>
             <br>
             <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                 <input type="checkbox" wire:model.debounce.800ms="nombre_id" class="c-switch-input">
                 <span class="c-switch-slider" data-checked="On" data-unchecked="Off"></span>
             </label>
-        </div>
+        </div>--}}
         <div class="form-group col-sm-3">
             <label class="required" for="nempleado_id"><i class="fas fa-street-view iconos-crear"></i>N°
                 de

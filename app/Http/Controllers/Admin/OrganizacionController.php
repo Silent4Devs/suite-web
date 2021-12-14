@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-// use App\Schedule;
+use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\HttpFoundation\Response;
 

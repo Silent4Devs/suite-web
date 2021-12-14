@@ -70,9 +70,7 @@
                         <th>
                             Aprobador
                         </th>
-                        <th>
-                            Opciones
-                        </th>
+
                     </tr>
 
                 </thead>
@@ -87,8 +85,8 @@
                     </div>
                 </div> --}}
                 <!-- modal -->
-                <div class="modal fade" id="ResponsablesModal" tabindex="-1" role="dialog"
-                    aria-labelledby="basicModal" aria-hidden="true">
+                <div class="modal fade" id="ResponsablesModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -103,19 +101,23 @@
                                         @endforeach
 
                                     </select> --}}
-                                    <p>Realizó modificaciones en la lista de asistentes. Elija una de las opciones siguientes</p>
-                                    <input type="radio" id="contactChoice1"name="contact" value="email"> Enviar actualizaciones solo
-                                    a los asistentes agregados o eliminados
+                                    <p>Realizó modificaciones en la lista de responsables. Elija una de las opciones
+                                        siguientes</p>
+                                    <input type="radio" id="contactChoice1" name="contact" value="1"> Enviar actualizaciones
+                                    solo
+                                    a los responsables agregados o eliminados
                                     <br>
-                                    <input type="radio" id="contactChoice1"name="contact" value="email">&nbsp;Enviar actualizaciones a todos
-                                    los asistentes
+                                    <input type="radio" id="contactChoice1" name="contact" value="2">&nbsp;Enviar
+                                    actualizaciones a todos
+                                    los responsables
                                     <br>
-                                    <button type="button" class="mt-3 btn btn-primary btnEnviar"
-                                        onclick="enviarCorreo(event,'responsable')">Enviar</button>
+
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="mt-3 btn btn-primary btnEnviar"
+                                    onclick="enviarCorreo(event,'responsable')">Enviar</button>
+                                <button type="button" class="mt-3 btn btn-default" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
 
@@ -291,8 +293,8 @@
                             <select class="revisoresSelect" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
                                 ${responsableselects?.map ((responsable,idx)=>{
                                     return`
-                                            <option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-image='${responsable.foto}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>
-                                                            ${responsable.name }</option>`})}
+                                                <option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-image='${responsable.foto}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>
+                                                                ${responsable.name }</option>`})}
                             </select>`;
                             $(`select#responsables${row.id}`).select2({
                                 theme: 'bootstrap4',
@@ -323,6 +325,23 @@
                                 });
                                 request.then(response => response.json()).
                                 then(data => {
+                                    if (data.estatus == 'limite_alcanzado') {
+                                        const usuarioSeleccionado = $(
+                                            `select#responsables${row.id} option[data-id-empleado="${responsable}"]`
+                                            );
+                                        usuarioSeleccionado.prop('selected', false);
+                                        $(`select#responsables${row.id}`).trigger(
+                                            'change.select2');
+                                    }
+                                    console.log(data.estatus)
+                                    if (data.estatus == 'ya_es_aprobador') {
+                                        const usuarioSeleccionadoResp = $(
+                                            `select#responsables${row.id} option[data-id-empleado="${responsable}"]`
+                                            );
+                                        usuarioSeleccionadoResp.prop('selected', false);
+                                        $(`select#responsables${row.id}`).trigger(
+                                            'change.select2');
+                                    }
                                     toastr.success(data.message);
                                 }).
                                 catch(error => console.log)
@@ -369,8 +388,8 @@
                         <select class="revisoresSelect" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
                             ${aprobadoreselects?.map ((aprobador,idx)=>{
                                 return`
-                                                    <option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-image='${aprobador.foto}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>
-                                                        ${aprobador.name }</option>`})}
+                                                        <option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-image='${aprobador.foto}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>
+                                                            ${aprobador.name }</option>`})}
                                 </select>`;
                             $(`select#aprobadores${row.id}`).select2({
                                 theme: 'bootstrap4',
@@ -401,7 +420,24 @@
                                 });
                                 request.then(response => response.json()).
                                 then(data => {
-                                    console.log(data)
+                                    if (data.estatus == 'limite_alcanzado') {
+                                        const usuarioSeleccionado = $(
+                                            `select#aprobadores${row.id} option[data-id-empleado="${aprobador}"]`
+                                            );
+                                        usuarioSeleccionado.prop('selected', false);
+                                        $(`select#aprobadores${row.id}`).trigger(
+                                            'change.select2');
+                                    }
+                                    if (data.estatus == 'ya_es_responsable') {
+                                        const usuarioSeleccionadoAprob = $(
+                                            `select#aprobadores${row.id} option[data-id-empleado="${aprobador}"]`
+                                            );
+                                        usuarioSeleccionadoAprob.prop('selected',
+                                        false);
+                                        $(`select#aprobadores${row.id}`).trigger(
+                                            'change.select2');
+                                    }
+                                    toastr.success(data.message);
                                 }).
                                 catch(error => console.log)
                                 console.log(empleadoId);
@@ -437,16 +473,13 @@
                             });
                             return aprobadorselect;
                         }
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
                     }
                 ],
                 orderCellsTop: true,
                 order: [
-                    [4, 'desc']
-                ]
+                    [0, 'desc']
+                ],
+                paging: false
             };
             let table = $('.datatable-PanelDeclaracion').DataTable(dtOverrideGlobals);
             // buttons: dtButtons
@@ -470,8 +503,19 @@
         document.addEventListener('DOMContentLoaded', function() {
 
             window.enviarCorreo = (e, tipo) => {
-                // console.log("Enviar correo");
+                let enviarRadio = document.getElementsByName('contact');
+                let dataRadio="";
+                for (var i = 0, length = enviarRadio.length; i < length; i++) {
+                    if (enviarRadio[i].checked) {
+                        // do whatever you want with the checked radio
+                    dataRadio=enviarRadio[i].value;
+                        // only one radio can be logically checked, don't check the rest
+                        break;
+                    }
+                }
+
                 const responsables = $(e.target.parentElement.querySelector('select')).select2('data');
+                console.log(responsables);
                 const array_responsables = [];
                 responsables.forEach(responsable => {
                     const responsable_id = responsable.element.getAttribute('data-id-empleado')
@@ -488,6 +532,7 @@
                         },
                         method: 'POST',
                         body: JSON.stringify({
+                            dataRadio: dataRadio,
                             responsables: JSON.stringify(array_responsables),
                             tipo
                         })

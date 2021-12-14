@@ -432,7 +432,7 @@
                                         <li><a href="{{ route('admin.comunicacion-sgis.index') }}">
                                                 <div>
                                                     <i class="far fa-comments"></i>
-                                                    Comunicación SGI
+                                                    Comunicados Generales
                                                 </div>
                                             </a></li>
                                         <li><a href="{{ route('admin.control-accesos.index') }}">

@@ -150,7 +150,7 @@
             </div>
 
             <div class="form-group col-sm-6">
-                <label for="fecha_constitucion"><i class="iconos-crear  fas fa-calendar-alt"></i>Fecha de constitución</label>
+                <label for="fecha_constitucion"><i class="iconos-crear fas fa-calendar-alt"></i>Fecha de constitución</label>
                 <input class="form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}" type="date" name="fecha_constitucion" id="fecha_constitucion" value="{{ old('fecha_constitucion') }}">
                 @if($errors->has('fecha_constitucion'))
                 <div class="invalid-feedback">
@@ -160,7 +160,7 @@
                 {{-- <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span> --}}
             </div>
             <div class="form-group col-sm-6">
-                <label class="" for="num_empleados"><i class="iconos-crear  fas fa-users"></i>Número de empleados</label>
+                <label class="" for="num_empleados"><i class="iconos-crear fas fa-users"></i>Número de empleados</label>
                 <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number" name="num_empleados" id="num_empleados" value="{{ old('num_empleados', $countEmpleados) }}" style="" readonly >
                 @if($errors->has('num_empleados'))
                     <div class="invalid-feedback">
@@ -170,7 +170,7 @@
                 {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
             </div>
             <div class="form-group col-sm-6">
-                <label class="" for="tamano"><i class="iconos-crear  fas fa-building"></i>Tamaño</label>
+                <label class="" for="tamano"><i class="iconos-crear fas fa-building"></i>Tamaño</label>
                 <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text" name="tamano" id="tamano" value="{{ old('tamano', $tamanoEmpresa) }}" readonly>
                 @if($errors->has('tamano'))
                     <div class="invalid-feedback">

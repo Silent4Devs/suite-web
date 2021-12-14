@@ -8,14 +8,16 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class AccionCorrectiva extends Model implements HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-
+    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory, QueryCacheable;
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     public $table = 'accion_correctivas';
 
     protected $appends = [

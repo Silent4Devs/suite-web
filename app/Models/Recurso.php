@@ -8,6 +8,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -15,7 +16,10 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Recurso extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+    use QueryCacheable;
 
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     public $table = 'recursos';
 
     protected $appends = [
@@ -49,6 +53,7 @@ class Recurso extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'archivar',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

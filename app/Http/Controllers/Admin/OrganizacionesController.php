@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyOrganizacioneRequest;
 use App\Http\Requests\StoreOrganizacioneRequest;
 use App\Http\Requests\UpdateOrganizacioneRequest;
+use App\Models\Organizacion;
 use App\Models\Organizacione;
 use App\Models\Team;
 use Gate;
@@ -70,7 +71,7 @@ class OrganizacionesController extends Controller
 
     public function store(StoreOrganizacioneRequest $request)
     {
-        $organizacione = Organizacione::create($request->all());
+        $organizacione = Organizacion::create($request->all());
 
         return redirect()->route('admin.organizaciones.index');
     }
