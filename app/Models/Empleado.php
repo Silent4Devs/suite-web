@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\RH\BeneficiariosEmpleado;
+use App\Models\RH\ContactosEmergenciaEmpleado;
+use App\Models\RH\DependientesEconomicosEmpleados;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -95,6 +98,33 @@ class Empleado extends Model
         'resumen',
         'puesto_id',
         'perfil_empleado_id',
+        'tipo_contrato_empleados_id', //Agregados para nueva version de perfil de empleado
+        'terminacion_contrato',
+        'renovacion_contrato',
+        'esquema_contratacion',
+        'proyecto_asignado',
+        'domicilio_personal',
+        'telefono_casa',
+        'correo_personal',
+        'estado_civil',
+        'NSS',
+        'CURP',
+        'RFC',
+        'lugar_nacimiento',
+        'nacionalidad',
+        'entidad_crediticias_id',
+        'numero_credito',
+        'descuento',
+        'banco',
+        'cuenta_bancaria',
+        'clabe_interbancaria',
+        'centro_costos',
+        'salario_bruto',
+        'salario_diario',
+        'salario_diario_integrado',
+        'salario_base_mensual',
+        'pagadora_actual',
+        'periodicidad_nomina',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -326,5 +356,21 @@ class Empleado extends Model
         $misDeclaraciones = DeclaracionAplicabilidadAprobadores::select('id', 'declaracion_id')->where('aprobadores_id', $this->id)->pluck('declaracion_id')->toArray();
 
         return $misDeclaraciones;
+    }
+
+    // dependientes economicos
+    public function dependientesEconomicos()
+    {
+        return $this->hasMany(DependientesEconomicosEmpleados::class, 'empleado_id', 'id')->orderBy('id');
+    }
+
+    public function contactosEmergencia()
+    {
+        return $this->hasMany(ContactosEmergenciaEmpleado::class, 'empleado_id', 'id')->orderBy('id');
+    }
+
+    public function beneficiarios()
+    {
+        return $this->hasMany(BeneficiariosEmpleado::class, 'empleado_id', 'id')->orderBy('id');
     }
 }
