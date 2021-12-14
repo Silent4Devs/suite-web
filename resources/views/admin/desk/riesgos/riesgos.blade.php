@@ -76,9 +76,9 @@
 	   			<tr>
 	       			<td>{{ $riesgo->folio }}</td>
 	       			<td>{{ $riesgo->titulo}}</td>
-                    <td>{{ $riesgo->fecha}}</td>
-                    <td>{{ $riesgo->created_at}}</td>
-                    <td>{{ $riesgo->fecha_cierre}}</td>
+                    <td>{{ $riesgo->fecha_creacion}}</td>
+                    <td>{{ $riesgo->fecha_reporte}}</td>
+                    <td>{{ $riesgo->fecha_de_cierre}}</td>
                     <td>{{ $riesgo->descripcion }}</td>
                     <td>{{ $riesgo->comentarios }}</td>
                     <td>{{ $riesgo->estatus }}</td>

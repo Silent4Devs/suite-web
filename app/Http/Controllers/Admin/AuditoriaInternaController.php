@@ -54,10 +54,10 @@ class AuditoriaInternaController extends Controller
                 return $row->alcance ? $row->alcance : '';
             });
             $table->editColumn('fecha_inicio', function ($row) {
-                return $row->fecha_inicio ? $row->fecha_inicio : '';
+                return $row->fecha_inicio ? \Carbon\Carbon::parse($row->fechainicio)->format('d-m-Y') : '';
             });
             $table->editColumn('fecha_fin', function ($row) {
-                return $row->fecha_fin ? $row->fecha_fin : '';
+                return $row->fecha_fin ? \Carbon\Carbon::parse($row->fechafin)->format('d-m-Y') : '';
             });
             $table->addColumn('clausula', function ($row) {
                 return $row->clausulas ? $row->clausulas : '';
