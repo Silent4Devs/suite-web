@@ -19,7 +19,7 @@ class TipoCompetenciaSelect extends Component
 
     public function render()
     {
-        $this->tipos = TipoCompetencia::all();
+        $this->tipos = TipoCompetencia::get();
 
         return view('livewire.tipo-competencia-select', ['tipos' => $this->tipos]);
     }

@@ -16,7 +16,7 @@ class PuestoImport implements ToModel
     {
         return new Puesto([
             'puesto' => $row[0],
-            'descripcion'=> isset($row[1])?$row[1]:null,
+            'descripcion'=> isset($row[1]) ? $row[1] : null,
         ]);
     }
 
@@ -27,5 +27,4 @@ class PuestoImport implements ToModel
             'descripcion' => 'required|string',
         ];
     }
-
 }

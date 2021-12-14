@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class VariablesObjetivosseguridad.
@@ -20,6 +21,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class VariablesObjetivosseguridad extends Model
 {
     use SoftDeletes;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     protected $table = 'variables_objetivosseguridad';
 
     protected $dates = ['deleted_at'];

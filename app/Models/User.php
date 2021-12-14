@@ -11,11 +11,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class User extends Authenticatable
 {
     use SoftDeletes, Notifiable, HasFactory;
+    use QueryCacheable;
 
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     public $table = 'users';
 
     protected $hidden = [

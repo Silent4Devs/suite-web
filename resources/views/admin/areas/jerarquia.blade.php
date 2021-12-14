@@ -275,7 +275,7 @@
 
         .range-slider__range {
             -webkit-appearance: none;
-            width: calc(100% - (73px));
+            width:100%;
             height: 10px;
             border-radius: 5px;
             background: #d7dcdf;
@@ -507,7 +507,7 @@
         .grupos_funciones .caja_grupos{
             margin-left:0px;
             /* transition:0.5s !important; */
-           
+
         }
         .btn_grupos{
             transform:rotate(0deg);
@@ -522,6 +522,11 @@
         .caja_grupos ul{
             transition:0.5s !important;
         }
+        .btn_iconos_areas{
+            margin-top:15px;
+            transform: scale(1.25);
+        }
+
     </style>
 @endsection
 @section('content')
@@ -566,13 +571,13 @@
                     <section id="contenido1" class="caja_tab_reveldada">
 
                         <div class="row">
-                            <div class="col-lg-11 col-md-12 col-sm-12">
+                            <div class="col-8">
                                 <div class="m-0 range-slider h-100">
                                     <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
                                         <i class="mr-1 fas fa-search-plus"></i>
                                         Control de zoom
                                     </span>
-                                    <div class="d-flex justify-content-center align-items-center" style="height: 75%">
+                                    <div class="d-flex justify-content-center align-items-center" style="height: 75%; width:100% !important;">
                                         <input id="zoomer" class="range-slider__range" type="range" value="70" min="10"
                                             max="200">
                                         <span id="output" class="range-slider__value">70</span>
@@ -580,6 +585,8 @@
                                 </div>
                             </div>
 
+                            <div class="btn_iconos_areas" id="export_csv"></div>
+                            <div class="btn_iconos_areas" id="shot_screen"></div>
                             <div class="col-lg-1 col-sm-12" style="position: relative;">
                                 <div class="pl-0 col-3" style="position: absolute;top: 20px;left: 0;">
                                     <button class="btn btn-lg" id="reloadOrg" title="Recargar organigrama"
@@ -663,8 +670,15 @@
                         </div>
 
                     </section>
+
                     <section id="contenido2" class="mt-4">
+                        <div class="col-12 text-right">
+                        <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-file-csv" style="font-size:18pt;"></i></a>
+                        <a href="{{route("admin.areas.exportar")}}" class="mr-5"><i class="fas fa-camera" style="font-size:18pt;"></i></a>
+                        </div>
                         <div class="row">
+
+
                             <div class="col-sm-12 col-12 col-lg-{{ count($areas_sin_grupo) ? '9' : '12' }}">
                                 @if ($numero_grupos > 0)
                                     <div class="justify-content-center">
@@ -764,6 +778,8 @@
 
                 let url_organigrama = "{{ route('admin.areas.obtenerJerarquia') }}";
 
+                document.querySelector('#export_csv').innerHTML = "";
+                document.querySelector('#shot_screen').innerHTML = "";
                 $.ajax({
                     type: "GET",
                     url: url_organigrama,
@@ -804,9 +820,9 @@
                             'nodeID': 'id',
                             'pan': true,
                             'exportButton': true,
-                            'exportFilename': `Organigrama de ${organizacion}`,
+                            'exportFilename': `Jerarquia de Areas`,
                             'direction': orientacion,
-                            'urlExportCSV': "{{ route('admin.organigrama.exportar') }}"
+                            'urlExportCSV': "{{ route('admin.areas.exportar') }}"
                         });
                     }
                 });

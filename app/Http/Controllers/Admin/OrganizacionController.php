@@ -2,34 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Flash;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\StoreOrganizacionRequest;
-use App\Http\Requests\UpdateOrganizacionRequest;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyOrganizacionRequest;
+use App\Http\Requests\StoreOrganizacionRequest;
+use App\Http\Requests\UpdateOrganizacionRequest;
 use App\Models\Empleado;
+use App\Models\Organizacion;
+use Flash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrganizacionController extends Controller
 {
     use MediaUploadingTrait;
-
 
     public function index(Request $request)
     {
         abort_if(Gate::denies('organizacion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacions = Organizacion::first();
-
-
-
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
@@ -39,7 +35,7 @@ class OrganizacionController extends Controller
         } else {
             $empty = true;
             $count = Organizacion::get()->count();
-            $logotipo=$organizacions->logotipo;
+            $logotipo = $organizacions->logotipo;
             // dd($organizacions);
             return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo);
         }
@@ -47,18 +43,16 @@ class OrganizacionController extends Controller
 
     public function create()
     {
-
         $countEmpleados = Empleado::get()->count();
 
-
-        if ($countEmpleados == 0 ){
-            $tamanoEmpresa = "debe registrar a los empleados";
-        }else if ($countEmpleados >= 1 && $countEmpleados <= 250) {
-            $tamanoEmpresa = "Chica";
-        } else if ($countEmpleados >= 250 && $countEmpleados <= 1000) {
-            $tamanoEmpresa = "Mediana";
-        } else if ($countEmpleados >=1000) {
-            $tamanoEmpresa = "Grande";
+        if ($countEmpleados == 0) {
+            $tamanoEmpresa = 'debe registrar a los empleados';
+        } elseif ($countEmpleados >= 1 && $countEmpleados <= 250) {
+            $tamanoEmpresa = 'Chica';
+        } elseif ($countEmpleados >= 250 && $countEmpleados <= 1000) {
+            $tamanoEmpresa = 'Mediana';
+        } elseif ($countEmpleados >= 1000) {
+            $tamanoEmpresa = 'Grande';
         }
 
         // dd($tamanoEmpresa);
@@ -125,8 +119,8 @@ class OrganizacionController extends Controller
 
         $file = $request->file('logotipo');
         if ($file != null) {
-            Storage::makeDirectory("public/images");
-            $ruta=public_path("storage/images");
+            Storage::makeDirectory('public/images');
+            $ruta = public_path('storage/images');
             $nombre = $file->getClientOriginalName();
             $file->move($ruta, $file->getClientOriginalName());
             $organizacions->logotipo = $nombre;
@@ -160,8 +154,8 @@ class OrganizacionController extends Controller
         }
         $file = $request->file('logotipo');
         if ($file != null) {
-            Storage::makeDirectory("public/images");
-            $ruta=public_path("storage/images");
+            Storage::makeDirectory('public/images');
+            $ruta = public_path('storage/images');
             $nombre = $file->getClientOriginalName();
             $file->move($ruta, $file->getClientOriginalName());
             $organizacions = Organizacion::find(request()->org_id);

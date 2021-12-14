@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\PanelInicioRule;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class PanelInicioRuleController extends Controller
 {
