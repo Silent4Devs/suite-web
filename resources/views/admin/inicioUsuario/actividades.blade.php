@@ -103,9 +103,12 @@
                                 }
                             @endphp
                             <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
-                            <button class="btn_archivar" title="Archivar" data-toggle="modal" data-target="#alert_activ{{$task->id}}">
-                                <i class="fas fa-archive"></i>
-                            </button>
+
+                            @if(($task->status == 'STATUS_DONE') or ($task->status == 'STATUS_FAILED'))
+                                <button class="btn_archivar" title="Archivar" data-toggle="modal" data-target="#alert_activ{{$task->id}}">
+                                    <i class="fas fa-archive"></i>
+                                </button>
+                            @endif
                         </td>
                     </tr>
                 @endif

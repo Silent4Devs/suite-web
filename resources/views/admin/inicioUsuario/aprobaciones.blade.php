@@ -1,5 +1,22 @@
 @inject('Documento', 'App\Models\Documento')
 <div class="card-body datatable-fix">
+
+    <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
+        <div class="row w-100">
+            <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                <div class="w-100">
+                    <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                </div>
+            </div>
+            <div class="col-11">
+                <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará los documentos que le han sido asignadas para su aprobación, o bien, documentos que usted ha solicitado se aprueben.
+
+                </p>
+
+            </div>
+        </div>
+    </div>
     <h5 class="p-0 m-0 text-muted">Solicitados: Documentos que envíe a aprobación</h5>
     <hr>
     <table id="tblMisDocumentos" class="table">
@@ -149,9 +166,11 @@
                                     </svg>
                                 </a>
 
-                                <button class="btn_archivar" title="Archivar" data-toggle="modal" data-target="#alert_aprob_arch{{ $documento->id }}">
-                                    <i class="fas fa-archive"></i>
-                                </button>
+                                @if(($documento->estatus == 3) or ($documento->estatus == 4))
+                                    <button class="btn_archivar" title="Archivar" data-toggle="modal" data-target="#alert_aprob_arch{{ $documento->id }}">
+                                        <i class="fas fa-archive"></i>
+                                    </button>
+                                @endif
                             </div>
                         </td>
                     </tr>

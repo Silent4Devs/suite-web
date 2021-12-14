@@ -1,6 +1,21 @@
 @extends('layouts.admin')
 @section('content')
 
+@inject('Empleado', 'App\Models\Empleado')
+
+<style type="text/css">
+    .td_div_recursos {
+        width: 100px;
+        display: flex;
+        overflow-x: auto;
+    }
+
+    .td_nombre {
+        min-width: 400px !important;
+    }
+
+</style>
+
 	<div class="mt-5 card">
 	    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
 	        <h3 class="mb-2 text-center text-white"><strong>Archivo de Actividades</strong></h3>
@@ -8,6 +23,22 @@
 		
 		<div class="card-body">
 			<div class="row px-3">
+
+                <div class=" col-12 px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6; margin: auto;">
+                    <div class="row w-100">
+                        <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                            <div class="w-100">
+                                <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará las actividades que han sido archivadas.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
 					
 				<div class="datatable-fix" style="width: 100%;">
 				    <div class="mb-3 text-right">
@@ -23,7 +54,7 @@
                                 {{-- <th>Urgencia</th> --}}
                                 <th style="min-width:200px;">Fecha&nbsp;inicio</th>
                                 <th style="min-width:200px;">Fecha&nbsp;fin</th>
-                                {{-- <th>Asignada por</th> --}}
+                                <th>Compartida por</th>
                                 <th>Estatus</th>
                                 <th>Recuperar</th>
                             </tr>
@@ -41,7 +72,23 @@
                                         <td>{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('Y-m-d') }}
                                         </td>
                                         
-                                        {{-- <td>Asignada por</td> --}}
+                                        <td>
+                                            <div class="td_div_recursos">
+                                                @foreach ($task->assigs as $assig)
+                                                    @php
+                                                        $empleado = $Empleado->where('id', intval($assig->resourceId))->first();
+                                                    @endphp
+                                                    @if ($empleado)
+                                                        <img src="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
+                                                            style="height: 37px; clip-path: circle(18px at 50% 50%);"
+                                                            class="rounded-circle {{ $empleado->id == auth()->user()->empleado->id ? 'd-none' : '' }}"
+                                                            alt="{{ $empleado->name }}" title="{{ $empleado->name }}">
+                                                        {{ $empleado->id == auth()->user()->empleado->id ? '' : '' }}
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </td>
+                                        
                                         <td>
                                             @switch($task->status)
                                                 @case('STATUS_ACTIVE')

@@ -119,6 +119,27 @@
         .btn_archivar{
             all: unset !important;
         }
+
+
+        .caja_botones_secciones a{
+            position: relative;
+        }
+        .indicador_numero{
+            position: absolute;
+            background-color: #FF4141;
+            color: #fff !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            margin: 0;
+            border-radius: 50px;
+            top: 0;
+            right: 0;
+            margin-top: -10px;
+        }
     </style>
 
     @include('partials.flashMessages')
@@ -169,13 +190,13 @@
                         Calendario</a>
                     <a href="#" id="b_actividades" onclick="almacenarMenuEnLocalStorage('actividades')" data-tabs="s_actividades">
                         @if ($contador_actividades)
-                            <span>{{ $contador_actividades }}</span>
+                            <span class="indicador_numero">{{ $contador_actividades }}</span>
                         @endif
                         <i class="fas fa-stopwatch"></i>Actividades
                     </a>
                     <a href="#" id="b_aprobaciones" onclick="almacenarMenuEnLocalStorage('aprobaciones')" data-tabs="s_aprobaciones">
                         @if ($contador_revisiones)
-                            <span>{{ $contador_revisiones }}</span>
+                            <span class="indicador_numero">{{ $contador_revisiones }}</span>
                         @endif
                         <i class="fas fa-check"></i>Aprobaciones
                     </a>
@@ -187,7 +208,7 @@
                     </a> --}}
                     <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')" data-tabs="s_capacitaciones">
                         @if ($contador_recursos)
-                            <span>{{ $contador_recursos }}</span>
+                            <span class="indicador_numero">{{ $contador_recursos }}</span>
                         @endif
                         <i class="fas fa-chalkboard-teacher"></i>Capacitaciones
                     </a>

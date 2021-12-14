@@ -14,6 +14,22 @@
 		
 		<div class="card-body">
 			<div class="row px-3">
+
+                <div class=" col-12 px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6; margin: auto;">
+                    <div class="row w-100">
+                        <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                            <div class="w-100">
+                                <i class="fas fa-info-circle" style="color: #3B82F6; font-size: 22px"></i>
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará las capacitaciones que han sido archivadas.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
 					
 				<div class="datatable-fix" style="width: 100%;">
 				    <div class="mb-3 text-right">
