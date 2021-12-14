@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\RH\GruposEvaluado;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\RH\Competencia;
 use App\Models\RH\Evaluacion;
+use App\Models\RH\GruposEvaluado;
 use App\Models\RH\TipoCompetencia;
 use Livewire\Component;
 
@@ -24,8 +24,10 @@ class GruposComunicacion extends Component
         $grupos_evaluados = GruposEvaluado::all();
         $areas = Area::all();
         $empleados = Empleado::all();
-        return view('livewire.grupos-comunicacion',["grupos_evaluados"=>$grupos_evaluados,"areas"=>$areas,"empleados"=>$empleados ]);
+
+        return view('livewire.grupos-comunicacion', ['grupos_evaluados'=>$grupos_evaluados, 'areas'=>$areas, 'empleados'=>$empleados]);
     }
+
     public function habilitarSelectAlternativo()
     {
         if ($this->evaluados_objetivo == 'manual') {

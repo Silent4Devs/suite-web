@@ -217,9 +217,10 @@ class AreasController extends Controller
         return json_encode($areasTree);
         // dd($areasTree);
     }
+
     public function exportTo()
     {
-       // abort_if(AccessGate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(AccessGate::denies('configuracion_area_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return Excel::download(new AreasExport, 'areas.xlsx');
     }

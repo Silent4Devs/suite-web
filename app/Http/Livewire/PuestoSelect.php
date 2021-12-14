@@ -20,6 +20,7 @@ class PuestoSelect extends Component
     public function render()
     {
         $this->puestos = Puesto::get();
+
         return view('livewire.puesto-select', ['puestos' => $this->puestos]);
     }
 

@@ -13,6 +13,7 @@ class Evidencia extends Model
 
     public $cacheFor = 3600;
     protected static $flushCacheOnUpdate = true;
+
     public function evidenciable()
     {
         return $this->morphTo();

@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class IncidentesSeguridad extends Model implements HasMedia
 {
@@ -74,7 +74,8 @@ class IncidentesSeguridad extends Model implements HasMedia
         return $this->hasMany(ActividadIncidente::class, 'seguridad_id', 'id');
     }
 
-    public function getFechaCreacionAttribute(){
+    public function getFechaCreacionAttribute()
+    {
         return Carbon::parse($this->fecha)->format('d-m-Y');
     }
 }
