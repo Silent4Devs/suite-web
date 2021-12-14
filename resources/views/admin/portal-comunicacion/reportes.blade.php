@@ -22,10 +22,11 @@
             display: inline-block !important;
             background-color: #001B44;
             color: #fff;
-            margin-top: 70px;
+            margin-top:120px;
             text-align: center;
             transition: 0.1s;
             position: relative;
+            padding-bottom: 60px;
         }
         .a_reporte:hover{
             color: #fff;
@@ -66,6 +67,12 @@
             text-align: justify;
             font-size: 9pt;
         }
+        .btn_g_r{
+            position: absolute;
+            right: calc(50% - 69px);
+            bottom: 15px;
+        }
+
 
     </style>
 @endsection
@@ -74,7 +81,7 @@
 <div class="card">
 
     <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-        <h3 class="mb-2 text-center text-white"><strong>Archivo de Capacitaciones</strong></h3>
+        <h3 class="mb-2 text-center text-white"><strong>Generar Reportes</strong></h3>
     </div>
     <div class=" card-body">
         <div class="row">
@@ -89,7 +96,7 @@
                         </div>
                         <div class="col-11">
                             <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Esta sección es un canal de comunicación para que los colaboradores de la Organización puedan
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A; text-align: justify; ">Esta sección es un canal de comunicación para que los colaboradores de la Organización puedan
                             reportarnos un incidente de Seguridad, un riesgo identificado o compartirnos sus sugerencias, quejas o denuncias,
                             cuando se tengan ideas de mejora, se identifiquen casos que estén fuera de lo indicado en el manual de conducta y
                             código de ética, o bien, fuera de los valores de la Organización.
@@ -109,104 +116,96 @@
                 <img src="{{ asset($logotipo) }}" class="logo_organizacion_politica">
 
             </div>
-            <div style="margin: auto; text-align: center;" class="col-12 row mt-4 justify-content-center">
+            <div style="margin: auto; text-align: center; margin-top: -40px !important;" class="col-12 row mt-4 justify-content-center">
 
 
-                <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="a_reporte col-center col-lg-3 col-md-4 col-sm-12">
+                <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
                     <i class="fas fa-lightbulb"></i>
                     <h4>Sugerencia</h4>
                     <p>
                         Si quieres aportar alguna idea o
-                        propuesta para la Empresa o área en
+                        propuesta para la Organización o área en
                         particular, ¡Te escuchamos!
                     </p>
                     <p>
                         Una sugerencia es un planteamiento,
                         idea o recomendación que se presenta
                         con el objetivo de proponer una o
-                        más acciones para la Empresa.
+                        más acciones para la Organización.
 
                     </p>
                     <p>
                         Las sugerencias serán recibidas por el
-                        área de Gestión de Talento quienes
-                        llevarán un control y seguimiento de
+                        área correspondiente, quien
+                        llevará un control y seguimiento de
                         las propuestas recibidas y las
-                        canalizarán a las áreas
-                        correspondientes.
+                        canalizará a las diferentes áreas.
                     </p>
+                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                 </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="a_reporte col-center col-lg-3 col-md-4 col-sm-12">
+                <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
                     <i class="fas fa-rocket"></i> 
                     <h4>Mejora</h4>
                     <p>
                         Puedes proponer mejoras en los
-                        procesos y servicios actuales, por lo
+                        procesos y servicios actuales de la organización, para lo
                         cual se establecen las siguientes
-                        categorías para los tipos demejora:
+                        categorías de mejora:
                     </p>
                     <p>
                         Mejoras Estratégicas: Son aquellas
                         mejoras que impactan directamente a
                         las estrategias y objetivos del negocio.
                         Mejoras de Procesos: Son aquellas
-                        mejoras que su impacto se ve
+                        mejoras donde su impacto se ve
                         reflejado en los procesos de la
                         organización.
                         Mejoras Operativas: Son aquellas
-                        mejoras que su impacto se ve
+                        mejoras donde su impacto se ve
                         reflejado en la operación del día a día.
                     </p>
+                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                 </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="a_reporte col-center col-lg-3 col-md-4 col-sm-12">
+                <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
                     <i class="fas fa-frown"></i>
                     <h4>Queja</h4>
                     <p>
-                        Cuando exista cualquier tipo de
+                        Podras levantar una queja cuando exista cualquier tipo de
                         reclamación generada por
                         descontentos o disgustos por alguna
-                        situación vivida dentro de la empresa
+                        situación vivida dentro de la organización
                         y que se considere injusta.
                         Normalmente se incumple con algún
                         punto del Código de Conducta y Ética
-                        de la empresa y/o al manual de
-                        Políticas .
+                        de la organización y/o al manual de
+                        Políticas.
                     </p>
-                    <p>
-                        Cuando te hayas visto involucrado en
-                        malos tratos o tu espació de trabajo
-                        es inseguro en algún aspecto, existe
-                        coercion mental o física y abusos
-                        verbales por parte de los líderes hacia
-                        sus subordinados.
-
-                    </p>
+                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                 </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="a_reporte col-center col-lg-3 col-md-4 col-sm-12">
+                <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
                     <i class="fas fa-hand-paper"></i>
                     <h4>Denuncia</h4>
                     <p>
-                        Cuando desees hacer una acusación
-                        grave en contra de un colaborador de
-                        la Empresa. Darán seguimiento
-                        específico los miembros del comité de
-                        ética y se tomarán las acciones
-                        pertinentes según sea el caso
+                        Podras levantar una denuncia cuando desees hacer una acusación
+                        en contra de un colaborador de
+                        la organización. Se dará seguimiento
+                        específico y se tomarán las acciones pertinentes según sea el caso
                         pudiendo llegar hasta la rescición del
                         contrato y cuando se considere
-                        necesario elevarse a las autoridades
-                        competentes de la Ciudad de México.
+                        necesario se elevara a las autoridades
+                        competentes.
                     </p>
                     <p>
                         Podrás externar temas sensibles los
                         cuales serán tratados con extricta
-                        confiddencialidad. Son casos graves
+                        confidencialidad. Son casos graves
                         que no se podrán dejar pasar por
                         ninguna circunstancia.
 
                     </p>
+                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                 </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}" class="a_reporte col-center col-lg-3 col-md-4 col-sm-12">
+                <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
                     <i class="fas fa-exclamation-triangle"></i>
                     <h4>Incidente de Seguridad</h4>
                     <p>
@@ -229,17 +228,18 @@
                         de información y la interrupción de los
                         Servicios.
                     </p>
+                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                 </a>
-                <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}" class="a_reporte col-center col-lg-3 col-md-4 col-sm-12">
+                <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}" class="a_reporte col-center col-lg-4 col-md-4 col-sm-12">
                    <i class="fas fa-shield-virus"></i>
-                    <h4>Riesgo Identificado</h4>
+                    <h4>Riesgo</h4>
                     <p>
-                       En caso de identificar un evento que
+                        Aquí podrás reportar un riesgo en caso de presentarse un evento que
                         pueda afectar los objetivos de la
                         organización o que ponga en peligro la
-                        integridad física de los colaboradores
-                        podrá reportarlo desde aquí
+                        integridad física de los colaboradores.
                     </p>
+                    <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                 </a>
             </div>
         </div>
