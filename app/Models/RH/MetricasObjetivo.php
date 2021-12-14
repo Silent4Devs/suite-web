@@ -5,6 +5,7 @@ namespace App\Models\RH;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Rennokki\QueryCache\Traits\QueryCacheable;
+
 class MetricasObjetivo extends Model
 {
     use HasFactory, QueryCacheable;

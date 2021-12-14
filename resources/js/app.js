@@ -92,19 +92,17 @@ Echo.channel("notificaciones-campana").listen(".AccionCorrectivaEvent", e => {
             toastr.success(mensaje);
             break;
         case "update":
-            mensaje = `La ${e.slug} con tema ${
-                e.accion_correctiva.tema != null
+            mensaje = `La ${e.slug} con tema ${e.accion_correctiva.tema != null
                     ? e.accion_correctiva.tema
                     : "N/A"
-            } ha sido actualizada`;
+                } ha sido actualizada`;
             toastr.info(mensaje);
             break;
         case "delete":
-            mensaje = `La ${e.slug} con tema ${
-                e.accion_correctiva.tema != null
+            mensaje = `La ${e.slug} con tema ${e.accion_correctiva.tema != null
                     ? e.accion_correctiva.tema
                     : "N/A"
-            } ha sido eliminada`;
+                } ha sido eliminada`;
             toastr.error(mensaje);
             break;
         default:

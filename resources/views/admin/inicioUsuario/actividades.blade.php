@@ -52,9 +52,9 @@
                         <td><span class="badge badge-primary">{{ $task->parent }}</span></td>
                         {{-- <td>Categoria</td> --}}
                         {{-- <td>Urgencia</td> --}}
-                        <td>{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTime()->format('Y-m-d') }}
+                        <td>{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTime()->format('d-m-Y') }}
                         </td>
-                        <td>{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('Y-m-d') }}
+                        <td>{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('d-m-Y') }}
                         </td>
                         <td>
                             <div class="td_div_recursos">
@@ -103,7 +103,6 @@
                                 }
                             @endphp
                             <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
-
                             @if(($task->status == 'STATUS_DONE') or ($task->status == 'STATUS_FAILED'))
                                 <button class="btn_archivar" title="Archivar" data-toggle="modal" data-target="#alert_activ{{$task->id}}">
                                     <i class="fas fa-archive"></i>

@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-use Carbon\Carbon;
-use App\Models\Empleado;
-use App\Models\Documento;
-use App\Models\organizacion;
-use Illuminate\Http\Request;
-use App\Models\Organizacione;
-use App\Models\ComunicacionSgi;
 use App\Http\Controllers\Controller;
+use App\Models\ComunicacionSgi;
+use App\Models\Documento;
+use App\Models\Empleado;
+use App\Models\Organizacione;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class PortalComunicacionController extends Controller
 {

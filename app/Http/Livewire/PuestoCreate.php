@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use Carbon\Carbon;
 use App\Models\Puesto;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class PuestoCreate extends Component

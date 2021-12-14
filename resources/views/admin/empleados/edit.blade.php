@@ -182,11 +182,8 @@
 
             <div class="row">
                 <div class="col-md-12">
-
                     <div class="caja_caja_secciones">
                         <div class="caja_secciones">
-
-
                             <section id="contenido1" class="mt-4 caja_tab_reveldada">
                                 <div>
                                     <form method="POST" action="{{ route('admin.empleados.update', [$empleado->id]) }}"
@@ -204,428 +201,12 @@
                                             </div>
 
                                         </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="name"><i
-                                                        class="fas fa-user iconos-crear"></i>{{ trans('cruds.user.fields.name') }}</label>
-                                                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                    type="text" name="name" id="name"
-                                                    value="{{ old('name', $empleado->name) }}" required>
-                                                @if ($errors->has('name'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('name') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="n_empleado"><i
-                                                        class="fas fa-street-view iconos-crear"></i>N°
-                                                    de
-                                                    empleado</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}"
-                                                    type="text" name="n_empleado" id="n_empleado"
-                                                    value="{{ old('n_empleado', $empleado->n_empleado) }}">
-                                                @if ($errors->has('n_empleado'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('n_empleado') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="area"><i
-                                                        class="fas fa-street-view iconos-crear"></i>Área</label>
-                                                <div class="mb-3 input-group">
-                                                    <select class="custom-select areas" id="inputGroupSelect01"
-                                                        name="area_id">
-                                                        <option selected disabled value="null">-- Seleccion un área --
-                                                        </option>
-                                                        @forelse ($areas as $area_n)
-                                                            <option value="{{ $area_n->id }}"
-                                                                {{ old('area_id', $area_n->id) == $area->id ? 'selected active' : '' }}>
-                                                                {{ $area_n->area }}</option>
-                                                        @empty
-                                                            <option value="" disabled>Sin Datos</option>
-                                                        @endforelse
-                                                    </select>
-                                                </div>
-                                                @if ($errors->has('area_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('area_id') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="jefe"><i
-                                                        class="fas fa-user iconos-crear"></i>Jefe
-                                                    Inmediato</label>
-                                                <div class="mb-3 input-group">
-                                                    <select class="custom-select supervisor" id="inputGroupSelect01"
-                                                        name="supervisor_id">
-                                                        <option selected disabled value="null">-- Selecciona supervisor --
-                                                        </option>
-                                                        @if (!$ceo_exists)
-                                                            <option value="">CEO</option>
-                                                        @endif
-                                                        @forelse ($empleados as $empleado_r)
-                                                            @if ($empleado_r->id != $empleado->id)
-                                                                <option value="{{ $empleado_r->id }}"
-                                                                    {{ old('supervisor_id', $empleado_r->id) == $empleado->supervisor_id ? 'selected' : '' }}>
-                                                                    {{ $empleado_r->name }}</option>
-                                                            @endif
-                                                        @empty
-                                                            <option value="" disabled>Sin Datos</option>
-                                                        @endforelse
-                                                    </select>
-                                                </div>
-                                                @if ($errors->has('supervisor_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('supervisor_id') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-3">
-                                                <div class="form-group">
-                                                    <label class="required" for="puesto_id"><i
-                                                            class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                                    <div class="row align-items-center">
-                                                        <div class="col-11"
-                                                            style=" margin-top:-9px; margin-right: 10px;">
-                                                            @livewire('puesto-select',['puestos_seleccionado'=>$puestos_seleccionado])
-                                                        </div>
-                                                        <div class="pl-0 col"
-                                                            style="text-align: right;
-                                                                                                                                            margin-top: 0px;
-                                                                                                                                            margin-left: inherit;">
-                                                            <button id="btnAgregarPuesto" class="text-white btn btn-sm"
-                                                                style="background:#3eb2ad;height: 34px;" data-toggle="modal"
-                                                                data-target="#PuestoModal" title="Agregar Puesto"><i
-                                                                    class="fas fa-plus"></i></button>
-                                                        </div>
-                                                    </div>
-                                                    @livewire('puesto-create')
-                                                    {{-- <input
-                                                    class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
-                                                    type="text" name="puesto_id" id="puesto_id"
-                                                    value="{{ old('puesto_id', '') }}" required> --}}
-                                                    @if ($errors->has('puesto_id'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('puesto_id') }}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-sm-3">
-                                                <div class="form-group">
-                                                    <label class="required" for="perfil_empleado_id"><i
-                                                            class="fas fa-briefcase iconos-crear"></i>Perfil</label>
-                                                    <div class="row align-items-center">
-                                                        <div class="col-11"
-                                                            style=" margin-top:-9px; margin-right: 10px;">
-                                                            @livewire('perfil-select',['perfiles_seleccionado'=>$perfiles_seleccionado])
-                                                        </div>
-                                                        <div class="pl-0 col"
-                                                            style="text-align: right;
-                                                                                                                            margin-top: 0px;
-                                                                                                                            margin-left: inherit;">
-                                                            <button id="btnAgregarPerfil" class="text-white btn btn-sm"
-                                                                style="background:#3eb2ad;height: 34px;" data-toggle="modal"
-                                                                data-target="#PerfilModal" title="Agregar Perfil"><i
-                                                                    class="fas fa-plus"></i></button>
-                                                        </div>
-                                                    </div>
-                                                    @livewire('perfil-create')
-                                                    @if ($errors->has('perfil_empleado_id'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('perfil_empleado_id') }}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="antiguedad"><i
-                                                        class="fas fa-calendar-alt iconos-crear"></i>Fecha
-                                                    de
-                                                    ingreso</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('antiguedad') ? 'is-invalid' : '' }}"
-                                                    type="date" name="antiguedad" id="antiguedad"
-                                                    value="{{ old('antiguedad', \Carbon\Carbon::parse($empleado->antiguedad)->format('Y-m-d')) }}"
-                                                    required>
-                                                @if ($errors->has('antiguedad'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('antiguedad') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="genero"><i
-                                                        class="fas fa-user iconos-crear"></i>Género</label>
-                                                <div class="mb-3 input-group">
-                                                    <select class="custom-select genero" id="genero" name="genero">
-                                                        <option selected value="" disabled>-- Selecciona Género --</option>
-                                                        <option value="H"
-                                                            {{ old('genero', $empleado->genero) == 'H' ? 'selected' : '' }}>
-                                                            Hombre
-                                                        </option>
-                                                        <option value="M"
-                                                            {{ old('genero', $empleado->genero) == 'M' ? 'selected' : '' }}>
-                                                            Mujer
-                                                        </option>
-                                                        <option value="X"
-                                                            {{ old('genero', $empleado->genero) == 'X' ? 'selected' : '' }}>
-                                                            Otro
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                @if ($errors->has('genero'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('genero') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="estatus"><i
-                                                        class="fas fa-business-time iconos-crear"></i>Estatus</label>
-                                                <select class="form-control" class="validate" required=""
-                                                    name="estatus">
-                                                    <option value="" disabled selected>Escoga una opción</option>
-                                                    <option
-                                                        {{ old('estatus', $empleado->estatus) == 'alta' ? 'selected' : '' }}
-                                                        value="alta">
-                                                        Alta
-                                                    </option>
-                                                    <option
-                                                        {{ old('estatus', $empleado->estatus) == 'baja' ? 'selected' : '' }}
-                                                        value="baja">
-                                                        Baja
-                                                    </option>
-                                                </select>
-                                                @if ($errors->has('estatus'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('estatus') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="email"><i
-                                                        class="far fa-envelope iconos-crear"></i>Correo
-                                                    Electrónico</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                    type="text" name="email" id="email"
-                                                    value="{{ old('email', $empleado->email) }}" required>
-                                                @if ($errors->has('email'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('email') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label for="telefono_movil"><i
-                                                        class="fas fa-phone iconos-crear"></i>Teléfono
-                                                    móvil</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                    type="number" name="telefono_movil" id="telefono_movil"
-                                                    value="{{ old('telefono_movil', $empleado->telefono_movil) }}">
-                                                @if ($errors->has('telefono_movil'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('telefono_movil') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-4">
-                                                <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono
-                                                    oficina</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
-                                                    type="number" name="telefono" id="telefono"
-                                                    value="{{ old('telefono', $empleado->telefono) }}">
-                                                @if ($errors->has('telefono'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('telefono') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-2">
-                                                <label for="extension"><i
-                                                        class="fas fa-phone-volume iconos-crear"></i>Ext.</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('extension') ? 'is-invalid' : '' }}"
-                                                    type="text" name="extension" id="extension"
-                                                    value="{{ old('extension', $empleado->extension) }}">
-                                                @if ($errors->has('extension'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('extension') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-
-                                            <div class="form-group col-sm-6">
-                                                <label for="sede_id"><i
-                                                        class="fas fa-building iconos-crear"></i>Sede</label>
-                                                @if ($sedes)
-                                                    <select
-                                                        class="form-control select2 {{ $errors->has('sedes') ? 'is-invalid' : '' }}"
-                                                        name="sede_id" id="sede_id">
-                                                        @foreach ($sedes as $sede_actual)
-                                                            @if ($sede)
-                                                                <option value="{{ $sede_actual->id }}"
-                                                                    {{ old('sede_id', $sede_actual->id) == $sede->id ? 'selected' : '' }}>
-                                                                    {{ $sede_actual->sede }}</option>
-                                                            @else
-                                                                <option value="{{ $sede_actual->id }}">
-                                                                    {{ $sede_actual->sede }}</option>
-                                                            @endif
-
-                                                        @endforeach
-                                                    </select>
-                                                @endif
-                                                @if ($errors->has('sede_id'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('sede_id') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-12 col-md-6 ">
-                                                <label for="direccion"><i
-                                                        class="fas fa-map iconos-crear"></i>Dirección</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}"
-                                                    type="text" name="direccion" id="direccion"
-                                                    value="{{ old('direccion', $empleado->direccion) }}">
-                                                @if ($errors->has('direccion'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('direccion') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-12 col-md-6">
-                                                <label for="cumpleaños"><i
-                                                        class="fas fa-birthday-cake iconos-crear"></i>Cumpleaños</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('cumpleaños') ? 'is-invalid' : '' }}"
-                                                    type="date" name="cumpleaños" id="cumpleaños"
-                                                    value="{{ old('cumpleaños', $empleado->cumpleaños) }}">
-                                                @if ($errors->has('cumpleaños'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('cumpleaños') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="input-group is-invalid">
-                                                    <div class="form-group"
-                                                        style="width: 100%;border: dashed 1px #cecece;">
-                                                        <div class="row" style="padding: 20px 0;">
-                                                            <div
-                                                                class="col-md-5 col-sm-5 col-12 d-flex justify-content-center">
-                                                                <label style="cursor: pointer" for="foto">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <h5>
-                                                                            <i class="fas fa-image iconos-crear"
-                                                                                style="font-size: 20pt;position: relative;top: 4px;"></i>
-                                                                            <span id="texto-imagen" class="pl-2">
-                                                                                Subir imágen
-                                                                                <small class="text-danger"
-                                                                                    style="font-size: 10px">
-                                                                                    (Opcional)</small>
-                                                                            </span>
-                                                                        </h5>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                            <div
-                                                                class="col-sm-2 col-md-2 col-12 d-flex justify-content-center">
-                                                                Ó
-                                                            </div>
-                                                            <div class="col-md-5 col-sm-5 col-12 d-flex justify-content-center"
-                                                                id="avatar_choose">
-                                                                <label style="cursor: pointer">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <h5>
-                                                                            <i class="fas fa-camera iconos-crear"
-                                                                                style="font-size: 20pt;position: relative;top: 4px;"></i>
-                                                                            <span id="texto-imagen-avatar"
-                                                                                class="pl-2">
-                                                                                Tomar Foto
-                                                                                <small class="text-danger"
-                                                                                    style="font-size: 10px">
-                                                                                    (Opcional)</small>
-                                                                            </span>
-                                                                        </h5>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <input name="foto" type="file" accept="image/png, image/jpeg"
-                                                            class="form-control-file" id="foto" hidden="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" id="canvasFoto" style="display: none">
-                                            <div class="mt-0 display-cover">
-                                                <span class="badge badge-dark" id="cerrarCanvasFoto">&times;</span>
-                                                <video autoplay></video>
-                                                <canvas class="d-none"></canvas>
-
-                                                <div class="video-options">
-                                                    <select name="" id="" class="custom-select devices">
-                                                        <option value="">Selecciona una cámara</option>
-                                                    </select>
-                                                </div>
-
-                                                <img class="screenshot-image d-none" alt="">
-
-                                                <div class="controls">
-                                                    <button class="btn btn-danger play" title="Iniciar"><i
-                                                            class="fas fa-play-circle"></i></button>
-                                                    <button class="btn btn-info pause d-none" title="Pausar"><i
-                                                            class="fas fa-pause-circle"></i></button>
-                                                    <button class="btn btn-danger stop d-none" title="Detener"><i
-                                                            class="fas fa-stop"></i></button>
-                                                    <button class="btn btn-outline-success screenshot d-none"
-                                                        title="Capturar"><i class="fas fa-image"></i></button>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" id="snapshoot" readonly autocomplete="off"
-                                                name="snap_foto">
-                                        </div>
+                                        @include('admin.empleados._form')
                                     </form>
                                 </div>
                             </section>
-
-
-
-
-
                             <section id="contenido2" class="mt-4 ml-2">
                                 <div>
-
-
-
                                     <form method="POST"
                                         action="{{ route('admin.empleados.storeResumen', [$empleado->id]) }}"
                                         id="formResumen">
@@ -792,10 +373,8 @@
 
 
                                             <div class="form-group col-sm-3">
-                                                <label for="año"><i
-                                                        class="far fa-calendar-alt iconos-crear"></i>Año</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('año') ? 'is-invalid' : '' }}"
+                                                <label for="año"><i class="far fa-calendar-alt iconos-crear"></i>Año</label>
+                                                <input class="form-control {{ $errors->has('año') ? 'is-invalid' : '' }}"
                                                     type="date" name="año" id="año" value="{{ old('año', '') }}">
                                                 <span class="errors año_error text-danger"></span>
                                             </div>
@@ -1084,8 +663,6 @@
                             </section>
                         </div>
                     </div>
-
-
                     <div class="text-right form-group col-12">
                         <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                         <button class="btn btn-danger" type="submit" id="btnGuardar">
@@ -1095,35 +672,52 @@
 
                 </div>
             </div>
-
-
-
-
-
-
         </div>
     </div>
-
-
 @endsection
-
-
 @section('scripts')
     @parent
     <script>
-        // document.querySelector('.custom-file-input').addEventListener('change', function(e) {
-        //     var fileName = document.getElementById("foto").files[0].name;
-        //     var nextSibling = e.target.nextElementSibling
-        //     nextSibling.innerText = fileName
-        // })
         $(document).ready(function() {
             $('.areas').select2({
                 theme: 'bootstrap4',
             });
-
+            $('.select-search').select2({
+                theme: 'bootstrap4',
+            });
             $('.supervisor').select2({
                 theme: 'bootstrap4',
             });
+            $('#puesto_id').select2({
+                theme: 'bootstrap4',
+            });
+            $('#perfil_empleado_id').select2({
+                theme: 'bootstrap4',
+            });
+            $('#nacionalidad').select2({
+                theme: 'bootstrap4',
+                templateResult: customizeNationalitySelect,
+                templateSelection: customizeNationalitySelect
+            });
+
+            function customizeNationalitySelect(opt) {
+                if (!opt.id) {
+                    return opt.text;
+                }
+
+                let optImage = $(opt.element).attr('data-flag');
+                let $opt = $(
+                    `<span>
+                        <img src="${optImage}" class="img-fluid rounded-circle" width="30" height="30"/>
+                        ${opt.text}
+                    </span>`
+                    // '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
+                    // optimage +
+                    // '" class="img-fluid rounded-circle" width="30" height="30"/>' +
+                    // opt.text + '</span>'
+                );
+                return $opt;
+            };
         });
     </script>
     <script>
@@ -1703,10 +1297,45 @@
 
             document.getElementById('btnGuardar').addEventListener('click', function(e) {
                 // e.preventDefault();
-                document.querySelector('#formEmpleados').submit();
+                // document.querySelector('#formEmpleados').submit();
 
+                e.preventDefault();
+                const formData = new FormData(document.getElementById('formEmpleados'));
+                const url = document.getElementById('formEmpleados').getAttribute('action');
+
+                fetch(url, {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.errors) {
+                            $.each(data.errors, function(indexInArray, valueOfElement) {
+                                $(`#error_${indexInArray.replaceAll('.','_')}`).text(
+                                    valueOfElement[0]);
+                            });
+                        }
+
+                        if (data.status) {
+                            Swal.fire(
+                                data.message,
+                                '',
+                                'success',
+                            )
+                            setTimeout(() => {
+                                window.location.href =
+                                    "{{ route('admin.empleados.index') }}";
+                            }, 1500);
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
             })
-
         });
 
 
@@ -1745,62 +1374,6 @@
                     });
                 }
             });
-            //     let experiencias = tblExperiencia.rows().data().toArray();
-            //     let arrExperiencia = [];
-            //     experiencias.forEach(experiencia => {
-            //         arrExperiencia.push(experiencia[0])
-
-            //     });
-
-            //     //no se puedan agregar datos que ya estan
-            //     let nombre = $("#empresa").val();
-            //     let puesto = $("#puesto_trabajo").val();
-            //     let descripcion = $("#descripcion").val();
-            //     let inicio_mes = $("#inicio_mes").val();
-            //     let fin_mes = $("#fin_mes").val();
-            //     if (nombre.trim() == '') {
-            //         document.querySelector('.empresa_error').innerHTML = "El campo empresa es requerido"
-            //         // limpiarCamposExperienciaPorId('empresa');
-            //     }
-            //     if (puesto.trim() == '') {
-            //         document.querySelector('.puesto_trabajo_error').innerHTML = "El campo puesto es requerido"
-            //         // limpiarCamposExperienciaPorId('puesto_trabajo');
-            //     }
-            //     if (inicio_mes.trim() == '') {
-            //         document.querySelector('.inicio_mes_error').innerHTML = "El campo de inicio de puesto laboral es requerido"
-            //         // limpiarCamposExperienciaPorId('puesto_trabajo');
-            //     }
-            //     if (fin_mes.trim() == '') {
-            //         document.querySelector('.fin_mes_error').innerHTML = "El campo fin de puesto laboral es requerido"
-            //         // limpiarCamposExperienciaPorId('fin_mes');
-            //     }
-            //     if (descripcion.trim() == '') {
-            //         document.querySelector('.descripcion_error').innerHTML = "El campo de descripción laboral es requerido"
-            //         // limpiarCamposExperienciaPorId('descripcion_error');
-            //     }
-            //     if (nombre.trim() != '' && puesto.trim() != '' && inicio_mes.trim() != '' && fin_mes.trim() != '' && descripcion
-            //         .trim() != '') {
-            //         limpiarCamposExperiencia();
-
-
-            //         if (!arrExperiencia.includes(nombre)) {
-
-
-            //             tblExperiencia.row.add([
-            //                 nombre,
-            //                 puesto,
-            //                 descripcion,
-            //                 inicio_mes,
-            //                 fin_mes
-            //             ]).draw();
-
-            //         } else {
-            //             Swal.fire('Este participante ya ha sido agregado', '', 'error')
-            //             limpiarCamposExperiencia();
-            //         }
-            //     }
-            //     //limpia campos
-
         }
 
         function limpiarCamposExperiencia() {

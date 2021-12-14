@@ -73,9 +73,9 @@
 	   			<tr>
 	       			<td>{{ $mejora->folio }}</td>
                     <td>{{ $mejora->estatus }}</td>
-                    <td>{{ $mejora->fecha }}</td>
-                    <td>{{ $mejora->created_at }}</td>
-                    <td>{{ $mejora->fecha_cierre }}</td>
+                    <td>{{ $mejora->fecha_creacion }}</td>
+                    <td>{{ $mejora->fecha_reporte }}</td>
+                    <td>{{ $mejora->fecha_de_cierre }}</td>
 	       			<td>
                         <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $mejora->mejoro->avatar }}" title="{{ $mejora->mejoro->name }}">
                     </td>

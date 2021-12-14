@@ -70,7 +70,7 @@
 	   			<tr>
 	       			<td>{{ $sugerencia->folio }}</td>
                     <td>{{ $sugerencia->estatus }}</td>
-                    <td>{{ $sugerencia->created_at }}</td>
+                    <td>{{ $sugerencia->fecha_reporte }}</td>
                     <td>{{ $sugerencia->fecha_cierre }}</td>
 	       			<td>
                         <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $sugerencia->sugirio->avatar }}" title="{{ $sugerencia->sugirio->name }}">

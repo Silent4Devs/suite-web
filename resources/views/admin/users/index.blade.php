@@ -204,13 +204,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -256,7 +256,7 @@
                         data: 'n_empleado',
                         render: function(data, type, row, meta) {
                             if (data) {
-                                return row.empleado.name;
+                                return row.empleado?.name;
                             } else {
                                 return 'Sin vincular a empleado';
                             }
@@ -266,7 +266,7 @@
                         data: 'n_empleado',
                         render: function(data, type, row, meta) {
                             if (data) {
-                                return row.empleado.area.area;
+                                return row.empleado?.area?.area;
                             } else {
                                 return 'Sin vincular a empleado';
                             }
@@ -276,7 +276,7 @@
                         data: 'n_empleado',
                         render: function(data, type, row, meta) {
                             if (data) {
-                                return row.empleado.puesto;
+                                return row.empleado?.puesto;
                             } else {
                                 return 'Sin vincular a empleado';
                             }

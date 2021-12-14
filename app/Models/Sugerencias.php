@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Rennokki\QueryCache\Traits\QueryCacheable;
@@ -19,7 +20,7 @@ class Sugerencias extends Model
         'id',
     ];
 
-    protected $appends = ['folio'];
+    protected $appends = ['folio', 'fecha_de_cierre', 'fecha_reporte'];
 
     public function getFolioAttribute()
     {
@@ -39,5 +40,15 @@ class Sugerencias extends Model
     public function actividades()
     {
         return $this->hasMany(ActividadSugerencia::class, 'sugerencia_id', 'id');
+    }
+
+    public function getFechaDeCierreAttribute()
+    {
+        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y') : '';
+    }
+
+    public function getFechaReporteAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('d-m-Y');
     }
 }
