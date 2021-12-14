@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RiesgoIdentificado extends Model
 {
@@ -23,7 +24,7 @@ class RiesgoIdentificado extends Model
         'id',
     ];
 
-    protected $appends = ['folio'];
+    protected $appends = ['folio','fecha_creacion','fecha_de_cierre','fecha_reporte'];
 
     public function getFolioAttribute()
     {
@@ -48,5 +49,20 @@ class RiesgoIdentificado extends Model
     public function actividades()
     {
         return $this->hasMany(ActividadRiesgo::class, 'riesgo_id', 'id');
+    }
+
+    public function getFechaCreacionAttribute()
+    {
+        return Carbon::parse($this->fecha)->format('d-m-Y');
+    }
+
+    public function getFechaDeCierreAttribute()
+    {
+        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y'):'';
+    }
+
+    public function getFechaReporteAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('d-m-Y');
     }
 }
