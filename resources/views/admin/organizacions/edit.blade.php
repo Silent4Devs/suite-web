@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-12">
                         <label class="required" for="empresa"><i class="far fa-building iconos-crear"></i> Nombre de la
                             Empresa</label>
                         <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
@@ -38,12 +38,12 @@
                         <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span>
                     </div>
 
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-12">
                         <label class="required" for="direccion"><i
                                 class="fas fa-map-marker-alt iconos-crear"></i>{{ trans('cruds.organizacion.fields.direccion') }}</label>
                         <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}"
-                            name="direccion" id="direccion"
-                            required style="min-height: 0px; max-height: 200px; height: 35px;">{{ old('direccion', $organizacion->direccion) }}</textarea>
+                            name="direccion" id="direccion" required
+                            style="min-height: 0px; max-height: 200px; height: 35px;">{{ old('direccion', $organizacion->direccion) }}</textarea>
                         @if ($errors->has('direccion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('direccion') }}
@@ -52,32 +52,54 @@
                         <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
                     </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="form-group col-sm-6">
                         <label class="" for="razon_social">Razón Social</label>
                         <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" type="text" name="razon_social" id="razon_social" value="{{ old('razon_social', $organizacion->razon_social) }}" >
-                        @if($errors->has('razon_social'))
+                        @if ($errors->has('razon_social'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('razon_social') }}
+                            </div>
+                        @endif
+
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="" for="rfc">RFC</label>
+                        <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="rfc" id="rfc" value="{{ old('rfc', $organizacion->rfc) }}" >
+                        @if ($errors->has('rfc'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('rfc') }}
+                            </div>
+                        @endif
+
+                    </div>
+                </div> --}}
+
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label class="" for="razon_social">Razón Social</label>
+                        <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" type="text"
+                            name="razon_social" id="razon_social"
+                            value="{{ old('razon_social', $organizacion->razon_social) }}">
+                        @if ($errors->has('razon_social'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('razon_social') }}
                             </div>
                         @endif
                         {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
                     </div>
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-4">
                         <label class="" for="rfc">RFC</label>
-                        <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="rfc" id="rfc" value="{{ old('rfc', $organizacion->rfc) }}" >
-                        @if($errors->has('rfc'))
+                        <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
+                            name="rfc" id="rfc" value="{{ old('rfc', $organizacion->rfc) }}">
+                        @if ($errors->has('rfc'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('rfc') }}
                             </div>
                         @endif
                         {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
                     </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-4">
                         <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
                         <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number"
                             name="telefono" id="telefono" value="{{ old('telefono', $organizacion->telefono) }}"
@@ -90,7 +112,10 @@
                         <span class="help-block">{{ trans('cruds.organizacion.fields.telefono_helper') }}</span>
                     </div>
 
+                </div>
 
+
+                <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="correo"> <i
                                 class="far fa-envelope iconos-crear"></i>{{ trans('cruds.organizacion.fields.correo') }}</label>
@@ -103,10 +128,6 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.organizacion.fields.correo_helper') }}</span>
                     </div>
-                </div>
-
-
-                <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="pagina_web"><i class="fas fa-pager iconos-crear"></i>Página Web</label>
                         <input class="form-control {{ $errors->has('pagina_web') ? 'is-invalid' : '' }}" type="text"
@@ -118,7 +139,27 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
                     </div>
+                </div>
+                <div class="form-group col-12">
+                    <table class="table" id="user_table">
+                        <tbody>
+                            <div class=" row col-12 p-0 m-0">
+                                <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i
+                                        class="fas fa-calendar-alt iconos-crear"></i>Día Laboral</label>
+                                <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i
+                                        class="fas fa-clock iconos-crear"></i>Horario Laboral Inicio</label>
+                                <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i
+                                        class="fas fa-clock iconos-crear"></i>Horario Laboral Fin</label>
+                                <label class="col-md-3 col-sm-3" for="working_day"
+                                    style="text-align: center;"></i>Opciones</label>
+                            </div>
+                        </tbody>
+                        <tfoot></tfoot>
+                    </table>
+                </div>
 
+
+                <div class="row">
                     <div class="form-group col-sm-6">
                         {{-- @dump($organizacion['logotipo']) --}}
                         <label for="logotipo">Logotipo <strong>(Selecciona tu imagen en formato .png)</strong></label>
@@ -132,11 +173,19 @@
                     </div>
                 </div>
 
+                <div class="col-md-12 col-sm-12">
+                    <div class="card vrd-agua">
+                        <p class="mb-1 text-center text-white">DATOS COMPLEMENTARIOS</p>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label class="" for="representante_legal">Representante Legal</label>
-                        <input class="form-control {{ $errors->has('representante_legal') ? 'is-invalid' : '' }}" type="text" name="representante_legal" id="representante_legal" value="{{ old('representante_legal', $organizacion->representante_legal) }}" >
-                        @if($errors->has('representante_legal'))
+                        <input class="form-control {{ $errors->has('representante_legal') ? 'is-invalid' : '' }}"
+                            type="text" name="representante_legal" id="representante_legal"
+                            value="{{ old('representante_legal', $organizacion->representante_legal) }}">
+                        @if ($errors->has('representante_legal'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('representante_legal') }}
                             </div>
@@ -145,11 +194,13 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="fecha_constitucion">Fecha de constitución</label>
-                        <input class=" form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}" type="date" name="fecha_constitucion" id="fecha_constitucion" value="{{ old('fecha_constitucion',  \Carbon\Carbon::parse($organizacion->fecha_constitucion))->format('Y-m-d') }}">
-                        @if($errors->has('fecha_constitucion'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fecha_constitucion') }}
-                        </div>
+                        <input class=" form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}"
+                            type="date" name="fecha_constitucion" id="fecha_constitucion"
+                            value="{{ old('fecha_constitucion', \Carbon\Carbon::parse($organizacion->fecha_constitucion))->format('Y-m-d') }}">
+                        @if ($errors->has('fecha_constitucion'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('fecha_constitucion') }}
+                            </div>
                         @endif
                         {{-- <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion_helper') }}</span> --}}
                     </div>
@@ -157,8 +208,10 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label class="" for="num_empleados">Número de empleados</label>
-                        <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number" name="num_empleados" id="num_empleados" value="{{ old('num_empleados', $organizacion->num_empleados) }}" readonly>
-                        @if($errors->has('num_empleados'))
+                        <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number"
+                            name="num_empleados" id="num_empleados"
+                            value="{{ old('num_empleados', $organizacion->num_empleados) }}" readonly>
+                        @if ($errors->has('num_empleados'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('num_empleados') }}
                             </div>
@@ -167,19 +220,14 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label class="" for="tamano">Tamaño</label>
-                        <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text" name="tamano" id="tamano" value="{{ old('tamano', $organizacion->tamano) }}" readonly>
-                        @if($errors->has('tamano'))
+                        <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text"
+                            name="tamano" id="tamano" value="{{ old('tamano', $organizacion->tamano) }}" readonly>
+                        @if ($errors->has('tamano'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('tamano') }}
                             </div>
                         @endif
                         {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
-                    </div>
-                </div>
-
-                <div class="col-md-12 col-sm-12">
-                    <div class="card vrd-agua">
-                        <p class="mb-1 text-center text-white">DATOS COMPLEMENTARIOS</p>
                     </div>
                 </div>
 
@@ -214,7 +262,7 @@
                     <div class="form-group col-sm-6">
                         <label for="mision"><i class="fas fa-flag iconos-crear"></i>Misión </label>
                         <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision"
-                            id="mision">{{ old('mision', $organizacion->mision) }}</textarea>
+                            id="mision">{{ old('mision', strip_tags($organizacion->mision)) }}</textarea>
                         @if ($errors->has('mision'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('mision') }}
@@ -226,7 +274,7 @@
                         <label for="vision"><i class="far fa-eye iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.vision') }}</label>
                         <textarea class="form-control {{ $errors->has('vision') ? 'is-invalid' : '' }}" name="vision"
-                            id="vision">{{ old('vision', $organizacion->vision) }}</textarea>
+                            id="vision">{{ old('vision', strip_tags($organizacion->vision)) }}</textarea>
                         @if ($errors->has('vision'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('vision') }}
@@ -241,7 +289,7 @@
                         <label for="valores"><i class="far fa-heart iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.valores') }}</label>
                         <textarea class="form-control {{ $errors->has('valores') ? 'is-invalid' : '' }}" name="valores"
-                            id="valores">{{ old('valores', $organizacion->valores) }}</textarea>
+                            id="valores">{{ old('valores', strip_tags($organizacion->valores)) }}</textarea>
                         @if ($errors->has('valores'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('valores') }}
@@ -254,7 +302,7 @@
                         <label for="antecedentes"> <i class="far fa-file-alt iconos-crear"></i>Antecedentes</label>
                         <textarea class="form-control {{ $errors->has('antecedentes') ? 'is-invalid' : '' }}"
                             name="antecedentes"
-                            id="antecedentes">{{ old('antecedentes', $organizacion->antecedentes) }}</textarea>
+                            id="antecedentes">{{ old('antecedentes', strip_tags($organizacion->antecedentes)) }}</textarea>
                         @if ($errors->has('antecedentes'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('antecedentes') }}
@@ -277,6 +325,228 @@
 @endsection
 
 @section('scripts')
+
+    <script>
+        $(document).ready(function() {
+
+
+
+
+            function dynamic_field(number, element) {
+
+
+                if (element === undefined) {
+                    console.log(0);
+
+                    html = "<tr>";
+                    html += '<td class="col-3"><input class="form-control" type="hidden" value="0"  name="working[' + number +'][id][]"><select class="workingSelect form-control" name="working[' + number +
+                        '][day][]" id="working_day"><option value="">Seleccione una opción</option>';
+                    html += '<option value="Lunes" >Lunes</option>';
+                    html += '<option value="Martes" >Martes</option>';
+                    html += '<option value="Miercoles" >Miercoles</option>';
+                    html += '<option value="Jueves" >Jueves</option>';
+                    html += '<option value="Viernes" >Viernes</option>';
+                    html += '<option value="Sabado" >Sabado</option>';
+                    html += '<option value="Domingo" >Domingo</option>';
+                    html += '</select></td>';
+                    html += '<td class="col-3"><input class="form-control" type="time" name="working[' + number +
+                        '][start_time][]" id="start_work_time" ></td>';
+                    html += '<td class="col-3"><input class="form-control" type="time" name="working[' + number +
+                        '][end_time][]" id="end_work_time" ></td>';
+
+                    if (number > 1) {
+                        html +=
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3" style="background-color: #d96161 !important;"><i class="fas fa-trash-alt"></i></button></td></tr>';
+                        $("#user_table tbody").append(html);
+                    } else {
+                        html +=
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
+                        $("#user_table tbody").html(html);
+                    }
+
+                } else {
+
+                    if (element.working_day == "Lunes") {
+                        var Lunes = " selected ";
+                    } else if (element.working_day == "Martes") {
+                        var Martes = " selected ";
+                    } else if (element.working_day == "Miercoles") {
+                        var Miercoles = " selected ";
+                    } else if (element.working_day == "Jueves") {
+                        var Jueves = " selected ";
+                    } else if (element.working_day == "Viernes") {
+                        var Viernes = " selected ";
+                    } else if (element.working_day == "Sabado") {
+                        var Sabado = " selected ";
+                    } else if (element.working_day == "Domingo") {
+                        var Domingo = " selected ";
+                    }
+
+                    html = "<tr>";
+                    html += '<td class="col-3"><input class="form-control" type="hidden" value="' + element
+                        .id + '" name="working[' + number +
+                        '][id][]"><select class="workingSelect form-control" data-model-id="' + element
+                        .id + '" data-type-input="working_day" name="working[' + number +
+                        '][day][]" id="working_day"><option value="">Seleccione una opción</option>';
+                    html += '<option value="Lunes" ' + Lunes + ' >Lunes</option>';
+                    html += '<option value="Martes" ' + Martes + ' >Martes</option>';
+                    html += '<option value="Miercoles" ' + Miercoles + ' >Miercoles</option>';
+                    html += '<option value="Jueves" ' + Jueves + ' >Jueves</option>';
+                    html += '<option value="Viernes" ' + Viernes + ' >Viernes</option>';
+                    html += '<option value="Sabado" ' + Sabado + ' >Sabado</option>';
+                    html += '<option value="Domingo" ' + Domingo + ' >Domingo</option>';
+                    html += '</select></td>';
+                    html += '<td class="col-3"><input class="form-control" type="time" data-model-id="' + element
+                        .id + '" data-type-input="start_work_time" name="working[' + number +
+                        '][start_time][]" id="start_work_time" value="' + element.start_work_time + '" ></td>';
+                    html += '<td class="col-3"><input class="form-control" type="time" data-model-id="' + element
+                        .id + '" data-type-input="end_work_time" name="working[' + number +
+                        '][end_time][]" id="end_work_time" value="' + element.end_work_time + '"></td>';
+                    // console.log(html);
+                    if (number > 1) {
+                        html +=
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3 removeWithFetch" style="background-color: #d96161 !important;" data-model-id="' + element.id + '"><i class="fas fa-trash-alt"></i></button></td></tr>';
+                        $("#user_table tbody").append(html);
+                    } else {
+                        html +=
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
+                        $("#user_table tbody").html(html);
+                    }
+                }
+            }
+
+            $(document).on("click", "#add", function() {
+                count++;
+                var divs = document.getElementsByClassName("workingSelect").length;
+                // console.log("Hay " + divs + " elementos");
+                if (divs <= 7) {
+                    dynamic_field(count);
+                }
+            });
+
+            $(document).on("click", ".remove", function() {
+                count--;
+                $(this).closest("tr").remove();
+            });
+
+
+
+            let schedule = @json($schedule);
+            let dscheduleSize = schedule.length;
+            let count = dscheduleSize > 0 ? dscheduleSize : 1;
+            if (dscheduleSize) {
+                schedule.forEach((element, index) => {
+                    ++index;
+                    dynamic_field(index, element);
+
+                });
+            } else {
+                dynamic_field(count);
+            }
+            $("#user_table").on("change", "input", async function(e) {
+                const target = e.target;
+
+                const value = target.value;
+                const modelId = target.getAttribute('data-model-id')
+                const typeInput = target.getAttribute('data-type-input');
+
+                if (typeInput && modelId) {
+                    const url = `/admin/organizacions/${modelId}/update-schedule`;
+
+                    const response = await fetch(url, {
+
+                        method: 'POST',
+
+                        body: JSON.stringify({
+
+                            value,
+
+                            typeInput
+
+                        }),
+
+                        headers: {
+
+                            Accept: "application/json",
+
+                            "Content-Type": "application/json",
+
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+
+                        },
+
+                    })
+
+                    const data = await response.json();
+
+                    // console.log(data);
+                }
+            })
+            $('#user_table').on('click', '.removeWithFetch', function(e) {
+                e.preventDefault()
+                let = target = e.target;
+                if (target.tagName == 'I') {
+                    target = e.target.parentElement
+                }
+
+                const modelId = target.getAttribute('data-model-id')
+
+
+
+                const url = `/admin/organizacions/${modelId}/delete-schedule`;
+                Swal.fire({
+
+                    title: '¿Quieres eliminar este registro?',
+
+                    text: "Este dato ya está almacenado",
+
+                    icon: 'question',
+
+                    showCancelButton: true,
+
+                    confirmButtonColor: '#3085d6',
+
+                    cancelButtonColor: '#d33',
+
+                    confirmButtonText: 'Eliminar',
+
+                    cancelButtonText: 'Cancelar'
+
+                }).then(async (result) => {
+
+                    if (result.isConfirmed) {
+                        const response = await fetch(url, {
+
+                            method: 'POST',
+
+                            headers: {
+
+                                Accept: "application/json",
+
+                                "Content-Type": "application/json",
+
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'),
+
+                            },
+
+                        })
+
+                        const data = await response.json();
+                        count--;
+                        $(this).closest("tr").remove();
+                        console.log(data);
+                    }
+
+                })
+
+
+
+            });
+
+
+        });
+    </script>
 
     <script>
         document.querySelector('.custom-file-input').addEventListener('change', function(e) {
