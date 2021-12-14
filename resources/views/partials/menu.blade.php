@@ -406,7 +406,7 @@
 
         {{-- @endcan --}}
         @can('configuracion_datos_access')
-            <li class="c-sidebar-nav-dropdown">
+            <li class="c-sidebar-nav-dropdown btn_bajar_scroll">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fas fa-file-alt iconos_menu letra_blanca">
 
@@ -598,7 +598,7 @@
             </li>
         @endcan
         @can('user_management_access')
-            <li class="c-sidebar-nav-dropdown">
+            <li class="c-sidebar-nav-dropdown btn_bajar_scroll">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-user-cog iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Ajustes de Usuario </font>
@@ -706,14 +706,11 @@
                         </li>
                     @endcan
                     @can('team_access')
-                        <li class="c-sidebar-nav-item">
+                        <li class="c-sidebar-nav-item" class="">
                             <a href="{{ route('admin.teams.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/teams') || request()->is('admin/teams/*') ? 'active' : '' }}">
-                                <i class="fa-fw fas fa-users iconos_menu letra_blanca">
-
-                                </i>
-                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.team.title') }}
-                                </font>
+                                <i class="fa-fw fas fa-users iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca" style="margin-left:10px;"> {{ trans('cruds.team.title') }} </font>
                             </a>
                         </li>
                     @endcan
@@ -827,6 +824,9 @@
                 </a>
             </li>
         @endcan --}}
+        <div class="row lemnt_row_menu" style="padding-bottom:300px;">
+            
+        </div>
     </ul>
 
 </div>

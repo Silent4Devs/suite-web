@@ -65,6 +65,8 @@ class InicioUsuarioController extends Controller
                     $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
                     $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
                     $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+                    $task->archivo = $implementacion->archivo;
+                    $task->id_implementacion = $implementacion->id;
                 }
 
                 $implementacion->tasks = $tasks;
@@ -119,10 +121,9 @@ class InicioUsuarioController extends Controller
             }
             $auditoria_internas = $auditoria_internas->unique();
             $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
-                $query->where('empleados.id', $empleado->id)->where('archivado', '=', 0);
+                $query->where('empleados.id', $empleado->id);
             })->get();
         }
-
         $contador_recursos = 0;
         if ($usuario->empleado) {
             $contador_recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
@@ -799,12 +800,168 @@ class InicioUsuarioController extends Controller
         return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
-    public function archivarCapacitacion(Request $request)
-    {
-        $int_empleado = intval($request->id_empleado);
-        $recurso = Recurso::find(intval($request->recurso_id));
-        $recurso->empleados()->syncWithoutDetaching([$int_empleado => ['archivado' => true]]);
 
-        return response()->json(['success' => true]);
+
+    public function archivarCapacitacion($id)
+    {
+        $recurso = Recurso::find($id);
+
+        $recurso->update([
+            'archivar' => 'archivado',
+        ]);
+
+        if ($errors) {
+            return redirect('admin/inicioUsuario/capacitaciones/archivo');
+        }
+
+        
     }
+
+    public function recuperarCapacitacion($id)
+    {
+        $recurso = Recurso::find($id);
+
+        $recurso->update([
+            'archivar' => 'recuperado',
+        ]);
+
+        if ($errors) {
+            return redirect()->route('admin.inicio-Usuario.index');
+        }
+        
+    }
+
+    public function archivoCapacitacion()
+    {
+        $recursos = Recurso::get();
+
+        return view('admin.inicioUsuario.capacitaciones_archivo', compact('recursos'));
+    }
+
+
+
+    public function archivarAprobacion($id)
+    {
+        $mis_documentos = Documento::find($id);
+
+        $mis_documentos->update([
+            'archivo' => 'archivado',
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.aprobacion.archivo');
+    }
+
+    public function recuperarAprobacion($id)
+    {
+        $mis_documentos = Documento::find($id);
+
+        $mis_documentos->update([
+            'archivo' => 'recuperado',
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
+    }
+
+    public function archivoAprobacion()
+    {
+        $mis_documentos = Documento::get();
+
+        return view('admin.inicioUsuario.aprobaciones_archivo', compact('mis_documentos'));
+    }
+
+
+
+
+    public function archivoActividades()
+    {
+        $usuario = auth()->user();
+        $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
+        $actividades = [];
+        $implementaciones = PlanImplementacion::get();
+        $actividades = collect();
+        if ($implementaciones) {
+            foreach ($implementaciones as $implementacion) {
+                $tasks = $implementacion->tasks;
+                foreach ($tasks as $task) {
+                    $task->parent_id = $implementacion->id;
+                    $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
+                    $task->end = intval($task->end);
+                    $task->start = intval($task->start);
+                    $task->canAdd = $task->canAdd == 'true' ? true : false;
+                    $task->canWrite = $task->canWrite == 'true' ? true : false;
+                    $task->duration = intval($task->duration);
+                    $task->progress = intval($task->progress);
+                    $task->canDelete = $task->canDelete == 'true' ? true : false;
+                    isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
+                    isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
+                    $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
+                    $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
+                    $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
+                    $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+                    $task->archivo = $implementacion->archivo;
+                    $task->id_implementacion = $implementacion->id;
+                }
+
+                $implementacion->tasks = $tasks;
+                // if (!isset($implementacion->assigs)) {
+                //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
+                // }
+                $actividades_collet = collect($implementacion->tasks)->filter(function ($task) use ($empleado_id, $implementacion) {
+                    if ($task->level > 1) {
+                        if (isset($task->assigs)) {
+                            $assigs = $task->assigs;
+                            $task->parent = $implementacion->parent;
+                            $task->slug = $implementacion->slug;
+                            foreach ($assigs as $assig) {
+                                if ($assig->resourceId == $empleado_id) {
+                                    return $task;
+                                }
+                            }
+                        }
+                    }
+                });
+
+                $actividades->push($actividades_collet);
+            }
+        }
+        $actividades = $actividades->flatten(1);
+
+        $contador_actividades = 0;
+
+        foreach ($actividades as $actividad) {
+            $progreso = $actividad->progress;
+
+            if (intval($progreso) < 100) {
+                $contador_actividades++;
+            }
+        }
+
+        // dd($actividades);
+
+        return view('admin.inicioUsuario.actividades_archivo', compact('actividades'));
+    }
+
+    public function archivarActividades($id)
+    {
+        $actividad = PlanImplementacion::find($id);
+
+        $actividad->update([
+            'archivo' => 'archivado',
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.acctividades.archivo');
+    }
+
+    public function recuperarActividades($id)
+    {
+        $actividad = PlanImplementacion::find($id);
+
+        $actividad->update([
+            'archivo' => 'recuperado',
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
+    }
+
+
 }

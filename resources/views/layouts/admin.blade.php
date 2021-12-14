@@ -10,7 +10,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>{{ trans('panel.site_title') }}</title>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 
@@ -1039,7 +1039,9 @@
                                 <div class="alert alert-success" role="alert">{{ session('message') }}</div>
                             </div>
                         </div>
-                    @endif
+                    </div>
+                @endif
+                <div id="errores_generales_admin_quitar_recursos">
                     @if ($errors->count() > 0)
                         <div class="alert alert-danger">
                             <ul class="list-unstyled">
@@ -1049,9 +1051,10 @@
                             </ul>
                         </div>
                     @endif
-                    @yield('content')
-
                 </div>
+                @yield('content')
+
+        </div>
 
 
             </main>
@@ -1127,6 +1130,11 @@
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         })
+
+        $(".btn_bajar_scroll").click(function(){
+            $("lemnt_row_menu").fadeIn(0);
+            $('.c-sidebar-nav').delay(1000).scrollTop( 900);
+        });
     </script>
 
     <script>

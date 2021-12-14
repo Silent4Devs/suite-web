@@ -46,72 +46,103 @@
         </thead>
         <tbody>
             @foreach ($actividades as $task)
-                <tr id="{{ $task->id }}" data-parent-plan="{{ $task->slug }}">
-                    <td class="td_nombre">{{ $task->name }}</td>
-                    <td><span class="badge badge-primary">{{ $task->parent }}</span></td>
-                    {{-- <td>Categoria</td> --}}
-                    {{-- <td>Urgencia</td> --}}
-                    <td>{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTime()->format('d-m-Y') }}
-                    </td>
-                    <td>{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('d-m-Y') }}
-                    </td>
-                    <td>
-                        <div class="td_div_recursos">
-                            @foreach ($task->assigs as $assig)
-                                @php
-                                    $empleado = $Empleado->where('id', intval($assig->resourceId))->first();
-                                @endphp
-                                @if ($empleado)
-                                    <img src="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
-                                        style="height: 37px; clip-path: circle(18px at 50% 50%);"
-                                        class="rounded-circle {{ $empleado->id == auth()->user()->empleado->id ? 'd-none' : '' }}"
-                                        alt="{{ $empleado->name }}" title="{{ $empleado->name }}">
-                                    {{ $empleado->id == auth()->user()->empleado->id ? '' : '' }}
-                                @endif
-                            @endforeach
-                        </div>
-                    </td>
-                    {{-- <td>Asignada por</td> --}}
-                    <td>
-                        @switch($task->status)
-                            @case('STATUS_ACTIVE')
-                                <span class="badge" style="background-color:rgb(253, 171, 61)">En proceso</span>
-                            @break
-                            @case('STATUS_DONE')
-                                <span class="badge" style="background-color:rgb(0, 200, 117)">Completada</span>
-                            @break
-                            @case ('STATUS_FAILED')
-                                <span class="badge" style="background-color:rgb(226, 68, 92)">Con retraso</span>
-                            @break
-                            @case ('STATUS_SUSPENDED')
-                                <span class="badge" style="background-color:#aaaaaa">Suspendida</span>
-                            @break
-                            @case ('STATUS_UNDEFINED')
-                                <span class="badge" style="background-color:#00b1e1">Sin iniciar</span>
-                            @break
-                            @default
-                                <span class="badge" style="background-color:#00b1e1">Sin iniciar</span>
-                        @endswitch
-                    </td>
-                    <td class="d-flex">
-                        @php
-                            if (intval($task->parent_id) == 1) {
-                                $ruta = '/admin/planTrabajoBase/';
-                            } else {
-                                $ruta = '/admin/planes-de-accion/' . $task->parent_id;
-                            }
-                        @endphp
-                        <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
-                        {{-- <i class="fas fa-code-branch"></i> delegar --}}
-                        {{-- <i class="far fa-times-circle"></i> rechazar --}}
-                        {{-- <i class="fas fa-archive"></i> archivado --}}
-                    </td>
-                </tr>
+                @if(!($task->archivo == 'archivado'))
+                    <tr id="{{ $task->id }}" data-parent-plan="{{ $task->slug }}">
+                        <td class="td_nombre">{{ $task->name }}</td>
+                        <td><span class="badge badge-primary">{{ $task->parent }}</span></td>
+                        {{-- <td>Categoria</td> --}}
+                        {{-- <td>Urgencia</td> --}}
+                        <td>{{ \Carbon\Carbon::createFromTimestamp($task->start / 1000)->toDateTime()->format('d-m-Y') }}
+                        </td>
+                        <td>{{ \Carbon\Carbon::createFromTimestamp($task->end / 1000)->toDateTime()->format('d-m-Y') }}
+                        </td>
+                        <td>
+                            <div class="td_div_recursos">
+                                @foreach ($task->assigs as $assig)
+                                    @php
+                                        $empleado = $Empleado->where('id', intval($assig->resourceId))->first();
+                                    @endphp
+                                    @if ($empleado)
+                                        <img src="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
+                                            style="height: 37px; clip-path: circle(18px at 50% 50%);"
+                                            class="rounded-circle {{ $empleado->id == auth()->user()->empleado->id ? 'd-none' : '' }}"
+                                            alt="{{ $empleado->name }}" title="{{ $empleado->name }}">
+                                        {{ $empleado->id == auth()->user()->empleado->id ? '' : '' }}
+                                    @endif
+                                @endforeach
+                            </div>
+                        </td>
+                        {{-- <td>Asignada por</td> --}}
+                        <td>
+                            @switch($task->status)
+                                @case('STATUS_ACTIVE')
+                                    <span class="badge" style="background-color:rgb(253, 171, 61)">En proceso</span>
+                                @break
+                                @case('STATUS_DONE')
+                                    <span class="badge" style="background-color:rgb(0, 200, 117)">Completada</span>
+                                @break
+                                @case ('STATUS_FAILED')
+                                    <span class="badge" style="background-color:rgb(226, 68, 92)">Con retraso</span>
+                                @break
+                                @case ('STATUS_SUSPENDED')
+                                    <span class="badge" style="background-color:#aaaaaa">Suspendida</span>
+                                @break
+                                @case ('STATUS_UNDEFINED')
+                                    <span class="badge" style="background-color:#00b1e1">Sin iniciar</span>
+                                @break
+                                @default
+                                    <span class="badge" style="background-color:#00b1e1">Sin iniciar</span>
+                            @endswitch
+                        </td>
+                        <td class="d-flex">
+                            @php
+                                if (intval($task->parent_id) == 1) {
+                                    $ruta = '/admin/planTrabajoBase/';
+                                } else {
+                                    $ruta = '/admin/planes-de-accion/' . $task->parent_id;
+                                }
+                            @endphp
+                            <a href="{{ asset($ruta) }}"><i class="far fas fa-stream"></i></a>
+                            @if(($task->status == 'STATUS_DONE') or ($task->status == 'STATUS_FAILED'))
+                                <button class="btn_archivar" title="Archivar" data-toggle="modal" data-target="#alert_activ{{$task->id}}">
+                                    <i class="fas fa-archive"></i>
+                                </button>
+                            @endif
+                        </td>
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>
 </div>
 
+<div>
+    @foreach ($actividades as $task)
+        @if(!($task->archivo == 'archivado'))
+
+            <div class="modal fade" id="alert_activ{{$task->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <div class="delete">
+                        <i class="fas fa-archive icono_delete"></i>
+                        <h1 class="mb-4">Archivar</h1>
+                        <p class="parrafo">¿Esta seguro que desea archivar este registro?</p>
+                        <div class="mt-4">
+                            <form action="{{route('admin.inicio-Usuario.actividades.archivar', $task->id_implementacion)}}" method="POST">
+                                @csrf
+                                <div class="mr-4 cancelar btn btn-outline-secondary" data-dismiss="modal">Cancelar</div>
+                                <button class="eliminar btn btn-info" type="submit">Archivar</button>
+                            </form>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        @endif
+    @endforeach
+</div>
 
 @section('scripts')
     @parent
@@ -185,6 +216,20 @@
                 }
 
             ];
+
+            let btnArchivo = {
+                text: '<i class="pl-2 pr-3 fas fa-archive"></i> Archivo',
+                titleAttr: 'Archivo',
+                url: "{{asset('admin/inicioUsuario/actividades/archivo')}}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                }
+            };
+            dtButtons.push(btnArchivo);
             $("#tabla_usuario_actividades").DataTable({
                 buttons: dtButtons,
             });
