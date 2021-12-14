@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Models\Team;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use App\Models\Organizacione;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Requests\MassDestroyOrganizacioneRequest;
 use App\Http\Requests\StoreOrganizacioneRequest;
 use App\Http\Requests\UpdateOrganizacioneRequest;
-use App\Http\Requests\MassDestroyOrganizacioneRequest;
+use App\Models\Organizacion;
+use App\Models\Organizacione;
+use App\Models\Team;
+use Gate;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class OrganizacionesController extends Controller
 {
@@ -71,7 +71,6 @@ class OrganizacionesController extends Controller
 
     public function store(StoreOrganizacioneRequest $request)
     {
-
         $organizacione = Organizacion::create($request->all());
 
         return redirect()->route('admin.organizaciones.index');

@@ -10,7 +10,7 @@ class PanelInicioRule extends Model
 {
     use HasFactory;
     use QueryCacheable;
-
+    protected $table = 'panel_inicio_rules';
     public $cacheFor = 3600;
     protected static $flushCacheOnUpdate = true;
 }
