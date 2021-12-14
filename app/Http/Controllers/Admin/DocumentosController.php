@@ -78,7 +78,7 @@ class DocumentosController extends Controller
             'aprobo_id' => 'required|exists:empleados,id',
             'reviso_id' => 'required|exists:empleados,id',
             'responsable_id' => 'required|exists:empleados,id',
-            'version'=>'required|numeric'
+            'version'=>'required|numeric',
         ], [
             'codigo.unique' => 'El código de documento ya ha sido tomado',
             'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',

@@ -25,6 +25,7 @@ class EV360ObjetivosController extends Controller
         $areas = Area::select('id', 'area')->get();
         $puestos = Puesto::select('id', 'puesto')->get();
         $perfiles = PerfilEmpleado::select('id', 'nombre')->get();
+
         return view('admin.recursos-humanos.evaluacion-360.objetivos.index', compact('areas', 'puestos', 'perfiles'));
     }
 
@@ -117,10 +118,8 @@ class EV360ObjetivosController extends Controller
         }
     }
 
-
     public function editByEmpleado(Request $request, $empleado, $objetivo)
     {
-
         $objetivo = Objetivo::find(intval($objetivo))->load(['tipo', 'metrica']);
         $empleado = Empleado::find(intval($empleado));
         $empleado->load(['objetivos' => function ($q) {
@@ -134,7 +133,6 @@ class EV360ObjetivosController extends Controller
 
     public function edit($objetivo)
     {
-
         $objetivo = Objetivo::find($objetivo);
         $tipo_seleccionado = $objetivo->tipo_id;
         $metrica_seleccionada = $objetivo->metrica_id;
@@ -157,7 +155,7 @@ class EV360ObjetivosController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'OBJETIVO_' .  $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $objetivo->empleado_id . '.' . $extension;
+            $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $objetivo->empleado_id . '.' . $extension;
             $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto'));
@@ -165,7 +163,7 @@ class EV360ObjetivosController extends Controller
                 $constraint->aspectRatio();
             })->save($route);
             $objetivo->update([
-                'imagen' => $nombre_imagen
+                'imagen' => $nombre_imagen,
             ]);
         }
         if ($u_objetivo) {
@@ -192,13 +190,13 @@ class EV360ObjetivosController extends Controller
 
     public function indexCopiar($empleado)
     {
-
         $empleado = Empleado::select('id', 'name')->with(['objetivos' => function ($query) {
             return $query->with('objetivo');
         }])->find(intval($empleado));
         $objetivos_empleado = $empleado->objetivos;
         if (count($objetivos_empleado)) {
             $empleados = Empleado::select('id', 'name', 'genero')->get()->except($empleado->id);
+
             return response()->json(['empleados' => $empleados, 'hasObjetivos' => true, 'objetivos' => $objetivos_empleado]);
         } else {
             return response()->json(['hasObjetivos' => false]);

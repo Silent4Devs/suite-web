@@ -3,12 +3,11 @@
 namespace App\Http\Livewire;
 
 use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Proceso;
-use Livewire\Component;
 use App\Models\MatrizRiesgo;
-use App\Models\AnalisisDeRiesgo;
+use App\Models\Proceso;
+use App\Models\Sede;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class MatrizHeatmap extends Component
 {
@@ -247,7 +246,6 @@ class MatrizHeatmap extends Component
                     }
                     break;
             }
-
         }
 
         foreach ($matriz_query_r->get() as $key => $value_r) {
@@ -317,9 +315,6 @@ class MatrizHeatmap extends Component
                     }
                     break;
             }
-
-
-
         }
 
         return view('livewire.matriz-heatmap', [

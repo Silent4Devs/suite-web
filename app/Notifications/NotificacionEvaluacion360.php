@@ -4,8 +4,6 @@ namespace App\Notifications;
 
 use App\Mail\RH\Evaluaciones\NotificacionEvaluador;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;
 
@@ -17,6 +15,7 @@ class NotificacionEvaluacion360 extends Notification
     public $evaluacion;
     public $evaluador;
     public $evaluado;
+
     /**
      * Create a new notification instance.
      *

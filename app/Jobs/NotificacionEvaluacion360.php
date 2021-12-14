@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Mail\RH\Evaluaciones\NotificacionEvaluador;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -19,6 +18,7 @@ class NotificacionEvaluacion360 implements ShouldQueue
     public $evaluacion;
     public $evaluador;
     public $evaluado;
+
     /**
      * Create a new job instance.
      *
@@ -31,6 +31,7 @@ class NotificacionEvaluacion360 implements ShouldQueue
         $this->evaluador = $evaluador;
         $this->evaluado = $evaluado;
     }
+
     /**
      * Execute the job.
      *

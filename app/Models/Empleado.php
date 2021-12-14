@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Empleado.
@@ -48,6 +49,11 @@ class Empleado extends Model
 {
     use SoftDeletes;
     use HasFactory;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
+
     protected $table = 'empleados';
 
     protected $casts = [
@@ -311,12 +317,14 @@ class Empleado extends Model
     public function getDeclaracionesResponsableAttribute()
     {
         $misDeclaraciones = DeclaracionAplicabilidadResponsable::select('id', 'declaracion_id')->where('empleado_id', $this->id)->pluck('declaracion_id')->toArray();
+
         return $misDeclaraciones;
     }
 
     public function getDeclaracionesAprobadorAttribute()
     {
         $misDeclaraciones = DeclaracionAplicabilidadAprobadores::select('id', 'declaracion_id')->where('aprobadores_id', $this->id)->pluck('declaracion_id')->toArray();
+
         return $misDeclaraciones;
     }
 }

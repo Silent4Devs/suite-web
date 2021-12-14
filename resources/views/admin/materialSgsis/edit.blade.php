@@ -103,10 +103,10 @@
                         {{ $errors->first('fechaexpedicion') }}
                     </div>
                 @endif
-                
+
             </div> --}}
 
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-6">
                     <label for="fechacreacion_actualizacion"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                         creación</label>
                     <input

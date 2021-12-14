@@ -3,11 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\RH\TipoObjetivo;
-use App\Models\Tipoactivo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Intervention\Image\Facades\Image;
 use Livewire\WithFileUploads;
 
 class TipoObjetivosCreate extends Component
@@ -31,7 +29,6 @@ class TipoObjetivosCreate extends Component
 
     public function save()
     {
-
         $this->validate(
             [
                 'fotoPerspectiva' => 'required|mimes:jpeg,jpg,png|max:6000',
@@ -41,7 +38,7 @@ class TipoObjetivosCreate extends Component
                 'nombre.required' => 'Debes de definir un nombre para el tipo de objetivo',
                 'nombre.max' => 'El tipo de objetivo no debe exceder los 255 carácteres',
                 'fotoPerspectiva.mimes' => 'Formato de imágen aceptado: jpeg,jpg,png',
-                'fotoPerspectiva.max' => 'Peso máximo de la imágen: 6 MB'
+                'fotoPerspectiva.max' => 'Peso máximo de la imágen: 6 MB',
             ]
         );
         $imagen = null;

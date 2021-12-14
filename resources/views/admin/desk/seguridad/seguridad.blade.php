@@ -274,13 +274,11 @@
                             data: 'activos_afectados'
                         },
                         {
-                            data: 'fecha'
+                            data: 'fecha_creacion',
                         },
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-
-
                                 let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto?.avatar}" title="${row.reporto?.name}"></img>`;
 
                                 return html;
