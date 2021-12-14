@@ -3,16 +3,15 @@
 namespace App\Exports;
 
 use App\Models\Area;
-use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class AreasExport implements FromCollection,WithHeadings,WithMapping
+class AreasExport implements FromCollection, WithHeadings, WithMapping
 {
     public function collection()
     {
-        return Area::with('supervisor','grupo')->get();
+        return Area::with('supervisor', 'grupo')->get();
     }
 
     public function map($area): array
@@ -24,6 +23,7 @@ class AreasExport implements FromCollection,WithHeadings,WithMapping
         if (!is_null($area->grupo)) {
             $grupo = $area->grupo->nombre;
         }
+
         return [
             $area->area,
             $area->descripcion,
