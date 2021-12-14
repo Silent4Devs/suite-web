@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Rennokki\QueryCache\Traits\QueryCacheable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Denuncias extends Model
 {
@@ -20,7 +20,7 @@ class Denuncias extends Model
         'id',
     ];
 
-    protected $appends = ['folio','fecha_creacion','fecha_reporte','fecha_de_cierre'];
+    protected $appends = ['folio', 'fecha_creacion', 'fecha_reporte', 'fecha_de_cierre'];
 
     public function getFolioAttribute()
     {
@@ -59,7 +59,7 @@ class Denuncias extends Model
 
     public function getFechaDeCierreAttribute()
     {
-        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y'):'';
+        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y') : '';
     }
 
     public function getFechaReporteAttribute()
