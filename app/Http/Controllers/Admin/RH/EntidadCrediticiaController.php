@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\RH;
 use App\Http\Controllers\Controller;
 use App\Models\RH\EntidadCrediticia;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class EntidadCrediticiaController extends Controller
 {
@@ -20,6 +19,7 @@ class EntidadCrediticiaController extends Controller
         if ($request->ajax()) {
             return datatables()->of($entidadesCrediticias)->toJson();
         }
+
         return view('admin.recursos-humanos.entidades-crediticias.index', compact('entidadesCrediticias'));
     }
 
@@ -31,6 +31,7 @@ class EntidadCrediticiaController extends Controller
     public function create()
     {
         $entidadCrediticia = new EntidadCrediticia;
+
         return view('admin.recursos-humanos.entidades-crediticias.create', compact('entidadCrediticia'));
     }
 
@@ -44,10 +45,11 @@ class EntidadCrediticiaController extends Controller
     {
         $request->validate([
             'entidad' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:4000'
+            'descripcion' => 'nullable|string|max:4000',
         ]);
 
         EntidadCrediticia::create($request->all());
+
         return redirect()->route('admin.entidades-crediticias.index')->with('success', 'Entidad crediticia creada');
     }
 
@@ -84,10 +86,11 @@ class EntidadCrediticiaController extends Controller
     {
         $request->validate([
             'entidad' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:4000'
+            'descripcion' => 'nullable|string|max:4000',
         ]);
 
         EntidadCrediticia::create($request->all());
+
         return redirect()->route('admin.entidades-crediticias.index')->with('success', 'Entidad crediticia creada');
     }
 
