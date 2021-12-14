@@ -338,7 +338,7 @@ class Empleado extends Model
 
     public function getEmpleadosMismaAreaAttribute()
     {
-        $by_area = self::where('area_id', $this->area_id)->pluck('id')->toArray();
+        $by_area = self::where('id', '!=', $this->id)->where('area_id', $this->area_id)->pluck('id')->toArray();
 
         return $by_area;
     }
