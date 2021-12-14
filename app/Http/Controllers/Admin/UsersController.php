@@ -229,6 +229,7 @@ class UsersController extends Controller
         $user->two_factor = !$user->two_factor;
 
         $user->save();
+
         return redirect()->route('admin.users.index')->with('success', $message);
     }
 
@@ -243,6 +244,7 @@ class UsersController extends Controller
         $user->is_active = !$user->is_active;
 
         $user->save();
+
         return redirect()->route('admin.users.index')->with('success', $message);
     }
 }

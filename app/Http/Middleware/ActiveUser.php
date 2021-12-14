@@ -19,6 +19,7 @@ class ActiveUser
         if (!auth()->user()->is_active) {
             return redirect()->route('users.usuario-bloqueado');
         }
+
         return $next($request);
     }
 }

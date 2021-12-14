@@ -5,7 +5,7 @@
 
 <style>
 
-input, textarea{
+input, textarea, select{
 
     border:none !important;
     border-bottom: 1px solid #1BB0B0 !important;
@@ -24,6 +24,9 @@ textarea{
     background-color:#f1f1f1;
     padding:10px;
     border-radius:5px;
+}
+select{
+    background-color: rgba(0,0,0,0) !important;
 }
 
 </style>
@@ -144,46 +147,25 @@ textarea{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
             </div>
-            <div class="form-group col-sm-3">
-                <label class="" for="dia_inicio"><i class="fas fa-user-tie iconos-crear"></i>Día Laboral inicio</label>
-                <input class="form-control {{ $errors->has('dia_inicio') ? 'is-invalid' : '' }}" type="text" name="dia_inicio" id="dia_inicio" value="{{ $organizacion->dia_inicio }}" disabled>
-                @if($errors->has('dia_inicio'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('dia_inicio') }}
-                    </div>
-                @endif
-                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
+
+            <div class="form-group col-12">
+                <table class="table" id="user_table">
+                    <tbody>
+                        <div class=" row col-12 p-0 m-0">
+                            <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
+                                    class="fas fa-calendar-alt iconos-crear"></i>Día Laboral</label>
+                            <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
+                                    class="fas fa-clock iconos-crear"></i>Horario Laboral Inicio</label>
+                            <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
+                                    class="fas fa-clock iconos-crear"></i>Horario Laboral Fin</label>
+                            {{-- <label class="col-md-3 col-sm-3" for="working_day"
+                                style="text-align: center;"></i>Opciones</label> --}}
+                        </div>
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
             </div>
-            <div class="form-group col-sm-3">
-                <label class="" for="hora_laboral_inicio"><i class="fas fa-user-clock iconos-crear"></i>Horario Laboral Inicio</label>
-                <input class="form-control {{ $errors->has('hora_laboral_inicio') ? 'is-invalid' : '' }}" type="time" name="hora_laboral_inicio" id="hora_laboral_inicio" value="{{ $organizacion->hora_laboral_inicio }}" disabled>
-                @if($errors->has('hora_laboral_inicio'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('hora_laboral_inicio') }}
-                    </div>
-                @endif
-                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
-            </div>
-            <div class="form-group col-sm-3">
-                <label class="" for="dia_fin"><i class="fas fa-user-tie iconos-crear"></i>Día Laboral Fin</label>
-                <input class="form-control {{ $errors->has('dia_fin') ? 'is-invalid' : '' }}" type="text" name="dia_fin" id="dia_fin" value="{{ $organizacion->dia_fin }}" disabled>
-                @if($errors->has('dia_fin'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('dia_fin') }}
-                    </div>
-                @endif
-                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
-            </div>
-            <div class="form-group col-sm-3">
-                <label class="" for="hora_laboral_fin"><i class="fas fa-user-clock iconos-crear"></i>Horario Laboral Fin</label>
-                <input class="form-control {{ $errors->has('hora_laboral_fin') ? 'is-invalid' : '' }}" type="time" name="hora_laboral_fin" id="hora_laboral_fin" value="{{ $organizacion->hora_laboral_fin }}" disabled>
-                @if($errors->has('hora_laboral_fin'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('hora_laboral_fin') }}
-                    </div>
-                @endif
-                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
-            </div>
+
 
             <div class="col-md-12 col-sm-12">
                 <div class="card vrd-agua">
@@ -308,6 +290,241 @@ textarea{
 @else
 <img src="{{asset('img/portal_404.png') }} " style="width: 40%;margin-left: 25%;">
 @endif
+
+
+
+@endsection
+
+@section('scripts')
+
+
+<script>
+    $(document).ready(function() {
+
+
+        function dynamic_field(number, element) {
+
+
+            if (element === undefined) {
+                console.log(0);
+
+                html = "<tr>";
+                html += '<td class="col-3"><input class="form-control" type="hidden" value="0"  name="working[' + number +'][id][]"><select class="workingSelect form-control" name="working[' + number +
+                    '][day][]" id="working_day" disabled style="background-color:whithe;"><option value="">Seleccione una opción</option>';
+                html += '<option value="Lunes" >Lunes</option>';
+                html += '<option value="Martes" >Martes</option>';
+                html += '<option value="Miercoles" >Miercoles</option>';
+                html += '<option value="Jueves" >Jueves</option>';
+                html += '<option value="Viernes" >Viernes</option>';
+                html += '<option value="Sabado" >Sabado</option>';
+                html += '<option value="Domingo" >Domingo</option>';
+                html += '</select></td>';
+                html += '<td class="col-3"><input class="form-control" type="time" name="working[' + number +
+                    '][start_time][]" id="start_work_time" disabled></td>';
+                html += '<td class="col-3"><input class="form-control" type="time" name="working[' + number +
+                    '][end_time][]" id="end_work_time" disabled></td>';
+
+                /*
+                if (number > 1) {
+                    html +=
+                        '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3" style="background-color: #d96161 !important;"><i class="fas fa-trash-alt"></i></button></td></tr>';
+                    $("#user_table tbody").append(html);
+                } else {
+                    html +=
+                        '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
+                    $("#user_table tbody").html(html);
+                }
+                */
+
+            } else {
+
+                if (element.working_day == "Lunes") {
+                    var Lunes = " selected ";
+                } else if (element.working_day == "Martes") {
+                    var Martes = " selected ";
+                } else if (element.working_day == "Miercoles") {
+                    var Miercoles = " selected ";
+                } else if (element.working_day == "Jueves") {
+                    var Jueves = " selected ";
+                } else if (element.working_day == "Viernes") {
+                    var Viernes = " selected ";
+                } else if (element.working_day == "Sabado") {
+                    var Sabado = " selected ";
+                } else if (element.working_day == "Domingo") {
+                    var Domingo = " selected ";
+                }
+
+                html = "<tr>";
+                html += '<td class="col-3"><input class="form-control" type="hidden" value="' + element
+                    .id + '" name="working[' + number +
+                    '][id][]"><select class="workingSelect form-control" data-model-id="' + element
+                    .id + '" data-type-input="working_day" name="working[' + number +
+                    '][day][]" id="working_day" disabled><option value="">Seleccione una opción</option>';
+                html += '<option value="Lunes" ' + Lunes + ' >Lunes</option>';
+                html += '<option value="Martes" ' + Martes + ' >Martes</option>';
+                html += '<option value="Miercoles" ' + Miercoles + ' >Miercoles</option>';
+                html += '<option value="Jueves" ' + Jueves + ' >Jueves</option>';
+                html += '<option value="Viernes" ' + Viernes + ' >Viernes</option>';
+                html += '<option value="Sabado" ' + Sabado + ' >Sabado</option>';
+                html += '<option value="Domingo" ' + Domingo + ' >Domingo</option>';
+                html += '</select></td>';
+                html += '<td class="col-3"><input class="form-control" type="time" data-model-id="' + element
+                    .id + '" data-type-input="start_work_time" name="working[' + number +
+                    '][start_time][]" id="start_work_time" value="' + element.start_work_time + '" disabled></td>';
+                html += '<td class="col-3"><input class="form-control" type="time" data-model-id="' + element
+                    .id + '" data-type-input="end_work_time" name="working[' + number +
+                    '][end_time][]" id="end_work_time" value="' + element.end_work_time + '" disabled></td>';
+                // console.log(html);
+                if (number > 1) {
+                    /*
+                    html +=
+                        '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3 removeWithFetch" style="background-color: #d96161 !important;" data-model-id="' + element.id + '"><i class="fas fa-trash-alt"></i></button></td></tr>';
+                    $("#user_table tbody").append(html);
+                    */
+                    $("#user_table tbody").append(html);
+                } else {
+                    /*
+                    html +=
+                        '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
+                    $("#user_table tbody").html(html);
+                    */
+                    $("#user_table tbody").html(html);
+                }
+            }
+        }
+
+        $(document).on("click", "#add", function() {
+            count++;
+            var divs = document.getElementsByClassName("workingSelect").length;
+            // console.log("Hay " + divs + " elementos");
+            if (divs <= 7) {
+                dynamic_field(count);
+            }
+        });
+
+        $(document).on("click", ".remove", function() {
+            count--;
+            $(this).closest("tr").remove();
+        });
+
+
+
+        let schedule = @json($schedule);
+        let dscheduleSize = schedule.length;
+        let count = dscheduleSize > 0 ? dscheduleSize : 1;
+        if (dscheduleSize) {
+            schedule.forEach((element, index) => {
+                ++index;
+                dynamic_field(index, element);
+
+            });
+        } else {
+            dynamic_field(count);
+        }
+        $("#user_table").on("change", "input", async function(e) {
+            const target = e.target;
+
+            const value = target.value;
+            const modelId = target.getAttribute('data-model-id')
+            const typeInput = target.getAttribute('data-type-input');
+
+            if (typeInput && modelId) {
+                const url = `/admin/organizacions/${modelId}/update-schedule`;
+
+                const response = await fetch(url, {
+
+                    method: 'POST',
+
+                    body: JSON.stringify({
+
+                        value,
+
+                        typeInput
+
+                    }),
+
+                    headers: {
+
+                        Accept: "application/json",
+
+                        "Content-Type": "application/json",
+
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+
+                    },
+
+                })
+
+                const data = await response.json();
+
+                // console.log(data);
+            }
+        })
+        $('#user_table').on('click', '.removeWithFetch', function(e) {
+            e.preventDefault()
+            let = target = e.target;
+            if (target.tagName == 'I') {
+                target = e.target.parentElement
+            }
+
+            const modelId = target.getAttribute('data-model-id')
+
+
+
+            const url = `/admin/organizacions/${modelId}/delete-schedule`;
+            Swal.fire({
+
+                title: '¿Quieres eliminar este registro?',
+
+                text: "Este dato ya está almacenado",
+
+                icon: 'question',
+
+                showCancelButton: true,
+
+                confirmButtonColor: '#3085d6',
+
+                cancelButtonColor: '#d33',
+
+                confirmButtonText: 'Eliminar',
+
+                cancelButtonText: 'Cancelar'
+
+            }).then(async (result) => {
+
+                if (result.isConfirmed) {
+                    const response = await fetch(url, {
+
+                        method: 'POST',
+
+                        headers: {
+
+                            Accept: "application/json",
+
+                            "Content-Type": "application/json",
+
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                'content'),
+
+                        },
+
+                    })
+
+                    const data = await response.json();
+                    count--;
+                    $(this).closest("tr").remove();
+                    console.log(data);
+                }
+
+            })
+
+
+
+        });
+
+
+    });
+</script>
 
 
 

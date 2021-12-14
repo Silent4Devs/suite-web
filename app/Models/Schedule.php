@@ -20,7 +20,6 @@ class Schedule extends Model
         'end_work_time',
         'organizacions_id',
 
-
     ];
 
     public function organizacion()

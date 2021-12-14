@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UsuarioBloqueado extends Controller
 {
@@ -11,6 +10,7 @@ class UsuarioBloqueado extends Controller
     {
         $this->middleware('isActive');
     }
+
     public function usuarioBloqueado(User $user)
     {
         return view('usuario-bloqueado.index', compact('user'));

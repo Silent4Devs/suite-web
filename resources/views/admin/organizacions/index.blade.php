@@ -217,14 +217,14 @@
                         <table class="table" id="user_table">
                             <tbody>
                                 <div class=" row col-12 p-0 m-0">
-                                    <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i
+                                    <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
                                             class="fas fa-calendar-alt iconos-crear"></i>Día Laboral</label>
-                                    <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i
+                                    <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
                                             class="fas fa-clock iconos-crear"></i>Horario Laboral Inicio</label>
-                                    <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i
+                                    <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
                                             class="fas fa-clock iconos-crear"></i>Horario Laboral Fin</label>
-                                    <label class="col-md-3 col-sm-3" for="working_day"
-                                        style="text-align: center;"></i>Opciones</label>
+                                    <!-- <label class="col-md-3 col-sm-3" for="working_day"
+                                        style="text-align: center;"></i>Opciones</label> -->
                                 </div>
                             </tbody>
                             <tfoot></tfoot>
@@ -400,7 +400,6 @@
 
 @section('scripts')
 
-
     <script>
         $(document).ready(function() {
 
@@ -412,8 +411,8 @@
                     console.log(0);
 
                     html = "<tr>";
-                    html += '<td class="col-3"><input class="form-control" type="hidden" value="0"  name="working[' + number +'][id][]"><select class="workingSelect form-control" name="working[' + number +
-                        '][day][]" id="working_day"><option value="">Seleccione una opción</option>';
+                    html += '<td class="col-3"><div class="form-control" type="hidden" value="0"  name="working[' + number +'][id][]"><div class="workingSelect form-control" name="working[' + number +
+                        '][day][]" id="working_day" disabled><option value="">Seleccione una opción</option>';
                     html += '<option value="Lunes" >Lunes</option>';
                     html += '<option value="Martes" >Martes</option>';
                     html += '<option value="Miercoles" >Miercoles</option>';
@@ -421,12 +420,13 @@
                     html += '<option value="Viernes" >Viernes</option>';
                     html += '<option value="Sabado" >Sabado</option>';
                     html += '<option value="Domingo" >Domingo</option>';
-                    html += '</select></td>';
+                    html += '</div></td>';
                     html += '<td class="col-3"><input class="form-control" type="time" name="working[' + number +
-                        '][start_time][]" id="start_work_time" ></td>';
+                        '][start_time][]" id="start_work_time" disabled></td>';
                     html += '<td class="col-3"><input class="form-control" type="time" name="working[' + number +
-                        '][end_time][]" id="end_work_time" ></td>';
+                        '][end_time][]" id="end_work_time" disabled></td>';
 
+                    /*
                     if (number > 1) {
                         html +=
                             '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3" style="background-color: #d96161 !important;"><i class="fas fa-trash-alt"></i></button></td></tr>';
@@ -436,6 +436,7 @@
                             '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
                         $("#user_table tbody").html(html);
                     }
+                    */
 
                 } else {
 
@@ -460,7 +461,7 @@
                         .id + '" name="working[' + number +
                         '][id][]"><select class="workingSelect form-control" data-model-id="' + element
                         .id + '" data-type-input="working_day" name="working[' + number +
-                        '][day][]" id="working_day"><option value="">Seleccione una opción</option>';
+                        '][day][]" id="working_day" disabled><option value="">Seleccione una opción</option>';
                     html += '<option value="Lunes" ' + Lunes + ' >Lunes</option>';
                     html += '<option value="Martes" ' + Martes + ' >Martes</option>';
                     html += '<option value="Miercoles" ' + Miercoles + ' >Miercoles</option>';
@@ -471,18 +472,24 @@
                     html += '</select></td>';
                     html += '<td class="col-3"><input class="form-control" type="time" data-model-id="' + element
                         .id + '" data-type-input="start_work_time" name="working[' + number +
-                        '][start_time][]" id="start_work_time" value="' + element.start_work_time + '" ></td>';
+                        '][start_time][]" id="start_work_time" value="' + element.start_work_time + '" disabled></td>';
                     html += '<td class="col-3"><input class="form-control" type="time" data-model-id="' + element
                         .id + '" data-type-input="end_work_time" name="working[' + number +
-                        '][end_time][]" id="end_work_time" value="' + element.end_work_time + '"></td>';
+                        '][end_time][]" id="end_work_time" value="' + element.end_work_time + '" disabled></td>';
                     // console.log(html);
                     if (number > 1) {
+                        /*
                         html +=
                             '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3 removeWithFetch" style="background-color: #d96161 !important;" data-model-id="' + element.id + '"><i class="fas fa-trash-alt"></i></button></td></tr>';
                         $("#user_table tbody").append(html);
+                        */
+                        $("#user_table tbody").append(html);
                     } else {
+                        /*
                         html +=
                             '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
+                        $("#user_table tbody").html(html);
+                        */
                         $("#user_table tbody").html(html);
                     }
                 }
@@ -621,67 +628,4 @@
         });
     </script>
 
-    <script>
-        document.querySelector('.custom-file-input').addEventListener('change', function(e) {
-            var fileName = document.getElementById("logotipo").files[0].name;
-            var nextSibling = e.target.nextElementSibling
-            nextSibling.innerText = fileName
-        })
-    </script>
-
-
-    <script>
-        Dropzone.options.logotipoDropzone = {
-            url: '{{ route('admin.organizacions.storeMedia') }}',
-            maxFilesize: 4, // MB
-            acceptedFiles: '.jpeg,.jpg,.png,.gif',
-            maxFiles: 1,
-            addRemoveLinks: true,
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            params: {
-                size: 4,
-                width: 4096,
-                height: 4096
-            },
-            success: function(file, response) {
-                $('form').find('input[name="logotipo"]').remove()
-                $('form').append('<input type="hidden" name="logotipo" value="' + response.name + '">')
-            },
-            removedfile: function(file) {
-                file.previewElement.remove()
-                if (file.status !== 'error') {
-                    $('form').find('input[name="logotipo"]').remove()
-                    this.options.maxFiles = this.options.maxFiles + 1
-                }
-            },
-            init: function() {
-                @if (isset($organizacion) && $organizacion->logotipo)
-                    var file = {!! json_encode($organizacion->logotipo) !!}
-                    this.options.addedfile.call(this, file)
-                    this.options.thumbnail.call(this, file, file.preview)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form').append('<input type="hidden" name="logotipo" value="' + file.file_name + '">')
-                    this.options.maxFiles = this.options.maxFiles - 1
-                @endif
-            },
-            error: function(file, response) {
-                if ($.type(response) === 'string') {
-                    var message = response //dropzone sends it's own error messages in string
-                } else {
-                    var message = response.errors.file
-                }
-                file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
-                    _results.push(node.textContent = message)
-                }
-
-                return _results
-            }
-        }
-    </script>
 @endsection

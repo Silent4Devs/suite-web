@@ -548,6 +548,83 @@
         });
     </script>
 
+<script>
+    CKEDITOR.replace('mision', {
+        toolbar: [{
+        name: 'document',
+            items: [
+                'Maximize', '-',
+                'Styles', 'Format', 'Font', 'FontSize', '-',
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                'Bold', 'Italic', 'Underline', 'Strike', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                'Undo', 'Redo', '-', 'Scayt', '-',
+                'TextColor', 'BGColor', '-',
+                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+            ]
+        }]
+    });
+</script>
+<script>
+    CKEDITOR.replace('vision', {
+        toolbar: [{
+        name: 'document',
+            items: [
+                'Maximize', '-',
+                'Styles', 'Format', 'Font', 'FontSize', '-',
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                'Bold', 'Italic', 'Underline', 'Strike', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                'Undo', 'Redo', '-', 'Scayt', '-',
+                'TextColor', 'BGColor', '-',
+                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+            ]
+        }]
+    });
+</script>
+<script>
+    CKEDITOR.replace('valores', {
+        toolbar: [{
+        name: 'document',
+            items: [
+                'Maximize', '-',
+                'Styles', 'Format', 'Font', 'FontSize', '-',
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                'Bold', 'Italic', 'Underline', 'Strike', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                'Undo', 'Redo', '-', 'Scayt', '-',
+                'TextColor', 'BGColor', '-',
+                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+            ]
+        }]
+    });
+</script>
+<script>
+    CKEDITOR.replace('antecedentes', {
+        toolbar: [{
+        name: 'document',
+            items: [
+                'Maximize', '-',
+                'Styles', 'Format', 'Font', 'FontSize', '-',
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                'Bold', 'Italic', 'Underline', 'Strike', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                'Undo', 'Redo', '-', 'Scayt', '-',
+                'TextColor', 'BGColor', '-',
+                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+            ]
+        }]
+    });
+</script>
+
     <script>
         document.querySelector('.custom-file-input').addEventListener('change', function(e) {
             var fileName = document.getElementById("logotipo").files[0].name;

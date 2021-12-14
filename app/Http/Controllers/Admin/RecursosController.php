@@ -58,7 +58,7 @@ class RecursosController extends Controller
             });
 
             $table->editColumn('participantes', function ($row) {
-               return $row->empleados ? $row->empleados : '';
+                return $row->empleados ? $row->empleados : '';
             });
             $table->editColumn('instructor', function ($row) {
                 return $row->instructor ? $row->instructor : '';
