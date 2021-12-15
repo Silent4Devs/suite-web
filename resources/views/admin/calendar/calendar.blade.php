@@ -4,20 +4,20 @@
 
 
 
-    
+
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/tui-calendar.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('../css/calendar_tui/default.css') }}">
-    
+
 
 
 <style type="text/css">
     .caja{
         width: 50% !important;
         padding: 0;
-        overflow: hidden !important;    
+        overflow: hidden !important;
     }
     #lnb{
         background: rgba(0,0,0,0) !important;
@@ -134,7 +134,7 @@
 
         <div class="caja">
             <div id="lnb">
-                
+
                 <div id="lnb-calendars" class="lnb-calendars">
                     <div>
                         <div class="lnb-calendars-item">
@@ -149,7 +149,7 @@
                     <div id="calendarList" class="lnb-calendars-d1">
                     </div>
                 </div>
-                
+
             </div>
             <div id="right">
                 <div id="menu">
@@ -237,8 +237,8 @@
 
 
 
-    
-    
+
+
     <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
     <script src="https://uicdn.toast.com/tui.time-picker/v2.0.3/tui-time-picker.min.js"></script>
     <script src="https://uicdn.toast.com/tui.date-picker/v4.0.3/tui-date-picker.min.js"></script>
@@ -258,7 +258,7 @@
                     dueDateClass: '',
                     start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_inicio)->format("Y-m-d") }}',
                     end: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_fin)->format("Y-m-d") }}',
-                    isReadOnly : true, 
+                    isReadOnly : true,
                 },
             @endforeach
 
@@ -271,7 +271,7 @@
                     dueDateClass: '',
                     start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->format("Y-m-d") }}',
                     end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->format("Y-m-d") }}',
-                    isReadOnly : true, 
+                    isReadOnly : true,
                 },
             @endforeach
 
@@ -304,9 +304,19 @@
                 isReadOnly : true,
                 },
             @endforeach
+            @foreach ($eventos as $evento)
 
-            
-
+                {
+                id: 'evento{{ $evento->id }}',
+                calendarId: '4',
+                title: 'Evento: {{ $evento->nombre }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[0])->format("Y-m-d") }}',
+                end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
+                isReadOnly : true,
+                },
+            @endforeach
         ];
     </script>
 

@@ -26,7 +26,6 @@ class CompararEvaluaciones extends Component
         $this->evaluador = $evaluador;
     }
 
-
     public function render()
     {
         $evaluacionController = new EV360EvaluacionesController;
@@ -34,15 +33,15 @@ class CompararEvaluaciones extends Component
         $jefe = Empleado::select('id', 'name')->with('children')->find($this->evaluador);
         $equipo_a_cargo = $evaluacionController->obtenerEquipoACargo($jefe->children);
         $equipo_a_cargo = Empleado::select('id', 'name')->find($equipo_a_cargo);
+
         return view('livewire.comparar-evaluaciones', [
             'evaluaciones' => $evaluaciones,
-            'empleados' => $equipo_a_cargo
+            'empleados' => $equipo_a_cargo,
         ]);
     }
 
     public function compararEvaluaciones($evaluado)
     {
-
         $evaluacionController = new EV360EvaluacionesController;
         $this->informacion_obtenida_compare_first = $evaluacionController->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion1, $evaluado);
         $this->informacion_obtenida_compare = $evaluacionController->obtenerInformacionDeLaConsultaPorEvaluado($this->evaluacion2, $evaluado);

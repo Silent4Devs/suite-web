@@ -9,7 +9,6 @@ use Livewire\Component;
 
 class ConsultaDeEvaluciones extends Component
 {
-
     public $evaluacion;
     public $evaluado;
     public $evaluador;
@@ -57,9 +56,10 @@ class ConsultaDeEvaluciones extends Component
             $jefe = Empleado::select('id', 'name')->with('children')->find($this->evaluador);
             $equipo_a_cargo = $evaluacionController->obtenerEquipoACargo($jefe->children);
             $equipo_a_cargo = Empleado::select('id', 'name')->find($equipo_a_cargo);
+
             return view('livewire.consulta-de-evaluciones', [
                 'evaluaciones' => $evaluaciones,
-                'empleados' => $equipo_a_cargo
+                'empleados' => $equipo_a_cargo,
             ]);
         } else {
             return view('livewire.consulta-de-evaluciones', [
