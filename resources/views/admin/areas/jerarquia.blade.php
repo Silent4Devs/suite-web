@@ -498,9 +498,9 @@
         .caja_grupos{
             left:20px;
             transition:0.5s !important;
-            margin-left:-150px;
-            position:absolute;
-            top:30px;
+            margin-left:-200px;
+            position:absolute; 
+            top:30px; 
             background: white;
             z-index:1;
         }
@@ -530,6 +530,7 @@
     </style>
 @endsection
 @section('content')
+
     <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
         <h3 class="mb-2 text-center text-white"><strong>Áreas</strong></h3>
     </div>
@@ -599,9 +600,9 @@
 
                         {{-- <div id="exportData"></div> --}}
                         <div class="contenedor-areas">
-                            <i class="fas fa-caret-right btn_grupos" style= "position:absolute; top:0; font-size:25pt;"></i>
+                            <i class="fas fa-caret-right btn_grupos" title="Ver grupos" style= "position:absolute; top:0; font-size:25pt; cursor:pointer;"></i>
                             <div class="row caja_grupos">
-                                <ul >
+                                <ul style="max-width: 200px !important; overflow:hidden !important;">
                                     @foreach ($grupos as $grupo)
                                         <li class="mb-2 d-flex align-items-center" data-toggle="modal"
                                             data-target="#Grupo{{ $grupo->id }}" style="cursor: pointer;">

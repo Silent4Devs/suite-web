@@ -66,6 +66,8 @@ class InicioUsuarioController extends Controller
                     $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
                     $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
                     $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+                    $task->archivo = $implementacion->archivo;
+                    $task->id_implementacion = $implementacion->id;
                 }
 
                 $implementacion->tasks = $tasks;
@@ -121,10 +123,9 @@ class InicioUsuarioController extends Controller
             }
             $auditoria_internas = $auditoria_internas->unique();
             $recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
-                $query->where('empleados.id', $empleado->id)->where('archivado', '=', 0);
+                $query->where('empleados.id', $empleado->id);
             })->get();
         }
-
         $contador_recursos = 0;
         if ($usuario->empleado) {
             $contador_recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
@@ -139,6 +140,10 @@ class InicioUsuarioController extends Controller
         $mis_evaluaciones = new EvaluadoEvaluador;
         $lista_evaluaciones = collect();
         $last_evaluacion = collect();
+        $equipo_a_cargo = collect();
+        $equipo_trabajo = collect();
+        $supervisor = null;
+        $mis_objetivos = collect();
         if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
 
@@ -186,18 +191,20 @@ class InicioUsuarioController extends Controller
             // }
             // dd($lista_evaluaciones);
             // SECCION MIS DATOS
-            $equipo_a_cargo = $this->obtenerEquipoACargo($usuario->empleado->children);
-            $equipo_a_cargo = Empleado::find($equipo_a_cargo);
+            if ($usuario->empleado->children->count()) {
+                $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
+                $equipo_a_cargo = Empleado::find($equipo_a_cargo);
+            } else {
+                $equipo_trabajo = $usuario->empleado->empleados_misma_area;
+                $equipo_trabajo = Empleado::find($equipo_trabajo);
+            }
             $supervisor = $usuario->empleado->supervisor;
-        } else {
-            $equipo_a_cargo = collect();
-            $supervisor = null;
-            $mis_objetivos = collect();
         }
 
         $panel_rules = PanelInicioRule::select('nombre', 'n_empleado', 'area', 'jefe_inmediato', 'puesto', 'perfil', 'fecha_ingreso', 'genero', 'estatus', 'email', 'telefono', 'sede', 'direccion', 'cumpleaños')->get()->first();
+        $activos = Activo::select('id', 'nombreactivo')->where('id_responsable', '=', auth()->user()->empleado->id)->get();
 
-        return view('admin.inicioUsuario.index', compact('usuario','eventos', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules'));
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -453,7 +460,7 @@ class InicioUsuarioController extends Controller
         ];
     }
 
-    public function obtenerEquipoACargo($childrens)
+    public function obtenerEquipo($childrens)
     {
         $equipo_a_cargo = collect();
 
@@ -461,7 +468,7 @@ class InicioUsuarioController extends Controller
             $equipo_a_cargo->push($evaluador->id);
 
             if (count($evaluador->children)) {
-                $equipo_a_cargo->push($this->obtenerEquipoACargo($evaluador->children));
+                $equipo_a_cargo->push($this->obtenerEquipo($evaluador->children));
             }
         }
 
@@ -800,12 +807,168 @@ class InicioUsuarioController extends Controller
         return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
-    public function archivarCapacitacion(Request $request)
-    {
-        $int_empleado = intval($request->id_empleado);
-        $recurso = Recurso::find(intval($request->recurso_id));
-        $recurso->empleados()->syncWithoutDetaching([$int_empleado => ['archivado' => true]]);
 
-        return response()->json(['success' => true]);
+
+    public function archivarCapacitacion($id)
+    {
+        $recurso = Recurso::find($id);
+
+        $recurso->update([
+            'archivar' => 'archivado',
+        ]);
+
+        if ($errors) {
+            return redirect('admin/inicioUsuario/capacitaciones/archivo');
+        }
+
+        
     }
+
+    public function recuperarCapacitacion($id)
+    {
+        $recurso = Recurso::find($id);
+
+        $recurso->update([
+            'archivar' => 'recuperado',
+        ]);
+
+        if ($errors) {
+            return redirect()->route('admin.inicio-Usuario.index');
+        }
+        
+    }
+
+    public function archivoCapacitacion()
+    {
+        $recursos = Recurso::get();
+
+        return view('admin.inicioUsuario.capacitaciones_archivo', compact('recursos'));
+    }
+
+
+
+    public function archivarAprobacion($id)
+    {
+        $mis_documentos = Documento::find($id);
+
+        $mis_documentos->update([
+            'archivo' => 'archivado',
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.aprobacion.archivo');
+    }
+
+    public function recuperarAprobacion($id)
+    {
+        $mis_documentos = Documento::find($id);
+
+        $mis_documentos->update([
+            'archivo' => 'recuperado',
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
+    }
+
+    public function archivoAprobacion()
+    {
+        $mis_documentos = Documento::get();
+
+        return view('admin.inicioUsuario.aprobaciones_archivo', compact('mis_documentos'));
+    }
+
+
+
+
+    public function archivoActividades()
+    {
+        $usuario = auth()->user();
+        $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
+        $actividades = [];
+        $implementaciones = PlanImplementacion::get();
+        $actividades = collect();
+        if ($implementaciones) {
+            foreach ($implementaciones as $implementacion) {
+                $tasks = $implementacion->tasks;
+                foreach ($tasks as $task) {
+                    $task->parent_id = $implementacion->id;
+                    $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
+                    $task->end = intval($task->end);
+                    $task->start = intval($task->start);
+                    $task->canAdd = $task->canAdd == 'true' ? true : false;
+                    $task->canWrite = $task->canWrite == 'true' ? true : false;
+                    $task->duration = intval($task->duration);
+                    $task->progress = intval($task->progress);
+                    $task->canDelete = $task->canDelete == 'true' ? true : false;
+                    isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
+                    isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
+                    $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
+                    $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
+                    $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
+                    $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+                    $task->archivo = $implementacion->archivo;
+                    $task->id_implementacion = $implementacion->id;
+                }
+
+                $implementacion->tasks = $tasks;
+                // if (!isset($implementacion->assigs)) {
+                //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
+                // }
+                $actividades_collet = collect($implementacion->tasks)->filter(function ($task) use ($empleado_id, $implementacion) {
+                    if ($task->level > 1) {
+                        if (isset($task->assigs)) {
+                            $assigs = $task->assigs;
+                            $task->parent = $implementacion->parent;
+                            $task->slug = $implementacion->slug;
+                            foreach ($assigs as $assig) {
+                                if ($assig->resourceId == $empleado_id) {
+                                    return $task;
+                                }
+                            }
+                        }
+                    }
+                });
+
+                $actividades->push($actividades_collet);
+            }
+        }
+        $actividades = $actividades->flatten(1);
+
+        $contador_actividades = 0;
+
+        foreach ($actividades as $actividad) {
+            $progreso = $actividad->progress;
+
+            if (intval($progreso) < 100) {
+                $contador_actividades++;
+            }
+        }
+
+        // dd($actividades);
+
+        return view('admin.inicioUsuario.actividades_archivo', compact('actividades'));
+    }
+
+    public function archivarActividades($id)
+    {
+        $actividad = PlanImplementacion::find($id);
+
+        $actividad->update([
+            'archivo' => 'archivado',
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.acctividades.archivo');
+    }
+
+    public function recuperarActividades($id)
+    {
+        $actividad = PlanImplementacion::find($id);
+
+        $actividad->update([
+            'archivo' => 'recuperado',
+        ]);
+
+        return redirect()->route('admin.inicio-Usuario.index');
+    }
+
+
 }

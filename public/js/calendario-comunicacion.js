@@ -225,7 +225,7 @@ $(document).ready(function () {
         "SEPTIEMBRE",
         "OCTUBRE",
         "NOVIEMBRE",
-        "DECIEMBRE"
+        "DICIEMBRE"
     ];
     var daysArray = [
         "Domingo",

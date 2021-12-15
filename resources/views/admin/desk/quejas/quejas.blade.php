@@ -82,9 +82,9 @@
 	       			<td>{{ $queja->folio }}</td>
 	       			<td>{{ $queja->anonimo }}</td>
                     <td>{{ $queja->estatus }}</td>
-                    <td>{{ $queja->fecha }}</td>
-                    <td>{{ $queja->created_at }}</td>
-                    <td>{{ $queja->fecha_cierre }}</td>
+                    <td>{{ $queja->fecha_creacion }}</td>
+                    <td>{{ $queja->fecha_reporte }}</td>
+                    <td>{{ $queja->fecha_de_cierre }}</td>
                     @if($queja->anonimo == 'no')
                         <td>
                             <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $queja->quejo->avatar }}" title="{{ $queja->quejo->name }}">

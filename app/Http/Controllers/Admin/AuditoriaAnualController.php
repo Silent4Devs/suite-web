@@ -52,11 +52,11 @@ class AuditoriaAnualController extends Controller
             });
 
             $table->editColumn('fechainicio', function ($row) {
-                return $row->fechainicio ? $row->fechainicio : '';
+                return $row->fechainicio ? \Carbon\Carbon::parse($row->fechainicio)->format('d-m-Y') : '';
             });
 
             $table->editColumn('fechafin', function ($row) {
-                return $row->fechafin ? $row->fechafin : '';
+                return $row->fechafin ? \Carbon\Carbon::parse($row->fechafin)->format('d-m-Y') : '';
             });
             $table->addColumn('auditorlider_name', function ($row) {
                 return $row->auditorlider ? $row->auditorlider->name : '';

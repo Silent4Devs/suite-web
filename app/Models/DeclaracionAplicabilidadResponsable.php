@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class DeclaracionAplicabilidadResponsable.
@@ -22,7 +23,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DeclaracionAplicabilidadResponsable extends Model
 {
-    // use SoftDeletes;
+    use SoftDeletes;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
     protected $table = 'declaracion_aplicabilidad_responsables';
 
     protected $casts = [
@@ -45,6 +50,6 @@ class DeclaracionAplicabilidadResponsable extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class);
+        return $this->belongsTo(Empleado::class, 'empleado_id');
     }
 }

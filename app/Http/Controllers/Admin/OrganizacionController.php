@@ -9,12 +9,15 @@ use App\Http\Requests\StoreOrganizacionRequest;
 use App\Http\Requests\UpdateOrganizacionRequest;
 use App\Models\Empleado;
 use App\Models\Organizacion;
+use App\Models\Schedule;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\HttpFoundation\Response;
 
 class OrganizacionController extends Controller
@@ -27,8 +30,15 @@ class OrganizacionController extends Controller
 
         $organizacions = Organizacion::first();
 
+        $schedule = Organizacion::find(1)->schedules;
+        // dd($schedule);
+        $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
+
+
+
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
+
             $empty = false;
 
             return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty);
@@ -36,8 +46,9 @@ class OrganizacionController extends Controller
             $empty = true;
             $count = Organizacion::get()->count();
             $logotipo = $organizacions->logotipo;
-            // dd($organizacions);
-            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo);
+            // dd($schedule);
+
+            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo)->with('schedule', $schedule)->with('dias', $dias);
         }
     }
 
@@ -47,21 +58,23 @@ class OrganizacionController extends Controller
 
         if ($countEmpleados == 0) {
             $tamanoEmpresa = 'debe registrar a los empleados';
-        } elseif ($countEmpleados >= 1 && $countEmpleados <= 250) {
-            $tamanoEmpresa = 'Chica';
+        } elseif ($countEmpleados >= 1 && $countEmpleados <= 249) {
+            $tamanoEmpresa = 'Chica (menos de 250 empleados)';
         } elseif ($countEmpleados >= 250 && $countEmpleados <= 1000) {
-            $tamanoEmpresa = 'Mediana';
+            $tamanoEmpresa = 'Mediana (entre 250 y 1000 empleados)';
         } elseif ($countEmpleados >= 1000) {
-            $tamanoEmpresa = 'Grande';
+            $tamanoEmpresa = 'Grande (más de 1000 empleados)';
         }
 
         // dd($tamanoEmpresa);
+
+        $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
         $count = Organizacion::get()->count();
         if ($count == 0) {
             abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            return view('admin.organizacions.create')->with('countEmpleados', $countEmpleados)->with('tamanoEmpresa', $tamanoEmpresa);
+            return view('admin.organizacions.create')->with('countEmpleados', $countEmpleados)->with('tamanoEmpresa', $tamanoEmpresa)->with('dias', $dias);
         } else {
             Flash::warning("<h5 align='center'>Ya existe un registro en la base de datos</h5>");
 
@@ -71,11 +84,10 @@ class OrganizacionController extends Controller
 
     public function store(StoreOrganizacionRequest $request)
     {
-        // dd($request);
-
+        // dd($request->working);
         abort_if(Gate::denies('organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $organizacions = Organizacion::create([
 
+        $organizacions = Organizacion::create([
             'empresa' => $request->empresa,
             'direccion' => $request->direccion,
             'telefono' => $request->telefono,
@@ -93,8 +105,8 @@ class OrganizacionController extends Controller
             'fecha_constitucion' => $request->fecha_constitucion,
             'num_empleados' => $request->num_empleados,
             'tamano' => $request->tamano,
-
         ]);
+        $this->saveOrUpdateSchedule($request, $organizacions);
 
         if ($request->hasFile('logotipo')) {
             $this->validate($request, [
@@ -138,14 +150,18 @@ class OrganizacionController extends Controller
     {
         abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->load('team');
+        $schedule = Organizacion::find(1)->schedules;
 
-        return view('admin.organizacions.edit', compact('organizacion'));
+        $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
+
+        return view('admin.organizacions.edit', compact('organizacion', 'dias', 'schedule'));
     }
 
     public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
     {
         abort_if(Gate::denies('organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacion->update($request->all());
+        // dd($organizacion);
 
         if ($request->hasFile('logotipo')) {
             $this->validate($request, [
@@ -162,6 +178,7 @@ class OrganizacionController extends Controller
             $organizacions->logotipo = $nombre;
             $organizacions->save();
         }
+        $this->saveOrUpdateSchedule($request, $organizacion);
 
         return redirect()->route('admin.organizacions.index')->with('success', 'Editado con éxito');
     }
@@ -200,5 +217,85 @@ class OrganizacionController extends Controller
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function visualizarOrganizacion()
+    {
+        $organizacions = Organizacion::first();
+
+
+        $schedule = Organizacion::find(1)->schedules;
+
+        $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
+
+        if (empty($organizacions)) {
+            $count = Organizacion::get()->count();
+            $empty = false;
+
+            return view('admin.organizacions.visualizarorganizacion')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('schedule', $schedule)->with('dias', $dias);
+        } else {
+            $empty = true;
+            $count = Organizacion::get()->count();
+            $logotipo = $organizacions->logotipo;
+        }
+
+        // $var = $this->index();
+
+        // dd($organizacion);
+        return view('admin.organizacions.visualizarorganizacion')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo)->with('schedule', $schedule)->with('dias', $dias);
+    }
+
+    public function saveOrUpdateSchedule($request, $organizacions)
+    {
+        $id = $organizacions->id;
+
+        $i = 0;
+        if (isset($request->working)) {
+            if (count($request->working)) {
+                foreach ($request->working as $w) {
+                    $model = Schedule::where('id', $w['id']);
+
+                    $registerAlreadyExists = $model->exists();
+
+                    if ($registerAlreadyExists) {
+                        $dataModel = $model->first();
+
+                        $dataModel->update([
+                            'working_day'  => $w['day'][$i],
+                            'start_work_time' =>  $w['start_time'][$i],
+                            'end_work_time' => $w['end_time'][$i],
+
+                        ]);
+                    } else {
+                        $schedule = Schedule::create([
+                            'working_day'  => $w['day'][$i],
+                            'start_work_time' =>  $w['start_time'][$i],
+                            'end_work_time' => $w['end_time'][$i],
+                            'organizacions_id'=> $id,
+                        ]);
+                    }
+                }
+            }
+        }
+    }
+
+    public function updateSchedule(Request $request, $schedule)
+    {
+        // dd($schedule);
+        $schedule = Schedule::find($schedule);
+
+        $schedule->update([
+            $request->typeInput => $request->value,
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Dato Actualizado']);
+    }
+
+    public function deleteSchedule(Request $request, $schedule)
+    {
+        $schedule = Schedule::find($schedule);
+        $schedule->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Dato Eliminado']);
     }
 }
