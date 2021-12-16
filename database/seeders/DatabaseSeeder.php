@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             EstadoincidentesTableSeeder::class,
             EstusplatrabajoTableSeeder::class,
             ActividadFaseSeeder::class,
-            OrganizacionSeeder::class,
+            // OrganizacionSeeder::class,
             SedeSeeder::class,
             GrupoSeeder::class,
             AreaSeeder::class,
@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             VulnerabilidadesTableSeeder::class,
             AmenazasTableSeeder::class,
             PanelInicioSeeder::class,
+            PanelOrganizacionSeeder::class,
             //PlanBaseSeeder::class,
         ]);
     }

@@ -10,9 +10,15 @@
             @php
                 use App\Models\Organizacion;
                 $organizacion = Organizacion::select('id', 'logotipo')->first();
-                $logotipo = $organizacion->logotipo;
+                if (!is_null($organizacion)) {
+                    $logotipo = $organizacion->logotipo;
+                }else {
+                   $logotipo  = "logotipo-tabantaj.png";
+                }
             @endphp
+
             <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
+
         </div>
 
     </div>
@@ -840,7 +846,7 @@
             </li>
         @endcan --}}
         <div class="row lemnt_row_menu" style="padding-bottom:300px;">
-            
+
         </div>
     </ul>
 
