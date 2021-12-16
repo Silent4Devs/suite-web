@@ -14,7 +14,7 @@ class RemoveFkEmpleadoIdToDeclaracionAplicabilidadResponsablesTable extends Migr
     public function up()
     {
         Schema::table('declaracion_aplicabilidad_responsables', function (Blueprint $table) {
-        $table->dropForeign('declaracion_aplicabilidad_responsables_empleado_id_foreign');
+            $table->dropForeign('declaracion_aplicabilidad_responsables_empleado_id_foreign');
         });
     }
 
