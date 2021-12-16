@@ -387,6 +387,7 @@
 
         .scroll_estilo::-webkit-scrollbar {
             width: 7px;
+            height: 7px;
         }
 
         /* Track */
