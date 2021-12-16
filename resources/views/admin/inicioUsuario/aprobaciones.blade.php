@@ -1,40 +1,47 @@
 @inject('Documento', 'App\Models\Documento')
+<style>
+
+
+.mayusculatext{
+    text-tranform:lowercase !important;
+}
+
+</style>
 <div class="card-body datatable-fix">
     <h5 class="p-0 m-0 text-muted">Solicitados: Documentos que envíe a aprobación</h5>
     <hr>
     <table id="tblMisDocumentos" class="table">
         <thead>
             <tr>
-                <th style="vertical-align: top">
+                <th style=" min-width:100px; text-align: center !important;">
                     Código&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
-                <th style="vertical-align: top">
+                <th style=" min-width:200px; text-align: center !important;">
                     Nombre
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top; min-width:90px; text-align: center !important;">
                     Tipo
                 </th>
-
-                <th style="vertical-align: top">
+                <th style="vertical-align: top; text-align: center !important; min-width:100px;">
                     Vinculado&nbsp;a
                 </th>
                 <th style="vertical-align: top">
                     Estatus
                 </th>
-                <th style="vertical-align: top">
+                <th style="vertical-align: top; text-align: center !important;">
                     Versión
                 </th>
-                <th style="vertical-align: top; min-width:200px;">
+                <th style="vertical-align: top; text-align: center !important; min-width:90px;">
                     Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </th>
                 <th style="vertical-align: top">
                     Elaboró
                 </th>
                 <th style="vertical-align: top">
-                    Revisó
+                    Revisor
                 </th>
                 <th style="vertical-align: top">
-                    Aprobó
+                    Aprobador
                 </th>
                 <th style="vertical-align: top">
                     Responsable
@@ -47,21 +54,21 @@
         <tbody>
             @foreach ($mis_documentos as $documento)
                 <tr>
-                    <td>
+                    <td style=" text-align: center !important;">
                         {{ $documento->codigo ?? '' }}
                     </td>
-                    <td>
+                    <td >
                         {{ $documento->nombre ?? '' }}
                     </td>
-                    <td style="text-transform: capitalize">
+                    <td style="text-transform: capitalize; text-align: center !important;">
                         {{ $documento->tipo ?? '' }}
                     </td>
                     @if ($documento->proceso_id == null)
-                        <th style="vertical-align: top">
+                        <th style="text-align: center !important; font-weight: normal;">
                             {{ $documento->macroproceso ? $documento->macroproceso->nombre : 'Sin vincular' }}
                         </th>
                     @else
-                        <th style="vertical-align: top">
+                        <th style="text-align: center !important; font-weight: normal;">
                             {{ $documento->proceso ? $documento->proceso->nombre : 'Sin vincular' }}
                         </th>
                     @endif
@@ -86,13 +93,13 @@
 
                         @endif
                     </td>
-                    <td>
+                    <td style="text-align: center !important;">
                         {{ $documento->version == 0 ? 'Sin versión actualmente' : $documento->version }}
                     </td>
-                    <td>
+                    <td style="text-align: center !important;">
                         {{ $documento->fecha_dmy ?? '' }}
                     </td>
-                    <td>
+                    <td style="text-align: center !important;">
                         @if ($documento->elaborador)
                             <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->elaborador->avatar }}"
                                 class="rounded-circle" alt="{{ $documento->elaborador->name }}"
@@ -101,7 +108,7 @@
                             <span class="badge badge-info">Sin Asignar</span>
                         @endif
                     </td>
-                    <td>
+                    <td style="text-align: center !important;">
                         @if ($documento->revisor)
                             <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->revisor->avatar }}"
                                 class="rounded-circle" alt="{{ $documento->revisor->name }}"
@@ -110,7 +117,7 @@
                             <span class="badge badge-info">Sin Asignar</span>
                         @endif
                     </td>
-                    <td>
+                    <td style="text-align: center !important;">
                         @if ($documento->aprobador)
                             <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->aprobador->avatar }}"
                                 class="rounded-circle" alt="{{ $documento->aprobador->name }}"
@@ -119,7 +126,7 @@
                             <span class="badge badge-info">Sin Asignar</span>
                         @endif
                     </td>
-                    <td>
+                    <td style="text-align: center !important;">
                         @if ($documento->responsable)
                             <img src="{{ asset('storage/empleados/imagenes/') . '/' . $documento->responsable->avatar }}"
                                 class="rounded-circle" alt="{{ $documento->responsable->name }}"
@@ -161,14 +168,42 @@
     <table id="tabla_usuario_aprobaciones" class="table">
         <thead>
             <tr>
-                <th>Código&nbsp;del&nbsp;Documento</th>
-                <th>Nombre&nbsp;del&nbsp;Documento</th>
-                <th>Versión</th>
-                <th>Tipo</th>
-                <th>Solicitante</th>
-                <th style="min-width:200px;">Fecha&nbsp;de&nbsp;Solicitud</th>
-                <th>Estatus</th>
-                <th>Opciones</th>
+                <th style=" min-width:100px; text-align: center !important;">
+                    Código&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </th>
+                <th style=" min-width:200px; text-align: center !important;">
+                    Nombre
+                </th>
+                <th style="vertical-align: top; min-width:90px; text-align: center !important;">
+                    Tipo
+                </th>
+                <th style="vertical-align: top; text-align: center !important; min-width:150px;">
+                    Vinculado&nbsp;a
+                </th>
+                <th style="vertical-align: top; text-align: center !important;">
+                    Estatus
+                </th>
+                <th style="vertical-align: top; text-align: center !important;">
+                    Versión
+                </th>
+                <th style="vertical-align: top; text-align: center !important; min-width:90px;">
+                    Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </th>
+                <th style="vertical-align: top">
+                    Solicitante
+                </th>
+                <th style="vertical-align: top">
+                    Revisor
+                </th>
+                <th style="vertical-align: top">
+                    Aprobador
+                </th>
+                <th style="vertical-align: top">
+                    Responsable
+                </th>
+                <th style="vertical-align: top">
+                    Visualizar
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -176,7 +211,7 @@
                 @if ($revision->before_level_all_answered)
                     @if ($revision->estatus != $Documento::RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR)
                         <tr>
-                            <td>
+                            <td style="text-align: center !important;">
                                 {{ Str::limit($revision->documento ? $revision->documento->codigo : 'Sin Código Asignado', 40, '...') }}
                             </td>
                             <td>
@@ -189,12 +224,26 @@
                                 Sin revisión
                                 @endif
                             </td>
-                            <td>{{ $revision->version }}</td>
                             <td style="text-transform: capitalize;">
                                 {{ $revision->documento ? $revision->documento->tipo : 'El tipo no ha sido asignado' }}
                             </td>
+                            @if ($revision->documento->proceso_id == null)
+                                <th style="text-align: center !important; font-weight: normal;">
+                                    {{ $revision->documento->macroproceso ? $revision->documento->macroproceso->nombre : 'Sin vincular' }}
+                                </th>
+                            @else
+                                <th style="text-align: center !important; font-weight: normal;">
+                                    {{ $revision->documento->proceso ? $revision->documento->proceso->nombre : 'Sin vincular' }}
+                                </th>
+                            @endif
+                            
+                             <td  style="text-align: center !important;">
+                                <span class="badge badge-info"
+                                    style="background-color:{{ $revision->color_revisiones_estatus }}">{{mb_strtoupper($revision->estatus_revisiones_formateado) }}</span>
                             </td>
-                            <td class="text-center" style="padding: 5px 0;">
+                             <td style="text-align: center !important;">{{ $revision->documento->version }}</td>
+                            <td class="justify-content:center">{{ $revision->fecha_solicitud }}</td>
+                            <td style="text-align: center !important;" >
                                 @if ($revision->documento)
                                     @if ($revision->documento->elaborador)
                                         <img class="rounded-circle" style="clip-path: circle(40%);height: 35px"
@@ -206,10 +255,39 @@
                                     Sin Asignar
                                 @endif
                             </td>
-                            <td>{{ $revision->fecha_solicitud }}</td>
-                            <td style="background-color: {{ $revision->color_revisiones_estatus }}">
-                                <span class="badge"
-                                    style="color:white;background-color:{{ $revision->color_revisiones_estatus }}">{{ $revision->estatus_revisiones_formateado }}</span>
+                             <td style="text-align: center !important;">
+                                @if ($revision->documento)
+                                     @if ($revision->documento->revisor)
+                                    <img src="{{ asset('storage/empleados/imagenes/') . '/' . $revision->documento->revisor->avatar }}"
+                                        class="rounded-circle" alt="{{ $revision->documento->revisor->name }}"
+                                        title="{{ $revision->documento->revisor->name }}" width="40">
+                                    @endif
+                                @else
+                                    <span class="badge badge-info">Sin Asignar</span>
+                                @endif
+                            </td>
+                            <td style="text-align: center !important;">
+                                @if ($revision->documento)
+                                    @if ($revision->documento->aprobador)
+                                        <img src="{{ asset('storage/empleados/imagenes/') . '/' . $revision->documento->aprobador->avatar }}"
+                                            class="rounded-circle" alt="{{$revision->documento->aprobador->name }}"
+                                            title="{{ $revision->documento->aprobador->name }}" width="40">
+                                    @endif
+                                @else
+                                    <span class="badge badge-info">Sin Asignar</span>
+                                @endif
+                            </td>
+                            <td style="text-align: center !important;">
+                                 @if ($revision->documento)
+                                    @if ($revision->documento->responsable)
+                                        <img src="{{ asset('storage/empleados/imagenes/') . '/' . $revision->documento->responsable->avatar }}"
+                                            class="rounded-circle" alt="{{ $revision->documento->responsable->name }}"
+                                            title="{{ $revision->documento->responsable->name }}" width="40">
+                                    @endif
+                                @else
+                                    <span class="badge badge-info">Sin Asignar</span>
+                                @endif
+                            </td>
                             <td>
                                 @if ($revision->documento)
                                 <a href="{{ route('admin.documentos.renderViewDocument', $revision->documento) }}"

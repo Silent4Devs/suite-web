@@ -435,7 +435,7 @@
                                         <div class="col-3 title-info-personal">Perfil</div>
                                     @endif
                                     @if ($panel_rules->genero)
-                                        <div class="col-3 title-info-personal">Genero</div>
+                                        <div class="col-3 title-info-personal">Género</div>
                                     @endif
                                     @if ($panel_rules->estatus)
                                         <div class="col-3 title-info-personal">Estatus</div>

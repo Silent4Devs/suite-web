@@ -3,7 +3,7 @@
         overflow: hidden;
         width: 200px;
         height:60px;
-        padding: 10px 0px;
+        padding: 15px 0px;
         padding-left: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -70,11 +70,13 @@
     <div class="row">
         <div class="col-sm-5 col-lg-5">
             <div class="mb-3 ml-2 mr-2 bg-white rounded " style="height:300px; border:1px solid #ccc !important">
-                <h6 class="mt-3 ml-3" style="color: #008186;" >Deseo reportar un:</h6>
+                <div class="mt-4 mb-3 ml-4 col-9" style="border-bottom: solid 2px #0CA193;">
+                    <h6 class="mt-3 mr-1" style="color: #008186; font-weight: bold;">Deseo reportar un:</h6>
+                </div>
                 <div class="mt-4  row justify-content:center align-items-center">
                     <div class="text-center col-12">
                         <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}"  class="cards_alto">
-                            <i class="fas fa-exclamation-triangle"></i> Incidente de seguridad
+                            <i class="fas fa-exclamation-triangle"></i> Incidente de Seguridad
                         </a>
                     </div>
                     <div class="text-center col-12">
@@ -88,20 +90,23 @@
         <div class="col-sm-7 col-lg-7">
 
             <div class="mb-3 ml-2 mr-2 bg-white rounded" style="height:300px; border:1px solid #ccc !important">
-                <h6 class="mt-3 ml-3" style="color: #008186;">Deseo realizar un:</h6>
+                <div class="mt-4 mb-3 ml-4 col-10" style="border-bottom: solid 2px #0CA193;">
+                    <h6 class="mt-3" style="color: #008186; font-weight: bold;">Deseo realizar una:</h6>
+                </div>
+                {{-- --}}
                 <div class="mt-4 text-center">
                     <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="cards_reportes">
-                        <i class="fas fa-frown"></i> Realizar queja
+                        <i class="fas fa-frown"></i> Queja
                     </a>
 
                     <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="cards_reportes">
-                        <i class="fas fa-hand-paper"></i> Realizar denuncia
+                        <i class="fas fa-hand-paper"></i> Denuncia
                     </a>
                     <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
-                        <i class="fas fa-rocket"></i> Reportar mejora
+                        <i class="fas fa-rocket"></i> Propuesta de Mejora
                     </a>
                     <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
-                        <i class="fas fa-lightbulb"></i> Realizar sugerencia
+                        <i class="fas fa-lightbulb"></i>Sugerencia
                     </a>
                 </div>
             </div>
