@@ -8,6 +8,7 @@ use App\Models\AnalisisSeguridad;
 use App\Models\Area;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
+use App\Models\Calendario;
 use App\Models\Denuncias;
 use App\Models\Documento;
 use App\Models\Empleado;
@@ -107,6 +108,7 @@ class InicioUsuarioController extends Controller
         $auditoria_internas = new AuditoriaInterna;
         $empleado = auth()->user()->empleado;
         $recursos = collect();
+        $eventos =Calendario::get();
         if ($usuario->empleado) {
             $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
                 $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);

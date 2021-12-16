@@ -389,6 +389,13 @@
                         <font class="letra_blanca" style="margin-left:10px;"> Evaluación 360° </font>
                     </a>
                 </li>
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route('admin.tabla-calendario.index') }}"
+                        class="c-sidebar-nav-link {{ request()->is('tabla-calendario') || request()->is('tabla-calendario/*') ? 'active' : '' }}">
+                        <i class="fas fa-calendar-check iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca">Calendario</font>
+                    </a>
+                </li>
             </ul>
         </li>
 

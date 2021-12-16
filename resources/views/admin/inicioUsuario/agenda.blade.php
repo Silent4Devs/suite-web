@@ -254,14 +254,28 @@
                 isReadOnly : true,
                 },
             @endforeach
+           @if ($eventos->count())
+
+           @foreach ($eventos as $evento)
+
+                {
+                id: 'evento{{ $evento->id }}',
+                calendarId: '4',
+                title: 'Evento: {{ $evento->nombre }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[0])->format("Y-m-d") }}',
+                end: '{{  \Carbon\Carbon::parse(explode("-",$evento->fecha)[1])->format("Y-m-d") }}',
+                isReadOnly : true,
+                },
+            @endforeach
+           @endif
 
             @if ($recursos->count() )
 
 
             @forelse ($recursos as $it_recursos)
-
                 {
-
                 id: 'recursos{{ $it_recursos->id }}',
                 calendarId: '3',
                 title: 'Tipo: {{ $it_recursos->cursoscapacitaciones }}',
@@ -271,16 +285,13 @@
                 end: '',
                 isReadOnly : true,
                 },
-
             @endforeach
 
-@endif
 
+            @endif
 
+                    ];
+                </script>
 
-
-        ];
-    </script>
-
-    <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
-@endsection
+                <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
+            @endsection

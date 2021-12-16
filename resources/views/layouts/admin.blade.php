@@ -387,6 +387,7 @@
 
         .scroll_estilo::-webkit-scrollbar {
             width: 7px;
+            height: 7px;
         }
 
         /* Track */
@@ -1065,6 +1066,9 @@
         <!-- incluir de footer -->
         {{-- @include('partials.footer') --}}
     </div>
+    {{-- daterangepicker --}}
+
+
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>

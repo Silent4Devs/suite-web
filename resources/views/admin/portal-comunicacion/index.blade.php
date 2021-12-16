@@ -684,7 +684,7 @@
                             @endforelse
                         </div>
 
-                        <h2 class="mt-5 titulo-seccion"><i class="mr-3 fas fa-birthday-cake"></i>Aniversarios</h2>
+                        <h2 class="mt-5 titulo-seccion"><i class="mr-3 fas fa-medal"></i>Aniversarios</h2>
                         <div class="caja_nuevo">
                             <div class="caja_nuevo">
                                 @forelse($aniversarios as $aniversario)

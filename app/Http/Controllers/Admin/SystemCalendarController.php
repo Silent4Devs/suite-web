@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
+use App\Models\Calendario;
 use App\Models\PlanBaseActividade;
 use App\Models\PlanImplementacion;
 use App\Models\Recurso;
@@ -89,7 +90,8 @@ class SystemCalendarController extends Controller
         $auditoria_internas = AuditoriaInterna::get();
         // dd($auditoria_internas);
         $recursos = Recurso::get();
+        $eventos =Calendario::get();
 
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas'));
+        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas',"eventos"));
     }
 }

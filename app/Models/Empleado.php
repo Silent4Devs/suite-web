@@ -75,7 +75,7 @@ class Empleado extends Model
 
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
-    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador'];
+    protected $appends = ['avatar', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso'];
     //, 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
@@ -356,6 +356,11 @@ class Empleado extends Model
         $misDeclaraciones = DeclaracionAplicabilidadAprobadores::select('id', 'declaracion_id')->where('aprobadores_id', $this->id)->pluck('declaracion_id')->toArray();
 
         return $misDeclaraciones;
+    }
+
+    public function getFechaIngresoAttribute()
+    {
+        return Carbon::parse($this->antiguedad)->format('d-m-Y');
     }
 
     // dependientes economicos
