@@ -18,10 +18,33 @@ Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@ed
 
 Auth::routes();
 
+// Tabla-Calendario
+
+
+
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+    //Tipos de contratos
+    Route::resource('recursos-humanos/tipos-contratos-empleados', 'RH\TipoContratoEmpleadoController');
+    Route::resource('recursos-humanos/entidades-crediticias', 'RH\EntidadCrediticiaController');
+    Route::resource('recursos-humanos/dependientes-empleados', 'RH\DependientesEconomicosEmpleadosController');
+    Route::resource('recursos-humanos/contactos-emergencia-empleados', 'RH\ContactosEmergenciaEmpleadoController');
+    Route::resource('recursos-humanos/beneficiarios-empleados', 'RH\BeneficiariosEmpleadoController');
+
+    // Evaluaciones 360
     Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
+    Route::get('tabla-calendario/index', 'TablaCalendarioController@index')->name('tabla-calendario.index');
+    Route::resource('recursos-humanos/calendario', 'TablaCalendarioController')->names([
+    'create' => 'tabla-calendario.create',
+    'store' => 'tabla-calendario.store',
+    'show' => 'tabla-calendario.show',
+    'edit' => 'tabla-calendario.edit',
+    'update' => 'tabla-calendario.update',
+    'destroy' => 'tabla-calendario.destroy',
+]);
 
     //Consulta de evaluación
+
     Route::get('recursos-humanos/evaluacion-360/{evaluacion}/{evaluado}/mis-evaluaciones', 'RH\EV360EvaluacionesController@misEvaluaciones')->name('ev360-evaluaciones.misEvaluaciones');
     Route::get('recursos-humanos/evaluacion-360/{evaluacion}/{evaluador}/evaluaciones-mi-equipo', 'RH\EV360EvaluacionesController@evaluacionesDeMiEquipo')->name('ev360-evaluaciones.evaluacionesDeMiEquipo');
 
@@ -162,7 +185,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('inicioUsuario/reportes/riesgos', 'InicioUsuarioController@riesgos')->name('reportes-riesgos');
     Route::post('inicioUsuario/reportes/riesgos', 'InicioUsuarioController@storeRiesgos')->name('reportes-riesgos-store');
 
-    Route::post('inicioUsuario/capacitaciones/archivar', 'InicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
+    Route::post('inicioUsuario/capacitaciones/archivar/{id}', 'InicioUsuarioController@archivarCapacitacion')->name('inicio-Usuario.capacitaciones.archivar');
+    Route::post('inicioUsuario/capacitaciones/recuperar/{id}', 'InicioUsuarioController@recuperarCapacitacion')->name('inicio-Usuario.capacitaciones.recuperar');
+    Route::get('inicioUsuario/capacitaciones/archivo', 'InicioUsuarioController@archivoCapacitacion')->name('inicio-Usuario.capacitaciones.archivo');
+
+    Route::post('inicioUsuario/aprobacion/archivar/{id}', 'InicioUsuarioController@archivarAprobacion')->name('inicio-Usuario.aprobacion.archivar');
+    Route::post('inicioUsuario/aprobacion/recuperar/{id}', 'InicioUsuarioController@recuperarAprobacion')->name('inicio-Usuario.aprobacion.recuperar');
+    Route::get('inicioUsuario/aprobacion/archivo', 'InicioUsuarioController@archivoAprobacion')->name('inicio-Usuario.aprobacion.archivo');
+
+    Route::post('inicioUsuario/actividades/archivar/{id}', 'InicioUsuarioController@archivarActividades')->name('inicio-Usuario.actividades.archivar');
+    Route::post('inicioUsuario/actividades/recuperar/{id}', 'InicioUsuarioController@recuperarActividades')->name('inicio-Usuario.actividades.recuperar');
+    Route::get('inicioUsuario/actividades/archivo', 'InicioUsuarioController@archivoActividades')->name('inicio-Usuario.acctividades.archivo');
 
     Route::get('desk', 'DeskController@index')->name('desk.index');
 
@@ -281,6 +314,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
     // Empleados
+    Route::post('empleado/update-image-profile', 'EmpleadoController@updateImageProfile')->name('empleado.update-image-profile');
+    Route::post('empleado/update-profile', 'EmpleadoController@updateInformationProfile')->name('empleado.update-profile');
+    Route::post('empleado/update-related-info-profile', 'EmpleadoController@updateInformacionRelacionadaProfile')->name('empleado.update-related-info-profile');
     Route::post('empleados/store/{empleado}/competencias-resumen', 'EmpleadoController@storeResumen')->name('empleados.storeResumen');
     Route::post('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
     Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', 'EmpleadoController@deleteCertificaciones')->name('empleados.deleteCertificaciones');
@@ -304,7 +340,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
     Route::post('organizacions/media', 'OrganizacionController@storeMedia')->name('organizacions.storeMedia');
     Route::post('organizacions/ckmedia', 'OrganizacionController@storeCKEditorImages')->name('organizacions.storeCKEditorImages');
+    Route::get('organizacions/visualizarorganizacion', 'OrganizacionController@visualizarOrganizacion')->name('organizacions.visualizarorganizacion');
+    Route::post('organizacions/{schedule}/update-schedule', 'OrganizacionController@updateSchedule')->name('organizacions.update-schedule');
+    Route::post('organizacions/{schedule}/delete-schedule', 'OrganizacionController@deleteSchedule')->name('organizacions.delete-schedule');
     Route::resource('organizacions', 'OrganizacionController');
+
+    // Route::get('sedes/organizacion', 'SedeController@obtenerListaSedes')->name('sedes.obtenerListaSedes');
 
     Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
     Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
@@ -496,6 +537,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Revision Direccions
     Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
     Route::resource('revision-direccions', 'RevisionDireccionController');
+
 
     // Controles
     Route::delete('controles/destroy', 'ControlesController@massDestroy')->name('controles.massDestroy');
@@ -759,7 +801,9 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
     // Organizacions
     Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
+
     Route::resource('organizacions', 'OrganizacionController');
+
 
 
     // Glosarios

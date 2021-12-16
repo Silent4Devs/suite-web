@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .screenshot-image {
             width: 150px;
@@ -169,11 +168,6 @@
         }
 
     </style>
-
-
-
-
-
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Empleado </strong></h3>
@@ -200,90 +194,20 @@
         @endif
         <div class="card-body">
             <form method="POST" action="{{ route('admin.empleados.store') }}" enctype="multipart/form-data"
-                id="formEmpleado">
+                id="formCreateEmpleado">
                 @csrf
-                <div class="row">
-                    <div class="col-md-12">
-                        {{-- <ul class="nav nav-pills nav-fill nav-tabs" id="tab-recursos" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab"
-                                    aria-controls="general" aria-selected="true">
-                                    <font class="letra_blanca">
-                                        <i class="mr-1 fas fa-file"></i>
-                                        Información General
-                                    </font>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="participantes-tab" data-toggle="tab" href="#participantes"
-                                    role="tab" aria-controls="participantes" aria-selected="false"
-                                    onclick="participantesDataTable()">
-                                    <font class="letra_blanca">
-                                        <i class="mr-1 fas fa-flag-checkered"></i>
-                                        Competencias
-                                    </font>
-                                </a>
-                            </li>
-                        </ul> --}}
-                        <div class="caja_botones_menu">
-                            <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-file"
-                                    style="font-size:30px;" style="text-decoration:none;"></i>Información General</a>
-                            {{-- <a href="#" data-tabs="contenido2"><i class="mr-2 fas fa-flag-checkered"
-                                    style="font-size:30px;"></i>
-                                Competencias</a> --}}
-                        </div>
-                        <div class="caja_caja_secciones">
-                            <div class="caja_secciones">
-                                <section id="contenido1" class="mt-4 caja_tab_reveldada">
-                                    <div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="name"><i
-                                                        class="fas fa-street-view iconos-crear"></i>Nombre</label>
-                                                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                    type="text" name="name" id="name" value="{{ old('name', '') }}"
-                                                    required>
-                                                @if ($errors->has('name'))
-                                                    <div class="invalid-feedback">
-                                                        {{ $errors->first('name') }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label class="required" for="n_empleado"><i
-                                                        class="fas fa-street-view iconos-crear"></i>N°
-                                                    de
-                                                    empleado</label>
-                                                <input
-                                                    class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}"
-                                                    type="text" name="n_empleado" id="n_empleado"
-                                                    value="{{ old('n_empleado', '') }}" required>
-                                                @error('n_empleado')
-                                                    <span class="invalid-feedback d-block" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-{{ $ceo_exists ? '6' : '12' }}">
-                                                <label class="required" for="area"><i
-                                                        class="fas fa-street-view iconos-crear"></i>Área</label>
-                                                <select class="custom-select areas" id="inputGroupSelect01" name="area_id">
-                                                    <option selected value="" disabled>-- Selecciona un área --</option>
-                                                    @forelse ($areas as $area)
-                                                        <option value="{{ $area->id }}">{{ $area->area }}</option>
-                                                    @empty
-                                                        <option value="" disabled>Sin registros de áreas</option>
-                                                    @endforelse
-                                                </select>
-                                            </div>
-                                            @if ($ceo_exists)
-                                                <div class="form-group col-sm-6">
-                                                    <label class="required" for="jefe"><i
-                                                            class="fas fa-user iconos-crear"></i>Jefe
-                                                        Inmediato</label>
-                                                    <div class="mb-3 input-group">
+                <section id="contenido1" class="mt-4 caja_tab_reveldada">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="caja_botones_menu">
+                                <a href="#" data-tabs="contenido1" class="btn_activo"><i class="mr-2 fas fa-file"
+                                        style="font-size:30px;" style="text-decoration:none;"></i>Información General</a>
+                            </div>
+                            <div class="caja_caja_secciones">
+                                <div class="caja_secciones">
+                                    @include('admin.empleados._form')
+                                </div>
+                            </div>
 
                                                         <select class="custom-select supervisor" id="inputGroupSelect01"
                                                             name="supervisor_id">
@@ -635,19 +559,8 @@
                                 </section>
                             </div>
                         </div>
-
-                        <div class="text-right form-group col-12">
-                            <a href="{{ redirect()->getUrlGenerator()->previous() }}"
-                                class="btn_cancelar">Cancelar</a>
-                            <button class="btn btn-danger" type="submit" id="btnGuardar">
-                                {{ trans('global.save') }}
-                            </button>
-                            {{-- <button class="btn btn-danger" type="submit" id="btnSiguiente">
-                                Siguiente
-                            </button> --}}
-                        </div>
                     </div>
-                </div>
+                </section>
         </div>
     </div>
 @endsection
@@ -655,13 +568,88 @@
 @section('scripts')
     @parent
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            document.querySelector('#btnGuardar').addEventListener('click', function(e) {
+                e.preventDefault();
+                const formData = new FormData(document.getElementById('formCreateEmpleado'));
+                const url = document.getElementById('formCreateEmpleado').getAttribute('action');
+
+                fetch(url, {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.errors) {
+                            $.each(data.errors, function(indexInArray, valueOfElement) {
+                                $(`#error_${indexInArray.replaceAll('.','_')}`).text(
+                                    valueOfElement[0]);
+                            });
+                        }
+
+                        if (data.status) {
+                            Swal.fire(
+                                'Empleado Creado',
+                                '',
+                                'success',
+                            )
+                            setTimeout(() => {
+                                window.location.href = "{{ route('admin.empleados.index') }}";
+                            }, 1500);
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            })
+        })
+    </script>
+    <script>
         $(document).ready(function() {
             $('.areas').select2({
+                theme: 'bootstrap4',
+            });
+            $('.select-search').select2({
                 theme: 'bootstrap4',
             });
             $('.supervisor').select2({
                 theme: 'bootstrap4',
             });
+            $('#puesto_id').select2({
+                theme: 'bootstrap4',
+            });
+            $('#perfil_empleado_id').select2({
+                theme: 'bootstrap4',
+            });
+            $('#nacionalidad').select2({
+                theme: 'bootstrap4',
+                templateResult: customizeNationalitySelect,
+                templateSelection: customizeNationalitySelect
+            });
+
+            function customizeNationalitySelect(opt) {
+                if (!opt.id) {
+                    return opt.text;
+                }
+
+                let optImage = $(opt.element).attr('data-flag');
+                let $opt = $(
+                    `<span>
+                        <img src="${optImage}" class="img-fluid rounded-circle" width="30" height="30"/>
+                        ${opt.text}
+                    </span>`
+                    // '<span><img src="{{ asset('storage/empleados/imagenes/') }}/' +
+                    // optimage +
+                    // '" class="img-fluid rounded-circle" width="30" height="30"/>' +
+                    // opt.text + '</span>'
+                );
+                return $opt;
+            };
         });
     </script>
     <script>

@@ -102,6 +102,7 @@ class DeclaracionAplicabilidadController extends Controller
         $ISO27001_SoA_PATH = 'storage/Normas/ISO27001/Analísis Inicial/';
         $path = public_path($ISO27001_SoA_PATH);
         $lista_archivos_declaracion = glob($path . 'Analisis Inicial*.pdf');
+        $empleados = Empleado::select('id', 'name', 'genero', 'foto')->get();
         $responsables = DeclaracionAplicabilidadResponsable::get();
         $aprobadores = DeclaracionAplicabilidadAprobadores::get();
         // $empleados=Empleado::select('id','name','genero','foto')->get();
@@ -189,6 +190,20 @@ class DeclaracionAplicabilidadController extends Controller
                     } catch (Throwable $e) {
                         return response()->json(['success' => false]);
                     }
+                    break;
+
+                case 'aprobadores_id':
+                    $gapun = DeclaracionAplicabilidadAprobadores::findOrFail($id);
+                    $gapun->aprobadores_id = $request->value;
+
+                    return response()->json(['success' => true]);
+                    break;
+
+                case 'empleado_id':
+                    $gapun = DeclaracionAplicabilidadResponsable::findOrFail($id);
+                    $gapun->empleado_id = $request->value;
+
+                    return response()->json(['success' => true]);
                     break;
 
             }
