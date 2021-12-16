@@ -821,7 +821,7 @@ class InicioUsuarioController extends Controller
             return redirect('admin/inicioUsuario/capacitaciones/archivo');
         }
 
-        
+
     }
 
     public function recuperarCapacitacion($id)
@@ -835,7 +835,7 @@ class InicioUsuarioController extends Controller
         if ($errors) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
-        
+
     }
 
     public function archivoCapacitacion()
