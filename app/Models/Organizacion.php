@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 
+// use App\Models\Schedule;
+
 /**
  * Class Organizacion.
  *
@@ -66,6 +68,10 @@ class Organizacion extends Model
         'fecha_constitucion',
         'num_empleados',
         'tamano',
+        'hora_laboral_inicio',
+        'hora_laboral_fin',
+        'dia_inicio',
+        'dia_fin',
 
     ];
 
@@ -87,5 +93,10 @@ class Organizacion extends Model
     public function sedes()
     {
         return $this->hasMany(Sede::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany('App\Models\Schedule', 'organizacions_id')->orderBy('id');
     }
 }

@@ -489,8 +489,11 @@
                             class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
                     <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}"><i
                             class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
-                    <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}"><i
+
+                    @if($empleado_asignado)
+                        <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}"><i
                             class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
+                    @endif
                 </div>
 
                 <div class="mt-5 col-lg-9">
@@ -507,6 +510,9 @@
                                 }
 
                             @endphp
+                            <style type="text/css">
+                                height
+                            </style>
                             {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
 
                             <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
@@ -592,7 +598,17 @@
                             </div>
                         </div>
                     @empty
-                        <p>Sin documentos registrados</p>
+                        <div class="comunicado" style="position:relative;">
+                            <div class="img_comunicado"
+                                style="background-image: url('{{ asset('img/no_docs.svg') }}'); transform: scale(0.8);"></div>
+                            <div class="text_comunicado">
+                                <h4 class="w-100">Sin documentos que mostar</h4>
+                                <p class="w-100">
+
+                                </p>
+                                <a href=""></a>
+                            </div>
+                        </div>
                     @endforelse
                 </div>
 
@@ -653,7 +669,14 @@
                                             @endif
                                         </p>
                                         <h6 class="mt-3">Fecha de cumpleaños</h6>
-                                        <span>{{ \Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m-Y') }}</span>
+                                        @php
+                                            $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                                            $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
+                                            $mes = $meses[($fecha->format('n')) - 1];
+                                            $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
+                                        @endphp
+
+                                        <span>{{ $inputs['Fecha'] }}</span>
                                     </div>
                                 </div>
                             @empty

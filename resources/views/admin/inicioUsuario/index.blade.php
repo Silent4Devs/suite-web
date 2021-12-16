@@ -54,7 +54,7 @@
             overflow: hidden;
         }
 
-        .caja_botones_secciones a {
+        /*.caja_botones_secciones a {
             position: relative;
         }
 
@@ -73,12 +73,73 @@
             margin-top: -5px;
             margin-right: -5px;
             z-index: 1;
-        }
+        }*/
 
         .caja_botones_menu a{
             outline: none;
         }
 
+
+
+
+        /*alerta*/
+
+        .delete {
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .icono_delete {
+            margin: 40px 0px;
+            color: #FF5500;
+            opacity: 0.7;
+            font-size: 70pt;
+        }
+        .eliminar{
+            background-color: #FF5500;
+            opacity: 0.7;
+            border: none;
+        }
+        .eliminar:hover{
+            background-color: #FF5500;
+            opacity: 1;
+        }
+
+        body.c-dark-theme .delete {
+            background: #2a2b36;
+        }
+
+        body.c-dark-theme .btn-outline-secondary {
+            border: 1px solid #ccc;
+            color: #ccc;
+        }
+
+        .btn_archivar{
+            all: unset !important;
+        }
+
+
+        .caja_botones_secciones a{
+            position: relative;
+        }
+        .indicador_numero{
+            position: absolute;
+            background-color: #FF4141;
+            color: #fff !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            margin: 0;
+            border-radius: 50px;
+            top: 0;
+            right: 0;
+            margin-top: -10px;
+        }
     </style>
 
     @include('partials.flashMessages')
@@ -129,13 +190,13 @@
                         Calendario</a>
                     <a href="#" id="b_actividades" onclick="almacenarMenuEnLocalStorage('actividades')" data-tabs="s_actividades">
                         @if ($contador_actividades)
-                            <span>{{ $contador_actividades }}</span>
+                            <span class="indicador_numero">{{ $contador_actividades }}</span>
                         @endif
                         <i class="fas fa-stopwatch"></i>Actividades
                     </a>
                     <a href="#" id="b_aprobaciones" onclick="almacenarMenuEnLocalStorage('aprobaciones')" data-tabs="s_aprobaciones">
                         @if ($contador_revisiones)
-                            <span>{{ $contador_revisiones }}</span>
+                            <span class="indicador_numero">{{ $contador_revisiones }}</span>
                         @endif
                         <i class="fas fa-check"></i>Aprobaciones
                     </a>
@@ -147,7 +208,7 @@
                     </a> --}}
                     <a href="#" id="b_capacitaciones" onclick="almacenarMenuEnLocalStorage('capacitaciones')" data-tabs="s_capacitaciones">
                         @if ($contador_recursos)
-                            <span>{{ $contador_recursos }}</span>
+                            <span class="indicador_numero">{{ $contador_recursos }}</span>
                         @endif
                         <i class="fas fa-chalkboard-teacher"></i>Capacitaciones
                     </a>

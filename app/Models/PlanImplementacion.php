@@ -31,6 +31,7 @@ class PlanImplementacion extends Model
         'elaboro_id',
         'plan_implementacionable_id',
         'plan_implementacionable_type',
+        'archivo',
     ];
 
     protected $casts = ['tasks' => 'object'];
