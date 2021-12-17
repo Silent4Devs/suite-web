@@ -494,6 +494,8 @@
                         <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}"><i
                             class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
                     @endif
+
+                    <a class="btn-silent" href="{{ asset('admin/directorio') }}"><i class=" mr-2 fas fa-address-book"></i> <span>Directorio</span></a>
                 </div>
 
                 <div class="mt-5 col-lg-9">

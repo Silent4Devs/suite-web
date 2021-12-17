@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label for="descripcion">{{ trans('cruds.puesto.fields.descripcion') }}</label>
-                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion', $puesto->descripcion) }}</textarea>
+                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion', strip_tags($puesto->descripcion)) }}</textarea>
                 @if($errors->has('descripcion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('descripcion') }}
@@ -41,5 +41,71 @@
 </div>
 
 
+
+@endsection
+
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('descripcion', {
+            toolbar: [{
+                    name: 'styles',
+                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                },
+                {
+                    name: 'colors',
+                    items: ['TextColor', 'BGColor']
+                },
+                {
+                    name: 'editing',
+                    groups: ['find', 'selection', 'spellchecker'],
+                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                }, {
+                    name: 'clipboard',
+                    groups: ['undo'],
+                    items: ['Undo', 'Redo']
+                },
+                {
+                    name: 'tools',
+                    items: ['Maximize']
+                },
+                {
+                    name: 'basicstyles',
+                    groups: ['basicstyles', 'cleanup'],
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                        '-',
+                        'CopyFormatting', 'RemoveFormat'
+                    ]
+                },
+                {
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'Blockquote',
+                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                    ]
+                },
+                {
+                    name: 'links',
+                    items: ['Link', 'Unlink']
+                },
+                {
+                    name: 'insert',
+                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                },
+                '/',
+
+
+                // {
+                //     name: 'others',
+                //     items: ['-']
+                // }
+            ]
+        });
+
+    });
+</script>
 
 @endsection
