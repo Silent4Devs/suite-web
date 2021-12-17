@@ -141,8 +141,11 @@
         }
 
         .sidenav .side.img-nav {
-            width: 5rem;
+            width: 250px;
             margin: auto;
+            margin-top: -10px;
+            z-index: 0;
+            position: relative;
         }
 
         .side.nav-shadow {
@@ -499,8 +502,8 @@
             left:20px;
             transition:0.5s !important;
             margin-left:-200px;
-            position:absolute; 
-            top:30px; 
+            position:absolute;
+            top:30px;
             background: white;
             z-index:1;
         }
@@ -555,7 +558,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="{{ asset('img/areas.jpg') }}" class="mt-3" style="height: 400px;">
+                <img src="{{ asset('img/areas_fondo.jpg') }}" class="mt-3" style="height: 400px;">
             </div>
         @else
             <div class="caja_botones_menu">
@@ -788,7 +791,7 @@
                         let img = document.createElement('img');
                         img.classList.add('imagen-search');
                         img.src = "{{ asset('img/searching.svg') }}";
-                        img.width = 500;
+                        img.width = 0;
                         img.style.margin = 'auto';
                         let texto = document.createElement('h3');
                         texto.classList.add('texto-search');
@@ -843,7 +846,7 @@
 
                 <div class="btnCerrar" style="color:${color}">X</div>
                                 <div class="row justify-content-center">
-                                    <div class="ml-5 bg-white rounded shadow-sm col-12 justify-content-center" style="margin-top:50px; background-color:${color}!important">
+                                    <div class="ml-5 bg-white rounded shadow-sm col-12 justify-content-center" style=" background-color:${color}!important">
                                         <p class="text-center text-white"> ${nombre} </p>
                                     </div>
 
