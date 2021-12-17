@@ -108,6 +108,30 @@
         display: block;
     }
 
+
+    .tui-full-calendar-weekday-schedule-title{
+        position: relative;
+   }
+    .tui-full-calendar-weekday-schedule-title strong{
+        font-size: 9pt !important;
+        position: absolute;
+        right: 10px;
+   }
+    .tui-full-calendar-weekday-schedule-title strong:before{
+        content: "Inicio:  ";
+   }
+   .dropdown-menu.show{
+        width: 250px !important;
+   }
+
+   .i_calendar{
+        font-size: 11pt;
+        width: 20px;
+        text-align: center;
+   }
+   .i_calendar_cuadro{
+        margin: 0px 8px;
+   }
 </style>
 
 
@@ -163,17 +187,17 @@
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
                             <li role="presentation">
                                 <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
-                                    <i class="calendar-icon ic_view_day"></i>Atrasados
+                                    <i class="calendar-icon ic_view_day"></i>Diario
                                 </a>
                             </li>
                             <li role="presentation">
                                 <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
-                                    <i class="calendar-icon ic_view_week"></i>Semanales
+                                    <i class="calendar-icon ic_view_week"></i>Semanal
                                 </a>
                             </li>
                             <li role="presentation">
                                 <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
-                                    <i class="calendar-icon ic_view_month"></i>Mensuales
+                                    <i class="calendar-icon ic_view_month"></i>Mensual
                                 </a>
                             </li>
                             <li role="presentation">
@@ -253,7 +277,7 @@
                 {
                     id: 'planinicio{{$it_plan_base->id}}',
                     calendarId: '1',
-                    title: 'Actividad: {{$it_plan_base->actividad}}',
+                    title: '<i class="fas fa-thumbtack i_calendar_cuadro"></i> Actividad: {{$it_plan_base->actividad}}',
                     category: 'allday',
                     dueDateClass: '',
                     start: '{{  \Carbon\Carbon::createFromFormat("d-m-Y", $it_plan_base->fecha_inicio)->format("Y-m-d") }}',
@@ -266,12 +290,13 @@
                 {
                     id: 'auditoria{{$it_auditoria_internas->id}}',
                     calendarId: '3',
-                    title: 'Alcance: {{$it_auditoria_internas->alcance}}',
+                    title: '<i class="fas fa-clipboard-list i_calendar_cuadro"></i> Alcance: {{$it_auditoria_internas->alcance}}',
                     category: 'allday',
                     dueDateClass: '',
-                    start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->format("Y-m-d") }}',
-                    end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->format("Y-m-d") }}',
-                    isReadOnly : true,
+                    start: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() }}',
+                    end: '{{  \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() }}',
+                    isReadOnly : true, 
+
                 },
             @endforeach
 
@@ -281,11 +306,11 @@
 
                     id: 'recursos{{$it_recursos->id}}',
                     calendarId: '2',
-                    title: 'Tipo: {{$it_recursos->cursoscapacitaciones}}',
-                    category: 'allday',
+                    title: '<i class="fas fa-graduation-cap i_calendar_cuadro"></i> Tipo: {{$it_recursos->cursoscapacitaciones}}',
+                    category: 'time',
                     dueDateClass: '',
-                    start: '{{ \Carbon\Carbon::parse($it_recursos->fecha_curso)->format("Y-m-d") }}',
-                    end: '',
+                    start: '{{ \Carbon\Carbon::parse($it_recursos->fecha_curso)->toDateTimeString() }}',
+                    end: '{{ \Carbon\Carbon::parse($it_recursos->fecha_fin)->toDateTimeString() }}',
                     isReadOnly : true,
                 },
 
@@ -295,7 +320,7 @@
                 {
                 id: 'planinicio{{ $it_plan_base->id }}',
                 calendarId: '1',
-                title: 'Actividad: {{ $it_plan_base->name }}',
+                title: '<i class="fas fa-thumbtack i_calendar_cuadro"></i> Actividad: {{ $it_plan_base->name }}',
                 category: 'allday',
                 dueDateClass: '',
                 start: '{{ \Carbon\Carbon::createFromTimestamp(($it_plan_base->start/1000))->toDateString()}}',

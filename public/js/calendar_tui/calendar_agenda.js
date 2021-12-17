@@ -48,7 +48,7 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = 'Actividades';
+    calendar.name = '<i class="fas fa-thumbtack i_calendar" style="color:#9e5fff;"></i> Actividades';
     calendar.color = '#ffffff';
     calendar.bgColor = '#9e5fff';
     calendar.dragBgColor = '#9e5fff';
@@ -59,7 +59,7 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = 'Cursos';
+    calendar.name = '<i class="fas fa-graduation-cap i_calendar" style="color:#ff5583;"></i> Cursos';
     calendar.color = '#ffffff';
     calendar.bgColor = '#ff5583';
     calendar.dragBgColor = '#ff5583';
@@ -69,7 +69,7 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = 'Auditorias';
+    calendar.name = '<i class="fas fa-clipboard-list i_calendar" style="color:#00a9ff;"></i> Auditorias';
     calendar.color = '#ffffff';
     calendar.bgColor = '#00a9ff';
     calendar.dragBgColor = '#00a9ff';
