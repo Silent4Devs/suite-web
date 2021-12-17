@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class EvidenciasDocumentosEmpleados extends Model
@@ -30,8 +31,17 @@ class EvidenciasDocumentosEmpleados extends Model
     protected $fillable = [
         'empleado_id',
         'documentos',
-
+        'nombre',
     ];
+
+    protected $appends = ['ruta_documento'];
+
+    public function getRutaDocumentoAttribute()
+    {
+        $empleado = Empleado::select('id', 'name')->find($this->empleado_id);
+
+        return asset('storage/expedientes/' . Str::slug($empleado->name) . '/' . $this->documentos);
+    }
 
     public function empleados_documentos()
     {

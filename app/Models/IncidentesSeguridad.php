@@ -32,7 +32,7 @@ class IncidentesSeguridad extends Model implements HasMedia
         'id',
     ];
 
-    protected $appends = ['folio', 'archivo', 'fecha_creacion'];
+    protected $appends = ['folio', 'archivo', 'fecha_creacion', 'fecha_cerrado'];
 
     // public function getFechaAttribute()
     // {
@@ -77,5 +77,10 @@ class IncidentesSeguridad extends Model implements HasMedia
     public function getFechaCreacionAttribute()
     {
         return Carbon::parse($this->fecha)->format('d-m-Y');
+    }
+
+    public function getFechaCerradoAttribute()
+    {
+        return $this->fecha_cierre ? Carbon::parse($this->fecha_ciere)->format('d-m-Y') : '';
     }
 }

@@ -73,7 +73,7 @@
                                     $permisoResponsable = false;
                                 }
                             }
-
+                            
                             foreach ($aprobadores as $aprobador) {
                                 if (auth()->user()->empleado->id == $aprobador->aprobadores_id) {
                                     $permisoAprobador = true;
@@ -82,7 +82,7 @@
                                     $permisoAprobador = false;
                                 }
                             }
-
+                            
                         @endphp
                         <div class="table-responsive">
                             <table class="table" style="font-size: 12px;">
@@ -160,11 +160,13 @@
                                                 @if ($aprobador->declaracion_id == $g5s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
+
                                                             @if (is_null($aplica))
                                                                 <p>Sin información</p>
                                                             @else
                                                                 {{ $aplica ? 'Si' : 'No' }}
                                                             @endif
+
                                                         </td>
                                                     @endif
                                                 @endif
@@ -200,136 +202,145 @@
                                                             @if (is_null($justificacion))
                                                                 <p>Sin información</p>
                                                             @else
-
                                                                 {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
-                                            @endif
-                                    @endforeach
+                                            @endforeach
 
 
-                                    @foreach ($responsables as $responsable)
-                                        @if ($responsable->declaracion_id == $g5s->id)
-                                            @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                <td class="text-justify">
-                                                    <a data-type="textarea" data-pk="{{ $g5s->id }}"
-                                                        data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
-                                                        data-title="Justificacion"
-                                                        data-value="{{ $responsable->justificacion }}"
-                                                        class="justificacion" data-name="justificacion">
-                                                    </a>
-                                                </td>
-                                            @endif
-                                        @endif
-                                    @endforeach
-
-                                    @php
-                                        foreach ($aprobadores as $aprobador) {
-                                            if ($aprobador->declaracion_id == $g5s->id) {
-                                                $estatusy = $aprobador->estatus;
-                                            }
-                                        }
-                                    @endphp
-
-                                    @foreach ($responsables as $responsable)
-                                        @if ($responsable->declaracion_id == $g5s->id)
-                                            @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                <td style="width:15%">
-                                                    @if (is_null($estatusy))
-                                                        <p>Sin revisión</p>
-                                                    @else
-                                                        {{ $estatusy }}
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g5s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td class="text-justify">
+                                                            <a data-type="textarea" data-pk="{{ $g5s->id }}"
+                                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
+                                                                data-title="Justificacion"
+                                                                data-value="{{ $responsable->justificacion }}"
+                                                                class="justificacion" data-name="justificacion">
+                                                            </a>
+                                                        </td>
                                                     @endif
-                                                </td>
-                                            @endif
-                                        @endif
-                                    @endforeach
+                                                @endif
+                                            @endforeach
 
-                                    @foreach ($aprobadores as $aprobador)
-                                        @if ($aprobador->declaracion_id == $g5s->id)
-                                            @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                <td style="width:15%">
-                                                    <a href="#" data-type="select" data-pk="{{ $g5s->id }}"
-                                                        data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
-                                                        data-title="Seleccionar estatus"
-                                                        data-value="{{ $aprobador->estatus }}" class="estatus"
-                                                        data-name="estatus" onchange='cambioOpciones();' id="opciones">
-                                                    </a>
-                                                </td>
-                                            @endif
-                                        @endif
-                                    @endforeach
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g5s->id) {
+                                                        $estatusy = $aprobador->estatus;
+                                                    }
+                                                }
+                                            @endphp
 
-
-                                    @php
-                                        foreach ($aprobadores as $aprobador) {
-                                            if ($aprobador->declaracion_id == $g5s->id) {
-                                                $comentariox = $aprobador->comentarios;
-                                            }
-                                        }
-                                    @endphp
-
-                                    @foreach ($aprobadores as $aprobador)
-                                        @if ($aprobador->declaracion_id == $g5s->id)
-                                            @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                <td class="text-justify">
-                                                    <a href="#" data-type="textarea" data-pk="{{ $g5s->id }}"
-                                                        data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
-                                                        data-title="Comentarios"
-                                                        data-value="{{ $aprobador->comentarios }}"
-                                                        class="comentarios" data-name="comentarios">
-                                                    </a>
-                                                </td>
-                                            @endif
-                                        @endif
-                                    @endforeach
-
-                                    @foreach ($responsables as $responsable)
-                                        @if ($responsable->declaracion_id == $g5s->id)
-                                            @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                <td class="text-justify">
-                                                    @if (is_null($justificacion))
-                                                        <p>Sin información</p>
-                                                    @else
-                                                        {{ $comentariox }}
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g5s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
+                                                        </td>
                                                     @endif
-                                                </td>
-                                            @endif
-                                        @endif
-                                    @endforeach
+                                                @endif
+                                            @endforeach
 
-
-                                    @php
-                                        foreach ($aprobadores as $aprobador) {
-                                            if ($aprobador->declaracion_id == $g5s->id) {
-                                                $fecha = $aprobador->updated_at;
-                                            }
-                                        }
-                                    @endphp
-
-                                    @foreach ($responsables as $responsable)
-                                        @if ($responsable->declaracion_id == $g5s->id)
-                                            @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                <td style="width:15%">
-                                                    {{ $fecha }}
-                                                </td>
-                                            @endif
-                                        @endif
-                                    @endforeach
-                                    @foreach ($aprobadores as $aprobador)
-                                        @if ($aprobador->declaracion_id == $g5s->id)
-                                            @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                <td style="width:15%" id="actualizacion_fecha_{{ $g5s->id }}">
-                                                    @if ($aprobador->estatus == 2)
-                                                        {{ $aprobador->updated_at }}
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g5s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                        <td style="width:15%">
+                                                            <a href="#" data-type="select"
+                                                                data-pk="{{ $g5s->id }}"
+                                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
+                                                                data-title="Seleccionar estatus"
+                                                                data-value="{{ $aprobador->estatus }}"
+                                                                class="estatus" data-name="estatus"
+                                                                onchange='cambioOpciones();' id="opciones">
+                                                            </a>
+                                                        </td>
                                                     @endif
-                                                </td>
-                                            @endif
-                                        @endif
-                                    @endforeach
+                                                @endif
+                                            @endforeach
 
-                                    </tr>
+
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g5s->id) {
+                                                        $comentariox = $aprobador->comentarios;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g5s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                        <td class="text-justify">
+                                                            <a href="#" data-type="textarea"
+                                                                data-pk="{{ $g5s->id }}"
+                                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g5s->id) }}"
+                                                                data-title="Comentarios"
+                                                                data-value="{{ $aprobador->comentarios }}"
+                                                                class="comentarios" data-name="comentarios">
+                                                            </a>
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g5s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td class="text-justify">
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $comentariox }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+
+                                            @php
+                                                foreach ($aprobadores as $aprobador) {
+                                                    if ($aprobador->declaracion_id == $g5s->id) {
+                                                        $fecha = $aprobador->updated_at;
+                                                    }
+                                                }
+                                            @endphp
+
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g5s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            {{ $fecha }}
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g5s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                        <td style="width:15%"
+                                                            id="actualizacion_fecha_{{ $g5s->id }}">
+                                                            @if ($aprobador->estatus == 2)
+                                                                {{ $aprobador->updated_at }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -411,9 +422,13 @@
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g6s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-
-                                                        {{ $aplica ? 'Si' : 'No' }}
-
+                                                        <td style="width:5%">
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -446,7 +461,11 @@
                                                 @if ($aprobador->declaracion_id == $g6s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -480,7 +499,17 @@
                                                 @if ($responsable->declaracion_id == $g6s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
 
                                                         </td>
                                                     @endif
@@ -632,7 +661,13 @@
                                         @foreach ($aprobadores as $aprobador)
                                             @if ($aprobador->declaracion_id == $g62s->id)
                                                 @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
-                                                    {{ $aplica ? 'Si' : 'No' }}
+                                                    <td style="width:5%">
+                                                        @if (is_null($aplica))
+                                                            <p>Sin información</p>
+                                                        @else
+                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                        @endif
+                                                    </td>
                                                 @endif
                                             @endif
                                         @endforeach
@@ -664,7 +699,11 @@
                                             @if ($aprobador->declaracion_id == $g62s->id)
                                                 @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                     <td class="text-justify">
-                                                        {{ $justificacion }}
+                                                        @if (is_null($justificacion))
+                                                            <p>Sin información</p>
+                                                        @else
+                                                            {{ $justificacion }}
+                                                        @endif
                                                     </td>
                                                 @endif
                                             @endif
@@ -698,7 +737,17 @@
                                             @if ($responsable->declaracion_id == $g62s->id)
                                                 @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                     <td style="width:15%">
-                                                        {{ $estatusy }}
+                                                        @if (is_null($estatusy))
+                                                            <p>Sin revisión</p>
+                                                        @else
+                                                            @if ($estatusy == 1)
+                                                                <p>Pendiente de aprobar</p>
+                                                            @elseif($estatusy==2)
+                                                                <p>Aprobada</p>
+                                                            @else
+                                                                <p>Rechazada</p>
+                                                            @endif
+                                                        @endif
                                                     </td>
                                                 @endif
                                             @endif
@@ -860,7 +909,11 @@
                                                 @if ($aprobador->declaracion_id == $g71s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -894,7 +947,11 @@
                                                 @if ($aprobador->declaracion_id == $g71s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -943,7 +1000,17 @@
                                                 @if ($responsable->declaracion_id == $g71s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1083,7 +1150,11 @@
                                                 @if ($aprobador->declaracion_id == $g72s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1117,7 +1188,11 @@
                                                 @if ($aprobador->declaracion_id == $g72s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1151,7 +1226,17 @@
                                                 @if ($responsable->declaracion_id == $g72s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1306,7 +1391,12 @@
                                                 @if ($responsable->declaracion_id == $g73s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }} </td>
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -1339,7 +1429,11 @@
                                                 @if ($aprobador->declaracion_id == $g73s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1391,7 +1485,17 @@
                                                 @if ($aprobador->declaracion_id == $g73s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td>
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1536,7 +1640,11 @@
                                                 @if ($aprobador->declaracion_id == $g81s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1571,7 +1679,11 @@
                                                 @if ($aprobador->declaracion_id == $g81s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1622,7 +1734,17 @@
                                                 @if ($responsable->declaracion_id == $g81s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1768,7 +1890,11 @@
                                                 @if ($aprobador->declaracion_id == $g82s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1802,7 +1928,11 @@
                                                 @if ($aprobador->declaracion_id == $g82s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1853,7 +1983,17 @@
                                                 @if ($responsable->declaracion_id == $g82s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -1994,7 +2134,11 @@
                                                 @if ($aprobador->declaracion_id == $g83s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2028,7 +2172,11 @@
                                                 @if ($aprobador->declaracion_id == $g83s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2079,7 +2227,17 @@
                                                 @if ($responsable->declaracion_id == $g83s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2237,7 +2395,11 @@
                                                 @if ($aprobador->declaracion_id == $g91s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2254,7 +2416,11 @@
                                                 @if ($responsable->declaracion_id == $g91s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2306,7 +2472,17 @@
                                                 @if ($responsable->declaracion_id == $g91s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2448,7 +2624,11 @@
                                                 @if ($aprobador->declaracion_id == $g92s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2482,7 +2662,11 @@
                                                 @if ($responsable->declaracion_id == $g92s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2533,7 +2717,17 @@
                                                 @if ($responsable->declaracion_id == $g92s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2673,7 +2867,11 @@
                                                 @if ($aprobador->declaracion_id == $g93s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $responsable->aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2707,7 +2905,11 @@
                                                 @if ($aprobador->declaracion_id == $g93s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2757,7 +2959,17 @@
                                                 @if ($responsable->declaracion_id == $g93s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2899,7 +3111,11 @@
                                                 @if ($aprobador->declaracion_id == $g94s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2933,7 +3149,11 @@
                                                 @if ($aprobador->declaracion_id == $g94s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -2967,7 +3187,17 @@
                                                 @if ($responsable->declaracion_id == $g94s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3128,7 +3358,11 @@
                                                 @if ($aprobador->declaracion_id == $g101s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3162,7 +3396,11 @@
                                                 @if ($aprobador->declaracion_id == $g101s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3196,7 +3434,17 @@
                                                 @if ($responsable->declaracion_id == $g101s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3356,7 +3604,11 @@
                                                 @if ($aprobador->declaracion_id == $g111s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3390,7 +3642,11 @@
                                                 @if ($aprobador->declaracion_id == $g111s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3425,7 +3681,17 @@
                                                 @if ($responsable->declaracion_id == $g111s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3583,7 +3849,11 @@
                                                 @if ($aprobador->declaracion_id == $g112s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3617,7 +3887,11 @@
                                                 @if ($aprobador->declaracion_id == $g112s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3651,7 +3925,17 @@
                                                 @if ($responsable->declaracion_id == $g112s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3811,7 +4095,11 @@
                                                 @if ($aprobador->declaracion_id == $g121s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3845,7 +4133,11 @@
                                                 @if ($responsable->declaracion_id == $g121s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -3879,7 +4171,17 @@
                                                 @if ($aprobador->declaracion_id == $g121s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4036,7 +4338,11 @@
                                                 @if ($aprobador->declaracion_id == $g122s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4070,7 +4376,11 @@
                                                 @if ($aprobador->declaracion_id == $g122s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4105,7 +4415,17 @@
                                                 @if ($responsable->declaracion_id == $g122s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4261,7 +4581,11 @@
                                                 @if ($aprobador->declaracion_id == $g123s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4295,7 +4619,11 @@
                                                 @if ($aprobador->declaracion_id == $g123s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4338,14 +4666,17 @@
                                                 @if ($responsable->declaracion_id == $g123s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            <a href="#" data-type="select"
-                                                                data-pk="{{ $g123s->id }}"
-                                                                data-url="{{ route('admin.declaracion-aplicabilidad.update', $g123s->id) }}"
-                                                                data-title="Seleccionar estatus"
-                                                                data-value="{{ $g123s->estatus }}"
-                                                                class="estatus" data-name="estatus"
-                                                                onchange='cambioOpciones();' id="opciones">
-                                                            </a>
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4487,7 +4818,11 @@
                                                 @if ($aprobador->declaracion_id == $g124s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4521,7 +4856,11 @@
                                                 @if ($aprobador->declaracion_id == $g124s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4555,7 +4894,17 @@
                                                 @if ($responsable->declaracion_id == $g124s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4711,7 +5060,11 @@
                                                 @if ($aprobador->declaracion_id == $g125s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4745,7 +5098,11 @@
                                                 @if ($aprobador->declaracion_id == $g125s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4779,7 +5136,17 @@
                                                 @if ($responsable->declaracion_id == $g125s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4938,7 +5305,11 @@
                                                 @if ($aprobador->declaracion_id == $g126s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -4973,7 +5344,11 @@
                                                 @if ($aprobador->declaracion_id == $g126s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5007,7 +5382,17 @@
                                                 @if ($responsable->declaracion_id == $g126s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5165,7 +5550,11 @@
                                                 @if ($aprobador->declaracion_id == $g127s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5199,7 +5588,11 @@
                                                 @if ($responsable->declaracion_id == $g127s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5233,7 +5626,17 @@
                                                 @if ($responsable->declaracion_id == $g127s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5393,7 +5796,11 @@
                                                 @if ($aprobador->declaracion_id == $g131s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5428,7 +5835,11 @@
                                                 @if ($responsable->declaracion_id == $g131s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5462,7 +5873,17 @@
                                                 @if ($responsable->declaracion_id == $g131s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5618,7 +6039,11 @@
                                                 @if ($aprobador->declaracion_id == $g132s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5651,7 +6076,13 @@
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g132s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
-                                                        {{ $justificacion }}
+                                                        <td class="text-justify">
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
+                                                        </td>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -5684,7 +6115,17 @@
                                                 @if ($responsable->declaracion_id == $g132s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5845,7 +6286,11 @@
                                                 @if ($aprobador->declaracion_id == $g141s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5880,7 +6325,11 @@
                                                 @if ($responsable->declaracion_id == $g141s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -5913,7 +6362,17 @@
                                                 @if ($responsable->declaracion_id == $g141s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6062,7 +6521,11 @@
                                                 @if ($aprobador->declaracion_id == $g142s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $responsable->aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6096,7 +6559,11 @@
                                                 @if ($responsable->declaracion_id == $g142s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6129,7 +6596,17 @@
                                                 @if ($responsable->declaracion_id == $g142s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6274,7 +6751,11 @@
                                                 @if ($aprobador->declaracion_id == $g143s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6308,7 +6789,11 @@
                                                 @if ($responsable->declaracion_id == $g143s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6342,7 +6827,17 @@
                                                 @if ($responsable->declaracion_id == $g143s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6513,7 +7008,11 @@
                                                 @if ($aprobador->declaracion_id == $g151s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
 
                                                         </td>
                                                     @endif
@@ -6548,7 +7047,11 @@
                                                 @if ($responsable->declaracion_id == $g151s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6592,7 +7095,17 @@
                                                 @if ($responsable->declaracion_id == $g151s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6749,8 +7262,11 @@
                                                 @if ($aprobador->declaracion_id == $g152s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
-
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6784,7 +7300,11 @@
                                                 @if ($responsable->declaracion_id == $g152s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6817,7 +7337,17 @@
                                                 @if ($responsable->declaracion_id == $g152s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -6974,10 +7504,19 @@
                                                     }
                                                 }
                                             @endphp
-
-                                            <td style="width:5%">
-                                                {{ $aplica ? 'Si' : 'No' }}
-                                            </td>
+                                            @foreach ($aprobadores as $aprobador)
+                                                @if ($aprobador->declaracion_id == $g161s->id)
+                                                    @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
+                                                        <td style="width:5%">
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
 
                                             @foreach ($responsables as $responsable)
                                                 @if ($responsable->declaracion_id == $g161s->id)
@@ -7008,7 +7547,11 @@
                                                 @if ($aprobador->declaracion_id == $g161s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7039,10 +7582,25 @@
                                                 }
                                             @endphp
 
-
-                                            <td style="width:15%">
-                                                {{ $estatusy }}
-                                            </td>
+                                            @foreach ($responsables as $responsable)
+                                                @if ($responsable->declaracion_id == $g161s->id)
+                                                    @if (auth()->user()->empleado->id == $responsable->empleado_id)
+                                                        <td style="width:15%">
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                @endif
+                                            @endforeach
 
                                             @foreach ($aprobadores as $aprobador)
                                                 @if ($aprobador->declaracion_id == $g161s->id)
@@ -7174,7 +7732,11 @@
                                                 @if ($aprobador->declaracion_id == $g171s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7209,7 +7771,11 @@
                                                 @if ($aprobador->declaracion_id == $g171s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7243,7 +7809,17 @@
                                                 @if ($responsable->declaracion_id == $g171s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7380,7 +7956,11 @@
                                                 @if ($aprobador->declaracion_id == $g172s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7416,7 +7996,11 @@
                                                 @if ($aprobador->declaracion_id == $g172s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7451,7 +8035,17 @@
                                                 @if ($responsable->declaracion_id == $g172s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7594,7 +8188,11 @@
                                                 @if ($aprobador->declaracion_id == $g181s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7628,7 +8226,11 @@
                                                 @if ($aprobador->declaracion_id == $g181s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7662,7 +8264,17 @@
                                                 @if ($responsable->declaracion_id == $g181s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7798,7 +8410,11 @@
                                                 @if ($aprobador->declaracion_id == $g182s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:5%">
-                                                            {{ $responsable->aplica ? 'Si' : 'No' }}
+                                                            @if (is_null($aplica))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $aplica ? 'Si' : 'No' }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7832,7 +8448,11 @@
                                                 @if ($aprobador->declaracion_id == $g182s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td class="text-justify">
-                                                            {{ $justificacion }}
+                                                            @if (is_null($justificacion))
+                                                                <p>Sin información</p>
+                                                            @else
+                                                                {{ $justificacion }}
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif
@@ -7866,7 +8486,17 @@
                                                 @if ($aprobador->declaracion_id == $g182s->id)
                                                     @if (auth()->user()->empleado->id == $aprobador->aprobadores_id)
                                                         <td style="width:15%">
-                                                            {{ $estatusy }}
+                                                            @if (is_null($estatusy))
+                                                                <p>Sin revisión</p>
+                                                            @else
+                                                                @if ($estatusy == 1)
+                                                                    <p>Pendiente de aprobar</p>
+                                                                @elseif($estatusy==2)
+                                                                    <p>Aprobada</p>
+                                                                @else
+                                                                    <p>Rechazada</p>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     @endif
                                                 @endif

@@ -274,7 +274,7 @@
                             data: 'activos_afectados'
                         },
                         {
-                            data: 'fecha_creacion',
+                            data: 'fecha_creacion'
                         },
                         {
                             data: 'id',
@@ -306,7 +306,7 @@
                             data: 'estatus'
                         },
                         {
-                            data: 'fecha_cierre'
+                            data: 'fecha_cerrado'
                         },
                         {
                             data: 'id',

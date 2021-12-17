@@ -385,6 +385,16 @@
             margin-top: -5px;
         }
 
+        .btn_link_agenda{
+            all:unset;
+            font-size: 11pt;
+            color: #00abb2;
+            cursor: pointer;
+            transition: 0.09;
+        }
+        .btn_link_agenda:hover{
+            transform: scale(1.1);
+        }
     </style>
 
 
@@ -404,8 +414,9 @@
                     <div class="p-2" id="clima"
                         style="border-left: solid 2px #00abb2; background-color: #e6e6e6;"></div>
                     <div class="p-3"
-                        style=" margin-top: 20px; border-left: solid 2px #00abb2;  background-color: #f3f3f3;">
-                        <div class="calendar calendar-first" id="calendar_first">
+                        style=" margin-top: 20px; border-left: solid 2px #00abb2;  background-color: #f3f3f3;position: relative;">
+                        <a href="{{asset('admin/system-calendar')}}" class="btn_link_agenda" style=" position: absolute; top:3px; right:8px;" title="Agenda organizacional"><i class="fas fa-calendar-alt"></i></a>
+                        <div class="calendar calendar-first" id="calendar_first" style="margin-top: 10px;">
                             <div class="calendar_header">
                                 <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
                                 <h2></h2>
@@ -419,20 +430,20 @@
                 <div class="col-sm-12 col-12 col-lg-6">
                     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleCaptions" data-slide-to=""
-                            class="active"></li>
+                            {{-- <li data-target="#carouselExampleCaptions" data-slide-to=""
+                            class="active"></li> --}}
                             @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
                                 <li data-target="#carouselExampleCaptions" data-slide-to="{{ $idx }}"
-                                    class="{{ $idx == 0 ? '' : '' }}"></li>
+                                    class="{{ $idx == 0 ? 'active' : '' }}"></li>
                             @endforeach
                         </ol>
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="img_carrusel" style="background-image: url('https://silent4business.com/wp-content/uploads/2019/06/Silent4Business-Logo-Color.png');">
+                            {{-- <div class="carousel-item active">
+                                <div class="img_carrusel" style="background-image: url('{{ asset('img/Carrusel_inicio.png') }}');">
                                 </div>
                                     <div class="carousel-caption d-none d-md-block">
                                     </div>
-                            </div>
+                            </div> --}}
                             @forelse($comunicacionSgis_carrusel as $idx=>$carrusel)
                                 @php
                                     if ($carrusel->first()->count()) {
@@ -444,7 +455,7 @@
                                     }
 
                                 @endphp
-                                <div class="carousel-item {{ $idx == 0 ? '' : '' }}">
+                                <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
                                     <div class="img_carrusel" style="background-image: url('{{ asset($imagen) }}');">
                                     </div>
                                     <div class="carousel-caption d-none d-md-block">
@@ -454,7 +465,7 @@
                             @empty
                                 <div class="carousel-item active">
                                     <div class="img_carrusel"
-                                        style="background-image: url('{{ asset('img/tabantaj_fondo_blanco.png') }}');">
+                                        style="background-image: url('{{ asset('img/Carrusel_inicio.png') }}');">
                                     </div>
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>Sin Comunicados</h5>
@@ -489,8 +500,13 @@
                             class="mr-2 fas fa-users"></i> <span>Comité del SGSI</span></a>
                     <a class="btn-silent" href="{{ asset('admin/sedes/organizacion') }}"><i
                             class="mr-2 fas fa-map-marked-alt "></i> <span>Sedes</span></a>
-                    <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}"><i
+
+                    @if($empleado_asignado)
+                        <a class="btn-silent" href="{{ asset('admin/portal-comunicacion/reportes') }}"><i
                             class="mr-2 fas fa-hand-paper"></i> <span>Reportar</span></a>
+                    @endif
+
+                    <a class="btn-silent" href="{{ asset('admin/directorio') }}"><i class=" mr-2 fas fa-address-book"></i> <span>Directorio</span></a>
                 </div>
 
                 <div class="mt-5 col-lg-9">
@@ -507,6 +523,9 @@
                                 }
 
                             @endphp
+                            <style type="text/css">
+                                height
+                            </style>
                             {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
 
                             <div class="img_comunicado" style="background-image: url('{{ asset($imagen) }}');"></div>
@@ -592,7 +611,17 @@
                             </div>
                         </div>
                     @empty
-                        <p>Sin documentos registrados</p>
+                        <div class="comunicado" style="position:relative;">
+                            <div class="img_comunicado"
+                                style="background-image: url('{{ asset('img/no_docs.svg') }}'); transform: scale(0.8);"></div>
+                            <div class="text_comunicado">
+                                <h4 class="w-100">Sin documentos que mostar</h4>
+                                <p class="w-100">
+
+                                </p>
+                                <a href=""></a>
+                            </div>
+                        </div>
                     @endforelse
                 </div>
 
@@ -653,7 +682,14 @@
                                             @endif
                                         </p>
                                         <h6 class="mt-3">Fecha de cumpleaños</h6>
-                                        <span>{{ \Carbon\Carbon::parse($cumple->cumpleaños)->format('d-m-Y') }}</span>
+                                        @php
+                                            $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                                            $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
+                                            $mes = $meses[($fecha->format('n')) - 1];
+                                            $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
+                                        @endphp
+
+                                        <span>{{ $inputs['Fecha'] }}</span>
                                     </div>
                                 </div>
                             @empty
@@ -661,7 +697,7 @@
                             @endforelse
                         </div>
 
-                        <h2 class="mt-5 titulo-seccion"><i class="mr-3 fas fa-birthday-cake"></i>Aniversarios</h2>
+                        <h2 class="mt-5 titulo-seccion"><i class="mr-3 fas fa-medal"></i>Aniversarios</h2>
                         <div class="caja_nuevo">
                             <div class="caja_nuevo">
                                 @forelse($aniversarios as $aniversario)
