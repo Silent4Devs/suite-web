@@ -419,20 +419,20 @@
                 <div class="col-sm-12 col-12 col-lg-6">
                     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleCaptions" data-slide-to=""
-                            class="active"></li>
+                            {{-- <li data-target="#carouselExampleCaptions" data-slide-to=""
+                            class="active"></li> --}}
                             @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
                                 <li data-target="#carouselExampleCaptions" data-slide-to="{{ $idx }}"
-                                    class="{{ $idx == 0 ? '' : '' }}"></li>
+                                    class="{{ $idx == 0 ? 'active' : '' }}"></li>
                             @endforeach
                         </ol>
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="img_carrusel" style="background-image: url('https://silent4business.com/wp-content/uploads/2019/06/Silent4Business-Logo-Color.png');">
+                            {{-- <div class="carousel-item active">
+                                <div class="img_carrusel" style="background-image: url('{{ asset('img/Carrusel_inicio.png') }}');">
                                 </div>
                                     <div class="carousel-caption d-none d-md-block">
                                     </div>
-                            </div>
+                            </div> --}}
                             @forelse($comunicacionSgis_carrusel as $idx=>$carrusel)
                                 @php
                                     if ($carrusel->first()->count()) {
@@ -444,7 +444,7 @@
                                     }
 
                                 @endphp
-                                <div class="carousel-item {{ $idx == 0 ? '' : '' }}">
+                                <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
                                     <div class="img_carrusel" style="background-image: url('{{ asset($imagen) }}');">
                                     </div>
                                     <div class="carousel-caption d-none d-md-block">
@@ -454,7 +454,7 @@
                             @empty
                                 <div class="carousel-item active">
                                     <div class="img_carrusel"
-                                        style="background-image: url('{{ asset('img/tabantaj_fondo_blanco.png') }}');">
+                                        style="background-image: url('{{ asset('img/Carrusel_inicio.png') }}');">
                                     </div>
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>Sin Comunicados</h5>
