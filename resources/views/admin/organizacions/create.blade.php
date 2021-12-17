@@ -2,8 +2,15 @@
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{ asset('../css/colores.css') }}">
+<script src="https://cdn.ckeditor.com/4.17.1/full-all/ckeditor.js"></script>
 
+<style>
 
+.btn .btn-danger{
+    background-color: #3e223d !important;
+}
+
+</style>
 
 <div class="mt-4 card">
     <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -15,14 +22,14 @@
             @csrf
 
 
-                <div class="col-md-12 col-sm-12">
-                    <div class="card vrd-agua">
-                        <p class="mb-1 text-center text-white">DATOS GENERALES</p>
-                    </div>
+            <div class="col-md-12 col-sm-12">
+                <div class="card vrd-agua">
+                    <p class="mb-1 text-center text-white">DATOS GENERALES</p>
                 </div>
+            </div>
 
 
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-12">
                 <label class="required" for="empresa"><i class="far fa-building iconos-crear"></i> Nombre de la Empresa</label>
                 <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}" required>
                 @if($errors->has('empresa'))
@@ -32,7 +39,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span>
             </div>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-12">
                 <label class="required" for="direccion"> <i class="fas fa-map-marker-alt iconos-crear"></i> {{ trans('cruds.organizacion.fields.direccion') }}</label>
                 <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" name="direccion" id="direccion" required style="min-height: 0px; max-height: 200px; height: 35px;">{{ old('direccion') }}</textarea>
                 @if($errors->has('direccion'))
@@ -42,7 +49,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
             </div>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-4">
                 <label class="" for="razon_social"><i class="far fa-building iconos-crear"></i> Razón Social</label>
                 <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" type="text" name="razon_social" id="razon_social" value="{{ old('razon_social', '') }}">
                 @if($errors->has('razon_social'))
@@ -52,7 +59,7 @@
                 @endif
                 {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
             </div>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-4">
                 <label class="" for="rfc"><i class="fas fa-file-alt iconos-crear"></i>RFC</label>
                 <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="rfc" id="rfc" value="{{ old('rfc', '') }}" >
                 @if($errors->has('rfc'))
@@ -62,7 +69,7 @@
                 @endif
                 {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span> --}}
             </div>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-4">
                 <label for="telefono"> <i class="fas fa-phone iconos-crear"></i> Teléfono</label>
                 <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number" name="telefono" id="telefono" value="{{ old('telefono', '') }}" step="1">
                 @if($errors->has('telefono'))
@@ -92,6 +99,63 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
             </div>
+            <div class="form-group col-sm-3">
+                <label for="linkedln"><i class="fab fa-linkedin iconos-crear"></i>Linkedln</label>
+                <input class="form-control {{ $errors->has('linkedln') ? 'is-invalid' : '' }}" type="text" name="linkedln" id="linkedln" value="{{ old('linkedln', '') }}">
+                @if($errors->has('linkedln'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('linkedln') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="youtube"><i class="fab fa-youtube iconos-crear"></i>YouTube</label>
+                <input class="form-control {{ $errors->has('youtube') ? 'is-invalid' : '' }}" type="text" name="youtube" id="youtube" value="{{ old('youtube', '') }}">
+                @if($errors->has('youtube'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('youtube') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="facebook"><i class="fab fa-facebook-square iconos-crear"></i>Facebook</label>
+                <input class="form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" type="text" name="facebook" id="facebook" value="{{ old('facebook', '') }}">
+                @if($errors->has('facebook'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('facebook') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="twitter"><i class="fab fa-twitter-square iconos-crear"></i>Twitter</label>
+                <input class="form-control {{ $errors->has('twitter') ? 'is-invalid' : '' }}" type="text" name="twitter" id="twitter" value="{{ old('twitter', '') }}">
+                @if($errors->has('twitter'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('twitter') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
+            </div>
+
+
+            <div class="form-group col-12">
+                <table class="table" id="user_table">
+                    <tbody>
+                        <div class=" row col-12 p-0 m-0">
+                            <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i class="fas fa-calendar-alt iconos-crear"></i>Día Laboral</label>
+                            <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i class="fas fa-clock iconos-crear"></i>Horario Laboral Inicio</label>
+                            <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"><i class="fas fa-clock iconos-crear"></i>Horario Laboral Fin</label>
+                            <label class="col-md-3 col-sm-3" for="working_day" style="text-align: center;"></i>Opciones</label>
+                        </div>
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
+
+
             <div class="form-group col-sm-6">
                 <label for="logotipo"> <i class="fas fa-image iconos-crear"></i> Logotipo <strong> (Selecciona tu imagen en formato .png) </strong></label>
                 <div class="mb-3 input-group">
@@ -108,6 +172,13 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
             </div>
+
+            <div class="col-md-12 col-sm-12">
+                <div class="card vrd-agua">
+                    <p class="mb-1 text-center text-white">DATOS COMPLEMENTARIOS</p>
+                </div>
+            </div>
+
             <div class="form-group col-sm-6">
                 <label class="" for="representante_legal"><i class="iconos-crear fas fa-user"></i>Representante Legal</label>
                 <input class="form-control {{ $errors->has('representante_legal') ? 'is-invalid' : '' }}" type="text" name="representante_legal" id="representante_legal" value="{{ old('representante_legal', '') }}" >
@@ -151,11 +222,7 @@
             </div>
 
 
-            <div class="col-md-12 col-sm-12">
-                <div class="card vrd-agua">
-                    <p class="mb-1 text-center text-white">DATOS COMPLEMENTARIOS</p>
-                </div>
-            </div>
+
 
 
             <div class="form-group col-sm-6">
@@ -181,7 +248,6 @@
             </div>
             <div class="form-group col-sm-6">
                 <label for="mision"> <i class="fas fa-flag iconos-crear"></i> {{ trans('cruds.organizacion.fields.mision') }}</label>
-                <label for="valores"> <i class="far fa-heart iconos-crear"></i> {{ trans('cruds.organizacion.fields.valores') }}</label>
                 <textarea class="form-control {{ $errors->has('mision') ? 'is-invalid' : '' }}" name="mision" id="mision">{{ old('mision') }}</textarea>
                 @if($errors->has('mision'))
                     <div class="invalid-feedback">
@@ -230,6 +296,137 @@
 @endsection
 
 @section('scripts')
+
+
+
+<script>
+  $(document).ready(function () {
+    var count = 1;
+
+    dynamic_field(count);
+
+    function dynamic_field(number) {
+        html = "<tr>";
+        html += '<td class="col-3"><select class="workingSelect form-control" name="working['+number+'][day][]" id="working_day"><option value="">Seleccione una opción</option>';
+        html+= '<option  value="Lunes" >Lunes</option>';
+        html+= '<option  value="Martes" >Martes</option>';
+        html+= '<option  value="Miercoles" >Miercoles</option>';
+        html+= '<option  value="Jueves" >Jueves</option>';
+        html+= '<option  value="Viernes" >Viernes</option>';
+        html+= '<option  value="Sabado" >Sabado</option>';
+        html+= '<option  value="Domingo" >Domingo</option>';
+        html+= '</select></td>';
+        html +='<td class="col-3"><input class="form-control" type="time" name="working['+number+'][start_time][]" id="start_work_time" ></td>';
+        html +='<td class="col-3"><input class="form-control" type="time" name="working['+number+'][end_time][]" id="end_work_time" ></td>';
+        if (number > 1) {
+            html +=
+            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3" style="background-color: #d96161 !important;"><i class="fas fa-trash-alt"></i></button></td></tr>';
+            $("#user_table tbody").append(html);
+        } else {
+            html +=
+                '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
+                $("#user_table tbody").html(html);
+        }
+    }
+
+
+
+
+    $(document).on("click", "#add", function () {
+        count++;
+        var divs = document.getElementsByClassName("workingSelect").length;
+        console.log("Hay " + divs + " elementos");
+        if(divs <=7){
+            dynamic_field(count);
+        }
+    });
+
+    $(document).on("click", ".remove", function () {
+      count--;
+      $(this).closest("tr").remove();
+    });
+
+  });
+
+</script>
+
+
+<script>
+    CKEDITOR.replace('mision', {
+        toolbar: [{
+        name: 'document',
+            items: [
+                'Maximize', '-',
+                'Styles', 'Format', 'Font', 'FontSize', '-',
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                'Bold', 'Italic', 'Underline', 'Strike', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                'Undo', 'Redo', '-', 'Scayt', '-',
+                'TextColor', 'BGColor', '-',
+                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+            ]
+        }]
+    });
+</script>
+<script>
+    CKEDITOR.replace('vision', {
+        toolbar: [{
+        name: 'document',
+            items: [
+                'Maximize', '-',
+                'Styles', 'Format', 'Font', 'FontSize', '-',
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                'Bold', 'Italic', 'Underline', 'Strike', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                'Undo', 'Redo', '-', 'Scayt', '-',
+                'TextColor', 'BGColor', '-',
+                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+            ]
+        }]
+    });
+</script>
+<script>
+    CKEDITOR.replace('valores', {
+        toolbar: [{
+        name: 'document',
+            items: [
+                'Maximize', '-',
+                'Styles', 'Format', 'Font', 'FontSize', '-',
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                'Bold', 'Italic', 'Underline', 'Strike', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                'Undo', 'Redo', '-', 'Scayt', '-',
+                'TextColor', 'BGColor', '-',
+                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+            ]
+        }]
+    });
+</script>
+<script>
+    CKEDITOR.replace('antecedentes', {
+        toolbar: [{
+        name: 'document',
+            items: [
+                'Maximize', '-',
+                'Styles', 'Format', 'Font', 'FontSize', '-',
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                'Bold', 'Italic', 'Underline', 'Strike', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                'Undo', 'Redo', '-', 'Scayt', '-',
+                'TextColor', 'BGColor', '-',
+                'CopyFormatting', 'RemoveFormat', 'NumberedList', 'BulletedList', '-',
+                'Outdent', 'Indent', '-',
+                'Link', 'Unlink', 'Image', 'Table', 'SpecialChar'
+            ]
+        }]
+    });
+</script>
 
 <script>
 

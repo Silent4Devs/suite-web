@@ -129,7 +129,7 @@
             </label>
         </div>
         <div class="form-group col-sm-3">
-            <label class="required" for="dire_id"><i class="fas fa-map iconos-crear"></i>Direccion</label>
+            <label class="required" for="dire_id"><i class="fas fa-map iconos-crear"></i>Dirección</label>
             <br>
             <label class="c-switch c-switch-lg c-switch-pill c-switch-label c-switch-info" style="margin-left: 30px;">
                 <input type="checkbox" wire:model.debounce.800ms="dire_id" class="c-switch-input">

@@ -76,9 +76,21 @@ function hexToRGBA(hex) {
     calendar.borderColor = '#00a9ff';
     addCalendar(calendar);
 
-    
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = 'Eventos';
+    calendar.color = '#000000';
+    calendar.bgColor = '#87F378';
+    calendar.dragBgColor = '#87F378';
+    calendar.borderColor = '#87F378';
+    addCalendar(calendar);
 
-    
 
-    
+
+
+
+
+
+
 })();

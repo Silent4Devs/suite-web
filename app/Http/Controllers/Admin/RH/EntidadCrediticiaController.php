@@ -84,7 +84,14 @@ class EntidadCrediticiaController extends Controller
      */
     public function update(Request $request, EntidadCrediticia $entidadCrediticia)
     {
-        //
+        $request->validate([
+            'entidad' => 'required|string|max:255',
+            'descripcion' => 'nullable|string|max:4000',
+        ]);
+
+        EntidadCrediticia::create($request->all());
+
+        return redirect()->route('admin.entidades-crediticias.index')->with('success', 'Entidad crediticia creada');
     }
 
     /**

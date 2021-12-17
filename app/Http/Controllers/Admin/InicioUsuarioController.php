@@ -8,6 +8,7 @@ use App\Models\AnalisisSeguridad;
 use App\Models\Area;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
+use App\Models\Calendario;
 use App\Models\Denuncias;
 use App\Models\Documento;
 use App\Models\Empleado;
@@ -107,6 +108,7 @@ class InicioUsuarioController extends Controller
         $auditoria_internas = new AuditoriaInterna;
         $empleado = auth()->user()->empleado;
         $recursos = collect();
+        $eventos =Calendario::get();
         if ($usuario->empleado) {
             $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
                 $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);
@@ -138,6 +140,10 @@ class InicioUsuarioController extends Controller
         $mis_evaluaciones = new EvaluadoEvaluador;
         $lista_evaluaciones = collect();
         $last_evaluacion = collect();
+        $equipo_a_cargo = collect();
+        $equipo_trabajo = collect();
+        $supervisor = null;
+        $mis_objetivos = collect();
         if ($usuario->empleado) {
             $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
 
@@ -185,19 +191,20 @@ class InicioUsuarioController extends Controller
             // }
             // dd($lista_evaluaciones);
             // SECCION MIS DATOS
-            $equipo_a_cargo = $this->obtenerEquipoACargo($usuario->empleado->children);
-            $equipo_a_cargo = Empleado::find($equipo_a_cargo);
+            if ($usuario->empleado->children->count()) {
+                $equipo_a_cargo = $this->obtenerEquipo($usuario->empleado->children);
+                $equipo_a_cargo = Empleado::find($equipo_a_cargo);
+            } else {
+                $equipo_trabajo = $usuario->empleado->empleados_misma_area;
+                $equipo_trabajo = Empleado::find($equipo_trabajo);
+            }
             $supervisor = $usuario->empleado->supervisor;
-        } else {
-            $equipo_a_cargo = collect();
-            $supervisor = null;
-            $mis_objetivos = collect();
         }
 
         $panel_rules = PanelInicioRule::select('nombre', 'n_empleado', 'area', 'jefe_inmediato', 'puesto', 'perfil', 'fecha_ingreso', 'genero', 'estatus', 'email', 'telefono', 'sede', 'direccion', 'cumpleaños')->get()->first();
         $activos = Activo::select('id', 'nombreactivo')->where('id_responsable', '=', auth()->user()->empleado->id)->get();
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos'));
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -453,7 +460,7 @@ class InicioUsuarioController extends Controller
         ];
     }
 
-    public function obtenerEquipoACargo($childrens)
+    public function obtenerEquipo($childrens)
     {
         $equipo_a_cargo = collect();
 
@@ -461,7 +468,7 @@ class InicioUsuarioController extends Controller
             $equipo_a_cargo->push($evaluador->id);
 
             if (count($evaluador->children)) {
-                $equipo_a_cargo->push($this->obtenerEquipoACargo($evaluador->children));
+                $equipo_a_cargo->push($this->obtenerEquipo($evaluador->children));
             }
         }
 
@@ -814,7 +821,7 @@ class InicioUsuarioController extends Controller
             return redirect('admin/inicioUsuario/capacitaciones/archivo');
         }
 
-        
+
     }
 
     public function recuperarCapacitacion($id)
@@ -828,7 +835,7 @@ class InicioUsuarioController extends Controller
         if ($errors) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
-        
+
     }
 
     public function archivoCapacitacion()

@@ -10,9 +10,15 @@
             @php
                 use App\Models\Organizacion;
                 $organizacion = Organizacion::select('id', 'logotipo')->first();
-                $logotipo = $organizacion->logotipo;
+                if (!is_null($organizacion)) {
+                    $logotipo = $organizacion->logotipo;
+                }else {
+                   $logotipo  = "logotipo-tabantaj.png";
+                }
             @endphp
+
             <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
+
         </div>
 
     </div>
@@ -50,7 +56,7 @@
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('organizacion_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route('admin.organizacions.index') }}"
+                            <a href="{{ route('admin.organizacions.visualizarorganizacion') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
                                 <i class="fas fa-bullseye iconos_menu letra_blanca">
 
@@ -383,6 +389,13 @@
                         <font class="letra_blanca" style="margin-left:10px;"> Evaluación 360° </font>
                     </a>
                 </li>
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route('admin.tabla-calendario.index') }}"
+                        class="c-sidebar-nav-link {{ request()->is('tabla-calendario') || request()->is('tabla-calendario/*') ? 'active' : '' }}">
+                        <i class="fas fa-calendar-check iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca">Calendario</font>
+                    </a>
+                </li>
             </ul>
         </li>
 
@@ -415,6 +428,21 @@
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('documentos_access')
+
+
+
+
+                        @can('organizacion_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route('admin.organizacions.index') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/organizacions') || request()->is('admin/organizacions/*') ? 'active' : '' }}">
+                                    <i class="fas fa-bullseye iconos_menu letra_blanca">
+
+                                    </i>
+                                    <font class="letra_blanca" style="margin-left:10px;">Mi Organización</font>
+                                </a>
+                            </li>
+                        @endcan
                         <li
                             class="c-sidebar-nav-dropdown {{ request()->is('admin/carpeta*') ? 'c-show' : '' }} {{ request()->is('admin/crear-documentos*') ? 'c-show' : '' }}">
                             <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -825,7 +853,7 @@
             </li>
         @endcan --}}
         <div class="row lemnt_row_menu" style="padding-bottom:300px;">
-            
+
         </div>
     </ul>
 
