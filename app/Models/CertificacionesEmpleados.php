@@ -38,6 +38,17 @@ class CertificacionesEmpleados extends Model
 
     ];
 
+    protected $appends = ['vigencia_ymd'];
+
+    public function getVigenciaYmdAttribute()
+    {
+        if ($this->vigencia) {
+            return Carbon::parse($this->vigencia)->format('Y-m-d');
+        } else {
+            return null;
+        }
+    }
+
     public function empleado_certificaciones()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');
