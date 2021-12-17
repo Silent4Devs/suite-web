@@ -194,6 +194,24 @@
                             </div>
                         </div>
                         <div class="p-3 mt-3 card" x-data="{show:false}">
+                            <h5 class="mb-0"><i class="fas fa-award mr-2"></i>Mis Competencias
+                                <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
+                                        class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
+                            </h5>
+                            <hr class="hr-custom-title">
+                            <div class="row align-items-center" id="listaCompetenciaCV" x-show="show"
+                                x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                                <div class="container text-center mt-1">
+                                    @if ($usuario->empleado)
+                                        <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}"
+                                            class="btn btn-success">
+                                            Ver Competencias
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3 mt-3 card" x-data="{show:false}">
                             <h5 class="mb-0"><i class="mr-2 fas fa-users"></i>Mi Equipo
                                 @if ($last_evaluacion)
                                     <a href="{{ route('admin.ev360-evaluaciones.evaluacionesDeMiEquipo', ['evaluacion' => $last_evaluacion, 'evaluador' => auth()->user()->empleado->id]) }}"
@@ -294,27 +312,6 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                    {{-- <div class="text-center col-6 col-sm-6 col-lg-6 col-md-6">
-                                        <img class="img-fluid img-profile-secondary" style="position:relative;"
-                                            src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}">
-                                        <p class="text-muted" style="font-size:10px;">
-                                            {{ Str::limit($empleado->name, 12, '...') }}</p>
-                                        <span class="btn-lista-acciones"><i class="fa fa-edit"></i></span>
-                                        <div class="list-group lista-acciones lista-toggle">
-                                            <a type="button"
-                                                href="{{ route('admin.ev360-objetivos-empleado.create', $empleado) }}"
-                                                class="list-group-item list-group-item-action text-muted"
-                                                aria-current="true"><i class="fas fa-dot-circle"></i>
-                                                Objetivos
-                                            </a>
-                                            <a type="button"
-                                                href="{{ route('admin.ev360-evaluaciones.evaluacionesDelEmpleado', $empleado) }}"
-                                                class="list-group-item list-group-item-action text-muted"
-                                                aria-current="true"><i class="fas fa-book"></i>
-                                                Evaluaciones
-                                            </a>
-                                        </div>
-                                    </div> --}}
                                 @endforelse
                             </div>
                         </div>
@@ -403,7 +400,7 @@
                                     @endif
                                 </div>
                                 <div class="row">
-                                     @if (!empty($panel_rules->n_empleado))
+                                    @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->area)
                                             <div class="col-3 title-info-personal">Área</div>
                                         @endif
@@ -597,7 +594,7 @@
                                 <div class="mb-0 card h-100">
                                     <div class="pb-0 card-body" x-data="{show:false}">
                                         <h5 class="mb-0 d-inline-block"><i class="mr-2 fas fa-edit"></i>Mi
-                                            autoevaluación
+                                            Autoevaluación
                                         </h5>
                                         @if ($last_evaluacion)
                                             @include('admin.inicioUsuario.info_card_evaluacion')
@@ -652,7 +649,7 @@
                                 <div class="mb-0 card h-100">
                                     <div class="pb-0 mb-0 card-body" x-data="{show:false}">
                                         <h5 class="mb-0 d-inline-block"><i class="mr-2 fas fa-edit"></i>Evaluaciones a
-                                            realizar
+                                            Realizar
                                             <div class="circle-total-evaluaciones">
                                                 <span
                                                     style="position: absolute;top: 3px;">{{ $evaluaciones->count() }}</span>
