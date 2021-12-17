@@ -55,6 +55,7 @@ class EducacionEmpleados extends Model
             return null;
         }
     }
+
     public function getYearFinYmdAttribute()
     {
         if ($this->año_fin) {
@@ -63,6 +64,7 @@ class EducacionEmpleados extends Model
             return null;
         }
     }
+
     public function empleado_educacion()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');

@@ -2,12 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Empleado;
 use App\Models\EvidenciasDocumentosEmpleados;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
 
 class ExpedienteEmpleadoComponent extends Component
 {
@@ -26,53 +25,56 @@ class ExpedienteEmpleadoComponent extends Component
             'documentoIne' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoIne->extension();
-        $this->documentoIne->storeAs("public/expedientes/" . Str::slug($this->empleado->name) . "/", "INE.{$extension}");
+        $this->documentoIne->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "INE.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => 'INE',
             'documentos' => "INE.{$extension}",
-            'empleado_id' => $this->empleado->id
+            'empleado_id' => $this->empleado->id,
         ]);
     }
+
     public function updatedDocumentoImss()
     {
         $this->validate([
             'documentoImss' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoImss->extension();
-        $nombre_documento = "IMSS";
-        $this->documentoImss->storeAs("public/expedientes/" . Str::slug($this->empleado->name) . "/", "{$nombre_documento}.{$extension}");
+        $nombre_documento = 'IMSS';
+        $this->documentoImss->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "{$nombre_documento}.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => $nombre_documento,
             'documentos' => "{$nombre_documento}.{$extension}",
-            'empleado_id' => $this->empleado->id
+            'empleado_id' => $this->empleado->id,
         ]);
     }
+
     public function updatedDocumentoCurp()
     {
         $this->validate([
             'documentoCurp' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoCurp->extension();
-        $nombre_documento = "CURP";
-        $this->documentoCurp->storeAs("public/expedientes/" . Str::slug($this->empleado->name) . "/", "{$nombre_documento}.{$extension}");
+        $nombre_documento = 'CURP';
+        $this->documentoCurp->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "{$nombre_documento}.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => $nombre_documento,
             'documentos' => "{$nombre_documento}.{$extension}",
-            'empleado_id' => $this->empleado->id
+            'empleado_id' => $this->empleado->id,
         ]);
     }
+
     public function updatedDocumentoRFC()
     {
         $this->validate([
             'documentoRfc' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoRfc->extension();
-        $nombre_documento = "RFC";
-        $this->documentoRfc->storeAs("public/expedientes/" . Str::slug($this->empleado->name) . "/", "{$nombre_documento}.{$extension}");
+        $nombre_documento = 'RFC';
+        $this->documentoRfc->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "{$nombre_documento}.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => $nombre_documento,
             'documentos' => "{$nombre_documento}.{$extension}",
-            'empleado_id' => $this->empleado->id
+            'empleado_id' => $this->empleado->id,
         ]);
     }
 
@@ -109,7 +111,7 @@ class ExpedienteEmpleadoComponent extends Component
     public function removeDocumento($documento_id)
     {
         $evidencia = EvidenciasDocumentosEmpleados::find($documento_id);
-        Storage::disk('public')->delete("expedientes/" . Str::slug($this->empleado->name) . "/" . $evidencia->documentos);
+        Storage::disk('public')->delete('expedientes/' . Str::slug($this->empleado->name) . '/' . $evidencia->documentos);
         $evidencia->delete();
         $this->checkIfDocumentExists();
     }
@@ -117,8 +119,9 @@ class ExpedienteEmpleadoComponent extends Component
     public function render()
     {
         $this->checkIfDocumentExists();
+
         return view('livewire.expediente-empleado-component', [
-            'empleado' => $this->empleado
+            'empleado' => $this->empleado,
         ]);
     }
 }

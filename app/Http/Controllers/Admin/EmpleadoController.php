@@ -534,17 +534,17 @@ class EmpleadoController extends Controller
 
     public function storeCertificaciones(Request $request, $empleado)
     {
-        if ($request->esVigente == "true") {
+        if ($request->esVigente == 'true') {
             $request->validate([
-                "nombre" => "required|string|max:255",
-                "documento" => "nullable|mimes:pdf|max:10000",
-                "vigencia" => "required|date|max:255",
-                "estatus" => "required|string|max:255",
+                'nombre' => 'required|string|max:255',
+                'documento' => 'nullable|mimes:pdf|max:10000',
+                'vigencia' => 'required|date|max:255',
+                'estatus' => 'required|string|max:255',
             ]);
         } else {
             $request->validate([
-                "nombre" => "required|string|max:255",
-                "documento" => "nullable|mimes:pdf|max:10000"
+                'nombre' => 'required|string|max:255',
+                'documento' => 'nullable|mimes:pdf|max:10000',
             ]);
         }
         // dd($request->all());
@@ -578,22 +578,23 @@ class EmpleadoController extends Controller
             }
         }
     }
+
     public function updateCertificaciones(Request $request, CertificacionesEmpleados $certificacion)
     {
         if (isset($request->name)) {
             $request->validate([
-                "nombre" => "required|string|max:255",
+                'nombre' => 'required|string|max:255',
             ]);
         }
         if (isset($request->vigencia)) {
             $request->validate([
-                "vigencia" => "required|date",
-                "estatus" => "required|string|max:255",
+                'vigencia' => 'required|date',
+                'estatus' => 'required|string|max:255',
             ]);
         }
         if (isset($request->documento)) {
             $request->validate([
-                "documento" => "required|mimes:pdf|max:10000"
+                'documento' => 'required|mimes:pdf|max:10000',
             ]);
         }
 
@@ -614,14 +615,16 @@ class EmpleadoController extends Controller
         } else {
             $certificacion->update($request->all());
         }
+
         return response()->json(['status' => 'success', 'message' => 'Certificado Actualizado']);
     }
 
     public function deleteFileCertificacion(Request $request, CertificacionesEmpleados $certificacion)
     {
         $certificacion->update([
-            'documento' => null
+            'documento' => null,
         ]);
+
         return response()->json(['status' => 'success', 'message' => 'Certificado Actualizado']);
     }
     // public function deleteDocumento(Request $request,  $certificacion)
@@ -659,28 +662,28 @@ class EmpleadoController extends Controller
             }
         }
     }
+
     public function updateCurso(Request $request, CursosDiplomasEmpleados $curso)
     {
-
         if (array_key_exists('curso_diploma', $request->all())) {
             $request->validate([
-                'curso_diploma' => 'required|string|max:255'
+                'curso_diploma' => 'required|string|max:255',
             ]);
         }
 
         if (array_key_exists('tipo', $request->all())) {
             $request->validate([
-                'tipo' => 'required|string|max:255'
+                'tipo' => 'required|string|max:255',
             ]);
         }
         if (array_key_exists('año', $request->all())) {
             $request->validate([
-                'año' => 'required|date'
+                'año' => 'required|date',
             ]);
         }
         if (array_key_exists('duracion', $request->all())) {
             $request->validate([
-                'duracion' => 'required|numeric|min:1'
+                'duracion' => 'required|numeric|min:1',
             ]);
         }
 
@@ -721,31 +724,30 @@ class EmpleadoController extends Controller
 
     public function updateExperiencia(Request $request, ExperienciaEmpleados $experiencia)
     {
-
         if (array_key_exists('empresa', $request->all())) {
             $request->validate([
-                'empresa' => 'required|string|max:255'
+                'empresa' => 'required|string|max:255',
             ]);
         }
 
         if (array_key_exists('puesto', $request->all())) {
             $request->validate([
-                'puesto' => 'required|string|max:255'
+                'puesto' => 'required|string|max:255',
             ]);
         }
         if (array_key_exists('descripcion', $request->all())) {
             $request->validate([
-                'descripcion' => 'required|string|max:1500'
+                'descripcion' => 'required|string|max:1500',
             ]);
         }
         if (array_key_exists('inicio_mes', $request->all())) {
             $request->validate([
-                'inicio_mes' => 'required|date'
+                'inicio_mes' => 'required|date',
             ]);
         }
         if (array_key_exists('fin_mes', $request->all())) {
             $request->validate([
-                'fin_mes' => 'required|date'
+                'fin_mes' => 'required|date',
             ]);
         }
 
@@ -785,25 +787,24 @@ class EmpleadoController extends Controller
 
     public function updateEducacion(Request $request, EducacionEmpleados $educacion)
     {
-
         if (array_key_exists('institucion', $request->all())) {
             $request->validate([
-                'institucion' => 'required|string|max:255'
+                'institucion' => 'required|string|max:255',
             ]);
         }
         if (array_key_exists('nivel', $request->all())) {
             $request->validate([
-                'nivel' => 'required|string|max:1500'
+                'nivel' => 'required|string|max:1500',
             ]);
         }
         if (array_key_exists('año_inicio', $request->all())) {
             $request->validate([
-                'año_inicio' => 'required|date'
+                'año_inicio' => 'required|date',
             ]);
         }
         if (array_key_exists('año_fin', $request->all())) {
             $request->validate([
-                'año_fin' => 'required|date'
+                'año_fin' => 'required|date',
             ]);
         }
 
@@ -855,6 +856,7 @@ class EmpleadoController extends Controller
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
         $isEditAdmin = true;
+
         return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin'));
     }
 
@@ -1014,10 +1016,11 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Empleado Actualizado', 'from' => 'rh'], 200);
         // return redirect()->route('admin.empleados.index')->with('success', 'Editado con éxito');
     }
+
     public function updateFromCurriculum(Request $request, Empleado $empleado)
     {
         $request->validate([
-            'files.*' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000'
+            'files.*' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
         ]);
 
         if ($request->hasFile('files')) {
@@ -1031,8 +1034,10 @@ class EmpleadoController extends Controller
                 }
             }
         }
+
         return response()->json(['status' => 'success', 'message' => 'Curriculum Actualizado', 'from' => 'curriculum'], 200);
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -1211,6 +1216,7 @@ class EmpleadoController extends Controller
     public function getDocumentos(Empleado $empleado)
     {
         $documentos = EvidenciasDocumentosEmpleados::where('empleado_id', $empleado->id)->get();
+
         return response()->json(['documentos' => $documentos]);
     }
 }

@@ -198,13 +198,14 @@ class CompetenciasController extends Controller
     public function editarCompetencias(Empleado $empleado)
     {
         $isEditAdmin = false;
+
         return view('admin.empleados.edit', compact('isEditAdmin', 'empleado'));
     }
 
     public function cargarDocumentos(Request $request, Empleado $empleado)
     {
         $request->validate([
-            "files.*" => "required|mimes:pdf|max:10000"
+            'files.*' => 'required|mimes:pdf|max:10000',
         ]);
         if ($request->hasFile('files')) {
             $files = $request->file('files');
@@ -217,23 +218,23 @@ class CompetenciasController extends Controller
                 }
             }
         }
+
         return response()->json(['status' => 'success', 'message' => 'Documentos cargados con éxito']);
     }
 
     public function cargarCertificacion(Request $request, Empleado $empleado)
     {
-
-        if ($request->esVigente == "true") {
+        if ($request->esVigente == 'true') {
             $request->validate([
-                "nombre" => "required|string|max:255",
-                "documento" => "required|mimes:pdf|max:10000",
-                "vigencia" => "required|date|max:255",
-                "estatus" => "required|string|max:255",
+                'nombre' => 'required|string|max:255',
+                'documento' => 'required|mimes:pdf|max:10000',
+                'vigencia' => 'required|date|max:255',
+                'estatus' => 'required|string|max:255',
             ]);
         } else {
             $request->validate([
-                "nombre" => "required|string|max:255",
-                "documento" => "required|mimes:pdf|max:10000"
+                'nombre' => 'required|string|max:255',
+                'documento' => 'required|mimes:pdf|max:10000',
             ]);
         }
 
@@ -258,6 +259,7 @@ class CompetenciasController extends Controller
                 'documento' => $fileNameToStore,
             ]);
         }
+
         return response()->json(['status' => 'success', 'message' => 'Certificación guardada']);
     }
 }

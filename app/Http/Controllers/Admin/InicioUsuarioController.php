@@ -805,8 +805,6 @@ class InicioUsuarioController extends Controller
         return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
-
-
     public function archivarCapacitacion($id)
     {
         $recurso = Recurso::find($id);
@@ -818,8 +816,6 @@ class InicioUsuarioController extends Controller
         if ($errors) {
             return redirect('admin/inicioUsuario/capacitaciones/archivo');
         }
-
-        
     }
 
     public function recuperarCapacitacion($id)
@@ -833,7 +829,6 @@ class InicioUsuarioController extends Controller
         if ($errors) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
-        
     }
 
     public function archivoCapacitacion()
@@ -842,8 +837,6 @@ class InicioUsuarioController extends Controller
 
         return view('admin.inicioUsuario.capacitaciones_archivo', compact('recursos'));
     }
-
-
 
     public function archivarAprobacion($id)
     {
@@ -873,9 +866,6 @@ class InicioUsuarioController extends Controller
 
         return view('admin.inicioUsuario.aprobaciones_archivo', compact('mis_documentos'));
     }
-
-
-
 
     public function archivoActividades()
     {
@@ -967,6 +957,4 @@ class InicioUsuarioController extends Controller
 
         return redirect()->route('admin.inicio-Usuario.index');
     }
-
-
 }
