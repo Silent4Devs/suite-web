@@ -74,6 +74,7 @@ class EntidadCrediticiaController extends Controller
     public function edit($entidadCrediticia)
     {
         $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
+
         return view('admin.recursos-humanos.entidades-crediticias.edit', compact('entidadCrediticia'));
     }
 
@@ -107,6 +108,7 @@ class EntidadCrediticiaController extends Controller
     {
         $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
         $entidadCrediticia->delete();
+
         return redirect()->route('admin.entidades-crediticias.index')->with('success', 'Entidad crediticia eliminada');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Models\PanelOrganizacion;
 use Illuminate\Http\Request;
@@ -16,8 +17,6 @@ class PanelOrganizacionController extends Controller
     {
         // dd("aqui");
         return view('admin.panel-organizacion.index');
-
-
     }
 
     /**

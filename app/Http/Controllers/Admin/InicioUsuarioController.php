@@ -108,7 +108,7 @@ class InicioUsuarioController extends Controller
         $auditoria_internas = new AuditoriaInterna;
         $empleado = auth()->user()->empleado;
         $recursos = collect();
-        $eventos =Calendario::get();
+        $eventos = Calendario::get();
         if ($usuario->empleado) {
             $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
                 $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);

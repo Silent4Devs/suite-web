@@ -25,10 +25,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Str;
 
 class EmpleadoController extends Controller
 {
@@ -1223,7 +1223,7 @@ class EmpleadoController extends Controller
             'nombre' => 'required|string|max:255',
             'numero' => 'required|string|max:255',
             'documentos' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
-            'empleado_id' => 'required|exists:empleados,id'
+            'empleado_id' => 'required|exists:empleados,id',
         ]);
 
         // dd($empleado);
@@ -1260,7 +1260,7 @@ class EmpleadoController extends Controller
 
         if (array_key_exists('file', $request->all())) {
             $request->validate([
-                'file' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000'
+                'file' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
             ]);
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
@@ -1278,6 +1278,7 @@ class EmpleadoController extends Controller
     public function getDocumentos(Empleado $empleado)
     {
         $documentos = EvidenciasDocumentosEmpleados::where('empleado_id', $empleado->id)->get();
+
         return datatables()->of($documentos)->toJson();
         // return response()->json(['documentos' => $documentos]);
     }
@@ -1285,6 +1286,7 @@ class EmpleadoController extends Controller
     public function deleteDocumento(EvidenciasDocumentosEmpleados $documento)
     {
         $documento->delete();
+
         return response()->json(['status' => 'success', 'message' => 'Documento eliminado']);
     }
 

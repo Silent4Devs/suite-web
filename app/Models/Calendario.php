@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Calendario extends Model
 {
-
     use SoftDeletes;
 
     public $table = 'calendario';
@@ -53,8 +51,7 @@ class Calendario extends Model
         'deleted_at' => 'nullable',
     ];
 
-    /**
+    /*
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-
 }
