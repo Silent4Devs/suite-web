@@ -20,9 +20,6 @@ Auth::routes();
 
 // Tabla-Calendario
 
-
-
-
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
     //Tipos de contratos
     Route::resource('recursos-humanos/tipos-contratos-empleados', 'RH\TipoContratoEmpleadoController');
@@ -363,7 +360,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('directorio', 'DirectorioEmpleadosController@index')->name('directorio.index');
 
-
     // Dashboards
     Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
@@ -555,7 +551,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Revision Direccions
     Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
     Route::resource('revision-direccions', 'RevisionDireccionController');
-
 
     // Controles
     Route::delete('controles/destroy', 'ControlesController@massDestroy')->name('controles.massDestroy');
