@@ -107,7 +107,7 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar documento',
-                url: "{{ route('admin.entidades-crediticias.index') }}",
+                url: "{{ route('admin.entidades-crediticias.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
                     let {
@@ -163,7 +163,7 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <button title="Eliminar"
-                                    onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.name}');return false;"
+                                    onclick="Eliminar(this,'${urlShowDelete}','${data}','${row.entidad}');return false;"
                                     class="btn btn-sm text-danger">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>`;

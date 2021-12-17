@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -141,7 +142,7 @@ class EmpleadoController extends Controller
 
     public function getCertificaciones($empleado)
     {
-        $certificaciones = CertificacionesEmpleados::where('empleado_id', intval($empleado))->get();
+        $certificaciones = CertificacionesEmpleados::where('empleado_id', intval($empleado))->orderBy('id')->get();
 
         return datatables()->of($certificaciones)->toJson();
     }
@@ -192,7 +193,7 @@ class EmpleadoController extends Controller
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles','perfiles_seleccionado', 'puestos_seleccionado' ));
+        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado'));
     }
 
     public function onlyStore($request)
@@ -381,10 +382,10 @@ class EmpleadoController extends Controller
             'cuenta_bancaria' => $request->cuenta_bancaria,
             'clabe_interbancaria' => $request->clabe_interbancaria,
             'centro_costos' => $request->centro_costos,
-            'salario_bruto' => preg_replace('/([^0-9\.])/i', '', $request->salario_bruto),
-            'salario_diario' => preg_replace('/([^0-9\.])/i', '', $request->salario_diario),
-            'salario_diario_integrado' => preg_replace('/([^0-9\.])/i', '', $request->salario_diario_integrado),
-            'salario_base_mensual' => preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual),
+            'salario_bruto' => $request->salario_bruto ? preg_replace('/([^0-9\.])/i', '', $request->salario_bruto) : null,
+            'salario_diario' => $request->salario_diario ? preg_replace('/([^0-9\.])/i', '', $request->salario_diario) : null,
+            'salario_diario_integrado' => $request->salario_diario_integrado ? preg_replace('/([^0-9\.])/i', '', $request->salario_diario_integrado) : null,
+            'salario_base_mensual' => $request->salario_base_mensual ? preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual) : null,
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
         ]);
@@ -517,7 +518,7 @@ class EmpleadoController extends Controller
     public function storeResumen(Request $request, $empleado)
     {
         $request->validate([
-            'resumen' => 'required|string|max:800',
+            'resumen' => 'required|string|max:4000',
         ]);
         if ($request->ajax()) {
             $empleado = Empleado::find(intval($empleado));
@@ -534,12 +535,19 @@ class EmpleadoController extends Controller
 
     public function storeCertificaciones(Request $request, $empleado)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'estatus' => 'required|string|max:255',
-            'vigencia' => 'required|date',
-            'empleado_id' => 'required|exists:empleados,id',
-        ]);
+        if ($request->esVigente == 'true') {
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'documento' => 'nullable|mimes:pdf|max:10000',
+                'vigencia' => 'required|date|max:255',
+                'estatus' => 'required|string|max:255',
+            ]);
+        } else {
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'documento' => 'nullable|mimes:pdf|max:10000',
+            ]);
+        }
         // dd($request->all());
         if ($request->ajax()) {
             $empleado = Empleado::find(intval($empleado));
@@ -572,6 +580,62 @@ class EmpleadoController extends Controller
         }
     }
 
+    public function updateCertificaciones(Request $request, CertificacionesEmpleados $certificacion)
+    {
+        if (isset($request->name)) {
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+            ]);
+        }
+        if (isset($request->vigencia)) {
+            $request->validate([
+                'vigencia' => 'required|date',
+                'estatus' => 'required|string|max:255',
+            ]);
+        }
+        if (isset($request->documento)) {
+            $request->validate([
+                'documento' => 'required|mimes:pdf|max:10000',
+            ]);
+        }
+
+        if ($request->hasFile('documento')) {
+            $filenameWithExt = $request->file('documento')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('documento')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
+
+            $certificacion->update([
+                'documento' => $fileNameToStore,
+            ]);
+        } else {
+            $certificacion->update($request->all());
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Certificado Actualizado']);
+    }
+
+    public function deleteFileCertificacion(Request $request, CertificacionesEmpleados $certificacion)
+    {
+        $certificacion->update([
+            'documento' => null,
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Certificado Actualizado']);
+    }
+    // public function deleteDocumento(Request $request,  $certificacion)
+    // {
+    //     $certificacion->update([
+    //         'documento' => null
+    //     ]);
+    //     return response()->json(['status' => 'success', 'message' => 'Certificado Actualizado']);
+    // }
+
     public function storeCursos(Request $request, $empleado)
     {
         $request->validate([
@@ -598,6 +662,35 @@ class EmpleadoController extends Controller
                 return response()->json(['error' => true]);
             }
         }
+    }
+
+    public function updateCurso(Request $request, CursosDiplomasEmpleados $curso)
+    {
+        if (array_key_exists('curso_diploma', $request->all())) {
+            $request->validate([
+                'curso_diploma' => 'required|string|max:255',
+            ]);
+        }
+
+        if (array_key_exists('tipo', $request->all())) {
+            $request->validate([
+                'tipo' => 'required|string|max:255',
+            ]);
+        }
+        if (array_key_exists('año', $request->all())) {
+            $request->validate([
+                'año' => 'required|date',
+            ]);
+        }
+        if (array_key_exists('duracion', $request->all())) {
+            $request->validate([
+                'duracion' => 'required|numeric|min:1',
+            ]);
+        }
+
+        $curso->update($request->all());
+
+        return response()->json(['status' => 'success', 'message' => 'Curso Actualizado']);
     }
 
     public function storeExperiencia(Request $request, $empleado)
@@ -630,6 +723,40 @@ class EmpleadoController extends Controller
         }
     }
 
+    public function updateExperiencia(Request $request, ExperienciaEmpleados $experiencia)
+    {
+        if (array_key_exists('empresa', $request->all())) {
+            $request->validate([
+                'empresa' => 'required|string|max:255',
+            ]);
+        }
+
+        if (array_key_exists('puesto', $request->all())) {
+            $request->validate([
+                'puesto' => 'required|string|max:255',
+            ]);
+        }
+        if (array_key_exists('descripcion', $request->all())) {
+            $request->validate([
+                'descripcion' => 'required|string|max:1500',
+            ]);
+        }
+        if (array_key_exists('inicio_mes', $request->all())) {
+            $request->validate([
+                'inicio_mes' => 'required|date',
+            ]);
+        }
+        if (array_key_exists('fin_mes', $request->all())) {
+            $request->validate([
+                'fin_mes' => 'required|date',
+            ]);
+        }
+
+        $experiencia->update($request->all());
+
+        return response()->json(['status' => 'success', 'message' => 'Registro Actualizado']);
+    }
+
     public function storeEducacion(Request $request, $empleado)
     {
         $request->validate([
@@ -657,6 +784,34 @@ class EmpleadoController extends Controller
                 return response()->json(['error' => true]);
             }
         }
+    }
+
+    public function updateEducacion(Request $request, EducacionEmpleados $educacion)
+    {
+        if (array_key_exists('institucion', $request->all())) {
+            $request->validate([
+                'institucion' => 'required|string|max:255',
+            ]);
+        }
+        if (array_key_exists('nivel', $request->all())) {
+            $request->validate([
+                'nivel' => 'required|string|max:1500',
+            ]);
+        }
+        if (array_key_exists('año_inicio', $request->all())) {
+            $request->validate([
+                'año_inicio' => 'required|date',
+            ]);
+        }
+        if (array_key_exists('año_fin', $request->all())) {
+            $request->validate([
+                'año_fin' => 'required|date',
+            ]);
+        }
+
+        $educacion->update($request->all());
+
+        return response()->json(['status' => 'success', 'message' => 'Registro Actualizado']);
     }
 
     /**
@@ -692,7 +847,7 @@ class EmpleadoController extends Controller
         $documentos = EvidenciasDocumentosEmpleados::get();
         $puestos = Puesto::all();
         $perfiles = PerfilEmpleado::all();
-        $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description')->get();
+        $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $puestos = Puesto::get();
         $perfiles = PerfilEmpleado::get();
@@ -701,8 +856,9 @@ class EmpleadoController extends Controller
 
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
+        $isEditAdmin = true;
 
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado'));
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin'));
     }
 
     /**
@@ -794,17 +950,17 @@ class EmpleadoController extends Controller
             }
         }
 
-        if ($request->hasFile('files')) {
-            $files = $request->file('files');
-            foreach ($files as $file) {
-                if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
-                    EvidenciasDocumentosEmpleados::create([
-                        'documentos' => $file->getClientOriginalName(),
-                        'empleado_id' => $empleado->id,
-                    ]);
-                }
-            }
-        }
+        // if ($request->hasFile('files')) {
+        //     $files = $request->file('files');
+        //     foreach ($files as $file) {
+        //         if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
+        //             EvidenciasDocumentosEmpleados::create([
+        //                 'documentos' => $file->getClientOriginalName(),
+        //                 'empleado_id' => $empleado->id,
+        //             ]);
+        //         }
+        //     }
+        // }
 
         $empleado->update([
             'name' => $request->name,
@@ -820,7 +976,7 @@ class EmpleadoController extends Controller
             'n_empleado' =>  $request->n_empleado,
             'n_registro' =>  $request->n_registro,
             'sede_id' =>  $request->sede_id,
-            'resumen' =>  $request->resumen,
+            // 'resumen' =>  $request->resumen,
             'cumpleaños' => $request->cumpleaños,
             'direccion' => $request->direccion,
             'telefono_movil' => $request->telefono_movil,
@@ -848,18 +1004,39 @@ class EmpleadoController extends Controller
             'cuenta_bancaria' => $request->cuenta_bancaria,
             'clabe_interbancaria' => $request->clabe_interbancaria,
             'centro_costos' => $request->centro_costos,
-            'salario_bruto' => preg_replace('/([^0-9\.])/i', '', $request->salario_bruto),
-            'salario_diario' => preg_replace('/([^0-9\.])/i', '', $request->salario_diario),
-            'salario_diario_integrado' => preg_replace('/([^0-9\.])/i', '', $request->salario_diario_integrado),
-            'salario_base_mensual' => preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual),
+            'salario_bruto' => $request->salario_bruto ? preg_replace('/([^0-9\.])/i', '', $request->salario_bruto) : null,
+            'salario_diario' => $request->salario_diario ? preg_replace('/([^0-9\.])/i', '', $request->salario_diario) : null,
+            'salario_diario_integrado' => $request->salario_diario_integrado ? preg_replace('/([^0-9\.])/i', '', $request->salario_diario_integrado) : null,
+            'salario_base_mensual' => $request->salario_base_mensual ? preg_replace('/([^0-9\.])/i', '', $request->salario_base_mensual) : null,
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
         ]);
 
         $this->assignDependenciesModel($request, $empleado);
 
-        return response()->json(['status' => 'success', 'message' => 'Empleado Actualizado'], 200);
+        return response()->json(['status' => 'success', 'message' => 'Empleado Actualizado', 'from' => 'rh'], 200);
         // return redirect()->route('admin.empleados.index')->with('success', 'Editado con éxito');
+    }
+
+    public function updateFromCurriculum(Request $request, Empleado $empleado)
+    {
+        $request->validate([
+            'files.*' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
+        ]);
+
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
+                    EvidenciasDocumentosEmpleados::create([
+                        'documentos' => $file->getClientOriginalName(),
+                        'empleado_id' => $empleado->id,
+                    ]);
+                }
+            }
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Curriculum Actualizado', 'from' => 'curriculum'], 200);
     }
 
     /**
@@ -1035,5 +1212,93 @@ class EmpleadoController extends Controller
         $this->assignDependenciesModel($request, $empleado);
 
         return redirect()->back()->with(['success' => 'Información actualizada']);
+    }
+
+    public function storeDocumentos(Request $request, Empleado $empleado)
+    {
+        $request->merge([
+            'empleado_id' => $empleado->id,
+        ]);
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'numero' => 'required|string|max:255',
+            'documentos' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
+            'empleado_id' => 'required|exists:empleados,id',
+        ]);
+
+        // dd($empleado);
+        $evidencia = EvidenciasDocumentosEmpleados::create($request->all());
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+                $evidencia->update([
+                    'documentos' => $file->getClientOriginalName(),
+                ]);
+            }
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Documento registrado']);
+    }
+
+    public function updateDocumento(Request $request, EvidenciasDocumentosEmpleados $documento)
+    {
+        $empleado = $documento->empleados_documentos;
+        if (array_key_exists('nombre', $request->all())) {
+            $request->validate([
+                'nombre' => 'required|string|min:2|max:255',
+            ]);
+            $documento->update($request->all());
+        }
+
+        if (array_key_exists('numero', $request->all())) {
+            $request->validate([
+                'numero' => 'required|string|min:5|max:255',
+            ]);
+            $documento->update($request->all());
+        }
+
+        if (array_key_exists('file', $request->all())) {
+            $request->validate([
+                'file' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
+            ]);
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+                    $documento->update([
+                        'documentos' => $file->getClientOriginalName(),
+                    ]);
+                }
+            }
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Registro Actualizado']);
+    }
+
+    public function getDocumentos(Empleado $empleado)
+    {
+        $documentos = EvidenciasDocumentosEmpleados::where('empleado_id', $empleado->id)->get();
+
+        return datatables()->of($documentos)->toJson();
+        // return response()->json(['documentos' => $documentos]);
+    }
+
+    public function deleteDocumento(EvidenciasDocumentosEmpleados $documento)
+    {
+        $documento->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Documento eliminado']);
+    }
+
+    public function deleteFileDocumento(EvidenciasDocumentosEmpleados $documento)
+    {
+        if (Storage::disk('public')->exists($documento->ruta_absoluta_documento)) {
+            Storage::disk('public')->delete($documento->ruta_absoluta_documento);
+        }
+        $documento->update([
+            'documentos' => null,
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Archivo eliminado']);
     }
 }

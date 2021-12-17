@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use App\Models\PanelOrganizacion;
 use Illuminate\Database\Seeder;
 

@@ -20,9 +20,6 @@ Auth::routes();
 
 // Tabla-Calendario
 
-
-
-
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
     //Tipos de contratos
     Route::resource('recursos-humanos/tipos-contratos-empleados', 'RH\TipoContratoEmpleadoController');
@@ -35,13 +32,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
     Route::get('tabla-calendario/index', 'TablaCalendarioController@index')->name('tabla-calendario.index');
     Route::resource('recursos-humanos/calendario', 'TablaCalendarioController')->names([
-    'create' => 'tabla-calendario.create',
-    'store' => 'tabla-calendario.store',
-    'show' => 'tabla-calendario.show',
-    'edit' => 'tabla-calendario.edit',
-    'update' => 'tabla-calendario.update',
-    'destroy' => 'tabla-calendario.destroy',
-]);
+        'create' => 'tabla-calendario.create',
+        'store' => 'tabla-calendario.store',
+        'show' => 'tabla-calendario.show',
+        'edit' => 'tabla-calendario.edit',
+        'update' => 'tabla-calendario.update',
+        'destroy' => 'tabla-calendario.destroy',
+    ]);
 
     //Consulta de evaluación
 
@@ -314,16 +311,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
     // Empleados
+    Route::get('empleado/{empleado}/documentos', 'EmpleadoController@getDocumentos')->name('empleado.documentos');
+    Route::post('empleado/{empleado}/documentos', 'EmpleadoController@storeDocumentos')->name('empleado.storeDocumentos');
+    Route::delete('empleado/{documento}/documentos', 'EmpleadoController@deleteDocumento')->name('empleado.deleteDocumento');
+    Route::post('empleados/update/{documento}/documentos', 'EmpleadoController@updateDocumento')->name('empleados.updateDocumento');
+    Route::delete('empleados/{documento}/delete-file-documento', 'EmpleadoController@deleteFileDocumento')->name('empleados.deleteFileDocumento');
     Route::post('empleado/update-image-profile', 'EmpleadoController@updateImageProfile')->name('empleado.update-image-profile');
     Route::post('empleado/update-profile', 'EmpleadoController@updateInformationProfile')->name('empleado.update-profile');
     Route::post('empleado/update-related-info-profile', 'EmpleadoController@updateInformacionRelacionadaProfile')->name('empleado.update-related-info-profile');
     Route::post('empleados/store/{empleado}/competencias-resumen', 'EmpleadoController@storeResumen')->name('empleados.storeResumen');
+
+    Route::post('empleados/update/{certificacion}/competencias-certificaciones', 'EmpleadoController@updateCertificaciones')->name('empleados.updateCertificaciones');
+    Route::delete('empleados/{certificacion}/delete-file-certificacion', 'EmpleadoController@deleteFileCertificacion')->name('empleados.deleteFileCertificacion');
+    Route::delete('empleados/{documento}/delete', 'EmpleadoController@deleteDocumento')->name('empleados.deleteDocumento');
     Route::post('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
     Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', 'EmpleadoController@deleteCertificaciones')->name('empleados.deleteCertificaciones');
+    Route::post('empleados/update/{curso}/competencias-curso', 'EmpleadoController@updateCurso')->name('empleados.updateCurso');
     Route::post('empleados/store/{empleado}/competencias-cursos', 'EmpleadoController@storeCursos')->name('empleados.storeCursos');
     Route::delete('empleados/delete/{curso}/competencias-cursos', 'EmpleadoController@deleteCursos')->name('empleados.deleteCursos');
+    Route::post('empleados/update/{experiencia}/competencias-experiencia', 'EmpleadoController@updateExperiencia')->name('empleados.updateExperiencia');
     Route::post('empleados/store/{empleado}/competencias-experiencia', 'EmpleadoController@storeExperiencia')->name('empleados.storeExperiencia');
     Route::delete('empleados/delete/{educacion}/competencias-educacion', 'EmpleadoController@deleteEducacion')->name('empleados.deleteEducacion');
+    Route::post('empleados/update/{educacion}/competencias-educacion', 'EmpleadoController@updateEducacion')->name('empleados.updateEducacion');
     Route::post('empleados/store/{empleado}/competencias-educacion', 'EmpleadoController@storeEducacion')->name('empleados.storeEducacion');
     Route::delete('empleados/delete/{experiencia}/competencias-experiencia', 'EmpleadoController@deleteExperiencia')->name('empleados.deleteExperiencia');
     Route::get('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@getCertificaciones')->name('empleados.getCertificaciones');
@@ -334,6 +343,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
     Route::post('empleados/get-lista', 'EmpleadoController@getListaEmpleados')->name('empleados.lista');
     Route::get('empleados/get-all', 'EmpleadoController@getAllEmpleados')->name('empleados.getAll');
+    Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
     Route::resource('empleados', 'EmpleadoController');
 
     // Organizacions
@@ -349,6 +359,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
     Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
+
+    //Directorio
+
+    Route::get('directorio', 'DirectorioEmpleadosController@index')->name('directorio.index');
 
     // Dashboards
     Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
@@ -462,6 +476,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('competencia/ckmedia', 'CompetenciasController@storeCKEditorImages')->name('competencia.storeCKEditorImages');
     Route::resource('competencia', 'CompetenciasController');
     Route::get('buscarCV', 'CompetenciasController@buscarcv')->name('buscarCV');
+    Route::post('competencias/{empleado}/documentos-carga', 'CompetenciasController@cargarDocumentos')->name('cargarDocumentos');
+    Route::post('competencias/{empleado}/certificacion-carga', 'CompetenciasController@cargarCertificacion')->name('cargarCertificacion');
+    Route::get('competencias/{empleado}/edit', 'CompetenciasController@editarCompetencias')->name('editarCompetencias');
+    Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
 
     // Adquirirveintidostrecientosunos
     Route::resource('adquirirveintidostrecientosunos', 'AdquirirveintidostrecientosunoController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
@@ -537,7 +555,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Revision Direccions
     Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
     Route::resource('revision-direccions', 'RevisionDireccionController');
-
 
     // Controles
     Route::delete('controles/destroy', 'ControlesController@massDestroy')->name('controles.massDestroy');

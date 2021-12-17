@@ -11,11 +11,9 @@ use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Empleado;
 
 class SystemCalendarController extends Controller
 {
-
     public function index()
     {
         abort_if(Gate::denies('agenda_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -59,9 +57,7 @@ class SystemCalendarController extends Controller
         $recursos = Recurso::get();
         $eventos =Calendario::get();
 
-        
         $cumples_aniversarios = Empleado::get();
-
 
         return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas',"eventos", 'cumples_aniversarios'));
     }

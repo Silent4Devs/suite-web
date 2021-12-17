@@ -19,6 +19,7 @@ class BuscarCVComponent extends Component
     public $empleado_cursos;
     public $foto_organizacion;
     public $empleados;
+    public $isPersonal;
 
     public function clean()
     {
@@ -41,25 +42,28 @@ class BuscarCVComponent extends Component
 
     public function mount()
     {
-        $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
+        if (!$this->isPersonal) {
+            $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
+        }
     }
 
     public function render()
     {
         $empleadoget = Empleado::select('*')->with('empleado_experiencia');
 
-        if ($this->area_id != '') {
-            if (Empleado::where('area_id', '=', $this->area_id)->count() > 0) {
-                $this->empleados = Empleado::where('area_id', '=', $this->area_id)->get();
-                $this->callAlert('success', 'La información se actualizo correctamente', true);
-            } else {
-                $this->callAlert('warning', 'No se encontro registro con esta area', false, 'las opciones de busqueda se restablecieron');
-                $this->area_id = '';
-                $this->empleado_id = '';
-                $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
+        if (!$this->isPersonal) {
+            if ($this->area_id != '') {
+                if (Empleado::where('area_id', '=', $this->area_id)->count() > 0) {
+                    $this->empleados = Empleado::where('area_id', '=', $this->area_id)->get();
+                    $this->callAlert('success', 'La información se actualizo correctamente', true);
+                } else {
+                    $this->callAlert('warning', 'No se encontro registro con esta area', false, 'las opciones de busqueda se restablecieron');
+                    $this->area_id = '';
+                    $this->empleado_id = '';
+                    $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
+                }
             }
         }
-
         if ($this->empleado_id != '') {
             if (Empleado::where('id', '=', $this->empleado_id)->count() > 0) {
                 $empleadoget->where('id', '=', $this->empleado_id);
@@ -79,23 +83,14 @@ class BuscarCVComponent extends Component
     public function callAlert($tipo, $mensaje, $bool, $test = '')
     {
         $this->alert($tipo, $mensaje, [
-
             'position' =>  'top-end',
-
             'timer' =>  2500,
-
             'toast' =>  true,
-
             'text' =>  $test,
-
             'confirmButtonText' =>  'Entendido',
-
             'cancelButtonText' =>  '',
-
             'showCancelButton' =>  false,
-
             'showConfirmButton' =>  $bool,
-
         ]);
     }
 }

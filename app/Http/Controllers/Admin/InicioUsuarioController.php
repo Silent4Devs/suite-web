@@ -108,7 +108,7 @@ class InicioUsuarioController extends Controller
         $auditoria_internas = new AuditoriaInterna;
         $empleado = auth()->user()->empleado;
         $recursos = collect();
-        $eventos =Calendario::get();
+        $eventos = Calendario::get();
         if ($usuario->empleado) {
             $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
                 $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);
@@ -202,9 +202,16 @@ class InicioUsuarioController extends Controller
         }
 
         $panel_rules = PanelInicioRule::select('nombre', 'n_empleado', 'area', 'jefe_inmediato', 'puesto', 'perfil', 'fecha_ingreso', 'genero', 'estatus', 'email', 'telefono', 'sede', 'direccion', 'cumpleaños')->get()->first();
-        $activos = Activo::select('id', 'nombreactivo')->where('id_responsable', '=', auth()->user()->empleado->id)->get();
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos'));
+        if (!is_null(auth()->user()->empleado)) {
+            $activos = Activo::select('*')->where('id_responsable', '=', auth()->user()->empleado->id)->get();
+        } else {
+            $activos = false;
+        }
+
+
+
+        return view('admin.inicioUsuario.index', compact('usuario', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos'));
     }
 
     public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -807,8 +814,6 @@ class InicioUsuarioController extends Controller
         return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Reporte generado');
     }
 
-
-
     public function archivarCapacitacion($id)
     {
         $recurso = Recurso::find($id);
@@ -820,8 +825,6 @@ class InicioUsuarioController extends Controller
         if ($errors) {
             return redirect('admin/inicioUsuario/capacitaciones/archivo');
         }
-
-
     }
 
     public function recuperarCapacitacion($id)
@@ -835,7 +838,6 @@ class InicioUsuarioController extends Controller
         if ($errors) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
-
     }
 
     public function archivoCapacitacion()
@@ -844,8 +846,6 @@ class InicioUsuarioController extends Controller
 
         return view('admin.inicioUsuario.capacitaciones_archivo', compact('recursos'));
     }
-
-
 
     public function archivarAprobacion($id)
     {
@@ -875,9 +875,6 @@ class InicioUsuarioController extends Controller
 
         return view('admin.inicioUsuario.aprobaciones_archivo', compact('mis_documentos'));
     }
-
-
-
 
     public function archivoActividades()
     {
@@ -969,6 +966,4 @@ class InicioUsuarioController extends Controller
 
         return redirect()->route('admin.inicio-Usuario.index');
     }
-
-
 }

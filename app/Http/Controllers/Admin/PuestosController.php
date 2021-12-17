@@ -51,7 +51,7 @@ class PuestosController extends Controller
                 return $row->puesto ? $row->puesto : '';
             });
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
+                return $row->descripcion ? html_entity_decode(strip_tags($row->descripcion), ENT_QUOTES, 'UTF-8') : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);

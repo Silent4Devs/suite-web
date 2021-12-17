@@ -59,8 +59,9 @@ class EntidadCrediticiaController extends Controller
      * @param  \App\Models\RH\EntidadCrediticia  $entidadCrediticia
      * @return \Illuminate\Http\Response
      */
-    public function show(EntidadCrediticia $entidadCrediticia)
+    public function show($entidadCrediticia)
     {
+        $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
         //
     }
 
@@ -70,8 +71,10 @@ class EntidadCrediticiaController extends Controller
      * @param  \App\Models\RH\EntidadCrediticia  $entidadCrediticia
      * @return \Illuminate\Http\Response
      */
-    public function edit(EntidadCrediticia $entidadCrediticia)
+    public function edit($entidadCrediticia)
     {
+        $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
+
         return view('admin.recursos-humanos.entidades-crediticias.edit', compact('entidadCrediticia'));
     }
 
@@ -82,14 +85,15 @@ class EntidadCrediticiaController extends Controller
      * @param  \App\Models\RH\EntidadCrediticia  $entidadCrediticia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EntidadCrediticia $entidadCrediticia)
+    public function update(Request $request, $entidadCrediticia)
     {
+        $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
         $request->validate([
             'entidad' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:4000',
         ]);
 
-        EntidadCrediticia::create($request->all());
+        $entidadCrediticia->update($request->all());
 
         return redirect()->route('admin.entidades-crediticias.index')->with('success', 'Entidad crediticia creada');
     }
@@ -100,8 +104,11 @@ class EntidadCrediticiaController extends Controller
      * @param  \App\Models\RH\EntidadCrediticia  $entidadCrediticia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EntidadCrediticia $entidadCrediticia)
+    public function destroy($entidadCrediticia)
     {
-        //
+        $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
+        $entidadCrediticia->delete();
+
+        return redirect()->route('admin.entidades-crediticias.index')->with('success', 'Entidad crediticia eliminada');
     }
 }

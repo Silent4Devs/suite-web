@@ -8,11 +8,15 @@ use App\Http\Requests\MassDestroyCompetenciumRequest;
 use App\Http\Requests\StoreCompetenciumRequest;
 use App\Http\Requests\UpdateCompetenciumRequest;
 use App\Models\Area;
+use App\Models\CertificacionesEmpleados;
 use App\Models\Competencium;
+use App\Models\Empleado;
+use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -184,5 +188,78 @@ class CompetenciasController extends Controller
         $areas = Area::get();
 
         return view('admin.competencia.buscarCV', compact('areas'));
+    }
+
+    public function miCurriculum(Request $request, Empleado $empleado)
+    {
+        return view('admin.competencia.mi-cv', compact('empleado'));
+    }
+
+    public function editarCompetencias(Empleado $empleado)
+    {
+        $isEditAdmin = false;
+
+        return view('admin.empleados.edit', compact('isEditAdmin', 'empleado'));
+    }
+
+    public function cargarDocumentos(Request $request, Empleado $empleado)
+    {
+        $request->validate([
+            'files.*' => 'required|mimes:pdf|max:10000',
+        ]);
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
+                    EvidenciasDocumentosEmpleados::create([
+                        'documentos' => $file->getClientOriginalName(),
+                        'empleado_id' => $empleado->id,
+                    ]);
+                }
+            }
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Documentos cargados con éxito']);
+    }
+
+    public function cargarCertificacion(Request $request, Empleado $empleado)
+    {
+        if ($request->esVigente == 'true') {
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'documento' => 'required|mimes:pdf|max:10000',
+                'vigencia' => 'required|date|max:255',
+                'estatus' => 'required|string|max:255',
+            ]);
+        } else {
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'documento' => 'required|mimes:pdf|max:10000',
+            ]);
+        }
+
+        $certificado = CertificacionesEmpleados::create([
+            'empleado_id' => $empleado->id,
+            'nombre' => $request->nombre,
+            'estatus' =>  $request->estatus,
+            'vigencia' =>  $request->vigencia,
+        ]);
+        if ($request->hasFile('documento')) {
+            $filenameWithExt = $request->file('documento')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('documento')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
+
+            $certificado->update([
+                'documento' => $fileNameToStore,
+            ]);
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Certificación guardada']);
     }
 }
