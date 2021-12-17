@@ -32,13 +32,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
     Route::get('tabla-calendario/index', 'TablaCalendarioController@index')->name('tabla-calendario.index');
     Route::resource('recursos-humanos/calendario', 'TablaCalendarioController')->names([
-    'create' => 'tabla-calendario.create',
-    'store' => 'tabla-calendario.store',
-    'show' => 'tabla-calendario.show',
-    'edit' => 'tabla-calendario.edit',
-    'update' => 'tabla-calendario.update',
-    'destroy' => 'tabla-calendario.destroy',
-]);
+        'create' => 'tabla-calendario.create',
+        'store' => 'tabla-calendario.store',
+        'show' => 'tabla-calendario.show',
+        'edit' => 'tabla-calendario.edit',
+        'update' => 'tabla-calendario.update',
+        'destroy' => 'tabla-calendario.destroy',
+    ]);
 
     //Consulta de evaluación
 
@@ -312,6 +312,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Empleados
     Route::get('empleado/{empleado}/documentos', 'EmpleadoController@getDocumentos')->name('empleado.documentos');
+    Route::post('empleado/{empleado}/documentos', 'EmpleadoController@storeDocumentos')->name('empleado.storeDocumentos');
+    Route::delete('empleado/{documento}/documentos', 'EmpleadoController@deleteDocumento')->name('empleado.deleteDocumento');
+    Route::post('empleados/update/{documento}/documentos', 'EmpleadoController@updateDocumento')->name('empleados.updateDocumento');
+    Route::delete('empleados/{documento}/delete-file-documento', 'EmpleadoController@deleteFileDocumento')->name('empleados.deleteFileDocumento');
     Route::post('empleado/update-image-profile', 'EmpleadoController@updateImageProfile')->name('empleado.update-image-profile');
     Route::post('empleado/update-profile', 'EmpleadoController@updateInformationProfile')->name('empleado.update-profile');
     Route::post('empleado/update-related-info-profile', 'EmpleadoController@updateInformacionRelacionadaProfile')->name('empleado.update-related-info-profile');

@@ -466,7 +466,7 @@ Breadcrumbs::for('Mi-Perfil', function ($trail) {
 
 Breadcrumbs::for('Mi-CV', function ($trail, $empleado = null) {
     $trail->parent('Mi-Perfil');
-    $trail->push('Mi Curriculum', route('admin.miCurriculum', ['empleado' => $empleado]));
+    $trail->push('Perfil Profesional', route('admin.miCurriculum', ['empleado' => $empleado]));
 });
 Breadcrumbs::for('Editar-Curriculum', function ($trail, $empleado = null) {
     $trail->parent('Mi-CV', $empleado);
