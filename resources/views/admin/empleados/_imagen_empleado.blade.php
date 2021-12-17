@@ -1,12 +1,18 @@
+<style>
+    .img-clip {
+        clip-path: circle(50% at 50% 50%);
+    }
+
+</style>
 <div class="row align-items-center">
     <div class="col-sm-12 col-md-6 col-6 text-center">
         @php
-            $foto = asset('img/add-photo.png');
+            $foto = asset('storage/empleados/imagenes/man.png');
             if ($empleado->foto) {
                 $foto = asset('storage/empleados/imagenes/' . $empleado->foto);
             }
         @endphp
-        <img class="imf-fluid" src="{{ $foto }}" style="max-width:170px">
+        <img class="img-clip" src="{{ $foto }}" style="max-width:170px">
     </div>
     <div class="col-sm-12 col-md-6 col-6">
         <div class="input-group is-invalid">
@@ -20,16 +26,12 @@
                                         style="font-size: 20pt;position: relative;top: 4px;"></i>
                                     <span id="texto-imagen" class="pl-2">
                                         Subir imágen
-                                        <small class="text-danger" style="font-size: 10px">
-                                            (Opcional)</small>
+                                        <small class="text-danger" style="font-size: 10px"></small>
                                     </span>
                                     <small id="error_foto" class="text-danger"></small>
                                 </h5>
                             </div>
                         </label>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-12 d-flex justify-content-center text-center">
-                        <p>Ó</p>
                     </div>
                     <div class="col-md-12 col-sm-12 col-12 d-flex justify-content-center" id="avatar_choose">
                         <label style="cursor: pointer">
@@ -38,9 +40,7 @@
                                     <i class="fas fa-camera iconos-crear"
                                         style="font-size: 20pt;position: relative;top: 4px;"></i>
                                     <span id="texto-imagen-avatar" class="pl-2">
-                                        Tomar Foto
-                                        <small class="text-danger" style="font-size: 10px">
-                                            (Opcional)</small>
+                                        Tomar Foto&nbsp;&nbsp;&nbsp;
                                     </span>
                                     <small id="error_snap_foto" class="text-danger"></small>
                                 </h5>

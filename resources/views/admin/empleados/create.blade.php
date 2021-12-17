@@ -201,17 +201,17 @@
                 <div class="nav nav-tabs" id="tabsEmpleado" role="tablist">
                     <a class="nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab"
                         aria-controls="nav-general" aria-selected="true">
-                        <i class="mr-2 fas fa-database" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
                         Información General
                     </a>
                     <a class="nav-link" id="nav-personal-tab" data-toggle="tab" href="#nav-personal" role="tab"
                         aria-controls="nav-personal" aria-selected="false">
-                        <i class="mr-2 fas fa-database" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="mr-2 fas fa-house-user" style="font-size:20px;" style="text-decoration:none;"></i>
                         Datos Personales
                     </a>
                     <a class="nav-link" id="nav-financiera-tab" data-toggle="tab" href="#nav-financiera" role="tab"
                         aria-controls="nav-financiera" aria-selected="false">
-                        <i class="mr-2 fas fa-database" style="font-size:20px;" style="text-decoration:none;"></i>
+                        <i class="mr-2 fas fa-wallet" style="font-size:20px;" style="text-decoration:none;"></i>
                         Datos Financieros
                     </a>
                 </div>
@@ -348,6 +348,82 @@
                 return canvas;
             }
         </script> --}}
+        <script type="module">
+            import {
+                formatNumber,
+                formatCurrency
+            } from "{{ asset('js/money-format/moneyInput.js') }}";
+
+            document.addEventListener('DOMContentLoaded', function() {
+                initInpusToMoneyFormat();
+                inputsToMoneyFormat();
+                const toogleProyectoAsignado = (ocultar) => {
+                    const elProyectoAsignado = document.getElementById('proyecto_asignado');
+                    const containerProyectoAsignado = document.getElementById('c_proyecto_asignado');
+                    const containerEsquemaContratacion = document.getElementById('c_esquema_contratacion');
+                    if (ocultar) {
+                        containerProyectoAsignado.classList.remove('col-sm-6');
+                        containerProyectoAsignado.classList.add('d-none');
+                        containerEsquemaContratacion.classList.remove('col-sm-6');
+                        containerEsquemaContratacion.classList.add('col-sm-12');
+                        elProyectoAsignado.setAttribute('disabled', 'disabled');
+                        elProyectoAsignado.removeAttribute('type');
+                        elProyectoAsignado.setAttribute('type', 'hidden');
+                        elProyectoAsignado.value = "";
+                    } else {
+                        containerProyectoAsignado.classList.add('col-sm-6');
+                        containerProyectoAsignado.classList.remove('d-none');
+                        containerEsquemaContratacion.classList.remove('col-sm-12');
+                        containerEsquemaContratacion.classList.add('col-sm-6');
+                        elProyectoAsignado.removeAttribute('disabled');
+                        elProyectoAsignado.removeAttribute('type');
+                        elProyectoAsignado.setAttribute('type', 'text');
+                    }
+                }
+
+                $('#sede_id').on('select2:select', function(e) {
+                    const direction = e.target.options[e.target.selectedIndex].getAttribute('data-direction');
+                    setDirectionOnInput(direction);
+                });
+                $('#tipo_contrato_empleados_id').on('select2:select', function(e) {
+                    const slug = e.target.options[e.target.selectedIndex].getAttribute('data-slug');
+                    console.log(slug);
+                    if (slug === "por-proyecto") {
+                        toogleProyectoAsignado(false);
+                    } else {
+                        toogleProyectoAsignado(true);
+                    }
+                });
+
+                document.getElementById('sede_id').addEventListener('change', function(e) {
+                    const direction = e.target.options[e.target.selectedIndex].getAttribute('data-direction');
+                    setDirectionOnInput(direction);
+                })
+                const setDirectionOnInput = (direction) => {
+                    document.getElementById('direccion').value = direction;
+                }
+            })
+
+            function initInpusToMoneyFormat() {
+                document.querySelectorAll("input[data-type='currency']").forEach(element => {
+                    formatCurrency($(element));
+                })
+            }
+
+            function inputsToMoneyFormat() {
+                $("input[data-type='currency']").on({
+                    init: function() {
+                        console.log(this);
+                    },
+                    keyup: function() {
+                        formatCurrency($(this));
+                    },
+                    blur: function() {
+                        formatCurrency($(this), "blur");
+                    }
+                });
+            }
+        </script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 function limpiarErrores() {

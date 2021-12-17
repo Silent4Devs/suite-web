@@ -225,6 +225,7 @@ class OrganizacionComponent extends Component
         $this->panel->save();
         $this->callAlert('success', 'La información se actualizo correctamente', false);
     }
+
     public function updatedRedesSocialesId($value)
     {
         $this->redessociales_id = $value;
@@ -232,6 +233,7 @@ class OrganizacionComponent extends Component
         $this->panel->save();
         $this->callAlert('success', 'La información se actualizo correctamente', false);
     }
+
     public function callAlert($tipo, $mensaje, $bool, $test = '')
     {
         $this->alert($tipo, $mensaje, [
@@ -246,4 +248,3 @@ class OrganizacionComponent extends Component
         ]);
     }
 }
-

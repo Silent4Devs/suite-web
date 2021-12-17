@@ -19,7 +19,6 @@ use Intervention\Image\Facades\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
-
 class OrganizacionController extends Controller
 {
     use MediaUploadingTrait;
@@ -39,7 +38,6 @@ class OrganizacionController extends Controller
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
         $panel_rules = PanelOrganizacion::select('empresa', 'direccion', 'telefono', 'correo', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'team_id', 'antecedentes', 'logotipo', 'razon_social', 'rfc', 'representante_legal', 'fecha_constitucion', 'num_empleados', 'tamano', 'schedule')->get()->first();
-
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
@@ -228,7 +226,6 @@ class OrganizacionController extends Controller
     {
         $organizacions = Organizacion::first();
 
-
         $schedule = Organizacion::find(1)->schedules;
 
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
@@ -275,15 +272,15 @@ class OrganizacionController extends Controller
                                 'end_work_time' => $w['end_time'][$i],
 
                                 ]);
-                    }
-                        } else {
-                            $schedule = Schedule::create([
+                        }
+                    } else {
+                        $schedule = Schedule::create([
                                 'working_day'  => $w['day'][$i],
                                 'start_work_time' =>  $w['start_time'][$i],
                                 'end_work_time' => $w['end_time'][$i],
                                 'organizacions_id'=> $id,
                             ]);
-                        }
+                    }
                 }
             }
         }

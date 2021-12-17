@@ -15,7 +15,7 @@
 
         <div class="card-body">
             <div class="mt-4 text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
-                MIS COMPETENCIAS
+                CURRICULUM VITAE
             </div>
             @livewire('buscar-c-v-component',['isPersonal'=>true,'empleado_id'=>$empleado->id])
         </div>

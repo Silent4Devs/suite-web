@@ -5,9 +5,9 @@
             margin-top: 0px !important;
         }
 
-        .dataTables_scrollHeadInner {
-            width: 100% !important;
-        }
+        /* .dataTables_scrollHeadInner {
+                                                                            width: auto !important;
+                                                                        } */
 
         .screenshot-image {
             width: 150px;
@@ -179,82 +179,89 @@
         }
 
     </style>
-    <div class="mt-4 card p-4">
+    <div class="mt-4 card">
         @if ($isEditAdmin)
             <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
                 <h3 class="mb-1 text-center text-white"><strong> Editar: </strong>Empleado </h3>
             </div>
-            <nav>
-                <div class="nav nav-tabs" id="tabsEmpleado" role="tablist">
-                    <a class="nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab"
-                        aria-controls="nav-general" aria-selected="true">
-                        <i class="mr-2 fas fa-database" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Información General
-                    </a>
-                    <a class="nav-link" id="nav-personal-tab" data-toggle="tab" href="#nav-personal" role="tab"
-                        aria-controls="nav-personal" aria-selected="false">
-                        <i class="mr-2 fas fa-database" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Datos Personales
-                    </a>
-                    <a class="nav-link" id="nav-financiera-tab" data-toggle="tab" href="#nav-financiera" role="tab"
-                        aria-controls="nav-financiera" aria-selected="false">
-                        <i class="mr-2 fas fa-database" style="font-size:20px;" style="text-decoration:none;"></i>
-                        Datos Financieros
-                    </a>
-                    <a class="nav-link" id="nav-competencias-tab" data-toggle="tab" href="#nav-competencias"
-                        role="tab" aria-controls="nav-competencias" aria-selected="false">
-                        <i class="mr-2 fas fa-flag-checkered" style="font-size:20px;"></i>Competencias
-                    </a>
-                    <a class="nav-link" id="nav-documentos-tab" data-toggle="tab" href="#nav-documentos" role="tab"
-                        aria-controls="nav-documentos" aria-selected="false">
-                        <i class="mr-2 fas fa-flag-checkered" style="font-size:20px;"></i>Documentos
-                    </a>
-                </div>
-            </nav>
-            <form method="POST" action="{{ route('admin.empleados.update', [$empleado->id]) }}"
-                enctype="multipart/form-data" id="formEmpleados">
-                @method('PUT')
-                @csrf
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
-                        @include('admin.empleados.form_components.general')
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="tabsEmpleado" role="tablist">
+                        <a class="nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab"
+                            aria-controls="nav-general" aria-selected="true">
+                            <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
+                            Datos Laborales
+                        </a>
+                        <a class="nav-link" id="nav-personal-tab" data-toggle="tab" href="#nav-personal" role="tab"
+                            aria-controls="nav-personal" aria-selected="false">
+                            <i class="mr-2 fas fa-house-user" style="font-size:20px;" style="text-decoration:none;"></i>
+                            Datos Personales
+                        </a>
+                        <a class="nav-link" id="nav-financiera-tab" data-toggle="tab" href="#nav-financiera" role="tab"
+                            aria-controls="nav-financiera" aria-selected="false">
+                            <i class="mr-2 fas fa-wallet" style="font-size:20px;" style="text-decoration:none;"></i>
+                            Datos Financieros
+                        </a>
+                        <a class="nav-link" id="nav-competencias-tab" data-toggle="tab" href="#nav-competencias"
+                            role="tab" aria-controls="nav-competencias" aria-selected="false">
+                            <i class="mr-2 fas fa-award" style="font-size:20px;"></i>Competencias
+                        </a>
+                        <a class="nav-link" id="nav-documentos-tab" data-toggle="tab" href="#nav-documentos"
+                            role="tab" aria-controls="nav-documentos" aria-selected="false">
+                            <i class="mr-2 fas fa-folder-open" style="font-size:20px;"></i>Documentos
+                        </a>
                     </div>
-                    <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
-                        @include('admin.empleados.form_components.personal')
-                    </div>
-                    <div class="tab-pane fade" id="nav-financiera" role="tabpanel" aria-labelledby="nav-financiera-tab">
-                        @include('admin.empleados.form_components.financiera')
-                    </div>
-                    <div class="tab-pane fade" id="nav-competencias" role="tabpanel"
-                        aria-labelledby="nav-competencias-tab">
-                        @include('admin.empleados.components._competencias_form')
-                    </div>
-                    <div class="tab-pane fade show active" id="nav-documentos" role="tabpanel"
-                        aria-labelledby="nav-documentos-tab">
-                        @include('admin.empleados.form_components.documentos')
-                    </div>
+                </nav>
+                <form method="POST" action="{{ route('admin.empleados.update', [$empleado->id]) }}"
+                    enctype="multipart/form-data" id="formEmpleados">
+                    @method('PUT')
+                    @csrf
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
+                            aria-labelledby="nav-general-tab">
+                            @include('admin.empleados.form_components.general')
+                        </div>
+                        <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
+                            @include('admin.empleados.form_components.personal')
+                        </div>
+                        <div class="tab-pane fade" id="nav-financiera" role="tabpanel"
+                            aria-labelledby="nav-financiera-tab">
+                            @include('admin.empleados.form_components.financiera')
+                        </div>
+                        <div class="tab-pane fade" id="nav-competencias" role="tabpanel"
+                            aria-labelledby="nav-competencias-tab">
+                            @include('admin.empleados.components._competencias_form')
+                        </div>
+                        <div class="tab-pane fade" id="nav-documentos" role="tabpanel"
+                            aria-labelledby="nav-documentos-tab">
+                            @include('admin.empleados.form_components.documentos')
+                        </div>
 
+                    </div>
+                </form>
+                <div class="text-right form-group col-12">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                        {{ trans('global.save') }}
+                    </button>
                 </div>
-            </form>
-            <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit" id="btnGuardar">
-                    {{ trans('global.save') }}
-                </button>
             </div>
         @else
             {{ Breadcrumbs::render('Editar-Curriculum', $empleado) }}
-            <div class="mt-4 text-center form-group" style="background-color:#1BB0B0; border-radius: 100px; color: white;">
-                CURRICULUM
-            </div>
-            <label id="urlFormEmpleados"
-                data-url="{{ route('admin.empleados.updateFromCurriculum', $empleado) }}"></label>
-            @include('admin.empleados.components._competencias_form')
-            <div class="text-right form-group col-12">
-                <a href="{{ route('admin.miCurriculum', $empleado) }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit" id="btnGuardar">
-                    Guardar
-                </button>
+            <div class="p-4">
+                <div class="mt-4 text-center form-group"
+                    style="background-color:#1BB0B0; border-radius: 100px; color: white;">
+                    CURRICULUM
+                </div>
+                <label id="urlFormEmpleados"
+                    data-url="{{ route('admin.empleados.updateFromCurriculum', $empleado) }}"></label>
+                @include('admin.empleados.components._competencias_form')
+                <div class="text-right form-group col-12">
+                    <a href="{{ route('admin.miCurriculum', $empleado) }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                        Guardar
+                    </button>
+                </div>
             </div>
         @endif
 
@@ -358,7 +365,7 @@
             });
             $('#tipo_contrato_empleados_id').on('select2:select', function(e) {
                 const slug = e.target.options[e.target.selectedIndex].getAttribute('data-slug');
-                console.log(slug);
+                console.log(e.target);
                 if (slug === "por-proyecto") {
                     toogleProyectoAsignado(false);
                 } else {
@@ -397,51 +404,6 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            $('#tabsEmpleado a').on('click', function(event) {
-                event.preventDefault()
-                // $(this).tab('show')
-                console.log('¿si');
-            })
-        })
-    </script>
-    <script>
-        class Documentos {
-            constructor() {
-                this.url = "{{ route('admin.empleado.documentos', $empleado) }}";
-                this.pdfFile = "{{ asset('img/pdf-file.png') }}";
-                this.assetDocumentosUrl = "{{ asset('storage/documentos_empleados/') }}";
-            }
-            async render() {
-                const response = await fetch(this.url);
-                const data = await response.json();
-                let html = `<div class="row">`
-                data.documentos.forEach(element => {
-                    html += `
-                    <div class="col-md-2 col-2" style="position: relative;" id="contendorDocumento">
-                        <a href="${this.assetDocumentosUrl}/${element.documentos}" target="_blank" title="Visualizar">
-                        <img class="img-fluid" src="${this.pdfFile}">
-                        <p class="text-muted" style="font-size: 9pt;text-align: center;">${element.documentos}</p>
-                        </a>
-                        <i data-documento-id="${element.id}" class="fas fa-times-circle" style="cursor:pointer;position: absolute;top: 13px;font-size: 12pt;right: 26px;color: #4a4a4a;"></i>
-                    </div>
-                    `
-                });
-                html += `</div>`;
-                document.getElementById('documentosGrid').innerHTML = html;
-                console.log(data);
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            const documentos = new Documentos();
-            documentos.render();
-
-            const documentosGrid = document.getElementById('documentosGrid');
-            documentosGrid.addEventListener('click', function(e) {
-                if (e.target.tagName == 'I') {
-                    console.log(e.target.getAttribute('data-documento-id'));
-                }
-            })
-
             CKEDITOR.replace('resumen', {
                 toolbar: [{
                         name: 'styles',
@@ -492,8 +454,57 @@
                     '/',
                 ]
             });
+            $('#tabsEmpleado a').on('click', function(event) {
+                event.preventDefault()
+                // $(this).tab('show')
+                setTimeout(() => {
+                    $.fn.dataTable.tables({
+                        visible: true,
+                        api: true
+                    }).columns.adjust();
+                }, 1000);
+            })
         })
     </script>
+    {{-- <script>
+        class Documentos {
+            constructor() {
+                this.url = "{{ route('admin.empleado.documentos', $empleado) }}";
+                this.pdfFile = "{{ asset('img/pdf-file.png') }}";
+                this.assetDocumentosUrl = "{{ asset('storage/documentos_empleados/') }}";
+            }
+            async render() {
+                const response = await fetch(this.url);
+                const data = await response.json();
+                let html = `<div class="row">`
+                data.documentos.forEach(element => {
+                    html += `
+                    <div class="col-md-2 col-2" style="position: relative;" id="contendorDocumento">
+                        <a href="${this.assetDocumentosUrl}/${element.documentos}" target="_blank" title="Visualizar">
+                        <img class="img-fluid" src="${this.pdfFile}">
+                        <p class="text-muted" style="font-size: 9pt;text-align: center;">${element.documentos}</p>
+                        </a>
+                        <i data-documento-id="${element.id}" class="fas fa-times-circle" style="cursor:pointer;position: absolute;top: 13px;font-size: 12pt;right: 26px;color: #4a4a4a;"></i>
+                    </div>
+                    `
+                });
+                html += `</div>`;
+                document.getElementById('documentosGrid').innerHTML = html;
+                console.log(data);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const documentos = new Documentos();
+            documentos.render();
+
+            const documentosGrid = document.getElementById('documentosGrid');
+            documentosGrid.addEventListener('click', function(e) {
+                if (e.target.tagName == 'I') {
+                    console.log(e.target.getAttribute('data-documento-id'));
+                }
+            })
+        })
+    </script> --}}
     <script>
         $(document).ready(function() {
             $('.areas').select2({
@@ -1475,8 +1486,6 @@
                     }
                 }
             });
-
-
             window.Eliminar = function(url, certificacionId) {
                 Swal.fire({
                     title: 'Estás seguro de eliminar?',
@@ -1541,10 +1550,259 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            document.getElementById("btnGuardarDocumento").addEventListener("click", async function(e) {
+                e.preventDefault();
+                limpiarErrores();
+                let url = $("#formDocumentos").attr("action");
+                const formulario = document.getElementById('formDocumentos');
+                const formData = new FormData(formulario);
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                'content'),
+                        },
+                    });
+                    const data = await response.json();
+                    if (data.errors) {
+                        $.each(data.errors, function(indexInArray, valueOfElement) {
+                            $(`#${indexInArray.replaceAll('.','_')}_error`).text(
+                                valueOfElement[0]);
+                        });
+                        toastr.error(
+                            'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
+                        );
+                    }
+                    if (data.status) {
+                        tblDocumentos.ajax.reload();
+                        formulario.reset();
+                        console.log(data.message);
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            })
+
+            window.tblDocumentos = $('#tbl-documentos').DataTable({
+                buttons: [],
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
+                ajax: "{{ route('admin.empleado.documentos', $empleado->id) }}",
+                columns: [{
+                        data: 'nombre',
+                        name: 'nombre',
+                        render: function(data, type, row, meta) {
+                            return `<input class="form-control" type="text" value="${data}" data-name-input="nombre" data-documento-id="${row.id}" />
+                            <span class="errors nombre_error text-danger"></span>`;
+                        }
+                    },
+                    {
+                        data: 'numero',
+                        name: 'numero',
+                        render: function(data, type, row, meta) {
+                            return `<input class="form-control" type="text" value="${data}" data-name-input="numero" data-documento-id="${row.id}" />
+                            <span class="errors numero_error text-danger"></span>`;
+                        }
+                    },
+                    {
+                        data: 'documentos',
+                        name: 'documentos',
+                        render: function(data, type, row, meta) {
+                            if (data) {
+                                const pdfFile = "{{ asset('img/pdf-file.png') }}";
+                                return `
+                            <div class="text-center" style="position:relative;">
+                                <a target="_blank" class="text-center" href="${row.ruta_documento}" title="${data}">
+                                    <img style="width:35px" src="${pdfFile}" class="img-fluid" alt="${data}" />
+                                    <p class="m-0 text-muted" style="font-size:10px">${data.substring(0,35)}...</p>
+                                </a>
+                                <i data-documento-id="${row.id}" class="fas fa-times-circle removeFile" style="position:absolute; top:0;right: 58px;"></i>
+                            </div>
+                            `;
+                            } else {
+                                return `
+                                <div class="text-center">
+                                    <label for="documento${row.id}" class="text-center">
+                                        <img src="{{ asset('img/upload-pdf.png') }}" style="width:40px" />
+                                        <p class="m-0 text-muted" style="font-size:10px">Subir Documento</p>
+                                    </label>
+                                </div>
+                                <input type="file" class="form-control d-none" id="documento${row.id}" data-name-input="file" data-documento-id="${row.id}"/>
+                                <p class="m-0">
+                                    <span class="errors documento_error text-danger"></span>
+                                </p>
+                                `;
+                            }
+
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let urlEliminar =
+                                `/admin/empleado/${data}/documentos`;
+                            let html = `
+                            <button onclick="event.preventDefault(); EliminarDocumento('${urlEliminar}','${data}')" class="btn btn-sm text-primary"><i class="fas fa-trash-alt" style="color:#fd0000"></i></button>
+                            `;
+                            return html;
+                        }
+                    },
+
+                ],
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ],
+            })
+            //Eventos para editar registros
+            document.getElementById('tbl-documentos').addEventListener('change', async function(e) {
+                if (e.target.tagName == 'INPUT') {
+                    if (e.target.type == 'file') {
+                        const documentoId = e.target.getAttribute('data-documento-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const files = e.target.files;
+                        const formData = new FormData();
+                        files.forEach(element => {
+                            formData.append(typeInput, element);
+                        });
+                        const url =
+                            `/admin/empleados/update/${documentoId}/documentos`;
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            tblDocumentos.ajax.reload();
+                            console.log(data);
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    }
+                }
+            });
+            document.getElementById('tbl-documentos').addEventListener('keyup', async function(e) {
+                if (e.target.tagName == 'INPUT') {
+                    if (e.target.type == 'text') {
+                        const documentoId = e.target.getAttribute('data-documento-id');
+                        const typeInput = e.target.getAttribute('data-name-input');
+                        const value = e.target.value;
+                        const formData = new FormData();
+                        formData.append(typeInput, value);
+                        const url =
+                            `/admin/empleados/update/${documentoId}/documentos`;
+                        try {
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            const data = await response.json();
+                            console.log(data);
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    }
+                }
+            });
+            document.getElementById('tbl-documentos').addEventListener('click', function(e) {
+                if (e.target.tagName == 'I') {
+                    if (e.target.classList.contains('removeFile')) {
+                        const documentoId = e.target.getAttribute('data-documento-id');
+                        Swal.fire({
+                            title: 'Estás seguro de eliminar el documento?',
+                            text: "Esto no se puede revertir!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si',
+                            cancelButtonText: "No",
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                const url =
+                                    `/admin/empleados/${documentoId}/delete-file-documento`;
+                                try {
+                                    const response = await fetch(url, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            Accept: "application/json",
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                                .attr(
+                                                    'content'),
+                                        },
+                                    })
+                                    const data = await response.json();
+                                    tblDocumentos.ajax.reload();
+                                } catch (error) {
+                                    console.log(error);
+                                }
+                            }
+                        })
+
+                    }
+                }
+            });
+            window.EliminarDocumento = function(url, documentoId) {
+                Swal.fire({
+                    title: 'Estás seguro de eliminar?',
+                    text: "Esto no se puede revertir!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si',
+                    cancelButtonText: "No",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "delete",
+                            url: url,
+                            data: {
+                                documentoId
+                            },
+                            beforeSend: function() {
+                                toastr.info("Eliminando documento");
+                            },
+                            success: function(response) {
+                                if (response.status == 'success') {
+                                    toastr.success("Documento eliminado");
+                                    tblDocumentos.ajax.reload();
+                                }
+                            },
+                            error: function(request, status, error) {
+                                console.log(error)
+                                $.each(request.responseJSON.errors, function(indexInArray,
+                                    valueOfElement) {
+                                    console.log(valueOfElement, indexInArray);
+                                    $(`span.${indexInArray}_error`).text(
+                                        valueOfElement[0]);
+                                });
+                            }
+                        });
+                    }
+                })
+            }
+
             // let url = "{{ route('admin.empleados.get') }}";
-
-
-
             document.getElementById('btn-agregar-experiencia').addEventListener('click', function(e) {
                 e.preventDefault();
                 limpiarErrores();

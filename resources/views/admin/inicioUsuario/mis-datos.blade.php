@@ -157,11 +157,12 @@
         text-transform: capitalize;
     }
 
-    .cuadro_verde_con_before{
+    .cuadro_verde_con_before {
         position: relative;
         overflow: hidden;
     }
-    .cuadro_verde_con_before:before{
+
+    .cuadro_verde_con_before:before {
         content: "";
         background: #00abb2;
         position: absolute;
@@ -170,6 +171,7 @@
         top: 0;
         z-index: 0;
     }
+
 </style>
 
 <div class="card-body">
@@ -194,7 +196,7 @@
                             </div>
                         </div>
                         <div class="p-3 mt-3 card" x-data="{show:false}">
-                            <h5 class="mb-0"><i class="fas fa-award mr-2"></i>Mis Competencias
+                            <h5 class="mb-0"><i class="fas fa-award mr-2"></i>Mi Perfil Profesional
                                 <span style="float: right; cursor:pointer; margin-top: 0px;" @click="show=!show"><i
                                         class="fas" :class="[show ? 'fa-minus' : 'fa-plus']"></i></span>
                             </h5>
@@ -205,7 +207,7 @@
                                     @if ($usuario->empleado)
                                         <a href="{{ route('admin.miCurriculum', $usuario->empleado->id) }}"
                                             class="btn btn-success">
-                                            Ver Competencias
+                                            Ver Curriculum
                                         </a>
                                     @endif
                                 </div>
