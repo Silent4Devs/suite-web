@@ -71,19 +71,19 @@
         .datatable-fix table.dataTable thead .sorting:after {
             opacity: 0.5;
             content: "\f0dc";
-            font-family: "Font Awesome 5 Free";
+            font-family: "FontAwesome";
         }
 
         .datatable-fix table.dataTable thead .sorting_asc:after {
             opacity: 0.5;
             content: "\f0de";
-            font-family: "Font Awesome 5 Free";
+            font-family: "FontAwesome";
         }
 
         .datatable-fix table.dataTable thead .sorting_desc:after {
             opacity: 0.5;
             content: "\f0dd";
-            font-family: "Font Awesome 5 Free";
+            font-family: "FontAwesome";
         }
 
         table.dataTable {
@@ -304,6 +304,33 @@
 
         .breadcrumb-item.active {
             color: #000000;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: none;
+        }
+
+        label input.form-control {
+            border: none;
+            border-bottom: 1px solid #b4b4b4;
+            border-radius: unset;
+        }
+
+        label input.form-control:focus,
+        label input.form-control:active,
+        label input.form-control:focus-within {
+            outline: none;
+            border-bottom: 1px solid #7fabfd;
+        }
+
+        table.dataTable thead {
+            background: #F2F2F2 !important;
+        }
+
+        table.dataTable tr th {
+            font-weight: normal;
+            border: none !important;
         }
 
     </style>
@@ -1041,7 +1068,7 @@
                                 <div class="alert alert-success" role="alert">{{ session('message') }}</div>
                             </div>
                         </div>
-                    </div>
+                </div>
                 @endif
                 <div id="errores_generales_admin_quitar_recursos">
                     @if ($errors->count() > 0)
@@ -1059,13 +1086,13 @@
         </div>
 
 
-            </main>
-            <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-        </div>
-        <!-- incluir de footer -->
-        {{-- @include('partials.footer') --}}
+        </main>
+        <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
+    </div>
+    <!-- incluir de footer -->
+    {{-- @include('partials.footer') --}}
     </div>
     {{-- daterangepicker --}}
 
@@ -1136,12 +1163,11 @@
             $('[data-toggle="tooltip"]').tooltip()
         })
 
-        $(".btn_bajar_scroll").click(function(){
+        $(".btn_bajar_scroll").click(function() {
             $("lemnt_row_menu").fadeIn(0);
-            $('.c-sidebar-nav').delay(1000).scrollTop( 900);
+            $('.c-sidebar-nav').delay(1000).scrollTop(900);
         });
     </script>
-
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>

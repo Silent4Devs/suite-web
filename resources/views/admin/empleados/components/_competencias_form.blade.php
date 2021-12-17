@@ -74,9 +74,8 @@
                 </div> --}}
 
                 <div class="custom-file">
-                    <input type="file" name="documento" class="custom-file-input" id="evidencia"
-                        aria-describedby="inputGroupFileAddon01">
-                    <label class="custom-file-label" for="evidencia">Seleccionar archivo</label>
+                    <input type="file" name="documento" id="evidencia" aria-describedby="inputGroupFileAddon01">
+                    {{-- <label class="custom-file-label" for="evidencia">Seleccionar archivo</label> --}}
                     <span class="errors documento_error text-danger"></span>
                 </div>
             </div>
@@ -91,8 +90,8 @@
 
     </form>
     <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
-        <table class="table w-100" id="tbl-certificados" style="width:100% !important">
-            <thead class="thead-dark">
+        <table class="table w-100" id="tbl-certificados" style="width:100%">
+            <thead>
                 <tr>
                     <th>Certificación</th>
                     <th>Vigencia</th>
@@ -122,7 +121,7 @@
 
         <div class="row">
             <div class="form-group col-sm-12">
-                <label for="curso_diplomado"><i class="fas fa-street-view iconos-crear"></i>Nombre
+                <label for="curso_diplomado"><i class="fas fa-certificate iconos-crear"></i>Nombre
                     del curso /
                     diplomado</label>
                 <input class="form-control {{ $errors->has('curso_diplomado') ? 'is-invalid' : '' }}" type="text"
@@ -135,7 +134,7 @@
 
         <div class="row">
             <div class="form-group col-sm-6">
-                <label for="tipo"><i class="fas fa-street-view iconos-crear"></i>Tipo</label>
+                <label for="tipo"><i class="fas fa-chalkboard-teacher iconos-crear"></i>Tipo</label>
                 <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo">
                     <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                         Selecciona una opción</option>
@@ -160,7 +159,7 @@
 
 
             <div class="form-group col-sm-3">
-                <label for="duracion"><i class="fas fa-street-view iconos-crear"></i>Duración
+                <label for="duracion"><i class="fas fa-clock iconos-crear"></i>Duración
                     (Hrs)</label>
                 <input class="form-control {{ $errors->has('duracion') ? 'is-invalid' : '' }}" type="number"
                     name="duracion" id="duracion" value="{{ old('duracion', '') }}">
@@ -181,7 +180,7 @@
 
     <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
         <table class="table w-100" id="tbl-cursos">
-            <thead class="thead-dark">
+            <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Tipo</th>
@@ -276,7 +275,7 @@
 
     <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
         <table class="table w-100" id="tbl-experiencia">
-            <thead class="thead-dark">
+            <thead>
                 <tr>
                     <th>Empresa</th>
                     <th>Puesto</th>
@@ -312,10 +311,9 @@
 
 
             <div class="form-group col-sm-6">
-                <label for="nivel"><i class="fas fa-street-view iconos-crear"></i>Nivel de
+                <label for="nivel"><i class="fas fa-graduation-cap iconos-crear"></i>Nivel de
                     estudios</label>
-                <select class="form-control {{ $errors->has('nivel') ? 'is-invalid' : '' }}" name="nivel"
-                    id="nivel">
+                <select class="form-control {{ $errors->has('nivel') ? 'is-invalid' : '' }}" name="nivel" id="nivel">
                     <option value disabled {{ old('nivel', null) === null ? 'selected' : '' }}>
                         Selecciona una opción</option>
                     @foreach (App\Models\EducacionEmpleados::NivelSelect as $key => $label)
@@ -360,7 +358,7 @@
 
     <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
         <table class="table w-100" id="tbl-educacion">
-            <thead class="thead-dark">
+            <thead>
                 <tr>
                     <th>Institución</th>
                     <th>Nivel</th>
@@ -375,11 +373,11 @@
         </table>
     </div>
     <input type="hidden" name="educacion" value="" id="educacion">
-    <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
+    {{-- <div class="mb-3 w-100" style="border-bottom: solid 2px #0CA193;">
         <span style="font-size: 17px; font-weight: bold;">
             Expediente del Empleado</span>
     </div>
-    {{-- <div class="mt-3 col-sm-12 form-group px-0">
+    <div class="mt-3 col-sm-12 form-group px-0">
         <label for="documentos"><i class="fas fa-folder-open iconos-crear"></i>Documentos</label><i
             class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
         <div class="custom-file">

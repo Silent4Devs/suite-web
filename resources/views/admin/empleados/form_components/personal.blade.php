@@ -1,6 +1,6 @@
 <div class="row mt-4">
     <div class="form-group col-sm-12">
-        <label for="domicilio_personal"><i class="fas fa-street-view iconos-crear"></i>Domicilio
+        <label for="domicilio_personal"><i class="fas fa-home iconos-crear"></i>Domicilio
             Personal</label>
         <input class="form-control {{ $errors->has('domicilio_personal') ? 'is-invalid' : '' }}" type="text"
             name="domicilio_personal" id="domicilio_personal"
@@ -24,7 +24,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="correo_personal"><i class="fas fa-at iconos-crear"></i>Correo Personal</label>
+        <label for="correo_personal"><i class="fas fa-envelope iconos-crear"></i>Correo Personal</label>
         <input class="form-control {{ $errors->has('correo_personal') ? 'is-invalid' : '' }}" type="text"
             placeholder="example@tabantaj.com" name="correo_personal" id="correo_personal"
             value="{{ old('correo_personal', $empleado->correo_personal) }}">
@@ -44,7 +44,7 @@
     </div>
     {{-- Fin componente dependientes economicos --}}
     <div class="form-group col-sm-6">
-        <label for="estado_civil"><i class="fas fa-briefcase iconos-crear"></i>Estado
+        <label for="estado_civil"><i class="fas fa-book iconos-crear"></i>Estado
             civil</label>
         <select class="form-control select-search {{ $errors->has('estado_civil') ? 'is-invalid' : '' }}"
             name="estado_civil" id="estado_civil" value="{{ old('estado_civil', '') }}" required>
@@ -109,7 +109,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="lugar_nacimiento"><i class="fas fa-street-view iconos-crear"></i>Lugar de
+        <label for="lugar_nacimiento"><i class="fas fa-map-marker-alt iconos-crear"></i>Lugar de
             nacimiento</label>
         <input class="form-control {{ $errors->has('lugar_nacimiento') ? 'is-invalid' : '' }}" type="text"
             name="lugar_nacimiento" id="lugar_nacimiento"
@@ -122,7 +122,7 @@
         @endif
     </div>
     <div class="form-group col-sm-12">
-        <label for="nacionalidad"><i class="fas fa-street-view iconos-crear"></i>Nacionalidad</label>
+        <label for="nacionalidad"><i class="fas fa-globe-americas iconos-crear"></i>Nacionalidad</label>
         <select class="form-control {{ $errors->has('nacionalidad') ? 'is-invalid' : '' }}" name="nacionalidad"
             id="nacionalidad">
             <option value="" selected disabled>-- Selecciona la nacionalidad --</option>
@@ -149,7 +149,7 @@
     </div>
     {{-- Fin Componente contacto(s) de emergencia --}}
     <div class="form-group col-sm-6">
-        <label for="entidad_crediticias_id"><i class="fas fa-briefcase iconos-crear"></i>Entidad
+        <label for="entidad_crediticias_id"><i class="fas fa-landmark iconos-crear"></i>Entidad
             crediticia</label>
         <select class="form-control select-search {{ $errors->has('entidad_crediticias_id') ? 'is-invalid' : '' }}"
             name="entidad_crediticias_id" id="entidad_crediticias_id"
@@ -169,7 +169,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6">
-        <label for="numero_credito"><i class="fas fa-address-card iconos-crear"></i>Número de crédito</label>
+        <label for="numero_credito"><i class="fas fa-barcode iconos-crear"></i>Número de crédito</label>
         <input class="form-control {{ $errors->has('numero_credito') ? 'is-invalid' : '' }}" type="text"
             name="numero_credito" id="numero_credito" value="{{ old('numero_credito', $empleado->numero_credito) }}">
         <small id="error_numero_credito" class="text-danger"></small>
@@ -180,8 +180,9 @@
         @endif
     </div>
     <div class="form-group col-sm-12">
-        <label for="descuento"><i class="fas fa-address-card iconos-crear"></i>Descuento</label>
-        <input class="form-control {{ $errors->has('descuento') ? 'is-invalid' : '' }}" type="text" name="descuento"
+        <label for="descuento"><i class="fas fa-percentage iconos-crear"></i>Descuento</label>
+        <input placeholder="$1,000,000.00" data-type='currency'
+            class="form-control {{ $errors->has('descuento') ? 'is-invalid' : '' }}" type="text" name="descuento"
             id="descuento" value="{{ old('descuento', $empleado->descuento) }}">
         <small id="error_descuento" class="text-danger"></small>
         @if ($errors->has('descuento'))

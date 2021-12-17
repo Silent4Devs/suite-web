@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class EmpleadoController extends Controller
 {
@@ -846,7 +847,7 @@ class EmpleadoController extends Controller
         $documentos = EvidenciasDocumentosEmpleados::get();
         $puestos = Puesto::all();
         $perfiles = PerfilEmpleado::all();
-        $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description')->get();
+        $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $puestos = Puesto::get();
         $perfiles = PerfilEmpleado::get();
@@ -949,17 +950,17 @@ class EmpleadoController extends Controller
             }
         }
 
-        if ($request->hasFile('files')) {
-            $files = $request->file('files');
-            foreach ($files as $file) {
-                if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
-                    EvidenciasDocumentosEmpleados::create([
-                        'documentos' => $file->getClientOriginalName(),
-                        'empleado_id' => $empleado->id,
-                    ]);
-                }
-            }
-        }
+        // if ($request->hasFile('files')) {
+        //     $files = $request->file('files');
+        //     foreach ($files as $file) {
+        //         if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
+        //             EvidenciasDocumentosEmpleados::create([
+        //                 'documentos' => $file->getClientOriginalName(),
+        //                 'empleado_id' => $empleado->id,
+        //             ]);
+        //         }
+        //     }
+        // }
 
         $empleado->update([
             'name' => $request->name,
@@ -1213,10 +1214,89 @@ class EmpleadoController extends Controller
         return redirect()->back()->with(['success' => 'Información actualizada']);
     }
 
+    public function storeDocumentos(Request $request, Empleado $empleado)
+    {
+        $request->merge([
+            'empleado_id' => $empleado->id,
+        ]);
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'numero' => 'required|string|max:255',
+            'documentos' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
+            'empleado_id' => 'required|exists:empleados,id'
+        ]);
+
+        // dd($empleado);
+        $evidencia = EvidenciasDocumentosEmpleados::create($request->all());
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+                $evidencia->update([
+                    'documentos' => $file->getClientOriginalName(),
+                ]);
+            }
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Documento registrado']);
+    }
+
+    public function updateDocumento(Request $request, EvidenciasDocumentosEmpleados $documento)
+    {
+        $empleado = $documento->empleados_documentos;
+        if (array_key_exists('nombre', $request->all())) {
+            $request->validate([
+                'nombre' => 'required|string|min:2|max:255',
+            ]);
+            $documento->update($request->all());
+        }
+
+        if (array_key_exists('numero', $request->all())) {
+            $request->validate([
+                'numero' => 'required|string|min:5|max:255',
+            ]);
+            $documento->update($request->all());
+        }
+
+        if (array_key_exists('file', $request->all())) {
+            $request->validate([
+                'file' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000'
+            ]);
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+                    $documento->update([
+                        'documentos' => $file->getClientOriginalName(),
+                    ]);
+                }
+            }
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Registro Actualizado']);
+    }
+
     public function getDocumentos(Empleado $empleado)
     {
         $documentos = EvidenciasDocumentosEmpleados::where('empleado_id', $empleado->id)->get();
+        return datatables()->of($documentos)->toJson();
+        // return response()->json(['documentos' => $documentos]);
+    }
 
-        return response()->json(['documentos' => $documentos]);
+    public function deleteDocumento(EvidenciasDocumentosEmpleados $documento)
+    {
+        $documento->delete();
+        return response()->json(['status' => 'success', 'message' => 'Documento eliminado']);
+    }
+
+    public function deleteFileDocumento(EvidenciasDocumentosEmpleados $documento)
+    {
+        if (Storage::disk('public')->exists($documento->ruta_absoluta_documento)) {
+            Storage::disk('public')->delete($documento->ruta_absoluta_documento);
+        }
+        $documento->update([
+            'documentos' => null,
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Archivo eliminado']);
     }
 }

@@ -32,15 +32,22 @@ class EvidenciasDocumentosEmpleados extends Model
         'empleado_id',
         'documentos',
         'nombre',
+        'numero'
     ];
 
-    protected $appends = ['ruta_documento'];
+    protected $appends = ['ruta_documento', 'ruta_absoluta_documento'];
 
     public function getRutaDocumentoAttribute()
     {
         $empleado = Empleado::select('id', 'name')->find($this->empleado_id);
 
         return asset('storage/expedientes/' . Str::slug($empleado->name) . '/' . $this->documentos);
+    }
+    public function getRutaAbsolutaDocumentoAttribute()
+    {
+        $empleado = Empleado::select('id', 'name')->find($this->empleado_id);
+
+        return 'expedientes/' . Str::slug($empleado->name) . '/' . $this->documentos;
     }
 
     public function empleados_documentos()
