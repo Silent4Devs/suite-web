@@ -157,6 +157,19 @@
         text-transform: capitalize;
     }
 
+    .cuadro_verde_con_before{
+        position: relative;
+        overflow: hidden;
+    }
+    .cuadro_verde_con_before:before{
+        content: "";
+        background: #00abb2;
+        position: absolute;
+        width: 100%;
+        height: 100px;
+        top: 0;
+        z-index: 0;
+    }
 </style>
 
 <div class="card-body">
@@ -165,7 +178,7 @@
             <div class="main-body">
                 <div class="row gutters-sm">
                     <div class="mb-3 col-md-4">
-                        <div class="card">
+                        <div class="card cuadro_verde_con_before">
                             <div class="card-body">
                                 <div class="text-center d-flex flex-column align-items-center">
                                     <img class="img-fluid img-profile" style="position: relative;"
@@ -194,7 +207,7 @@
                                 x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                 @foreach ($equipo_a_cargo as $empleado)
                                     <div class="col-md-12">
-                                        <div class="card">
+                                        <div class="card" style="position:relative;">
                                             <div class="card-body" style="position:relative">
                                                 <div class="text-center d-flex flex-column align-items-center">
 

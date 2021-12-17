@@ -342,6 +342,7 @@
         .caja_botones_menu a.btn_activo,
         .caja_botones_menu a.btn_activo:hover {
             background-color: #fff;
+            box-shadow: 0px -2px 0px 0px;
         }
 
         .caja_botones_menu a:hover {
