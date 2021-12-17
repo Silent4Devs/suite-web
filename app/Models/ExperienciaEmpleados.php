@@ -39,6 +39,26 @@ class ExperienciaEmpleados extends Model
 
     ];
 
+    protected $appends = ['inicio_mes_ymd', 'fin_mes_ymd'];
+
+    public function getInicioMesYmdAttribute()
+    {
+        if ($this->inicio_mes) {
+            return Carbon::parse($this->inicio_mes)->format('Y-m-d');
+        } else {
+            return null;
+        }
+    }
+
+    public function getFinMesYmdAttribute()
+    {
+        if ($this->inicio_mes) {
+            return Carbon::parse($this->fin_mes)->format('Y-m-d');
+        } else {
+            return null;
+        }
+    }
+
     public function empleado_experiencia()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');

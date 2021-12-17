@@ -385,6 +385,16 @@
             margin-top: -5px;
         }
 
+        .btn_link_agenda{
+            all:unset;
+            font-size: 11pt;
+            color: #00abb2;
+            cursor: pointer;
+            transition: 0.09;
+        }
+        .btn_link_agenda:hover{
+            transform: scale(1.1);
+        }
     </style>
 
 
@@ -404,8 +414,9 @@
                     <div class="p-2" id="clima"
                         style="border-left: solid 2px #00abb2; background-color: #e6e6e6;"></div>
                     <div class="p-3"
-                        style=" margin-top: 20px; border-left: solid 2px #00abb2;  background-color: #f3f3f3;">
-                        <div class="calendar calendar-first" id="calendar_first">
+                        style=" margin-top: 20px; border-left: solid 2px #00abb2;  background-color: #f3f3f3;position: relative;">
+                        <a href="{{asset('admin/system-calendar')}}" class="btn_link_agenda" style=" position: absolute; top:3px; right:8px;" title="Agenda organizacional"><i class="fas fa-calendar-alt"></i></a>
+                        <div class="calendar calendar-first" id="calendar_first" style="margin-top: 10px;">
                             <div class="calendar_header">
                                 <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
                                 <h2></h2>

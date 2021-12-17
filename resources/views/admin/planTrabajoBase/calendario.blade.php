@@ -109,6 +109,33 @@
          display: block;
      }
 
+
+     .tui-full-calendar-weekday-schedule-title{
+        position: relative;
+   }
+    .tui-full-calendar-weekday-schedule-title strong{
+        font-size: 9pt !important;
+        position: absolute;
+        right: 10px;
+   }
+    .tui-full-calendar-weekday-schedule-title strong:before{
+        content: "Inicio:  ";
+   }
+   .dropdown-menu.show{
+        width: 250px !important;
+   }
+
+
+
+   .i_calendar{
+        font-size: 11pt;
+        width: 20px;
+        text-align: center;
+   }
+   .i_calendar_cuadro{
+        margin: 0px 8px;
+   }
+
  </style>
 
  <div class="card" style="box-shadow: none; !important">
@@ -146,17 +173,17 @@
                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
                              <li role="presentation">
                                  <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
-                                     <i class="calendar-icon ic_view_day"></i>Atrasados
+                                     <i class="calendar-icon ic_view_day"></i>Diario
                                  </a>
                              </li>
                              <li role="presentation">
                                  <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
-                                     <i class="calendar-icon ic_view_week"></i>Semanales
+                                     <i class="calendar-icon ic_view_week"></i>Semanal
                                  </a>
                              </li>
                              <li role="presentation">
                                  <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
-                                     <i class="calendar-icon ic_view_month"></i>Mensuales
+                                     <i class="calendar-icon ic_view_month"></i>Mensual
                                  </a>
                              </li>
                              <li role="presentation">
@@ -319,7 +346,7 @@
                      id: `r_${task.id}`,
                      calendarId: `${task.level == 1 ? '1': '2'}`,
                      //  bgColor: bgColor,
-                     title: `${task.level == 1 ? 'Fase: ': 'Actividad: '}${task.name}`,
+                     title: `<i class="fas fa-thumbtack i_calendar_cuadro" style="color:#00ABB2;"></i> ${task.level == 1 ? 'Fase: ': 'Actividad: '}${task.name}`,
                      category: 'allday',
                      body: `${filteredAssigs.length > 0 ? "<h5>Responsables</h5>":""} ${images} <p>Estatus: <span class="badge ${task.status}">${estatus}</span></p>`,
                      dueDateClass: '',

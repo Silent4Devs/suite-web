@@ -10,9 +10,15 @@
             @php
                 use App\Models\Organizacion;
                 $organizacion = Organizacion::select('id', 'logotipo')->first();
-                $logotipo = $organizacion->logotipo;
+                if (!is_null($organizacion)) {
+                    $logotipo = $organizacion->logotipo;
+                }else {
+                   $logotipo  = "logotipo-tabantaj.png";
+                }
             @endphp
+
             <img src="{{ asset($logotipo) }}" class="img_logo" style="width: 110%;">
+
         </div>
 
     </div>
@@ -376,7 +382,7 @@
                     </ul>
                 </li>
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/*') ? 'active' : '' }}"
+                    <a class="c-sidebar-nav-link {{ request()->is('admin/recursos-humanos/evaluacion-360/*') ? 'active' : '' }}"
                         href="{{ route('admin.rh-evaluacion360.index') }}">
                         <img src="{{ asset('img/360-degrees1.png') }}" alt="icono360"
                             style="width: 26px;margin-right: 14px;margin-left: 3px;">
@@ -397,7 +403,7 @@
             <font class="letra_blanca">Normas</font>
         </li>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link " href="{{ route('admin.iso27001.index') }}#contexto">
+            <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') ? 'active' : '' }}" href="{{ route('admin.iso27001.index') }}#contexto">
                 <i class="fa-fw fas fa-globe-americas iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> ISO 27001 </font>
             </a>
@@ -596,7 +602,7 @@
                     @can('configuracion_sede_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route('admin.paneldeclaracion.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/sedes') || request()->is('admin/sedes/*/edit') || request()->is('admin/sedes/create') ? 'active' : '' }}">
+                                class="c-sidebar-nav-link {{ request()->is('admin/paneldeclaracion') || request()->is('admin/paneldeclaracion/*/edit') || request()->is('admin/paneldeclaracion/create') ? 'active' : '' }}">
                                 <i class="ml-2 fas fa-file iconos_menu letra_blanca"></i>
 
                                 <font class="letra_blanca" style="margin-left:10px;">Controles</font>
@@ -847,7 +853,7 @@
             </li>
         @endcan --}}
         <div class="row lemnt_row_menu" style="padding-bottom:300px;">
-            
+
         </div>
     </ul>
 

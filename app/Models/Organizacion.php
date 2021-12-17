@@ -68,10 +68,10 @@ class Organizacion extends Model
         'fecha_constitucion',
         'num_empleados',
         'tamano',
-        'hora_laboral_inicio',
-        'hora_laboral_fin',
-        'dia_inicio',
-        'dia_fin',
+        'linkedln',
+        'youtube',
+        'facebook',
+        'twitter',
 
     ];
 
