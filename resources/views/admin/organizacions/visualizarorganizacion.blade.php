@@ -42,6 +42,7 @@ select{
         </div>
 
         <div class="row p-0 col-12" style="">
+            @if ($panel_rules->logotipo)
             <div class="col-md-6" style="margin-top:0px;transform: scale(0.7);margin-top:-40px;margin-right:10px;">
                 <img class="bg-light" src="{{ url($logotipo) }}" alt="Card image" style="width:100%;">
                 @if ($errors->has('logotipo'))
@@ -51,8 +52,9 @@ select{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.logotipo_helper') }}</span>
             </div>
-
+            @endif
             <div class="col-md-6 row">
+                @if ($panel_rules->empresa)
                 <div class="form-group col-sm-12 col-md-12">
                     <label class="" for="empresa"><i class="far fa-building iconos-crear"></i> Nombre de la
                         Empresa
@@ -66,7 +68,8 @@ select{
                     @endif
                     <span class="help-block">{{ trans('cruds.organizacion.fields.empresa_helper') }}</span>
                 </div>
-
+                @endif
+                @if ($panel_rules->razon_social)
                 <div class="form-group col-sm-12">
                     <label class="" for="razon_social"><i class="far fa-building iconos-crear"></i> Razón Social</label>
                     <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" type="text" name="razon_social" id="razon_social" value="{{ $organizacion->razon_social }}" disabled>
@@ -76,7 +79,8 @@ select{
                         </div>
                     @endif
                 </div>
-
+                @endif
+                @if ($panel_rules->rfc)
                 <div class="form-group col-sm-12">
                     <label class="" for="rfc"><i class="fas fa-barcode iconos-crear"></i>RFC</label>
                     <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="rfc" id="rfc" value="{{ $organizacion->rfc }}" disabled>
@@ -86,11 +90,12 @@ select{
                         </div>
                     @endif
                 </div>
+                @endif
             </div>
         </div>
 
-
         <div class="row col-md-12">
+            @if ($panel_rules->direccion)
             <div class="form-group col-sm-12 col-md-12">
                 <label class="" for="direccion"> <i class="fas fa-map-marker-alt iconos-crear"></i>
                     {{ trans('cruds.organizacion.fields.direccion') }}
@@ -104,9 +109,10 @@ select{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.direccion_helper') }}</span>
             </div>
-
+            @endif
+            @if ($panel_rules->telefono)
             <div class="form-group col-sm-12 col-md-4">
-                <label for="telefono"> <i class="fas fa-phone iconos-crear"></i> Teléfono
+                <label for="telefono"> <i class="fas fa-phone iconos-crear"></i>Teléfono
                 </label>
                 <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number"
                     name="telefono" id="telefono" value="{{ $organizacion->telefono }}" disabled>
@@ -117,8 +123,8 @@ select{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.telefono_helper') }}</span>
             </div>
-
-
+            @endif
+            @if ($panel_rules->correo)
             <div class="form-group col-sm-12 col-md-4">
                 <label for="correo"> <i class="far fa-envelope iconos-crear"></i>
                     {{ trans('cruds.organizacion.fields.correo') }}
@@ -132,9 +138,9 @@ select{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.correo_helper') }}</span>
             </div>
+            @endif
 
-
-
+            @if ($panel_rules->pagina_web)
             <div class="form-group col-sm-12 col-md-4">
                 <label for="pagina_web"> <i class="fas fa-pager iconos-crear"></i> Página Web
                 </label>
@@ -147,7 +153,58 @@ select{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span>
             </div>
-
+            @endif
+            @if ($panel_rules->redessociales)
+            <div class="form-group col-sm-4 col-md-3">
+                <label for="linkedln"> <i class="fab fa-linkedin iconos-crear"></i>Linkedln
+                </label>
+                <input class="form-control {{ $errors->has('linkedln') ? 'is-invalid' : '' }}" type="text"
+                    name="linkedln" id="linkedln" value="{{ $organizacion->linkedln }}" disabled>
+                @if ($errors->has('linkedln'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('linkedln') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
+            </div>
+            <div class="form-group col-sm-4 col-md-3">
+                <label for="youtube"><i class="fab fa-youtube iconos-crear"></i>YouTube
+                </label>
+                <input class="form-control {{ $errors->has('youtube') ? 'is-invalid' : '' }}" type="text"
+                    name="youtube" id="youtube" value="{{ $organizacion->youtube }}" disabled>
+                @if ($errors->has('youtube'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('youtube') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
+            </div>
+            <div class="form-group col-sm-4 col-md-3">
+                <label for="facebook"><i class="fab fa-facebook-square iconos-crear"></i>Facebook
+                </label>
+                <input class="form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" type="text"
+                    name="facebook" id="facebook" value="{{ $organizacion->facebook }}" disabled>
+                @if ($errors->has('facebook'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('facebook') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
+            </div>
+            <div class="form-group col-sm-4 col-md-3">
+                <label for="twitter"><i class="fab fa-twitter-square iconos-crear"></i>Twitter
+                </label>
+                <input class="form-control {{ $errors->has('twitter') ? 'is-invalid' : '' }}" type="text"
+                    name="twitter" id="twitter" value="{{ $organizacion->twitter }}" disabled>
+                @if ($errors->has('twitter'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('twitter') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.organizacion.fields.pagina_web_helper') }}</span> --}}
+            </div>
+            @endif
+            @if ($panel_rules->schedule)
             <div class="form-group col-12">
                 <table class="table" id="user_table">
                     <tbody>
@@ -165,6 +222,7 @@ select{
                     <tfoot></tfoot>
                 </table>
             </div>
+            @endif
 
 
             <div class="col-md-12 col-sm-12">
@@ -172,7 +230,7 @@ select{
                     <p class="mb-1 text-center text-white">DATOS COMPLEMENTARIOS</p>
                 </div>
             </div>
-
+            @if ($panel_rules->representante_legal)
             <div class="form-group  col-sm-12 col-md-6">
                 <label class="" for="representante_legal"><i class="fas fa-user-tie iconos-crear"></i>Representante Legal</label>
                 <input class="form-control {{ $errors->has('representante_legal') ? 'is-invalid' : '' }}" type="text" name="representante_legal" id="representante_legal" value="{{ $organizacion->representante_legal }}" disabled>
@@ -181,10 +239,9 @@ select{
                         {{ $errors->first('representante_legal') }}
                     </div>
                 @endif
-
             </div>
-
-
+            @endif
+            @if ($panel_rules->fecha_constitucion)
             <div class="form-group  col-sm-3 col-md-6">
                 <label for="fecha_constitucion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha de constitución</label>
                 <input class="form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}" type="date" name="fecha_constitucion" id="fecha_constitucion" value="{{ $organizacion->fecha_constitucion  }}" disabled>
@@ -194,6 +251,8 @@ select{
                 </div>
                 @endif
             </div>
+            @endif
+            @if ($panel_rules->num_empleados)
             <div class="form-group col-sm-6">
                 <label class="" for="num_empleados"><i class="fas fa-users iconos-crear"></i>Número de empleados</label>
                 <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number" name="num_empleados" id="num_empleados" value="{{ $organizacion->num_empleados }}" disabled>
@@ -202,8 +261,9 @@ select{
                         {{ $errors->first('num_empleados') }}
                     </div>
                 @endif
-
             </div>
+            @endif
+            @if ($panel_rules->tamano)
             <div class="form-group  col-sm-12 col-md-6">
                 <label class="" for="tamano"><i class="fas fa-boxes iconos-crear"></i>Tamaño</label>
                 <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text" name="tamano" id="tamano" value="{{ $organizacion->tamano }}" disabled>
@@ -212,10 +272,9 @@ select{
                         {{ $errors->first('tamano') }}
                     </div>
                 @endif
-
             </div>
-
-
+            @endif
+            @if ($panel_rules->giro)
             <div class="form-group col-sm-12 col-md-6">
                 <label for="giro"> <i class="fas fa-briefcase iconos-crear"></i>
                     {{ trans('cruds.organizacion.fields.giro') }}
@@ -229,6 +288,8 @@ select{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.giro_helper') }}</span>
             </div>
+            @endif
+            @if ($panel_rules->servicios)
             <div class="form-group col-sm-12 col-md-6">
                 <label for="servicios"><i class="fas fa-briefcase iconos-crear"></i>
                     {{ trans('cruds.organizacion.fields.servicios') }}
@@ -242,7 +303,8 @@ select{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.servicios_helper') }}</span>
             </div>
-
+            @endif
+            @if ($panel_rules->mision)
             <div class="form-group col-sm-12 col-md-6">
                 <label for="mision"> <i class="fas fa-flag iconos-crear"></i>
                     {{ trans('cruds.organizacion.fields.mision') }}</label>
@@ -254,6 +316,8 @@ select{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.mision_helper') }}</span>
             </div>
+            @endif
+            @if ($panel_rules->vision)
             <div class="form-group col-sm-12 col-md-6">
                 <label for="vision"> <i class="far fa-eye iconos-crear"></i>
                     {{ trans('cruds.organizacion.fields.vision') }}</label>
@@ -265,6 +329,8 @@ select{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.vision_helper') }}</span>
             </div>
+            @endif
+            @if ($panel_rules->valores)
             <div class="form-group col-sm-12 col-md-6">
                 <label for="valores"> <i class="far fa-heart iconos-crear"></i>
                     {{ trans('cruds.organizacion.fields.valores') }}
@@ -277,13 +343,15 @@ select{
                 @endif
                 <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
             </div>
-
+            @endif
+            @if ($panel_rules->antecedentes)
             <div class="form-group col-sm-12 col-md-6">
                 <label for="antecedentes"> <i class="far fa-file-alt iconos-crear"></i> Antecedentes
                 </label>
                 <div class="c_text" >{!! $organizacion->antecedentes !!}</div>
                 <span class="help-block">{{ trans('cruds.organizacion.fields.valores_helper') }}</span>
             </div>
+            @endif
         </div>
     </div>
 </div>

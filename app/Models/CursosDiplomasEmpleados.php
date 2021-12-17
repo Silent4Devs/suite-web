@@ -43,6 +43,17 @@ class CursosDiplomasEmpleados extends Model
 
     ];
 
+    protected $appends = ['year_ymd'];
+
+    public function getYearYmdAttribute()
+    {
+        if ($this->año) {
+            return Carbon::parse($this->año)->format('Y-m-d');
+        } else {
+            return null;
+        }
+    }
+
     public function empleado_cursos()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');

@@ -193,6 +193,7 @@
                     {
                         data: 'puesto',
                         name: 'puesto'
+
                     },
                     {
                         data: 'descripcion',
@@ -223,5 +224,10 @@
             // });
         });
 
+
+    </script>
+
+    <script>
+        $(document).ready(function() {})
     </script>
 @endsection

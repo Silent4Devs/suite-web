@@ -11,6 +11,10 @@
         min-width: 400px !important;
     }
 
+    .td_recursos{
+        position: relative;
+    }
+
 </style>
 <div class="card-body datatable-fix w-100">
     <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6;">
@@ -36,8 +40,8 @@
                 <th>Origen</th>
                 {{-- <th>Categoria</th> --}}
                 {{-- <th>Urgencia</th> --}}
-                <th style="min-width:200px;">Fecha&nbsp;inicio</th>
-                <th style="min-width:200px;">Fecha&nbsp;fin</th>
+                <th style="min-width:100px;">Fecha&nbsp;inicio</th>
+                <th style="min-width:100px;">Fecha&nbsp;fin</th>
                 <th>Compartida&nbsp;con</th>
                 {{-- <th>Asignada por</th> --}}
                 <th>Estatus</th>

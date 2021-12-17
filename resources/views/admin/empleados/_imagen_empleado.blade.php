@@ -1,9 +1,18 @@
-<div class="row">
-    <div class="col">
+<div class="row align-items-center">
+    <div class="col-sm-12 col-md-6 col-6 text-center">
+        @php
+            $foto = asset('img/add-photo.png');
+            if ($empleado->foto) {
+                $foto = asset('storage/empleados/imagenes/' . $empleado->foto);
+            }
+        @endphp
+        <img class="imf-fluid" src="{{ $foto }}" style="max-width:170px">
+    </div>
+    <div class="col-sm-12 col-md-6 col-6">
         <div class="input-group is-invalid">
-            <div class="form-group" style="width: 100%;border: dashed 1px #cecece;">
-                <div class="row" style="padding: 20px 0;">
-                    <div class="col-md-5 col-sm-5 col-12 d-flex justify-content-center">
+            <div class="form-group">
+                <div class="row text-center" style="padding: 20px 0;">
+                    <div class="col-md-12 col-sm-12 col-12 d-flex justify-content-center">
                         <label style="cursor: pointer" for="foto">
                             <div class="d-flex align-items-center">
                                 <h5>
@@ -19,14 +28,14 @@
                             </div>
                         </label>
                     </div>
-                    <div class="col-sm-2 col-md-2 col-12 d-flex justify-content-center">
-                        Ó
+                    <div class="col-sm-12 col-md-12 col-12 d-flex justify-content-center text-center">
+                        <p>Ó</p>
                     </div>
-                    <div class="col-md-5 col-sm-5 col-12 d-flex justify-content-center" id="avatar_choose">
+                    <div class="col-md-12 col-sm-12 col-12 d-flex justify-content-center" id="avatar_choose">
                         <label style="cursor: pointer">
                             <div class="d-flex align-items-center">
                                 <h5>
-                                    <i class="fas fa-image iconos-crear"
+                                    <i class="fas fa-camera iconos-crear"
                                         style="font-size: 20pt;position: relative;top: 4px;"></i>
                                     <span id="texto-imagen-avatar" class="pl-2">
                                         Tomar Foto
@@ -39,8 +48,8 @@
                         </label>
                     </div>
                 </div>
-                <input name="foto" type="file" accept="image/png, image/jpeg" class="form-control-file" id="foto"
-                    hidden="">
+                <input name="foto" type="file" accept="image/png, image/jpeg" class="imageCrop form-control-file"
+                    id="foto" hidden="">
             </div>
         </div>
     </div>
@@ -67,5 +76,5 @@
                     class="fas fa-image"></i></button>
         </div>
     </div>
-    <input type="hidden" id="snapshoot" readonly autocomplete="off" name="snap_foto">
+    <input type="hidden" id="snapshoot" readonly autocomplete="off" name="snap_foto" class="imageCrop">
 </div>

@@ -564,7 +564,7 @@ export default class OrgChart {
           ${dataSourceJSON.email != null ? '<div class="col-4 p-0"><a href="mailto:'+dataSourceJSON.email+'" class="btn text-danger p-0" title="Enviar correo" style="text-align:left;"><i class="fas fa-envelope" style="margin:0;font-size:15pt; color: #374151;"></i></a></div>':''}
         </div>
         <h4>Más Información</h4>
-        <p class="it_1"><i class="fas fa-calendar-day"></i>Ingreso: <span>${dataSourceJSON.antiguedad == null ? 'Sin dato':dataSourceJSON.antiguedad}</span></p>
+        <p class="it_1"><i class="fas fa-calendar-day"></i>Ingreso: <span>${dataSourceJSON.fecha_ingreso == null ? 'Sin dato':dataSourceJSON.fecha_ingreso}</span></p>
         <p class="it_3"><i class="fas fa-info-circle"></i>Estatus: <span class="text-capitalize badge badge-${dataSourceJSON.estatus == 'alta' ? 'success':'danger'}">${dataSourceJSON.estatus == null ? 'Sin dato':dataSourceJSON.estatus}</span></p>
         <p class="it_4"><i class="fas fa-info-circle"></i>No. empleado: <span>${dataSourceJSON.n_empleado == null ? 'Sin dato':dataSourceJSON.n_empleado}</span></p>
         <p class="it_2"><i class="fas fa-info-circle" style="margin: 0 7px 0 0px;"></i>
