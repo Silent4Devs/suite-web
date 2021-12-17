@@ -2,7 +2,7 @@
 <style type="text/css">
     #errores_generales_admin_quitar_recursos{
         display: none !important;
-    }    
+    }
 </style>
 
 <div class="card-body datatable-fix">
@@ -26,12 +26,15 @@
     <table id="tabla_usuario_capacitaciones" class="table">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Categoría</th>
-                <th>Instructor</th>
-                <th style="min-width:200px;">Fecha Inicio</th>
-                <th style="min-width:200px;">Fecha Fin</th>
-                <th>Calificación</th>
+                <th style="min-width:200px;">Título</th>
+                <th style="min-width:150px;">Categoría</th>
+                <th style="min-width:150px;">Tipo</th>
+                <th style="min-width:150px;">Modalidad</th>
+                <th style="min-width:150px;">Ubicación</th>
+                <th style="min-width:200px;">Instructor</th>
+                <th style="min-width:100px;">Fecha Inicio</th>
+                <th style="min-width:100px;">Fecha Fin</th>
+                <th style="min-width:50px;">Calificación</th>
                 <th>Opciones</th>
             </tr>
         </thead>
@@ -42,6 +45,9 @@
 
                         <td>{{$recurso->cursoscapacitaciones}}</td>
                         <td>{{$recurso->categoria_capacitacion->nombre}}</td>
+                        <td>{{$recurso->tipo}}</td>
+                        <td>{{$recurso->modalidad}}</td>
+                        <td>{{$recurso->ubicacion}}</td>
                         <td>{{$recurso->instructor}}</td>
                         <td>{{$recurso->fecha_curso}}</td>
                         <td>{{$recurso->fecha_fin}}</td>

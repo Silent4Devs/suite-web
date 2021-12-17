@@ -9,6 +9,7 @@ use App\Http\Requests\StoreOrganizacionRequest;
 use App\Http\Requests\UpdateOrganizacionRequest;
 use App\Models\Empleado;
 use App\Models\Organizacion;
+use App\Models\PanelOrganizacion;
 use App\Models\Schedule;
 use Flash;
 use Illuminate\Http\Request;
@@ -18,7 +19,6 @@ use Intervention\Image\Facades\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
-use Symfony\Component\HttpFoundation\Response;
 
 class OrganizacionController extends Controller
 {
@@ -30,10 +30,15 @@ class OrganizacionController extends Controller
 
         $organizacions = Organizacion::first();
 
-        $schedule = Organizacion::find(1)->schedules;
+        $schedule = collect();
+        if ($organizacions) {
+            $schedule = $organizacions->schedules;
+        }
+
         // dd($schedule);
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
+        $panel_rules = PanelOrganizacion::select('empresa', 'direccion', 'telefono', 'correo', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'team_id', 'antecedentes', 'logotipo', 'razon_social', 'rfc', 'representante_legal', 'fecha_constitucion', 'num_empleados', 'tamano', 'schedule')->get()->first();
 
 
         if (empty($organizacions)) {
@@ -41,14 +46,14 @@ class OrganizacionController extends Controller
 
             $empty = false;
 
-            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty);
+            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('panel_rules', $panel_rules)->with('schedule', $schedule);
         } else {
             $empty = true;
             $count = Organizacion::get()->count();
             $logotipo = $organizacions->logotipo;
             // dd($schedule);
 
-            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo)->with('schedule', $schedule)->with('dias', $dias);
+            return view('admin.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo)->with('schedule', $schedule)->with('dias', $dias)->with('panel_rules', $panel_rules);
         }
     }
 
@@ -228,11 +233,13 @@ class OrganizacionController extends Controller
 
         $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
+        $panel_rules = PanelOrganizacion::select('empresa', 'direccion', 'telefono', 'correo', 'pagina_web', 'giro', 'servicios', 'mision', 'vision', 'valores', 'team_id', 'antecedentes', 'logotipo', 'razon_social', 'rfc', 'representante_legal', 'fecha_constitucion', 'num_empleados', 'tamano', 'schedule')->get()->first();
+
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
             $empty = false;
 
-            return view('admin.organizacions.visualizarorganizacion')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('schedule', $schedule)->with('dias', $dias);
+            return view('admin.organizacions.visualizarorganizacion')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('schedule', $schedule)->with('dias', $dias)->with('panel_rules', $panel_rules);
         } else {
             $empty = true;
             $count = Organizacion::get()->count();
@@ -242,7 +249,7 @@ class OrganizacionController extends Controller
         // $var = $this->index();
 
         // dd($organizacion);
-        return view('admin.organizacions.visualizarorganizacion')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo)->with('schedule', $schedule)->with('dias', $dias);
+        return view('admin.organizacions.visualizarorganizacion')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo)->with('schedule', $schedule)->with('dias', $dias)->with('panel_rules', $panel_rules);
     }
 
     public function saveOrUpdateSchedule($request, $organizacions)
@@ -253,27 +260,30 @@ class OrganizacionController extends Controller
         if (isset($request->working)) {
             if (count($request->working)) {
                 foreach ($request->working as $w) {
-                    $model = Schedule::where('id', $w['id']);
+                    // dd($w);
 
-                    $registerAlreadyExists = $model->exists();
+                    if (isset($w['id'])) {
+                        $model = Schedule::where('id', $w['id']);
+                        $registerAlreadyExists = $model->exists();
 
-                    if ($registerAlreadyExists) {
-                        $dataModel = $model->first();
+                        if ($registerAlreadyExists) {
+                            $dataModel = $model->first();
 
-                        $dataModel->update([
-                            'working_day'  => $w['day'][$i],
-                            'start_work_time' =>  $w['start_time'][$i],
-                            'end_work_time' => $w['end_time'][$i],
+                            $dataModel->update([
+                                'working_day'  => $w['day'][$i],
+                                'start_work_time' =>  $w['start_time'][$i],
+                                'end_work_time' => $w['end_time'][$i],
 
-                        ]);
-                    } else {
-                        $schedule = Schedule::create([
-                            'working_day'  => $w['day'][$i],
-                            'start_work_time' =>  $w['start_time'][$i],
-                            'end_work_time' => $w['end_time'][$i],
-                            'organizacions_id'=> $id,
-                        ]);
+                                ]);
                     }
+                        } else {
+                            $schedule = Schedule::create([
+                                'working_day'  => $w['day'][$i],
+                                'start_work_time' =>  $w['start_time'][$i],
+                                'end_work_time' => $w['end_time'][$i],
+                                'organizacions_id'=> $id,
+                            ]);
+                        }
                 }
             }
         }

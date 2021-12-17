@@ -15,7 +15,6 @@ class AddFkEmpleadoIdToDeclaracionAplicabilidadResponsablesTable extends Migrati
     {
         Schema::table('declaracion_aplicabilidad_responsables', function (Blueprint $table) {
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('SET NULL');
-
         });
     }
 
