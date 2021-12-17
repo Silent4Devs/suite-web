@@ -254,7 +254,7 @@
                 isReadOnly : true,
                 },
             @endforeach
-           @if ($eventos->count())
+           @if ($eventos->count() > 1)
 
            @foreach ($eventos as $evento)
 
