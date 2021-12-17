@@ -377,6 +377,11 @@ Breadcrumbs::for('admin.comunicacion-sgis.show', function ($trail) {
     $trail->push('Comunicados');
 });
 
+Breadcrumbs::for('admin.system-calendar', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Calendario');
+});
+
 // Breadcrumbs::for('admin..index', function ($trail) {
 // $trail->parent('admin.iso27001.index');
 // $trail->push('', route('admin..index'));

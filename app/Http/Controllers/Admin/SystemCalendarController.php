@@ -59,7 +59,10 @@ class SystemCalendarController extends Controller
         $recursos = Recurso::get();
         $eventos =Calendario::get();
 
+        
+        $cumples_aniversarios = Empleado::get();
 
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas',"eventos"));
+
+        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas',"eventos", 'cumples_aniversarios'));
     }
 }
