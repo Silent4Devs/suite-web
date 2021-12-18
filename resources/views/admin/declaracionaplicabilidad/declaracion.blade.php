@@ -73,7 +73,7 @@
                                     $permisoResponsable = false;
                                 }
                             }
-                            
+
                             foreach ($aprobadores as $aprobador) {
                                 if (auth()->user()->empleado->id == $aprobador->aprobadores_id) {
                                     $permisoAprobador = true;
@@ -82,7 +82,7 @@
                                     $permisoAprobador = false;
                                 }
                             }
-                            
+
                         @endphp
                         <div class="table-responsive">
                             <table class="table" style="font-size: 12px;">
@@ -880,9 +880,11 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g71s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($aprobador->empleado->avatar))
+                                                            {{-- <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}"> --}}
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -3584,10 +3586,13 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g111s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
+                                                    @if (!empty($aprobador->empleado->avatar))
+                                                    <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
+                                                    @endif
                                                     @endif
                                                 @endforeach
                                             </td>

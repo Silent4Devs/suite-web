@@ -157,7 +157,7 @@
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
 
-                            @endif
+
                         </td>
                         <td>
                             {{ $documento->version == 0 ? 'Sin versión actualmente' : $documento->version }}
@@ -229,7 +229,6 @@
                             </div>
                         </td>
                     </tr>
-                @endif
             @endforeach
         </tbody>
     </table>
@@ -337,7 +336,7 @@
                                     {{ $revision->documento->proceso ? $revision->documento->proceso->nombre : 'Sin vincular' }}
                                 </th>
                             @endif
-                            
+
                              <td  style="text-align: center !important;">
                                 <span class="badge badge-info"
                                     style="background-color:{{ $revision->color_revisiones_estatus }}">{{mb_strtoupper($revision->estatus_revisiones_formateado) }}</span>
