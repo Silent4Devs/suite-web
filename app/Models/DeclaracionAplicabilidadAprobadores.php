@@ -62,5 +62,4 @@ class DeclaracionAplicabilidadAprobadores extends Model
     {
         return $this->hasMany(NotificacionAprobadore::class, 'aprobadores_id', 'id');
     }
-
 }

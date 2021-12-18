@@ -55,7 +55,6 @@ class DeclaracionAplicabilidadResponsable extends Model
 
     public function notificacion()
     {
-            return $this->hasMany(NotificacionAprobadores::class, 'responsables_id', 'id');
-
+        return $this->hasMany(NotificacionAprobadores::class, 'responsables_id', 'id');
     }
 }
